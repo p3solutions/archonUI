@@ -1,0 +1,78 @@
+.nav-custom {
+  background-color: #4c93de;
+  margin-bottom: 0px;
+}
+
+.navbar-nav>li>a {
+  color: #fff;
+}
+
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover {
+  background-color: #477ab5;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: normal;
+  line-height: 13px;
+  padding: 2px 6px;
+  position: absolute;
+  right: 2px;
+  top: 8px;
+}
+
+.bg-red {
+  background: #E74C3C !important;
+  border: 1px solid #E74C3C !important;
+  color: #fff;
+}
+
+ul.msg_list li {
+  background: #f7f7f7;
+  padding: 5px;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 6px 6px 0;
+  width: 93% !important;
+}
+
+ul.msg_list li:last-child {
+  margin-bottom: 6px;
+  padding: 10px;
+}
+
+ul.msg_list li a {
+  padding: 3px 5px !important;
+}
+
+ul.msg_list li a .image img {
+  border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  float: left;
+  margin-right: 10px;
+  width: 11%;
+}
+
+ul.msg_list li a .time {
+  font-size: 11px;
+  font-style: italic;
+  font-weight: bold;
+  position: absolute;
+  right: 35px;
+}
+
+ul.msg_list li a .message {
+  display: block !important;
+  font-size: 11px;
+}
+
+.dropdown-menu.msg_list span {
+  white-space: normal;
+}
+
+.nav-brand-img {
+  width: 120px;
+  height: 20px;
+}

@@ -1,0 +1,96 @@
+<nav class="navbar navbar-default nav-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <img alt="Brand" src="assets/archonWhite.png" class="nav-brand-img">
+      </a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active">
+          <a href="#">Home
+          </a>
+        </li>
+        <li>
+          <a href="#">My Activities</a>
+        </li>
+        <li *ngIf="info.show" role="presentation" class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-bell-o fa-lg" data-toggle="tooltip" data-placement="bottom" title="Notifications"></i>
+            <span class="badge bg-red">6</span>
+          </a>
+          <ul id="notifications" class="dropdown-menu msg_list" role="menu">
+            <li>
+              <a href="#">
+                <span>
+                  <span>User 1</span>
+                  <span class="time">3 mins ago</span>
+                </span>
+                <span class="message">
+                  Performed an activity.
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>
+                  <span>User 1</span>
+                  <span class="time">3 mins ago</span>
+                </span>
+                <span class="message">
+                  Performed an awesome activity which u need to see immediatly and perform some operation on top of it.
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>
+                  <span>User 1</span>
+                  <span class="time">3 mins ago</span>
+                </span>
+                <span class="message">
+                  Performed an activity.
+                </span>
+              </a>
+            </li>
+            <li>
+              <div class="text-center">
+                <a href="#">
+                  <strong>See All Notifications</strong>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{info.username}}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#">Profile</a>
+            </li>
+            <li *ngIf="info.show" role="separator" class="divider" ></li>
+            <li *ngIf="info.show">
+              <a href="#">Manage</a>
+            </li>
+          </ul>
+        </li>
+        <li role="presentation">
+          <a href="" class="info-number">
+
+            <i class="fa fa-sign-out fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Logout"></i>
+
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="" class="info-number">
+            <i class="fa fa-question-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Help"></i>
+
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
