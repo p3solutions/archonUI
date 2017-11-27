@@ -37,9 +37,9 @@ export class InfoService {
       return of(result as T);
     };
   }
-  /** Log a HeroService message with the MessageService */
+  /** Log a message with the MessageService */
   private log(message: string) {
-    console.log('HeroService: ' + message);
+    console.log(message);
   }
 
 }
