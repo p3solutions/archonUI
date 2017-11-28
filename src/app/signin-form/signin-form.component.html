@@ -1,0 +1,17 @@
+<html>
+<body>
+<div>
+  <form>
+    <h3>Sign in</h3><br><br>
+    <input [(ngModel)]="dataObj.usermail" type="email" placeholder="Email Address" 
+    [ngModelOptions]="{standalone: true}">
+    <input [(ngModel)]="dataObj.userpassword" type="password" placeholder="Password" 
+    [ngModelOptions]="{standalone: true}">
+<!--     <input class = "btn btn-default" type="submit" value="Forgot Password ?" style="float: left;"> -->
+    <a href="#" style="float: left;">Forgot Password?</a>
+    <input class="btn btn-primary" type="submit" value="Sign in" style="float: right;">
+
+  </form>
+</div>
+</body>
+</html>
