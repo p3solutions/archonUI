@@ -23,12 +23,5 @@ describe('NavbarComponent', () => {
     fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    de = fixture.debugElement.query(By.css('a'));
-    elem = de.nativeElement;
   });
-
-  // it('should have Home button', () => {
-  //   fixture.detectChanges();
-  //   expect(elem.textContent).toContain('Home');
-  // });
 });
