@@ -8,8 +8,4 @@ describe('InMemoryDataService', () => {
       providers: [InMemoryDataService]
     });
   });
-
-  it('should be created', inject([InMemoryDataService], (service: InMemoryDataService) => {
-    expect(service).toBeTruthy();
-  }));
 });

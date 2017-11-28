@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   }
   // Get information from the info service
   getInfo(): void {
-    this.infoservice.getinfo().subscribe(info => {
+    this.infoservice.getinfo(this.infoservice.infoUrl).subscribe(info => {
       this.info = info;
       if (this.info.role === 'Admin') {
         this.info.show = true;
