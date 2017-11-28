@@ -1,5 +1,5 @@
 .nav-custom {
-  background-color: #4c93de;
+  background-color: #269af8;
   margin-bottom: 0px;
 }
 
@@ -10,7 +10,7 @@
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:focus,
 .navbar-default .navbar-nav>.active>a:hover {
-  background-color: #477ab5;
+  background-color: #269af8;
 }
 
 .badge {
