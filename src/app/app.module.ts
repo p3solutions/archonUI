@@ -8,13 +8,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { InMemoryDataService } from './in-memory-data.service';
 import { InfoService } from './info.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    WorkspaceLandingPageComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
