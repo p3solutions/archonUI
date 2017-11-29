@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Info} from '../info';
+import { NgForm } from '@angular/forms';
+import { SigninFormService } from '../signin-form.service';
+import { SigninForm} from '../signin-form';
 @Component({
   selector: 'app-signin-form',
   templateUrl: './signin-form.component.html',
@@ -7,10 +9,30 @@ import {Info} from '../info';
 })
 export class SigninFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private signinService : SigninFormService) { }
+ 
+  
 
-  dataObj : Info;
+  signinDetails : SigninForm = {
+    email : '',
+    password : ''
+  }
+
+  onSubmit(signinForm : NgForm){
+    console.log(this.signinService.getUserCredentials()+" before");
+//    this.getUserDatas(this.signinService.getUserCredentials());
+  	this.signinDetails.email = signinForm.form.value.emailid;
+  	this.signinDetails.password = signinForm.form.value.passwordid;
+    if(this.signinDetails.email.length>0 && this.signinDetails.password.length>0){
+    	this.signinService.postingUserData(this.signinDetails);
+      console.log('Data posted successfully');
+    }
+    else{
+      console.log('User entered incorrect data');
+    }
+  }
   ngOnInit() {
+ 
   }
 
 }

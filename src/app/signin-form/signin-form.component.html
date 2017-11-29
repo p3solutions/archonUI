@@ -1,17 +1,29 @@
 <html>
 <body>
 <div>
-  <form>
+  <form (ngSubmit)="onSubmit(signinForm)" #signinForm = "ngForm" novalidate class="form-signin">
     <h3>Sign in</h3><br><br>
-    <input [(ngModel)]="dataObj.usermail" type="email" placeholder="Email Address" 
-    [ngModelOptions]="{standalone: true}">
-    <input [(ngModel)]="dataObj.userpassword" type="password" placeholder="Password" 
-    [ngModelOptions]="{standalone: true}">
-<!--     <input class = "btn btn-default" type="submit" value="Forgot Password ?" style="float: left;"> -->
+    <input  type="email" placeholder="Email Address"  name = "emailid" required ngModel>
+    <input  type="password" placeholder="Password" name = "passwordid" required ngModel>
     <a href="#" style="float: left;">Forgot Password?</a>
     <input class="btn btn-primary" type="submit" value="Sign in" style="float: right;">
-
   </form>
 </div>
 </body>
 </html>
+
+<!-- div class="modal-content">
+        <form (ngSubmit)="onSubmit(loginForm)" novalidate class="form-signin" #loginForm="ngForm">
+            <div *ngIf="(errors.error)" class="alert alert-danger">{{errors.text}}</div>
+            <input type="text" name="username" class="form-control" placeholder="Username"
+             required ngModel [ngClass]="{ 'alert-danger': (loginForm.form.dirty && !loginForm.form.value.username)}"/>
+           
+            <input type="password" name="password" class="form-control" placeholder="Password"
+            required ngModel [ngClass]="{ 'alert-danger': (loginForm.form.dirty && !loginForm.form.value.password)}"/>
+
+            <button type="submit" class="btn btn-lg btn-outline-primary btn-block"
+             [disabled]="!loginForm.form.valid || loginForm.form.pristine" [ngClass]="{'cur-p':loginForm.form.valid}">Login</button>
+             
+            <button type="button" class="cur-p btn btn-link">Forgot Password?</button>
+            <button type="button" class="cur-p btn btn-link">Register</button>
+        </form> -->
