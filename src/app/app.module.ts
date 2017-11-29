@@ -9,6 +9,8 @@ import { InMemoryDataService } from './in-memory-data.service';
 import { InfoService } from './info.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
+import { SigninFormComponent } from './signin-form/signin-form.component';
+import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspac
     AppComponent,
     NavbarComponent,
     LandingPageComponent,
-    WorkspaceLandingPageComponent
+    WorkspaceLandingPageComponent,
+    SigninFormComponent,
+    ForgotpasswordFormComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
