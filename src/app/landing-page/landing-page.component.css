@@ -5,15 +5,28 @@
 .brand-img {
   width: 600px;
   margin: 50px;
-  margin-top: 70px;
+  margin-top: 0px;
   margin-left: 50px;
 }
 
 .archon-desc {
   padding: 25px;
+  color: darkgrey;
+  font-size: 20px;
+  text-align: justify;
+  min-height: 300px;
+  max-height: 300px;
+  overflow: auto;
 }
 
 .archon-head {
   margin-left: 50px;
 }
 
+.landing-card {
+  height: 400px;
+}
+
+.archon-buttons {
+  margin-top: 20px;
+}
