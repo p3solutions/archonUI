@@ -27,7 +27,7 @@ import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpasswor
     ForgotpasswordFormComponent,
   ],
   imports: [
-    BrowserModule,FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
+    BrowserModule,FormsModule, ReactiveFormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     )
   ],

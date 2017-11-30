@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { SigninFormService } from '../signin-form.service';
 import { SigninForm} from '../signin-form';
+import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 
 @Component({
   selector: 'app-signin-form',
@@ -10,30 +10,49 @@ import { SigninForm} from '../signin-form';
 })
 export class SigninFormComponent implements OnInit {
 
+  form  : FormGroup;
 
-  constructor(private signinService : SigninFormService) { }
+  constructor(private signinService : SigninFormService,private fb : FormBuilder) { }
  
-  
 
   signinDetails : SigninForm = {
     email : '',
     password : ''
   }
 
-  onSubmit(signinForm : NgForm){
-    console.log(this.signinService.getUserCredentials()+" before");
-//    this.getUserDatas(this.signinService.getUserCredentials());
-  	this.signinDetails.email = signinForm.form.value.email;
-  	this.signinDetails.password = signinForm.form.value.password;
-    if(this.signinDetails.email.length>0 && this.signinDetails.password.length>0){
-    	this.signinService.postingUserData(this.signinDetails);
-      console.log('Data posted successfully');
+  onSubmit(){
+    if(this.form.valid){
+      console.log(this.form.value.email+" "+this.form.value.password);
+      this.signinDetails.email = this.form.value.email;
+      this.signinDetails.password = this.form.value.password;
+      this.signinService.postingUserData(this.signinDetails);
+      console.log("successfully data posted");
     }
     else{
-      console.log('User entered incorrect data');
+      console.log("invalid form data");
     }
+//     this.form = signinForm;
+//     console.log(this.signinService.getUserCredentials()+" before");
+// //    this.getUserDatas(this.signinService.getUserCredentials());
+//   	this.signinDetails.email = signinForm.form.value.email;
+//   	this.signinDetails.password = signinForm.form.value.password;
+//     if(this.signinDetails.email.length>0 && this.signinDetails.password.length>0){
+//     	this.signinService.postingUserData(this.signinDetails);
+//       console.log('Data posted successfully');
+//     }
+//     else{
+//       console.log('User entered incorrect data');
+//     }
   }
   ngOnInit() {
+    this.form = this.fb.group({
+      email: ['', [
+        Validators.required,
+        Validators.pattern("[^ @]*@[^ @]*")]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8)]],
+    });
  }
 
 
