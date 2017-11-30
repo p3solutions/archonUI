@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter,Output } from '@angular/core';
 import { SigninFormService } from '../signin-form.service';
 import { SigninForm} from '../signin-form';
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
@@ -11,6 +11,8 @@ import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 export class SigninFormComponent implements OnInit {
 
   form  : FormGroup;
+
+  // @Output() loggedIn = new EventEmitter<SigninForm>();
 
   constructor(private signinService : SigninFormService,private fb : FormBuilder) { }
  

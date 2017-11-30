@@ -97,14 +97,17 @@ describe('SigninFormComponent', () => {
     component.form.controls['password'].setValue("chandruashwin");
     expect(component.form.valid).toBeTruthy();
 
-    let siginform: SigninForm;
+    let signinform: SigninForm;
  
+      // component.loggedIn.subscribe((value) => signinform = value);
+      signinform = component.signinDetails;
+
     // Trigger the login function
     component.login();
 
     // Now we can check to make sure the emitted value is correct
-    expect(siginform.email).toBe("chandru@platform3solutions.com");
-    expect(siginform.password).toBe("chandruashwin");
+    expect(signinform.email).toBe("chandru@platform3solutions.com");
+    expect(signinform.password).toBe("chandruashwin");
   });
 
 });
