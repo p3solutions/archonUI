@@ -36,10 +36,10 @@ export class SigninFormComponent implements OnInit {
 //     this.form = signinForm;
 //     console.log(this.signinService.getUserCredentials()+" before");
 // //    this.getUserDatas(this.signinService.getUserCredentials());
-//   	this.signinDetails.email = signinForm.form.value.email;
-//   	this.signinDetails.password = signinForm.form.value.password;
+//     this.signinDetails.email = signinForm.form.value.email;
+//     this.signinDetails.password = signinForm.form.value.password;
 //     if(this.signinDetails.email.length>0 && this.signinDetails.password.length>0){
-//     	this.signinService.postingUserData(this.signinDetails);
+//       this.signinService.postingUserData(this.signinDetails);
 //       console.log('Data posted successfully');
 //     }
 //     else{

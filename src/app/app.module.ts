@@ -13,6 +13,7 @@ import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ReactiveFormsModule} from '@angular/forms';
 import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
+import { AppRoutingModule } from './/app-routing.module';
 
 
 
@@ -27,9 +28,9 @@ import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpasswor
     ForgotpasswordFormComponent,
   ],
   imports: [
-    BrowserModule,FormsModule, ReactiveFormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
+    BrowserModule,FormsModule, ReactiveFormsModule, HttpClientModule, AppRoutingModule,HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ), AppRoutingModule
   ],
   providers: [InMemoryDataService, InfoService, SigninFormService],
   bootstrap: [AppComponent]
