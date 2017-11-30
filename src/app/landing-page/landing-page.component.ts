@@ -8,18 +8,9 @@ import { InfoService } from '../info.service';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-  info: Info;
-  constructor(private infoservice: InfoService) { }
+
+  constructor() { }
+
   ngOnInit() {
-    this.getInfo();
-  }
-  // Get information from the info service
-  getInfo(): void {
-    this.infoservice.getinfo().subscribe(info => {
-      this.info = info;
-      if (this.info.role === 'Admin') {
-        this.info.show = true;
-      }
-    });
   }
 }

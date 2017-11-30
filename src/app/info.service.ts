@@ -11,9 +11,10 @@ export class InfoService {
   constructor(
     private http: HttpClient
   ) { }
-  private infoUrl = 'api/info';
-  getinfo(): Observable<Info> {
-    return this.http.get<Info>(this.infoUrl).pipe(
+  // The URL to the API
+  infoUrl = 'api/info';
+  getinfo(infoUrl): Observable<Info> {
+    return this.http.get<Info>(infoUrl).pipe(
       catchError(this.handleError<Info>('getinfo'))
     );
   }
@@ -37,9 +38,9 @@ export class InfoService {
       return of(result as T);
     };
   }
-  /** Log a HeroService message with the MessageService */
+  /** Log a message with the MessageService */
   private log(message: string) {
-    console.log('HeroService: ' + message);
+    console.log(message);
   }
 
 }

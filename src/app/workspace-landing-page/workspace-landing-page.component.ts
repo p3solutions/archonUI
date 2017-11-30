@@ -3,11 +3,12 @@ import { Info } from '../info';
 import { InfoService } from '../info.service';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-workspace-landing-page',
+  templateUrl: './workspace-landing-page.component.html',
+  styleUrls: ['./workspace-landing-page.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class WorkspaceLandingPageComponent implements OnInit {
+
   info: Info;
   constructor(private infoservice: InfoService) { }
   ngOnInit() {

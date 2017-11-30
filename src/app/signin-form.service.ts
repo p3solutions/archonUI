@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {SigninForm} from './signin-form';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import {HttpClient,HttpHeaders} from '@angular/common/http';
+import {HttpClient,HttpHeaders,HttpClientModule} from '@angular/common/http';
 @Injectable()
 export class SigninFormService {
 
@@ -10,8 +10,7 @@ export class SigninFormService {
   private credentialsUrl = 'api/credentials';
 
   constructor(
-  	private http : HttpClient
-  	) { }
+  	private http : HttpClient) { }
 
   postingUserData(signinform : SigninForm) : Observable<any>{
      const httpOptions = {

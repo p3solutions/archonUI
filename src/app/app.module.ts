@@ -10,6 +10,9 @@ import { InfoService } from './info.service';
 import { SigninFormService } from './signin-form.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninFormComponent } from './signin-form/signin-form.component';
+import { ReactiveFormsModule} from '@angular/forms';
+import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
+import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 
 
 
@@ -18,7 +21,10 @@ import { SigninFormComponent } from './signin-form/signin-form.component';
     AppComponent,
     NavbarComponent,
     LandingPageComponent,
-    SigninFormComponent
+    SigninFormComponent,
+    WorkspaceLandingPageComponent,
+    SigninFormComponent,
+    ForgotpasswordFormComponent,
   ],
   imports: [
     BrowserModule,FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(

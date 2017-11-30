@@ -1,29 +1,19 @@
-<html>
-<body>
-<div>
-  <form (ngSubmit)="onSubmit(signinForm)" #signinForm = "ngForm" novalidate class="form-signin">
-    <h3>Sign in</h3><br><br>
-    <input  type="email" placeholder="Email Address"  name = "emailid" required ngModel>
-    <input  type="password" placeholder="Password" name = "passwordid" required ngModel>
-    <a href="#" style="float: left;">Forgot Password?</a>
-    <input class="btn btn-primary" type="submit" value="Sign in" style="float: right;">
+<div class="x_title">
+  <h2>Sign In</h2>
+  <div class="clearfix"></div>
+</div>
+<div class="x_content">
+  <form class="form-horizontal form-label-left input_mask" (ngSubmit)="onSubmit(signinForm)">
+    <div class="col-md-12 form-group has-feedback">
+      <input type="text" class="form-control has-feedback-right" placeholder="Email" name = "email" required ngModel>
+      <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-12 form-group has-feedback">
+      <input type="password" class="form-control" placeholder="Password" name="password" required ngModel>
+      <span class="fa fa-key form-control-feedback right" aria-hidden="true"></span>
+    </div>
+    <div class="col-md-12 form-group">
+      <button type="submit" class="btn btn-primary pull-right">Submit</button>
+    </div>
   </form>
 </div>
-</body>
-</html>
-
-<!-- div class="modal-content">
-        <form (ngSubmit)="onSubmit(loginForm)" novalidate class="form-signin" #loginForm="ngForm">
-            <div *ngIf="(errors.error)" class="alert alert-danger">{{errors.text}}</div>
-            <input type="text" name="username" class="form-control" placeholder="Username"
-             required ngModel [ngClass]="{ 'alert-danger': (loginForm.form.dirty && !loginForm.form.value.username)}"/>
-           
-            <input type="password" name="password" class="form-control" placeholder="Password"
-            required ngModel [ngClass]="{ 'alert-danger': (loginForm.form.dirty && !loginForm.form.value.password)}"/>
-
-            <button type="submit" class="btn btn-lg btn-outline-primary btn-block"
-             [disabled]="!loginForm.form.valid || loginForm.form.pristine" [ngClass]="{'cur-p':loginForm.form.valid}">Login</button>
-             
-            <button type="button" class="cur-p btn btn-link">Forgot Password?</button>
-            <button type="button" class="cur-p btn btn-link">Register</button>
-        </form> -->
