@@ -6,6 +6,7 @@ import { SigninFormComponent } from './signin-form.component';
 import { SigninFormService} from '../signin-form.service';
 import {HttpClient,HttpHeaders,HttpHandler} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { SigninForm } from '../signin-form';
 describe('SigninFormComponent', () => {
   let component: SigninFormComponent;
   let fixture: ComponentFixture<SigninFormComponent>;
@@ -30,6 +31,7 @@ describe('SigninFormComponent', () => {
   });
 
   it('should create', () => {
+    //is Sigin-Form Component available?
     expect(component).toBeTruthy();
   });
   it('is Form title as Sign In',() =>{
@@ -42,6 +44,7 @@ describe('SigninFormComponent', () => {
   });
 
   it('form invalid when empty', () => {
+    //Entire form validation
   expect(component.form.valid).toBeFalsy();
 });
 
@@ -55,13 +58,13 @@ describe('SigninFormComponent', () => {
     expect(errors['required']).toBeTruthy();
 
     // Set email to something
-    email.setValue("test");
+    email.setValue("chandru");
     errors = email.errors || {};
     expect(errors['required']).toBeFalsy();
     expect(errors['pattern']).toBeTruthy();
 
     // Set email to something correct
-    email.setValue("test@example.com");
+    email.setValue("chandru@platform3solutions.com");
     errors = email.errors || {};
     expect(errors['required']).toBeFalsy();
     expect(errors['pattern']).toBeFalsy();
@@ -76,16 +79,32 @@ describe('SigninFormComponent', () => {
     expect(errors['required']).toBeTruthy();
 
     // Set email to something
-    password.setValue("123456");
+    password.setValue("ashwin");
     errors = password.errors || {};
     expect(errors['required']).toBeFalsy();
     expect(errors['minlength']).toBeTruthy();
 
     // Set email to something correct
-    password.setValue("123456789");
+    password.setValue("chandruashwin");
     errors = password.errors || {};
     expect(errors['required']).toBeFalsy();
     expect(errors['minlength']).toBeFalsy();
+  });
+
+    it('submitting a form emits a user', () => {
+    expect(component.form.valid).toBeFalsy();
+    component.form.controls['email'].setValue("chandru@platform3solutions.com");
+    component.form.controls['password'].setValue("chandruashwin");
+    expect(component.form.valid).toBeTruthy();
+
+    let siginform: SigninForm;
+ 
+    // Trigger the login function
+    component.login();
+
+    // Now we can check to make sure the emitted value is correct
+    expect(siginform.email).toBe("chandru@platform3solutions.com");
+    expect(siginform.password).toBe("chandruashwin");
   });
 
 });

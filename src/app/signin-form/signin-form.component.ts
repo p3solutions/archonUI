@@ -20,7 +20,7 @@ export class SigninFormComponent implements OnInit {
     password : ''
   }
 
-  onSubmit(){
+  login(){
     if(this.form.valid){
       console.log(this.form.value.email+" "+this.form.value.password);
       this.signinDetails.email = this.form.value.email;
