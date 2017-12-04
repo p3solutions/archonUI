@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -11,6 +12,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
 import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { SignInService } from './sign-in.service';
 
 
 @NgModule({
@@ -23,11 +26,11 @@ import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpasswor
     ForgotpasswordFormComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
+    BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ), AppRoutingModule
   ],
-  providers: [InMemoryDataService, InfoService],
+  providers: [InMemoryDataService, InfoService, SignInService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

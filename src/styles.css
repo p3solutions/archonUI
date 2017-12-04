@@ -1,5 +1,18 @@
 /* Global styles*/
 
+body {
+  font-family: "Montserrat", sans-serif;
+  background: #FAFAFA;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Montserrat", sans-serif;
+}
+
 
 /* Links */
 
@@ -7,7 +20,18 @@ a,
 a:focus,
 a:hover {
   color: #269af8;
+}
 
+a:focus,
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  font-family: "Avenir Next", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 0.2px;
 }
 
 
@@ -30,6 +54,7 @@ html,
 body {
   height: 100%;
   text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .site-wrapper {
@@ -136,8 +161,6 @@ body {
 
 .layoutfoot {
   color: #999;
-  position: fixed;
-  bottom: 0;
   width: 100%
 }
 
@@ -210,12 +233,20 @@ body {
   font-weight: 500;
 }
 
+.form-horizontal .form-group {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.form-control {
+  height: 40px;
+}
+
 .form-control-feedback {
-  margin-top: 6px;
-  height: 23px;
+  margin-top: 7px;
+  height: 32px;
   color: #269af8;
-  line-height: 24px;
-  font-size: 15px;
+  line-height: 30px;
 }
 
 .form-control-feedback.left {
@@ -228,25 +259,29 @@ body {
   right: 15px;
 }
 
+.form-fields {
+  min-height: 225px;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #269af8;
   border-color: #269af8;
 }
+
 .btn-primary:hover {
   color: #fff;
   background-color: #037ad8;
   border-color: #023e6d;
 }
 
-.btn-control{
+.btn-control {
   position: relative;
-  color:#fff;
+  width: 25px;
   height: auto;
   margin-top: auto;
   line-height: normal;
 }
-
 
 .has-feedback-right {
   padding-right: 45px;
@@ -256,5 +291,47 @@ body {
   padding-right: 45px;
 }
 
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
 
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+footer {
+  padding: 15px 20px;
+  display: block;
+}
+
+.footer_fixed footer {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+}
+
+.input-form {
+  font-size: 17px;
+  padding: 12px;
+  height: 45px;
+  margin: 0px;
+  margin-bottom: 3px;
+}
+
+.btn-form {
+  height: 40px;
+  font-size: 17px;
+}
+.forgot-password {
+  padding: 2px
+}
+.forgot-password>div {
+  padding: 15px;
+}
+
+.forgot-password>div>a {
+  float: left
+}
 
