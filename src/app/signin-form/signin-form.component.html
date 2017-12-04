@@ -4,17 +4,24 @@
 </div>
 <div class="x_content">
   <br />
-  <form class="form-horizontal form-label-left input_mask">
-    <div class="col-md-12 form-group has-feedback">
-      <input type="text" class="form-control has-feedback-right" placeholder="Email">
-      <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+  <form class="form-horizontal form-label-left input_mask" (ngSubmit)="onSignIn()" #signinForm="ngForm">
+    <div class="row form-fields">
+      <div class="col-md-12 form-group has-feedback">
+        <input type="text" class="form-control input-form" name="signin-email" required [(ngModel)]="signin.email" placeholder="Email">
+        <span class="fa fa-envelope fa-lg form-control-feedback right" aria-hidden="true"></span>
+      </div>
+      <div class="col-md-12 form-group has-feedback">
+        <input type="password" class="form-control input-form" name="signin-password" required [(ngModel)]="signin.password" placeholder="Password">
+        <span class="fa fa-key fa-lg form-control-feedback right" aria-hidden="true"></span>
+      </div>
     </div>
-    <div class="col-md-12 form-group has-feedback">
-      <input type="password" class="form-control" placeholder="Password">
-      <span class="fa fa-key form-control-feedback right" aria-hidden="true"></span>
-    </div>
-    <div class="col-md-12 form-group">
-      <button type="submit" class="btn btn-primary pull-right">Submit</button>
+    <div class="row forgot-password">
+      <div class="col-md-6 form-group">
+        <a routerLink="/forgot-password">Forgot Password</a>
+      </div>
+      <div class="col-md-6 form-group">
+        <button type="submit" class="btn btn-primary pull-right btn-form">Submit</button>
+      </div>
     </div>
   </form>
 </div>
