@@ -14,6 +14,8 @@ import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { SignInService } from './sign-in.service';
+import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
+import { WorkspaceinfoService } from './workspaceinfo.service';
 
 
 @NgModule({
@@ -23,14 +25,15 @@ import { SignInService } from './sign-in.service';
     LandingPageComponent,
     WorkspaceLandingPageComponent,
     SigninFormComponent,
-    ForgotpasswordFormComponent
+    ForgotpasswordFormComponent,
+    WorkspaceInfoComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ), AppRoutingModule
   ],
-  providers: [InMemoryDataService, InfoService, SignInService],
+  providers: [InMemoryDataService, InfoService, SignInService, WorkspaceinfoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

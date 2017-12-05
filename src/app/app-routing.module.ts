@@ -4,9 +4,14 @@ import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspac
 import { SigninFormComponent } from './signin-form/signin-form.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
+import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
 
 const routes: Routes = [
-  { path: 'workspace', component: WorkspaceLandingPageComponent },
+  { path: 'workspace', component: WorkspaceLandingPageComponent, children: [
+       {
+         path: 'workspace-info', component: WorkspaceInfoComponent
+       }
+  ]},
   {
     path: '', component: LandingPageComponent, children: [
       {
