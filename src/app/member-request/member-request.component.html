@@ -1,0 +1,18 @@
+<table datatable class = "row-border hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <td>Name</td>
+      <td>Username</td>
+      <td>Email</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor = "let user of DataArray">
+      <td>{{user.id}}</td>
+      <td>{{user.userId}}</td>
+      <td>{{user.title}}</td>
+      <td>{{user.body}}</td>
+    </tr>
+  </tbody>
+</table>
