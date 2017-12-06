@@ -10,7 +10,7 @@ export class MemberRequestComponent implements OnInit {
 
   memberRequestData: MemberRequestData[];
 
-  isAvailable: boolean;
+  isAvailable: boolean = false;
 
   constructor(private memberRequestService: MemberRequestService) {
     this.getMemberRequestData();
@@ -20,10 +20,12 @@ export class MemberRequestComponent implements OnInit {
 
   }
   getMemberRequestData() {
+
     this.memberRequestService.getMemberRequestDetails()
       .subscribe(data => {
         this.memberRequestData = data;
+        this.isAvailable = true;
       });
-    this.isAvailable = true;
+
   }
 }
