@@ -4,9 +4,18 @@ import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspac
 import { SigninFormComponent } from './signin-form/signin-form.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
-
+import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
+import { MemberRequestComponent } from './member-request/member-request.component';
 const routes: Routes = [
-  { path: 'workspace', component: WorkspaceLandingPageComponent },
+  { path: 'workspace', component: WorkspaceLandingPageComponent, children : [
+    {
+      path : 'workspace-panel', component : WorkspacePanelComponent, children : [
+        {
+          path : 'member-request',component : MemberRequestComponent
+        }
+      ]
+    }
+  ] },
   {
     path: '', component: LandingPageComponent, children: [
       {
@@ -16,7 +25,8 @@ const routes: Routes = [
         path: 'sign-in', component: SigninFormComponent
       }, {
         path: 'forgot-password', component: ForgotpasswordFormComponent
-      }]
+      }
+    ]
   }
 ];
 

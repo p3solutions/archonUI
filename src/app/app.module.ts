@@ -17,6 +17,8 @@ import { SignInService } from './sign-in.service';
 import { DataTablesModule } from 'angular-datatables';
 import { MemberRequestComponent } from './member-request/member-request.component';
 import { MemberRequestService } from './member-request.service';
+import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
+import { HeaderPanelComponent } from './header-panel/header-panel.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { MemberRequestService } from './member-request.service';
     WorkspaceLandingPageComponent,
     SigninFormComponent,
     ForgotpasswordFormComponent,
-    MemberRequestComponent
+    MemberRequestComponent,
+    WorkspacePanelComponent,
+    HeaderPanelComponent
     // MemberRequestComponent
   ],
   imports: [
