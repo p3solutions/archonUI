@@ -14,6 +14,8 @@ import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { SignInService } from './sign-in.service';
+import { AuthModule } from './/auth.module';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -28,7 +30,7 @@ import { SignInService } from './sign-in.service';
   imports: [
     BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    ), AppRoutingModule
+    ), AppRoutingModule, AuthModule, DataTablesModule
   ],
   providers: [InMemoryDataService, InfoService, SignInService],
   bootstrap: [AppComponent]
