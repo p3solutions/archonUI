@@ -1,18 +1,21 @@
-<table datatable class = "row-border hover">
+<!-- datatable class="table row-border hover" *ngIf="this.temp_var" -->
+<table datatable class="table row-border hover">
   <thead>
     <tr>
-      <th>ID</th>
-      <td>Name</td>
-      <td>Username</td>
-      <td>Email</td>
+      <th>SI No</th>
+      <th>Master Version</th>
+      <th>Description</th>
+      <th>Requested Date</th>
+      <th>Requested By</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor = "let user of DataArray">
-      <td>{{user.id}}</td>
-      <td>{{user.userId}}</td>
-      <td>{{user.title}}</td>
-      <td>{{user.body}}</td>
+    <tr *ngFor="let rec of this.memberRequestData">
+      <td>{{rec.siNo}}</td>
+      <td>{{rec.masterVersion}}</td>
+      <td>{{rec.description}}</td>
+      <td>{{rec.requestedDate}}</td>
+      <td>{{rec.requestedBy}}</td>
     </tr>
   </tbody>
 </table>

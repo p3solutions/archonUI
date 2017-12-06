@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { MemberRequestService } from '../member-request.service';
 @Component({
   selector: 'app-member-request',
   templateUrl: './member-request.component.html',
@@ -7,13 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MemberRequestComponent implements OnInit {
 
-  constructor() { }
+  memberRequestData : any;
+  constructor(private memberRequestService : MemberRequestService) { }
 
   ngOnInit() {
-    this.data();
+    this.getMemberRequestData();
   }
-  data(){
-    console.log('hai chandruashwin');
+  getMemberRequestData(){
+    console.log("*****************");
+    this.memberRequestService.getMemberRequestDetails()
+    .subscribe(data => {
+      this.memberRequestData = JSON.stringify(data);
+    });
+    console.log('Finished');
   }
-
 }
