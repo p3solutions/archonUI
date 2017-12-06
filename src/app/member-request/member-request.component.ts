@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MemberRequestService } from '../member-request.service';
+import { MemberRequestData } from '../member-request-data';
 @Component({
   selector: 'app-member-request',
   templateUrl: './member-request.component.html',
@@ -7,18 +8,23 @@ import { MemberRequestService } from '../member-request.service';
 })
 export class MemberRequestComponent implements OnInit {
 
-  memberRequestData : any;
-  constructor(private memberRequestService : MemberRequestService) { }
+  memberRequestData : MemberRequestData[];
+
+  isAvailable : boolean;
+  constructor(private memberRequestService : MemberRequestService) {
+    this.getMemberRequestData();
+   }
 
   ngOnInit() {
-    this.getMemberRequestData();
+  
   }
   getMemberRequestData(){
     console.log("*****************");
     this.memberRequestService.getMemberRequestDetails()
     .subscribe(data => {
-      this.memberRequestData = JSON.stringify(data);
+      this.memberRequestData = data;
     });
     console.log('Finished');
+    this.isAvailable = true;
   }
 }
