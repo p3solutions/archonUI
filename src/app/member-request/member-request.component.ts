@@ -8,23 +8,22 @@ import { MemberRequestData } from '../member-request-data';
 })
 export class MemberRequestComponent implements OnInit {
 
-  memberRequestData : MemberRequestData[];
+  memberRequestData: MemberRequestData[];
 
-  isAvailable : boolean;
-  constructor(private memberRequestService : MemberRequestService) {
+  isAvailable: boolean;
+
+  constructor(private memberRequestService: MemberRequestService) {
     this.getMemberRequestData();
-   }
+  }
 
   ngOnInit() {
-  
+
   }
-  getMemberRequestData(){
-    console.log("*****************");
+  getMemberRequestData() {
     this.memberRequestService.getMemberRequestDetails()
-    .subscribe(data => {
-      this.memberRequestData = data;
-    });
-    console.log('Finished');
+      .subscribe(data => {
+        this.memberRequestData = data;
+      });
     this.isAvailable = true;
   }
 }

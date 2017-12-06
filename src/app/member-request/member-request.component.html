@@ -1,20 +1,25 @@
-<table datatable class="table row-border hover" *ngIf="this.isAvailable">
-  <thead>
-    <tr>
-      <th>SI No</th>
-      <th>Master Version</th>
-      <th>Description</th>
-      <th>Requested Date</th>
-      <th>Requested By</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let rec of this.memberRequestData">
-      <td>{{rec.siNo}}</td>
-      <td>{{rec.masterVersion}}</td>
-      <td>{{rec.description}}</td>
-      <td>{{rec.requestedDate}}</td>
-      <td>{{rec.requestedBy}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="x-content">
+  <table datatable class="table row-border hover" *ngIf="this.isAvailable">
+    <thead>
+      <tr>
+        <th>SI No</th>
+        <th>Master Version</th>
+        <th>Description</th>
+        <th>Requested Date</th>
+        <th>Requested By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rec of this.memberRequestData">
+        <td>{{rec.siNo}}</td>
+        <td>{{rec.masterVersion}}</td>
+        <td>{{rec.description}}</td>
+        <td>{{rec.requestedDate}}</td>
+        <td>{{rec.requestedBy}}</td>
+        <td>
+          <a href="#">Details</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
