@@ -1,6 +1,7 @@
 export class Workspaceinfo {
-        name: string;
-        owner: string;
-        approver: string;
-  
+        constructor(
+        name: string,
+        owner: string,
+        approver: string
+        ) { }
 }

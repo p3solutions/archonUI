@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { WorkspaceinfoService } from '../workspaceinfo.service';
+import { Workspaceinfo } from '../workspaceinfo';
+import {HttpClientModule} from '@angular/common/http';
+import { Http, Headers, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-workspace-info',
@@ -6,10 +12,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workspace-info.component.css']
 })
 export class WorkspaceInfoComponent implements OnInit {
+  // workspaceinfo = new Workspaceinfo('', '', '');
+  results: string[];
+  info: Workspaceinfo;
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private workspaceinfoservice: WorkspaceinfoService
+  ) { }
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    this.getWorkspaceInfo();
+    // Make the HTTP request:
   }
+  getWorkspaceInfo(): void {
+    this.workspaceinfoservice.getworkinfo(this.workspaceinfoservice.workspaceinfoUrl).subscribe(info => {
+      this.info = info;
+      console.log(this.info);
+    });
+  }
+
+  // onWorkspaceInfo() {
+  //   console.log('alokkkkkkkkk');
+  //   // console.log(JSON.stringify(this.workspaceinfo));
+  //   // this.workspaceinfoservice.workspaceInfo(this.workspaceinfo);
+   
+  // }
 
 }
