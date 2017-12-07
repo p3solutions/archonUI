@@ -1,4 +1,21 @@
-.well {
-    width: 1150px;
-    height: 500px;
+
+ul {
+    margin-top: 12px;
+    margin-bottom: 10px;
+    float: left;
 }
+td{
+    font-size: 17px;
+}
+
+
+/* div.first {
+    width: auto;
+    /* overflow-y: scroll;
+    overflow-x: hidden; */
+    /* height: 150px;    
+    padding-bottom: 1px;
+    position: absolute;
+    top:auto; */
+/* } */
+

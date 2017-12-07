@@ -1,10 +1,38 @@
 
 
-<div class="container border">
-  <div class="well">
-      <a (click)="onWorkspaceInfo()"><span class="glyphicon glyphicon-arrow-left">Workspace Information</span></a>  
-      <!-- <a (click)="onWorkspaceInfo()">Workspace Information</a>   -->
-      <!-- <button type="button" class="btn btn-success" (click)="getProfile()">Get Profile</button><br><br> -->
-      
+    <table style="width:35%">
+      <tr>
+        <td>Name</td>
+        <td><b>{{this.info['name']}}</b></td>
+      </tr>
+      <br>
+      <tr>
+        <td>Owner</td>
+        <td><b>{{this.info['owner']}}</b></td>
+      </tr>
+      <br>
+      <tr>
+        <td>Approver</td>
+        <td><b>{{this.info['approver']}}</b></td>
+      </tr>
+    </table>
+
+
+
+    	
+
+<!-- <div class="first">
+    <div class="second">
+        <table>
+            <tr>
+              <td class="headcol">Name</td>
+              <td class="long">QWERTYUIOPASDFGHJKLZXCVBNM</td><td class="long">QWERTYUIOPASDFGHJKLZXCVBNM</td></tr>
+            <tr><td class="headcol">Owner</td><td class="long">QWERTYUIOPASDFGHJKLZXCVBNM</td><td class="long">QWERTYUIOPASDFGHJKLZXCVBNM</td></tr>
+            <tr><td class="headcol">Approver</td><td class="long">QWERTYUIOPASDFGHJKLZXCVBNM</td><td class="long">QWERTYUIOPASDFGHJKLZXCVBNM</td></tr>
+
+        </table>
     </div>
-</div>
+</div> -->
+
+
+

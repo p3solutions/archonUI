@@ -16,6 +16,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { SignInService } from './sign-in.service';
 import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
 import { WorkspaceinfoService } from './workspaceinfo.service';
+import { HeaderTabComponent } from './header-tab/header-tab.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { WorkspaceinfoService } from './workspaceinfo.service';
     WorkspaceLandingPageComponent,
     SigninFormComponent,
     ForgotpasswordFormComponent,
-    WorkspaceInfoComponent
+    WorkspaceInfoComponent,
+    HeaderTabComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(

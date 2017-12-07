@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class WorkspaceInfoComponent implements OnInit {
   // workspaceinfo = new Workspaceinfo('', '', '');
-  results: string[];
+  results: string;
   info: Workspaceinfo;
   constructor(
     private httpClient: HttpClient,
@@ -28,15 +28,10 @@ export class WorkspaceInfoComponent implements OnInit {
   getWorkspaceInfo(): void {
     this.workspaceinfoservice.getworkinfo(this.workspaceinfoservice.workspaceinfoUrl).subscribe(info => {
       this.info = info;
-      console.log(this.info);
+      console.log(JSON.stringify(this.info));
+      this.results = JSON.stringify(this.info);
+
     });
   }
-
-  // onWorkspaceInfo() {
-  //   console.log('alokkkkkkkkk');
-  //   // console.log(JSON.stringify(this.workspaceinfo));
-  //   // this.workspaceinfoservice.workspaceInfo(this.workspaceinfo);
-   
-  // }
 
 }

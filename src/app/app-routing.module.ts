@@ -5,11 +5,12 @@ import { SigninFormComponent } from './signin-form/signin-form.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
+import { HeaderTabComponent } from './header-tab/header-tab.component';
 
 const routes: Routes = [
   { path: 'workspace', component: WorkspaceLandingPageComponent, children: [
        {
-         path: 'workspace-info', component: WorkspaceInfoComponent
+         path: 'workspace-info', component: HeaderTabComponent
        }
   ]},
   {
