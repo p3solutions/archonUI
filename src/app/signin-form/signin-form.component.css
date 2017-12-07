@@ -1,0 +1,20 @@
+	div{
+		margin:125px;
+		margin-left:400px;
+		width : 500px;
+		height: 370px;
+		background: white;
+		padding: 40px;
+		border-style: solid;
+}
+	input[type = email],input[type = password]{
+		width:100%;
+		padding : 12px 20px;
+		margin:8px 0;
+		box-sizing: border-box;
+		border-radius: 4px;
+	}
+	a{
+		color : black;
+		
+	}
