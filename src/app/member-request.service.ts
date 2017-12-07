@@ -4,6 +4,8 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
 import { MemberRequestData } from './member-request-data';
 @Injectable()
 export class MemberRequestService {
@@ -12,16 +14,20 @@ export class MemberRequestService {
   memberRequestUrl = 'api/memberrequest';
   constructor(private http: HttpClient) { }
   getMemberRequestDetails(): Observable<MemberRequestData[]> {
-    return this.http.get<MemberRequestData[]>(this.memberRequestUrl).pipe(
+      return this.http.get<MemberRequestData[]>(this.memberRequestUrl).pipe(
       catchError(this.handleError('memberrequest', []))
     );
   }
-  /**
-* Handle Http operation that failed.
-* Let the app continue.
-* @param operation - name of the operation that failed
-* @param result - optional value to return as the observable result
-*/
+
+  // getVideos() {
+  //   return this.http.get(`${this.apiUrl}/videos`)
+  //                   .map(res => res.json().data);
+  // }
+// * Handle Http operation that failed.
+// * Let the app continue.
+// * @param operation - name of the operation that failed
+// * @param result - optional value to return as the observable result
+// */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
