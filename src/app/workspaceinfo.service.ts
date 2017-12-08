@@ -10,30 +10,30 @@ import { Router } from '@angular/router/src/router';
 
 @Injectable()
 export class WorkspaceinfoService {
-
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json'});
+  workspaceinfoUrl = 'api/workspaceinfo';
   constructor(
     private http: HttpClient,
   ) { }
 
-  workspaceinfoUrl = 'api/workspaceinfo';
-
-
-  getworkinfo(workspaceinfoUrl): Observable<Workspaceinfo> {
-    return this.http.get<Workspaceinfo>(workspaceinfoUrl).pipe(
+  getworkinfo(): Observable<Workspaceinfo> {
+    return this.http.get<Workspaceinfo>(this.workspaceinfoUrl).pipe(
       catchError(this.handleError<Workspaceinfo>('getworkinfo'))
     );
   }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      // this.log(`${operation} failed: ${error.message}`);
-
+      console.error(error);
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 }
+
+  // private log(message: string) {
+  //   console.log(message);
+  // }
+

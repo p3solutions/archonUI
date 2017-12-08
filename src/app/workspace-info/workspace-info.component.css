@@ -6,9 +6,12 @@ ul {
 }
 td{
     font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-
+table {
+    margin-left: 40px;
+}
 /* div.first {
     width: auto;
     /* overflow-y: scroll;

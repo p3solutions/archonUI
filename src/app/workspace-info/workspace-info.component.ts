@@ -13,25 +13,24 @@ import { HttpClient } from '@angular/common/http';
 })
 export class WorkspaceInfoComponent implements OnInit {
   // workspaceinfo = new Workspaceinfo('', '', '');
-  results: string;
-  info: Workspaceinfo;
+  workspaceInfoData: Workspaceinfo;
+
   constructor(
     private httpClient: HttpClient,
-    private router: Router,
+    // private router: Router,
     private workspaceinfoservice: WorkspaceinfoService
-  ) { }
+  ) { this.getWorkspaceInfo(); }
 
-  ngOnInit(): void {
-    this.getWorkspaceInfo();
-    // Make the HTTP request:
+  ngOnInit(){
   }
-  getWorkspaceInfo(): void {
-    this.workspaceinfoservice.getworkinfo(this.workspaceinfoservice.workspaceinfoUrl).subscribe(info => {
-      this.info = info;
-      console.log(JSON.stringify(this.info));
-      this.results = JSON.stringify(this.info);
-
+  
+  getWorkspaceInfo() {
+    this.workspaceinfoservice.getworkinfo().subscribe(data => {
+      this.workspaceInfoData = data;
+      console.log('testing ', this.workspaceInfoData['name']);
     });
   }
 
+
 }
+

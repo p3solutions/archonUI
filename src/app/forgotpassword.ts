@@ -3,3 +3,4 @@ export class Forgotpassword {
         public emailid: string
     ) { }
 }
+
