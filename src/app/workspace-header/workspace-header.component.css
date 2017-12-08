@@ -1,0 +1,11 @@
+.workspace-header {
+    height: 20%;
+    padding: 25px;
+
+}
+.workspace-dropdown {
+    float: right;
+    min-width: 150px;
+    min-height: 50px; 
+}
+

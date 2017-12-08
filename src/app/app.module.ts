@@ -14,6 +14,9 @@ import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { SignInService } from './sign-in.service';
+import { WorkspaceHeaderComponent } from './workspace-header/workspace-header.component';
+import { WorkspaceHeaderInfoComponent } from './workspace-header-info/workspace-header-info.component';
+import { WorkspaceMgmtPanelComponent } from './workspace-mgmt-panel/workspace-mgmt-panel.component';
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { SignInService } from './sign-in.service';
     LandingPageComponent,
     WorkspaceLandingPageComponent,
     SigninFormComponent,
-    ForgotpasswordFormComponent
+    ForgotpasswordFormComponent,
+    WorkspaceHeaderComponent,
+    WorkspaceHeaderInfoComponent,
+    WorkspaceMgmtPanelComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
