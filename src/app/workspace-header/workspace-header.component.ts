@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserWorkspaceService } from '../user-workspace.service';
+import { WorkSpaceHeaderInfo } from '../WorkSpaceHeaderInfo';
 
 @Component({
   selector: 'app-workspace-header',
@@ -6,31 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workspace-header.component.css']
 })
 export class WorkspaceHeaderComponent implements OnInit {
-  workspace1: any;
-  workspace2: any;
-  userWorkspaceArray: any;
+  userWorkspaceArray: WorkSpaceHeaderInfo;
+  id: number;
 
-  constructor() {
-    // ToDo: need to delete these data and read from in-memory service
-    this.workspace1 = {
-      name: 'Sample workspace',
-      members: 22,
-      masterMetaVersion: 22
-    };
-    this.workspace2 = {
-      name: 'Sample 2',
-      members: 20,
-      masterMetaVersion: 23
-    };
-    this.userWorkspaceArray = [
-      this.workspace2,
-      this.workspace1,
-      this.workspace2,
-      this.workspace1
-    ];
-   }
+  constructor(
+    private userWorkspaceService: UserWorkspaceService
+  ) {  }
 
   ngOnInit() {
+    this.id = 11; // userid --> info.id
+    this.getUserWorkspaceList(this.id);
+  }
+
+  getUserWorkspaceList(id) {
+    this.userWorkspaceService.getUserWorkspaceList().subscribe(data => {
+      this.userWorkspaceArray = data[id];
+    });
   }
 
 }

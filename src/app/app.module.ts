@@ -17,7 +17,7 @@ import { SignInService } from './sign-in.service';
 import { WorkspaceHeaderComponent } from './workspace-header/workspace-header.component';
 import { WorkspaceHeaderInfoComponent } from './workspace-header-info/workspace-header-info.component';
 import { WorkspaceMgmtPanelComponent } from './workspace-mgmt-panel/workspace-mgmt-panel.component';
-
+import { UserWorkspaceService } from './user-workspace.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import { WorkspaceMgmtPanelComponent } from './workspace-mgmt-panel/workspace-mg
       InMemoryDataService, { dataEncapsulation: false }
     ), AppRoutingModule
   ],
-  providers: [InMemoryDataService, InfoService, SignInService],
+  providers: [InMemoryDataService, InfoService, SignInService, UserWorkspaceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
