@@ -13,13 +13,13 @@ export class ManageMasterMetadataComponent implements OnInit {
     isAvailable: boolean = false;
   
     constructor(private manage_Master_MetadataService: ManageMasterMetadataService) {
-      this.getMemberRequestData();
+ 
     }
   
-    ngOnInit() {
-  
+    ngOnInit() : void {
+      this.getManage_Master_MetaData();
     }
-    getMemberRequestData() {
+    getManage_Master_MetaData() {
   
       this.manage_Master_MetadataService.getMasterDetails()
         .subscribe(data => {
