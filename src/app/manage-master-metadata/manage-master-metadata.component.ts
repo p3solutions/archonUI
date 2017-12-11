@@ -22,7 +22,7 @@ export class ManageMasterMetadataComponent implements OnInit {
     this.getManage_Master_MetaData();
   }
   getManage_Master_MetaData() {
-    this.manage_Master_MetadataService.getMasterDetails()
+    this.manage_Master_MetadataService.getManageMasterMetaData()
       .subscribe(data => {
         this.manage_Master_Metadata = data;
         this.isAvailable = true;
@@ -31,9 +31,8 @@ export class ManageMasterMetadataComponent implements OnInit {
   
   deleteManageMasterRecord(obj : Manage_Master_Metadata){
     this.manage_Master_Metadata = this.manage_Master_Metadata.filter(h => h !== obj);
-    this.manage_Master_MetadataService.removeManageMasterRecord(obj).subscribe();
-    // this.getManage_Master_MetaData();
-    // this.heroService.deleteHero(hero).subscribe();
+    this.manage_Master_MetadataService.removeManageMasterData(obj).subscribe();
+
   }
 
 }

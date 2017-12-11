@@ -17,25 +17,15 @@ export class ManageMasterMetadataService {
   
   constructor(private http: HttpClient) { }
 
-  updated_Master_MetaData : Observable<Manage_Master_Metadata[]>;
 
-  getMasterDetails(): Observable<Manage_Master_Metadata[]> {
+  getManageMasterMetaData(): Observable<Manage_Master_Metadata[]> {
       return this.http.get<Manage_Master_Metadata[]>(this.manage_master_metadataUrl).pipe(
       catchError(this.handleError('master-meta data', []))
     );
   }
-  // ${this.heroesUrl}/${id}
-  getupdatedManageMasterRecord(id : number): void{
-    if(confirm('Are you sure to delete ?')){
-      const url = '${this.manage_master_metadataUrl}/${id}';
-      this.http.delete(url,{headers : this.headers});
-    }
-  }
-  removeManageMasterRecord(manageMasterObj : Manage_Master_Metadata | number) : Observable<Manage_Master_Metadata>{
-    // console.log("serial no is : "+manageMasterObj.slNo);
+   removeManageMasterData(manageMasterObj : Manage_Master_Metadata | number) : Observable<Manage_Master_Metadata>{
     const slNo = typeof manageMasterObj === 'number' ? manageMasterObj : manageMasterObj.slNo;
     const url = '${this.manage_master_metadataUrl}/${slNo}';
-    // console.log("url is :"+url+${slNo});
     return this.http.delete<Manage_Master_Metadata>(url).pipe(
       catchError(this.handleError<Manage_Master_Metadata>('master-meta data')));
   }
