@@ -7,3 +7,12 @@ th,td{
     align : center;
     width : 1100px; 
 }
+.icon-button {
+    color: red;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    border: 0;
+    background: transparent;
+}

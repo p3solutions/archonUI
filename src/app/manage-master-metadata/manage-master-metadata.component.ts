@@ -6,27 +6,34 @@ import { Manage_Master_Metadata } from '../master-metadata-data';
   templateUrl: './manage-master-metadata.component.html',
   styleUrls: ['./manage-master-metadata.component.css']
 })
-export class ManageMasterMetadataComponent implements OnInit {  
+export class ManageMasterMetadataComponent implements OnInit {
 
-  manage_Master_Metadata : Manage_Master_Metadata[];
+  manage_Master_Metadata: Manage_Master_Metadata[];
+
+  isAvailable: boolean = false;
+
+  slNo : number;
+
+  constructor(private manage_Master_MetadataService: ManageMasterMetadataService) {
+
+  }
+
+  ngOnInit(): void {
+    this.getManage_Master_MetaData();
+  }
+  getManage_Master_MetaData() {
+    this.manage_Master_MetadataService.getMasterDetails()
+      .subscribe(data => {
+        this.manage_Master_Metadata = data;
+        this.isAvailable = true;
+      });
+  }
   
-    isAvailable: boolean = false;
-  
-    constructor(private manage_Master_MetadataService: ManageMasterMetadataService) {
- 
-    }
-  
-    ngOnInit() : void {
-      this.getManage_Master_MetaData();
-    }
-    getManage_Master_MetaData() {
-  
-      this.manage_Master_MetadataService.getMasterDetails()
-        .subscribe(data => {
-          this.manage_Master_Metadata = data;
-          this.isAvailable = true;
-        });
-        console.log(this.manage_Master_Metadata+"*");
-    }
+  deleteManageMasterRecord(obj : Manage_Master_Metadata){
+    this.manage_Master_Metadata = this.manage_Master_Metadata.filter(h => h !== obj);
+    this.manage_Master_MetadataService.removeManageMasterRecord(obj).subscribe();
+    // this.getManage_Master_MetaData();
+    // this.heroService.deleteHero(hero).subscribe();
+  }
 
 }

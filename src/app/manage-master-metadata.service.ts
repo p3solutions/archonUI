@@ -12,17 +12,34 @@ export class ManageMasterMetadataService {
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  master_metadata_RequestUrl = 'api/master_metadata';
+  manage_master_metadataUrl = 'api/master_metadata';
 
+  
   constructor(private http: HttpClient) { }
 
   updated_Master_MetaData : Observable<Manage_Master_Metadata[]>;
 
   getMasterDetails(): Observable<Manage_Master_Metadata[]> {
-      return this.http.get<Manage_Master_Metadata[]>(this.master_metadata_RequestUrl).pipe(
+      return this.http.get<Manage_Master_Metadata[]>(this.manage_master_metadataUrl).pipe(
       catchError(this.handleError('master-meta data', []))
     );
   }
+  // ${this.heroesUrl}/${id}
+  getupdatedManageMasterRecord(id : number): void{
+    if(confirm('Are you sure to delete ?')){
+      const url = '${this.manage_master_metadataUrl}/${id}';
+      this.http.delete(url,{headers : this.headers});
+    }
+  }
+  removeManageMasterRecord(manageMasterObj : Manage_Master_Metadata | number) : Observable<Manage_Master_Metadata>{
+    // console.log("serial no is : "+manageMasterObj.slNo);
+    const slNo = typeof manageMasterObj === 'number' ? manageMasterObj : manageMasterObj.slNo;
+    const url = '${this.manage_master_metadataUrl}/${slNo}';
+    // console.log("url is :"+url+${slNo});
+    return this.http.delete<Manage_Master_Metadata>(url).pipe(
+      catchError(this.handleError<Manage_Master_Metadata>('master-meta data')));
+  }
+
 
   // remove_Master_Metadata(): Observable<Manage_Master_Metadata[]>{
   //   return this.http.delete()
