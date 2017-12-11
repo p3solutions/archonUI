@@ -24,10 +24,11 @@ export class WorkspacePanelComponent implements OnInit {
    }
 
   ngOnInit() {
+    // console.log(this.route.data+"***");
     this.route.data
   .subscribe(data => {
     this.componentTitle = data.title;
-    // console.log(this.componentTitle+" 0000");
+    console.log(this.componentTitle+" 0000"+data);
   });
     // this.sub= this.routes.data.subscribe((data) => {
     //   this.componentTitle = data.title;

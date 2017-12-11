@@ -6,19 +6,20 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
 import { MemberRequestComponent } from './member-request/member-request.component';
+import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 // , data : {title : 'Manage Member Request for Approvals'}
 const routes: Routes = [
   { path: 'workspace', component: WorkspaceLandingPageComponent, children : [
     {
       path : 'workspace-panel', component : WorkspacePanelComponent, children : [
         {
-          path : 'member-request',component : MemberRequestComponent
+          path : 'member-request',component : MemberRequestComponent, data :{title : 'Manage Member Request'}
         },
         {
           path : 'manage-members',component : MemberRequestComponent, data :{title : 'Manage members of ABC'}
         },
         {
-          path : 'manage-master-metadata',component : MemberRequestComponent, data : {title : 'Manage Master metadata for ABC'}
+          path : 'manage-master-metadata',component : ManageMasterMetadataComponent, data : {title : 'Manage Master metadata for ABC'}
         },
         {
           path : 'workspace-info',component : MemberRequestComponent, data : {title : 'Workspace Information'}

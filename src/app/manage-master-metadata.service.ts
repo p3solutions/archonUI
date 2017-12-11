@@ -6,19 +6,27 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-import { MemberRequestData } from './member-request-data';
+import { Manage_Master_Metadata } from './master-metadata-data';
 @Injectable()
-export class MemberRequestService {
+export class ManageMasterMetadataService {
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  memberRequestUrl = 'api/memberrequest';
+
+  master_metadata_RequestUrl = 'api/master_metadata';
+
   constructor(private http: HttpClient) { }
-  getMemberRequestDetails(): Observable<MemberRequestData[]> {
-      return this.http.get<MemberRequestData[]>(this.memberRequestUrl).pipe(
-      catchError(this.handleError('memberrequest', []))
+
+  updated_Master_MetaData : Observable<Manage_Master_Metadata[]>;
+
+  getMasterDetails(): Observable<Manage_Master_Metadata[]> {
+      return this.http.get<Manage_Master_Metadata[]>(this.master_metadata_RequestUrl).pipe(
+      catchError(this.handleError('master-meta data', []))
     );
   }
 
+  // remove_Master_Metadata(): Observable<Manage_Master_Metadata[]>{
+  //   return this.http.delete()
+  // }
 // * Handle Http operation that failed.
 // * Let the app continue.
 // * @param operation - name of the operation that failed
