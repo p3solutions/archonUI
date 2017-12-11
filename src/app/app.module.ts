@@ -17,6 +17,7 @@ import { SignInService } from './sign-in.service';
 import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
 import { WorkspaceinfoService } from './workspaceinfo.service';
 import { HeaderTabComponent } from './header-tab/header-tab.component';
+import { ManageMembersComponent } from './manage-members/manage-members.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { HeaderTabComponent } from './header-tab/header-tab.component';
     SigninFormComponent,
     ForgotpasswordFormComponent,
     WorkspaceInfoComponent,
-    HeaderTabComponent
+    HeaderTabComponent,
+    ManageMembersComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
