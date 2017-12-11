@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkSpaceHeaderInfo } from '../WorkSpaceHeaderInfo';
+import {  } from '../info';
 
 @Component({
   selector: 'app-workspace-header',
@@ -10,13 +11,15 @@ import { WorkSpaceHeaderInfo } from '../WorkSpaceHeaderInfo';
 export class WorkspaceHeaderComponent implements OnInit {
   userWorkspaceArray: WorkSpaceHeaderInfo;
   id: number;
+  @Input() userId: number;
+  @Input() userRole: string;
 
   constructor(
     private userWorkspaceService: UserWorkspaceService
   ) {  }
 
   ngOnInit() {
-    this.id = 11; // userid --> info.id
+    this.id = this.userId;
     this.getUserWorkspaceList(this.id);
   }
 
@@ -26,4 +29,28 @@ export class WorkspaceHeaderComponent implements OnInit {
     });
   }
 
+  onChangeDropdown(selected: any) {
+    switch (selected[0].id) {
+      case 'contactAdmin':
+        this.contactAdmin();
+        break;
+      case 'createWorkspace':
+        this.createNewWorkspace();
+        break;
+      default:
+        this.selectWorkspace(selected[0].id);
+        break;
+    }
+  }
+
+  contactAdmin() {
+    console.log('contact Admin function pending!');
+  }
+  createNewWorkspace() {
+    console.log('creating new workspace function pending!');
+  }
+
+  selectWorkspace(selectedWorkspaceId: number) {
+    console.log('selectedWorkspaceId', selectedWorkspaceId);
+  }
 }

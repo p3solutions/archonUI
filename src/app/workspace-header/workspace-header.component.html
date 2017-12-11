@@ -3,11 +3,11 @@
   <div class="col col-lg-5 fl-r">
     <app-workspace-mgmt-panel></app-workspace-mgmt-panel>
     <div class="workspace-dropdown">
-      <select>
-        <option [hidden]="true" [ngValue]="null" disabled selected>SELECT WORKSPACE</option>
-        <option *ngFor="let workspace of userWorkspaceArray">{{workspace.name}}</option>
-        <!-- <option [ngValue]="null" *ngIf="Info.role == 'member'">Contact Your Admin</option> -->
-        <!-- <option *ngIf="Info.role == 'Admin'">+ Create workspace</option> -->
+      <select (change)="onChangeDropdown($event.target.selectedOptions)">
+        <option [hidden]="true" disabled selected>SELECT WORKSPACE</option>
+        <option *ngFor="let workspace of userWorkspaceArray" id="{{workspace.id}}">{{workspace.name}}</option>
+        <option *ngIf="userRole == 'member'" id="contactAdmin">Contact Your Admin</option>
+        <option *ngIf="userRole == 'Admin'" id="createWorkspace">+ Create workspace</option>
       </select>
     </div>
   </div>
