@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-manage-members',
   templateUrl: './manage-members.component.html',
