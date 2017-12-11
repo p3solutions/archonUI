@@ -6,7 +6,7 @@
       <select (change)="onChangeDropdown($event.target.selectedOptions)">
         <option [hidden]="true" disabled selected>SELECT WORKSPACE</option>
         <option *ngFor="let workspace of userWorkspaceArray" id="{{workspace.id}}">{{workspace.name}}</option>
-        <option *ngIf="userRole == 'member'" id="contactAdmin">Contact Your Admin</option>
+        <option *ngIf="userRole == 'Member'" id="contactAdmin">Contact Your Admin</option>
         <option *ngIf="userRole == 'Admin'" id="createWorkspace">+ Create workspace</option>
       </select>
     </div>
