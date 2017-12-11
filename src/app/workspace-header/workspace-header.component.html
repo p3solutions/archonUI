@@ -1,12 +1,14 @@
 <div class="row col col-lg-12 workspace-header">
   <app-workspace-header-info></app-workspace-header-info>
-  <app-workspace-mgmt-panel></app-workspace-mgmt-panel>
-  <div class="workspace-dropdown">
-    <select>
-      <option [hidden]="true" [ngValue]="null" disabled selected>SELECT WORKSPACE</option>
-      <option *ngFor="let workspace of userWorkspaceArray">{{workspace.name}}</option>
-      <!-- <option [ngValue]="null" *ngIf="Info.role == 'member'">Contact Your Admin</option> -->
-      <!-- <option *ngIf="Info.role == 'Admin'">+ Create workspace</option> -->
-    </select>
+  <div class="col col-lg-5 fl-r">
+    <app-workspace-mgmt-panel></app-workspace-mgmt-panel>
+    <div class="workspace-dropdown">
+      <select>
+        <option [hidden]="true" [ngValue]="null" disabled selected>SELECT WORKSPACE</option>
+        <option *ngFor="let workspace of userWorkspaceArray">{{workspace.name}}</option>
+        <!-- <option [ngValue]="null" *ngIf="Info.role == 'member'">Contact Your Admin</option> -->
+        <!-- <option *ngIf="Info.role == 'Admin'">+ Create workspace</option> -->
+      </select>
+    </div>
   </div>
 </div>

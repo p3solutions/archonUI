@@ -1,11 +1,17 @@
 .workspace-header {
     height: 20%;
-    padding: 25px;
-
+    padding: 25px 0 0;
+    /* border-bottom: 1px solid #afadad8c; */
 }
 .workspace-dropdown {
-    float: right;
-    min-width: 150px;
-    min-height: 50px; 
+    position: absolute;
+    right: 15px;
+    top: 10px;
 }
 
+@media screen and (max-width: 480px) {
+  .workspace-dropdown {
+    top: 50px;
+    right: 50px;
+  }
+}

@@ -11,7 +11,7 @@ export class InMemoryDataService implements InMemoryDbService {
       id: 1,
       masterMetaVersion: 22,
       members: 22,
-      name: 'Sample workspace',
+      name: 'Sample WS Name',
       role: 'admin',
       users: [11, 13] // user-ids --> info.id
     };
@@ -33,7 +33,7 @@ export class InMemoryDataService implements InMemoryDbService {
       11: userWorkspaces,
       12: userWorkspaces
     };
-    const currentWorkspace = workspace2;
-    return { info, signin, forgotpassword, /* userWorkspaces */ workspaceList, currentWorkspace };
+    const currentWorkspace = workspace1;
+    return { info, signin, forgotpassword, workspaceList, currentWorkspace };
   }
 }

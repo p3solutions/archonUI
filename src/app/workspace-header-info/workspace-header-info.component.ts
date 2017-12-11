@@ -22,7 +22,6 @@ export class WorkspaceHeaderInfoComponent implements OnInit {
     this.userWorkspaceService.getCurrentWorkspace()
       .subscribe(data => {
         this.currentWorkspace = data;
-        console.log('info', data);
       });
   }
 }
