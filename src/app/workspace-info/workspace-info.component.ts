@@ -21,16 +21,22 @@ export class WorkspaceInfoComponent implements OnInit {
     private workspaceinfoservice: WorkspaceinfoService
   ) { this.getWorkspaceInfo(); }
 
-  ngOnInit(){
+  ngOnInit() {
   }
-  
+
   getWorkspaceInfo() {
     this.workspaceinfoservice.getworkinfo().subscribe(data => {
       this.workspaceInfoData = data;
-      console.log('testing ', this.workspaceInfoData['name']);
+      console.log('testing ', this.workspaceInfoData);
     });
   }
 
+
+  // this.memberRequestService.getMemberRequestDetails()
+  // .subscribe(data => {
+  //   this.memberRequestData = data;
+  //   this.isAvailable = true;
+  // });
 
 }
 

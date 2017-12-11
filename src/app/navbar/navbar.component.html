@@ -14,7 +14,7 @@
         <li>
           <a href="#">My Activities</a>
         </li>
-        <li *ngIf="info.show" role="presentation" class="dropdown">
+        <li *ngIf="info?.show" role="presentation" class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-bell-o fa-lg" data-toggle="tooltip" data-placement="bottom" title="Notifications"></i>
             <span class="badge bg-red">6</span>
@@ -64,15 +64,15 @@
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{info.username}}
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{info?.username}}
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li>
               <a href="#">Profile</a>
             </li>
-            <li *ngIf="info.show" role="separator" class="divider" ></li>
-            <li *ngIf="info.show">
+            <li *ngIf="info?.show" role="separator" class="divider" ></li>
+            <li *ngIf="info?.show">
               <a href="#">Manage</a>
             </li>
           </ul>

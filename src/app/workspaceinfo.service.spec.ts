@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 describe('WorkspaceinfoService', () => {
   // tslint:disable-next-line:prefer-const
   let workspaceInfoService: WorkspaceinfoService;
+  // tslint:disable-next-line:prefer-const
   let workspace_info_observable: Observable<Workspaceinfo>;
   // tslint:disable-next-line:prefer-const
   // let info: Workspaceinfo;

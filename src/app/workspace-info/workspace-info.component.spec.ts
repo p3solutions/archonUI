@@ -3,14 +3,18 @@ import { Workspaceinfo } from '../workspaceinfo';
 import { WorkspaceInfoComponent } from './workspace-info.component';
 import { WorkspaceinfoService } from '../workspaceinfo.service';
 
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 // describe('WorkspaceInfoComponent', () => {
 //   let component: WorkspaceInfoComponent;
 //   let fixture: ComponentFixture<WorkspaceInfoComponent>;
 //   // tslint:disable-next-line:prefer-const
-//   let info: Workspaceinfo;
+//    let workInfoData: Workspaceinfo;
+
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
+//       imports: [ HttpClientTestingModule ],
+//       providers: [WorkspaceinfoService],
 //       declarations: [ WorkspaceInfoComponent ]
 //     })
 //     .compileComponents();
@@ -19,47 +23,30 @@ import { WorkspaceinfoService } from '../workspaceinfo.service';
 //   beforeEach(() => {
 //     fixture = TestBed.createComponent(WorkspaceInfoComponent);
 //     component = fixture.componentInstance;
-//     imports: [HttpClientModule],
-//     providers: [WorkspaceinfoService]
 //     fixture.detectChanges();
 //   });
-//   console.log(this.info);
 
-//   // getWorkspaceInfo(): void {
-//   //   this.workspaceinfoservice.getworkinfo(this.workspaceinfoservice.workspaceinfoUrl).subscribe(info => {
-//   //     this.info = info;
-//   //     console.log(JSON.stringify(this.info));
-
-//   //   });
-
-
-//     describe('getWorkspaceInfo()', () => {
-//       it('should return an Observable<Array<MemberRequestDetail>>',
-//         inject([], (Workspaceinfo) => {
-//           WorkspaceinfoService.getMemberRequestDetails().subscribe(memberData => {
-//             console.log(memberData);
-
-
+//   describe('getworkinfo()', () => {
+//       it('should return an Observable data for workspace-info component',
+//         inject( [WorkspaceinfoService], (workspaceInfoService) => {
+//           workspaceInfoService.getworkinfo().subscribe(workspaceInfoData => {
+//             console.log('testing-testing ', this.workspaceInfoData);
+//           });
+//         }));
+//     });
 // });
 
 
-
-
-
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-// import { MemberRequestComponent } from './member-request.component';
-// import { MemberRequestService } from '../member-request.service';
-// import { MemberRequestData } from '../member-request-data';
 describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
   let fixture: ComponentFixture<WorkspaceInfoComponent>;
   // tslint:disable-next-line:prefer-const
-  let workInfoData: Workspaceinfo;
+   let workInfoData: Workspaceinfo;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ],
-      providers: [WorkspaceinfoService],
+       imports: [ HttpClientTestingModule ],
+       providers: [WorkspaceinfoService],
       declarations: [ WorkspaceInfoComponent ]
     })
     .compileComponents();
@@ -75,8 +62,9 @@ describe('WorkspaceInfoComponent', () => {
       it('should return an Observable data for workspace-info component',
         inject( [WorkspaceinfoService], (workspaceInfoService) => {
           workspaceInfoService.getworkinfo().subscribe(workspaceInfoData => {
-            console.log('testing-testing ', this.workspaceInfoData);
+            console.log('testing-testing ', workspaceInfoData);
           });
         }));
     });
 });
+
