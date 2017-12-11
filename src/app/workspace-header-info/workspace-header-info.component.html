@@ -1,16 +1,25 @@
 <div class="col col-lg-4">
-    <div *ngIf="currentWorkspace">
+    <div>
         <div class="col-lg-4">
             <div class="col-lg-12 title">Workspace</div>
-            <div class="col-lg-12">{{currentWorkspace.name}}</div> <!-- use trimming class -->
+            <div class="col-lg-12">{{currentWorkspace?.name}}</div> <!-- use trimming class -->
+            <div *ngIf="!currentWorkspace">
+                <i class="fa fa-spinner fa-spin loading"></i>
+            </div>
         </div>
         <div class="col-lg-2">
             <div class="col-lg-12 title">Role</div>
-            <div class="col-lg-12">{{currentWorkspace.role}}</div> <!-- use trimming class -->
+            <div class="col-lg-12">{{currentWorkspace?.role}}</div> <!-- use trimming class -->
+            <div *ngIf="!currentWorkspace">
+                <i class="fa fa-spinner fa-spin loading"></i>
+            </div>
         </div>
         <div class="col-lg-6">
             <div class="col-lg-12 title">Master Metadata Version </div>
-            <div class="col-lg-12">{{currentWorkspace.masterMetaVersion}}</div><!-- use trimming class -->
+            <div class="col-lg-12">{{currentWorkspace?.masterMetaVersion}}</div><!-- use trimming class -->
+            <div *ngIf="!currentWorkspace">
+                <i class="fa fa-spinner fa-spin loading"></i>
+            </div>            
         </div>
     </div>
 </div>
