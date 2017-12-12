@@ -10,6 +10,8 @@ export class MemberRequestComponent implements OnInit {
 
   memberRequestData: MemberRequestData[];
 
+  total : number = 0;
+
   isAvailable: boolean = false;
 
   constructor(private memberRequestService: MemberRequestService) {

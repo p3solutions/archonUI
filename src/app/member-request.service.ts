@@ -14,6 +14,7 @@ export class MemberRequestService {
   memberRequestUrl = 'api/memberrequest';
   constructor(private http: HttpClient) { }
   getMemberRequestDetails(): Observable<MemberRequestData[]> {
+    console.log('hai chandru welcome to service');
       return this.http.get<MemberRequestData[]>(this.memberRequestUrl).pipe(
       catchError(this.handleError('memberrequest', []))
     );

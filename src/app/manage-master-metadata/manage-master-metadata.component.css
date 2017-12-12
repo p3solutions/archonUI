@@ -16,3 +16,26 @@ th,td{
     border: 0;
     background: transparent;
 }
+ul {
+    margin-top: 12px;
+    margin-bottom: 10px;
+    float: left;
+}
+td{
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+th {
+    font-size: 15px;
+}
+a {
+    /* color: black; */
+    font-size: 17px;
+    font-family: Arial;
+}
+
+table {
+    margin-left: 40px;
+    width:93%;
+    text-align: left;
+}

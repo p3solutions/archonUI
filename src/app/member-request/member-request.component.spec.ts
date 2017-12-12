@@ -9,6 +9,7 @@ describe('MemberRequestComponent', () => {
   let component: MemberRequestComponent;
   let fixture: ComponentFixture<MemberRequestComponent>;
   let memberData : MemberRequestData[];
+  let value : number;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
@@ -28,7 +29,8 @@ describe('MemberRequestComponent', () => {
       it('should return an Observable<Array<MemberRequestDetail>>',
         inject([MemberRequestService], (memberRequestService) => {
           memberRequestService.getMemberRequestDetails().subscribe(memberData => {
-            console.log(memberData);
+            component.total = memberData.length;
+            value = memberData.length;
             expect(memberData.length).toBe(5);
             expect(memberData[0].slNo).toEqual('1');
             expect(memberData[1].slNo).toEqual('2');
