@@ -18,6 +18,7 @@ import { WorkspaceInfoComponent } from './workspace-info/workspace-info.componen
 import { WorkspaceinfoService } from './workspaceinfo.service';
 import { HeaderTabComponent } from './header-tab/header-tab.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
+import { ManageMembersService } from './manage-members.service';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { ManageMembersComponent } from './manage-members/manage-members.componen
       InMemoryDataService, { dataEncapsulation: false }
     ), AppRoutingModule
   ],
-  providers: [InMemoryDataService, InfoService, SignInService, WorkspaceinfoService],
+  providers: [InMemoryDataService, InfoService, SignInService, WorkspaceinfoService, ManageMembersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
