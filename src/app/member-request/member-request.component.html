@@ -1,12 +1,36 @@
   
-  <table datatable class="table" *ngIf="this.isAvailable">
+  <!-- <table datatable class="table" *ngIf="this.isAvailable">
     <thead>
       <tr>
-        <th>Sl No</th>
+        <th>slNo No</th>
         <th>Master Version</th>
         <th>Description</th>
         <th>Requested Date</th>
         <th>Requested By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rec of this.memberRequestData">
+        <td>{{rec.slNo}}</td>
+        <td>{{rec.masterVersion}}</td>
+        <td>{{rec.description}}</td>
+        <td>{{rec.requestedDate}}</td>
+        <td>{{rec.requestedBy}}</td>
+        <td>
+          <a href="#">Details</a>
+        </td>
+      </tr>
+    </tbody>
+  </table> -->
+  <table class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="this.isAvailable">
+    <thead>
+      <tr>
+        <th>SL.No</th>
+        <th>Master Version</th>
+        <th>Description</th>
+        <th>Requested Date</th>
+        <th>Requested By</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
