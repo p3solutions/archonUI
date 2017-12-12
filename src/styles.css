@@ -145,11 +145,11 @@ body {
 /* Cover */
 
 .cover {
-  padding: 0 20px;
-  top: 45%;
+  padding: 0px;
+  /* top: 45%; */
   width: 100%;
   /* position: fixed; */
-    margin: 15% 0;  
+    margin: 10% 0;  
 }
 
 .cover .btn-lg {
