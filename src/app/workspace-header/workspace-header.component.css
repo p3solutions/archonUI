@@ -48,3 +48,9 @@
   background-color: #f5f5f5;
   cursor: pointer;
 }
+.dropdown-divider {
+  height: 1px;
+  margin: .5rem 0;
+  overflow: hidden;
+  background-color: #eceeef;
+}
