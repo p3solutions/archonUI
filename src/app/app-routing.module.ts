@@ -6,12 +6,14 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
 import { HeaderTabComponent } from './header-tab/header-tab.component';
+import { Component } from '@angular/core/src/metadata/directives';
 
 const routes: Routes = [
   { path: 'workspace', component: WorkspaceLandingPageComponent, children: [
        {
          path: 'workspace-info', component: HeaderTabComponent
-       }
+       },
+      //  path: 'manage-members', Component: 
   ]},
   {
     path: '', component: LandingPageComponent, children: [
