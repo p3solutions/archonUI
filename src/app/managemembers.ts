@@ -1,4 +1,4 @@
-export interface MemberRequestData {
+export interface ManageMembers {
     slNo: string;
     version: string;
     description: string;
