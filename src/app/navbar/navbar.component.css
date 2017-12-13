@@ -2,8 +2,10 @@
   background-color: #269af8;
   margin-bottom: 0px;
 }
-.navbar-nav>li>a {
+.navbar-nav>li>a,
+.navbar-nav>li>a:active{
   color: #fff;
+  text-align: right;
 }
 .navbar-nav>li>a:hover,
 .navbar-nav>li>a:focus {
@@ -12,8 +14,21 @@
 .navbar-nav>li.dropdown.open>a.dropdown-toggle {
   color: #333;
 }
-
-
+.user-menu,
+.user-menu .dropdown-menu {
+  min-width: 108px;
+  /* width: 108px; */
+  max-width: 108px;
+}
+.user-menu li>a {
+  width: 95px;
+  margin: 0 8px;
+}
+.user-menu a>.caret {
+  position: absolute;
+  right: 4px;
+  top: 24px;
+}
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:focus,
 .navbar-default .navbar-nav>.active>a:hover {
@@ -86,6 +101,4 @@ ul.msg_list li a .message {
 .fa-sign-out {
   color: #269af8;
 }
-.user-menu.dropdown-menu {
-  min-width: 100px;
-}
+
