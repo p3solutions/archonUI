@@ -12,7 +12,7 @@ export class InMemoryDataService implements InMemoryDbService {
       masterMetaVersion: 22,
       members: 22,
       name: 'Sample WS Name',
-      role: 'Admin',
+      role: 'Admin', // need to remove this & use userRole instead
       users: [11, 13] // user-ids --> info.id
     };
     const workspace2 = {
