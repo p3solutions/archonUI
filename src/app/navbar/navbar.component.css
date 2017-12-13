@@ -6,6 +6,10 @@
 .navbar-nav>li>a {
   color: #fff;
 }
+.navbar-nav>li.dropdown.open>a.dropdown-toggle {
+  color: #333;
+}
+
 
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:focus,
@@ -75,4 +79,10 @@ ul.msg_list li a .message {
 .nav-brand-img {
   width: 120px;
   height: 20px;
+}
+.fa-sign-out {
+  color: #269af8;
+}
+.user-menu.dropdown-menu {
+  min-width: 100px;
 }

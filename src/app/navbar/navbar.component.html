@@ -67,7 +67,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{info?.username}}
             <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu user-menu">
             <li>
               <a href="#">Profile</a>
             </li>
@@ -75,19 +75,18 @@
             <li *ngIf="info?.show">
               <a href="#">Manage</a>
             </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a href="" class="info-number">
+                Logout 
+                <i class="fa fa-sign-out fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Logout"></i>
+              </a>
+            </li>
           </ul>
         </li>
         <li role="presentation">
           <a href="" class="info-number">
-
-            <i class="fa fa-sign-out fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Logout"></i>
-
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="" class="info-number">
             <i class="fa fa-question-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Help"></i>
-
           </a>
         </li>
       </ul>
