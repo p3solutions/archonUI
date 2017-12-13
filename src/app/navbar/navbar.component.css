@@ -2,9 +2,12 @@
   background-color: #269af8;
   margin-bottom: 0px;
 }
-
 .navbar-nav>li>a {
   color: #fff;
+}
+.navbar-nav>li>a:hover,
+.navbar-nav>li>a:focus {
+  color: #333;
 }
 .navbar-nav>li.dropdown.open>a.dropdown-toggle {
   color: #333;
