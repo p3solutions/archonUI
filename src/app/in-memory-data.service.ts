@@ -10,11 +10,11 @@ export class InMemoryDataService implements InMemoryDbService {
       name: 'Frontend Developer', owner: 'Platform3Solutions', approver: 'User1, User2',
       members: 'User1, User2, User3', your_role: 'Admin', master_metadata_version: '22'
     };
-    const managemembers = [{ sl_no: '1', version: '2.0', description: 'need to be filled', created_date: '12/12/2017' },
-    { sl_no: '2', version: '2.0', description: 'need to be filled', created_date: '1/12/2017' },
-    { sl_no: '3', version: '2.0', description: 'need to be filled', created_date: '12/12/2017' },
-    { sl_no: '4', version: '2.0', description: 'need to be filled', created_date: '10/12/2017' },
-    { sl_no: '5', version: '2.0', description: 'need to be filled', created_date: '8/12/2017' }];
+    const managemembers = [{ sl_no: '1', member: '2.0', role: 'need to be filled',},
+    { sl_no: '2', member: '2.0', role: 'need to be filled' },
+    { sl_no: '3', member: '2.0', role: 'need to be filled'},
+    { sl_no: '4', member: '2.0', role: 'need to be filled'},
+    { sl_no: '5', member: '2.0', role: 'need to be filled'}];
     return { info, signin, forgotpassword, workspaceinfo, managemembers };
   }
 }
