@@ -6,6 +6,7 @@
 .navbar-nav>li>a:active{
   color: #fff;
   text-align: right;
+  /* padding: 13px 18px 15px 12px; */
 }
 .navbar-nav>li>a:hover,
 .navbar-nav>li>a:focus {
@@ -16,8 +17,8 @@
 }
 .user-menu,
 .user-menu .dropdown-menu {
+  /* default .dropdown-menu css has min-width:160px, hence overriding */
   min-width: 108px;
-  /* width: 108px; */
   max-width: 108px;
 }
 .user-menu li>a {

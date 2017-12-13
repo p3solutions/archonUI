@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkspaceLandingPageComponent } from './workspace-landing-page.component';
 
-describe('WorkspaceLandingPageComponent', () => {
+xdescribe('WorkspaceLandingPageComponent', () => {
   let component: WorkspaceLandingPageComponent;
   let fixture: ComponentFixture<WorkspaceLandingPageComponent>;
 
