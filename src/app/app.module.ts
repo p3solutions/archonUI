@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule,HttpTestingController } from '@angular/common/http/testing';
 import { MatTableModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -37,7 +38,7 @@ import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-m
     // MemberRequestComponent
   ],
   imports: [
-    BrowserModule, FormsModule, HttpClientModule,MatTableModule,DataTablesModule, HttpClientInMemoryWebApiModule.forRoot(
+    BrowserModule, FormsModule, HttpClientModule,MatTableModule,DataTablesModule, HttpClientTestingModule, HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ), AppRoutingModule
   ],

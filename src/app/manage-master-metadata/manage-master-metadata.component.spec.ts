@@ -1,72 +1,47 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { HttpModule, Http, Response, ResponseOptions, XHRBackend } from '@angular/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ManageMasterMetadataComponent } from './manage-master-metadata.component';
-import { Manage_Master_Metadata } from '../master-metadata-data';
+
+import { TestBed, async, inject } from '@angular/core/testing';
+import { HttpClientModule, HttpClient,HttpRequest } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ManageMasterMetadataService } from '../manage-master-metadata.service';
-import { MockBackend } from '@angular/http/testing';
-describe('ManageMasterMetadataComponent', () => {
-  let component: ManageMasterMetadataComponent;
-  let fixture: ComponentFixture<ManageMasterMetadataComponent>;
-  let manage_Master_Metata : Manage_Master_Metadata[];
-  let obj : Manage_Master_Metadata;
-  let version : '';
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ],
-      providers: [ManageMasterMetadataService,{ provide: XHRBackend, useClass: MockBackend }],
-      declarations: [ ManageMasterMetadataComponent ]
-    })
-    .compileComponents();
-  }));
+describe(`FakeHttpClientResponsesIn ManageMasterMetadata`, () => {
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageMasterMetadataComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  describe('getManageMemberMetadataDetails()', () => {
-    it('should return an Observable<Array<ManageMemberMetadataDetail>>',
-      inject([ManageMasterMetadataService, XHRBackend], (manageMasterMetadataService, mockBackend) => {
-        const mockResponse = {
-          data: [
-            { id: 0, name: 'Video 0' },
-            { id: 1, name: 'Video 1' },
-            { id: 2, name: 'Video 2' },
-            { id: 3, name: 'Video 3' },
-          ]
-        };
-
-        mockBackend.connections.subscribe((connection) => {
-          connection.mockRespond(new Response(new ResponseOptions({
-            body: JSON.stringify(mockResponse)
-          })));
-        });
-
-
-        manageMasterMetadataService.getManageMasterMetaData().subscribe((manage_Master_Metata) => {
-          // console.log("The total length is : "+manage_Master_Metata.length);
-          expect(manage_Master_Metata.length).toEqual(10);
-          
-        });
-      }));
-
-      // it('should deleted an Observable<Array<ManageMemberMetadataDetail>>',
-      // inject([ManageMasterMetadataService], (manageMasterMetadataService) => {
-      //   manageMasterMetadataService.removeManageMasterData(obj).subscribe(manage_Master_Metata => {
-      //     console.log("The total length is : "+manage_Master_Metata.length);
-
-      //    console.log(obj.description+" "+obj.createdDate+" "+obj.slNo+" "+obj.version);
-      //     expect(manage_Master_Metata.length).toBe(4);
-         
-      //   });
-      // }));
+    // 0. set up the test environment
+    TestBed.configureTestingModule({
+      imports: [
+        // no more boilerplate code w/ custom providers needed :-)
+        HttpClientModule,
+        HttpClientTestingModule
+      ],
+      providers : [ ManageMasterMetadataService]
+    });
   });
   
+  it('should create a service', inject([ManageMasterMetadataService], (service: ManageMasterMetadataService) => {
+    expect(service).toBeTruthy();
+  }));
 
- 
+  it(`should respond with fake data using GET method`, async(inject([HttpClient, HttpTestingController],
+    (http: HttpClient, backend: HttpTestingController) => {
+      http.get('api/master_metadata').subscribe((next) => {
+        expect(next).toEqual(  { slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'});
+      });
+
+      backend.match({
+        url: 'api/master_metadata',
+        method: 'GET'
+      })[0].flush(  { slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'});
+  })));
+  it(`should respond with fake data using DELETE method`, async(inject([HttpClient, HttpTestingController],
+    (http: HttpClient, backend: HttpTestingController) => {
+      http.delete('api/master_metadata').subscribe((next) => {
+        expect(next).toEqual({ slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'});
+      });
+
+      backend.match({
+        url: 'api/master_metadata',
+        method: 'DELETE'
+      })[0].flush(  { slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'});
+  })));
+
 });
-
-
-
