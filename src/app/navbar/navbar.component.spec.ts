@@ -21,9 +21,10 @@ describe('NavbarComponent', () => {
     observer.next(info);
     observer.complete();
   });
+  let disposeMe;
   const getInfo = function (): Observable<Info> {
     // subscribe to the observable
-    simpleObservable.subscribe();
+    disposeMe = simpleObservable.subscribe();
     return simpleObservable;
   };
 
@@ -33,13 +34,13 @@ describe('NavbarComponent', () => {
         HttpClientModule,
         HttpClientTestingModule
       ],
-      declarations: [ NavbarComponent ],
+      declarations: [NavbarComponent],
       providers: [
         InfoService,
         HttpClientModule
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -78,6 +79,7 @@ describe('NavbarComponent', () => {
     fixture.detectChanges();
     expect(userName.textContent.trim()).toBe(component.info.username);
     // console.log('username->', component.info.username, 'info returned by infoservice->', component.info);
+    disposeMe.unsubscribe();
   });
 
   it('Should display username, Manage-link, notifications in Navbar for Admin role', () => {
@@ -102,5 +104,6 @@ describe('NavbarComponent', () => {
     const notifications: Element = navbarTag.querySelector('#see-all-notif');
     expect(notifications.textContent.trim()).toBe('See All Notifications');
     // console.log('info returned by infoservice->', component.info, manageLink, notifications);
+    disposeMe.unsubscribe();
   });
 });
