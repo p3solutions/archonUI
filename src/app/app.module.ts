@@ -24,6 +24,8 @@ import { WorkspaceHeaderComponent } from './workspace-header/workspace-header.co
 import { WorkspaceHeaderInfoComponent } from './workspace-header-info/workspace-header-info.component';
 import { WorkspaceMgmtPanelComponent } from './workspace-mgmt-panel/workspace-mgmt-panel.component';
 import { UserWorkspaceService } from './user-workspace.service';
+import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
+import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { UserWorkspaceService } from './user-workspace.service';
     ForgotpasswordFormComponent,
     WorkspaceHeaderComponent,
     WorkspaceHeaderInfoComponent,
-    WorkspaceMgmtPanelComponent
+    WorkspaceMgmtPanelComponent,
+    WorkspaceDashboardComponent,
+    NoWorkspaceComponent
   ],
   imports: [
     BrowserModule,
