@@ -8,19 +8,15 @@
 
   <div class="row">
     <div class="inner cover">
-      <h1 class="cover-heading">No Workspace assigned for you</h1>
-      <p class="lead">Please request your administrator to add you to a Workspace</p>
-      <div *ngIf="info.show">
-        <a href="#"><h1>Create a Workspace</h1></a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="layoutfoot">
-      <div class="inner">
-        <p>Copyright of
-          <a href="https://platform3solutions.com/">Platform3Solutions.com</a>
-        </p>
+      <div [ngSwitch]="info?.role">
+        <div *ngSwitchCase="'Admin'">
+          <a href="#">
+            <h1>Create a Workspace</h1>
+          </a>
+        </div>
+        <div *ngSwitchCase="'Member'">
+          <p class="lead">Please request your administrator to add you to a Workspace</p>
+        </div>
       </div>
     </div>
   </div>
