@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { JwtHelper } from 'angular2-jwt';
 
+import { MatTableModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InMemoryDataService } from './in-memory-data.service';
@@ -17,7 +18,6 @@ import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { AuthModule } from './/auth.module';
-import { DataTablesModule } from 'angular-datatables';
 import { SigninFormService } from './signin-form/signin-form.service';
 import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
 import { AuthenticationService } from './authentication/authentication.service';
@@ -32,7 +32,11 @@ import { WorkspaceinfoService } from './workspaceinfo.service';
 import { HeaderTabComponent } from './header-tab/header-tab.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
 import { ManageMembersService } from './manage-members.service';
-
+import { DataTablesModule } from 'angular-datatables';
+import { MemberRequestComponent } from './member-request/member-request.component';
+import { MemberRequestService } from './member-request.service';
+import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
+import { HeaderPanelComponent } from './header-panel/header-panel.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,10 @@ import { ManageMembersService } from './manage-members.service';
     NoWorkspaceComponent,
     WorkspaceInfoComponent,
     HeaderTabComponent,
-    ManageMembersComponent
+    ManageMembersComponent,
+    MemberRequestComponent,
+    WorkspacePanelComponent,
+    HeaderPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +69,8 @@ import { ManageMembersService } from './manage-members.service';
     AppRoutingModule,
     AuthModule,
     DataTablesModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule
   ],
   providers: [
     JwtHelper,
@@ -73,7 +81,8 @@ import { ManageMembersService } from './manage-members.service';
     AuthenticationService,
     UserWorkspaceService,
     WorkspaceinfoService,
-    ManageMembersService
+    ManageMembersService,
+    MemberRequestService
   ],
   bootstrap: [AppComponent]
 })
