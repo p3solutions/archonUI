@@ -20,7 +20,10 @@ import { SigninFormService } from './signin-form/signin-form.service';
 import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
 import { AuthenticationService } from './authentication/authentication.service';
 import { JwtHelper } from 'angular2-jwt';
-
+import { WorkspaceHeaderComponent } from './workspace-header/workspace-header.component';
+import { WorkspaceHeaderInfoComponent } from './workspace-header-info/workspace-header-info.component';
+import { WorkspaceMgmtPanelComponent } from './workspace-mgmt-panel/workspace-mgmt-panel.component';
+import { UserWorkspaceService } from './user-workspace.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { JwtHelper } from 'angular2-jwt';
     LandingPageComponent,
     WorkspaceLandingPageComponent,
     SigninFormComponent,
-    ForgotpasswordFormComponent
+    ForgotpasswordFormComponent,
+    WorkspaceHeaderComponent,
+    WorkspaceHeaderInfoComponent,
+    WorkspaceMgmtPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +57,7 @@ import { JwtHelper } from 'angular2-jwt';
     SigninFormService,
     ForgotpasswordFormService,
     AuthenticationService,
+    UserWorkspaceService,
   ],
   bootstrap: [AppComponent]
 })

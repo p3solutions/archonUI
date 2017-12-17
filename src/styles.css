@@ -147,10 +147,11 @@ body {
 /* Cover */
 
 .cover {
-  padding: 0 20px;
-  top: 45%;
-  position: fixed;
+  padding: 0px;
+  /* top: 45%; */
   width: 100%;
+  /* position: fixed; */
+    margin: 10% 0;  
 }
 
 .cover .btn-lg {
@@ -355,3 +356,15 @@ footer {
   text-overflow: ellipsis;
 }
 
+.trim-text {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fl-l {
+  float: left;
+}
+.fl-r {
+  float: right;
+}

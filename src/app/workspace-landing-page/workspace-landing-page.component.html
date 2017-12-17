@@ -1,6 +1,10 @@
 <app-navbar></app-navbar>
 <div class="container-fluid site-wrapper">
   <div class="row">
+    <app-workspace-header *ngIf="info" [userId]="info.id" [userRole]="info.role"></app-workspace-header>
+  </div>
+
+  <div class="row">
     <h3 class="ws-title-position">Workspace
       <i class="fa fa-info-circle " data-toggle="tooltip" data-placement="bottom" title="Workspace Info"></i>
     </h3>
