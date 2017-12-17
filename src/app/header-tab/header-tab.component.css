@@ -1,0 +1,16 @@
+.well {
+    width: 1150px;
+    height: 500px;
+}
+
+.btn-header {
+    position: relative;
+    bottom: -100px;
+    right: -484px;
+    width: 93px;
+    padding: 11px;
+    font-size: 16px;
+}
+b {
+    font-size:20px;
+}

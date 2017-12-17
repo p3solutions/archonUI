@@ -20,8 +20,14 @@ xdescribe('SigninFormComponent', () => {
     fixture.detectChanges();
   });
 
+<<<<<<< HEAD
   it('should create',
     inject([SigninFormService], (signInService: SigninFormService) => {
       expect(component).toBeTruthy();
     }));
+=======
+  // it('should create', () => {
+  //   expect(component).toBeTruthy();
+  // });
+>>>>>>> 832b9087f272d09ac707330e12a5b659732eaed3
 });

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ForgotpasswordFormComponent } from './forgotpassword-form.component';
+import { HeaderTabComponent } from './header-tab.component';
 
-xdescribe('ForgotpasswordFormComponent', () => {
-  let component: ForgotpasswordFormComponent;
-  let fixture: ComponentFixture<ForgotpasswordFormComponent>;
+describe('HeaderTabComponent', () => {
+  let component: HeaderTabComponent;
+  let fixture: ComponentFixture<HeaderTabComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForgotpasswordFormComponent ]
+      declarations: [ HeaderTabComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ForgotpasswordFormComponent);
+    fixture = TestBed.createComponent(HeaderTabComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
