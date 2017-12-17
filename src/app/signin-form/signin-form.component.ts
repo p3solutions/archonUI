@@ -41,7 +41,7 @@ export class SigninFormComponent implements OnInit {
     this.signinService.signIn(this.signin).subscribe(
       data => {
         this.responseData = data;
-        this.authenticationService.authenticateHelper(this.responseData.data._x);
+        // this.authenticationService.authenticateHelper(this.responseData.data._x);
         console.log(data);
         this.router.navigate(['/workspace']);
       },

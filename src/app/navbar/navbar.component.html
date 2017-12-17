@@ -14,7 +14,7 @@
         <li>
           <a href="#">My Activities</a>
         </li>
-        <li *ngIf="info?.show" role="presentation" class="dropdown">
+        <li role="presentation" class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-bell-o fa-lg" data-toggle="tooltip" data-placement="bottom" title="Notifications"></i>
             <span class="badge bg-red">6</span>
@@ -56,38 +56,37 @@
             <li>
               <div class="text-center">
                 <a href="#">
-                  <strong>See All Notifications</strong>
+                  <strong id="see-all-notif">See All Notifications</strong>
                   <i class="fa fa-angle-right"></i>
                 </a>
               </div>
             </li>
           </ul>
         </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{info?.username}}
+        <li class="dropdown user-menu">
+          <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{info?.username}}
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li>
-              <a href="#">Profile</a>
+            <li title="Profile">
+              <a href="#" class="trim-text">Profile</a>
             </li>
             <li *ngIf="info?.show" role="separator" class="divider" ></li>
-            <li *ngIf="info?.show">
-              <a href="#">Manage</a>
+            <li *ngIf="info?.show" title="Manage">
+              <a href="#" class="trim-text">Manage</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li title="Logout">
+              <a href="" class="info-number">
+                Logout 
+                <!-- <i class="fa fa-sign-out fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Logout"></i> -->
+              </a>
             </li>
           </ul>
         </li>
         <li role="presentation">
           <a href="" class="info-number">
-
-            <i class="fa fa-sign-out fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Logout"></i>
-
-          </a>
-        </li>
-        <li role="presentation">
-          <a href="" class="info-number">
             <i class="fa fa-question-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Help"></i>
-
           </a>
         </li>
       </ul>

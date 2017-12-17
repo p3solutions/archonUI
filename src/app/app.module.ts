@@ -35,10 +35,10 @@ import { JwtHelper } from 'angular2-jwt';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService,
-    //   { dataEncapsulation: false }
-    // ),
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService,
+      { dataEncapsulation: false }
+    ),
     AppRoutingModule,
     AuthModule,
     DataTablesModule,
