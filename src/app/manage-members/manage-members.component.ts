@@ -12,11 +12,10 @@ export class ManageMembersComponent implements OnInit {
   manageMembersRequestData: ManageMembers[];
 
   constructor(private manageMembersService: ManageMembersService) {
-    this.getManageMembersData();
   }
 
   ngOnInit() {
-
+    this.getManageMembersData();
   }
   getManageMembersData() {
 
@@ -24,7 +23,7 @@ export class ManageMembersComponent implements OnInit {
       .subscribe(data => {
         this.manageMembersRequestData = data;
       });
-
+     console.log('manage-members-component', this.manageMembersRequestData);
   }
   // onDelete(e: any) {
   //   console.log(e);
