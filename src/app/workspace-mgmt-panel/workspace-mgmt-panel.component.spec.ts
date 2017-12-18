@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkspaceMgmtPanelComponent } from './workspace-mgmt-panel.component';
 
-describe('WorkspaceMgmtPanelComponent', () => {
+xdescribe('WorkspaceMgmtPanelComponent', () => {
   let component: WorkspaceMgmtPanelComponent;
   let fixture: ComponentFixture<WorkspaceMgmtPanelComponent>;
 

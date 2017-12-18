@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkspaceHeaderInfoComponent } from './workspace-header-info.component';
 
-describe('WorkspaceHeaderInfoComponent', () => {
+xdescribe('WorkspaceHeaderInfoComponent', () => {
   let component: WorkspaceHeaderInfoComponent;
   let fixture: ComponentFixture<WorkspaceHeaderInfoComponent>;
 
