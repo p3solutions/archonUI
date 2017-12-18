@@ -18,6 +18,4 @@ describe('ManageMembersComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  
 });

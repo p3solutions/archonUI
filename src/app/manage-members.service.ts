@@ -17,26 +17,26 @@ export class ManageMembersService {
   constructor(private http: HttpClient) { }
 
   getManageMembersDetails(): Observable<ManageMembers[]> {
-      return this.http.get<ManageMembers[]>(this.manageMembersUrl).pipe(
+    return this.http.get<ManageMembers[]>(this.manageMembersUrl).pipe(
       catchError(this.handleError('managemembers', []))
     );
   }
   deleteManageMembersData(indexObject): Observable<ManageMembers[]> {
     // deleteHero (hero: Hero | number): Observable<Hero> {
-      // const id = typeof hero === 'number' ? hero : hero.id;
-      // const url = `${this.heroesUrl}/${id}`;
-      return this.http.delete<ManageMembers[]>(this.manageMembersUrl).pipe(
-        catchError(this.handleError('managemembers', []))
-        // tap(_ => this.log(`deleted hero id=${id}`)),
-        // catchError(this.handleError<Hero>('deleteHero'))
-      );
-    }
+    // const id = typeof hero === 'number' ? hero : hero.id;
+    // const url = `${this.heroesUrl}/${id}`;
+    return this.http.delete<ManageMembers[]>(this.manageMembersUrl).pipe(
+      catchError(this.handleError('managemembers', []))
+      // tap(_ => this.log(`deleted hero id=${id}`)),
+      // catchError(this.handleError<Hero>('deleteHero'))
+    );
+  }
 
-// * Handle Http operation that failed.
-// * Let the app continue.
-// * @param operation - name of the operation that failed
-// * @param result - optional value to return as the observable result
-// */
+  // * Handle Http operation that failed.
+  // * Let the app continue.
+  // * @param operation - name of the operation that failed
+  // * @param result - optional value to return as the observable result
+  // */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
