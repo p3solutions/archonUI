@@ -136,6 +136,14 @@
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
     "directive-class-suffix": true,
-    "invoke-injectable": true
+    "invoke-injectable": true,
+    "angular-whitespace": [
+      true,
+      "check-interpolation",
+      "check-semicolon"
+    ],
+    "no-attribute-parameter-decorator": true,
+    "no-output-on-prefix": true,
+    "no-forward-ref": true
   }
 }

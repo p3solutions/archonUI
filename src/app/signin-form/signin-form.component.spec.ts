@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { SigninFormComponent } from './signin-form.component';
+import { SigninFormService } from './signin-form.service';
 
 xdescribe('SigninFormComponent', () => {
   let component: SigninFormComponent;
@@ -8,9 +9,9 @@ xdescribe('SigninFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SigninFormComponent ]
+      declarations: [SigninFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +20,8 @@ xdescribe('SigninFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('should create',
+    inject([SigninFormService], (signInService: SigninFormService) => {
+      expect(component).toBeTruthy();
+    }));
 });
