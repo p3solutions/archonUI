@@ -1,47 +1,63 @@
-
-import { TestBed, async, inject } from '@angular/core/testing';
-import { HttpClientModule, HttpClient,HttpRequest } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { ManageMasterMetadataComponent } from './manage-master-metadata.component';
 import { ManageMasterMetadataService } from '../manage-master-metadata.service';
-describe(`FakeHttpClientResponsesIn ManageMasterMetadata`, () => {
+import { Manage_Master_Metadata } from '../master-metadata-data';
+import { Observable } from 'rxjs/Observable';
+describe('ManageMasterMetadataComponent', () => {
+  let component: ManageMasterMetadataComponent;
+  let fixture: ComponentFixture<ManageMasterMetadataComponent>;
+  let masterMetaData: Manage_Master_Metadata;
+  let de: DebugElement;
+  let memberRequestHTMLTag: HTMLElement;
+  let masterMetaDataService: any;
 
-  beforeEach(() => {
-    // 0. set up the test environment
-    TestBed.configureTestingModule({
-      imports: [
-        // no more boilerplate code w/ custom providers needed :-)
-        HttpClientModule,
-        HttpClientTestingModule
-      ],
-      providers : [ ManageMasterMetadataService]
-    });
+  const master_metadataMock : any = [
+    { slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
+    { slNo : '2', version : '1.46', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
+    { slNo : '3', version : '2.46', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
+    { slNo : '4', version : '3.00', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
+    { slNo : '5', version : '4.69', description : 'Null' , createdDate : '20/11/2017 04.05 PM'}
+];
+  const simpleObservable = new Observable<Manage_Master_Metadata>((observer) => {
+    observer.next(master_metadataMock);
+    observer.complete();
   });
-  
-  it('should create a service', inject([ManageMasterMetadataService], (service: ManageMasterMetadataService) => {
-    expect(service).toBeTruthy();
+  let disposeMe;
+  const getMemberRequest = function (): Observable<Manage_Master_Metadata> {
+    disposeMe = simpleObservable.subscribe();
+    return simpleObservable;
+  };
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, HttpClientModule],
+      providers: [ManageMasterMetadataService],
+      declarations: [ManageMasterMetadataComponent]
+    })
+      .compileComponents();
   }));
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ManageMasterMetadataComponent);
+    component = fixture.componentInstance;
+    de = fixture.debugElement.query(By.css('table'));
+    console.log('&&&&7',component,de,'chandruashwin');
+    memberRequestHTMLTag = de.nativeElement;
+    masterMetaDataService = TestBed.get(ManageMasterMetadataService);
+  });
+  // it('Should display the observable data for member-request component', () => {
+  //   spyOn(masterMetaDataService, 'getManageMasterMetaData').and.returnValue(getMemberRequest());
+  //   fixture.detectChanges();
+  //   const rowArray: NodeListOf<Element> = memberRequestHTMLTag.querySelectorAll('.mem-req-data');
+  //   console.log(rowArray[0], component.manage_Master_Metadata);
+  //   //const sl_no = rowArray[0];
+  //   const masterVersion = rowArray[1];
+  //   const description = rowArray[2];
+  //   expect(masterVersion.textContent.trim()).toBe(component.manage_Master_Metadata[0].createdDate);
+  //   expect(description.textContent.trim()).toBe(component.manage_Master_Metadata[0].description);
 
-  it(`should respond with fake data using GET method`, async(inject([HttpClient, HttpTestingController],
-    (http: HttpClient, backend: HttpTestingController) => {
-      http.get('api/master_metadata').subscribe((next) => {
-        expect(next).toEqual(  { slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'});
-      });
-
-      backend.match({
-        url: 'api/master_metadata',
-        method: 'GET'
-      })[0].flush(  { slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'});
-  })));
-  it(`should respond with fake data using DELETE method`, async(inject([HttpClient, HttpTestingController],
-    (http: HttpClient, backend: HttpTestingController) => {
-      http.delete('api/master_metadata').subscribe((next) => {
-        expect(next).toEqual({ slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'});
-      });
-
-      backend.match({
-        url: 'api/master_metadata',
-        method: 'DELETE'
-      })[0].flush(  { slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'});
-  })));
-
+  // });
 });

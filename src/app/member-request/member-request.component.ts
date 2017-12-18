@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { MemberRequestService } from '../member-request.service';
 import { MemberRequestData } from '../member-request-data';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -9,32 +9,34 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class MemberRequestComponent implements OnInit {
 
+  @Output() changes = new EventEmitter();
+
   memberRequestData: MemberRequestData[];
 
-  total : number = 0;
-
-  isAvailable: boolean = false;
-
-  componentTitle : string = 'chandruashiwn';
+  isAvailable : boolean;
   
-  constructor(private memberRequestService: MemberRequestService,private route : ActivatedRoute) {
+  componentTitle : string = 'chandruashwin';
+  
+  constructor(private memberRequestService: MemberRequestService) {
+    this.isAvailable = false;
+  }
+
+  ngOnInit(){
     this.getMemberRequestData();
+    // console.log("***********");
+    // this.route.data
+    // .subscribe(data =>
+    //   this.componentTitle = data.title);
+    // console.log(this.componentTitle);
   }
-
-  ngOnInit() {
-    console.log("***********");
-    this.route.data
-    .subscribe(data =>
-      this.componentTitle = data.title);
-    console.log(this.componentTitle);
-  }
+  
   getMemberRequestData() {
-
     this.memberRequestService.getMemberRequestDetails()
       .subscribe(data => {
-        this.memberRequestData = data;
-        this.isAvailable = true;
+        this.memberRequestData = data; 
+        this.isAvailable = true;       
       });
+      console.log(this.memberRequestData+"*************");
 
   }
 }
