@@ -73,15 +73,19 @@ describe('WorkspaceInfoComponent', () => {
     const member = row1Array[3];
     const role = row1Array[4];
     const metadata_version = row1Array[5];
-    console.log('alok', name);
-    console.log('alok', owner);
-    console.log('alok', approver);
-    console.log('alok', member);
-    console.log('alok', role);
-    console.log('alok', metadata_version);
-    // expect(userName.textContent.trim()).toBe(component.info.username);
-    // console.log('username->', component.info.username, 'info returned by infoservice->', component.info);
-    // disposeMe.unsubscribe();
+    // console.log('alok', name);
+    // console.log('alok', owner);
+    // console.log('alok', approver);
+    // console.log('alok', member);
+    // console.log('alok', role);
+    // console.log('alok', metadata_version);
+    expect(name.textContent.trim()).toBe(component.workspaceInfoData.name);
+    expect(owner.textContent.trim()).toBe(component.workspaceInfoData.owner);
+    expect(approver.textContent.trim()).toBe(component.workspaceInfoData.approver);
+    expect(member.textContent.trim()).toBe(component.workspaceInfoData.members);
+    expect(role.textContent.trim()).toBe(component.workspaceInfoData.your_role);
+    expect(metadata_version.textContent.trim()).toBe(component.workspaceInfoData.master_metadata_version);
+
   });
 
 });
