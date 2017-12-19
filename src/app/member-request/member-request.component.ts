@@ -10,21 +10,18 @@ export class MemberRequestComponent implements OnInit {
 
   memberRequestData: MemberRequestData[];
 
-  isAvailable: boolean = false;
-
   constructor(private memberRequestService: MemberRequestService) {
-    this.getMemberRequestData();
+   
   }
 
   ngOnInit() {
-
+    this.getMemberRequestData();
   }
   getMemberRequestData() {
-
+    console.log('cgggg');
     this.memberRequestService.getMemberRequestDetails()
       .subscribe(data => {
         this.memberRequestData = data;
-        this.isAvailable = true;
       });
 
   }
