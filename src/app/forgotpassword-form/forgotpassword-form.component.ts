@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Forgotpassword } from '../forgotpassword';
 import { SignInService } from '../sign-in.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-forgotpassword-form',

@@ -19,6 +19,7 @@ import { WorkspaceinfoService } from './workspaceinfo.service';
 import { HeaderTabComponent } from './header-tab/header-tab.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
 import { ManageMembersService } from './manage-members.service';
+import { HttpClient } from 'selenium-webdriver/http';
 
 
 @NgModule({
@@ -31,7 +32,9 @@ import { ManageMembersService } from './manage-members.service';
     ForgotpasswordFormComponent,
     WorkspaceInfoComponent,
     HeaderTabComponent,
-    ManageMembersComponent
+    ManageMembersComponent,
+    HttpClient,
+    HttpClientModule
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
