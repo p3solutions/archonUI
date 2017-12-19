@@ -47,7 +47,7 @@ describe('ForgotpasswordFormComponent', () => {
     fixture = TestBed.createComponent(ForgotpasswordFormComponent);
     component = fixture.componentInstance;
     // de = fixture.debugElement.query(By.css('#manage-members-info-table'));
-    // let btn = fixture.debugElement.query(By.css('span'));
+    let input = fixture.debugElement.query(By.css('input'));
     // ManageMembersInfoTag = de.nativeElement;
     manageMembersService = TestBed.get(SignInService);
   });
@@ -55,6 +55,7 @@ describe('ForgotpasswordFormComponent', () => {
   it('Should work onForgotPassword functionality', () => {
     // let btn = fixture.debugElement.query(By.css('button'));
     // btn.triggerEventHandler('click', null);
+    console.log('forgot pass', this.input);
     expect(component.onForgotPassword).toBeTruthy();
   });
 
