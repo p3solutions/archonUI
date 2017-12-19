@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkSpaceHeaderInfo } from '../WorkSpaceHeaderInfo';
-import {  } from '../info';
 
 @Component({
   selector: 'app-workspace-header',
