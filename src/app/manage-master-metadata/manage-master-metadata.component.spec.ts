@@ -64,4 +64,7 @@ describe('ManageMasterMetadataComponent', () => {
     expect(description.textContent.trim()).toBe(component.manage_Master_Metadata[0].description);
     expect(createdDate.textContent.trim()).toBe(component.manage_Master_Metadata[0].createdDate);
   });
+  it('should work the delete function', () => {
+    expect(component.deleteManageMasterRecord).toBeTruthy();
+  });
 });
