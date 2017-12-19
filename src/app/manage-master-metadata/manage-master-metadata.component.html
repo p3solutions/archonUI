@@ -1,27 +1,4 @@
-  
-  <!-- <table datatable class="table" *ngIf="this.isAvailable">
-    <thead>
-      <tr>
-        <th>Sl No</th>
-        <th>Version</th>
-        <th>Description</th>
-        <th>Created Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let rec of this.manage_Master_Metadata">
-        <td>{{rec.slNo}}</td>
-        <td>{{rec.version}}</td>
-        <td>{{rec.description}}</td>
-        <td>{{rec.createdDate}}</td>
-        <td>
-          <a href="#">View Changes</a>
-        </td>
-        <td><button (click) = "deleteManageMasterRecord(rec)"  class="icon-button"><span class="glyphicon glyphicon-trash"></span></button></td>
-      </tr>
-    </tbody>
-  </table> -->
-
+<div id="manager-master-metadata">
   <table class="table table-striped table-bordered" cellspacing="0" width="100%" *ngIf="this.isAvailable">
     <thead>
       <tr>
@@ -35,14 +12,19 @@
     </thead>
     <tbody>
       <tr *ngFor="let rec of this.manage_Master_Metadata">
-        <td>{{rec.slNo}}</td>
-        <td>{{rec.version}}</td>
-        <td>{{rec.description}}</td>
-        <td>{{rec.createdDate}}</td>
-        <td>
+        <td class = "man-mast-data">{{rec.slNo}}</td>
+        <td class = "man-mast-data">{{rec.version}}</td>
+        <td class = "man-mast-data">{{rec.description}}</td>
+        <td class = "man-mast-data">{{rec.createdDate}}</td>
+        <td >
           <a href="#">View Changes</a>
         </td>
-        <td><button (click) = "deleteManageMasterRecord(rec)"  class="icon-button"><span class="glyphicon glyphicon-trash"></span></button></td>
+        <td>
+          <button (click)="deleteManageMasterRecord(rec)" class="icon-button">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
+</div>

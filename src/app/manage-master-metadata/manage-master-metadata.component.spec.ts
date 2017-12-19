@@ -43,21 +43,25 @@ describe('ManageMasterMetadataComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ManageMasterMetadataComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement.query(By.css('table'));
+    de = fixture.debugElement.query(By.css('#manager-master-metadata'));
     console.log('&&&&7',component,de,'chandruashwin');
     memberRequestHTMLTag = de.nativeElement;
     masterMetaDataService = TestBed.get(ManageMasterMetadataService);
   });
-  // it('Should display the observable data for member-request component', () => {
-  //   spyOn(masterMetaDataService, 'getManageMasterMetaData').and.returnValue(getMemberRequest());
-  //   fixture.detectChanges();
-  //   const rowArray: NodeListOf<Element> = memberRequestHTMLTag.querySelectorAll('.mem-req-data');
-  //   console.log(rowArray[0], component.manage_Master_Metadata);
-  //   //const sl_no = rowArray[0];
-  //   const masterVersion = rowArray[1];
-  //   const description = rowArray[2];
-  //   expect(masterVersion.textContent.trim()).toBe(component.manage_Master_Metadata[0].createdDate);
-  //   expect(description.textContent.trim()).toBe(component.manage_Master_Metadata[0].description);
-
-  // });
+  it('Should display the observable data for Manage-master Metadata component', () => {
+    spyOn(masterMetaDataService, 'getManageMasterMetaData').and.returnValue(getMemberRequest());
+    fixture.detectChanges();
+    component.isAvailable = true;
+    fixture.detectChanges();
+    const rowArray: NodeListOf<Element> = memberRequestHTMLTag.querySelectorAll('.man-mast-data');
+    console.log(rowArray[0], component.manage_Master_Metadata);
+    const sl_no = rowArray[0];
+    const version = rowArray[1];
+    const description = rowArray[2];
+    const createdDate = rowArray[3];
+    expect(sl_no.textContent.trim()).toBe(component.manage_Master_Metadata[0].slNo);
+    expect(version.textContent.trim()).toBe(component.manage_Master_Metadata[0].version);
+    expect(description.textContent.trim()).toBe(component.manage_Master_Metadata[0].description);
+    expect(createdDate.textContent.trim()).toBe(component.manage_Master_Metadata[0].createdDate);
+  });
 });
