@@ -25,10 +25,7 @@ export class ManageMembersComponent implements OnInit {
       });
      console.log('manage-members-component', this.manageMembersRequestData);
   }
-  // onDelete(e: any) {
-  //   console.log(e);
-  //   this.manageMembersRequestData.splice(e, 1);
-  // }
+  
   onDelete(e: any): void {
     this.manageMembersRequestData = this.manageMembersRequestData.filter(h => h !== this.manageMembersRequestData[e]);
     this.manageMembersService.deleteManageMembersData(e).subscribe();

@@ -16,13 +16,14 @@ describe('ManageMembersComponent', () => {
   // tslint:disable-next-line:prefer-const
   let manageMemberInfoData: ManageMembers;
   let de: DebugElement;
+  let btn: DebugElement;
   let ManageMembersInfoTag: HTMLElement;
   let manageMembersService: any;
-  const managemembers1: any = [{ sl_no: '1', member: '2.0', role: 'need to be filled'},
+  const managemembers1: any = [{ sl_no: '1', member: '2.0', role: 'need to be filled' },
   { sl_no: '2', member: '2.0', role: 'need to be filled' },
-  { sl_no: '3', member: '2.0', role: 'need to be filled'},
-  { sl_no: '4', member: '2.0', role: 'need to be filled'},
-  { sl_no: '5', member: '2.0', role: 'need to be filled'}];
+  { sl_no: '3', member: '2.0', role: 'need to be filled' },
+  { sl_no: '4', member: '2.0', role: 'need to be filled' },
+  { sl_no: '5', member: '2.0', role: 'need to be filled' }];
   const simpleObservable = new Observable<ManageMembers>((observer) => {
     // observable execution
     observer.next(managemembers1);
@@ -54,6 +55,7 @@ describe('ManageMembersComponent', () => {
     fixture = TestBed.createComponent(ManageMembersComponent);
     component = fixture.componentInstance;
     de = fixture.debugElement.query(By.css('#manage-members-info-table'));
+    let btn = fixture.debugElement.query(By.css('span'));
     ManageMembersInfoTag = de.nativeElement;
     manageMembersService = TestBed.get(ManageMembersService);
   });
@@ -64,16 +66,22 @@ describe('ManageMembersComponent', () => {
     fixture.detectChanges();
     const rowArray: NodeListOf<Element> = ManageMembersInfoTag.querySelectorAll('.mm-info-data');
     // while spying on real service, mocked info is returned
-    
+
     console.log(rowArray[0], component.manageMembersRequestData);
     const sl_no = rowArray[0];
     const member = rowArray[1];
     const role = rowArray[2];
-   
+
     expect(sl_no.textContent.trim()).toBe(component.manageMembersRequestData[0].sl_no);
     expect(member.textContent.trim()).toBe(component.manageMembersRequestData[0].member);
     expect(role.textContent.trim()).toBe(component.manageMembersRequestData[0].role);
 
+  });
+
+  it('Should work the delete functionality', () => {
+    // let btn = fixture.debugElement.query(By.css('button'));
+    // btn.triggerEventHandler('click', null);
+    expect(component.onDelete).toBeTruthy();
   });
 
 });
