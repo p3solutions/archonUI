@@ -1,5 +1,4 @@
-
-<div class="row col col-lg-12 workspace-header">
+<div class="row col col-lg-12 workspace-header" id="workspace-header">
   <app-workspace-header-info></app-workspace-header-info>
 
   <div class="btn-group fl-r">
@@ -7,7 +6,7 @@
       SELECT WORKSPACE
     </button>
     <div class="dropdown-menu">
-      <a class="dropdown-item" *ngFor="let workspace of userWorkspaceArray" (click)="selectWorkspace(workspace.id)" id="{{workspace.id}}" >{{workspace.name}}</a>
+      <a class="dropdown-item dynamic-option" *ngFor="let workspace of userWorkspaceArray" (click)="selectWorkspace(workspace.id)" id="{{workspace.id}}" >{{workspace.name}}</a>
       <div class="dropdown-divider" *ngIf="userRole == 'Member'"></div>    
       <a class="dropdown-item" *ngIf="userRole == 'Member'" (click)="contactAdmin()">Contact Your Admin</a>
       <div class="dropdown-divider" *ngIf="userRole == 'Admin'"></div>

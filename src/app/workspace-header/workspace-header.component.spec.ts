@@ -6,15 +6,17 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserWorkspaceService } from '../user-workspace.service';
+import { WorkspaceHeaderInfoComponent } from '../workspace-header-info/workspace-header-info.component';
+import { WorkspaceMgmtPanelComponent } from '../workspace-mgmt-panel/workspace-mgmt-panel.component';
 
 describe('WorkspaceHeaderComponent', () => {
   let component: WorkspaceHeaderComponent;
   let fixture: ComponentFixture<WorkspaceHeaderComponent>;
   let de: DebugElement;
-  let btnTag: HTMLElement;
+  let workspaceHeader: HTMLElement;
   let userWorkspaceService: any;
   // mock data
-  const id = 11;
+  const userId = 11;
   const workspace1 = {
     id: 123,
     masterMetaVersion: 22,
@@ -32,21 +34,22 @@ describe('WorkspaceHeaderComponent', () => {
     users: [11, 12, 13] // user-ids --> info.id
   };
   const workspaceList = {
-    11: [
+  11: [
       workspace1,
       workspace2,
       workspace1,
       workspace2
       ]
-  };
+    };
   const simpleObservable = new Observable<object>((observer) => {
     // observable execution
-    observer.next(workspaceList[id]);
+    observer.next(workspaceList);
     observer.complete();
   });
+  let disposeMe;
   const getUserWorkspaceList = function (): Observable<object> {
     // subscribe to the observable
-    simpleObservable.subscribe();
+    disposeMe = simpleObservable.subscribe();
     return simpleObservable;
   };
 
@@ -56,7 +59,11 @@ describe('WorkspaceHeaderComponent', () => {
         HttpClientModule,
         HttpClientTestingModule
       ],
-      declarations: [ WorkspaceHeaderComponent ],
+      declarations: [
+        WorkspaceHeaderComponent,
+        WorkspaceHeaderInfoComponent,
+        WorkspaceMgmtPanelComponent
+      ],
       providers: [
         UserWorkspaceService,
         HttpClientModule
@@ -68,63 +75,35 @@ describe('WorkspaceHeaderComponent', () => {
   beforeEach(() => {
     // create component and test fixture
     fixture = TestBed.createComponent(WorkspaceHeaderComponent);
-
     // get test component from the fixture
     component = fixture.componentInstance;
-
     // userWorkspaceService provided to the TestBed
     userWorkspaceService = TestBed.get(UserWorkspaceService);
-
-    de = fixture.debugElement.query(By.css('button'));
-    btnTag = de.nativeElement;
+    de = fixture.debugElement.query(By.css('#workspace-header'));
+    workspaceHeader = de.nativeElement;
+    fixture.detectChanges();
   });
 
-  it('Should create Workspace-Header tag', () => {
+  it('Should create Workspace-Header component', () => {
     expect(component).toBeTruthy();
-    console.log(btnTag, 'btn');
   });
 
-  /* it('Should have the default selected Home menu in Navbar', () => {
-    const selectedMenu: Element = btnTag.querySelector('li.active>a');
-    expect(selectedMenu.textContent).toContain('Home');
-  });
-
-  it('Should not display the username in Navbar before calling getInfo', () => {
-    const userName: Element = btnTag.querySelector('li.user-menu>a');
-    // info.username not rendered
-    expect(userName.textContent.trim()).toBe('');
-  });
-
-  it('Should display the username in Navbar for any user', () => {
-    const userName: Element = btnTag.querySelector('li.user-menu>a');
-    // while spying on real service, mocked info is returned
-    spyOn(userWorkspaceService, 'getinfo').and.returnValue(getInfo());
+  it('Should have the drop-down button & its options', () => {
+    // set current userId
+    component.id = userId;
+    // returning mock data from the spy stub
+    spyOn(userWorkspaceService, 'getUserWorkspaceList').and.returnValue(getUserWorkspaceList());
+    // calling the function to render data in template
+    component.getUserWorkspaceList(component.id);
+    // triggering changes & update view
     fixture.detectChanges();
-    expect(userName.textContent.trim()).toBe(component.info.username);
-    // console.log('username->', component.info.username, 'info returned by userWorkspaceService->', component.info);
+    const dropDownOptions: NodeListOf<Element> = workspaceHeader.querySelectorAll('a.dropdown-item.dynamic-option');
+    // testing names of all the drop-down options rendered
+    for (let index = 0; index < dropDownOptions.length; index++) {
+      const dynamicOption = dropDownOptions.item(index);
+      expect(dynamicOption.textContent).toContain(component.userWorkspaceArray[index].name);
+    }
+    disposeMe.unsubscribe();
   });
 
-  it('Should display username, Manage-link, notifications in Navbar for Admin role', () => {
-    // to test for Admin, set role = 'Admin'
-    info.role = 'Admin';
-    // while spying on real service, mocked info is returned
-    spyOn(userWorkspaceService, 'getinfo').and.returnValue(getInfo());
-    fixture.detectChanges();
-    // call getInfo() to set info.show true for Admin
-    component.getInfo();
-
-    // detecting changes
-    fixture.detectChanges();
-
-    // expecting username
-    const userName: Element = btnTag.querySelector('li.user-menu>a');
-    expect(userName.textContent.trim()).toBe(component.info.username);
-    // expecting Manage link
-    const manageLink: Element = btnTag.querySelector('li[title="Manage"]>a');
-    expect(manageLink.textContent.trim()).toBe('Manage');
-
-    const notifications: Element = btnTag.querySelector('#see-all-notif');
-    expect(notifications.textContent.trim()).toBe('See All Notifications');
-    // console.log('info returned by userWorkspaceService->', component.info, manageLink, notifications);
-  }); */
 });

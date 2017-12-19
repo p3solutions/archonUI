@@ -28,20 +28,6 @@ export class WorkspaceHeaderComponent implements OnInit {
     });
   }
 
-  onChangeDropdown(selected: any) {
-    switch (selected[0].id) {
-      case 'contactAdmin':
-        this.contactAdmin();
-        break;
-      case 'createWorkspace':
-        this.createNewWorkspace();
-        break;
-      default:
-        this.selectWorkspace(selected[0].id);
-        break;
-    }
-  }
-
   contactAdmin() {
     console.log('contact Admin function pending!');
   }
