@@ -64,6 +64,28 @@ export class InMemoryDataService implements InMemoryDbService {
       { slNo: '5', masterVersion: '4.69', description: 'Null', requestedDate: '20/11/2017 04.05 PM', requestedBy: 'Member 5' }
     ];
     const forgotpassword = { email: '' };
-    return { info, signin, forgotpassword, workspaceinfo, managemembers, workspaceList, currentWorkspace, memberrequest };
+    const master_metadata = [
+      { slNo: '1', version: '1.01', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+      { slNo: '2', version: '1.46', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+      { slNo: '3', version: '2.46', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+      { slNo: '4', version: '3.00', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+      { slNo: '5', version: '4.69', description: 'Null', createdDate: '20/11/2017 04.05 PM' }
+    ];
+    return {
+      info,
+      signin,
+      forgotpassword,
+      memberrequest,
+      master_metadata,
+      managemembers,
+      workspaceinfo,
+      currentWorkspace,
+      workspaceList,
+      userWorkspaces2,
+      userWorkspaces,
+      workspace2,
+      workspace1,
+      users
+    };
   }
 }

@@ -1,15 +1,13 @@
 <div id="workspace">
-    <a href="#" style="float: left;">Workspace Info</a>
+  <a routerLink = "workspace-panel/workspace-info" style="float: left;">Workspace Info</a>    
 </div>
 <div id="mastermeta">
-  <!-- <a href="#" style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manage Master Metadata</a> -->
-  <a routerLink = "workspace-panel/member-request" style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manage Master Metadata</a>    
+  <a routerLink = "workspace-panel/manage-master-metadata" style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manage Master Metadata</a>    
 </div>
 <div id="managemem">
-  <!-- <a href="#" style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ManageMembers</a> -->
-  <a routerLink = "workspace-panel/member-request" style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ManageMembers</a>
+  <a routerLink = "workspace-panel/manage-members" style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ManageMembers</a>
 </div>
 <div id="memberreq">
-  <!-- <a href="#" style="float: right;"></a> -->
   <a routerLink = "workspace-panel/member-request" style="float: right;">Member Request</a>
+  <!-- <a [routerLink] = "['/workspace-panel/member-request',{title : MemberREquest Data}]">Member Request</a> -->
 </div>

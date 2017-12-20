@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { JwtHelper } from 'angular2-jwt';
 
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { MatTableModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -35,8 +36,10 @@ import { ManageMembersService } from './manage-members.service';
 import { DataTablesModule } from 'angular-datatables';
 import { MemberRequestComponent } from './member-request/member-request.component';
 import { MemberRequestService } from './member-request.service';
+import { ManageMasterMetadataService } from './manage-master-metadata.service';
 import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
 import { HeaderPanelComponent } from './header-panel/header-panel.component';
+import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,9 @@ import { HeaderPanelComponent } from './header-panel/header-panel.component';
     ManageMembersComponent,
     MemberRequestComponent,
     WorkspacePanelComponent,
-    HeaderPanelComponent
+    HeaderPanelComponent,
+    HeaderPanelComponent,
+    ManageMasterMetadataComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +87,8 @@ import { HeaderPanelComponent } from './header-panel/header-panel.component';
     UserWorkspaceService,
     WorkspaceinfoService,
     ManageMembersService,
-    MemberRequestService
+    MemberRequestService,
+    ManageMasterMetadataService
   ],
   bootstrap: [AppComponent]
 })
