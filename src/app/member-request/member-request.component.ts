@@ -18,7 +18,6 @@ export class MemberRequestComponent implements OnInit {
     this.getMemberRequestData();
   }
   getMemberRequestData() {
-    console.log('cgggg');
     this.memberRequestService.getMemberRequestDetails()
       .subscribe(data => {
         this.memberRequestData = data;
