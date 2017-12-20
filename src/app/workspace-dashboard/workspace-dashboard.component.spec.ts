@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkspaceDashboardComponent } from './workspace-dashboard.component';
 
-describe('WorkspaceDashboardComponent', () => {
+xdescribe('WorkspaceDashboardComponent', () => {
   let component: WorkspaceDashboardComponent;
   let fixture: ComponentFixture<WorkspaceDashboardComponent>;
 
