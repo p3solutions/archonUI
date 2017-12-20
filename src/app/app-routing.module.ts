@@ -9,20 +9,29 @@ import { HeaderTabComponent } from './header-tab/header-tab.component';
 import { Component } from '@angular/core/src/metadata/directives';
 import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
 import { MemberRequestComponent } from './member-request/member-request.component';
+import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
+import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
+import { ManageMembersComponent } from './manage-members/manage-members.component';
 
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
-        path: 'workspace-info', component: HeaderTabComponent
+        path: 'no-workspace', component: NoWorkspaceComponent
       },
       {
-        path: 'workspace-panel', component: WorkspacePanelComponent, children: [
+        path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
+          {
+            path: 'workspace-info', component: WorkspaceInfoComponent
+          },
           {
             path: 'member-request', component: MemberRequestComponent
+          },
+          {
+            path: 'manage-members', component: ManageMembersComponent
           }
         ]
-      }
+      },
     ]
   },
   {
