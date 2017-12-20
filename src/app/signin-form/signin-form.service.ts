@@ -1,33 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
+
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { Signin } from './signin';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import { Forgotpassword } from './forgotpassword';
+import { Signin } from '../signin';
 
 @Injectable()
-export class SignInService {
+export class SigninFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  private signinUrl = 'http://13.58.89.64:9000/auth/login';
+
   constructor(private http: HttpClient) { }
-  // The URL to the API
-  signinUrl = 'api/signin';
-  forgotPasswordUrl = 'api/forgotpassword';
+
   signIn(signin_info: Signin): Observable<Signin> {
-    console.log(signin_info);
-    return this.http.post<Signin>(this.signinUrl, signin_info, { headers: this.headers }).pipe(
-      catchError(this.handleError<Signin>('signin'))
-    );
-  }
-  forgotPassword(forgotpassword_info: Forgotpassword): Observable<Signin> {
-    console.log(forgotpassword_info);
-    return this.http.post<Signin>(this.forgotPasswordUrl, forgotpassword_info, { headers: this.headers }).pipe(
-      catchError(this.handleError<Signin>('forgotpassword'))
-    );
+    return this.http.post<Signin>(this.signinUrl, signin_info, { headers: this.headers });
   }
 
   /**
@@ -54,3 +43,4 @@ export class SignInService {
     console.log(message);
   }
 }
+

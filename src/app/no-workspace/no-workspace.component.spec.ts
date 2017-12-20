@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ForgotpasswordFormComponent } from './forgotpassword-form.component';
+import { NoWorkspaceComponent } from './no-workspace.component';
 
-xdescribe('ForgotpasswordFormComponent', () => {
-  let component: ForgotpasswordFormComponent;
-  let fixture: ComponentFixture<ForgotpasswordFormComponent>;
+describe('NoWorkspaceComponent', () => {
+  let component: NoWorkspaceComponent;
+  let fixture: ComponentFixture<NoWorkspaceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForgotpasswordFormComponent ]
+      declarations: [ NoWorkspaceComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ForgotpasswordFormComponent);
+    fixture = TestBed.createComponent(NoWorkspaceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

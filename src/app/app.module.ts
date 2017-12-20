@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -13,8 +14,18 @@ import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspac
 import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { SignInService } from './sign-in.service';
-
+import { AuthModule } from './/auth.module';
+import { DataTablesModule } from 'angular-datatables';
+import { SigninFormService } from './signin-form/signin-form.service';
+import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
+import { AuthenticationService } from './authentication/authentication.service';
+import { JwtHelper } from 'angular2-jwt';
+import { WorkspaceHeaderComponent } from './workspace-header/workspace-header.component';
+import { WorkspaceHeaderInfoComponent } from './workspace-header-info/workspace-header-info.component';
+import { WorkspaceMgmtPanelComponent } from './workspace-mgmt-panel/workspace-mgmt-panel.component';
+import { UserWorkspaceService } from './user-workspace.service';
+import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
+import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
 
 @NgModule({
   declarations: [
@@ -23,14 +34,35 @@ import { SignInService } from './sign-in.service';
     LandingPageComponent,
     WorkspaceLandingPageComponent,
     SigninFormComponent,
-    ForgotpasswordFormComponent
+    ForgotpasswordFormComponent,
+    WorkspaceHeaderComponent,
+    WorkspaceHeaderInfoComponent,
+    WorkspaceMgmtPanelComponent,
+    WorkspaceDashboardComponent,
+    NoWorkspaceComponent
   ],
   imports: [
-    BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ), AppRoutingModule
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService,
+      { dataEncapsulation: false }
+    ),
+    AppRoutingModule,
+    AuthModule,
+    DataTablesModule,
+    ReactiveFormsModule
   ],
-  providers: [InMemoryDataService, InfoService, SignInService],
+  providers: [
+    JwtHelper,
+    InMemoryDataService,
+    InfoService,
+    SigninFormService,
+    ForgotpasswordFormService,
+    AuthenticationService,
+    UserWorkspaceService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
