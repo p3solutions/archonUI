@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { SigninFormService } from './signin-form.service';
 
-xdescribe('SigninFormService', () => {
+describe('SigninFormService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [SigninFormService]

@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { ForgotpasswordFormService } from './forgotpassword-form.service';
 
-xdescribe('ForgotpasswordFormService', () => {
+describe('ForgotpasswordFormService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ForgotpasswordFormService]
