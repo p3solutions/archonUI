@@ -30,6 +30,9 @@ const routes: Routes = [
           },
           {
             path: 'manage-members', component: ManageMembersComponent
+          },
+          {
+            path: 'manage-master-metadata', component: ManageMasterMetadataComponent
           }
         ]
       },
