@@ -15,7 +15,6 @@ export class InMemoryDataService implements InMemoryDbService {
       const signin_info = reqInfo.utils.getJsonBody(reqInfo.req) || {};
       console.log(signin_info);
     }
-    const forgotpassword = { email: '' };
 
     const workspace1 = {
       id: 123,
@@ -34,11 +33,11 @@ export class InMemoryDataService implements InMemoryDbService {
       users: [11, 12, 13] // user-ids --> info.id
     };
     const userWorkspaces = [
-        workspace1,
-        workspace2,
-        workspace1,
-        workspace2
-      ];
+      workspace1,
+      workspace2,
+      workspace1,
+      workspace2
+    ];
     const userWorkspaces2 = [
       workspace2,
       workspace1,
@@ -49,6 +48,23 @@ export class InMemoryDataService implements InMemoryDbService {
       12: userWorkspaces2
     };
     const currentWorkspace = workspace1;
-    return { info, signin, forgotpassword, workspaceList, currentWorkspace };
+    const workspaceinfo = {
+      name: 'Frontend Developer', owner: 'Platform3Solutions', approver: 'User1, User2',
+      members: 'User1, User2, User3', your_role: 'Admin', master_metadata_version: '22'
+    };
+    const managemembers = [{ sl_no: '1', member: '2.0', role: 'need to be filled', },
+    { sl_no: '2', member: '2.0', role: 'need to be filled' },
+    { sl_no: '3', member: '2.0', role: 'need to be filled' },
+    { sl_no: '4', member: '2.0', role: 'need to be filled' },
+    { sl_no: '5', member: '2.0', role: 'need to be filled' }];
+    const memberrequest = [
+      { slNo: '1', masterVersion: '1.01', description: 'Null', requestedDate: '20/11/2017 04.05 PM', requestedBy: 'Member 1' },
+      { slNo: '2', masterVersion: '1.46', description: 'Null', requestedDate: '20/11/2017 04.05 PM', requestedBy: 'Member 2' },
+      { slNo: '3', masterVersion: '2.46', description: 'Null', requestedDate: '20/11/2017 04.05 PM', requestedBy: 'Member 3' },
+      { slNo: '4', masterVersion: '3.00', description: 'Null', requestedDate: '20/11/2017 04.05 PM', requestedBy: 'Member 4' },
+      { slNo: '5', masterVersion: '4.69', description: 'Null', requestedDate: '20/11/2017 04.05 PM', requestedBy: 'Member 5' }
+    ];
+    const forgotpassword = { email: '' };
+    return { info, signin, forgotpassword, workspaceinfo, managemembers, workspaceList, currentWorkspace, memberrequest };
   }
 }

@@ -8,12 +8,14 @@ import { InfoService } from '../info.service';
   styleUrls: ['./workspace-landing-page.component.css']
 })
 export class WorkspaceLandingPageComponent implements OnInit {
+  manageMembersFlagVal = false;
 
   info: Info;
   constructor(private infoservice: InfoService) { }
   ngOnInit() {
     this.getInfo();
   }
+
   // Get information from the info service
   getInfo(): void {
     this.infoservice.getinfo(this.infoservice.infoUrl).subscribe(info => {
