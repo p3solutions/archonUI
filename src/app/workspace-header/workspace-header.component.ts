@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkSpaceHeaderInfo } from '../WorkSpaceHeaderInfo';
+import {  } from '../info';
 
 @Component({
   selector: 'app-workspace-header',
@@ -26,6 +27,20 @@ export class WorkspaceHeaderComponent implements OnInit {
     this.userWorkspaceService.getUserWorkspaceList().subscribe(data => {
       this.userWorkspaceArray = data[id];
     });
+  }
+
+  onChangeDropdown(selected: any) {
+    switch (selected[0].id) {
+      case 'contactAdmin':
+        this.contactAdmin();
+        break;
+      case 'createWorkspace':
+        this.createNewWorkspace();
+        break;
+      default:
+        this.selectWorkspace(selected[0].id);
+        break;
+    }
   }
 
   contactAdmin() {
