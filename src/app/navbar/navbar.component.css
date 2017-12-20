@@ -1,4 +1,4 @@
-.nav-custom {
+#custom-nav {
   background-color: #269af8;
   margin-bottom: 0px;
 }
@@ -17,9 +17,11 @@
 }
 .user-menu,
 .user-menu .dropdown-menu {
-  /* default .dropdown-menu css has min-width:160px, hence overriding */
-  min-width: 108px;
   max-width: 108px;
+}
+/* default .dropdown-menu css has min-width:160px, hence overriding for max 10 letters width*/
+.user-menu .dropdown-menu {
+  min-width: 108px!important;
 }
 .user-menu li>a {
   width: 95px;
