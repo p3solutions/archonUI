@@ -1,41 +1,49 @@
+th,
+td {
+  text-align: center;
+}
 
-th,td{
-    text-align: center;
-}
-.table{
-    table-layout: fixed;
-    align : center;
-    width : 1100px; 
-}
 .icon-button {
-    color: red;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    outline: none;
-    border: 0;
-    background: transparent;
-}
-ul {
-    margin-top: 12px;
-    margin-bottom: 10px;
-    float: left;
-}
-td{
-    font-size: 14px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-th {
-    font-size: 15px;
-}
-a {
-    /* color: black; */
-    font-size: 17px;
-    font-family: Arial;
+  color: red;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  border: 0;
+  background: transparent;
 }
 
-table {
-    margin-left: 40px;
-    width:93%;
-    text-align: left;
+ul {
+  margin-top: 12px;
+  margin-bottom: 10px;
+  float: left;
+}
+
+td {
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+th {
+  font-size: 15px;
+}
+
+a {
+  /* color: black; */
+  font-size: 17px;
+  font-family: Arial;
+}
+
+.back-arrow {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 25px;
+}
+
+.workspace-panel-content {
+  padding: 30px;
+  margin: 0 30px 0 30px;
+}
+
+.workspace-panel-heading {
+  text-align: left;
 }
