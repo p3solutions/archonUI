@@ -35,7 +35,13 @@ p {
 }
 
 
+/* input {
+  border-radius: 2px;
+} */
+
+
 /* Custom default button */
+
 .btn {
   border-radius: 2px;
 }
@@ -151,7 +157,7 @@ body {
   /* top: 45%; */
   width: 100%;
   /* position: fixed; */
-    margin: 10% 0;  
+  margin: 10% 0;
 }
 
 .cover .btn-lg {
@@ -271,8 +277,8 @@ body {
   color: #fff;
   background-color: #269af8;
   border-color: #269af8;
-  padding-right: 23%;
-  padding-left: 23%;
+  padding-right: 42px;
+  padding-left: 42px;
 }
 
 .btn-primary:hover {
@@ -349,6 +355,7 @@ footer {
 .alert {
   border-radius: 2px;
 }
+
 .trim-text {
   display: inline-block;
   white-space: nowrap;
@@ -362,9 +369,21 @@ footer {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .fl-l {
   float: left;
 }
+
 .fl-r {
   float: right;
 }
+
+input[type=search] {
+  -webkit-appearance: searchfield;
+}
+
+
+/* Data tables */
+
+
+/* Data tabes end */
