@@ -38,9 +38,6 @@ describe('ManageMembersComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-<<<<<<< HEAD
-      declarations: [ManageMembersComponent]
-=======
       imports: [
         HttpClientModule,
         HttpClientTestingModule
@@ -50,7 +47,6 @@ describe('ManageMembersComponent', () => {
         ManageMembersService,
         HttpClientModule
       ],
->>>>>>> 136dce71c2d55bc40c1943af9e6185b372fee765
     })
       .compileComponents();
   }));
@@ -87,9 +83,5 @@ describe('ManageMembersComponent', () => {
     // btn.triggerEventHandler('click', null);
     expect(component.onDelete).toBeTruthy();
   });
-<<<<<<< HEAD
-=======
-
->>>>>>> 136dce71c2d55bc40c1943af9e6185b372fee765
 });
 
