@@ -13,6 +13,7 @@ import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
 import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
+import { SignupFormComponent } from './signup-form/signup-form.component';
 
 const routes: Routes = [
   {
@@ -66,10 +67,14 @@ const routes: Routes = [
       {
         path: '', redirectTo: '/sign-in', pathMatch: 'full'
       }
+      ,
+       {
+        path: 'sign-up', component: SignupFormComponent,
+      }
       , {
         path: 'sign-in', component: SigninFormComponent
       }, {
-        path: 'forgot-password', component: ForgotpasswordFormComponent
+        path: 'forgot-password', component: ForgotpasswordFormComponent,
       }
     ]
   }

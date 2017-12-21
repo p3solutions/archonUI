@@ -6,24 +6,18 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-import { Signin } from '../signin';
+import { Signup } from '../signup';
 
 @Injectable()
-export class SigninFormService {
+export class SignupFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private signinUrl = 'http://13.58.89.64:9000/auth/login';
+  private signupUrl = 'http://13.58.89.64:9000/user';
 
   constructor(private http: HttpClient) { }
-  signIn(signin_info: Signin): Observable<Signin> {
-    return this.http.post<Signin>(this.signinUrl, signin_info, { headers: this.headers });
+  signIn(signup_info: Signup): Observable<Signup> {
+    return this.http.post<Signup>(this.signupUrl, signup_info, { headers: this.headers });
   }
 
-  /*
- * Handle Http operation that failed.
- * Let the app continue.
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
@@ -42,4 +36,3 @@ export class SigninFormService {
     console.log(message);
   }
 }
-

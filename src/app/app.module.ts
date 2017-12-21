@@ -20,6 +20,7 @@ import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpasswor
 import { AppRoutingModule } from './/app-routing.module';
 import { AuthModule } from './/auth.module';
 import { SigninFormService } from './signin-form/signin-form.service';
+import { SignupFormService } from './signup-form/signup-form.service';
 import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
 import { AuthenticationService } from './authentication/authentication.service';
 import { WorkspaceHeaderComponent } from './workspace-header/workspace-header.component';
@@ -84,6 +85,7 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
     InMemoryDataService,
     InfoService,
     SigninFormService,
+    SignupFormService,
     ForgotpasswordFormService,
     AuthenticationService,
     UserWorkspaceService,
