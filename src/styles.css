@@ -382,6 +382,21 @@ input[type=search] {
   -webkit-appearance: searchfield;
 }
 
+.back-arrow {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 25px;
+}
+
+.workspace-panel-content {
+  padding: 30px;
+  margin: 0 30px 0 30px;
+}
+
+.workspace-panel-heading {
+  text-align: left;
+}
+
 
 /* Data tables */
 

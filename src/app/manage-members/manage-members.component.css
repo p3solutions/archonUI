@@ -14,13 +14,6 @@ a {
     font-family: Arial;
 }
 
-table {
-    margin-top: 20px;
-    margin-left: 40px;
-    width:93%;
-    /* text-align: left; */
-}
-
 span,i {
         cursor: pointer;
 }
