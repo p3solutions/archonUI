@@ -1,6 +1,5 @@
 export interface ManageMembers {
-    slNo: string;
-    version: string;
-    description: string;
-    createdDate: string;
+    sl_no: string;
+    member: string;
+    role: string;
 }

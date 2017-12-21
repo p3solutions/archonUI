@@ -41,6 +41,8 @@ import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.compo
 import { HeaderPanelComponent } from './header-panel/header-panel.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
+import { HttpClient } from 'selenium-webdriver/http';
+
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import { WorkspaceServicesComponent } from './workspace-services/workspace-servi
     WorkspaceServicesComponent
   ],
   imports: [
+    HttpClient,
     BrowserModule,
     FormsModule,
     HttpClientModule,
