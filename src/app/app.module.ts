@@ -40,6 +40,7 @@ import { ManageMasterMetadataService } from './manage-master-metadata.service';
 import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
 import { HeaderPanelComponent } from './header-panel/header-panel.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
+import { SignupFormComponent } from './signup-form/signup-form.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-m
     WorkspacePanelComponent,
     HeaderPanelComponent,
     HeaderPanelComponent,
-    ManageMasterMetadataComponent
+    ManageMasterMetadataComponent,
+    SignupFormComponent
   ],
   imports: [
     BrowserModule,
