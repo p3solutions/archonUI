@@ -36,7 +36,7 @@ export class ManageMasterMetadataComponent implements OnInit {
     this.manage_Master_MetadataService.removeManageMasterData(obj).subscribe();
   }
   gotoDashboard() {
-    this.router.navigate(['/workspace']);
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
 }
