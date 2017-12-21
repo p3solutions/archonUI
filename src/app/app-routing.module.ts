@@ -13,6 +13,7 @@ import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
 import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
+import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,12 @@ const routes: Routes = [
       },
       {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
+          {
+            path: '', redirectTo: 'workspace-services', pathMatch: 'full'
+          },
+          {
+            path: 'workspace-services', component: WorkspaceServicesComponent
+          },
           {
             path: 'workspace-info', component: WorkspaceInfoComponent
           },
@@ -38,6 +45,26 @@ const routes: Routes = [
       },
     ]
   },
+  {
+    path: '', component: LandingPageComponent, children: [
+      {
+        path: '', redirectTo: '/sign-in', pathMatch: 'full'
+      }
+      , {
+        path: 'sign-in', component: SigninFormComponent
+      }, {
+        path: 'forgot-password', component: ForgotpasswordFormComponent
+      }
+    ]
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
 // , data : {title : 'Manage Member Request for Approvals'}
 // const routes: Routes = [
 //   { path: 'workspace', component: WorkspaceLandingPageComponent, children : [
@@ -58,25 +85,3 @@ const routes: Routes = [
 //       ]
 //     }
 //   ] },
-
-
-
-  {
-    path: '', component: LandingPageComponent, children: [
-      {
-        path: '', redirectTo: '/sign-in', pathMatch: 'full'
-      }
-      , {
-        path: 'sign-in', component: SigninFormComponent
-      }, {
-        path: 'forgot-password', component: ForgotpasswordFormComponent
-      }
-    ]
-  }
-];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
