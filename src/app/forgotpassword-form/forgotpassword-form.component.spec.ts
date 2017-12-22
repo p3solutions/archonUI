@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ForgotpasswordFormComponent } from './forgotpassword-form.component';
-import { SignInService } from '../sign-in.service';
+import { ForgotpasswordFormService } from './forgotpassword-form.service';
 import { HttpClient } from 'selenium-webdriver/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -18,11 +18,10 @@ xdescribe('ForgotpasswordFormComponent', () => {
   let component: ForgotpasswordFormComponent;
   let fixture: ComponentFixture<ForgotpasswordFormComponent>;
   // tslint:disable-next-line:prefer-const
-  let manageMemberInfoData: ManageMembers;
+  // let manageMemberInfoData: ManageMembers;
   let de: DebugElement;
-  let btn: DebugElement;
-  let ManageMembersInfoTag: HTMLElement;
-  let manageMembersService: any;
+  let input: HTMLElement;
+  let forgotpasswordFormService: any;
 
 
   beforeEach(async(() => {
@@ -36,7 +35,7 @@ xdescribe('ForgotpasswordFormComponent', () => {
       ],
       declarations: [ForgotpasswordFormComponent],
       providers: [
-        SignInService,
+        ForgotpasswordFormService,
         HttpClientModule
       ],
     })
@@ -46,16 +45,15 @@ xdescribe('ForgotpasswordFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ForgotpasswordFormComponent);
     component = fixture.componentInstance;
-    // de = fixture.debugElement.query(By.css('#manage-members-info-table'));
-    let input = fixture.debugElement.query(By.css('input'));
-    // ManageMembersInfoTag = de.nativeElement;
-    manageMembersService = TestBed.get(SignInService);
+    de = fixture.debugElement.query(By.css('input'));
+    input = de.nativeElement;
+    forgotpasswordFormService = TestBed.get(ForgotpasswordFormService);
   });
 
   it('Should work onForgotPassword functionality', () => {
     // let btn = fixture.debugElement.query(By.css('button'));
     // btn.triggerEventHandler('click', null);
-    console.log('forgot pass', this.input);
+    console.log('forgot pass', input);
     expect(component.onForgotPassword).toBeTruthy();
   });
 

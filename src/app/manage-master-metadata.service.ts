@@ -14,7 +14,7 @@ export class ManageMasterMetadataService {
 
   manage_master_metadataUrl = 'api/master_metadata';
 
-  
+
   constructor(private http: HttpClient) { }
 
 
@@ -23,7 +23,7 @@ export class ManageMasterMetadataService {
       catchError(this.handleError('master-meta data', []))
     );
   }
-   removeManageMasterData(manageMasterObj : Manage_Master_Metadata | number) : Observable<Manage_Master_Metadata>{
+   removeManageMasterData(manageMasterObj: Manage_Master_Metadata | number): Observable<Manage_Master_Metadata> {
     const slNo = typeof manageMasterObj === 'number' ? manageMasterObj : manageMasterObj.slNo;
     const url = '${this.manage_master_metadataUrl}/${slNo}';
     return this.http.delete<Manage_Master_Metadata>(url).pipe(
