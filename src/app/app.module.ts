@@ -37,7 +37,9 @@ import { MemberRequestComponent } from './member-request/member-request.componen
 import { MemberRequestService } from './member-request.service';
 import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
 import { HeaderPanelComponent } from './header-panel/header-panel.component';
-
+import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component'; 
+import { EnterNewpasswordService } from './enter-newpassword/enter-newpassword.service';
+import { EqualValidator } from './enter-newpassword/equal-validator.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,9 @@ import { HeaderPanelComponent } from './header-panel/header-panel.component';
     ManageMembersComponent,
     MemberRequestComponent,
     WorkspacePanelComponent,
-    HeaderPanelComponent
+    HeaderPanelComponent,
+    EnterNewpasswordComponent,
+    EqualValidator
   ],
   imports: [
     BrowserModule,
@@ -82,7 +86,8 @@ import { HeaderPanelComponent } from './header-panel/header-panel.component';
     UserWorkspaceService,
     WorkspaceinfoService,
     ManageMembersService,
-    MemberRequestService
+    MemberRequestService,
+    EnterNewpasswordService
   ],
   bootstrap: [AppComponent]
 })
