@@ -38,12 +38,11 @@ export class SignupFormComponent implements OnInit {
 
   onSignUp() {
     this.signup = this.signUpForm.value;
-    console.log('alo5tg5trbght5rhb5rtg4tg4et5g45gt5k');
     this.signupService.signIn(this.signup).subscribe(
       data => {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
-        console.log('patratu', this.responseData);
+        console.log(this.responseData);
         this.router.navigate(['/sign-in']);
       },
       (err: HttpErrorResponse) => {

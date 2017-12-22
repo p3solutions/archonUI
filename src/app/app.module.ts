@@ -78,7 +78,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
     AuthModule,
     DataTablesModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    FormsModule
   ],
   providers: [
     JwtHelper,
