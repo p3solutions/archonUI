@@ -11,6 +11,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class ManageMembersComponent implements OnInit {
 
   manageMembersRequestData: ManageMembers[];
+  isAvailable = false;
 
   constructor(
     private manageMembersService: ManageMembersService,
@@ -27,6 +28,7 @@ export class ManageMembersComponent implements OnInit {
     this.manageMembersService.getManageMembersDetails()
       .subscribe(data => {
         this.manageMembersRequestData = data;
+        this.isAvailable = true;
       });
      console.log('manage-members-component', this.manageMembersRequestData);
   }

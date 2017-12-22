@@ -1,26 +1,49 @@
-<div id="member-request">
-  <table id="member-request-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-    <thead>
-      <tr>
-        <th>SL.No</th>
-        <th>Master Version</th>
-        <th>Description</th>
-        <th>Requested Date</th>
-        <th>Requested By</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let rec of this.memberRequestData">
-        <td class="mem-req-data">{{rec.slNo}}</td>
-        <td class="mem-req-data">{{rec.masterVersion}}</td>
-        <td class="mem-req-data">{{rec.description}}</td>
-        <td class="mem-req-data">{{rec.requestedDate}}</td>
-        <td class="mem-req-data">{{rec.requestedBy}}</td>
-        <td>
-          <a href="#">Details</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-1 back-arrow">
+        <a (click)="gotoDashboard()">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        </a>
+      </div>
+      <div class="col-md-8">
+        <h3 class="workspace-panel-heading">
+          Member Request
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div id="member-request" class="workspace-panel-content">
+      <table datatable id="member-request-table" class="table table-hover table-bordered" *ngIf="isAvailable">
+        <thead>
+          <tr>
+            <th>SL.No</th>
+            <th>Master Version</th>
+            <th>Description</th>
+            <th>Requested Date</th>
+            <th>Requested By</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rec of this.memberRequestData">
+            <td class="mem-req-data">{{rec.slNo}}</td>
+            <td class="mem-req-data">{{rec.masterVersion}}</td>
+            <td class="mem-req-data">{{rec.description}}</td>
+            <td class="mem-req-data">{{rec.requestedDate}}</td>
+            <td class="mem-req-data">{{rec.requestedBy}}</td>
+            <td>
+              <a href="#">Details</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="workspace-panel-content">
+      <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
+    </div>
+  </div>
 </div>
