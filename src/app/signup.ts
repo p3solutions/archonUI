@@ -1,5 +1,5 @@
 export class Signup {
-    fullName = '';
+    name = '';
     emailAddress = '';
     password = '';
 }

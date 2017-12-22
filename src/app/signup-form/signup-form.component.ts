@@ -15,27 +15,51 @@ import { AuthenticationService } from '../authentication/authentication.service'
 export class SignupFormComponent implements OnInit {
   signup: Signup;
   signUpForm: FormGroup;
+  responseData: any;
+  errorObject: ErrorObject;
 
   constructor(
     private signupService: SignupFormService,
     private authenticationService: AuthenticationService,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.createSignUpForm();
   }
   createSignUpForm() {
     this.signUpForm = new FormGroup({
-      fullName: new FormControl('', [Validators.required])
+      name: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required])
-      confirmPassword: new FormControl('', [Validators.required])
+      password: new FormControl('', [Validators.required]),
+      // confirmPassword: new FormControl('', [Validators.required])
     });
-  // isPasswordMatch() {
+  }
 
-  // }
-  //   onSignUp() {
-
-  //   }
+  onSignUp() {
+    this.signup = this.signUpForm.value;
+    console.log('alo5tg5trbght5rhb5rtg4tg4et5g45gt5k');
+    this.signupService.signIn(this.signup).subscribe(
+      data => {
+        this.responseData = data;
+        // this.authenticationService.authenticateHelper(this.responseData.data._x);
+        console.log('patratu', this.responseData);
+        this.router.navigate(['/sign-in']);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('An error occurred:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          this.errorObject = new ErrorObject;
+          this.errorObject.message = err.error.message;
+          this.errorObject.show = !err.error.success;
+          console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
+        }
+      }
+    );
+  }
 }
+
