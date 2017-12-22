@@ -1,70 +1,91 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { Workspaceinfo } from '../workspaceinfo';
 import { WorkspaceInfoComponent } from './workspace-info.component';
 import { WorkspaceinfoService } from '../workspaceinfo.service';
 
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
-// describe('WorkspaceInfoComponent', () => {
-//   let component: WorkspaceInfoComponent;
-//   let fixture: ComponentFixture<WorkspaceInfoComponent>;
-//   // tslint:disable-next-line:prefer-const
-//    let workInfoData: Workspaceinfo;
-
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       imports: [ HttpClientTestingModule ],
-//       providers: [WorkspaceinfoService],
-//       declarations: [ WorkspaceInfoComponent ]
-//     })
-//     .compileComponents();
-//   }));
-
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(WorkspaceInfoComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   describe('getworkinfo()', () => {
-//       it('should return an Observable data for workspace-info component',
-//         inject( [WorkspaceinfoService], (workspaceInfoService) => {
-//           workspaceInfoService.getworkinfo().subscribe(workspaceInfoData => {
-//             console.log('testing-testing ', this.workspaceInfoData);
-//           });
-//         }));
-//     });
-// });
-
+import { Observable } from 'rxjs/Observable';
 
 describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
   let fixture: ComponentFixture<WorkspaceInfoComponent>;
   // tslint:disable-next-line:prefer-const
-   let workInfoData: Workspaceinfo;
+  let workInfoData: Workspaceinfo;
+  let de: DebugElement;
+  let WorkspaceInfoTag: HTMLElement;
+  let workspaceinfoService: any;
+  const managemembers1: any = {
+    name: 'Frontend Developer', owner: 'Platform3Solutions', approver: 'User1, User2',
+    members: 'User1, User2, User3', your_role: 'Admin', master_metadata_version: '22'
+  };
+  const simpleObservable = new Observable<Workspaceinfo>((observer) => {
+    // observable execution
+    observer.next(managemembers1);
+    observer.complete();
+  });
+  let disposeMe;
+  const getworkinfo = function (): Observable<Workspaceinfo> {
+    disposeMe = simpleObservable.subscribe();
+    return simpleObservable;
+  };
 
   beforeEach(async(() => {
+
     TestBed.configureTestingModule({
-       imports: [ HttpClientTestingModule ],
-       providers: [WorkspaceinfoService],
-      declarations: [ WorkspaceInfoComponent ]
+      imports: [
+        HttpClientModule,
+        HttpClientTestingModule
+      ],
+      declarations: [WorkspaceInfoComponent],
+      providers: [
+        WorkspaceinfoService,
+        HttpClientModule
+      ],
     })
-    .compileComponents();
+      .compileComponents();
+    console.log('changed');
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkspaceInfoComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    de = fixture.debugElement.query(By.css('#workspace-info-table'));
+    WorkspaceInfoTag = de.nativeElement;
+    workspaceinfoService = TestBed.get(WorkspaceinfoService);
   });
 
-  describe('getworkinfo()', () => {
-      it('should return an Observable data for workspace-info component',
-        inject( [WorkspaceinfoService], (workspaceInfoService) => {
-          workspaceInfoService.getworkinfo().subscribe(workspaceInfoData => {
-            console.log('testing-testing ', workspaceInfoData);
-          });
-        }));
-    });
-});
+  it('Should create Workspace_Info tag', () => {
+    expect(component).toBeTruthy();
+  });
 
+  it('Should display the observable data for workspace-info componenet', () => {
+    const row1Array: NodeListOf<Element> = WorkspaceInfoTag.querySelectorAll('.ws-info-data');
+    // while spying on real service, mocked info is returned
+    spyOn(workspaceinfoService, 'getworkinfo').and.returnValue(getworkinfo());
+    fixture.detectChanges();
+    console.log(row1Array, component.workspaceInfoData);
+    const name = row1Array[0];
+    const owner = row1Array[1];
+    const approver = row1Array[2];
+    const member = row1Array[3];
+    const role = row1Array[4];
+    const metadata_version = row1Array[5];
+    // console.log('alok', name);
+    // console.log('alok', owner);
+    // console.log('alok', approver);
+    // console.log('alok', member);
+    // console.log('alok', role);
+    // console.log('alok', metadata_version);
+    expect(name.textContent.trim()).toBe(component.workspaceInfoData.name);
+    expect(owner.textContent.trim()).toBe(component.workspaceInfoData.owner);
+    expect(approver.textContent.trim()).toBe(component.workspaceInfoData.approver);
+    expect(member.textContent.trim()).toBe(component.workspaceInfoData.members);
+    expect(role.textContent.trim()).toBe(component.workspaceInfoData.your_role);
+    expect(metadata_version.textContent.trim()).toBe(component.workspaceInfoData.master_metadata_version);
+
+  });
+
+});

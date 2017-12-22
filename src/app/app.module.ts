@@ -42,6 +42,7 @@ import { HeaderPanelComponent } from './header-panel/header-panel.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
