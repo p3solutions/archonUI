@@ -363,13 +363,6 @@ footer {
   text-overflow: ellipsis;
 }
 
-.trim-text {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .fl-l {
   float: left;
 }
