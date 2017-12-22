@@ -14,7 +14,7 @@ export class SignupFormService {
   private signupUrl = 'http://13.58.89.64:9000/user';
 
   constructor(private http: HttpClient) { }
-  signIn(signup_info: Signup): Observable<Signup> {
+  signUp(signup_info: Signup): Observable<Signup> {
     return this.http.post<Signup>(this.signupUrl, signup_info, { headers: this.headers });
   }
 

@@ -38,7 +38,7 @@ export class SignupFormComponent implements OnInit {
 
   onSignUp() {
     this.signup = this.signUpForm.value;
-    this.signupService.signIn(this.signup).subscribe(
+    this.signupService.signUp(this.signup).subscribe(
       data => {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);

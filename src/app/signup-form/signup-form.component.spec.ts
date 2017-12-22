@@ -3,8 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignupFormComponent } from './signup-form.component';
 import { SignupFormService } from './signup-form.service';
 import { ManageMembers } from '../managemembers';
-// import { WorkspaceInfoComponent } from './workspace-info.component';
-// import { WorkspaceinfoService } from '../workspaceinfo.service';
+
 import { ManageMembersService } from '../manage-members.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
@@ -17,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { JwtHelper } from 'angular2-jwt';
 import { SigninFormService } from '../signin-form/signin-form.service';
+import { Signup } from '../signup';
 
 describe('SignupFormComponent', () => {
   let component: SignupFormComponent;
@@ -24,21 +24,19 @@ describe('SignupFormComponent', () => {
   // tslint:disable-next-line:prefer-const
   let manageMemberInfoData: ManageMembers;
   let de: DebugElement;
-  let btn: DebugElement;
-  let ManageMembersInfoTag: HTMLElement;
   let signUpService: any;
-  const managemembers1: any = {
+  const signUpData: any = {
     name: '',
     emailAddress: '',
     password: ''
   };
-  const simpleObservable = new Observable<ManageMembers>((observer) => {
+  const simpleObservable = new Observable<Signup>((observer) => {
     // observable execution
-    observer.next(managemembers1);
+    observer.next(signUpData);
     observer.complete();
   });
   let disposeMe;
-  const getManageMembersData = function (): Observable<ManageMembers> {
+  const onSignUp = function (): Observable<Signup> {
     disposeMe = simpleObservable.subscribe();
     return simpleObservable;
   };
@@ -77,7 +75,25 @@ describe('SignupFormComponent', () => {
 
   });
 
-  
+  it('Should display the response for signup-form component', () => {
+    spyOn(signUpService, 'signUp').and.returnValue(onSignUp);
+    console.log(component.onSignUp);
+    // component.getManageMembersData();
+    fixture.detectChanges();
+    // const rowArray: NodeListOf<Element> = ManageMembersInfoTag.querySelectorAll('.mm-info-data');
+    // // while spying on real service, mocked info is returned
+    // console.log(rowArray[0], component.manageMembersRequestData);
+    // const sl_no = rowArray[0];
+    // const member = rowArray[1];
+    // const role = rowArray[2];
+
+    // expect(sl_no.textContent.trim()).toBe(component.manageMembersRequestData[0].sl_no);
+    // expect(member.textContent.trim()).toBe(component.manageMembersRequestData[0].member);
+    // expect(role.textContent.trim()).toBe(component.manageMembersRequestData[0].role);
+
+  });
+
+
   it('Should work the createSignUpForm() functionality', () => {
     expect(component.createSignUpForm).toBeTruthy();
   });
