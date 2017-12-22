@@ -17,7 +17,7 @@ export class WorkspaceInfoComponent implements OnInit {
 
   constructor(
     // private httpClient: HttpClient,
-    // private router: Router,
+    private router: Router,
     private workspaceinfoservice: WorkspaceinfoService
   ) {
     // this.getWorkspaceInfo();
@@ -32,6 +32,9 @@ export class WorkspaceInfoComponent implements OnInit {
       this.workspaceInfoData = data;
       console.log('testing ', this.workspaceInfoData);
     });
+  }
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
 
