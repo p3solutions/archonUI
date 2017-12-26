@@ -66,10 +66,10 @@ import { EqualValidator } from './enter-newpassword/equal-validator.directive';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService,
-      { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService,
+    //   { dataEncapsulation: false }
+    // ),
     AppRoutingModule,
     AuthModule,
     DataTablesModule,

@@ -15,7 +15,7 @@ export class EnterNewpasswordComponent implements OnInit {
 
   public passwordReset : PasswordReset;
   responseData : any;
-  newPasswordSetForm = new NewPasswordSetter('a3423343jdssjbs342j341k12b41h1m1Z','');
+  newPasswordSetForm = new NewPasswordSetter('','5a4225875912213155a7682a1139069490882931');
   errorObject: ErrorObject;  
   constructor( private passwordResetService : EnterNewpasswordService) { }
 
@@ -27,7 +27,7 @@ export class EnterNewpasswordComponent implements OnInit {
   }    
   onSubmit(pwd : string){
     console.log(pwd);
-    this.newPasswordSetForm.password = pwd;
+    this.newPasswordSetForm.password = this.passwordReset.password;
     this.passwordResetService.passwordReset(this.newPasswordSetForm).subscribe(
       data => {
         this.responseData = data;

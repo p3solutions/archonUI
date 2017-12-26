@@ -1,7 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EnterNewpasswordComponent } from './enter-newpassword.component';
-
 describe('EnterNewpasswordComponent', () => {
   let component: EnterNewpasswordComponent;
   let fixture: ComponentFixture<EnterNewpasswordComponent>;
