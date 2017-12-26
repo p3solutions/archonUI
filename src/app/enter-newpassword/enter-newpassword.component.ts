@@ -15,7 +15,7 @@ export class EnterNewpasswordComponent implements OnInit {
 
   public passwordReset : PasswordReset;
   responseData : any;
-  newPasswordSetForm = new NewPasswordSetter('','5a4225875912213155a7682a1139069490882931');
+  newPasswordSetForm = new NewPasswordSetter('','5a422b025912213155a768341140472627094608');
   errorObject: ErrorObject;  
   constructor( private passwordResetService : EnterNewpasswordService) { }
 
