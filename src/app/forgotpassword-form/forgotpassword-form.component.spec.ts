@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ForgotpasswordFormComponent } from './forgotpassword-form.component';
-import { SignInService } from '../sign-in.service';
 import { HttpClient } from 'selenium-webdriver/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -13,6 +12,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { ForgotpasswordFormService } from './forgotpassword-form.service';
 
 xdescribe('ForgotpasswordFormComponent', () => {
   let component: ForgotpasswordFormComponent;
@@ -36,7 +36,6 @@ xdescribe('ForgotpasswordFormComponent', () => {
       ],
       declarations: [ForgotpasswordFormComponent],
       providers: [
-        SignInService,
         HttpClientModule
       ],
     })
@@ -49,7 +48,7 @@ xdescribe('ForgotpasswordFormComponent', () => {
     // de = fixture.debugElement.query(By.css('#manage-members-info-table'));
     let input = fixture.debugElement.query(By.css('input'));
     // ManageMembersInfoTag = de.nativeElement;
-    manageMembersService = TestBed.get(SignInService);
+    manageMembersService = TestBed.get(ForgotpasswordFormService);
   });
 
   it('Should work onForgotPassword functionality', () => {
