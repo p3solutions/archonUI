@@ -17,6 +17,7 @@ export class SignupFormComponent implements OnInit {
   signUpForm: FormGroup;
   responseData: any;
   errorObject: ErrorObject;
+  msg= 100;
 
   constructor(
     private signupService: SignupFormService,
@@ -42,19 +43,23 @@ export class SignupFormComponent implements OnInit {
       data => {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
-        console.log(this.responseData);
+        console.log('data', this.responseData);
         this.router.navigate(['/sign-in']);
+        this.msg = 200;
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('An error occurred:', err.error.message);
+          // this.msg = err.error.message;
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
           this.errorObject.message = err.error.message;
           this.errorObject.show = !err.error.success;
+          this.msg = err.status;
+          console.log('chilllllllar', this.msg);
           console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }
       }
