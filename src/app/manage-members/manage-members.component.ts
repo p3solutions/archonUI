@@ -16,21 +16,18 @@ export class ManageMembersComponent implements OnInit {
   constructor(
     private manageMembersService: ManageMembersService,
     private router: Router
-  ) {
-    this.getManageMembersData();
-  }
+  ) { }
 
   ngOnInit() {
     this.getManageMembersData();
   }
-  getManageMembersData() {
 
+  getManageMembersData() {
     this.manageMembersService.getManageMembersDetails()
       .subscribe(data => {
         this.manageMembersRequestData = data;
         this.isAvailable = true;
       });
-     console.log('manage-members-component', this.manageMembersRequestData);
   }
 
   onDelete(e: any): void {
@@ -41,6 +38,5 @@ export class ManageMembersComponent implements OnInit {
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
-
 
 }

@@ -28,10 +28,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of this.manageMembersRequestData; let i = index">
-            <td class="mm-info-data">{{this.manageMembersRequestData[i]['sl_no']}}</td>
-            <td class="mm-info-data">{{this.manageMembersRequestData[i]['member']}}</td>
-            <td class="mm-info-data">{{this.manageMembersRequestData[i]['role']}}</td>
+          <tr *ngFor="let data of manageMembersRequestData; let i = index">
+            <td class="mm-info-data">{{manageMembersRequestData[i]['sl_no']}}</td>
+            <td class="mm-info-data">{{manageMembersRequestData[i]['member']}}</td>
+            <td class="mm-info-data">{{manageMembersRequestData[i]['role']}}</td>
             <td>
               <a href="">
                 Manage Priviliges
@@ -44,7 +44,7 @@
               <span class="glyphicon glyphicon-pencil"></span>
             </td>
             <td>
-              <span (click)="onDelete(i)" class="glyphicon glyphicon-trash icon-button"></span>
+              <span (click)="onDelete(i)" class="del-member-info glyphicon glyphicon-trash icon-button"></span>
             </td>
           </tr>
         </tbody>
