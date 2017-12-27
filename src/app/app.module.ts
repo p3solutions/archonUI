@@ -44,6 +44,7 @@ import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-m
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
+import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.service';
 
 
 @NgModule({
@@ -75,10 +76,10 @@ import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService,
-    //   { dataEncapsulation: false }
-    // ),
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService,
+      { dataEncapsulation: false }
+    ),
     AppRoutingModule,
     AuthModule,
     DataTablesModule,
@@ -98,7 +99,8 @@ import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.
     WorkspaceinfoService,
     ManageMembersService,
     MemberRequestService,
-    ManageMasterMetadataService
+    ManageMasterMetadataService,
+    ManageUserRolesService
   ],
   bootstrap: [AppComponent]
 })

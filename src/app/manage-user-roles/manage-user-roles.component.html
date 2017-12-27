@@ -1,3 +1,50 @@
-<p>
-  manage-user-roles works!
-</p>
+
+<div class="workspace-header">
+  <div class="row">
+    <div class="col-md-3">
+      <!-- <ul class="nav nav-tabs mgmt-panel">
+        <li id="workspace-info-link" class="trim-text"> -->
+          <h4><a href="#" class="glyphicon glyphicon-arrow-left"></a><span>Manage User Roles</span></h4>
+        <!-- </li>
+      </ul> -->
+    </div>
+    <div class="col-md-9">
+      <!-- <ul class="nav nav-tabs mgmt-panel fl-r">
+        <li class="trim-text"> -->
+          <button type="submit" class="btn btn-primary">Invite New User</button>
+        <!-- </li>
+      </ul> -->
+    </div>
+  </div>
+  <div class="row">
+    <div id="manager-members" class="workspace-panel-content">
+      <table datatable id="manage-members-info-table" class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>SL.No</th>
+            <th>Name</th>
+            <th>Email Address</th>
+            <th>Last Activity Time</th>
+            <th>Global Role</th>
+            <th>      </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of this.manageUserRolesRequestData; let i = index">
+            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['slNo']}}</td>
+            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['name']}}</td>
+            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['email']}}</td>
+            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['lastActivityTime']}}</td>
+            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['globalRole']}}</td>
+            <td>
+              <a href="">
+                Manage Priviliges
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
