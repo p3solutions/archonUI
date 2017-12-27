@@ -58,13 +58,13 @@ describe('WorkspaceInfoComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('getworkinfo()', () => {
-      it('should return an Observable data for workspace-info component',
-        inject( [WorkspaceinfoService], (workspaceInfoService) => {
-          workspaceInfoService.getworkinfo().subscribe(workspaceInfoData => {
-            console.log('testing-testing ', workspaceInfoData);
-          });
-        }));
-    });
+  // describe('getworkinfo()', () => {
+  //     it('should return an Observable data for workspace-info component',
+  //       inject( [WorkspaceinfoService], (workspaceInfoService) => {
+  //         workspaceInfoService.getworkinfo().subscribe(workspaceInfoData => {
+  //           console.log('testing-testing ', workspaceInfoData);
+  //         });
+  //       }));
+  //   });
 });
 

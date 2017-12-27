@@ -14,7 +14,7 @@ export class EnterNewpasswordService {
 
   constructor(private http : HttpClient) { }
 
-  passwordReset(newPasswordSetForm : NewPasswordSetter) : Observable<any>{
+  passwordReset(newPasswordSetForm : NewPasswordSetter) : Observable<NewPasswordSetter>{
      return this.http.post<NewPasswordSetter>(this.forgotPasswordUrl,newPasswordSetForm, { headers : this.headers});
   }
  /**
