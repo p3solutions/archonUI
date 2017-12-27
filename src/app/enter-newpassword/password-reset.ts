@@ -1,4 +1,4 @@
-export interface PasswordReset{
+export class PasswordReset{
     password : string;
     confirmPassword : string
 }

@@ -12,22 +12,21 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./enter-newpassword.component.css']
 })
 export class EnterNewpasswordComponent implements OnInit {
-
-  public passwordReset : PasswordReset;
   responseData : any;
-  newPasswordSetForm = new NewPasswordSetter('','5a422b025912213155a768341140472627094608');
+  newPasswordSetForm = new NewPasswordSetter('','');
   errorObject: ErrorObject;  
   constructor( private passwordResetService : EnterNewpasswordService) { }
-
+  passwordReset : PasswordReset = {
+    password : '',
+    confirmPassword : ''
+  }
   ngOnInit() {
-    this.passwordReset = {
-      password : '',
-      confirmPassword : ''
-    }
+    
   }    
-  onSubmit(pwd : string){
-    console.log(pwd);
+  onSubmit(){
+    this.newPasswordSetForm.resetKey = '5a422b025912213155a768341140472627094608';
     this.newPasswordSetForm.password = this.passwordReset.password;
+    console.log(JSON.stringify(this.newPasswordSetForm));
     this.passwordResetService.passwordReset(this.newPasswordSetForm).subscribe(
       data => {
         this.responseData = data;
