@@ -3,20 +3,27 @@ import { WorkspaceDashboardComponent } from './workspace-dashboard.component';
 import { WorkspaceHeaderComponent } from '../workspace-header/workspace-header.component';
 import { WorkspaceHeaderInfoComponent } from '../workspace-header-info/workspace-header-info.component';
 import { WorkspaceMgmtPanelComponent } from '../workspace-mgmt-panel/workspace-mgmt-panel.component';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { Router } from '@angular/router';
-// import { routes } from '../app-routing.module';
-// import { Location } from '@angular/common';
+import { UserWorkspaceService } from '../user-workspace.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-xdescribe('WorkspaceDashboardComponent', () => {
+describe('WorkspaceDashboardComponent', () => {
   let component: WorkspaceDashboardComponent;
   let fixture: ComponentFixture<WorkspaceDashboardComponent>;
-  // let location: Location;
-  // let router: Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      // imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        HttpClientModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        RouterTestingModule,
+        UserWorkspaceService,
+        HttpClientModule
+      ],
       declarations: [
         WorkspaceDashboardComponent,
         WorkspaceHeaderComponent,
@@ -28,11 +35,8 @@ xdescribe('WorkspaceDashboardComponent', () => {
   }));
 
   beforeEach(() => {
-    // router = TestBed.get(Router);
-    // location = TestBed.get(Location);
     fixture = TestBed.createComponent(WorkspaceDashboardComponent);
     component = fixture.componentInstance;
-    // router.initialNavigation();
     fixture.detectChanges();
   });
 
