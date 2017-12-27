@@ -24,12 +24,12 @@ describe('MemberRequestComponent', () => {
     { slNo: '4', masterVersion: '3.00', description: 'Null', requestedDate: '20/11/2017 04.05 PM', requestedBy: 'Member 4' },
     { slNo: '5', masterVersion: '4.69', description: 'Null', requestedDate: '20/11/2017 04.05 PM', requestedBy: 'Member 5' }
   ];
-  const simpleObservable = new Observable<MemberRequestData>((observer) => {
+  const simpleObservable = new Observable<MemberRequestData[]>((observer) => {
     observer.next(memberrequestMockData);
     observer.complete();
   });
   let disposeMe;
-  const getMemberRequest = function (): Observable<MemberRequestData> {
+  const getMemberRequest = function (): Observable<MemberRequestData[]> {
     disposeMe = simpleObservable.subscribe();
     return simpleObservable;
   };
@@ -45,23 +45,21 @@ describe('MemberRequestComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MemberRequestComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement.query(By.css('table'));
-    // console.log('&&&&7',component,de);
+    de = fixture.debugElement.query(By.css('#member-request'));
     memberRequestHTMLTag = de.nativeElement;
     memberRequestService = TestBed.get(MemberRequestService);
   });
-  // it('Should display the observable data for member-request component', () => {
-  //   spyOn(memberRequestService, 'getMemberRequestDetails').and.returnValue(getMemberRequest());
-  //   fixture.detectChanges();
-    // const rowArray: NodeListOf<Element> = memberRequestHTMLTag.querySelectorAll('.mem-req-data');
-    // console.log(rowArray[0], component.memberRequestData);
-    // const sl_no = rowArray[0];
-    // const masterVersion = rowArray[1];
-    // const description = rowArray[2];
-    // expect(sl_no.textContent.trim()).toBe(component.memberRequestData[0].siNo);
-    // expect(masterVersion.textContent.trim()).toBe(component.memberRequestData[0].masterVersion);
-    // expect(description.textContent.trim()).toBe(component.memberRequestData[0].description);
+  it('Should display the observable data for member-request component', () => {
+    spyOn(memberRequestService, 'getMemberRequestDetails').and.returnValue(getMemberRequest());
+    // fixture.detectChanges();
+    fixture.detectChanges();
+    const rowArray: NodeListOf<Element> = memberRequestHTMLTag.querySelectorAll('.mem-req-data');
+    const sl_no = rowArray[0];
+    const masterVersion = rowArray[1];
+    const description = rowArray[2];
+    expect(sl_no.textContent.trim()).toBe(component.memberRequestData[0].slNo);
+    expect(masterVersion.textContent.trim()).toBe(component.memberRequestData[0].masterVersion);
+    expect(description.textContent.trim()).toBe(component.memberRequestData[0].description);
 
-  // });
+  });
 });
-

@@ -13,6 +13,7 @@ import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
 import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
+import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 
 const routes: Routes = [
@@ -23,6 +24,12 @@ const routes: Routes = [
       },
       {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
+          {
+            path: '', redirectTo: 'workspace-services', pathMatch: 'full'
+          },
+          {
+            path: 'workspace-services', component: WorkspaceServicesComponent
+          },
           {
             path: 'workspace-info', component: WorkspaceInfoComponent
           },
@@ -39,29 +46,6 @@ const routes: Routes = [
       },
     ]
   },
-// , data : {title : 'Manage Member Request for Approvals'}
-// const routes: Routes = [
-//   { path: 'workspace', component: WorkspaceLandingPageComponent, children : [
-//     {
-//       path : 'workspace-panel', component : WorkspacePanelComponent, children : [
-//         {
-//           path : 'member-request',component : MemberRequestComponent, data :{title : 'Manage Member Request'}
-//         },
-//         {
-//           path : 'manage-members',component : MemberRequestComponent, data :{title : 'Manage members of ABC'}
-//         },
-//         {
-//           path : 'manage-master-metadata',component : ManageMasterMetadataComponent, data : {title : 'Manage Master metadata for ABC'}
-//         },
-//         {
-//           path : 'workspace-info',component : MemberRequestComponent, data : {title : 'Workspace Information'}
-//         }
-//       ]
-//     }
-//   ] },
-
-
-
   {
     path: '', component: LandingPageComponent, children: [
       {
@@ -85,3 +69,24 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+// , data : {title : 'Manage Member Request for Approvals'}
+// const routes: Routes = [
+//   { path: 'workspace', component: WorkspaceLandingPageComponent, children : [
+//     {
+//       path : 'workspace-panel', component : WorkspacePanelComponent, children : [
+//         {
+//           path : 'member-request',component : MemberRequestComponent, data :{title : 'Manage Member Request'}
+//         },
+//         {
+//           path : 'manage-members',component : MemberRequestComponent, data :{title : 'Manage members of ABC'}
+//         },
+//         {
+//           path : 'manage-master-metadata',component : ManageMasterMetadataComponent, data : {title : 'Manage Master metadata for ABC'}
+//         },
+//         {
+//           path : 'workspace-info',component : MemberRequestComponent, data : {title : 'Workspace Information'}
+//         }
+//       ]
+//     }
+//   ] },
