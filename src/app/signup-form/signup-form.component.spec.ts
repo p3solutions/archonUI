@@ -82,13 +82,7 @@ describe('SignupFormComponent', () => {
     expect(emailAddressDummy).toBe(component.responseData['emailAddress']);
     expect(passwordDummy).toBe(component.responseData['password']);
     console.log('Backened returned code', component.msg);
-    // if ((expect('aloktesting').toBe(component.responseData['name'])) &&
-    //   (expect('alok.user@test.com').toBe(component.responseData['emailAddress'])) &&
-    //   (expect('12345').toBe(component.responseData['12345']))) {
-    //   console.log();
-    // } else {
-    //   console.log('400 response from server');
-    // }
+   
   });
 
 
