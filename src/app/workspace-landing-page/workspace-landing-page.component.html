@@ -1,11 +1,8 @@
 <app-navbar></app-navbar>
-<div class="container-fluid site-wrapper">
-  <div class="row">
-    <h3 class="ws-title-position">Workspace
-      <i class="fa fa-info-circle " data-toggle="tooltip" data-placement="bottom" title="Workspace Info"></i>
-    </h3>
-  </div>
-
+<router-outlet></router-outlet>
+<!-- <app-workspace-dashboard></app-workspace-dashboard> -->
+<!-- <app-no-workspace></app-no-workspace> -->
+<!-- <div class="container-fluid site-wrapper">
   <div class="row">
     <div class="inner cover">
       <h1 class="cover-heading">No Workspace assigned for you</h1>
@@ -13,15 +10,10 @@
       <div *ngIf="info.show">
         <a href="#"><h1>Create a Workspace</h1></a>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="layoutfoot">
-      <div class="inner">
-        <p>Copyright of
-          <a href="https://platform3solutions.com/">Platform3Solutions.com</a>
-        </p>
+      <div>
+        <app-header-panel></app-header-panel>
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>
-</div>
+</div> -->

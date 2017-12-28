@@ -4,38 +4,27 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { Signin } from './signin';
-
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import { Forgotpassword } from './forgotpassword';
-
+import 'rxjs/add/operator/do';
+import { MemberRequestData } from './member-request-data';
 @Injectable()
-export class SignInService {
+export class MemberRequestService {
+
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  memberRequestUrl = 'api/memberrequest';
   constructor(private http: HttpClient) { }
-  // The URL to the API
-  signinUrl = 'api/signin';
-  forgotPasswordUrl = 'api/forgotpassword';
-  signIn(signin_info: Signin): Observable<Signin> {
-    console.log(signin_info);
-    return this.http.post<Signin>(this.signinUrl, signin_info, { headers: this.headers }).pipe(
-      catchError(this.handleError<Signin>('signin'))
-    );
-  }
-  forgotPassword(forgotpassword_info: Forgotpassword): Observable<Signin> {
-    console.log(forgotpassword_info);
-    return this.http.post<Signin>(this.forgotPasswordUrl, forgotpassword_info, { headers: this.headers }).pipe(
-      catchError(this.handleError<Signin>('forgotpassword'))
+  getMemberRequestDetails(): Observable<MemberRequestData[]> {
+    console.log('hai chandru welcome to service');
+      return this.http.get<MemberRequestData[]>(this.memberRequestUrl).pipe(
+      catchError(this.handleError('memberrequest', []))
     );
   }
 
-  /**
- * Handle Http operation that failed.
- * Let the app continue.
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
+// * Handle Http operation that failed.
+// * Let the app continue.
+// * @param operation - name of the operation that failed
+// * @param result - optional value to return as the observable result
+// */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
@@ -53,4 +42,5 @@ export class SignInService {
   private log(message: string) {
     console.log(message);
   }
+
 }

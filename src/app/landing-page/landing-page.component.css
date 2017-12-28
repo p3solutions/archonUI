@@ -1,15 +1,15 @@
-.help-icon {
+#help-icon {
   margin: 25px;
 }
 
-.brand-img {
+#brand-img {
   width: 600px;
   margin: 50px;
   margin-top: 0px;
   margin-left: 50px;
 }
 
-.archon-desc {
+#archon-desc {
   padding: 25px;
   color: darkgrey;
   font-size: 20px;
@@ -19,15 +19,15 @@
   overflow: auto;
 }
 
-.archon-head {
+#archon-head {
   margin-left: 50px;
 }
 
-.landing-card {
+#landing-card {
   height: 400px;
 }
 
-.archon-buttons {
+#archon-buttons {
   margin-top: 20px;
 }
 .archon-link {

@@ -10,8 +10,8 @@ import { SigninForm } from '../signin-form';
 describe('SigninFormComponent', () => {
   let component: SigninFormComponent;
   let fixture: ComponentFixture<SigninFormComponent>;
-  let debugElement: DebugElement;
-  let htmlElement: HTMLElement;
+  // let debugElement: DebugElement;
+  // let htmlElement: HTMLElement;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormsModule],

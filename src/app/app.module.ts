@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { HttpClientModule } from '@angular/common/http';
+import { JwtHelper } from 'angular2-jwt';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { MatTableModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InMemoryDataService } from './in-memory-data.service';
@@ -14,7 +17,28 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { SignInService } from './sign-in.service';
+import { AuthModule } from './/auth.module';
+import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
+import { AuthenticationService } from './authentication/authentication.service';
+import { WorkspaceHeaderComponent } from './workspace-header/workspace-header.component';
+import { WorkspaceHeaderInfoComponent } from './workspace-header-info/workspace-header-info.component';
+import { WorkspaceMgmtPanelComponent } from './workspace-mgmt-panel/workspace-mgmt-panel.component';
+import { UserWorkspaceService } from './user-workspace.service';
+import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
+import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
+import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
+import { WorkspaceinfoService } from './workspaceinfo.service';
+import { HeaderTabComponent } from './header-tab/header-tab.component';
+import { ManageMembersComponent } from './manage-members/manage-members.component';
+import { ManageMembersService } from './manage-members.service';
+import { DataTablesModule } from 'angular-datatables';
+import { MemberRequestComponent } from './member-request/member-request.component';
+import { MemberRequestService } from './member-request.service';
+import { ManageMasterMetadataService } from './manage-master-metadata.service';
+import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
+import { HeaderPanelComponent } from './header-panel/header-panel.component';
+import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
+import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 
 
 @NgModule({
@@ -26,13 +50,48 @@ import { SignInService } from './sign-in.service';
     WorkspaceLandingPageComponent,
     SigninFormComponent,
     ForgotpasswordFormComponent,
+    WorkspaceHeaderComponent,
+    WorkspaceHeaderInfoComponent,
+    WorkspaceMgmtPanelComponent,
+    WorkspaceDashboardComponent,
+    NoWorkspaceComponent,
+    WorkspaceInfoComponent,
+    HeaderTabComponent,
+    ManageMembersComponent,
+    MemberRequestComponent,
+    WorkspacePanelComponent,
+    HeaderPanelComponent,
+    HeaderPanelComponent,
+    ManageMasterMetadataComponent,
+    WorkspaceServicesComponent
   ],
   imports: [
-    BrowserModule, FormsModule, HttpClientModule, HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ), AppRoutingModule
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService,
+      { dataEncapsulation: false }
+    ),
+    AppRoutingModule,
+    AuthModule,
+    DataTablesModule,
+    ReactiveFormsModule,
+    MatTableModule
   ],
-  providers: [InMemoryDataService, InfoService, SignInService],
+  providers: [
+    JwtHelper,
+    InMemoryDataService,
+    InfoService,
+    SigninFormService,
+    ForgotpasswordFormService,
+    AuthenticationService,
+    UserWorkspaceService,
+    WorkspaceinfoService,
+    ManageMembersService,
+    MemberRequestService,
+    ManageMasterMetadataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

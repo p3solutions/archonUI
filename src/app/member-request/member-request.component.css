@@ -1,0 +1,18 @@
+td{
+    font-size: 14px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+th{
+    font-size: 15px;
+    text-align: center;
+}
+
+ul {
+    margin-top: 12px;
+    margin-bottom: 10px;
+    float: left;
+}
+span,i {
+        cursor: pointer;
+}   
