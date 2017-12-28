@@ -16,7 +16,7 @@ import { TestabilityRegistry } from '@angular/core/src/testability/testability';
 import { HttpClient } from 'selenium-webdriver/http';
 //fdescribe used to run single testcase only
 //whenever we using fdescribe u should create it as fit
-describe('EnterNewpasswordComponent', () => {
+fdescribe('EnterNewpasswordComponent', () => {
   let component: EnterNewpasswordComponent;
   let fixture: ComponentFixture<EnterNewpasswordComponent>;
   let passwordResetForm : PasswordReset;
@@ -62,13 +62,13 @@ describe('EnterNewpasswordComponent', () => {
     passwordResetService = TestBed.get(EnterNewpasswordService);
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('Should work the onSignUp() functionality', () => {
+  fit('Should work the onSignUp() functionality', () => {
     expect(component.onSubmit).toBeTruthy();
   });
-  it('Should display the response for enter-new password component', () => {
+  fit('Should display the response for enter-new password component', () => {
     spyOn(passwordResetService, 'passwordReset').and.returnValue(onSubmit());
     component.onSubmit();
     fixture.detectChanges();
