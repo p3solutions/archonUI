@@ -22,9 +22,11 @@ export class ForgotpasswordFormComponent implements OnInit {
   constructor(
     private forgotPasswordFormService: ForgotpasswordFormService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
+    this.isRedirectedFromLink();
     this.createForm();
   }
 
@@ -58,5 +60,14 @@ export class ForgotpasswordFormComponent implements OnInit {
         }
       }
     );
+  }
+
+  isRedirectedFromLink() {
+    const queryParams = this.router.routerState.snapshot.root.queryParams;
+    if (queryParams && queryParams.error === 'true') {
+      this.errorObject = new ErrorObject;
+      this.errorObject.message = ' Invalid reset link, please try again.';
+      this.errorObject.show = true;
+    }
   }
 }

@@ -4,7 +4,7 @@ configs.dbHost = 'localhost';
 configs.url = 'http://localhost:';
 configs.logDirectory = `${__dirname}/log`;
 configs.logFile = 'access.log';
-configs.changePwdUrl = `${configs.url}4200/workspace`;
+configs.changePwdUrl = `${configs.url}4200/confirm-password`;
 configs.forgotPwdUrl = `${configs.url}4200/forgot-password`;
 configs.showLinkError = '?error=true'; // 'Invalid reset link'
 configs.pwdResetUrl = '/pwd-reset';
