@@ -34,7 +34,7 @@
             <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['lastActivityTime']}}</td>
             <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['globalRole']}}</td>
             <td>
-              <a href="">
+              <a href="" data-toggle="modal" data-target="#myModal">
                 Change Role
               </a>
             </td>
@@ -47,5 +47,44 @@
     <div class="workspace-panel-content">
       <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
     </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    
+    <div class="modal-content">
+      <div class="modal-header">
+          <div class="row">
+              <div class="col-md-6">
+                <div class="col-md-1 back-arrow">
+                  <a (click)="gotoDashboard()">
+                    <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+                  </a>
+                </div>
+                <div class="col-md-8">
+                  <h3 class="workspace-panel-heading">
+                    Manage User Roles
+                  </h3>
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Confirm</button>
+      </div>
+      </div>
+    </div>
+    
   </div>
 </div>
