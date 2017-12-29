@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ManageUserRolesService } from './manage-user-roles.service';
 import { ManageUserRoles } from '../manage-user-roles';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-manage-user-roles',
@@ -10,7 +11,7 @@ import { ManageUserRoles } from '../manage-user-roles';
 export class ManageUserRolesComponent implements OnInit {
   isAvailable = false;
   manageUserRolesRequestData: ManageUserRoles[];
-  constructor(    private manageUserRolesService: ManageUserRolesService) { }
+  constructor(private manageUserRolesService: ManageUserRolesService, private router: Router) { }
 
   ngOnInit() {
     this.getManageUserRolesData();
@@ -21,7 +22,11 @@ export class ManageUserRolesComponent implements OnInit {
         this.manageUserRolesRequestData = data;
         this.isAvailable = true;
       });
-     console.log('manage-members-component', this.manageUserRolesRequestData);
+    console.log('manage-members-component', this.manageUserRolesRequestData);
+  }
+
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
 }
