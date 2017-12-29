@@ -48,11 +48,10 @@ const validateLinkFn = function (url, pwdResetResponse) {
       try {
         const parsedData = JSON.parse(rawData);
         console.log('parsedData:', parsedData);
-        parsedData.success
         const redirectUrl =
           (!parsedData.success || !parsedData.data.keyExists) ? // for success=false or keyExists=false
           (configs.forgotPwdUrl + configs.showLinkError) : //redirect to forgotPwdUrl & show error
-          configs.changePwdUrl; // else redirect to changePwdUrl
+          configs.resetPwdUrl; // else redirect to resetPwdUrl
         console.log('redirecting to', redirectUrl);
         pwdResetResponse.redirect(redirectUrl);
       } catch (e) {
