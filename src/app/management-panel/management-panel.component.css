@@ -1,0 +1,52 @@
+#lg-button{
+    background-color: #428bca;
+    border: none;
+    color: white;
+    height: 120px;
+    width: 120%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 12px;
+    font-size: 16px;
+    margin: 4px 2px;
+    
+}
+#sm-button{
+    background-color: #428bca;
+    border: none;
+    color: white;
+    /* height: 60px;
+    width: 120%; */
+    padding: 12px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.button:hover span {
+    padding-right: 25px;
+  }
+  
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }

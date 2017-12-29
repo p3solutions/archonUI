@@ -14,6 +14,7 @@ import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-das
 import { ManageMembersComponent } from './manage-members/manage-members.component';
 import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component';
 import { NewPasswordSetter } from './enter-newpassword/newpasswordsetter';
+import { ManagementPanelComponent } from './management-panel/management-panel.component';
 import { componentFactoryName } from '@angular/compiler';
 
 const routes: Routes = [
@@ -21,6 +22,9 @@ const routes: Routes = [
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
         path: 'no-workspace', component: NoWorkspaceComponent
+      },
+      {
+        path: 'management-panel', component: ManagementPanelComponent
       },
       {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
@@ -47,7 +51,7 @@ const routes: Routes = [
         path: 'forgot-password', component: ForgotpasswordFormComponent
       },{
           path: 'password-reset', component: EnterNewpasswordComponent
-      }
+      },
     ]
   }
 ];

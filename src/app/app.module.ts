@@ -40,6 +40,7 @@ import { HeaderPanelComponent } from './header-panel/header-panel.component';
 import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component'; 
 import { EnterNewpasswordService } from './enter-newpassword/enter-newpassword.service';
 import { EqualValidator } from './enter-newpassword/equal-validator.directive';
+import { ManagementPanelComponent } from './management-panel/management-panel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +61,8 @@ import { EqualValidator } from './enter-newpassword/equal-validator.directive';
     WorkspacePanelComponent,
     HeaderPanelComponent,
     EnterNewpasswordComponent,
-    EqualValidator
+    EqualValidator,
+    ManagementPanelComponent
   ],
   imports: [
     BrowserModule,
