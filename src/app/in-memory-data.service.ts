@@ -76,6 +76,9 @@ export class InMemoryDataService implements InMemoryDbService {
       { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
       { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
       { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
       { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' }
     ];
     return {

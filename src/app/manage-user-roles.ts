@@ -4,5 +4,4 @@ export interface ManageUserRoles {
     email: string;
     last_activity_time: string;
     global_role: string;
-
 }

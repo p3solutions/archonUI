@@ -8,6 +8,7 @@ import { ManageUserRoles } from '../manage-user-roles';
   styleUrls: ['./manage-user-roles.component.css']
 })
 export class ManageUserRolesComponent implements OnInit {
+  isAvailable = false;
   manageUserRolesRequestData: ManageUserRoles[];
   constructor(    private manageUserRolesService: ManageUserRolesService) { }
 
@@ -18,6 +19,7 @@ export class ManageUserRolesComponent implements OnInit {
     this.manageUserRolesService.getManageMembersDetails()
       .subscribe(data => {
         this.manageUserRolesRequestData = data;
+        this.isAvailable = true;
       });
      console.log('manage-members-component', this.manageUserRolesRequestData);
   }
