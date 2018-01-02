@@ -50,3 +50,6 @@
     right: -20px;
     transition: 0.5s;
   }
+  label,a{
+    font-size: 15px;
+  }
