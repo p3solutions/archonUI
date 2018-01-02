@@ -52,39 +52,63 @@
 
 
 
-<!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
   <div class="modal-dialog">
-  
+
     <!-- Modal content-->
-    
+
     <div class="modal-content">
       <div class="modal-header">
-          <div class="row">
-              <div class="col-md-6">
-                <div class="col-md-1 back-arrow">
-                  <a (click)="gotoDashboard()">
-                    <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
-                  </a>
-                </div>
-                <div class="col-md-8">
-                  <h3 class="workspace-panel-heading">
-                    Manage User Roles
-                  </h3>
-                </div>
-              </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="col-md-1 back-arrow">
+              <a (click)="gotoDashboard()">
+                <i data-dismiss="modal" class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+              </a>
             </div>
+            <div class="col-md-8">
+              <h3 class="workspace-panel-heading">
+                Change Role
+              </h3>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        <div class="block">
+          <label>Current Role</label>
+          <p>Member</p>
+        </div>
+        <div class="block">
+          <br>
+          <label>Choose new role</label>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              style="background-color: #fff; border: 1px solid #ccc">
+              Choose Role
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" *ngFor="let workspace of userWorkspaceArray" (click)="selectWorkspace(workspace.id)" id="{{workspace.id}}">{{workspace.name}}</a>
+              <div class="dropdown-divider" *ngIf="userRole == 'Member'"></div>
+              <a class="dropdown-item" *ngIf="userRole == 'Member'" (click)="contactAdmin()">Contact Your Admin</a>
+              <div class="dropdown-divider" *ngIf="userRole == 'Admin'"></div>
+              <a class="dropdown-item" *ngIf="userRole == 'Admin'" (click)="createNewWorkspace()">+ Create workspace</a>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <br>
+          <label>Selected Role</label>
+          <p>Admin</p>
+        </div>
       </div>
       <div class="modal-footer">
         <div class="row">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Confirm</button>
-      </div>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+        </div>
       </div>
     </div>
-    
+
   </div>
 </div>
