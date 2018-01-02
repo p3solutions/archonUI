@@ -20,6 +20,7 @@ import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpasswor
 import { AppRoutingModule } from './/app-routing.module';
 import { AuthModule } from './/auth.module';
 import { SigninFormService } from './signin-form/signin-form.service';
+import { SignupFormService } from './signup-form/signup-form.service';
 import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
 import { AuthenticationService } from './authentication/authentication.service';
 import { WorkspaceHeaderComponent } from './workspace-header/workspace-header.component';
@@ -41,7 +42,7 @@ import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.compo
 import { HeaderPanelComponent } from './header-panel/header-panel.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
-
+import { SignupFormComponent } from './signup-form/signup-form.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { WorkspaceServicesComponent } from './workspace-services/workspace-servi
     HeaderPanelComponent,
     HeaderPanelComponent,
     ManageMasterMetadataComponent,
-    WorkspaceServicesComponent
+    WorkspaceServicesComponent,
+    SignupFormComponent
   ],
   imports: [
     BrowserModule,
@@ -78,13 +80,15 @@ import { WorkspaceServicesComponent } from './workspace-services/workspace-servi
     AuthModule,
     DataTablesModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    FormsModule
   ],
   providers: [
     JwtHelper,
     InMemoryDataService,
     InfoService,
     SigninFormService,
+    SignupFormService,
     ForgotpasswordFormService,
     AuthenticationService,
     UserWorkspaceService,

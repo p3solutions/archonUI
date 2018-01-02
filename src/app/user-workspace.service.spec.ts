@@ -9,7 +9,7 @@ describe('UserWorkspaceService', () => {
     });
   });
 
-  it('should be created', inject([UserWorkspaceService], (service: UserWorkspaceService) => {
-    expect(service).toBeTruthy();
-  }));
+  // it('should be created', inject([UserWorkspaceService], (service: UserWorkspaceService) => {
+  //   expect(service).toBeTruthy();
+  // }));
 });
