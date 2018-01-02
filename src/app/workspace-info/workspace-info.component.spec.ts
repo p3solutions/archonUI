@@ -9,7 +9,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs/Observable';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 
-xdescribe('WorkspaceInfoComponent', () => {
+describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
   let fixture: ComponentFixture<WorkspaceInfoComponent>;
   let de: DebugElement;
@@ -22,15 +22,10 @@ xdescribe('WorkspaceInfoComponent', () => {
     members: 'User1, User2, User3', your_role: 'Admin', master_metadata_version: '22'
   };
   const simpleObservable = new Observable<Workspaceinfo>((observer) => {
-    // observable execution
     observer.next(managemembers1);
     observer.complete();
   });
-  let disposeMe;
-  const getworkinfo = function (): Observable<Workspaceinfo> {
-    disposeMe = simpleObservable.subscribe();
-    return simpleObservable;
-  };
+  const disposeMe = simpleObservable.subscribe();
 
   beforeEach(async(() => {
 
@@ -51,22 +46,19 @@ xdescribe('WorkspaceInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkspaceInfoComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement.query(By.css('#workspace-info-table'));
-    WorkspaceInfoTag = de.nativeElement;
     workspaceinfoService = TestBed.get(WorkspaceinfoService);
-    fixture.detectChanges();
+    de = fixture.debugElement.query(By.css('#workspace-info'));
+    WorkspaceInfoTag = de.nativeElement;
   });
 
-  it('Should create Workspace_Info tag', () => {
-    // console.log(component, 'component');
+  it('Should create Workspace_Info component', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('Should display the observable data for workspace-info componenet', () => {
+  it('Should display the observable data for workspace-info componenet', () => {
     const row1Array: NodeListOf<Element> = WorkspaceInfoTag.querySelectorAll('.ws-info-data');
-    spyOn(workspaceinfoService, 'getworkinfo').and.returnValue(getworkinfo());
+    spyOn(workspaceinfoService, 'getworkinfo').and.returnValue(simpleObservable);
     fixture.detectChanges();
-    console.log(row1Array, 'row1Array');
     const name = row1Array[0];
     const owner = row1Array[1];
     const approver = row1Array[2];

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router } from '@angular/router';
 import { WorkspaceinfoService } from '../workspaceinfo.service';
 import { Workspaceinfo } from '../workspaceinfo';
-import { HttpClientModule } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClientModule } from '@angular/common/http';
+// import { Http, Headers, Response } from '@angular/http';
+// import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-workspace-info',
@@ -30,7 +30,6 @@ export class WorkspaceInfoComponent implements OnInit {
   getWorkspaceInfo() {
     this.workspaceinfoservice.getworkinfo().subscribe(data => {
       this.workspaceInfoData = data;
-      console.log('testing ', this.workspaceInfoData);
     });
   }
   gotoDashboard() {

@@ -2,8 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotpasswordFormComponent } from './forgotpassword-form.component';
 import { ForgotpasswordFormService } from './forgotpassword-form.service';
-import { HttpClient } from 'selenium-webdriver/http';
-import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ManageMembers } from '../managemembers';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -25,7 +23,6 @@ describe('ForgotpasswordFormComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientModule,
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule
@@ -33,8 +30,7 @@ describe('ForgotpasswordFormComponent', () => {
       declarations: [ForgotpasswordFormComponent],
       providers: [
         RouterTestingModule,
-        ForgotpasswordFormService,
-        HttpClientModule
+        ForgotpasswordFormService
       ],
     })
       .compileComponents();
