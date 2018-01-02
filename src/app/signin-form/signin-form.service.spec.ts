@@ -15,7 +15,7 @@ describe('SigninFormService', () => {
     });
   });
 
-  it('should be cre ated', inject([SigninFormService], (service: SigninFormService) => {
+  it('should be created', inject([SigninFormService], (service: SigninFormService) => {
     expect(service).toBeTruthy();
   }));
 });

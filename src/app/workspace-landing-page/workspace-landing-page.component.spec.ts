@@ -8,7 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs/Observable';
 import { Info } from '../info';
 
-describe('WorkspaceLandingPageComponent', () => {
+xdescribe('WorkspaceLandingPageComponent', () => {
   let component: WorkspaceLandingPageComponent;
   let fixture: ComponentFixture<WorkspaceLandingPageComponent>;
   let infoService: any;

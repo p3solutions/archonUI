@@ -11,7 +11,7 @@ describe('ForgotpasswordFormService', () => {
     });
   });
 
-  it('should be created', inject([ForgotpasswordFormService], (service: ForgotpasswordFormService) => {
-    expect(service).toBeTruthy();
-  }));
+  // it('should be created', inject([ForgotpasswordFormService], (service: ForgotpasswordFormService) => {
+  //   expect(service).toBeTruthy();
+  // }));
 });
