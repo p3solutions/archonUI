@@ -15,6 +15,7 @@ import { ManageMembersComponent } from './manage-members/manage-members.componen
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,9 @@ const routes: Routes = [
         path: 'forgot-password', component: ForgotpasswordFormComponent,
       }
     ]
+  },
+  {
+    path: 'user-profile', component: UserProfileComponent
   }
 ];
 

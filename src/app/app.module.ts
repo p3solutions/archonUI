@@ -43,7 +43,8 @@ import { HeaderPanelComponent } from './header-panel/header-panel.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
-
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserinfoService } from './userinfo.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +67,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
     HeaderPanelComponent,
     ManageMasterMetadataComponent,
     WorkspaceServicesComponent,
-    SignupFormComponent
+    SignupFormComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +97,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
     WorkspaceinfoService,
     ManageMembersService,
     MemberRequestService,
-    ManageMasterMetadataService
+    ManageMasterMetadataService,
+    UserinfoService
   ],
   bootstrap: [AppComponent]
 })

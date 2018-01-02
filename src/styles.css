@@ -379,6 +379,7 @@ input[type=search] {
   margin-top: 20px;
   margin-bottom: 10px;
   margin-left: 25px;
+  float: left;
 }
 
 .workspace-panel-content {
