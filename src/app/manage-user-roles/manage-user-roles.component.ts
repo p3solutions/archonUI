@@ -15,14 +15,18 @@ export class ManageUserRolesComponent implements OnInit {
 
   ngOnInit() {
     this.getManageUserRolesData();
+    this.getDropDown();
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
       .subscribe(data => {
+        console.log('coooooooooooooool' , data);
         this.manageUserRolesRequestData = data;
         this.isAvailable = true;
       });
-    console.log('manage-members-component', this.manageUserRolesRequestData);
+  }
+
+  getDropDown() {
   }
 
   gotoDashboard() {

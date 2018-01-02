@@ -83,20 +83,19 @@ p {
 }
 
 
-.workspace-header {
-    /* height: 125px; */
+.manage-role-header {
     padding: 20px 0 0;
     border-bottom: 2px solid #E6E9ED;
   }
-  .workspace-dropdown {
+  .manage-role-dropdown {
     padding: 10px;
   }
-  .workspace-dropdown select {
+  .manage-role-dropdown select {
     border-radius: 3px;
     padding: 5px;
     background-color: #fff;
   }
-  .workspace-dropdown option {
+  .manage-role-dropdown option {
     font-size: 15px;
     padding: 5px 2px;
   }
