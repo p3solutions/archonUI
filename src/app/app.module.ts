@@ -70,10 +70,10 @@ import { WorkspaceServicesComponent } from './workspace-services/workspace-servi
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService,
-      { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService,
+    //   { dataEncapsulation: false }
+    // ),
     AppRoutingModule,
     AuthModule,
     DataTablesModule,

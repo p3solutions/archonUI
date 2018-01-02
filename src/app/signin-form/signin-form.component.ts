@@ -42,7 +42,9 @@ export class SigninFormComponent implements OnInit {
       data => {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
-        console.log(data);
+        console.log(data.data.accessToken);
+        localStorage.setItem('accessToken', data.data.accessToken);
+        localStorage.setItem('refreshToken', data.data.refreshToken);
         this.router.navigate(['/workspace']);
       },
       (err: HttpErrorResponse) => {
