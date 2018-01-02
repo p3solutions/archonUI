@@ -2,15 +2,31 @@
     /* background-color: #428bca; */
     border: none;
     color: white;
-    height: 120px;
-    width: 120%;
+    height: 130px;
+    width: 70%;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    border-radius: 12px;
+    border-radius: 3px;
     font-size: 16px;
     margin: 4px 2px;
     
+}
+.container{
+  /* background-color: grey; */
+  /* width : 1300px; */
+  padding-top: 50px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
+div.panel-default{
+  width:950px;
+  /* background-color: brown; */
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 30px;
+  padding-left: 30px;
 }
 #sm-button{
     /* background-color: #428bca; */
