@@ -1,20 +1,18 @@
-
 ul {
-    margin-top: 12px;
-    margin-bottom: 10px;
-    float: left;
+  margin-top: 12px;
+  margin-bottom: 10px;
+  float: left;
 }
-td{
-    font-size: 15px;
-    font-family: Arial, Helvetica, sans-serif;
+
+td {
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 20%;
 }
 
 table {
-    margin-top: 20px;
-    margin-left: 75px;
-    width:72%;
-    text-align: left;
+  margin-top: 20px;
+  margin-left: 75px;
+  width: 72%;
+  text-align: left;
 }
-
-
-

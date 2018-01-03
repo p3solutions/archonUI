@@ -13,13 +13,13 @@ describe('WorkspaceinfoService', () => {
   let workspace_info_observable: Observable<Workspaceinfo>;
   // tslint:disable-next-line:prefer-const
   // let info: Workspaceinfo;
-   
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
       providers: [WorkspaceinfoService]
     });
   });
+
 
   // it('it should get workspace-info data for workspace-info components', inject([HttpClient],
 

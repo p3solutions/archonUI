@@ -6,6 +6,7 @@ import { Forgotpassword } from '../forgotpassword';
 import { ForgotpasswordFormService } from './forgotpassword-form.service';
 import { ErrorObject } from '../error-object';
 import { SuccessObject } from '../success-object';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-forgotpassword-form',

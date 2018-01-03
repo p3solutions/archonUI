@@ -12,6 +12,10 @@ describe('MemberRequestService', () => {
     });
   });
 
+
+  // it('should be created', inject([MemberRequestService], (service: MemberRequestService) => {
+  //   expect(service).toBeTruthy();
+  // }));
   // describe('getMemberRequestDetails()', () => {
   //   it('should return an Observable<Array<MemberRequestDetail>>',
   //     inject([MemberRequestService, XHRBackend], (memberRequestService, mockBackend) => {
@@ -46,5 +50,4 @@ describe('MemberRequestService', () => {
   // it('should be created', inject([MemberRequestService], (service: MemberRequestService) => {
   //   expect(service).toBeTruthy();
   // }));
-
 });

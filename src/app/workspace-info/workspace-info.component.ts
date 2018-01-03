@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WorkspaceinfoService } from '../workspaceinfo.service';
 import { Workspaceinfo } from '../workspaceinfo';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 
@@ -16,12 +16,15 @@ export class WorkspaceInfoComponent implements OnInit {
   workspaceInfoData: Workspaceinfo;
 
   constructor(
-    private httpClient: HttpClient,
-    // private router: Router,
+    // private httpClient: HttpClient,
+    private router: Router,
     private workspaceinfoservice: WorkspaceinfoService
-  ) { this.getWorkspaceInfo(); }
+  ) {
+    // this.getWorkspaceInfo();
+  }
 
   ngOnInit() {
+    this.getWorkspaceInfo();
   }
 
   getWorkspaceInfo() {
@@ -29,6 +32,9 @@ export class WorkspaceInfoComponent implements OnInit {
       this.workspaceInfoData = data;
       console.log('testing ', this.workspaceInfoData);
     });
+  }
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
 

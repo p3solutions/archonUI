@@ -14,11 +14,11 @@ export class SigninFormService {
   private signinUrl = 'http://13.58.89.64:9000/auth/login';
 
   constructor(private http: HttpClient) { }
-  signIn(signin_info: Signin): Observable<Signin> {
+  signIn(signin_info: Signin): Observable<any> {
     return this.http.post<Signin>(this.signinUrl, signin_info, { headers: this.headers });
   }
 
-  /**
+  /*
  * Handle Http operation that failed.
  * Let the app continue.
  * @param operation - name of the operation that failed
