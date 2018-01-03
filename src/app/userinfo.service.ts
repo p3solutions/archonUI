@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
 import { Info } from './info';
 import { JwtHelper } from 'angular2-jwt';
+import { Http, Headers, Response } from '@angular/http';
 
 @Injectable()
 export class UserinfoService {
@@ -12,32 +13,33 @@ export class UserinfoService {
   jwtHelper: JwtHelper = new JwtHelper();
   token_data: any;
   userId = '5a3ba85e4ca51516a7573982';
-  userInfoUrl = 'users/';
+  private userInfoUrl;
+  private headers;
 
   constructor(
     private http: HttpClient
   ) {
     this.http = http;
+    this.userInfoUrl = 'http://13.58.89.64:9000/users/' + this.getUserId();
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getAuthKey()
+    });
   }
 
   getUserId(): void {
     this.accessToken = localStorage.getItem('accessToken');
     this.token_data = this.jwtHelper.decodeToken(this.accessToken);
-    // this.info = new Info();
-    // this.info.role = this.token_data.user.role;
-    // this.info.username = this.token_data.username;
-    // if (this.token_data.user.role === 'ROLE_NOT_ASSIGNED') {
-    // this.info.show = true;
-    // }
     return this.userId = this.token_data.user.id;
   }
 
-  getUserInfo(): Observable<Info> {
-    // const userId = this.getUserId();
-    const userId = this.userId;
-    console.log('localStorage', localStorage, 'id:', userId);
-    return this.http.get<Info>(this.userInfoUrl + userId).
-      pipe(catchError(this.handleError<Info>('getUserInfo')));
+  getAuthKey() {
+    return localStorage.getItem('accessToken');
+  }
+
+  getUserInfo(): Observable<any> {
+    return this.http.get<any>(this.userInfoUrl, { headers: this.headers }).
+      pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

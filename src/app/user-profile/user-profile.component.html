@@ -1,55 +1,58 @@
-<div class="row">
-  <!-- <div class="col-md-6"> -->
-  <div class="col-md-1 back-arrow">
-    <a (click)="gotoDashboard()">
-      <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
-    </a>
+<app-navbar></app-navbar>
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-1 back-arrow">
+        <a (click)="gotoDashboard()">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        </a>
+      </div>
+      <div class="col-md-8">
+        <h3 class="workspace-panel-heading">
+          User Profile Info
+        </h3>
+      </div>
+    </div>
   </div>
-  <div class="col-md-8">
-    <h3 class="workspace-panel-heading">
-      User Profile Info
-    </h3>
+  <div class="row">
+    <div id="user-info" class="workspace-panel-content col-md-6" [attr.data-user-id]="userInfo?.id">
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td class="col-md-2">
+              <b>Name</b>
+            </td>
+            <td class="ws-info-data">{{userInfo?.name}}</td>
+            <td *ngIf="!userInfo">
+              <i class="fa fa-spinner fa-spin loading"></i>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-md-2">
+              <b>Email</b>
+            </td>
+            <td class="ws-info-data">{{userInfo?.email}}</td>
+            <td *ngIf="!userInfo">
+              <i class="fa fa-spinner fa-spin loading"></i>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-md-2">
+              <b>Role</b>
+            </td>
+            <td class="ws-info-data">{{userInfo?.role}}
+            </td>
+            <td *ngIf="!userInfo">
+              <i class="fa fa-spinner fa-spin loading"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <!-- </div> -->
-</div>
-<div class="row">
-  <div id="user-info" class="workspace-panel-content">
-    <table class="table table-hover">
-      <tbody>
-        <tr>
-          <td>
-            <b>Name</b>
-          </td>
-          <td class="ws-info-data">{{userInfo?.name}}</td>
-          <td *ngIf="!userInfo">
-            <i class="fa fa-spinner fa-spin loading"></i>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <b>Email</b>
-          </td>
-          <td class="ws-info-data">{{userInfo?.email}}</td>
-          <td *ngIf="!userInfo">
-            <i class="fa fa-spinner fa-spin loading"></i>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <b>Role</b>
-          </td>
-          <td class="ws-info-data">{{userInfo?.role}}
-          </td>
-          <td *ngIf="!userInfo">
-            <i class="fa fa-spinner fa-spin loading"></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<div class="row">
-  <div class="workspace-panel-content">
-    <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
+  <div class="row">
+    <div class="workspace-panel-content col-md-6">
+      <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
+    </div>
   </div>
 </div>
