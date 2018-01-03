@@ -15,6 +15,9 @@ import { ManageMembersComponent } from './manage-members/manage-members.componen
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component';
+import { NewPasswordSetter } from './enter-newpassword/newpasswordsetter';
+import { componentFactoryName } from '@angular/compiler';
 
 const routes: Routes = [
   {
@@ -50,15 +53,14 @@ const routes: Routes = [
     path: '', component: LandingPageComponent, children: [
       {
         path: '', redirectTo: '/sign-in', pathMatch: 'full'
-      }
-      ,
-       {
+      }, {
         path: 'sign-up', component: SignupFormComponent,
-      }
-      , {
+      }, {
         path: 'sign-in', component: SigninFormComponent
       }, {
         path: 'forgot-password', component: ForgotpasswordFormComponent,
+      }, {
+        path: 'password-reset', component: EnterNewpasswordComponent
       }
     ]
   }

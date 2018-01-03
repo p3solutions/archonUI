@@ -43,60 +43,65 @@ import { HeaderPanelComponent } from './header-panel/header-panel.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
-
+import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component';
+import { EnterNewpasswordService } from './enter-newpassword/enter-newpassword.service';
+import { EqualValidator } from './enter-newpassword/equal-validator.directive';
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    LandingPageComponent,
-    WorkspaceLandingPageComponent,
-    SigninFormComponent,
-    ForgotpasswordFormComponent,
-    WorkspaceHeaderComponent,
-    WorkspaceHeaderInfoComponent,
-    WorkspaceMgmtPanelComponent,
-    WorkspaceDashboardComponent,
-    NoWorkspaceComponent,
-    WorkspaceInfoComponent,
-    HeaderTabComponent,
-    ManageMembersComponent,
-    MemberRequestComponent,
-    WorkspacePanelComponent,
-    HeaderPanelComponent,
-    HeaderPanelComponent,
-    ManageMasterMetadataComponent,
-    WorkspaceServicesComponent,
-    SignupFormComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService,
-    //   { dataEncapsulation: false }
-    // ),
-    AppRoutingModule,
-    AuthModule,
-    DataTablesModule,
-    ReactiveFormsModule,
-    MatTableModule,
-    FormsModule
-  ],
-  providers: [
-    JwtHelper,
-    InMemoryDataService,
-    InfoService,
-    SigninFormService,
-    SignupFormService,
-    ForgotpasswordFormService,
-    AuthenticationService,
-    UserWorkspaceService,
-    WorkspaceinfoService,
-    ManageMembersService,
-    MemberRequestService,
-    ManageMasterMetadataService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        LandingPageComponent,
+        WorkspaceLandingPageComponent,
+        SigninFormComponent,
+        ForgotpasswordFormComponent,
+        WorkspaceHeaderComponent,
+        WorkspaceHeaderInfoComponent,
+        WorkspaceMgmtPanelComponent,
+        WorkspaceDashboardComponent,
+        NoWorkspaceComponent,
+        WorkspaceInfoComponent,
+        HeaderTabComponent,
+        ManageMembersComponent,
+        MemberRequestComponent,
+        WorkspacePanelComponent,
+        HeaderPanelComponent,
+        HeaderPanelComponent,
+        ManageMasterMetadataComponent,
+        WorkspaceServicesComponent,
+        SignupFormComponent,
+        EnterNewpasswordComponent,
+        EqualValidator
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        // HttpClientInMemoryWebApiModule.forRoot(
+        //   InMemoryDataService,
+        //   { dataEncapsulation: false }
+        // ),
+        AppRoutingModule,
+        AuthModule,
+        DataTablesModule,
+        ReactiveFormsModule,
+        MatTableModule,
+        FormsModule
+    ],
+    providers: [
+        JwtHelper,
+        InMemoryDataService,
+        InfoService,
+        SigninFormService,
+        SignupFormService,
+        ForgotpasswordFormService,
+        AuthenticationService,
+        UserWorkspaceService,
+        WorkspaceinfoService,
+        ManageMembersService,
+        MemberRequestService,
+        ManageMasterMetadataService,
+        EnterNewpasswordService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
