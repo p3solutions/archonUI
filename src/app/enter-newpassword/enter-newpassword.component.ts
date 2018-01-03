@@ -55,4 +55,6 @@ export class EnterNewpasswordComponent implements OnInit {
       }
     );
   }
+  get password() { return this.passwordResetForm.get('password'); }
+  get confirmPassword() { return this.passwordResetForm.get('confirmPassword'); }
 }
