@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // http://13.58.89.64:9000/auth/key-validity?resetKey=b5042e6b041747fb86296c5447b31b8
-const validateLinkFn = function (url, pwdResetResponse) {
+const validateLinkFn = function (url, resetKey, pwdResetResponse) {
   console.log('url:', url);
   http.get(url, (response) => {
     // console.log('http responsep:', response);
@@ -53,7 +53,7 @@ const validateLinkFn = function (url, pwdResetResponse) {
           (configs.forgotPwdUrl + configs.showLinkError) : //redirect to forgotPwdUrl & show error
           configs.resetPwdUrl; // else redirect to resetPwdUrl
         console.log('redirecting to', redirectUrl);
-        pwdResetResponse.redirect(redirectUrl);
+        pwdResetResponse.redirect(redirectUrl + '?resetKey=' + resetKey);
       } catch (e) {
         console.error(e.message);
       }
@@ -69,7 +69,7 @@ app.get(configs.pwdResetUrl, function (req, res) {
     const resetKey = req.query.resetKey;
     const validateLinkUrl = configs.validateLinkUrl + 'resetKey=' + resetKey;
     console.log('received validateLinkUrl:', validateLinkUrl);
-    validateLinkFn(validateLinkUrl, res);
+    validateLinkFn(validateLinkUrl, resetKey, res);
   } else {
     res.redirect(configs.forgotPwdUrl + configs.showLinkError);
   }

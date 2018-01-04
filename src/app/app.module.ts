@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InMemoryDataService } from './in-memory-data.service';
 import { InfoService } from './info.service';
-import { SigninFormService } from './signin-form.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +17,8 @@ import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspac
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { AuthModule } from './/auth.module';
+import { SigninFormService } from './signin-form/signin-form.service';
+import { SignupFormService } from './signup-form/signup-form.service';
 import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
 import { AuthenticationService } from './authentication/authentication.service';
 import { WorkspaceHeaderComponent } from './workspace-header/workspace-header.component';
@@ -37,9 +38,13 @@ import { MemberRequestService } from './member-request.service';
 import { ManageMasterMetadataService } from './manage-master-metadata.service';
 import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
 import { HeaderPanelComponent } from './header-panel/header-panel.component';
+import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component';
+import { EnterNewpasswordService } from './enter-newpassword/enter-newpassword.service';
+import { EqualValidator } from './enter-newpassword/equal-validator.directive';
+import { ManagementPanelComponent } from './management-panel/management-panel.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
-
+import { SignupFormComponent } from './signup-form/signup-form.component';
 
 @NgModule({
   declarations: [
@@ -61,23 +66,27 @@ import { WorkspaceServicesComponent } from './workspace-services/workspace-servi
     MemberRequestComponent,
     WorkspacePanelComponent,
     HeaderPanelComponent,
-    HeaderPanelComponent,
+    EnterNewpasswordComponent,
+    EqualValidator,
+    ManagementPanelComponent,
     ManageMasterMetadataComponent,
-    WorkspaceServicesComponent
+    WorkspaceServicesComponent,
+    SignupFormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService,
-      { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService,
+    //   { dataEncapsulation: false }
+    // ),
     AppRoutingModule,
     AuthModule,
     DataTablesModule,
     ReactiveFormsModule,
-    MatTableModule
+    MatTableModule,
+    FormsModule
   ],
   providers: [
     JwtHelper,
@@ -90,6 +99,7 @@ import { WorkspaceServicesComponent } from './workspace-services/workspace-servi
     WorkspaceinfoService,
     ManageMembersService,
     MemberRequestService,
+    EnterNewpasswordService,
     ManageMasterMetadataService
   ],
   bootstrap: [AppComponent]
