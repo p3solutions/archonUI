@@ -9,6 +9,7 @@ h3{
     height: 50px;
     text-align: center;
     padding: 5px;
+    float: right;
 }
 #one{
     background-color: red;
@@ -17,8 +18,8 @@ h3{
 .btn-box{
     padding: 1px;
     text-align: left;
-    width:500px;
-    height: 140px;
+    width:430px;
+    height: 160px;
 }
 button{
     border-radius: 4px;
