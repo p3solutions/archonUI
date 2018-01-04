@@ -1,0 +1,21 @@
+.btn-box{
+    padding: 5px;
+    text-align: left;
+    width:520px;
+    height: 130px;
+}
+button{
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 1px;
+}
+#insidecontainer{
+    padding-left: 5px;
+}
+p{
+    line-height: 150%;
+}
+h2{
+    line-height: 100%;
+}
