@@ -18,8 +18,8 @@ export class ManageUserRolesService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
-  private globalRolesUrl = 'http://13.58.89.64:9000/users';
-  // manageUserRolesUrl = 'api/manage_user_roles';
+  private getAllUsersUrl = 'http://13.58.89.64:9000/users';
+  private getGlobalRolesUrl = 'http://13.58.89.64//admin/roles/global';
   constructor(private http: HttpClient) { }
 
   private extractData(res: any) {
@@ -28,7 +28,7 @@ export class ManageUserRolesService {
   }
 
   getManageMembersDetails(): Observable<ManageUserRoles[]> {
-    return this.http.get<ManageUserRoles[]>(this.globalRolesUrl, { headers: this.headers }).map(this.extractData).pipe(
+    return this.http.get<ManageUserRoles[]>(this.getAllUsersUrl, { headers: this.headers }).map(this.extractData).pipe(
       catchError(this.handleError('manageuserroles', []))
     );
   }

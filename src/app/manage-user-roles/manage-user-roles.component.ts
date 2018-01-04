@@ -14,11 +14,12 @@ import { Data } from '@angular/router/src/config';
 export class ManageUserRolesComponent implements OnInit {
   isAvailable = false;
   manageUserRolesRequestData: ManageUserRoles[];
+  // globalRolesRequestData: 
   constructor(private manageUserRolesService: ManageUserRolesService, private router: Router) { }
 
   ngOnInit() {
     this.getManageUserRolesData();
-    this.getDropDown();
+    // this.getGlobalRolesData();
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
@@ -28,8 +29,12 @@ export class ManageUserRolesComponent implements OnInit {
       });
   }
 
-  getDropDown() {
-  }
+  // getGlobalRolesData() {
+  //   this.manageUserRolesService.getGlobalRolesDetails()
+  //     .subscribe(res => {
+  //       this.m
+  //     })
+  // }
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
