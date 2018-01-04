@@ -25,7 +25,6 @@ export class ManageUserRolesComponent implements OnInit {
       .subscribe(res => {
         this.manageUserRolesRequestData = res;
         this.isAvailable = true;
-        console.log('hhhhhhh', this.manageUserRolesRequestData[0]);
       });
   }
 
