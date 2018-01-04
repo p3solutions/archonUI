@@ -43,9 +43,8 @@ import { HeaderPanelComponent } from './header-panel/header-panel.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
-import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.service';
-
+import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 
 @NgModule({
   declarations: [
@@ -76,10 +75,10 @@ import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.se
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService,
-      { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService,
+    //   { dataEncapsulation: false }
+    // ),
     AppRoutingModule,
     AuthModule,
     DataTablesModule,

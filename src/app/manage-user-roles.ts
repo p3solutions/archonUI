@@ -3,8 +3,7 @@ export interface ManageUserRoles {
     createdAt: number;
     name: string;
     emailAddress: string;
-    // last_activity_time: string;
-    globalRoles: any[];
+    globalRoles: object[];
 }
 
 /*
@@ -19,3 +18,11 @@ export interface ManageUserRoles {
         "roleName": "ROLE_NOT_ASSIGNED"
     }
 ]*/
+
+
+
+// {
+//     id: string;
+//     createdAt: string;
+//     roleName: string;
+// }

@@ -1,3 +1,4 @@
+
 td{
     font-size: 14px;
     text-align: center;
@@ -50,8 +51,8 @@ p {
     font-size: 14px;
     padding-left: 13px;
 }
+
 .btn-group {
-    /* float: left; */
     font-size: 5px;
 }
 
@@ -73,7 +74,7 @@ p {
     margin-left: 13px;
 }
 
-.btn-primary {
+.btn-popup {
     color: #fff;
     background-color: #269af8;
     border-color: #269af8;
@@ -138,7 +139,3 @@ p {
     overflow: hidden;
     background-color: #eceeef;
   }
-  
-
-
-

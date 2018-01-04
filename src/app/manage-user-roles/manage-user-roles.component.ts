@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ManageUserRolesService } from './manage-user-roles.service';
 import { ManageUserRoles } from '../manage-user-roles';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { Data } from '@angular/router/src/config';
+
 
 @Component({
   selector: 'app-manage-user-roles',
@@ -19,10 +22,10 @@ export class ManageUserRolesComponent implements OnInit {
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
-      .subscribe(data => {
-        console.log('coooooooooooooool' , data);
-        this.manageUserRolesRequestData = data;
+      .subscribe(res => {
+        this.manageUserRolesRequestData = res;
         this.isAvailable = true;
+        console.log('hhhhhhh', this.manageUserRolesRequestData[0]);
       });
   }
 

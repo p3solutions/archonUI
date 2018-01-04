@@ -8,27 +8,43 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { ManageUserRoles } from '../manage-user-roles';
+import { headersToString } from 'selenium-webdriver/http';
+import { Data } from '@angular/router/src/config';
 
 @Injectable()
 export class ManageUserRolesService {
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json',
-   // tslint:disable-next-line:max-line-length
-   'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwicm9sZXMiOlt7InJvbGVJZCI6bnVsbCwicm9sZU5hbWUiOiJST0xFX05PVF9BU1NJR05FRCJ9XSwidXNlciI6eyJuYW1lIjpudWxsLCJpZCI6bnVsbCwiZW1haWxBZGRyZXNzIjoidGVzdEB0ZXN0LmNvbSJ9LCJpc3MiOiJJTkZPUExFWCIsImlhdCI6MTUxMzkyMDM3MSwiZXhwIjoxNTEzOTIxMjcxfQ.DNmTEHzgYV9ZkUGZnhDJdvB3FAQkLn5kJ9sKZ0apPnSCEmRzr4ZWO6lFBeaV6SOnixi-SzpAog07VFyjJHgTKQ' });
+   'Authorization': 'Bearer ' + localStorage.getItem('accessToken') });
   private globalRolesUrl = 'http://13.58.89.64:9000/users';
-  manageUserRolesUrl = 'api/manage_user_roles';
+  // manageUserRolesUrl = 'api/manage_user_roles';
   constructor(private http: HttpClient) { }
 
+  // getManageMembersDetails() {
+  //   this.http.get(this.globalRolesUrl, {headers: this.headers})
+  //   .subscribe(
+  //     (data: any[]) => {
+  //         console.log('hiiiii', data['data']['users']);
+  //     }
+  //   );
+  // }
+//   [04/01/2018 12:43 PM] Shammi Hans: getData():Observable<Post[]> {
+//     return this.http.get('http://jsonplaceholder.typicode.com/posts/')
+//         .map(this.extractData)
+//         .catch(this.handleError);
+// }
+
+private extractData(res: any) {
+    const body = res.data.users;
+    return body || [];
+}
+
+
   getManageMembersDetails(): Observable<ManageUserRoles[]> {
-    return this.http.get<ManageUserRoles[]>(this.globalRolesUrl).pipe(
+    return this.http.get<ManageUserRoles[]>(this.globalRolesUrl, {headers: this.headers}).map(this.extractData).pipe(
       catchError(this.handleError('manageuserroles', []))
     );
   }
-  // getManageMembersDetails(): Observable<ManageUserRoles[]> {
-  //   return this.http.get<ManageUserRoles[]>(this.manageUserRolesUrl).pipe(
-  //     catchError(this.handleError('manageuserroles', []))
-  //   );
-  // }
 
 
   // * Handle Http operation that failed.
