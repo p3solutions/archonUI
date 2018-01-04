@@ -1,0 +1,19 @@
+.col-title {
+  width: 200px;
+}
+
+.col-info-data {
+  width: 500px;
+}
+
+.col-info-data>.trim-text {
+  max-width: 450px;
+  min-width: 100px;
+}
+
+#user-info .table-hover {
+  margin-top: 20px;
+  margin-left: 75px;
+  width: 72%;
+  text-align: left;
+}

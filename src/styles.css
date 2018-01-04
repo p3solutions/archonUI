@@ -390,6 +390,18 @@ input[type=search] {
 .workspace-panel-heading {
   text-align: left;
 }
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: left;
+}
+.m-10 {
+  margin: 10px;
+}
+.fl-r {
+  float: right;
+}
 
 
 /* Data tables */

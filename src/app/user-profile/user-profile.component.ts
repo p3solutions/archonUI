@@ -30,8 +30,13 @@ export class UserProfileComponent implements OnInit {
           name: res.data.user.name
         };
         if (res.data.user.globalRoles && res.data.user.globalRoles.length) {
-          this.userInfo.role = res.data.user.globalRoles[0].roleName;
+          this.userInfo.roleList = [];
+          res.data.user.globalRoles.forEach(role => {
+            this.userInfo.roleList.push(role.roleName);
+          });
         }
+        // hard coded till we get it from BE API
+        this.userInfo.workspaceList = ['workspace1', 'workspace2', 'workspace3'];
       }
     });
   }
