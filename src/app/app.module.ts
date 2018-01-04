@@ -47,6 +47,7 @@ import { ManagementPanelComponent } from './management-panel/management-panel.co
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { WorkspaceListComponent } from './workspace-list/workspace-list.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
     ManagementPanelComponent,
     ManageMasterMetadataComponent,
     WorkspaceServicesComponent,
-    SignupFormComponent
+    SignupFormComponent,
+    WorkspaceListComponent
   ],
   imports: [
     BrowserModule,
