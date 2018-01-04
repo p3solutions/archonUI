@@ -10,6 +10,7 @@ import 'rxjs/add/operator/do';
 import { ManageUserRoles } from '../manage-user-roles';
 import { headersToString } from 'selenium-webdriver/http';
 import { Data } from '@angular/router/src/config';
+import { GlobalRoles } from '../global-roles';
 
 @Injectable()
 export class ManageUserRolesService {
@@ -19,17 +20,35 @@ export class ManageUserRolesService {
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
   private getAllUsersUrl = 'http://13.58.89.64:9000/users';
-  private getGlobalRolesUrl = 'http://13.58.89.64//admin/roles/global';
+  private getGlobalRolesUrl = 'http://13.58.89.64:9000/admin/roles/global';
   constructor(private http: HttpClient) { }
 
   private extractData(res: any) {
     const body = res.data.users;
     return body || [];
   }
+  private extractGlobalRolesData(res: any) {
+    const body = res.data.globalRoles;
+    return body || [];
+  }
 
   getManageMembersDetails(): Observable<ManageUserRoles[]> {
     return this.http.get<ManageUserRoles[]>(this.getAllUsersUrl, { headers: this.headers }).map(this.extractData).pipe(
       catchError(this.handleError('manageuserroles', []))
+    );
+  }
+
+  // getGlobalRolesDetails() {
+  //   this.http.get(this.getGlobalRolesUrl, {headers: this.headers})
+  //   .subscribe(
+  //     (data: any[]) => {
+  //         console.log('hillar', data);
+  //     }
+  //   );
+  // }
+  getGlobalRolesDetails(): Observable<GlobalRoles[]> {
+    return this.http.get<GlobalRoles[]>(this.getGlobalRolesUrl, { headers: this.headers}).map(this.extractGlobalRolesData).pipe(
+      catchError(this.handleError('globalroles', []))
     );
   }
 

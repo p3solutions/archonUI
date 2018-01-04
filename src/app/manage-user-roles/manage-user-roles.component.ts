@@ -4,6 +4,7 @@ import { ManageUserRoles } from '../manage-user-roles';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Data } from '@angular/router/src/config';
+import { GlobalRoles } from '../global-roles';
 
 
 @Component({
@@ -13,28 +14,36 @@ import { Data } from '@angular/router/src/config';
 })
 export class ManageUserRolesComponent implements OnInit {
   isAvailable = false;
+  selectDropDown = 'Choose Role';
+  choosedRole = 'not selected';
   manageUserRolesRequestData: ManageUserRoles[];
-  // globalRolesRequestData: 
+  globalRolesRequestData: GlobalRoles[];
   constructor(private manageUserRolesService: ManageUserRolesService, private router: Router) { }
 
   ngOnInit() {
     this.getManageUserRolesData();
-    // this.getGlobalRolesData();
+    this.getGlobalRolesData();
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
       .subscribe(res => {
         this.manageUserRolesRequestData = res;
         this.isAvailable = true;
+        console.log('manage-user-roles');
       });
   }
 
-  // getGlobalRolesData() {
-  //   this.manageUserRolesService.getGlobalRolesDetails()
-  //     .subscribe(res => {
-  //       this.m
-  //     })
-  // }
+  selectGlobalRoles(data) {
+     this.choosedRole = data;
+  }
+ 
+  getGlobalRolesData() {
+    this.manageUserRolesService.getGlobalRolesDetails()
+      .subscribe(res => {
+        this.globalRolesRequestData = res;
+        console.log('globalglobalglobal', this.globalRolesRequestData);
+      });
+  }
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);

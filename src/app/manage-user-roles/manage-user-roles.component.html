@@ -88,18 +88,14 @@
               Choose Role
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" *ngFor="let workspace of userWorkspaceArray" (click)="selectWorkspace(workspace.id)" id="{{workspace.id}}">{{workspace.name}}</a>
-              <div class="dropdown-divider" *ngIf="userRole == 'Member'"></div>
-              <a class="dropdown-item" *ngIf="userRole == 'Member'" (click)="contactAdmin()">Contact Your Admin</a>
-              <div class="dropdown-divider" *ngIf="userRole == 'Admin'"></div>
-              <a class="dropdown-item" *ngIf="userRole == 'Admin'" (click)="createNewWorkspace()">+ Create workspace</a>
+              <a class="dropdown-item" *ngFor="let name of globalRolesRequestData; let i = index" (click)="selectGlobalRoles(this.globalRolesRequestData[i].roleName)">{{this.globalRolesRequestData[i].roleName}}</a>
             </div>
           </div>
         </div>
         <div class="block">
           <br>
           <label>Selected Role</label>
-          <p>Admin</p>
+          <p>{{this.choosedRole}}</p>
         </div>
       </div>
       <div class="modal-footer">
