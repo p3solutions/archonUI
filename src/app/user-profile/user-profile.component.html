@@ -13,8 +13,8 @@
         </h3>
       </div>
     </div>
-    <div class="col-md-5 m-10 fl-r">
-      <button class="btn btn-secondary pull-right btn-form">Change Password</button>
+    <div class="col-md-5 m-10 pull-right">
+      <button class="btn btn-primary pull-right btn-form">Change Password</button>
     </div>
   </div>
   <div class="row">
@@ -74,7 +74,7 @@
               <b>Workspaces</b>
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
-                <span *ngFor="let workspace of userInfo?.workspaceList; let isLast=last">
+                <span class="m-r-10" *ngFor="let workspace of userInfo?.workspaceList; let isLast=last">
                    <a [routerLink]="">{{workspace.name}}</a>{{isLast ? '' : ', '}}
                 </span>
             </td>

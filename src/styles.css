@@ -394,13 +394,16 @@ input[type=search] {
   text-align: left;
 }
 .text-center {
-  text-align: left;
+  text-align: center;
 }
 .m-10 {
   margin: 10px;
 }
-.fl-r {
-  float: right;
+.m-l-10 {
+  margin-left: 10px;
+}
+.m-r-10 {
+  margin-right: 10px;
 }
 
 
