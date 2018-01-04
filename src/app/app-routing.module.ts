@@ -19,11 +19,14 @@ import { componentFactoryName } from '@angular/compiler';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { WorkspaceListComponent } from './workspace-list/workspace-list.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
         path: 'no-workspace', component: NoWorkspaceComponent
+      },{
+        path: 'workspace-list', component: WorkspaceListComponent
       },
       {
         path: 'management-panel', component: ManagementPanelComponent

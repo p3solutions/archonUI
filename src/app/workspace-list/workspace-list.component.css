@@ -1,0 +1,12 @@
+h3{
+    float: left;
+
+}
+button{
+    font-size: 15px;
+    margin-top:20px;
+    width:50%;
+    height: 50px;
+    text-align: center;
+    padding: 5px;
+}
