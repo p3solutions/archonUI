@@ -48,6 +48,7 @@ import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-m
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { WorkspaceListComponent } from './workspace-list/workspace-list.component';
+import { WorkspaceListService } from './workspace-list/workspace-list.service';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { WorkspaceListComponent } from './workspace-list/workspace-list.componen
     ManageMembersService,
     MemberRequestService,
     EnterNewpasswordService,
-    ManageMasterMetadataService
+    ManageMasterMetadataService,
+    WorkspaceListService
   ],
   bootstrap: [AppComponent]
 })

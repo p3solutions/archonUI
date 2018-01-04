@@ -72,6 +72,27 @@ export class InMemoryDataService implements InMemoryDbService {
       { slNo: '4', version: '3.00', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
       { slNo: '5', version: '4.69', description: 'Null', createdDate: '20/11/2017 04.05 PM' }
     ];
+    const workspaceListInfo =  [
+      {
+        id:"workspace001",
+        name:"Workspace 1",
+        metadata_version:"22",
+        owner:"Test-user",
+        members:["Test User","User 1","User 2"]
+      },{
+        id:"workspace002",
+        name:"Workspace 2",
+        metadata_version:"22",
+        owner:"Test-user",
+        members:["Test User","User 2","User 3"]
+      },{
+        id:"workspace003",
+        name:"Workspace 3",
+        metadata_version:"22",
+        owner:"Test-user",
+        members:["Test User","User 3","User 4"]
+      }
+    ]
     return {
       info,
       signin,
@@ -80,6 +101,7 @@ export class InMemoryDataService implements InMemoryDbService {
       master_metadata,
       managemembers,
       workspaceinfo,
+      workspaceListInfo,
       currentWorkspace,
       workspaceList,
       userWorkspaces2,
