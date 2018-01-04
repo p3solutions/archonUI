@@ -390,6 +390,11 @@ input[type=search] {
   text-align: left;
 }
 
+.btn-lg-arrow {
+  margin-top: 50px;
+}
+
+
 
 /* Data tables */
 

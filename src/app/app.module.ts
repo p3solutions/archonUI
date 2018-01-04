@@ -38,12 +38,13 @@ import { MemberRequestService } from './member-request.service';
 import { ManageMasterMetadataService } from './manage-master-metadata.service';
 import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
 import { HeaderPanelComponent } from './header-panel/header-panel.component';
-import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
-import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
-import { SignupFormComponent } from './signup-form/signup-form.component';
 import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component';
 import { EnterNewpasswordService } from './enter-newpassword/enter-newpassword.service';
 import { EqualValidator } from './enter-newpassword/equal-validator.directive';
+import { ManagementPanelComponent } from './management-panel/management-panel.component';
+import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
+import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
+import { SignupFormComponent } from './signup-form/signup-form.component';
 @NgModule({
     declarations: [
         AppComponent,
