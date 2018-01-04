@@ -26,10 +26,12 @@
               <b>Name</b>
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
-              <div class="trim-text">{{userInfo?.name}}</div>
-              <a [routerLink]="edit-profile" class="m-10">Edit
-                              <i class="m-10 glyphicon glyphicon-pencil"></i>
+              {{userInfo?.name}}
+              <span>
+                <a [routerLink]="['./edit-profile']" class="m-10">Edit
+                <i class="m-10 glyphicon glyphicon-pencil"></i>
               </a>
+              </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">
               <i class="fa fa-spinner fa-spin loading"></i>
@@ -40,10 +42,12 @@
               <b>Email</b>
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
-              <div class="trim-text">{{userInfo?.email}}</div>
-              <a [routerLink]="edit-profile" class="m-10">Edit
-                              <i class="m-10 glyphicon glyphicon-pencil"></i>
+              {{userInfo?.email}}
+              <span>
+                <a [routerLink]="['./edit-profile']" class="m-10">Edit
+                <i class="m-10 glyphicon glyphicon-pencil"></i>
               </a>
+              </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">
               <i class="fa fa-spinner fa-spin loading"></i>
@@ -54,10 +58,12 @@
               <b>Global Role</b>
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
-              <div class="trim-text">{{userInfo?.roleList?.join(', ')}}</div>
-              <a [routerLink]="" class="m-10">Edit
-                              <i class="m-10 glyphicon glyphicon-pencil"></i>
+              {{userInfo?.roleList?.join(', ')}}
+              <span>
+                <a [routerLink]="" class="m-10">Edit
+                <i class="m-10 glyphicon glyphicon-pencil"></i>
               </a>
+              </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">
               <i class="fa fa-spinner fa-spin loading"></i>
@@ -68,10 +74,9 @@
               <b>Workspaces</b>
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
-              <div class="trim-text">{{userInfo?.workspaceList?.join(', ')}}</div>
-              <a [routerLink]="" class="m-10">Edit
-                              <i class="m-10 glyphicon glyphicon-pencil"></i>
-              </a>
+                <span *ngFor="let workspace of userInfo?.workspaceList; let isLast=last">
+                   <a [routerLink]="">{{workspace.name}}</a>{{isLast ? '' : ', '}}
+                </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">
               <i class="fa fa-spinner fa-spin loading"></i>
@@ -87,3 +92,5 @@
     </div>
   </div>
 </div>
+<router-outlet></router-outlet>
+

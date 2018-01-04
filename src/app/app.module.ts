@@ -45,6 +45,7 @@ import { WorkspaceServicesComponent } from './workspace-services/workspace-servi
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserinfoService } from './userinfo.service';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,7 +69,8 @@ import { UserinfoService } from './userinfo.service';
     ManageMasterMetadataComponent,
     WorkspaceServicesComponent,
     SignupFormComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -36,7 +36,8 @@ export class UserProfileComponent implements OnInit {
           });
         }
         // hard coded till we get it from BE API
-        this.userInfo.workspaceList = ['workspace1', 'workspace2', 'workspace3'];
+        const obj = { name: 'workspace'};
+        this.userInfo.workspaceList = [obj, obj, obj];
       }
     });
   }

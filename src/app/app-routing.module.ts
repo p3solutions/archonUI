@@ -16,6 +16,7 @@ import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-m
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 const routes: Routes = [
   {
@@ -64,7 +65,9 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'user-profile', component: UserProfileComponent
+    path: 'user-profile', component: UserProfileComponent, children: [
+      { path: 'edit-profile', component: EditProfileComponent}
+    ]
   }
 ];
 
