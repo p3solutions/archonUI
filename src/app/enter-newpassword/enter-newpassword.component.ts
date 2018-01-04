@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PasswordReset } from './password-reset';
 import { NewPasswordSetter } from './newpasswordsetter';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -12,20 +13,27 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./enter-newpassword.component.css']
 })
 export class EnterNewpasswordComponent implements OnInit {
-  responseData : any;
-  newPasswordSetForm = new NewPasswordSetter('','');
-  errorObject: ErrorObject;  
-  constructor( private passwordResetService : EnterNewpasswordService) { }
-  passwordReset : PasswordReset = {
-    password : '',
-    confirmPassword : ''
-  }
+  responseData: any;
+  newPasswordSetForm = new NewPasswordSetter('', '');
+  errorObject: ErrorObject;
+  passwordReset: PasswordReset;
+  passwordResetForm: FormGroup;
+  constructor(
+    private passwordResetService: EnterNewpasswordService,
+    private router: Router
+  ) { }
   ngOnInit() {
-    
-  }    
-  onSubmit(){
+    this.createForm();
+  }
+  createForm() {
+    this.passwordResetForm = new FormGroup({
+      password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      confirmPassword: new FormControl('', [Validators.required]),
+    });
+  }
+  onSubmit() {
     this.newPasswordSetForm.resetKey = '5a422b025912213155a768341140472627094608';
-    this.newPasswordSetForm.password = this.passwordReset.password;
+    this.newPasswordSetForm.password = this.passwordResetForm.value.password;
     console.log(JSON.stringify(this.newPasswordSetForm));
     this.passwordResetService.passwordReset(this.newPasswordSetForm).subscribe(
       data => {
@@ -47,4 +55,6 @@ export class EnterNewpasswordComponent implements OnInit {
       }
     );
   }
+  get password() { return this.passwordResetForm.get('password'); }
+  get confirmPassword() { return this.passwordResetForm.get('confirmPassword'); }
 }

@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InMemoryDataService } from './in-memory-data.service';
 import { InfoService } from './info.service';
+import { SigninFormService } from './signin-form/signin-form.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +18,6 @@ import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspac
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { AuthModule } from './/auth.module';
-import { SigninFormService } from './signin-form/signin-form.service';
 import { SignupFormService } from './signup-form/signup-form.service';
 import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
 import { AuthenticationService } from './authentication/authentication.service';
@@ -45,63 +45,63 @@ import { ManagementPanelComponent } from './management-panel/management-panel.co
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    LandingPageComponent,
-    SigninFormComponent,
-    WorkspaceLandingPageComponent,
-    SigninFormComponent,
-    ForgotpasswordFormComponent,
-    WorkspaceHeaderComponent,
-    WorkspaceHeaderInfoComponent,
-    WorkspaceMgmtPanelComponent,
-    WorkspaceDashboardComponent,
-    NoWorkspaceComponent,
-    WorkspaceInfoComponent,
-    HeaderTabComponent,
-    ManageMembersComponent,
-    MemberRequestComponent,
-    WorkspacePanelComponent,
-    HeaderPanelComponent,
-    EnterNewpasswordComponent,
-    EqualValidator,
-    ManagementPanelComponent,
-    ManageMasterMetadataComponent,
-    WorkspaceServicesComponent,
-    SignupFormComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService,
-    //   { dataEncapsulation: false }
-    // ),
-    AppRoutingModule,
-    AuthModule,
-    DataTablesModule,
-    ReactiveFormsModule,
-    MatTableModule,
-    FormsModule
-  ],
-  providers: [
-    JwtHelper,
-    InMemoryDataService,
-    InfoService,
-    SigninFormService,
-    ForgotpasswordFormService,
-    AuthenticationService,
-    UserWorkspaceService,
-    WorkspaceinfoService,
-    ManageMembersService,
-    MemberRequestService,
-    EnterNewpasswordService,
-    ManageMasterMetadataService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        LandingPageComponent,
+        WorkspaceLandingPageComponent,
+        SigninFormComponent,
+        ForgotpasswordFormComponent,
+        WorkspaceHeaderComponent,
+        WorkspaceHeaderInfoComponent,
+        WorkspaceMgmtPanelComponent,
+        WorkspaceDashboardComponent,
+        NoWorkspaceComponent,
+        WorkspaceInfoComponent,
+        HeaderTabComponent,
+        ManageMembersComponent,
+        MemberRequestComponent,
+        WorkspacePanelComponent,
+        HeaderPanelComponent,
+        HeaderPanelComponent,
+        ManageMasterMetadataComponent,
+        WorkspaceServicesComponent,
+        SignupFormComponent,
+        EnterNewpasswordComponent,
+        EqualValidator,
+        ManagementPanelComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        // HttpClientInMemoryWebApiModule.forRoot(
+        //   InMemoryDataService,
+        //   { dataEncapsulation: false }
+        // ),
+        AppRoutingModule,
+        AuthModule,
+        DataTablesModule,
+        ReactiveFormsModule,
+        MatTableModule,
+        FormsModule
+    ],
+    providers: [
+        JwtHelper,
+        InMemoryDataService,
+        InfoService,
+        SigninFormService,
+        SignupFormService,
+        ForgotpasswordFormService,
+        AuthenticationService,
+        UserWorkspaceService,
+        WorkspaceinfoService,
+        ManageMembersService,
+        MemberRequestService,
+        ManageMasterMetadataService,
+        EnterNewpasswordService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
