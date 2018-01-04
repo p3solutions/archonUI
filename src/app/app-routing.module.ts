@@ -56,14 +56,13 @@ const routes: Routes = [
     path: '', component: LandingPageComponent, children: [
       {
         path: '', redirectTo: '/sign-in', pathMatch: 'full'
-      },{
+      }, {
         path: 'sign-in', component: SigninFormComponent
       }, {
         path: 'forgot-password', component: ForgotpasswordFormComponent
-      },{
-          path: 'password-reset', component: EnterNewpasswordComponent
-      },
-       {
+      }, {
+        path: 'password-reset', component: EnterNewpasswordComponent
+      }, {
         path: 'sign-up', component: SignupFormComponent,
       }
     ]
