@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InMemoryDataService } from './in-memory-data.service';
 import { InfoService } from './info.service';
-import { SigninFormService } from './signin-form.service';
+import { SigninFormService } from './signin-form/signin-form.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninFormComponent } from './signin-form/signin-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -69,7 +69,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
         WorkspaceServicesComponent,
         SignupFormComponent,
         EnterNewpasswordComponent,
-        EqualValidator
+        EqualValidator,
+        ManagementPanelComponent
     ],
     imports: [
         BrowserModule,

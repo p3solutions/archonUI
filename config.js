@@ -1,5 +1,5 @@
 var configs = {};
-configs.applicationPort = 8000;
+configs.applicationPort = 9000;
 configs.dbHost = 'localhost';
 configs.url = 'http://localhost:';
 configs.logDirectory = `${__dirname}/log`;
