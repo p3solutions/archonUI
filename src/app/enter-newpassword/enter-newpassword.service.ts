@@ -10,11 +10,11 @@ import { NewPasswordSetter } from './newpasswordsetter';
 export class EnterNewpasswordService {
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private forgotPasswordUrl = 'http://13.58.89.64:9000/auth/pwd-forgot';
+  private forgotPasswordUrl = 'http://13.58.89.64:9000/auth/pwd-reset';
 
   constructor(private http: HttpClient) { }
 
-  passwordReset(newPasswordSetForm: NewPasswordSetter): Observable<NewPasswordSetter> {
+  passwordReset(newPasswordSetForm: NewPasswordSetter): Observable<any> {
     return this.http.post<NewPasswordSetter>(this.forgotPasswordUrl, newPasswordSetForm, { headers: this.headers });
   }
   /**

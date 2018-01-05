@@ -11,7 +11,7 @@ import { Signup } from '../signup';
 @Injectable()
 export class SignupFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private signupUrl = 'http://13.58.89.64:9000/user';
+  private signupUrl = 'http://13.58.89.64:9000/auth/signup';
 
   constructor(private http: HttpClient) { }
   signUp(signup_info: Signup): Observable<Signup> {

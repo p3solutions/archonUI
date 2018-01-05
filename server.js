@@ -53,7 +53,7 @@ const validateLinkFn = function (url, resetKey, pwdResetResponse) {
           (configs.forgotPwdUrl + configs.showLinkError) : //redirect to forgotPwdUrl & show error
           configs.resetPwdUrl; // else redirect to resetPwdUrl
         console.log('redirecting to', redirectUrl);
-        pwdResetResponse.redirect(redirectUrl + '?resetKey=' + resetKey);
+        pwdResetResponse.redirect(redirectUrl + ';resetKey=' + resetKey);
       } catch (e) {
         console.error(e.message);
       }
