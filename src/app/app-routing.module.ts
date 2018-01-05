@@ -20,38 +20,31 @@ import { ManagementPanelComponent } from './management-panel/management-panel.co
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
+
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
         path: 'no-workspace', component: NoWorkspaceComponent
-      },
-      {
+      }, {
         path: 'management-panel', component: ManagementPanelComponent
-      },
-      {
+      }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
             path: '', redirectTo: 'workspace-services', pathMatch: 'full'
-          },
-          {
+          }, {
             path: 'workspace-services', component: WorkspaceServicesComponent
-          },
-          {
+          }, {
             path: 'workspace-info', component: WorkspaceInfoComponent
-          },
-          {
+          }, {
             path: 'member-request', component: MemberRequestComponent
-          },
-          {
+          }, {
             path: 'manage-members', component: ManageMembersComponent
-          },
-          {
+          }, {
             path: 'manage-master-metadata', component: ManageMasterMetadataComponent
-          }
-        ]
-      },
-    ]
+          }]
+      }]
   },
   {
     path: '', component: LandingPageComponent, children: [
@@ -64,9 +57,10 @@ const routes: Routes = [
       }, {
         path: 'password-reset', component: EnterNewpasswordComponent
       }, {
-        path: 'sign-up', component: SignupFormComponent,
-      }
-    ]
+        path: 'sign-up', component: SignupFormComponent
+      }]
+  }, {
+    path: 'manage-user-roles', component: ManageUserRolesComponent
   }
 ];
 

@@ -45,6 +45,8 @@ import { ManagementPanelComponent } from './management-panel/management-panel.co
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.service';
+import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -70,7 +72,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
         SignupFormComponent,
         EnterNewpasswordComponent,
         EqualValidator,
-        ManagementPanelComponent
+        ManagementPanelComponent,
+        ManageUserRolesComponent
     ],
     imports: [
         BrowserModule,
@@ -100,7 +103,8 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
         ManageMembersService,
         MemberRequestService,
         ManageMasterMetadataService,
-        EnterNewpasswordService
+        EnterNewpasswordService,
+        ManageUserRolesService
     ],
     bootstrap: [AppComponent]
 })
