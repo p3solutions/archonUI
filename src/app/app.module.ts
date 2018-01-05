@@ -76,7 +76,8 @@ import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.
     WorkspaceServicesComponent,
     SignupFormComponent,
     UserProfileComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    ManageUserRolesComponent
   ],
   imports: [
     BrowserModule,
