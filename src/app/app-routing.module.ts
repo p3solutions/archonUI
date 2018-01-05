@@ -20,7 +20,10 @@ import { ManagementPanelComponent } from './management-panel/management-panel.co
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
+
 const routes: Routes = [
+  { path: 'manage-user-roles', component: ManageUserRolesComponent},
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
