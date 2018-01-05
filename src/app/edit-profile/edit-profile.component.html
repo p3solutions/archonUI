@@ -1,3 +1,31 @@
-<p>
-  edit-profile works!
-</p>
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-left">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit Profile</h4>
+      </div>
+      <div class="modal-body row">
+        <div class="col-md-12 row m-10">
+          <div class="col-md-4">Change Name</div>
+          <div class="col-md-8">
+            <input value="{{username}}" name="userName" id="userName" />
+          </div>
+        </div>
+        <div class="col-md-12 row m-10">
+          <div class="col-md-4">Change Email Address</div>
+          <div class="col-md-8">
+            <input value="{{useremail}}" name="userEmail" id="userEmail" />
+          </div>
+        </div>
+        <input hidden value="{{userid}}" name="userId" id="userId" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
