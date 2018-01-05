@@ -23,38 +23,28 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 
 const routes: Routes = [
-  { path: 'manage-user-roles', component: ManageUserRolesComponent},
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
         path: 'no-workspace', component: NoWorkspaceComponent
-      },
-      {
+      }, {
         path: 'management-panel', component: ManagementPanelComponent
-      },
-      {
+      }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
             path: '', redirectTo: 'workspace-services', pathMatch: 'full'
-          },
-          {
+          }, {
             path: 'workspace-services', component: WorkspaceServicesComponent
-          },
-          {
+          }, {
             path: 'workspace-info', component: WorkspaceInfoComponent
-          },
-          {
+          }, {
             path: 'member-request', component: MemberRequestComponent
-          },
-          {
+          }, {
             path: 'manage-members', component: ManageMembersComponent
-          },
-          {
+          }, {
             path: 'manage-master-metadata', component: ManageMasterMetadataComponent
-          }
-        ]
-      },
-    ]
+          }]
+      }]
   },
   {
     path: '', component: LandingPageComponent, children: [
@@ -67,9 +57,10 @@ const routes: Routes = [
       }, {
         path: 'password-reset', component: EnterNewpasswordComponent
       }, {
-        path: 'sign-up', component: SignupFormComponent,
-      }
-    ]
+        path: 'sign-up', component: SignupFormComponent
+      }]
+  }, {
+    path: 'manage-user-roles', component: ManageUserRolesComponent
   }
 ];
 
