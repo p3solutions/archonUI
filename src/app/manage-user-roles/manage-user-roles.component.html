@@ -88,7 +88,7 @@
               Choose Role
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" *ngFor="let name of globalRolesRequestData; let i = index" (click)="selectGlobalRoles(this.globalRolesRequestData[i].roleName)">{{this.globalRolesRequestData[i].roleName}}</a>
+              <a class="dropdown-item" *ngFor="let name of globalRolesRequestData; let i = index" (click)="changeGlobalRoleData(this.globalRolesRequestData[i].roleName)">{{this.globalRolesRequestData[i].roleName}}</a>
             </div>
           </div>
         </div>

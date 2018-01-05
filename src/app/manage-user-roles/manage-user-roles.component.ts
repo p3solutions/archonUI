@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Data } from '@angular/router/src/config';
 import { GlobalRoles } from '../global-roles';
+import { ChangeGlobalRole } from '../change-global-role';
 
 
 @Component({
@@ -18,27 +19,32 @@ export class ManageUserRolesComponent implements OnInit {
   choosedRole = 'not selected';
   manageUserRolesRequestData: ManageUserRoles[];
   globalRolesRequestData: GlobalRoles[];
+  changeRoleRequestData: ChangeGlobalRole[];
   constructor(private manageUserRolesService: ManageUserRolesService, private router: Router) { }
 
   ngOnInit() {
     this.getManageUserRolesData();
-    this.getGlobalRolesData();
+    this.getGlobalRoleData();
+    // this.changeGlobalRoleData();
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
       .subscribe(res => {
         this.manageUserRolesRequestData = res;
         this.isAvailable = true;
-        console.log('manage-user-roles');
       });
   }
 
   selectGlobalRoles(data) {
      this.choosedRole = data;
   }
+
+  changeGlobalRoleData(id) {
+       this.manageUserRolesService.changeGlobalRoleDetails(); 
+  }
  
-  getGlobalRolesData() {
-    this.manageUserRolesService.getGlobalRolesDetails()
+  getGlobalRoleData() {
+    this.manageUserRolesService.getGlobalRoleDetails()
       .subscribe(res => {
         this.globalRolesRequestData = res;
         console.log('globalglobalglobal', this.globalRolesRequestData);
