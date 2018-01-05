@@ -81,10 +81,10 @@ import { WorkspaceListService } from './workspace-list/workspace-list.service';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService,
-      { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   InMemoryDataService,
+    //   { dataEncapsulation: false }
+    // ),
     AppRoutingModule,
     AuthModule,
     DataTablesModule,
