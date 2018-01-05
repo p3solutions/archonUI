@@ -72,6 +72,15 @@ export class InMemoryDataService implements InMemoryDbService {
       { slNo: '4', version: '3.00', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
       { slNo: '5', version: '4.69', description: 'Null', createdDate: '20/11/2017 04.05 PM' }
     ];
+    const manage_user_roles = [
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' }
+    ];
     return {
       info,
       signin,
@@ -86,7 +95,8 @@ export class InMemoryDataService implements InMemoryDbService {
       userWorkspaces,
       workspace2,
       workspace1,
-      users
+      users,
+      manage_user_roles
     };
   }
 }

@@ -59,7 +59,6 @@ export class SignupFormComponent implements OnInit {
           this.errorObject.message = err.error.message;
           this.errorObject.show = !err.error.success;
           this.msg = err.status;
-          console.log('chilllllllar', this.msg);
           console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }
       }

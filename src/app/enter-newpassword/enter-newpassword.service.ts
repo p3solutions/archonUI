@@ -10,34 +10,34 @@ import { NewPasswordSetter } from './newpasswordsetter';
 export class EnterNewpasswordService {
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private forgotPasswordUrl = 'http://13.58.89.64:9000/auth/pwd-forgot';
+  private forgotPasswordUrl = 'http://13.58.89.64:9000/auth/pwd-reset';
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  passwordReset(newPasswordSetForm : NewPasswordSetter) : Observable<NewPasswordSetter>{
-     return this.http.post<NewPasswordSetter>(this.forgotPasswordUrl,newPasswordSetForm, { headers : this.headers});
+  passwordReset(newPasswordSetForm: NewPasswordSetter): Observable<any> {
+    return this.http.post<NewPasswordSetter>(this.forgotPasswordUrl, newPasswordSetForm, { headers: this.headers });
   }
- /**
- * Handle Http operation that failed.
- * Let the app continue.
- * @param operation - name of the operation that failed
- * @param result - optional value to return as the observable result
- */
-private handleError<T>(operation = 'operation', result?: T) {
-  return (error: any): Observable<T> => {
+  /**
+  * Handle Http operation that failed.
+  * Let the app continue.
+  * @param operation - name of the operation that failed
+  * @param result - optional value to return as the observable result
+  */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
 
-    // TODO: send the error to remote logging infrastructure
-    console.error(error); // log to console instead
-    // TODO: better job of transforming error for user consumption
-    this.log(`${operation} failed: ${error.message}`);
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
 
-    // Let the app keep running by returning an empty result.
-    return of(result as T);
-  };
-}
-/** Log a message with the MessageService */
-private log(message: string) {
-  console.log(message);
-}
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+  /** Log a message with the MessageService */
+  private log(message: string) {
+    console.log(message);
+  }
 }
 
