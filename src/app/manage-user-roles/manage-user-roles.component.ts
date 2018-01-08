@@ -36,7 +36,7 @@ export class ManageUserRolesComponent implements OnInit {
   selectGlobalRoles(data) {
      this.choosedRole = data;
   }
- 
+
   getGlobalRolesData() {
     this.manageUserRolesService.getGlobalRolesDetails()
       .subscribe(res => {

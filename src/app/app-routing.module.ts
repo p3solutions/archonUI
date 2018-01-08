@@ -30,6 +30,8 @@ const routes: Routes = [
       }, {
         path: 'management-panel', component: ManagementPanelComponent
       }, {
+        path: 'manage-user-roles', component: ManageUserRolesComponent
+      }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
             path: '', redirectTo: 'workspace-services', pathMatch: 'full'
@@ -59,8 +61,6 @@ const routes: Routes = [
       }, {
         path: 'sign-up', component: SignupFormComponent
       }]
-  }, {
-    path: 'manage-user-roles', component: ManageUserRolesComponent
   }
 ];
 
