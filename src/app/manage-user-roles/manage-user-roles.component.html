@@ -34,7 +34,7 @@
             <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['createdAt']}}</td>
             <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['globalRoles'][0]['roleName']}}</td>
             <td>
-              <a href="" data-toggle="modal" data-target="#myModal">
+              <a href="" data-toggle="modal" data-target="#myModal" (click)="getUserId(this.manageUserRolesRequestData[i]['id'])">
                 Change Role
               </a>
             </td>
@@ -67,7 +67,7 @@
               </a>
             </div>
             <div class="col-md-8">
-              <h3 class="manage-role-panel-heading">
+              <h3  class="manage-role-panel-heading">
                 Change Role
               </h3>
             </div>
@@ -88,7 +88,8 @@
               Choose Role
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" *ngFor="let name of globalRolesRequestData; let i = index" (click)="changeGlobalRoleData(this.globalRolesRequestData[i].roleName)">{{this.globalRolesRequestData[i].roleName}}</a>
+                <!-- <a class="dropdown-item" *ngFor="let name of globalRolesRequestData; let i = index" (click)="changeGlobalRoleData(this.globalRolesRequestData[i].roleName)">{{this.globalRolesRequestData[i].roleName}}</a> -->
+              <a class="dropdown-item" *ngFor="let name of globalRolesRequestData; let i = index" (click)="getGlobalId(this.globalRolesRequestData[i]['id'],this.globalRolesRequestData[i]['roleName'])">{{this.globalRolesRequestData[i].roleName}}</a>
             </div>
           </div>
         </div>
@@ -101,7 +102,7 @@
       <div class="modal-footer">
         <div class="row">
           <button type="button" class="btn btn-primary btn-popup" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary btn-popup" data-dismiss="modal">Confirm</button>
+          <button type="submit" (click)="changeOnConfirm()" class="btn btn-primary btn-popup" data-dismiss="modal">Confirm</button>
         </div>
       </div>
     </div>

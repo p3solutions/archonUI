@@ -20,12 +20,13 @@ export class ManageUserRolesComponent implements OnInit {
   manageUserRolesRequestData: ManageUserRoles[];
   globalRolesRequestData: GlobalRoles[];
   changeRoleRequestData: ChangeGlobalRole[];
+  userId: string;
+  globalId: string;
   constructor(private manageUserRolesService: ManageUserRolesService, private router: Router) { }
 
   ngOnInit() {
     this.getManageUserRolesData();
     this.getGlobalRoleData();
-    // this.changeGlobalRoleData();
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
@@ -34,20 +35,27 @@ export class ManageUserRolesComponent implements OnInit {
         this.isAvailable = true;
       });
   }
-
-  selectGlobalRoles(data) {
-     this.choosedRole = data;
+  getUserId(id) {
+    console.log('testing', id);
+    this.userId = id;
+}
+  getGlobalId(id, roleName) {
+    this.globalId = id;
+    console.log('test test ', id);
+     this.choosedRole = roleName;
   }
 
-  changeGlobalRoleData(id) {
-       this.manageUserRolesService.changeGlobalRoleDetails(); 
+  changeOnConfirm() {
+    this.manageUserRolesService.changeGlobalRoleDetails(this.userId, this.globalId);
+    console.log('hiiiiiiiiiii');
+    this.router.navigate(['manage-user-roles']);
   }
  
   getGlobalRoleData() {
     this.manageUserRolesService.getGlobalRoleDetails()
       .subscribe(res => {
         this.globalRolesRequestData = res;
-        console.log('globalglobalglobal', this.globalRolesRequestData);
+        console.log('globalglobalglobal', this.globalRolesRequestData[0]['id']);
       });
   }
 

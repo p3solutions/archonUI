@@ -19,12 +19,16 @@ export class ManageUserRolesService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
-  body= { userId : '5a4cb08259122168004c0ef9',
-    globalRoleId : '5a4cae6a90689767f7467a56'
-  };
+  
+  // body= { userId : '5a4cb08259122168004c0ef9',
+  //         globalRoleId : '5a4cae6a90689767f7467a56'
+  // };
+
   private getAllUsersUrl = 'http://13.58.89.64:9000/users';
   private getGlobalRoleUrl = 'http://13.58.89.64:9000/admin/roles/global';
-  private changeGlobalRoleUrl = 'http://13.58.89.64:9000/users/5a4cb08259122168004c0ef9/roles/global';
+  // private changeGlobalRoleUrl = 'http://13.58.89.64:9000/users/5a4cb08259122168004c0ef9/roles/global';
+  private changeGlobalRoleUrl = 'http://13.58.89.64:9000/users/';
+
   constructor(private http: HttpClient) { }
 
   private extractData(res: any) {
@@ -41,9 +45,16 @@ export class ManageUserRolesService {
       catchError(this.handleError('manageuserroles', []))
     );
   }
+  // changeGlobalRoleDetails(userid, globalid) {
+  //   return this.http.patch('http://13.58.89.64:9000/users/5a4cb08259122168004c0ef9/roles/global', this.body, { headers: this.headers })
+  //   .subscribe((res) => console.log(res));
+  // }
 
-  changeGlobalRoleDetails() {
-    return this.http.patch(this.changeGlobalRoleUrl, this.body, { headers: this.headers })
+  changeGlobalRoleDetails(userid, globalid) {
+    const body = { userId : userid,
+    globalRoleId : globalid
+   };
+    return this.http.patch(this.changeGlobalRoleUrl + userid + '/roles/global', body, { headers: this.headers })
     .subscribe((res) => console.log(res));
   }
 
