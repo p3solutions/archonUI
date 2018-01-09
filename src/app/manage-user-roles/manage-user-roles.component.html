@@ -29,7 +29,7 @@
         <tbody>
           <tr *ngFor="let user of this.manageUserRolesRequestData; let i = index">
             <td class="mm-info-data">{{i+1}}</td>
-            <a href=""><td class="mm-info-data">{{manageUserRolesRequestData[i]['name']}}</td></a>
+            <td class="mm-info-data"><a href="">{{manageUserRolesRequestData[i]['name']}}</a></td>
             <td class="mm-info-data">{{manageUserRolesRequestData[i]['emailAddress']}}</td>
             <td class="mm-info-data">{{manageUserRolesRequestData[i]['createdAt']}}</td>
             <td class="mm-info-data">{{manageUserRolesRequestData[i]['globalRoles'][0]['roleName']}}</td>
