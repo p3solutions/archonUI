@@ -49,7 +49,8 @@ export class ManageUserRolesComponent implements OnInit {
   changeOnConfirm() {
     this.router.navigate([{ outlets: { bookPopup: [ 'update-book' ] }}]); 
     this.manageUserRolesService.changeGlobalRoleDetails(this.userId, this.globalId);
-    this.manageUserRolesRequestData[this.index]['globalRoles'][0]['roleName'] = this.choosedRole;
+    // this.manageUserRolesRequestData[this.index]['globalRoles'][0]['roleName'] = this.choosedRole;
+    this.choosedRole = 'Not Selected';
   }
 
   getGlobalRoleData() {

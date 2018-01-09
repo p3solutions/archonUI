@@ -18,7 +18,7 @@
       <table datatable id="manage-user-role-info-table" class="table table-hover table-bordered" *ngIf="isAvailable">
         <thead>
           <tr>
-            <th>Id</th>
+            <th>Sl No</th>
             <th>Name</th>
             <th>Email Address</th>
             <th>Created At</th>
@@ -28,8 +28,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of this.manageUserRolesRequestData; let i = index">
-            <td class="mm-info-data">{{manageUserRolesRequestData[i]['id']}}</td>
-            <td class="mm-info-data">{{manageUserRolesRequestData[i]['name']}}</td>
+            <td class="mm-info-data">{{i+1}}</td>
+            <a href=""><td class="mm-info-data">{{manageUserRolesRequestData[i]['name']}}</td></a>
             <td class="mm-info-data">{{manageUserRolesRequestData[i]['emailAddress']}}</td>
             <td class="mm-info-data">{{manageUserRolesRequestData[i]['createdAt']}}</td>
             <td class="mm-info-data">{{manageUserRolesRequestData[i]['globalRoles'][0]['roleName']}}</td>
