@@ -28,13 +28,13 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of this.manageUserRolesRequestData; let i = index">
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['id']}}</td>
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['name']}}</td>
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['emailAddress']}}</td>
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['createdAt']}}</td>
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['globalRoles'][0]['roleName']}}</td>
+            <td class="mm-info-data">{{manageUserRolesRequestData[i]['id']}}</td>
+            <td class="mm-info-data">{{manageUserRolesRequestData[i]['name']}}</td>
+            <td class="mm-info-data">{{manageUserRolesRequestData[i]['emailAddress']}}</td>
+            <td class="mm-info-data">{{manageUserRolesRequestData[i]['createdAt']}}</td>
+            <td class="mm-info-data">{{manageUserRolesRequestData[i]['globalRoles'][0]['roleName']}}</td>
             <td>
-              <a href="" data-toggle="modal" data-target="#myModal" (click)="getUserId(this.manageUserRolesRequestData[i]['id'])">
+              <a href="" data-toggle="modal" data-target="#myModal" (click)="getUserId(this.manageUserRolesRequestData[i]['id'],i)">
                 Change Role
               </a>
             </td>

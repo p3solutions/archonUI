@@ -16,12 +16,13 @@ import { ChangeGlobalRole } from '../change-global-role';
 export class ManageUserRolesComponent implements OnInit {
   isAvailable = false;
   selectDropDown = 'Choose Role';
-  choosedRole = 'not selected';
+  choosedRole = 'Not Selected';
   manageUserRolesRequestData: ManageUserRoles[];
   globalRolesRequestData: GlobalRoles[];
   changeRoleRequestData: ChangeGlobalRole[];
   userId: string;
   globalId: string;
+  index: string;
   constructor(private manageUserRolesService: ManageUserRolesService, private router: Router) { }
 
   ngOnInit() {
@@ -35,27 +36,26 @@ export class ManageUserRolesComponent implements OnInit {
         this.isAvailable = true;
       });
   }
-  getUserId(id) {
-    console.log('testing', id);
+  getUserId(id, index) {
+    this.index = index;
     this.userId = id;
-}
+    this.router.navigateByUrl('manage-user-roles');
+  }
   getGlobalId(id, roleName) {
     this.globalId = id;
-    console.log('test test ', id);
-     this.choosedRole = roleName;
+    this.choosedRole = roleName;
   }
 
   changeOnConfirm() {
+    this.router.navigate([{ outlets: { bookPopup: [ 'update-book' ] }}]); 
     this.manageUserRolesService.changeGlobalRoleDetails(this.userId, this.globalId);
-    console.log('hiiiiiiiiiii');
-    this.router.navigate(['manage-user-roles']);
+    this.manageUserRolesRequestData[this.index]['globalRoles'][0]['roleName'] = this.choosedRole;
   }
- 
+
   getGlobalRoleData() {
     this.manageUserRolesService.getGlobalRoleDetails()
       .subscribe(res => {
         this.globalRolesRequestData = res;
-        console.log('globalglobalglobal', this.globalRolesRequestData[0]['id']);
       });
   }
 
