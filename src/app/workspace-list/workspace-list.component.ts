@@ -18,11 +18,11 @@ export class WorkspaceListComponent implements OnInit {
         this.getWorkspaceListInfo();
     }
     getWorkspaceListInfo() {
-        this.workspaceListService.getList().subscribe(data => {
-            this.workspaceListInfo = data;
-            console.log(data);
+        this.workspaceListService.getList().subscribe(result => {
+            console.log(result);
+            this.workspaceListInfo = result.data.workspaces;
+            console.log(this.workspaceListInfo);
         });
-
     }
 }
 

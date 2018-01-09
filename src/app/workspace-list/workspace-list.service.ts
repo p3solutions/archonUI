@@ -6,7 +6,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-import { WorkspaceListInfo } from './workspace-list-data';
 import { JwtHelper } from 'angular2-jwt';
 @Injectable()
 export class WorkspaceListService {
@@ -27,9 +26,9 @@ export class WorkspaceListService {
     return localStorage.getItem('accessToken');
   }
 
-  getList(): Observable<WorkspaceListInfo[]> {
+  getList(): Observable<any> {
     console.log('yes i am here', this.getAuthKey(), this.headers);
-    return this.http.get<WorkspaceListInfo[]>(this.URL, { headers: this.headers }).pipe(
+    return this.http.get<any>(this.URL, { headers: this.headers }).pipe(
       catchError(this.handleError('workspace-getList()', []))
     );
   }
