@@ -93,6 +93,15 @@ export class InMemoryDataService implements InMemoryDbService {
         members:["Test User","User 3","User 4"]
       }
     ]
+    const manage_user_roles = [
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
+      { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' }
+    ];
     return {
       info,
       signin,
@@ -108,7 +117,8 @@ export class InMemoryDataService implements InMemoryDbService {
       userWorkspaces,
       workspace2,
       workspace1,
-      users
+      users,
+      manage_user_roles
     };
   }
 }

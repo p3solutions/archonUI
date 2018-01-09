@@ -15,13 +15,13 @@ describe('ManageMasterMetadataComponent', () => {
   let memberRequestHTMLTag: HTMLElement;
   let masterMetaDataService: any;
 
-  const master_metadataMock : any = [
-    { slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
-    { slNo : '2', version : '1.46', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
-    { slNo : '3', version : '2.46', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
-    { slNo : '4', version : '3.00', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
-    { slNo : '5', version : '4.69', description : 'Null' , createdDate : '20/11/2017 04.05 PM'}
-];
+  const master_metadataMock: any = [
+    { slNo: '1', version: '1.01', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+    { slNo: '2', version: '1.46', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+    { slNo: '3', version: '2.46', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+    { slNo: '4', version: '3.00', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+    { slNo: '5', version: '4.69', description: 'Null', createdDate: '20/11/2017 04.05 PM' }
+  ];
   const simpleObservable = new Observable<Manage_Master_Metadata>((observer) => {
     observer.next(master_metadataMock);
     observer.complete();
@@ -44,7 +44,7 @@ describe('ManageMasterMetadataComponent', () => {
     fixture = TestBed.createComponent(ManageMasterMetadataComponent);
     component = fixture.componentInstance;
     de = fixture.debugElement.query(By.css('#manager-master-metadata'));
-    console.log('&&&&7',component,de,'chandruashwin');
+    console.log('&&&&7', component, de, 'chandruashwin');
     memberRequestHTMLTag = de.nativeElement;
     masterMetaDataService = TestBed.get(ManageMasterMetadataService);
   });
