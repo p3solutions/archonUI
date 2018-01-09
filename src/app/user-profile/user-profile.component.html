@@ -28,9 +28,7 @@
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
               {{userInfo?.name}}
               <span>
-                <a href="#editProfileModal" class="m-10" data-toggle="modal" data-target="#editProfileModal">Edit
-                <i class="m-10 glyphicon glyphicon-pencil"></i>
-              </a>
+                <i class="m-10 glyphicon glyphicon-pencil link" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
               </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">
@@ -44,9 +42,8 @@
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
               {{userInfo?.email}}
               <span>
-                <a href="#editProfileModal" data-toggle="modal" data-target="#editProfileModal" class="m-10">Edit
-                <i class="m-10 glyphicon glyphicon-pencil"></i>
-              </a>
+                <!-- <i class="m-10 glyphicon glyphicon-pencil link"  data-toggle="modal" data-target="#editProfileModal"></i> -->
+                <i class="m-10 glyphicon glyphicon-pencil"></i>                
               </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">
@@ -92,6 +89,6 @@
     </div>
   </div>
 </div>
-<app-edit-profile [userid]="userInfo?.id" [username]="userInfo?.name" [useremail]="userInfo?.email" >
+<app-edit-profile [userid]="userInfo?.id" [username]="userInfo?.name" [useremail]="userInfo?.email">
 </app-edit-profile>
 

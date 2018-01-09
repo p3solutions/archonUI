@@ -12,19 +12,13 @@ export class UserinfoService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   token_data: any;
-  userId = '5a3ba85e4ca51516a7573982';
-  private userInfoUrl;
-  private headers;
+  userId: string;
+
 
   constructor(
     private http: HttpClient
   ) {
     this.http = http;
-    this.userInfoUrl = 'http://13.58.89.64:9000/users/' + this.getUserId();
-    this.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.getAuthKey()
-    });
   }
 
   getUserId(): void {
@@ -33,15 +27,34 @@ export class UserinfoService {
     return this.userId = this.token_data.user.id;
   }
 
+  getUserInfoUrl() {
+    return 'http://13.58.89.64:9000/users/' + this.getUserId();
+  }
+
   getAuthKey() {
     return localStorage.getItem('accessToken');
   }
 
+  getHeaders() {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getAuthKey()
+    });
+  }
+
   getUserInfo(): Observable<any> {
-    return this.http.get<any>(this.userInfoUrl, { headers: this.headers }).
+    return this.http.get<any>(this.getUserInfoUrl(), {headers: this.getHeaders()}).
       pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
+  updateUserProfile(params: any) {
+    return this.http.patch<any>(this.getUserInfoUrl(), params, {headers: this.getHeaders()}).
+    pipe(catchError(this.handleError<any>('getUserInfo')));
+  }
+
+  getUpdatedUserInfo() {
+
+  }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead

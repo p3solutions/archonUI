@@ -42,6 +42,10 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  focusOnInputBox() {
+    setTimeout(() => document.getElementById('userName').focus(), 500);
+  }
+
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
