@@ -7,16 +7,29 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { WorkspaceListInfo } from './workspace-list-data';
+import { JwtHelper } from 'angular2-jwt';
 @Injectable()
 export class WorkspaceListService {
+  accessToken: string;
+  jwtHelper: JwtHelper = new JwtHelper();
+  private headers;
+  URL: string;
+  constructor(private http: HttpClient) {
+    this.URL = 'http://13.58.89.64:9000/workspaces';
+    this.headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.getAuthKey()
+      });
 
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  url = 'http://localhost:9000/workspaces';
-  constructor(private http: HttpClient) { }
+  }
+  getAuthKey() {
+    return localStorage.getItem('accessToken');
+  }
 
   getList(): Observable<WorkspaceListInfo[]> {
-    console.log('yes i am here');
-    return this.http.get<WorkspaceListInfo[]>(this.url).pipe(
+    console.log('yes i am here', this.getAuthKey(), this.headers);
+    return this.http.get<WorkspaceListInfo[]>(this.URL, { headers: this.headers }).pipe(
       catchError(this.handleError('workspace-getList()', []))
     );
   }
