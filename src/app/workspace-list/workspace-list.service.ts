@@ -12,10 +12,10 @@ export class WorkspaceListService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   private headers;
-  url: string;
+  URL: string;
   constructor(private http: HttpClient) {
     // this.URL = 'http://13.58.89.64:9000/workspaces';
-    this.url = 'api/workspaceListInfo';
+    this.URL = 'api/workspaceListInfo';
     this.headers = new HttpHeaders(
       {
         'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export class WorkspaceListService {
 
   getList(): Observable<any> {
     console.log('yes i am here', this.getAuthKey(), this.headers);
-    return this.http.get<any>(this.url, { headers: this.headers }).pipe(
+    return this.http.get<any>(this.URL, { headers: this.headers }).pipe(
       catchError(this.handleError('workspace-getList()', []))
     );
   }
