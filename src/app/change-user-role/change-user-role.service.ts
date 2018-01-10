@@ -13,7 +13,7 @@ import { Data } from '@angular/router/src/config';
 import { GlobalRoles } from '../global-roles';
 
 @Injectable()
-export class ManageUserRolesService {
+export class ChangeUserRoleService {
 
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -46,8 +46,9 @@ export class ManageUserRolesService {
       userId: userid,
       globalRoleId: globalid
     };
-    return this.http.patch(this.changeGlobalRoleUrl + userid + '/roles/global', body, { headers: this.headers })
-      .subscribe((res) => console.log(res));
+    return this.http.patch(this.changeGlobalRoleUrl + userid + '/roles/global', body, { headers: this.headers }).pipe(
+      catchError(this.handleError('changeGlobalRoles', []))
+    );
   }
 
 
