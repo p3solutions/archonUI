@@ -1,6 +1,7 @@
 export interface WorkspaceListInfo{
-    id : string,
-    createdAt : string,
-    workspaceName : string,
-    ownerId : string
+    workspaceName : string;
+    databases : any;
+    masterMetadataVersion : string;
+    lastUpdatedTime : string;
+    databaseList : string;
 }

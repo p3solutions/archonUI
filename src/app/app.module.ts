@@ -87,10 +87,10 @@ import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        // HttpClientInMemoryWebApiModule.forRoot(
-        //   InMemoryDataService,
-        //   { dataEncapsulation: false }
-        // ),
+        HttpClientInMemoryWebApiModule.forRoot(
+          InMemoryDataService,
+          { dataEncapsulation: false }
+        ),
         AppRoutingModule,
         AuthModule,
         DataTablesModule,

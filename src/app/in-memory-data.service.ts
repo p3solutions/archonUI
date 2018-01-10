@@ -72,27 +72,71 @@ export class InMemoryDataService implements InMemoryDbService {
       { slNo: '4', version: '3.00', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
       { slNo: '5', version: '4.69', description: 'Null', createdDate: '20/11/2017 04.05 PM' }
     ];
-    const workspaceListInfo =  [
-      {
-        id:"workspace001",
-        name:"Workspace 1",
-        metadata_version:"22",
-        owner:"Test-user",
-        members:["Test User","User 1","User 2"]
-      },{
-        id:"workspace002",
-        name:"Workspace 2",
-        metadata_version:"22",
-        owner:"Test-user",
-        members:["Test User","User 2","User 3"]
-      },{
-        id:"workspace003",
-        name:"Workspace 3",
-        metadata_version:"22",
-        owner:"Test-user",
-        members:["Test User","User 3","User 4"]
-      }
-    ]
+    const workspaceListInfo = {
+      "data": {
+        "workspaces": [
+          {
+            workspaceName: "Workspace 1",
+            databases: [{
+              "id": "5a533baec7b4d489ed715b85",
+              "name": "SQL_DB_NAME",
+              "type": "SQL"
+            },
+            {
+              "id": "5a533baec7b4d489ed715b85",
+              "name": "DB2_DB_NAME",
+              "type": "DB2"
+            }],
+            masterMetadataVersion: '22',
+            lastUpdatedTime: 'Jan 1st 2018 22:30:40'
+          }, {
+            workspaceName: "Workspace 2",
+            databases: [{
+              "id": "5a533baec7b4d489ed715b85",
+              "name": "SQL_DB_NAME",
+              "type": "DB1"
+            },
+            {
+              "id": "5a533baec7b4d489ed715b85",
+              "name": "DB2_DB_NAME",
+              "type": "MYSQL"
+            }],
+            masterMetadataVersion: '22',
+            lastUpdatedTime: 'Feb 5th 2018 10:30:40'
+          }, {
+            workspaceName: "Workspace 3",
+            databases: [{
+              "id": "5a533baec7b4d489ed715b85",
+              "name": "SQL_DB_NAME",
+              "type": "DB1"
+            },
+            {
+              "id": "5a533baec7b4d489ed715b85",
+              "name": "DB2_DB_NAME",
+              "type": "DB2"
+            },
+            {
+              "id": "5a533baec7b4d489ed715b85",
+              "name": "DB2_DB_NAME",
+              "type": "DB3"
+            }],
+            masterMetadataVersion: '22',
+            lastUpdatedTime: 'Mar 5th 2018 10:30:40'
+          }, {
+            workspaceName: "Workspace 4",
+            databases: [{
+              "id": "5a533baec7b4d489ed715b85",
+              "name": "SQL_DB_NAME",
+              "type": "SQL"
+            }],
+            masterMetadataVersion: '22',
+            lastUpdatedTime: 'Apr 5th 2018 10:30:40'
+          }
+        ]
+      },
+      "success": true,
+      "httpStatus": 200
+    }
     const manage_user_roles = [
       { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },
       { slNo: '1', name: 'Archon Reloaded', email: 'archon@p3.com', lastActivityTime: '20/11/2017 04.05 PM', globalRole: 's/w engineer' },

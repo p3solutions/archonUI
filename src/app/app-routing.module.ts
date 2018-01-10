@@ -33,8 +33,7 @@ const routes: Routes = [
       },{
         path: 'workspace-list', component: WorkspaceListComponent
       },
-      {
-      }, {
+       {
         path: 'management-panel', component: ManagementPanelComponent
       }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
