@@ -13,22 +13,22 @@ export class EditProfileComponent implements OnInit {
   @Input() userid: string;
   nameLoader: boolean;
   emailLoader: boolean;
-  oldUser: object;
+  oldUserInfo: object;
   errorObject: ErrorObject;
 
   constructor(private userinfoService: UserinfoService) { }
 
   ngOnInit() {
     this.nameLoader = this.emailLoader = false;
-    this.oldUser = {
+  }
+
+  updateUserInfo() {
+    this.oldUserInfo = {
       id: this.userid,
       username: this.username,
       useremail: this.useremail
     };
-  }
-
-  updateUserInfo() {
-    this.errorObject = this.userinfoService.isInvalidEditValues(this.oldUser);
+    this.errorObject = this.userinfoService.isInvalidEditValues(this.oldUserInfo);
     if (this.errorObject) {
       return false;
     }
