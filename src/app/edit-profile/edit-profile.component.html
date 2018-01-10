@@ -11,18 +11,26 @@
         <div class="col-md-12 row m-10">
           <div class="col-md-4">Change Name</div>
           <div class="col-md-8">
-            <input value="{{username}}" name="userName" id="userName" [(ngModel)]="updatedName" />
+            <input value="{{username}}" name="userName" id="userName" />
             <i class="fa fa-spinner fa-spin loading" *ngIf="nameLoader"></i>
           </div>
         </div>
         <div class="col-md-12 row m-10">
           <div class="col-md-4">Change Email Address</div>
           <div class="col-md-8">
-            <input value="{{useremail}}" name="userEmail" id="userEmail" [(ngModel)]="updatedEmail" disabled/>
+            <input value="{{useremail}}" name="userEmail" id="userEmail" disabled />
             <i class="fa fa-spinner fa-spin loading" *ngIf="emailLoader"></i>
           </div>
         </div>
         <input hidden value="{{userid}}" name="userId" id="userId" />
+        <div class="col-md-8 form-group edit-profile-error">
+          <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Error!</strong> {{errorObject?.message}}
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeEditProfile">Cancel</button>

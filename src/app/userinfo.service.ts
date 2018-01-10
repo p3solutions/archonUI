@@ -6,14 +6,14 @@ import { catchError } from 'rxjs/operators';
 import { Info } from './info';
 import { JwtHelper } from 'angular2-jwt';
 import { Http, Headers, Response } from '@angular/http';
-
+import { ErrorObject } from './error-object';
 @Injectable()
 export class UserinfoService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   token_data: any;
   userId: string;
-
+  errorObject: ErrorObject;
 
   constructor(
     private http: HttpClient
@@ -52,9 +52,35 @@ export class UserinfoService {
     pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
-  getUpdatedUserInfo() {
-
+  getUpdatedName() {
+    return ((<HTMLInputElement>document.getElementById('userName')).value).trim();
   }
+
+  getUpdatedEmail() {
+    return ((<HTMLInputElement>document.getElementById('userEmail')).value).trim();
+  }
+
+  isInvalidEditValues(user) {
+    this.errorObject = new ErrorObject;
+    this.errorObject.show = true;
+    if (this.getUpdatedName() === '') {
+      this.errorObject.message = 'Name cannot be empty';
+      return this.errorObject;
+    }
+    if (this.getUpdatedEmail() === '') {
+      this.errorObject.message = 'Email cannot be empty';
+      return this.errorObject;
+    }
+    if (this.getUpdatedName() === user.username && this.getUpdatedEmail() === user.useremail) {
+      this.errorObject.message = 'Name or email is not changed';
+      return this.errorObject;
+    }
+    if (this.errorObject) {
+      this.errorObject = null;
+    }
+    return null;
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
