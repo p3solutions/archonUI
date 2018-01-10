@@ -50,7 +50,10 @@ import { UserinfoService } from './userinfo.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.service';
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
+import { ChangeUserRoleComponent } from './change-user-role/change-user-role.component';
+import { ChangeUserRoleService } from './change-user-role/change-user-role.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangePasswordService } from './change-password/change-password.service';
 @NgModule({
     declarations: [
         AppComponent,
@@ -78,6 +81,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
         EqualValidator,
         ManagementPanelComponent,
         ManageUserRolesComponent,
+        ChangeUserRoleComponent,
         UserProfileComponent,
         EditProfileComponent,
         ChangePasswordComponent
@@ -112,7 +116,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
         ManageMasterMetadataService,
         EnterNewpasswordService,
         ManageUserRolesService,
-        UserinfoService
+        ChangeUserRoleService,
+        UserinfoService,
+        ChangePasswordService
     ],
     bootstrap: [AppComponent]
 })

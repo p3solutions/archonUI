@@ -15,53 +15,36 @@ import { ChangeGlobalRole } from '../change-global-role';
 })
 export class ManageUserRolesComponent implements OnInit {
   isAvailable = false;
-  selectDropDown = 'Choose Role';
-  choosedRole = 'Not Selected';
   manageUserRolesRequestData: ManageUserRoles[];
-  globalRolesRequestData: GlobalRoles[];
-  changeRoleRequestData: ChangeGlobalRole[];
-  userId: string;
-  globalId: string;
-  index: string;
-  constructor(private manageUserRolesService: ManageUserRolesService, private router: Router) { }
+  selectedUserId: string;
+  constructor(
+    private manageUserRolesService: ManageUserRolesService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.getManageUserRolesData();
-    this.getGlobalRoleData();
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
       .subscribe(res => {
         this.manageUserRolesRequestData = res;
         this.isAvailable = true;
+        console.log(this.manageUserRolesRequestData);
       });
   }
-  getUserId(id, index) {
-    this.index = index;
-    this.userId = id;
-    this.router.navigateByUrl('manage-user-roles');
-  }
-  getGlobalId(id, roleName) {
-    this.globalId = id;
-    this.choosedRole = roleName;
+  getUserId(id) {
+    this.selectedUserId = id;
   }
 
-  changeOnConfirm() {
-    this.router.navigate([{ outlets: { bookPopup: [ 'update-book' ] }}]); 
-    this.manageUserRolesService.changeGlobalRoleDetails(this.userId, this.globalId);
-    this.manageUserRolesRequestData[this.index]['globalRoles'][0]['roleName'] = this.choosedRole;
-    this.choosedRole = 'Not Selected';
+  gotoManagementPanel() {
+    this.router.navigate(['workspace/management-panel']);
   }
 
-  getGlobalRoleData() {
-    this.manageUserRolesService.getGlobalRoleDetails()
-      .subscribe(res => {
-        this.globalRolesRequestData = res;
-      });
-  }
-
-  gotoDashboard() {
-    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  onConfirm(confirm: boolean) {
+    if (confirm) {
+      this.getManageUserRolesData();
+    }
   }
 
 }
