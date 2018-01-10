@@ -47,6 +47,8 @@ import { WorkspaceServicesComponent } from './workspace-services/workspace-servi
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.service';
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
+import { ChangeUserRoleComponent } from './change-user-role/change-user-role.component';
+import { ChangeUserRoleService } from './change-user-role/change-user-role.service';
 @NgModule({
     declarations: [
         AppComponent,
@@ -73,7 +75,8 @@ import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.
         EnterNewpasswordComponent,
         EqualValidator,
         ManagementPanelComponent,
-        ManageUserRolesComponent
+        ManageUserRolesComponent,
+        ChangeUserRoleComponent
     ],
     imports: [
         BrowserModule,
@@ -104,7 +107,8 @@ import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.
         MemberRequestService,
         ManageMasterMetadataService,
         EnterNewpasswordService,
-        ManageUserRolesService
+        ManageUserRolesService,
+        ChangeUserRoleService
     ],
     bootstrap: [AppComponent]
 })
