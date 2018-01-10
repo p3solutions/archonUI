@@ -30,10 +30,9 @@ const routes: Routes = [
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
         path: 'no-workspace', component: NoWorkspaceComponent
-      },{
+      }, {
         path: 'workspace-list', component: WorkspaceListComponent
-      },
-       {
+      }, {
         path: 'management-panel', component: ManagementPanelComponent
       }, {
         path: 'manage-user-roles', component: ManageUserRolesComponent
