@@ -379,6 +379,7 @@ input[type=search] {
   margin-top: 20px;
   margin-bottom: 10px;
   margin-left: 25px;
+  float: left;
 }
 
 .back-arrow-modal {
@@ -393,6 +394,21 @@ input[type=search] {
 
 .workspace-panel-heading {
   text-align: left;
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.m-10 {
+  margin: 10px;
+}
+.m-l-10 {
+  margin-left: 10px;
+}
+.m-r-10 {
+  margin-right: 10px;
 }
 
 .popup-panel-heading {
