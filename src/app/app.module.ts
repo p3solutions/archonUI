@@ -90,10 +90,10 @@ import { ChangeUserRoleService } from './change-user-role/change-user-role.servi
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        HttpClientInMemoryWebApiModule.forRoot(
-            InMemoryDataService,
-            { dataEncapsulation: false }
-        ),
+        // HttpClientInMemoryWebApiModule.forRoot(
+        //     InMemoryDataService,
+        //     { dataEncapsulation: false }
+        // ),
         AppRoutingModule,
         AuthModule,
         DataTablesModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkspaceListInfo } from './workspace-list-data';
 import { WorkspaceListService } from './workspace-list.service';
+import { JwtHelper } from 'angular2-jwt';
 
 
 @Component({
@@ -9,27 +10,36 @@ import { WorkspaceListService } from './workspace-list.service';
     styleUrls: ['./workspace-list.component.css']
 })
 export class WorkspaceListComponent implements OnInit {
-
+    accessToken: string;
+    jwtHelper: JwtHelper = new JwtHelper();
+    token_data: any;
     workspaceListInfo: WorkspaceListInfo[];
     constructor(private workspaceListService: WorkspaceListService) {
     }
     ngOnInit() {
-        this.getWorkspaceListInfo();
+        this.accessToken = localStorage.getItem('accessToken');
+        this.token_data = this.jwtHelper.decodeToken(this.accessToken);
+        console.log(this.token_data);
+        this.getWorkspaceListInfo(this.token_data.user.id);
     }
     setDatabaseList(data: WorkspaceListInfo[]) {
-        var i, j;
-        var dbarray = new Array();
+        let i, j;
+        let dbarray = new Array();
         for (i in data) {
-            dbarray = [];
-            for (j in this.workspaceListInfo[i].databases) {
-                dbarray.push(this.workspaceListInfo[i].databases[j].name);
+            if (i) {
+                dbarray = [];
+                for (j in this.workspaceListInfo[i].databases) {
+                    if (j) {
+                        dbarray.push(this.workspaceListInfo[i].databases[j].name);
+                    }
+                }
+                const db = dbarray.join(', ');
+                this.workspaceListInfo[i].databaseList = db;
             }
-            var db = dbarray.join(", ");
-            this.workspaceListInfo[i].databaseList = db;
         }
     }
-    getWorkspaceListInfo() {
-        this.workspaceListService.getList().subscribe(result => {
+    getWorkspaceListInfo(id: string) {
+        this.workspaceListService.getList(id).subscribe(result => {
             console.log(result);
             this.workspaceListInfo = result.data.workspaces;
             console.log(this.workspaceListInfo);
@@ -37,61 +47,4 @@ export class WorkspaceListComponent implements OnInit {
         });
 
     }
-}
-
-
-{
-    "data": {
-        "workspaces": [
-            {
-                "id": "5a55c85d9d226c08140a90d6",
-                "createdAt": 1515571293,
-                "updatedAt": 1515578378,
-                "workspaceName": "WS_Alok",
-                "owner": {
-                    "id": "5a535cbb9d226c1a4c946607",
-                    "name": "alok"
-                },
-                "masterMetadataVersion": 22,
-                "databases": [
-                    {
-                        "id": "5a533baec7b4d489ed715b85",
-                        "name": "SQL_DB_NAME",
-                        "type": "SQL"
-                    }
-                ],
-                "members": [
-                    {
-                        "createdAt": 1515571475,
-                        "updatedAt": 1515578378,
-                        "user": {
-                            "id": "5a535c4a9d226c1a4c946605",
-                            "name": "omji1"
-                        },
-                        "role": {
-                            "id": "5a55c819c7b4d407523007bc",
-                            "name": "ROLE_MEMBER"
-                        }
-                    }
-                ]
-            },
-            {
-                "id": "5a55dcb89d226c4607e16446",
-                "createdAt": 1515576504,
-                "updatedAt": 1515578378,
-                "workspaceName": "WS_2",
-                "masterMetadataVersion": 22,
-                "databases": [
-                    {
-                        "id": "5a533baec7b4d489ed715b85",
-                        "name": "SQL_DB_NAME",
-                        "type": "SQL"
-                    }
-                ],
-                "members": []
-            }
-        ]
-    },
-    "success": true,
-    "httpStatus": 200
 }
