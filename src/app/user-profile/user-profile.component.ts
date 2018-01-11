@@ -49,4 +49,10 @@ export class UserProfileComponent implements OnInit {
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
+
+  onUpdateProfile(confirm: boolean) {
+    if (confirm) {
+      this.getUserInfo();
+    }
+  }
 }

@@ -89,5 +89,5 @@
     </div>
   </div>
 </div>
-<app-edit-profile [userid]="userInfo?.id" [username]="userInfo?.name" [useremail]="userInfo?.email">
-</app-edit-profile>
+<app-edit-profile [userid]="userInfo?.id" [username]="userInfo?.name" [useremail]="userInfo?.email"
+ (onUpdateProfile)="onUpdateProfile($event)"></app-edit-profile>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserinfoService } from '../userinfo.service';
 import { ErrorObject } from '../error-object';
 
@@ -11,6 +11,7 @@ export class EditProfileComponent implements OnInit {
   @Input() username: string;
   @Input() useremail: string;
   @Input() userid: string;
+  @Output() onUpdateProfile = new EventEmitter<boolean>();
   nameLoader: boolean;
   emailLoader: boolean;
   oldUserInfo: object;
@@ -51,6 +52,7 @@ export class EditProfileComponent implements OnInit {
         this.useremail = res.data.emailAddress;
         this.nameLoader = this.emailLoader = false;
         document.getElementById('closeEditProfile').click();
+        this.onUpdateProfile.emit(true);
       }
     });
   }
