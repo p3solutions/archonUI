@@ -51,7 +51,7 @@ export class EditProfileComponent implements OnInit {
         this.username = res.data.name;
         this.useremail = res.data.emailAddress;
         this.nameLoader = this.emailLoader = false;
-        document.getElementById('closeEditProfile').click();
+        (<HTMLButtonElement>document.querySelector('#editProfileModal .cancel')).click();
         this.onUpdateProfile.emit(true);
       }
     });
