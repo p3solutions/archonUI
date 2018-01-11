@@ -18,9 +18,10 @@ export class ChangePasswordService {
 
   changePassword(param) {
     console.log('service param', param);
-    return this.http.patch(this.getUsersUrl, param, { headers: this.headers } ).pipe(
-      catchError(this.handleError('changePassword'))
-    );
+    return this.http.patch(this.getUsersUrl, param, { headers: this.headers } );
+    // .pipe(
+      // catchError(this.handleError('changePassword'))
+    // );
   }
 
    // * Handle Http operation that failed.

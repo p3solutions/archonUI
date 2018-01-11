@@ -31,6 +31,9 @@ export class ChangePasswordComponent implements OnInit {
       confirmPassword: new FormControl('', [Validators.required])
     });
   }
+  closeErrorMsg() {
+    this.errorObject = null;
+  }
 
   isPasswordNotValidated() {
     this.newPassword = this.changePasswordForm.value.newPassword;
@@ -70,7 +73,7 @@ export class ChangePasswordComponent implements OnInit {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
-          this.errorObject.message = err.error.message;
+          this.errorObject.message = 'Invalid current password';
           this.errorObject.show = !err.error.success;
           console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }
