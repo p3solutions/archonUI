@@ -25,7 +25,7 @@
         <button type="button" class="btn-primary" id="workspace-list-btn">
           <div class="btn-box">
             <div class="title">
-              <h2>{{rec.workspaceName}}</h2>
+              <h2 class="wsList">{{rec.workspaceName}}</h2>
             </div>
             <div class="right-arrow">
               <span>
@@ -33,11 +33,11 @@
               </span>
             </div>
             <div class="body">
-              <p>Databases(s) : {{rec.databaseList}}</p>
+              <p class="wsList">Databases(s) : {{rec.databaseList}}</p>
             </div>
             <div class="footer">
-              <p id="right">LastUpdatedTime : {{rec.lastUpdatedTime}}</p>
-              <p id="bottom">MetadataVersion : {{rec.masterMetadataVersion}}</p>
+              <p id="right" class="wsList">LastUpdatedTime : {{rec.lastUpdatedTime}}</p>
+              <p id="bottom" class="wsList">MetadataVersion : {{rec.masterMetadataVersion}}</p>
             </div>
           </div>
         </button>
