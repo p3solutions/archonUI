@@ -14,8 +14,8 @@
       </div>
     </div>
     <div class="col-md-5 m-10 pull-right">
-      <button data-toggle="modal" data-target="#myModal" class="btn btn-primary pull-right btn-form">Change Password</button>
-      <app-change-password></app-change-password>
+      <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary pull-right btn-form">Change Password</button>
+      <app-change-password [userId]="userInfo?.id"></app-change-password>
     </div>
   </div>
   <div class="row">
