@@ -45,6 +45,8 @@ import { ManagementPanelComponent } from './management-panel/management-panel.co
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { WorkspaceListComponent } from './workspace-list/workspace-list.component';
+import { WorkspaceListService } from './workspace-list/workspace-list.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserinfoService } from './userinfo.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -81,15 +83,16 @@ import { ChangeUserRoleService } from './change-user-role/change-user-role.servi
         ManageUserRolesComponent,
         ChangeUserRoleComponent,
         UserProfileComponent,
-        EditProfileComponent
+        EditProfileComponent,
+        WorkspaceListComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
         // HttpClientInMemoryWebApiModule.forRoot(
-        //   InMemoryDataService,
-        //   { dataEncapsulation: false }
+        //     InMemoryDataService,
+        //     { dataEncapsulation: false }
         // ),
         AppRoutingModule,
         AuthModule,
@@ -114,7 +117,8 @@ import { ChangeUserRoleService } from './change-user-role/change-user-role.servi
         EnterNewpasswordService,
         ManageUserRolesService,
         ChangeUserRoleService,
-        UserinfoService
+        UserinfoService,
+        WorkspaceListService
     ],
     bootstrap: [AppComponent]
 })

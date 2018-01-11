@@ -20,6 +20,7 @@ import { ManagementPanelComponent } from './management-panel/management-panel.co
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
+import { WorkspaceListComponent } from './workspace-list/workspace-list.component';
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -29,6 +30,8 @@ const routes: Routes = [
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
         path: 'no-workspace', component: NoWorkspaceComponent
+      }, {
+        path: 'workspace-list', component: WorkspaceListComponent
       }, {
         path: 'management-panel', component: ManagementPanelComponent
       }, {
