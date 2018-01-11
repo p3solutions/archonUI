@@ -28,7 +28,6 @@ import { UserWorkspaceService } from './user-workspace.service';
 import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
 import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
 import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
-import { WorkspaceinfoService } from './workspaceinfo.service';
 import { HeaderTabComponent } from './header-tab/header-tab.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
 import { ManageMembersService } from './manage-members.service';
@@ -54,6 +53,8 @@ import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.se
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 import { ChangeUserRoleComponent } from './change-user-role/change-user-role.component';
 import { ChangeUserRoleService } from './change-user-role/change-user-role.service';
+import { WorkspaceInfoService } from './workspace-info/workspace-info.service';
+import { WorkspaceLandingPageService } from './workspace-landing-page/workspace-landing-page.service';
 @NgModule({
     declarations: [
         AppComponent,
@@ -110,7 +111,6 @@ import { ChangeUserRoleService } from './change-user-role/change-user-role.servi
         ForgotpasswordFormService,
         AuthenticationService,
         UserWorkspaceService,
-        WorkspaceinfoService,
         ManageMembersService,
         MemberRequestService,
         ManageMasterMetadataService,
@@ -118,7 +118,9 @@ import { ChangeUserRoleService } from './change-user-role/change-user-role.servi
         ManageUserRolesService,
         ChangeUserRoleService,
         UserinfoService,
-        WorkspaceListService
+        WorkspaceListService,
+        WorkspaceInfoService,
+        WorkspaceLandingPageService
     ],
     bootstrap: [AppComponent]
 })
