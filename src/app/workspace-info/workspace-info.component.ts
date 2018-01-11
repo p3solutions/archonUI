@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { WorkspaceinfoService } from '../workspaceinfo.service';
-import { Workspaceinfo } from '../workspaceinfo';
+import { WorkspaceInfoService } from './workspace-info.service';
+import { WorkspaceInfo } from './workspace-info';
 import { HttpClientModule } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
@@ -12,23 +12,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./workspace-info.component.css']
 })
 export class WorkspaceInfoComponent implements OnInit {
-  // workspaceinfo = new Workspaceinfo('', '', '');
-  workspaceInfoData: Workspaceinfo;
+  workspaceInfoData: WorkspaceInfo;
+  workspaceId: string;
 
   constructor(
-    // private httpClient: HttpClient,
     private router: Router,
-    private workspaceinfoservice: WorkspaceinfoService
-  ) {
-    // this.getWorkspaceInfo();
-  }
+    private workspaceinfoservice: WorkspaceInfoService
+  ) { }
 
   ngOnInit() {
     this.getWorkspaceInfo();
   }
 
   getWorkspaceInfo() {
-    this.workspaceinfoservice.getworkinfo().subscribe(data => {
+    this.workspaceinfoservice.getWorkSpaceInfo(this.workspaceId).subscribe(data => {
       this.workspaceInfoData = data;
       console.log('testing ', this.workspaceInfoData);
     });
@@ -36,13 +33,5 @@ export class WorkspaceInfoComponent implements OnInit {
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
-
-
-  // this.memberRequestService.getMemberRequestDetails()
-  // .subscribe(data => {
-  //   this.memberRequestData = data;
-  //   this.isAvailable = true;
-  // });
-
 }
 
