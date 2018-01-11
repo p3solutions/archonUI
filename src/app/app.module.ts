@@ -50,68 +50,72 @@ import { UserinfoService } from './userinfo.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.service';
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
+import { ChangeUserRoleComponent } from './change-user-role/change-user-role.component';
+import { ChangeUserRoleService } from './change-user-role/change-user-role.service';
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    LandingPageComponent,
-    WorkspaceLandingPageComponent,
-    SigninFormComponent,
-    ForgotpasswordFormComponent,
-    WorkspaceHeaderComponent,
-    WorkspaceHeaderInfoComponent,
-    WorkspaceMgmtPanelComponent,
-    WorkspaceDashboardComponent,
-    NoWorkspaceComponent,
-    WorkspaceInfoComponent,
-    HeaderTabComponent,
-    ManageMembersComponent,
-    MemberRequestComponent,
-    WorkspacePanelComponent,
-    HeaderPanelComponent,
-    EnterNewpasswordComponent,
-    EqualValidator,
-    ManagementPanelComponent,
-    ManageMasterMetadataComponent,
-    WorkspaceServicesComponent,
-    SignupFormComponent,
-    UserProfileComponent,
-    EditProfileComponent,
-    ManageUserRolesComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService,
-    //   { dataEncapsulation: false }
-    // ),
-    AppRoutingModule,
-    AuthModule,
-    DataTablesModule,
-    ReactiveFormsModule,
-    MatTableModule,
-    FormsModule
-  ],
-  providers: [
-    JwtHelper,
-    InMemoryDataService,
-    InfoService,
-    SigninFormService,
-    SignupFormService,
-    ForgotpasswordFormService,
-    AuthenticationService,
-    UserWorkspaceService,
-    WorkspaceinfoService,
-    ManageMembersService,
-    MemberRequestService,
-    ManageMasterMetadataService,
-    UserinfoService,
-    EnterNewpasswordService,
-    ManageMasterMetadataService,
-    ManageUserRolesService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        LandingPageComponent,
+        WorkspaceLandingPageComponent,
+        SigninFormComponent,
+        ForgotpasswordFormComponent,
+        WorkspaceHeaderComponent,
+        WorkspaceHeaderInfoComponent,
+        WorkspaceMgmtPanelComponent,
+        WorkspaceDashboardComponent,
+        NoWorkspaceComponent,
+        WorkspaceInfoComponent,
+        HeaderTabComponent,
+        ManageMembersComponent,
+        MemberRequestComponent,
+        WorkspacePanelComponent,
+        HeaderPanelComponent,
+        HeaderPanelComponent,
+        ManageMasterMetadataComponent,
+        WorkspaceServicesComponent,
+        SignupFormComponent,
+        EnterNewpasswordComponent,
+        EqualValidator,
+        ManagementPanelComponent,
+        ManageUserRolesComponent,
+        ChangeUserRoleComponent,
+        UserProfileComponent,
+        EditProfileComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        // HttpClientInMemoryWebApiModule.forRoot(
+        //   InMemoryDataService,
+        //   { dataEncapsulation: false }
+        // ),
+        AppRoutingModule,
+        AuthModule,
+        DataTablesModule,
+        ReactiveFormsModule,
+        MatTableModule,
+        FormsModule
+    ],
+    providers: [
+        JwtHelper,
+        InMemoryDataService,
+        InfoService,
+        SigninFormService,
+        SignupFormService,
+        ForgotpasswordFormService,
+        AuthenticationService,
+        UserWorkspaceService,
+        WorkspaceinfoService,
+        ManageMembersService,
+        MemberRequestService,
+        ManageMasterMetadataService,
+        EnterNewpasswordService,
+        ManageUserRolesService,
+        ChangeUserRoleService,
+        UserinfoService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
