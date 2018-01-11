@@ -5,20 +5,19 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-import { Workspaceinfo } from './workspaceinfo';
+import { WorkspaceInfo } from './workspace-info';
 import { Router } from '@angular/router/src/router';
-
 @Injectable()
-export class WorkspaceinfoService {
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json'});
-  workspaceinfoUrl = 'api/workspaceinfo';
+export class WorkspaceInfoService {
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  workspaceinfoUrl = 'http://13.58.89.64:9000/workspaces/access?workspaceId=';
   constructor(
     private http: HttpClient,
   ) { }
-
-  getworkinfo(): Observable<Workspaceinfo> {
-    return this.http.get<Workspaceinfo>(this.workspaceinfoUrl).pipe(
-      catchError(this.handleError<Workspaceinfo>('getworkinfo'))
+  getWorkSpaceInfo(id: string): Observable<WorkspaceInfo> {
+    const URL = this.workspaceinfoUrl + id;
+    return this.http.get<WorkspaceInfo>(URL, { headers: this.headers }).pipe(
+      catchError(this.handleError<WorkspaceInfo>('getworkinfo'))
     );
   }
 
@@ -33,8 +32,3 @@ export class WorkspaceinfoService {
     };
   }
 }
-
-  // private log(message: string) {
-  //   console.log(message);
-  // }
-

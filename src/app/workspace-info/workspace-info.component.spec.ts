@@ -1,6 +1,6 @@
-import { Workspaceinfo } from '../workspaceinfo';
+import { WorkspaceInfo } from './workspace-info';
 import { WorkspaceInfoComponent } from './workspace-info.component';
-import { WorkspaceinfoService } from '../workspaceinfo.service';
+import { WorkspaceInfoService } from './workspace-info.service';
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -13,7 +13,7 @@ describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
   let fixture: ComponentFixture<WorkspaceInfoComponent>;
   // tslint:disable-next-line:prefer-const
-  let workInfoData: Workspaceinfo;
+  let workInfoData: WorkspaceInfo;
   let de: DebugElement;
   let WorkspaceInfoTag: HTMLElement;
   let workspaceinfoService: any;
@@ -21,13 +21,13 @@ describe('WorkspaceInfoComponent', () => {
     name: 'Frontend Developer', owner: 'Platform3Solutions', approver: 'User1, User2',
     members: 'User1, User2, User3', your_role: 'Admin', master_metadata_version: '22'
   };
-  const simpleObservable = new Observable<Workspaceinfo>((observer) => {
+  const simpleObservable = new Observable<WorkspaceInfo>((observer) => {
     // observable execution
     observer.next(managemembers1);
     observer.complete();
   });
   let disposeMe;
-  const getworkinfo = function (): Observable<Workspaceinfo> {
+  const getworkinfo = function (): Observable<WorkspaceInfo> {
     disposeMe = simpleObservable.subscribe();
     return simpleObservable;
   };
@@ -41,7 +41,7 @@ describe('WorkspaceInfoComponent', () => {
       ],
       declarations: [WorkspaceInfoComponent],
       providers: [
-        WorkspaceinfoService,
+        WorkspaceInfoService,
         HttpClientModule
       ],
     })
@@ -54,7 +54,7 @@ describe('WorkspaceInfoComponent', () => {
     component = fixture.componentInstance;
     de = fixture.debugElement.query(By.css('#workspace-info-table'));
     WorkspaceInfoTag = de.nativeElement;
-    workspaceinfoService = TestBed.get(WorkspaceinfoService);
+    workspaceinfoService = TestBed.get(WorkspaceInfoService);
   });
 
   it('Should create Workspace_Info tag', () => {
