@@ -21,9 +21,9 @@ import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-m
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { WorkspaceListComponent } from './workspace-list/workspace-list.component';
-import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 
 const routes: Routes = [
   {
