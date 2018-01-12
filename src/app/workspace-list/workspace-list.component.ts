@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WorkspaceListInfo } from './workspace-list-data';
 import { WorkspaceListService } from './workspace-list.service';
 import { JwtHelper } from 'angular2-jwt';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,10 @@ export class WorkspaceListComponent implements OnInit {
     jwtHelper: JwtHelper = new JwtHelper();
     token_data: any;
     workspaceListInfo: WorkspaceListInfo[];
-    constructor(private workspaceListService: WorkspaceListService) {
+    constructor(
+        private workspaceListService: WorkspaceListService,
+        private router: Router
+    ) {
     }
     ngOnInit() {
         this.accessToken = localStorage.getItem('accessToken');
@@ -46,5 +50,8 @@ export class WorkspaceListComponent implements OnInit {
             this.setDatabaseList(this.workspaceListInfo);
         });
 
+    }
+    gotoManagementPanel() {
+        this.router.navigate(['workspace/management-panel']);
     }
 }
