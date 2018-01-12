@@ -420,7 +420,23 @@ input[type=search] {
   margin-top: 50px;
 }
 
+.link {
+  color: #269AF8;
+  cursor: pointer;
+}
+.link:hover {
+  color: #037AD8;
+}
 
+.link:focus,
+.link:hover {
+  text-decoration: underline;
+}
+
+i.link:focus,
+i.link:hover {
+  text-decoration: none;
+}
 
 /* Data tables */
 
