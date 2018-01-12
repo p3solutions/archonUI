@@ -16,10 +16,7 @@ export class UserWorkspaceService {
     this.http = http;
   }
 
-  currentWorkspaceUrl = 'api/currentWorkspace';
-
-  private extractData(res: any) {
-    console.log('extracting', res);
+  private extractWorkspaces(res: any) {
     const data = res.data.workspaces;
     return data || [];
   }
@@ -32,16 +29,9 @@ export class UserWorkspaceService {
   }
 
   getUserWorkspaceList(): Observable<WorkspacePojo[]> {
-    // need to call getUserWorkspaceUrl()
-    console.log('getUserWorkspaceUrl', this.getWorkspaceByOwnerIdUrl());
-    return this.http.get<WorkspacePojo[]>(this.getWorkspaceByOwnerIdUrl(), { headers: this.userinfoService.getHeaders()})
-    .map(this.extractData)
+    return this.http.get<WorkspacePojo[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders()})
+    .map(this.extractWorkspaces)
     .pipe(catchError(this.handleError<WorkspacePojo[]>('getUserWorkspaces')));
-  }
-
-  getCurrentWorkspace(): Observable<WorkspacePojo> {
-    return this.http.get<WorkspacePojo>(this.currentWorkspaceUrl).
-      pipe(catchError(this.handleError<WorkspacePojo>('getUserWorkspaces')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

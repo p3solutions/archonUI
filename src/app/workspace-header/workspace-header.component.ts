@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkspacePojo } from '../WorkspacePojo';
 import { Info } from '../info';
+import { UserinfoService } from '../userinfo.service';
+import { setInterval, clearInterval } from 'timers';
+
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -10,44 +13,45 @@ import { Info } from '../info';
 export class WorkspaceHeaderComponent implements OnInit {
   userWorkspaceArray: WorkspacePojo[];
   userId: string;
+  userRole: any;
+  selectedWorkspaceName: string;
+  currentWorkspace: WorkspacePojo;
+  fn: any;
 
   constructor(
-    private userWorkspaceService: UserWorkspaceService
+    private userWorkspaceService: UserWorkspaceService,
+    private userinfoService: UserinfoService
   ) {  }
 
   ngOnInit() {
     this.getUserWorkspaceList();
+    this.userRole = this.userinfoService.getUserRoles();
   }
 
   getUserWorkspaceList() {
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
-      this.userWorkspaceArray = res;
-      console.log('getUserWorkspaceList', res);
+        this.userWorkspaceArray = res;
+        const fn = function() {
+          const dropdownItem = (<HTMLAnchorElement>document.querySelector('#workspace-list-dropdown>.dropdown-data'));
+          if (dropdownItem) {
+            dropdownItem.click();
+            clearInterval(k);
+          }
+        };
+        const k = setInterval(fn, 500);
     });
-  }
-
-  onChangeDropdown(selected: any) {
-    switch (selected[0].id) {
-      case 'contactAdmin':
-        this.contactAdmin();
-        break;
-      case 'createWorkspace':
-        this.createNewWorkspace();
-        break;
-      default:
-        this.selectWorkspace(selected[0].id);
-        break;
-    }
   }
 
   contactAdmin() {
     console.log('contact Admin function pending!');
   }
+
   createNewWorkspace() {
     console.log('creating new workspace function pending!');
   }
 
-  selectWorkspace(selectedWorkspaceId: number) {
-    console.log('selectedWorkspaceId', selectedWorkspaceId);
+  selectWorkspace(selectedWorkspace: WorkspacePojo) {
+    this.selectedWorkspaceName = selectedWorkspace.workspaceName;
+    this.currentWorkspace = selectedWorkspace;
   }
 }

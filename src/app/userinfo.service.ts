@@ -27,12 +27,11 @@ export class UserinfoService {
 
   getUserRoles() {
     this.getTokenData();
-    return this.token_data.roles;
+    return this.token_data.roles[0];
   }
 
   getUserId() {
     this.getTokenData();
-    console.log(this.token_data);
     return this.token_data.user.id;
   }
 
