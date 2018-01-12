@@ -1,0 +1,18 @@
+#editProfileModal .modal-dialog {
+    margin-top: 15%;
+}
+
+.edit-profile-error {
+    margin-left: 25px;
+    text-align: center;
+
+}
+
+.edit-profile-error .alert {
+    padding: 5px;
+    margin: 0;
+}
+
+.edit-profile-error .close {
+  right: 0;
+}
