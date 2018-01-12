@@ -54,3 +54,9 @@
   overflow: hidden;
   background-color: #eceeef;
 }
+#selectedWorkspace {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  text-align: right;
+  width: 195px;
+}
