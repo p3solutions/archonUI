@@ -12,7 +12,6 @@ export class UserinfoService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   token_data: any;
-  userId: string;
   errorObject: ErrorObject;
 
   constructor(
@@ -21,10 +20,20 @@ export class UserinfoService {
     this.http = http;
   }
 
-  getUserId(): void {
+  getTokenData() {
     this.accessToken = localStorage.getItem('accessToken');
     this.token_data = this.jwtHelper.decodeToken(this.accessToken);
-    return this.userId = this.token_data.user.id;
+  }
+
+  getUserRoles() {
+    this.getTokenData();
+    return this.token_data.roles;
+  }
+
+  getUserId() {
+    this.getTokenData();
+    console.log(this.token_data);
+    return this.token_data.user.id;
   }
 
   getUserInfoUrl() {

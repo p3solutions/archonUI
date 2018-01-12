@@ -1,31 +1,28 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
-import { WorkSpaceHeaderInfo } from '../WorkSpaceHeaderInfo';
-import {  } from '../info';
-
+import { WorkspacePojo } from '../WorkspacePojo';
+import { Info } from '../info';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
   styleUrls: ['./workspace-header.component.css']
 })
 export class WorkspaceHeaderComponent implements OnInit {
-  userWorkspaceArray: WorkSpaceHeaderInfo;
-  id: number;
-  @Input() userId: number;
-  @Input() userRole: string;
+  userWorkspaceArray: WorkspacePojo[];
+  userId: string;
 
   constructor(
     private userWorkspaceService: UserWorkspaceService
   ) {  }
 
   ngOnInit() {
-    this.id = this.userId;
-    this.getUserWorkspaceList(this.id);
+    this.getUserWorkspaceList();
   }
 
-  getUserWorkspaceList(id) {
-    this.userWorkspaceService.getUserWorkspaceList().subscribe(data => {
-      this.userWorkspaceArray = data[id];
+  getUserWorkspaceList() {
+    this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
+      this.userWorkspaceArray = res;
+      console.log('getUserWorkspaceList', res);
     });
   }
 

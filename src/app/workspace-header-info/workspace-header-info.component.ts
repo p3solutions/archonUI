@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
-import { WorkSpaceHeaderInfo } from '../WorkSpaceHeaderInfo';
+import { WorkspacePojo } from '../WorkspacePojo';
 
 @Component({
   selector: 'app-workspace-header-info',
@@ -8,14 +8,14 @@ import { WorkSpaceHeaderInfo } from '../WorkSpaceHeaderInfo';
   styleUrls: ['./workspace-header-info.component.css']
 })
 export class WorkspaceHeaderInfoComponent implements OnInit {
-  currentWorkspace: WorkSpaceHeaderInfo;
+  currentWorkspace: WorkspacePojo;
 
   constructor(
     private userWorkspaceService: UserWorkspaceService
   ) { }
 
   ngOnInit() {
-    this.getCurrentWorkspace();
+    // this.getCurrentWorkspace();
   }
 
   getCurrentWorkspace() {
