@@ -22,9 +22,11 @@ export class ForgotpasswordFormComponent implements OnInit {
   constructor(
     private forgotPasswordFormService: ForgotpasswordFormService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
+    this.isRedirectedFromLink();
     this.createForm();
   }
 
@@ -39,8 +41,9 @@ export class ForgotpasswordFormComponent implements OnInit {
     this.forgotPasswordFormService.forgotPassword(this.forgotpassword).subscribe(
       data => {
         this.successObject = new SuccessObject;
-        this.successObject.message = data.message;
+        this.successObject.message = data.data.resetUrl;
         this.successObject.show = data.success;
+        console.log(data);
         this.forgotPasswordForm.reset();
       },
       (err: HttpErrorResponse) => {
@@ -51,12 +54,21 @@ export class ForgotpasswordFormComponent implements OnInit {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
-          this.errorObject.message = err.error.message;
+          this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = !err.error.success;
           console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
           // this.router.navigate(['/forgot-password']);
         }
       }
     );
+  }
+
+  isRedirectedFromLink() {
+    const queryParams = this.router.routerState.snapshot.root.queryParams;
+    if (queryParams && queryParams.error === 'true') {
+      this.errorObject = new ErrorObject;
+      this.errorObject.message = ' Invalid reset link, please try again.';
+      this.errorObject.show = true;
+    }
   }
 }

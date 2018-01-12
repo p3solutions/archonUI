@@ -1,0 +1,42 @@
+h3{
+    float: left;
+
+}
+#workspace-add{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    font-size: 15px;
+    margin-top:20px;
+    width:60%;
+    height: 50px;
+    text-align: center;
+    padding: 3px;
+    float: right;
+}
+#one{
+    background-color: red;
+}
+
+.btn-box{
+    text-align: left;
+    width:600px;
+    height: 110px;
+}
+button{
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 3px 10px;
+}
+
+p{
+    line-height: 150%;
+}
+h2{
+    line-height: 100%;
+}
+#right{
+    margin-left:230px;
+}
+#bottom{
+    margin-top : -32px;
+}

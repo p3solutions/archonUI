@@ -18,11 +18,11 @@ describe('ManageMasterMetadataComponent', () => {
   let masterMetaDataService: any;
 
   const master_metadataMock: any = [
-    { slNo : '1', version : '1.01', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
-    { slNo : '2', version : '1.46', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
-    { slNo : '3', version : '2.46', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
-    { slNo : '4', version : '3.00', description : 'Null' , createdDate : '20/11/2017 04.05 PM'},
-    { slNo : '5', version : '4.69', description : 'Null' , createdDate : '20/11/2017 04.05 PM'}
+    { slNo: '1', version: '1.01', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+    { slNo: '2', version: '1.46', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+    { slNo: '3', version: '2.46', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+    { slNo: '4', version: '3.00', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
+    { slNo: '5', version: '4.69', description: 'Null', createdDate: '20/11/2017 04.05 PM' }
   ];
   const simpleObservable = new Observable<Manage_Master_Metadata>((observer) => {
     observer.next(master_metadataMock);

@@ -1,31 +1,38 @@
-import { Workspaceinfo } from '../workspaceinfo';
+import { WorkspaceInfo } from './workspace-info';
 import { WorkspaceInfoComponent } from './workspace-info.component';
-import { WorkspaceinfoService } from '../workspaceinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { WorkspaceInfoService } from './workspace-info.service';
+
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs/Observable';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
   let fixture: ComponentFixture<WorkspaceInfoComponent>;
   let de: DebugElement;
   let WorkspaceInfoTag: HTMLElement;
-  let workspaceinfoService: any;
+  let workspaceInfoService: any;
   let workspaceServiceTag: any;
   const dashboardUrl = 'workspace/workspace-dashboard/workspace-services';
   const managemembers1: any = {
     name: 'Frontend Developer', owner: 'Platform3Solutions', approver: 'User1, User2',
     members: 'User1, User2, User3', your_role: 'Admin', master_metadata_version: '22'
   };
-  const simpleObservable = new Observable<Workspaceinfo>((observer) => {
+  const simpleObservable = new Observable<WorkspaceInfo>((observer) => {
+    // observable execution
     observer.next(managemembers1);
     observer.complete();
   });
-  const disposeMe = simpleObservable.subscribe();
+  let disposeMe;
+  const getworkinfo = function (): Observable<WorkspaceInfo> {
+    disposeMe = simpleObservable.subscribe();
+    return simpleObservable;
+  };
 
   beforeEach(async(() => {
 
@@ -37,7 +44,8 @@ describe('WorkspaceInfoComponent', () => {
       declarations: [WorkspaceInfoComponent],
       providers: [
         RouterTestingModule,
-        WorkspaceinfoService
+        WorkspaceInfoService,
+        HttpClientModule
       ],
     })
       .compileComponents();
@@ -46,9 +54,9 @@ describe('WorkspaceInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkspaceInfoComponent);
     component = fixture.componentInstance;
-    workspaceinfoService = TestBed.get(WorkspaceinfoService);
-    de = fixture.debugElement.query(By.css('#workspace-info'));
+    de = fixture.debugElement.query(By.css('#workspace-info-table'));
     WorkspaceInfoTag = de.nativeElement;
+    workspaceInfoService = TestBed.get(WorkspaceInfoService);
   });
 
   it('Should create Workspace_Info component', () => {
@@ -57,7 +65,7 @@ describe('WorkspaceInfoComponent', () => {
 
   it('Should display the observable data for workspace-info componenet', () => {
     const row1Array: NodeListOf<Element> = WorkspaceInfoTag.querySelectorAll('.ws-info-data');
-    spyOn(workspaceinfoService, 'getworkinfo').and.returnValue(simpleObservable);
+    spyOn(workspaceInfoService, 'getworkinfo').and.returnValue(simpleObservable);
     fixture.detectChanges();
     const name = row1Array[0];
     const owner = row1Array[1];
