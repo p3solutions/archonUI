@@ -438,6 +438,16 @@ i.link:hover {
   text-decoration: none;
 }
 
+.inline-loader {
+  position: absolute;
+  right: 25px;
+  margin: 3px;
+}
+.bg-disabled, .bg-disabled:hover {
+  background-color: #ccc !important;
+  cursor: default !important;
+}
+
 /* Data tables */
 
 
