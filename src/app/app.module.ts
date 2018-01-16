@@ -33,7 +33,7 @@ import { ManageMembersComponent } from './manage-members/manage-members.componen
 import { ManageMembersService } from './manage-members.service';
 import { DataTablesModule } from 'angular-datatables';
 import { MemberRequestComponent } from './member-request/member-request.component';
-import { MemberRequestService } from './member-request.service';
+import { MemberRequestService } from './member-request/member-request.service';
 import { ManageMasterMetadataService } from './manage-master-metadata/manage-master-metadata.service';
 import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
 import { HeaderPanelComponent } from './header-panel/header-panel.component';
