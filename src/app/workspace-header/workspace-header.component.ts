@@ -3,7 +3,6 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkspacePojo } from '../WorkspacePojo';
 import { Info } from '../info';
 import { UserinfoService } from '../userinfo.service';
-import { setInterval, clearInterval } from 'timers';
 
 @Component({
   selector: 'app-workspace-header',
