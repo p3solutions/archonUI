@@ -30,7 +30,7 @@ import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
 import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
 import { HeaderTabComponent } from './header-tab/header-tab.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
-import { ManageMembersService } from './manage-members.service';
+import { ManageMembersService } from './manage-members/manage-members.service';
 import { DataTablesModule } from 'angular-datatables';
 import { MemberRequestComponent } from './member-request/member-request.component';
 import { MemberRequestService } from './member-request/member-request.service';
