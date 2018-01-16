@@ -3,7 +3,6 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkspacePojo } from '../WorkspacePojo';
 import { Info } from '../info';
 import { UserinfoService } from '../userinfo.service';
-import { setInterval, clearInterval } from 'timers';
 
 @Component({
   selector: 'app-workspace-header',
@@ -21,7 +20,7 @@ export class WorkspaceHeaderComponent implements OnInit {
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService
-  ) {  }
+  ) { }
 
   ngOnInit() {
     this.getUserWorkspaceList();
@@ -30,15 +29,15 @@ export class WorkspaceHeaderComponent implements OnInit {
 
   getUserWorkspaceList() {
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
-        this.userWorkspaceArray = res;
-        const fn = function() {
-          const dropdownItem = (<HTMLAnchorElement>document.querySelector('#workspace-list-dropdown>.dropdown-data'));
-          if (dropdownItem) {
-            dropdownItem.click();
-            clearInterval(k);
-          }
-        };
-        const k = setInterval(fn, 500);
+      this.userWorkspaceArray = res;
+      const fn = function () {
+        const dropdownItem = (<HTMLAnchorElement>document.querySelector('#workspace-list-dropdown>.dropdown-data'));
+        if (dropdownItem) {
+          dropdownItem.click();
+          clearInterval(k);
+        }
+      };
+      const k = setInterval(fn, 500);
     });
   }
 
