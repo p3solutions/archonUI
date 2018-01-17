@@ -19,8 +19,11 @@ export class ManageUserRolesService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
+
   private getAllUsersUrl = 'http://13.58.89.64:9000/users';
-  private getGlobalRolesUrl = 'http://13.58.89.64:9000/admin/roles/global';
+  private getGlobalRoleUrl = 'http://13.58.89.64:9000/admin/roles/global';
+  private changeGlobalRoleUrl = 'http://13.58.89.64:9000/users/';
+
   constructor(private http: HttpClient) { }
 
   private extractData(res: any) {
@@ -38,16 +41,18 @@ export class ManageUserRolesService {
     );
   }
 
-  // getGlobalRolesDetails() {
-  //   this.http.get(this.getGlobalRolesUrl, {headers: this.headers})
-  //   .subscribe(
-  //     (data: any[]) => {
-  //         console.log('hillar', data);
-  //     }
-  //   );
-  // }
-  getGlobalRolesDetails(): Observable<GlobalRoles[]> {
-    return this.http.get<GlobalRoles[]>(this.getGlobalRolesUrl, { headers: this.headers}).map(this.extractGlobalRolesData).pipe(
+  changeGlobalRoleDetails(userid, globalid) {
+    const body = {
+      userId: userid,
+      globalRoleId: globalid
+    };
+    return this.http.patch(this.changeGlobalRoleUrl + userid + '/roles/global', body, { headers: this.headers })
+      .subscribe((res) => console.log(res));
+  }
+
+
+  getGlobalRoleDetails(): Observable<GlobalRoles[]> {
+    return this.http.get<GlobalRoles[]>(this.getGlobalRoleUrl, { headers: this.headers }).map(this.extractGlobalRolesData).pipe(
       catchError(this.handleError('globalroles', []))
     );
   }

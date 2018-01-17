@@ -1,4 +1,4 @@
-export class SigninForm{
-	email  :string;
-	password  :string;
+export class SigninForm {
+	email: string;
+	password: string;
 }

@@ -382,6 +382,11 @@ input[type=search] {
   float: left;
 }
 
+.back-arrow-modal {
+  margin-left: 10px;
+}
+
+
 .workspace-panel-content {
   padding: 30px;
   margin: 0 30px 0 30px;
@@ -406,11 +411,32 @@ input[type=search] {
   margin-right: 10px;
 }
 
+.popup-panel-heading {
+  text-align: left;
+}
+
+
 .btn-lg-arrow {
   margin-top: 50px;
 }
 
+.link {
+  color: #269AF8;
+  cursor: pointer;
+}
+.link:hover {
+  color: #037AD8;
+}
 
+.link:focus,
+.link:hover {
+  text-decoration: underline;
+}
+
+i.link:focus,
+i.link:hover {
+  text-decoration: none;
+}
 
 /* Data tables */
 

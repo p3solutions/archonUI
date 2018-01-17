@@ -54,7 +54,7 @@ export class SigninFormComponent implements OnInit {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
-          this.errorObject.message = err.error.message;
+          this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = !err.error.success;
           console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }

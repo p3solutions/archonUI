@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()">
+        <a (click)="gotoManagementPanel()">
           <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
         </a>
       </div>
@@ -18,7 +18,7 @@
       <table datatable id="manage-user-role-info-table" class="table table-hover table-bordered" *ngIf="isAvailable">
         <thead>
           <tr>
-            <th>Id</th>
+            <th>Sl No</th>
             <th>Name</th>
             <th>Email Address</th>
             <th>Created At</th>
@@ -28,13 +28,15 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of this.manageUserRolesRequestData; let i = index">
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['id']}}</td>
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['name']}}</td>
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['emailAddress']}}</td>
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['createdAt']}}</td>
-            <td class="mm-info-data">{{this.manageUserRolesRequestData[i]['globalRoles'][0]['roleName']}}</td>
+            <td class="mm-info-data">{{i+1}}</td>
+            <td class="mm-info-data">
+              <a href="">{{user.name}}</a>
+            </td>
+            <td class="mm-info-data">{{user.emailAddress}}</td>
+            <td class="mm-info-data">{{user.createdAt}}</td>
+            <td class="mm-info-data">{{user.globalRoles[0].roleName}}</td>
             <td>
-              <a href="" data-toggle="modal" data-target="#myModal">
+              <a href="" data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id)">
                 Change Role
               </a>
             </td>
@@ -49,61 +51,6 @@
     </div>
   </div>
 </div>
-
-
-
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="col-md-1 back-arrow">
-              <a (click)="gotoDashboard()">
-                <i data-dismiss="modal" class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
-              </a>
-            </div>
-            <div class="col-md-8">
-              <h3 class="manage-role-panel-heading">
-                Change Role
-              </h3>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="block">
-          <label>Current Role</label>
-          <p>Member</p>
-        </div>
-        <div class="block">
-          <br>
-          <label>Choose new role</label>
-          <div class="btn-group">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-              style="background-color: #fff; border: 1px solid #ccc">
-              Choose Role
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" *ngFor="let name of globalRolesRequestData; let i = index" (click)="selectGlobalRoles(this.globalRolesRequestData[i].roleName)">{{this.globalRolesRequestData[i].roleName}}</a>
-            </div>
-          </div>
-        </div>
-        <div class="block">
-          <br>
-          <label>Selected Role</label>
-          <p>{{this.choosedRole}}</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-          <button type="button" class="btn btn-primary btn-popup" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary btn-popup" data-dismiss="modal">Confirm</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<app-change-user-role [selectedUserId]="selectedUserId" (onConfirm)="onConfirm($event)" class="modal fade" id="myModal1" role="dialog">
+  some other content
+</app-change-user-role>

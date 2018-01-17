@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ManageMasterMetadataService } from '../manage-master-metadata.service';
+import { ManageMasterMetadataService } from './manage-master-metadata.service';
 import { Manage_Master_Metadata } from '../master-metadata-data';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 @Component({

@@ -14,8 +14,8 @@ export class WorkspaceListService {
   private headers;
   URL: string;
   constructor(private http: HttpClient) {
-    // this.URL = 'http://13.58.89.64:9000/workspaces';
-    this.URL = 'api/workspaceListInfo';
+    this.URL = 'http://13.58.89.64:9000/workspaces?ownerId=';
+    // this.URL = 'api/workspaceListInfo';
     this.headers = new HttpHeaders(
       {
         'Content-Type': 'application/json',
@@ -27,9 +27,10 @@ export class WorkspaceListService {
     return localStorage.getItem('accessToken');
   }
 
-  getList(): Observable<any> {
-    console.log('yes i am here', this.getAuthKey(), this.headers);
-    return this.http.get<any>(this.URL, { headers: this.headers }).pipe(
+  getList(id: string): Observable<any> {
+    const URL = this.URL + id;
+    console.log(URL);
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
       catchError(this.handleError('workspace-getList()', []))
     );
   }

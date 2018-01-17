@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-4">
       <div class="col-md-1 back-arrow">
-        <a>
+        <a (click)="gotoManagementPanel()">
           <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
         </a>
       </div>
@@ -36,8 +36,13 @@
               <p class="wsList">Databases(s) : {{rec.databaseList}}</p>
             </div>
             <div class="footer">
+<<<<<<< HEAD
               <p id="right" class="wsList">LastUpdatedTime : {{rec.lastUpdatedTime}}</p>
               <p id="bottom" class="wsList">MetadataVersion : {{rec.masterMetadataVersion}}</p>
+=======
+              <p id="right">LastUpdatedTime : {{rec.updatedAt}}</p>
+              <p id="bottom">MetadataVersion : {{rec.masterMetadataVersion}}</p>
+>>>>>>> b3b7786b2122711ecd2f42cffce6d4c408158db2
             </div>
           </div>
         </button>

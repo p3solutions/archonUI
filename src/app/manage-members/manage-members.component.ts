@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ManageMembers } from '../managemembers';
-import { ManageMembersService } from '../manage-members.service';
+import { ManageMembersService } from './manage-members.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
