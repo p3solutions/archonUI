@@ -2,7 +2,7 @@ export class UserPojo {
     id: string;
     name: string;
 }
-class OwnerPojo {
+export class OwnerPojo {
     id: string;
     name: string;
 }
@@ -12,7 +12,7 @@ export class RolePojo {
     name: string;
 }
 
-class DatabasePojo {
+export class DatabasePojo {
     id: string;
     name: string;
 }
