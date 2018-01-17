@@ -16,3 +16,14 @@ table {
   width: 72%;
   text-align: left;
 }
+
+#voice{
+  overflow-y: scroll;
+  display: block;
+  height: 150px;
+  overflow-x:hidden; 
+  margin-right: 130px;
+}
+.workspace-panel-content{
+  margin-top: 40px;
+}
