@@ -22,8 +22,11 @@ export class ManageMembersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.workspaceId = this.route.snapshot.paramMap.get('id');
-    this.getManageMembersData(this.workspaceId);
+    this.route.params.subscribe(params => {
+      this.isAvailable = false;
+      this.workspaceId = params.id;
+      this.getManageMembersData(this.workspaceId);
+    });
   }
 
   getManageMembersData(workspaceId) {

@@ -15,16 +15,17 @@
   </div>
   <div class="row">
     <div id="manager-members" class="workspace-panel-content">
+      <div *ngIf="!isAvailable" class="column col-md-12">
+        <i class="fa fa-spinner fa-spin fa-3x"></i>
+      </div>
       <table datatable id="manage-members-info-table" class="table table-hover table-bordered" *ngIf="isAvailable">
         <thead>
           <tr>
             <th>Sl.No</th>
             <th>Members</th>
             <th>Role</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th>View More</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -32,12 +33,9 @@
             <td class="">{{i}}</td>
             <td class="mm-info-data">{{wsAccess.user.name}}</td>
             <td class="mm-info-data">{{wsAccess.workspaceRole.name}}</td>
-            <td></td>
-            <td>
-              <i class="fa">&#xf06e;</i>
-            </td>
-            <td>
-              <span class="glyphicon glyphicon-pencil"></span>
+            <td class="">
+              <span class="fa fa-plus-circle fa-2x"></span>
+              <span class="fa fa-minus-circle fa-2x"></span>
             </td>
             <td>
               <span (click)="onDelete(i)" class="glyphicon glyphicon-trash icon-button"></span>
