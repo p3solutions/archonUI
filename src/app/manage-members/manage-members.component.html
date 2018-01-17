@@ -18,7 +18,7 @@
       <table datatable id="manage-members-info-table" class="table table-hover table-bordered" *ngIf="isAvailable">
         <thead>
           <tr>
-            <th>SL.No</th>
+            <th>Sl.No</th>
             <th>Members</th>
             <th>Role</th>
             <th></th>
@@ -28,15 +28,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of this.manageMembersRequestData; let i = index">
-            <td class="mm-info-data">{{this.manageMembersRequestData[i]['sl_no']}}</td>
-            <td class="mm-info-data">{{this.manageMembersRequestData[i]['member']}}</td>
-            <td class="mm-info-data">{{this.manageMembersRequestData[i]['role']}}</td>
-            <td>
-              <a href="">
-                Manage Priviliges
-              </a>
-            </td>
+          <tr *ngFor="let wsAccess of manageMembers; let i = index;">
+            <td class="">{{i}}</td>
+            <td class="mm-info-data">{{wsAccess.user.name}}</td>
+            <td class="mm-info-data">{{wsAccess.workspaceRole.name}}</td>
+            <td></td>
             <td>
               <i class="fa">&#xf06e;</i>
             </td>

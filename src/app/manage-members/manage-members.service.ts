@@ -20,8 +20,9 @@ export class ManageMembersService {
     }
 
   getWSMembers(workspaceId): Observable<ManageMembers[]> {
-    return this.http.get<ManageMembers[]>(this.getWSMembersUrl + workspaceId, { headers: this.headers }).pipe(
-      catchError(this.handleError('managemembers', []))
+    return this.http.get<ManageMembers[]>(this.getWSMembersUrl + workspaceId, { headers: this.headers })
+      .map(this.extractWSAccess)
+      .pipe(catchError(this.handleError('managemembers', []))
     );
   }
 
@@ -36,6 +37,10 @@ export class ManageMembersService {
     );
   }
 
+  private extractWSAccess(res: any) {
+    const data = res.data.workspaceAccess;
+    return data || [];
+  }
   // * Handle Http operation that failed.
   // * Let the app continue.
   // * @param operation - name of the operation that failed
