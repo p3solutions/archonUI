@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-import { MemberRequestData } from './member-request-data';
+import { MemberRequestData } from '../member-request-data';
 @Injectable()
 export class MemberRequestService {
 
