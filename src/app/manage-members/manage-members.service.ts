@@ -7,25 +7,29 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { ManageMembers } from '../managemembers';
-
+import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class ManageMembersService {
+  getWSMembersUrl = 'http://13.58.89.64:9000/workspaces/access?workspaceId=';
+  headers: HttpHeaders;
 
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  manageMembersUrl = 'api/managemembers';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private userinfoService: UserinfoService) {
+      this.headers = userinfoService.getHeaders();
+    }
 
-  getManageMembersDetails(): Observable<ManageMembers[]> {
-    return this.http.get<ManageMembers[]>(this.manageMembersUrl).pipe(
+  getWSMembers(workspaceId): Observable<ManageMembers[]> {
+    return this.http.get<ManageMembers[]>(this.getWSMembersUrl + workspaceId, { headers: this.headers }).pipe(
       catchError(this.handleError('managemembers', []))
     );
   }
+
   deleteManageMembersData(indexObject): Observable<ManageMembers[]> {
     // deleteHero (hero: Hero | number): Observable<Hero> {
     // const id = typeof hero === 'number' ? hero : hero.id;
     // const url = `${this.heroesUrl}/${id}`;
-    return this.http.delete<ManageMembers[]>(this.manageMembersUrl).pipe(
+    return this.http.delete<ManageMembers[]>(this.getWSMembersUrl).pipe(
       catchError(this.handleError('managemembers', []))
       // tap(_ => this.log(`deleted hero id=${id}`)),
       // catchError(this.handleError<Hero>('deleteHero'))

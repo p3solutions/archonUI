@@ -47,7 +47,7 @@ const routes: Routes = [
           }, {
             path: 'member-request', component: MemberRequestComponent
           }, {
-            path: 'manage-members', component: ManageMembersComponent
+            path: 'manage-members/:id', component: ManageMembersComponent
           }, {
             path: 'manage-master-metadata', component: ManageMasterMetadataComponent
           }]
