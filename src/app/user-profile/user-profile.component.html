@@ -18,6 +18,7 @@
       <app-change-password [userId]="userInfo?.id"></app-change-password>
     </div>
   </div>
+  
   <div class="row">
     <div id="user-info" class="workspace-panel-content col-md-12 text-left" [attr.data-user-id]="userInfo?.id">
       <table class="table table-hover">
@@ -29,7 +30,7 @@
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
               {{userInfo?.name}}
               <span>
-                <i class="m-10 glyphicon glyphicon-pencil link" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
+                <i aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" class="m-10 glyphicon glyphicon-pencil link" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
               </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">

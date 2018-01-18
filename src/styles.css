@@ -35,15 +35,16 @@ p {
 }
 
 
-/* input {
+ input {
   border-radius: 2px;
-} */
+} 
 
 
 /* Custom default button */
 
 .btn {
   border-radius: 2px;
+  text-transform: uppercase;
 }
 
 .btn-default,
@@ -390,6 +391,10 @@ input[type=search] {
 .workspace-panel-content {
   padding: 30px;
   margin: 0 30px 0 30px;
+}
+
+table.dataTable.no-footer {
+  border-radius: 2px;
 }
 
 .workspace-panel-heading {
