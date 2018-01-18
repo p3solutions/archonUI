@@ -29,10 +29,10 @@
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
               {{userInfo?.name}}
-              <span>
-                <i aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" class="m-10 glyphicon glyphicon-pencil link" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
+              <span data-tooltip="Edit">
+                <i class="m-10 glyphicon glyphicon-pencil link" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
               </span>
-            </td>
+               </td>
             <td *ngIf="!userInfo" class="text-center">
               <i class="fa fa-spinner fa-spin loading"></i>
             </td>
