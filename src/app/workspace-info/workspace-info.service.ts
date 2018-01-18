@@ -4,18 +4,30 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import { JwtHelper } from 'angular2-jwt';
 import { WorkspaceInfo } from './workspace-info';
-import { Router } from '@angular/router/src/router';
 @Injectable()
 export class WorkspaceInfoService {
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  workspaceinfoUrl = 'http://13.58.89.64:9000/workspaces/access?workspaceId=';
-  constructor(
-    private http: HttpClient,
-  ) { }
+  accessToken: string;
+  jwtHelper: JwtHelper = new JwtHelper();
+  private headers;
+  URL: string;
+  constructor(private http: HttpClient) {
+    this.URL = 'http://13.58.89.64:9000/workspaces/';
+    this.headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.getAuthKey()
+      });
+  }
+  getAuthKey() {
+    return localStorage.getItem('accessToken');
+  }
   getWorkSpaceInfo(id: string): Observable<WorkspaceInfo> {
-    const URL = this.workspaceinfoUrl + id;
+    const URL = this.URL + id;
+    console.log(URL);
     return this.http.get<WorkspaceInfo>(URL, { headers: this.headers }).pipe(
       catchError(this.handleError<WorkspaceInfo>('getworkinfo'))
     );

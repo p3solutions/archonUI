@@ -13,8 +13,10 @@ export class WorkspaceListService {
   jwtHelper: JwtHelper = new JwtHelper();
   private headers;
   URL: string;
+  USERID_URL : string;
   constructor(private http: HttpClient) {
     this.URL = 'http://13.58.89.64:9000/workspaces?ownerId=';
+    this.USERID_URL = 'http://13.58.89.64:9000/workspaces?userId=';
     // this.URL = 'api/workspaceListInfo';
     this.headers = new HttpHeaders(
       {
@@ -31,6 +33,13 @@ export class WorkspaceListService {
     const URL = this.URL + id;
     console.log(URL);
     return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError(this.handleError('workspace-getList()', []))
+    );
+  }
+  getListOfWorkspaceByUserId(id : string) : Observable<any>{
+    const USERID_URL = this.URL + id;
+    console.log(USERID_URL);
+    return this.http.get<any>(USERID_URL, { headers: this.headers }).pipe(
       catchError(this.handleError('workspace-getList()', []))
     );
   }

@@ -17,15 +17,18 @@ export class WorkspaceInfoComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private workspaceinfoservice: WorkspaceInfoService
   ) { }
 
   ngOnInit() {
-    this.getWorkspaceInfo();
+    this.route.params.subscribe(params => {
+      this.workspaceId = '5a5f2e645912217634613dbe';
+      this.getWorkspaceInfo(this.workspaceId);
+    });
   }
-
-  getWorkspaceInfo() {
-    this.workspaceinfoservice.getWorkSpaceInfo(this.workspaceId).subscribe(data => {
+  getWorkspaceInfo(workspaceId: string) {
+    this.workspaceinfoservice.getWorkSpaceInfo(workspaceId).subscribe(data => {
       this.workspaceInfoData = data;
       console.log('testing ', this.workspaceInfoData);
     });
