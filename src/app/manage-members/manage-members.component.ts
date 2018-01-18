@@ -3,6 +3,7 @@ import { ManageMembers } from '../managemembers';
 import { ManageMembersService } from './manage-members.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
+import { UserinfoService } from '../userinfo.service';
 
 @Component({
   selector: 'app-manage-members',
@@ -14,9 +15,12 @@ export class ManageMembersComponent implements OnInit {
 
   manageMembers: ManageMembers[];
   isAvailable = false;
+  memberPrivilegeParam: any;
+  showMemPriv = false;
 
   constructor(
     private manageMembersService: ManageMembersService,
+    private userinfoService: UserinfoService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -34,7 +38,6 @@ export class ManageMembersComponent implements OnInit {
       .subscribe(res => {
         this.isAvailable = true;
         this.manageMembers = res;
-        console.log('manage-members-component', res);
       });
   }
 
@@ -47,5 +50,30 @@ export class ManageMembersComponent implements OnInit {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
+  toggleClasses(_selector, classNameA, classNameB) {
+    if (_selector.hasClass(classNameA)) {
+      _selector.addClass(classNameB);
+      _selector.removeClass(classNameA);
+    } else {
+      _selector.addClass(classNameA);
+      _selector.removeClass(classNameB);
+    }
+  }
+  generatePrivilegeDetails(_event, wsAccess) {
+    _event.stopPropagation();
+    const _viewMore = $(_event.target).parents('td');
+    this.toggleClasses(_viewMore, 'toggle-expand', 'toggle-collapse');
+    const _dataRow = $('tr[data-user-id="' + wsAccess.user.id + '"]');
+    if (_dataRow.find('app-manage-member-privileges').length === 0) {
+      this.showMemPriv = true;
+    }
+    this.toggleClasses(_dataRow, 'toggle-expand', 'toggle-collapse');
+    this.memberPrivilegeParam = {
+      id: this.userinfoService.getUserId(),
+      userId: wsAccess.user.id,
+      workspaceId: this.workspaceId,
+      roleId: wsAccess.workspaceRole.id
+    };
+  }
 
 }

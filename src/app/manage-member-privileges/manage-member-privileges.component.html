@@ -1,0 +1,35 @@
+<table cellpadding="5" cellspacing="0" border="0" class="table table-hover table-bordered mem-priv">
+  <tr>
+    <th>Role</th>
+    <td>
+      <span *ngIf="!showRoleDropdown">{{wsAccess?.workspaceRole?.name}}</span>
+      <span *ngIf="showRoleDropdown">
+        <select>
+          <option hidden selected="true">Select</option>
+          <option *ngFor="let wsR of wsRoleList" [value]="wsR?.name" [attr.role-id]="wsR?.id">{{wsR?.name}}</option>
+        </select>
+      </span>
+    </td>
+    <td>
+      <span *ngIf="!showRoleDropdown" (click)="toggleRoleDropdown()" class="col-md-12 glyphicon glyphicon-pencil cur-p"></span>
+      <button *ngIf="showRoleDropdown" class="btn btn-primary" (click)="update()">Update</button>
+    </td>
+  </tr>
+  <tr *ngFor="let serv of serviceList; let i = index; let firstIndex = first">
+    <th>{{serv?.name}}</th>
+    <td>
+      <span *ngIf="!showServiceDropdown">{{serv.permission}}</span>
+      <span *ngIf="showServiceDropdown">
+        <select>
+          <option hidden selected="true">Select</option>
+          <option *ngFor="let permit of permissionList" [value]="permit.permission"
+           [attr.permission-id]="permit.id" >{{permit.permission}}</option>
+        </select>
+      </span>
+    </td>
+    <td [attr.rowspan]="serviceList.length" *ngIf="firstIndex">
+      <span *ngIf="!showServiceDropdown" (click)="toggleServiceDropdown()" class="col-md-12 glyphicon glyphicon-pencil cur-p"></span>
+      <button *ngIf="showServiceDropdown" class="btn btn-primary" (click)="assign()">Assign</button>
+    </td>    
+  </tr>
+</table>

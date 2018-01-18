@@ -18,7 +18,7 @@
       <div *ngIf="!isAvailable" class="column col-md-12">
         <i class="fa fa-spinner fa-spin fa-3x"></i>
       </div>
-      <table datatable id="manage-members-info-table" class="table table-hover table-bordered" *ngIf="isAvailable">
+      <table id="manage-members-info-table" class="table table-hover table-bordered" *ngIf="isAvailable"> <!-- use 'datatable' attribute -->
         <thead>
           <tr>
             <th>Sl.No</th>
@@ -29,24 +29,35 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let wsAccess of manageMembers; let i = index;">
-            <td class="">{{i}}</td>
-            <td class="mm-info-data">{{wsAccess.user.name}}</td>
-            <td class="mm-info-data">{{wsAccess.workspaceRole.name}}</td>
-            <td class="">
-              <span class="fa fa-plus-circle fa-2x"></span>
-              <span class="fa fa-minus-circle fa-2x"></span>
-            </td>
-            <td>
-              <span (click)="onDelete(i)" class="glyphicon glyphicon-trash icon-button"></span>
-            </td>
-          </tr>
+          <ng-container *ngFor="let wsAccess of manageMembers; let i = index;">
+            <tr class="">
+              <td class="">{{i + 1}}</td>
+              <td class="mm-info-data">{{wsAccess.user.name}}</td>
+              <td class="mm-info-data">{{wsAccess.workspaceRole.name}}</td>
+              <td class="toggle-expand">
+                <i class="fa fa-plus-circle fa-2x expand" (click)="generatePrivilegeDetails($event, wsAccess)"></i>
+                <i class="fa fa-minus-circle fa-2x collapse" (click)="generatePrivilegeDetails($event, wsAccess)"></i>
+              </td>
+              <td>
+                <span (click)="onDelete(i)" class="glyphicon glyphicon-trash"></span>
+              </td>
+            </tr>
+            <tr [attr.data-user-id]="wsAccess?.user?.id" class="mem-priv-row toggle-collapse">
+              <td colspan="5">
+                <app-manage-member-privileges *ngIf="showMemPriv" [wsAccess]="wsAccess"></app-manage-member-privileges>
+              </td>
+              <td class="hide"></td>
+              <td class="hide"></td>
+              <td class="hide"></td>
+              <td class="hide"></td>
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     </div>
   </div>
   <div class="row">
-    <div class="workspace-panel-content">
+    <div class="col-md-12">
       <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
     </div>
   </div>

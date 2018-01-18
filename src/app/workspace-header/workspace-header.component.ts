@@ -30,7 +30,6 @@ export class WorkspaceHeaderComponent implements OnInit {
   getUserWorkspaceList() {
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
-      console.log(res);
       if (res && res.length > 0) {
         const fn = function () {
           const dropdownItem = (<HTMLAnchorElement>document.querySelector('#selectedWorkspace .dropdown-data'));
@@ -55,10 +54,8 @@ export class WorkspaceHeaderComponent implements OnInit {
   selectWorkspace(selectedWorkspace: WorkspacePojo) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
-    console.log('currWS value', this.currentWorkspace);
   }
   onChange(val) {
-    console.log(val, 'selected', JSON.stringify(val));
     // const ws = JSON.stringify(val);
     switch (val) {
       case '0':
