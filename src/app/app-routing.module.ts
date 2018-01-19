@@ -37,22 +37,23 @@ const routes: Routes = [
       }, {
         path: 'manage-user-roles', component: ManageUserRolesComponent
       },
-      //  {
-      //   path: 'workspace-info/:id', component: WorkspaceInfoComponent
-      // },
+      {
+        path: 'workspace-info/:id', component: WorkspaceInfoComponent
+      },
       {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
             path: '', redirectTo: 'workspace-services', pathMatch: 'full'
-          }, {
-            path: 'workspace-info/:id', component: WorkspaceInfoComponent
-          },
+          }, 
           {
             path: 'workspace-services', component: WorkspaceServicesComponent
-          }, {
+          },{
+            path: 'workspace-info/:id', component: WorkspaceInfoComponent
+          }, 
+          {
             path: 'member-request', component: MemberRequestComponent
           }, {
-            path: 'manage-members', component: ManageMembersComponent
+            path: 'manage-members/:id', component: ManageMembersComponent
           }, {
             path: 'manage-master-metadata', component: ManageMasterMetadataComponent
           }]

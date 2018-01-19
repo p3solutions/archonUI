@@ -7,7 +7,7 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { JwtHelper } from 'angular2-jwt';
-import { WorkspaceInfo } from './workspace-info';
+
 @Injectable()
 export class WorkspaceInfoService {
   accessToken: string;
@@ -25,11 +25,11 @@ export class WorkspaceInfoService {
   getAuthKey() {
     return localStorage.getItem('accessToken');
   }
-  getWorkSpaceInfo(id: string): Observable<WorkspaceInfo> {
+  getWorkSpaceInfo(id: string): Observable<any> {
     const URL = this.URL + id;
     console.log(URL);
-    return this.http.get<WorkspaceInfo>(URL, { headers: this.headers }).pipe(
-      catchError(this.handleError<WorkspaceInfo>('getworkinfo'))
+    return this.http.get<any>(URL, { headers: this.headers }).pipe(
+      catchError(this.handleError<any>('getworkinfo'))
     );
   }
 

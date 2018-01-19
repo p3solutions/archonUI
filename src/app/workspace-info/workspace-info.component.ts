@@ -23,16 +23,30 @@ export class WorkspaceInfoComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.workspaceId = '5a5f2e645912217634613dbe';
+      this.workspaceId = params.id;
       this.getWorkspaceInfo(this.workspaceId);
     });
   }
   getWorkspaceInfo(workspaceId: string) {
-    this.workspaceinfoservice.getWorkSpaceInfo(workspaceId).subscribe(data => {
-      this.workspaceInfoData = data;
-      console.log('testing ', this.workspaceInfoData);
+    this.workspaceinfoservice.getWorkSpaceInfo(workspaceId).subscribe(result => {
+      // console.log(result);
+      this.workspaceInfoData = result.data.workspace;
+      this.setOwnerName();
+      this.setMembers(this.workspaceInfoData['members']);
     });
   }
+  setOwnerName() {
+    this.workspaceInfoData.owner = this.workspaceInfoData['owner']['name'];
+  }
+  setMembers(data: any) {
+    let i;
+    let membersArray = new Array();
+    for (i in data) {
+      membersArray.push(data[i]['workspaceRole']['name'])
+    }
+    this.workspaceInfoData.members = membersArray.join(',');
+  }
+  
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
