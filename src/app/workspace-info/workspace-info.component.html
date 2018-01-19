@@ -37,11 +37,11 @@
               <b>Members</b>
             </td>
             <td class="ws-info-data">
-              <span *ngFor="let member of workspaceInfoData?.members; let i = index" class="m-10">
-                {{member?.user?.name}}
+              <span *ngFor="let member of workspaceInfoData?.members; let isLast = last">
+                {{member?.user?.name}}{{isLast ? '' : ','}}
               </span>
               <a [routerLink]="['../../manage-members',workspaceInfoData?.id]">
-                <i class="fa fa-pencil archon-icon"></i>
+                <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>
           </tr>
@@ -56,8 +56,8 @@
               <b>Metadata Version</b>
             </td>
             <td class="ws-info-data">{{workspaceInfoData?.masterMetadataVersion}}
-              <a href="#">
-                <i class="fa fa-pencil archon-icon"></i>
+              <a [routerLink]="['../../manage-master-metadata',workspaceInfoData?.id]">
+                <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>
           </tr>
