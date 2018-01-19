@@ -1,4 +1,4 @@
 export interface ChangeGlobalRole {
-   userId: string;
-   globalRoleId: string;
+    userId: string;
+    globalRoleId: string;
 }

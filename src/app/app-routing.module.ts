@@ -21,9 +21,9 @@ import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-m
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { WorkspaceListComponent } from './workspace-list/workspace-list.component';
-import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 
 const routes: Routes = [
   {
@@ -43,13 +43,13 @@ const routes: Routes = [
           }, {
             path: 'workspace-services', component: WorkspaceServicesComponent
           }, {
-            path: 'workspace-info', component: WorkspaceInfoComponent
+            path: 'workspace-info/:id', component: WorkspaceInfoComponent
           }, {
-            path: 'member-request', component: MemberRequestComponent
+            path: 'member-request/:id', component: MemberRequestComponent
           }, {
-            path: 'manage-members', component: ManageMembersComponent
+            path: 'manage-members/:id', component: ManageMembersComponent
           }, {
-            path: 'manage-master-metadata', component: ManageMasterMetadataComponent
+            path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
           }]
       }]
   },

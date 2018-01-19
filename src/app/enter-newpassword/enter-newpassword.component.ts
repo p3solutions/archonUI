@@ -34,7 +34,7 @@ export class EnterNewpasswordComponent implements OnInit {
   }
   createForm() {
     this.passwordResetForm = new FormGroup({
-      password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       confirmPassword: new FormControl('', [Validators.required]),
     });
   }

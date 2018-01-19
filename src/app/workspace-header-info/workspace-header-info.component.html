@@ -1,7 +1,7 @@
 <div class="col-md-12 workspace-header-info">
   <div class="col-md-4">
     <div class="col-md-12">Workspace</div>
-    <div class="col-md-12 title">{{currentWorkspace?.name}}</div>
+    <div class="col-md-12 title">{{currentWorkspace?.workspaceName}}</div>
     <!-- use trimming class -->
     <div *ngIf="!currentWorkspace">
       <i class="fa fa-spinner fa-spin loading"></i>
@@ -9,7 +9,7 @@
   </div>
   <div class="col-md-3">
     <div class="col-md-12">Role</div>
-    <div class="col-md-12 title">{{currentWorkspace?.role}}</div>
+    <div class="col-md-12 title">{{currentWorkspace?.workspaceRole?.name}}</div>
     <!-- use trimming class -->
     <div *ngIf="!currentWorkspace">
       <i class="fa fa-spinner fa-spin loading"></i>
@@ -17,7 +17,7 @@
   </div>
   <div class="col-md-5">
     <div class="col-md-12">Master Metadata Version </div>
-    <div class="col-md-12 title">{{currentWorkspace?.masterMetaVersion}}</div>
+    <div class="col-md-12 title">{{currentWorkspace?.masterMetadataVersion}}</div>
     <!-- use trimming class -->
     <div *ngIf="!currentWorkspace">
       <i class="fa fa-spinner fa-spin loading"></i>
