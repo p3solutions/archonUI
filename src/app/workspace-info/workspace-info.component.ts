@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WorkspaceInfoService } from './workspace-info.service';
+import { UserinfoService } from '../userinfo.service';
 import { WorkspaceInfo } from './workspace-info';
 import { HttpClientModule } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-workspace-info',
@@ -14,16 +16,18 @@ import { HttpClient } from '@angular/common/http';
 export class WorkspaceInfoComponent implements OnInit {
   workspaceInfoData: WorkspaceInfo;
   workspaceId: string;
-
+  loggedUserId: string;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private workspaceinfoservice: WorkspaceInfoService
+    private workspaceinfoservice: WorkspaceInfoService,
+    private userinfoservice: UserinfoService
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.workspaceId = params.id;
+      this.loggedUserId = this.userinfoservice.getUserId();
       this.getWorkspaceInfo(this.workspaceId);
     });
   }
@@ -33,6 +37,8 @@ export class WorkspaceInfoComponent implements OnInit {
       this.workspaceInfoData = result.data.workspace;
       this.setOwnerName();
       this.setMembers(this.workspaceInfoData['members']);
+      //Hard coded Approvers data 
+      this.workspaceInfoData.approvers = "NULL";
     });
   }
   setOwnerName() {
@@ -42,11 +48,15 @@ export class WorkspaceInfoComponent implements OnInit {
     let i;
     let membersArray = new Array();
     for (i in data) {
-      membersArray.push(data[i]['workspaceRole']['name'])
+      membersArray.push(data[i]['user']['name']);
+      console.log('hai chandru', data[i]['user']['id'], this.loggedUserId);
+      if (this.loggedUserId == data[i]['user']['id']) {
+        console.log('Hai chandru');
+        this.workspaceInfoData.your_role = data[i]['workspaceRole']['name'];
+      }
     }
-    this.workspaceInfoData.members = membersArray.join(',');
+    this.workspaceInfoData.members = membersArray.join(', ');
   }
-  
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
