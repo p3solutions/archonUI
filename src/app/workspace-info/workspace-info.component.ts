@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WorkspaceInfoService } from './workspace-info.service';
 import { WorkspaceInfo } from './workspace-info';
@@ -13,19 +13,30 @@ import { HttpClient } from '@angular/common/http';
 })
 export class WorkspaceInfoComponent implements OnInit {
   workspaceInfoData: WorkspaceInfo;
-  workspaceId: string;
+  @Input() workspaceId: string;
+  isAvailable: boolean;
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private workspaceinfoservice: WorkspaceInfoService
   ) { }
 
   ngOnInit() {
-    this.getWorkspaceInfo();
+    this.isAvailable = false;
+    if (!this.workspaceId) {
+      this.route.params.subscribe(params => {
+        this.workspaceId = params.id;
+        this.getWorkspaceInfo(this.workspaceId);
+      });
+    } else {
+      this.getWorkspaceInfo(this.workspaceId);
+    }
   }
 
-  getWorkspaceInfo() {
-    this.workspaceinfoservice.getWorkSpaceInfo(this.workspaceId).subscribe(data => {
+  getWorkspaceInfo(workspaceId) {
+    this.workspaceinfoservice.getWorkSpaceInfo(workspaceId).subscribe(data => {
+      this.isAvailable = true;
       this.workspaceInfoData = data;
       console.log('testing ', this.workspaceInfoData);
     });
