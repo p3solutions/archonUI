@@ -22,6 +22,8 @@ export class EnterNewpasswordComponent implements OnInit {
   successObject: SuccessObject;
   passwordReset: PasswordReset;
   passwordResetForm: FormGroup;
+  enablePasswordBtn = false;
+  inProgress = false;
   resetKey: string;
   constructor(
     private passwordResetService: EnterNewpasswordService,
@@ -31,6 +33,7 @@ export class EnterNewpasswordComponent implements OnInit {
   ngOnInit() {
     this.resetKey = this.route.snapshot.paramMap.get('resetKey');
     this.createForm();
+    setTimeout(this.enableResetPassword(), 3000);
   }
   createForm() {
     this.passwordResetForm = new FormGroup({
@@ -40,6 +43,7 @@ export class EnterNewpasswordComponent implements OnInit {
   }
   onSubmit() {
     console.log('submit button');
+    this.inProgress = true;
     this.newPasswordSetForm.resetKey = this.resetKey;
     this.newPasswordSetForm.password = this.passwordResetForm.value.password;
     console.log(JSON.stringify(this.newPasswordSetForm));
@@ -52,6 +56,7 @@ export class EnterNewpasswordComponent implements OnInit {
         console.log(data);
       },
       (err: HttpErrorResponse) => {
+        this.inProgress = false;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('An error occurred:', err.error.message);
@@ -69,4 +74,12 @@ export class EnterNewpasswordComponent implements OnInit {
   }
   get password() { return this.passwordResetForm.get('password'); }
   get confirmPassword() { return this.passwordResetForm.get('confirmPassword'); }
+
+  enableResetPassword() {
+    if (this.passwordResetForm.value.password && this.passwordResetForm.value.confirmPassword) {
+      this.enablePasswordBtn = true;
+    } else {
+      this.enablePasswordBtn = false;
+    }
+  }
 }

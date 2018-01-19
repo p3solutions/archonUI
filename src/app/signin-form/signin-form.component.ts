@@ -17,6 +17,8 @@ export class SigninFormComponent implements OnInit {
   signInForm: FormGroup;
   responseData: any;
   errorObject: ErrorObject;
+  inProgress = false;
+  enableSignInBtn = false;
 
   constructor(
     private signinService: SigninFormService,
@@ -27,6 +29,7 @@ export class SigninFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    setTimeout(this.enableSignIn(), 3000);
   }
 
   createForm() {
@@ -37,6 +40,7 @@ export class SigninFormComponent implements OnInit {
   }
 
   onSignIn() {
+    this.inProgress = true;
     this.signin = this.signInForm.value;
     this.signinService.signIn(this.signin).subscribe(
       data => {
@@ -47,6 +51,7 @@ export class SigninFormComponent implements OnInit {
         this.router.navigate(['/workspace']);
       },
       (err: HttpErrorResponse) => {
+        this.inProgress = false;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('An error occurred:', err.error.message);
@@ -60,5 +65,15 @@ export class SigninFormComponent implements OnInit {
         }
       }
     );
+  }
+  closeErrorMsg() {
+    this.errorObject = null;
+  }
+  enableSignIn() {
+    if (this.signInForm.value.emailAddress && this.signInForm.value.password) {
+      this.enableSignInBtn = true;
+    } else {
+      this.enableSignInBtn = false;
+    }
   }
 }
