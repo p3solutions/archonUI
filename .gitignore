@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /semantic
+/log
 
 # dependencies
 /node_modules
