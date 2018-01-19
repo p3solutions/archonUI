@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="row">
-    <div id="manager-members" class="workspace-panel-content">
+    <div id="manager-members" class="workspace-panel-content manage-members col-md-6">
       <div *ngIf="!isAvailable" class="column col-md-12">
         <i class="fa fa-spinner fa-spin fa-3x"></i>
       </div>
@@ -35,11 +35,11 @@
               <td class="mm-info-data">{{wsAccess.user.name}}</td>
               <td class="mm-info-data">{{wsAccess.workspaceRole.name}}</td>
               <td class="toggle-expand">
-                <i class="fa fa-plus-circle fa-2x expand" (click)="generatePrivilegeDetails($event, wsAccess)"></i>
-                <i class="fa fa-minus-circle fa-2x collapse" (click)="generatePrivilegeDetails($event, wsAccess)"></i>
+                <i class="fa fa-plus-circle fa-lg expand archon-icon disp-bl" (click)="generatePrivilegeDetails($event, wsAccess)"></i>
+                <i class="fa fa-minus-circle fa-lg collapse archon-icon disp-bl" (click)="generatePrivilegeDetails($event, wsAccess)"></i>
               </td>
               <td>
-                <span (click)="onDelete(i)" class="glyphicon glyphicon-trash"></span>
+                <i (click)="onDelete(i)" class="fa fa-trash-o archon-icon disp-bl"></i>
               </td>
             </tr>
             <tr [attr.data-user-id]="wsAccess?.user?.id" class="mem-priv-row toggle-collapse">
@@ -57,7 +57,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="workspace-panel-content">
       <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
     </div>
   </div>

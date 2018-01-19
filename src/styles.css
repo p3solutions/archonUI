@@ -440,6 +440,20 @@ i.link:hover {
 .cur-p {
   cursor: pointer;
 }
+.col-archon-blue {
+  color: #269AF8;
+}
+.disp-bl {
+  display: block
+}
+.archon-icon {
+  cursor: pointer;
+  color: #269AF8;
+  font-size: 1.33333333em;
+  line-height: .75em;
+  vertical-align: -15%;
+}
+
 /* Data tables */
 
 

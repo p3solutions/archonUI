@@ -21,11 +21,9 @@ span,i {
   background: transparent;
 }
 
-.workspace-panel-content {
+.manage-members {
     padding: 30px;
-    margin: 0 30px;
     height: 400px;
-    width: 60%;
     overflow-y: auto;
 }
 

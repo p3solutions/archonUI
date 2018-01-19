@@ -11,8 +11,9 @@
       </span>
     </td>
     <td>
-      <span *ngIf="!showRoleDropdown" (click)="toggleRoleDropdown()" class="col-md-12 glyphicon glyphicon-pencil cur-p"></span>
-      <button *ngIf="showRoleDropdown" class="btn btn-primary" (click)="update()">Update</button>
+      <i *ngIf="!showRoleDropdown" (click)="toggleRoleDropdown()" class="fa fa-pencil archon-icon disp-bl"></i>
+      <i *ngIf="showRoleDropdown && !roleUpdated" class="fa fa-check archon-icon disp-bl" aria-hidden="true" (click)="update()"></i>
+      <i *ngIf="roleUpdated" class="fa fa-check-circle archon-icon disp-bl" aria-hidden="true"></i>
     </td>
   </tr>
   <tr *ngFor="let serv of serviceList; let i = index; let firstIndex = first">
@@ -28,8 +29,9 @@
       </span>
     </td>
     <td [attr.rowspan]="serviceList.length" *ngIf="firstIndex">
-      <span *ngIf="!showServiceDropdown" (click)="toggleServiceDropdown()" class="col-md-12 glyphicon glyphicon-pencil cur-p"></span>
-      <button *ngIf="showServiceDropdown" class="btn btn-primary" (click)="assign()">Assign</button>
+      <i *ngIf="!showServiceDropdown" (click)="toggleServiceDropdown()" class="fa fa-pencil archon-icon disp-bl"></i>
+      <i *ngIf="showServiceDropdown && !permitUpdated" class="fa fa-check archon-icon disp-bl" aria-hidden="true" (click)="assign()"></i>
+      <i *ngIf="permitUpdated" class="fa fa-check-circle archon-icon disp-bl" aria-hidden="true"></i>
     </td>    
   </tr>
 </table>

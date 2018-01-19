@@ -12,12 +12,16 @@ export class ManageMemberPrivilegesComponent implements OnInit {
   serviceList: any;
   permissionList: any;
   wsRoleList: any;
-  showRoleDropdown = false;
-  showServiceDropdown = false;
+  showRoleDropdown: any;
+  showServiceDropdown: any;
+  roleUpdated = false;
+  permitUpdated = false;
 
   constructor() { }
 
   ngOnInit() {
+    this.showRoleDropdown = false;
+    this.showServiceDropdown = false;
     this.serviceList = this.getServiceList();
     this.wsRoleList = this.getWSRoleList();
     this.permissionList = this.getPermissionList();
@@ -52,15 +56,14 @@ export class ManageMemberPrivilegesComponent implements OnInit {
   toggleRoleDropdown() {
     this.showRoleDropdown = true;
   }
-  update() {
-    this.showRoleDropdown = false;
-  }
-
   toggleServiceDropdown() {
     this.showServiceDropdown = true;
   }
 
+  update() {
+    this.roleUpdated = true;
+  }
   assign() {
-    this.showServiceDropdown = false;
+    this.permitUpdated = true;
   }
 }
