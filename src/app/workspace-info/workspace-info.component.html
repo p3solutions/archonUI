@@ -1,3 +1,4 @@
+<app-navbar *ngIf="showNavBar"></app-navbar>
 <div>
   <div class="row">
     <div class="col-md-6">
@@ -34,23 +35,23 @@
           </tr>
           <tr>
             <td>
-              <b>Approver</b>
+              <b>Approver(s)</b>
             </td>
-            <td class="ws-info-data">{{(workspaceInfoData?.approver) ? workspaceInfoData?.approver : 'APPROVER'}}
-              <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
-              </a>
+            <td class="ws-info-data">{{(workspaceInfoData?.approvers) ? workspaceInfoData?.approver : 'NULL'}}
+              <!-- <a [routerLink]="['/user-profile', workspaceInfoData?.approvers.id]"> -->
+                <span class="fa fa-pencil archon-icon m-l-10 m-r-10"></span>
+              <!-- </a> -->
             </td>
           </tr>
           <tr>
             <td>
-              <b>Members</b>
+              <b>Members(s)</b>
             </td>
             <td class="ws-info-data">
               <span *ngFor="let member of workspaceInfoData?.members; let isLast = last">
                 {{member?.user?.name}}{{isLast ? '' : ','}}
               </span>
-              <a [routerLink]="['../../manage-members',workspaceInfoData?.id]">
+              <a [routerLink]="['/workspace/workspace-dashboard/manage-members',workspaceInfoData?.id]">
                 <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>
@@ -59,14 +60,14 @@
             <td>
               <b>Your Role</b>
             </td>
-            <td class="ws-info-data">{{workspaceInfoData?.your_role}}</td>
+            <td class="ws-info-data">{{workspaceInfoData?.loggedInUserRole?.name}}</td>
           </tr>
           <tr>
             <td>
               <b>Metadata Version</b>
             </td>
             <td class="ws-info-data">{{workspaceInfoData?.masterMetadataVersion}}
-              <a [routerLink]="['../../manage-master-metadata',workspaceInfoData?.id]">
+              <a [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">
                 <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Info } from '../info';
 import { UserinfoService } from '../userinfo.service';
+import { WorkspaceListInfo } from '../workspace-list/workspace-list-data';
+import { WorkspaceListService } from '../workspace-list/workspace-list.service';
 import { Router } from '@angular/router';
+import { WorkspacePojo } from '../WorkspacePojo';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,11 +12,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-
   userInfo: any;
+  workspaceList: WorkspacePojo[];
 
   constructor(
     private userinfoService: UserinfoService,
+    private workspaceListService: WorkspaceListService,
     private router: Router
   ) { }
 
@@ -29,15 +33,13 @@ export class UserProfileComponent implements OnInit {
           email: res.data.user.emailAddress,
           name: res.data.user.name
         };
+        this.getWorkspaceList(this.userInfo.id);
         if (res.data.user.globalRoles && res.data.user.globalRoles.length) {
           this.userInfo.roleList = [];
           res.data.user.globalRoles.forEach(role => {
             this.userInfo.roleList.push(role.roleName);
           });
         }
-        // hard coded till we get it from BE API
-        const obj = { name: 'workspace'};
-        this.userInfo.workspaceList = [obj, obj, obj];
       }
     });
   }
@@ -54,5 +56,11 @@ export class UserProfileComponent implements OnInit {
     if (confirm) {
       this.getUserInfo();
     }
+  }
+
+  getWorkspaceList(userId) {
+    this.workspaceListService.getListOfWorkspaceByUserId(userId).subscribe((res) => {
+      this.workspaceList = res;
+    });
   }
 }

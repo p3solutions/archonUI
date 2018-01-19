@@ -37,6 +37,8 @@ const routes: Routes = [
       }, {
         path: 'manage-user-roles', component: ManageUserRolesComponent
       }, {
+        path: 'workspace-info/:id', component: WorkspaceInfoComponent
+      }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
             path: '', redirectTo: 'workspace-services', pathMatch: 'full'
