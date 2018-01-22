@@ -461,10 +461,6 @@ i.link:hover {
   line-height: .75em;
   vertical-align: -15%;
 }
-.archon-icon:hover,
-.archon-icon:active {
-  text-decoration: underline;
-}
 
 /* Data tables */
 
