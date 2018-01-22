@@ -446,8 +446,6 @@ i.link:hover {
   text-decoration: none;
 }
 
-<<<<<<< HEAD
-=======
 .inline-loader {
   position: absolute;
   right: 25px;
@@ -457,7 +455,6 @@ i.link:hover {
   background-color: #ccc !important;
   cursor: default !important;
 }
->>>>>>> 3b7129664167a8f82f9d1c74c927190e63a2f537
 
 /* Data tables */
 
@@ -536,3 +533,15 @@ i.link:hover {
 /**
  * Tooltip Styles End
  */
+
+ .archon-icon {
+  cursor: pointer;
+  color: #269AF8;
+  font-size: 1.33333333em;
+  line-height: .75em;
+  vertical-align: -15%;
+}
+.archon-icon:hover,
+.archon-icon:active {
+  text-decoration: underline;
+}

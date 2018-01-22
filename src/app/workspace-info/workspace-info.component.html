@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        <a (click)="gotoDashboard()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
         </a>
       </div>
       <div class="col-md-8">
@@ -35,7 +35,7 @@
             </td>
             <td class="ws-info-data">{{this.workspaceInfoData['approver']}}
               <a data-tooltip="Edit">
-                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="fa fa-pencil archon-icon m-l-10 m-r-10"></span>
               </a>
             </td>
           </tr>
@@ -46,7 +46,7 @@
             <td class="ws-info-data">
               {{this.workspaceInfoData['members']}}
               <a data-tooltip="Edit">
-                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="fa fa-pencil archon-icon m-l-10 m-r-10"></span>
               </a>
             </td>
           </tr>
@@ -62,7 +62,7 @@
             </td>
             <td class="ws-info-data">{{this.workspaceInfoData['master_metadata_version']}}
               <a data-tooltip="Edit">
-                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="fa fa-pencil archon-icon m-l-10 m-r-10"></span>
               </a>
             </td>
           </tr>
