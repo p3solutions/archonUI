@@ -21,11 +21,14 @@
   <br>
   <div class="row">
     <div class="col-md-6 col-md-offset-1">
-      <div *ngFor="let rec of this.workspaceListInfo">
+      <div *ngIf="!workspaceListInfo" class="column col-md-12">
+        <i class="fa fa-spinner fa-spin fa-3x"></i>
+      </div>
+      <div *ngFor="let ws of workspaceListInfo">
         <button type="button" class="btn-primary" id="workspace-list-btn">
           <div class="btn-box">
             <div class="title">
-              <h2>{{rec.workspaceName}}</h2>
+              <h2>{{ws.workspaceName}}</h2>
             </div>
             <div class="right-arrow">
               <span>
@@ -33,11 +36,15 @@
               </span>
             </div>
             <div class="body">
-              <p>Databases(s) : {{rec.databaseList}}</p>
+              <p>Databases(s) :
+                  <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
+                    {{db?.name}}{{isLast ? '' : ', '}}
+                  </span>
+              </p>
             </div>
             <div class="footer">
-              <p id="right">LastUpdatedTime : {{rec.updatedAt}}</p>
-              <p id="bottom">MetadataVersion : {{rec.masterMetadataVersion}}</p>
+              <p id="right">LastUpdatedTime : {{ws.updatedAt}}</p>
+              <p id="bottom">MetadataVersion : {{ws.masterMetadataVersion}}</p>
             </div>
           </div>
         </button>

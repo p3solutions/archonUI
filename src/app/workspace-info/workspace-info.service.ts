@@ -4,23 +4,28 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-
-import { WorkspaceInfo } from './workspace-info';
+import { UserinfoService } from '../userinfo.service';
 import { Router } from '@angular/router/src/router';
+import { WorkspacePojo } from '../WorkspacePojo';
 @Injectable()
 export class WorkspaceInfoService {
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  workspaceinfoUrl = 'http://13.58.89.64:9000/workspaces/access?workspaceId=';
+  workspaceinfoUrl = 'http://13.58.89.64:9000/workspaces/';
   constructor(
     private http: HttpClient,
+    private userinfoService: UserinfoService
   ) { }
-  getWorkSpaceInfo(id: string): Observable<WorkspaceInfo> {
+  getWorkSpaceInfo(id: string): Observable<WorkspacePojo> {
     const URL = this.workspaceinfoUrl + id;
-    return this.http.get<WorkspaceInfo>(URL, { headers: this.headers }).pipe(
-      catchError(this.handleError<WorkspaceInfo>('getworkinfo'))
+    return this.http.get<WorkspacePojo>(URL, { headers: this.userinfoService.getHeaders() })
+    .map(this.extractWorkspace)
+    .pipe(catchError(this.handleError<WorkspacePojo>('getworkinfo'))
     );
   }
 
+  private extractWorkspace(res: any) {
+    const data = res.data.workspace;
+    return data || [];
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

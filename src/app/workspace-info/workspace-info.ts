@@ -1,4 +1,5 @@
 export class WorkspaceInfo {
+    id: string;
     name: string;
     owner: string;
     approver: string;

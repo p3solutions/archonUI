@@ -30,14 +30,16 @@ export class WorkspaceHeaderComponent implements OnInit {
   getUserWorkspaceList() {
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
-      const fn = function () {
-        const dropdownItem = (<HTMLAnchorElement>document.querySelector('#workspace-list-dropdown>.dropdown-data'));
-        if (dropdownItem) {
-          dropdownItem.click();
-          clearInterval(k);
-        }
-      };
-      const k = setInterval(fn, 500);
+      if (res && res.length > 0) {
+        const fn = function () {
+          const dropdownItem = (<HTMLAnchorElement>document.querySelector('#selectedWorkspace .dropdown-data'));
+          if (dropdownItem) {
+            dropdownItem.click();
+            clearInterval(k);
+          }
+        };
+        const k = setInterval(fn, 500);
+      }
     });
   }
 
@@ -52,5 +54,24 @@ export class WorkspaceHeaderComponent implements OnInit {
   selectWorkspace(selectedWorkspace: WorkspacePojo) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
+  }
+  onChange(val) {
+    // const ws = JSON.stringify(val);
+    switch (val) {
+      case '0':
+          // do nothing
+        break;
+      case '1': {
+        this.createNewWorkspace();
+        break;
+      }
+      case '2': {
+        this.contactAdmin();
+        break;
+      }
+      default:
+        // this.selectWorkspace(JSON.parse(ws));
+        break;
+    }
   }
 }
