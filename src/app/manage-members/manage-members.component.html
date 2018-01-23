@@ -9,15 +9,13 @@
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
           Manage Members
+          <i *ngIf="!isAvailable" class="fa fa-spinner fa-spin fa-1x"></i>
         </h3>
       </div>
     </div>
   </div>
   <div class="row">
     <div id="manager-members" class="workspace-panel-content manage-members col-md-6">
-      <div *ngIf="!isAvailable" class="column col-md-12">
-        <i class="fa fa-spinner fa-spin fa-3x"></i>
-      </div>
       <table id="manage-members-info-table" class="table table-hover table-bordered" *ngIf="isAvailable"> <!-- use 'datatable' attribute -->
         <thead>
           <tr>
