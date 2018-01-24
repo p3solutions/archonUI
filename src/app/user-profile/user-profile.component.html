@@ -3,8 +3,8 @@
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        <a data-tooltip="Back" (click)="gotoDashboard()">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
         </a>
       </div>
       <div class="col-md-8">
@@ -29,13 +29,8 @@
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
               {{userInfo?.name}}
-<<<<<<< HEAD
               <span data-tooltip="Edit">
-                <i class="m-10 glyphicon glyphicon-pencil link" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
-=======
-              <span>
                 <i class="fa fa-pencil archon-icon" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
->>>>>>> a1ca109734509b2082a568341633cfe7043a3b29
               </span>
                </td>
             <td *ngIf="!userInfo" class="text-center">

@@ -27,29 +27,6 @@
           </tr>
         </thead>
         <tbody>
-<<<<<<< HEAD
-          <tr *ngFor="let data of this.manageMembersRequestData; let i = index">
-            <td class="mm-info-data">{{this.manageMembersRequestData[i]['sl_no']}}</td>
-            <td class="mm-info-data">{{this.manageMembersRequestData[i]['member']}}</td>
-            <td class="mm-info-data">{{this.manageMembersRequestData[i]['role']}}</td>
-            <td>
-              <a href="">
-                Manage Priviliges
-              </a>
-            </td>
-            <td>
-              <i class="fa">&#xf06e;</i>
-            </td>
-            <td>
-              <span data-tooltip="Edit">
-                <i class="m-10 glyphicon glyphicon-pencil link"></i>
-              </span>
-            </td>
-            <td>
-              <span (click)="onDelete(i)" class="glyphicon glyphicon-trash icon-button"></span>
-            </td>
-          </tr>
-=======
           <ng-container *ngFor="let wsAccess of manageMembers; let i = index;">
             <tr class="">
               <td class="">{{i + 1}}</td>
@@ -73,7 +50,6 @@
               <td class="hide"></td>
             </tr>
           </ng-container>
->>>>>>> a1ca109734509b2082a568341633cfe7043a3b29
         </tbody>
       </table>
     </div>
