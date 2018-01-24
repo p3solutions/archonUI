@@ -1,14 +1,24 @@
-class OwnerPojo {
+export class UserPojo {
+    id: string;
+    name: string;
+}
+export class OwnerPojo {
     id: string;
     name: string;
 }
 
-class RolePojo {
+export class RolePojo {
     id: string;
     name: string;
 }
 
-class DatabasePojo {
+export class MemberPojo {
+    createdAt: number;
+    updatedAt: number;
+    user: UserPojo;
+    workspaceRole: RolePojo;
+}
+export class DatabasePojo {
     id: string;
     name: string;
 }
@@ -19,7 +29,8 @@ export class WorkspacePojo {
     updatedAt: number;
     workspaceName: string;
     owner: OwnerPojo;
-    role: RolePojo;
+    loggedInUserRole: RolePojo;
     masterMetadataVersion: number;
-    databases: DatabasePojo;
+    members: MemberPojo[];
+    databases: DatabasePojo[];
 }

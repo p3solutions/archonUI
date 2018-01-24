@@ -57,6 +57,7 @@ import { WorkspaceInfoService } from './workspace-info/workspace-info.service';
 import { WorkspaceLandingPageService } from './workspace-landing-page/workspace-landing-page.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangePasswordService } from './change-password/change-password.service';
+import { ManageMemberPrivilegesComponent } from './manage-member-privileges/manage-member-privileges.component';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -88,22 +89,23 @@ import { ChangePasswordService } from './change-password/change-password.service
                 UserProfileComponent,
                 EditProfileComponent,
                 WorkspaceListComponent,
-                ChangePasswordComponent
+                ChangePasswordComponent,
+                ManageMemberPrivilegesComponent
         ],
         imports: [
                 BrowserModule,
                 FormsModule,
-                HttpClientModule,
                 // HttpClientInMemoryWebApiModule.forRoot(
-                //     InMemoryDataService,
-                //     { dataEncapsulation: false }
-                // ),
-                AppRoutingModule,
+                        //     InMemoryDataService,
+                        //     { dataEncapsulation: false }
+                        // ),
+                FormsModule,
                 AuthModule,
-                DataTablesModule,
                 ReactiveFormsModule,
+                DataTablesModule,
                 MatTableModule,
-                FormsModule
+                AppRoutingModule,
+                HttpClientModule
         ],
         providers: [
                 JwtHelper,

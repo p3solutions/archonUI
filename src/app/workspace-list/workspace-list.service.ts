@@ -7,32 +7,40 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { JwtHelper } from 'angular2-jwt';
+import { UserinfoService } from '../userinfo.service';
+import { WorkspaceInfo } from '../workspace-info/workspace-info';
+import { WorkspacePojo } from '../WorkspacePojo';
+
 @Injectable()
 export class WorkspaceListService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
-  private headers;
-  URL: string;
-  constructor(private http: HttpClient) {
-    this.URL = 'http://13.58.89.64:9000/workspaces?ownerId=';
-    // this.URL = 'api/workspaceListInfo';
-    this.headers = new HttpHeaders(
-      {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.getAuthKey()
-      });
+  URL = 'http://13.58.89.64:9000/workspaces?ownerId=';
+  wSListByUidUrl = 'http://13.58.89.64:9000/workspaces?userId=';
+  constructor(
+    private http: HttpClient,
+    private userinfoService: UserinfoService
+  ) { }
 
-  }
-  getAuthKey() {
-    return localStorage.getItem('accessToken');
-  }
-
-  getList(id: string): Observable<any> {
+  getList(id: string): Observable<WorkspacePojo[]> {
     const URL = this.URL + id;
-    console.log(URL);
-    return this.http.get<any>(URL, { headers: this.headers }).pipe(
-      catchError(this.handleError('workspace-getList()', []))
+    return this.http.get<WorkspacePojo[]>(URL, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractWorkspaces)
+    .pipe(catchError(this.handleError('workspace-getList()', []))
     );
+  }
+
+  getListOfWorkspaceByUserId(id: string): Observable<WorkspacePojo[]> {
+    this.wSListByUidUrl = this.URL + id;
+    return this.http.get<WorkspacePojo[]>(this.wSListByUidUrl, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractWorkspaces)
+      .pipe(catchError(this.handleError('workspace-getList()', []))
+    );
+  }
+
+  private extractWorkspaces(res: any) {
+    const data = res.data.workspaces;
+    return data || [];
   }
 
 
