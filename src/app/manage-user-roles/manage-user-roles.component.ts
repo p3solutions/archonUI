@@ -33,9 +33,7 @@ export class ManageUserRolesComponent implements OnInit {
       });
   }
   getUserId(id) {
-    // this.index = index;
     this.selectedUserId = id;
-    console.log(id);
   }
 
   gotoManagementPanel() {

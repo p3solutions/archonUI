@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ManageMasterMetadataComponent } from './manage-master-metadata.component';
-import { ManageMasterMetadataService } from '../manage-master-metadata.service';
+import { ManageMasterMetadataService } from './manage-master-metadata.service';
 import { Manage_Master_Metadata } from '../master-metadata-data';
 import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MemberRequestService } from '../member-request.service';
+import { MemberRequestService } from './member-request.service';
 import { MemberRequestData } from '../member-request-data';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 @Component({

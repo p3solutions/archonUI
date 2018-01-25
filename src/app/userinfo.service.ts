@@ -6,40 +6,87 @@ import { catchError } from 'rxjs/operators';
 import { Info } from './info';
 import { JwtHelper } from 'angular2-jwt';
 import { Http, Headers, Response } from '@angular/http';
-
+import { ErrorObject } from './error-object';
 @Injectable()
 export class UserinfoService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   token_data: any;
-  userId = '5a3ba85e4ca51516a7573982';
-  private userInfoUrl;
-  private headers;
+  errorObject: ErrorObject;
 
   constructor(
     private http: HttpClient
   ) {
     this.http = http;
-    this.userInfoUrl = 'http://13.58.89.64:9000/users/' + this.getUserId();
-    this.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.getAuthKey()
-    });
   }
 
-  getUserId(): void {
+  getTokenData() {
     this.accessToken = localStorage.getItem('accessToken');
     this.token_data = this.jwtHelper.decodeToken(this.accessToken);
-    return this.userId = this.token_data.user.id;
+  }
+
+  getUserRoles() {
+    this.getTokenData();
+    return this.token_data.roles[0];
+  }
+
+  getUserId() {
+    this.getTokenData();
+    return this.token_data.user.id;
+  }
+
+  getUserInfoUrl() {
+    return 'http://13.58.89.64:9000/users/' + this.getUserId();
   }
 
   getAuthKey() {
     return localStorage.getItem('accessToken');
   }
 
+  getHeaders() {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getAuthKey()
+    });
+  }
+
   getUserInfo(): Observable<any> {
-    return this.http.get<any>(this.userInfoUrl, { headers: this.headers }).
+    return this.http.get<any>(this.getUserInfoUrl(), {headers: this.getHeaders()}).
       pipe(catchError(this.handleError<any>('getUserInfo')));
+  }
+
+  updateUserProfile(params: any) {
+    return this.http.patch<any>(this.getUserInfoUrl(), params, {headers: this.getHeaders()}).
+    pipe(catchError(this.handleError<any>('getUserInfo')));
+  }
+
+  getUpdatedName() {
+    return ((<HTMLInputElement>document.getElementById('userName')).value).trim();
+  }
+
+  getUpdatedEmail() {
+    return ((<HTMLInputElement>document.getElementById('userEmail')).value).trim();
+  }
+
+  isInvalidEditValues(user) {
+    this.errorObject = new ErrorObject;
+    this.errorObject.show = true;
+    if (this.getUpdatedName() === '') {
+      this.errorObject.message = 'Name cannot be empty';
+      return this.errorObject;
+    }
+    if (this.getUpdatedEmail() === '') {
+      this.errorObject.message = 'Email cannot be empty';
+      return this.errorObject;
+    }
+    if (this.getUpdatedName() === user.username && this.getUpdatedEmail() === user.useremail) {
+      this.errorObject.message = 'Name or email is not changed';
+      return this.errorObject;
+    }
+    if (this.errorObject) {
+      this.errorObject = null;
+    }
+    return null;
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

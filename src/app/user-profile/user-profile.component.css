@@ -6,6 +6,7 @@
 .col-info-data {
   width: 500px;
   padding: 0px 5px;
+  vertical-align: middle;
 }
 
 .col-info-data>.trim-text {

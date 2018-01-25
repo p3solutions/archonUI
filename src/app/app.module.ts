@@ -30,11 +30,11 @@ import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
 import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
 import { HeaderTabComponent } from './header-tab/header-tab.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
-import { ManageMembersService } from './manage-members.service';
+import { ManageMembersService } from './manage-members/manage-members.service';
 import { DataTablesModule } from 'angular-datatables';
 import { MemberRequestComponent } from './member-request/member-request.component';
-import { MemberRequestService } from './member-request.service';
-import { ManageMasterMetadataService } from './manage-master-metadata.service';
+import { MemberRequestService } from './member-request/member-request.service';
+import { ManageMasterMetadataService } from './manage-master-metadata/manage-master-metadata.service';
 import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
 import { HeaderPanelComponent } from './header-panel/header-panel.component';
 import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component';
@@ -55,73 +55,77 @@ import { ChangeUserRoleComponent } from './change-user-role/change-user-role.com
 import { ChangeUserRoleService } from './change-user-role/change-user-role.service';
 import { WorkspaceInfoService } from './workspace-info/workspace-info.service';
 import { WorkspaceLandingPageService } from './workspace-landing-page/workspace-landing-page.service';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangePasswordService } from './change-password/change-password.service';
 @NgModule({
-    declarations: [
-        AppComponent,
-        NavbarComponent,
-        LandingPageComponent,
-        WorkspaceLandingPageComponent,
-        SigninFormComponent,
-        ForgotpasswordFormComponent,
-        WorkspaceHeaderComponent,
-        WorkspaceHeaderInfoComponent,
-        WorkspaceMgmtPanelComponent,
-        WorkspaceDashboardComponent,
-        NoWorkspaceComponent,
-        WorkspaceInfoComponent,
-        HeaderTabComponent,
-        ManageMembersComponent,
-        MemberRequestComponent,
-        WorkspacePanelComponent,
-        HeaderPanelComponent,
-        HeaderPanelComponent,
-        ManageMasterMetadataComponent,
-        WorkspaceServicesComponent,
-        SignupFormComponent,
-        EnterNewpasswordComponent,
-        EqualValidator,
-        ManagementPanelComponent,
-        ManageUserRolesComponent,
-        ChangeUserRoleComponent,
-        UserProfileComponent,
-        EditProfileComponent,
-        WorkspaceListComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
-        // HttpClientInMemoryWebApiModule.forRoot(
-        //     InMemoryDataService,
-        //     { dataEncapsulation: false }
-        // ),
-        AppRoutingModule,
-        AuthModule,
-        DataTablesModule,
-        ReactiveFormsModule,
-        MatTableModule,
-        FormsModule
-    ],
-    providers: [
-        JwtHelper,
-        InMemoryDataService,
-        InfoService,
-        SigninFormService,
-        SignupFormService,
-        ForgotpasswordFormService,
-        AuthenticationService,
-        UserWorkspaceService,
-        ManageMembersService,
-        MemberRequestService,
-        ManageMasterMetadataService,
-        EnterNewpasswordService,
-        ManageUserRolesService,
-        ChangeUserRoleService,
-        UserinfoService,
-        WorkspaceListService,
-        WorkspaceInfoService,
-        WorkspaceLandingPageService
-    ],
-    bootstrap: [AppComponent]
+        declarations: [
+                AppComponent,
+                NavbarComponent,
+                LandingPageComponent,
+                WorkspaceLandingPageComponent,
+                SigninFormComponent,
+                ForgotpasswordFormComponent,
+                WorkspaceHeaderComponent,
+                WorkspaceHeaderInfoComponent,
+                WorkspaceMgmtPanelComponent,
+                WorkspaceDashboardComponent,
+                NoWorkspaceComponent,
+                WorkspaceInfoComponent,
+                HeaderTabComponent,
+                ManageMembersComponent,
+                MemberRequestComponent,
+                WorkspacePanelComponent,
+                HeaderPanelComponent,
+                HeaderPanelComponent,
+                ManageMasterMetadataComponent,
+                WorkspaceServicesComponent,
+                SignupFormComponent,
+                EnterNewpasswordComponent,
+                EqualValidator,
+                ManagementPanelComponent,
+                ManageUserRolesComponent,
+                ChangeUserRoleComponent,
+                UserProfileComponent,
+                EditProfileComponent,
+                WorkspaceListComponent,
+                ChangePasswordComponent
+        ],
+        imports: [
+                BrowserModule,
+                FormsModule,
+                HttpClientModule,
+                // HttpClientInMemoryWebApiModule.forRoot(
+                //     InMemoryDataService,
+                //     { dataEncapsulation: false }
+                // ),
+                AppRoutingModule,
+                AuthModule,
+                DataTablesModule,
+                ReactiveFormsModule,
+                MatTableModule,
+                FormsModule
+        ],
+        providers: [
+                JwtHelper,
+                InMemoryDataService,
+                InfoService,
+                SigninFormService,
+                SignupFormService,
+                ForgotpasswordFormService,
+                AuthenticationService,
+                UserWorkspaceService,
+                ManageMembersService,
+                MemberRequestService,
+                ManageMasterMetadataService,
+                EnterNewpasswordService,
+                ManageUserRolesService,
+                ChangeUserRoleService,
+                UserinfoService,
+                WorkspaceListService,
+                WorkspaceInfoService,
+                WorkspaceLandingPageService,
+                ChangePasswordService
+        ],
+        bootstrap: [AppComponent]
 })
 export class AppModule { }
