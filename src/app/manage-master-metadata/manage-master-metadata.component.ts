@@ -11,7 +11,7 @@ export class ManageMasterMetadataComponent implements OnInit {
 
   manage_Master_Metadata: Manage_Master_Metadata[];
 
-  isAvailable = false;
+  isProgress : boolean;
 
   slNo: number;
 
@@ -21,13 +21,14 @@ export class ManageMasterMetadataComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isProgress = false;
     this.getManage_Master_MetaData();
   }
   getManage_Master_MetaData() {
     this.manage_Master_MetadataService.getManageMasterMetaData()
       .subscribe(data => {
         this.manage_Master_Metadata = data;
-        this.isAvailable = true;
+        this.isProgress = true;
       });
   }
 

@@ -386,7 +386,6 @@ input[type=search] {
   margin-left: 10px;
 }
 
-
 .workspace-panel-content {
   padding: 30px;
   margin: 0 30px 0 30px;
@@ -395,18 +394,23 @@ input[type=search] {
 .workspace-panel-heading {
   text-align: left;
 }
+
 .text-left {
   text-align: left;
 }
+
 .text-center {
   text-align: center;
 }
+
 .m-10 {
   margin: 10px;
 }
+
 .m-l-10 {
   margin-left: 10px;
 }
+
 .m-r-10 {
   margin-right: 10px;
 }
@@ -414,7 +418,6 @@ input[type=search] {
 .popup-panel-heading {
   text-align: left;
 }
-
 
 .btn-lg-arrow {
   margin-top: 50px;
@@ -424,6 +427,7 @@ input[type=search] {
   color: #269AF8;
   cursor: pointer;
 }
+
 .link:hover {
   color: #037AD8;
 }
@@ -438,7 +442,26 @@ i.link:hover {
   text-decoration: none;
 }
 
-/* Data tables */
+.cur-p {
+  cursor: pointer;
+}
 
+.col-archon-blue {
+  color: #269AF8;
+}
+
+.disp-bl {
+  display: block
+}
+
+.archon-icon {
+  cursor: pointer;
+  color: #269AF8;
+  font-size: 1.33333333em;
+  line-height: .75em;
+  vertical-align: -15%;
+}
+
+/* Data tables */
 
 /* Data tabes end */
