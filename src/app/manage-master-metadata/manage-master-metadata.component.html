@@ -8,7 +8,7 @@
       </div>
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
-          Manage Master Metadata
+Master Metadata
           <i *ngIf="!isProgress" class="fa fa-spinner fa-spin fa-1x"></i>
         </h3>
       </div>
@@ -16,7 +16,7 @@
   </div>
   <div class="row">
     <div id="manager-master-metadata" class="workspace-panel-content">
-      <table datatable class="table table-bordered table-hover" *ngIf="this.isAvailable">
+      <table datatable class="table table-bordered table-hover" *ngIf="isProgress">
         <thead>
           <tr>
             <th>SL.No</th>

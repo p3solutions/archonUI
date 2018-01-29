@@ -16,7 +16,7 @@ describe('WorkspaceHeaderComponent', () => {
   let workspaceHeader: HTMLElement;
   let userWorkspaceService: any;
   // mock data
-  const userId = 11;
+  const userId = '11';
   const workspace1 = {
     id: 123,
     masterMetaVersion: 22,
@@ -89,19 +89,17 @@ describe('WorkspaceHeaderComponent', () => {
   });
 
   it('Should have the drop-down button & its options', () => {
-    // set current userId
-    component.id = userId;
     // returning mock data from the spy stub
     spyOn(userWorkspaceService, 'getUserWorkspaceList').and.returnValue(getUserWorkspaceList());
     // calling the function to render data in template
-    component.getUserWorkspaceList(component.id);
+    component.getUserWorkspaceList();
     // triggering changes & update view
     fixture.detectChanges();
     const dropDownOptions: NodeListOf<Element> = workspaceHeader.querySelectorAll('a.dropdown-item.dynamic-option');
     // testing names of all the drop-down options rendered
     for (let index = 0; index < dropDownOptions.length; index++) {
       const dynamicOption = dropDownOptions.item(index);
-      expect(dynamicOption.textContent).toContain(component.userWorkspaceArray[index].name);
+      expect(dynamicOption.textContent).toContain(component.userWorkspaceArray[index].workspaceName);
     }
     disposeMe.unsubscribe();
   });

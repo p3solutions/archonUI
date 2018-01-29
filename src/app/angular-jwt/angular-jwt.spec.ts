@@ -3,8 +3,7 @@ import { AuthConfig, AuthHttp, tokenNotExpired, JwtHelper } from './angular-jwt'
 import { Observable } from 'rxjs/Observable';
 import { encodeTestToken } from './angular-jwt-test-helpers';
 import { Request } from '@angular/http';
-
-
+import 'rxjs/add/observable/of';
 
 const expiredToken = encodeTestToken({
   'exp': 0
@@ -79,7 +78,7 @@ describe('JwtHelper', () => {
   describe('urlBase64Decode', () => {
     it('should successfully decode payloads with funny symbols (A Euro symbol in this case) simplified', () => {
       const expected = '€';
-      const payload = '4oKs'
+      const payload = '4oKs';
       const actual: any = jwtHelper.urlBase64Decode(payload);
       expect(actual).toBe(expected);
     });
@@ -177,7 +176,7 @@ describe('tokenNotExpired', () => {
 describe('AuthHttp', () => {
   describe('request', () => {
     it('handles tokenGetters returning string', () => {
-      let authHttp: AuthHttp = new AuthHttp(new AuthConfig({
+      const authHttp: AuthHttp = new AuthHttp(new AuthConfig({
         tokenGetter: () => validToken
       }), null);
 
@@ -189,7 +188,7 @@ describe('AuthHttp', () => {
     });
 
     it('handles tokenGetters returning Promise\<string\>', (done: Function) => {
-      let authHttp: AuthHttp = new AuthHttp(new AuthConfig({
+      const authHttp: AuthHttp = new AuthHttp(new AuthConfig({
         tokenGetter: () => Promise.resolve(validToken)
       }), null);
 
@@ -203,25 +202,25 @@ describe('AuthHttp', () => {
 
     it('loads the token on each http subscription', () => {
       const HEADER_NAME = 'JWT';
-      let firstToken = encodeTestToken({ 'sub': 123, 'name': 'first token' });
-      let secondToken = encodeTestToken({ 'sub': 345, 'name': 'second token' });
+      const firstToken = encodeTestToken({ 'sub': 123, 'name': 'first token' });
+      const secondToken = encodeTestToken({ 'sub': 345, 'name': 'second token' });
       let currentToken = firstToken;
 
-      let usedTokens: string[] = [];
+      const usedTokens: string[] = [];
 
-      let httpSpy = jasmine.createSpyObj('http', ['request']);
+      const httpSpy = jasmine.createSpyObj('http', ['request']);
       httpSpy.request.and.callFake((req: Request) => {
         usedTokens.push(req.headers.get(HEADER_NAME).trim());
         return Observable.of(null);
       });
 
-      let authHttp = new AuthHttp(new AuthConfig({
+      const authHttp = new AuthHttp(new AuthConfig({
         headerName: HEADER_NAME,
         headerPrefix: ' ',
         tokenGetter: () => currentToken
       }), httpSpy);
 
-      let observer = authHttp.request(new Request({ url: 'http://test.local' }));
+      const observer = authHttp.request(new Request({ url: 'http://test.local' }));
       observer.subscribe(() => { });
       currentToken = secondToken;
       observer.subscribe(() => { });
@@ -231,3 +230,4 @@ describe('AuthHttp', () => {
     });
   });
 });
+

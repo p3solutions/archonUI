@@ -51,7 +51,7 @@ describe('ManageMasterMetadataComponent', () => {
 
   it('Should display the observable data for Manage-master Metadata component', () => {
     spyOn(masterMetaDataService, 'getManageMasterMetaData').and.returnValue(simpleObservable);
-    component.isAvailable = true;
+    component.isProgress = true;
     fixture.detectChanges();
     const rowArray: NodeListOf<Element> = memberRequestHTMLTag.querySelectorAll('.man-mast-data');
     expect(rowArray[0].textContent.trim()).toBe(component.manage_Master_Metadata[0].slNo);
@@ -63,7 +63,7 @@ describe('ManageMasterMetadataComponent', () => {
 
   it('Should work the delete functionality, by deleting one master-record', () => {
     spyOn(masterMetaDataService, 'getManageMasterMetaData').and.returnValue(simpleObservable);
-    component.isAvailable = true;
+    component.isProgress = true;
     fixture.detectChanges();
     expect(component.deleteManageMasterRecord).toBeTruthy();
     let rowArray: NodeListOf<Element> = memberRequestHTMLTag.querySelectorAll('.man-mast-rec');

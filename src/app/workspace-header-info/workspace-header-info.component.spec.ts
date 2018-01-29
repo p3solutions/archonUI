@@ -15,13 +15,13 @@ describe('WorkspaceHeaderInfoComponent', () => {
   let userWorkspaceService: any;
   const currentWorkspace = {
     id: 123,
-    masterMetaVersion: 22,
+    masterMetadataVersion: 22,
     members: 22,
-    name: 'Sample WS Name',
-    role: 'Admin', // need to remove this & use userRole instead
+    workspaceName: 'Sample WS Name',
+    loggedInUserRole: { name: 'Admin'},
     users: [11, 13] // user-ids --> info.id
   };
-  const simpleObservable = new Observable<object>((observer) => {
+  /* const simpleObservable = new Observable<object>((observer) => {
     observer.next(currentWorkspace);
     observer.complete();
   });
@@ -29,7 +29,7 @@ describe('WorkspaceHeaderInfoComponent', () => {
   const getCurrentWorkspace = function (): Observable<object> {
     disposeMe = simpleObservable.subscribe();
     return simpleObservable;
-  };
+  }; */
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -61,18 +61,18 @@ describe('WorkspaceHeaderInfoComponent', () => {
 
   it('Should have the drop-down button & its options', () => {
     // returning mock data from the spy stub
-    spyOn(userWorkspaceService, 'getCurrentWorkspace').and.returnValue(getCurrentWorkspace());
+    // spyOn(userWorkspaceService, 'getCurrentWorkspace').and.returnValue(getCurrentWorkspace());
     // calling the function to render data in template
-    component.getCurrentWorkspace();
+    component.currentWorkspace = this.currentWorkspace;
     // triggering changes & update view
     fixture.detectChanges();
     // testing names of all the workspaceHeaderInfo rendered
     const workspaceName: Element = workspaceHeaderInfo.querySelector('div.workspace-name');
-    expect(workspaceName.textContent).toContain(component.currentWorkspace.name);
+    expect(workspaceName.textContent).toContain(component.currentWorkspace.workspaceName);
     const workspaceRole: Element = workspaceHeaderInfo.querySelector('div.workspace-role');
-    expect(workspaceRole.textContent).toContain(component.currentWorkspace.role);
+    expect(workspaceRole.textContent).toContain(component.currentWorkspace.loggedInUserRole.name);
     const workspaceMeta: Element = workspaceHeaderInfo.querySelector('div.workspace-master-meta-version');
-    expect(workspaceMeta.textContent).toContain(component.currentWorkspace.masterMetaVersion.toString());
-    disposeMe.unsubscribe();
+    expect(workspaceMeta.textContent).toContain(component.currentWorkspace.masterMetadataVersion.toString());
+    // disposeMe.unsubscribe();
   });
 });

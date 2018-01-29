@@ -11,7 +11,7 @@ export class ManageMasterMetadataComponent implements OnInit {
 
   manage_Master_Metadata: Manage_Master_Metadata[];
 
-  isProgress : boolean;
+  isProgress: boolean;
 
   slNo: number;
 

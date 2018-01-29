@@ -73,12 +73,16 @@ describe('WorkspaceInfoComponent', () => {
     const member = row1Array[3];
     const role = row1Array[4];
     const metadata_version = row1Array[5];
-    expect(name.textContent.trim()).toBe(component.workspaceInfoData.name);
-    expect(owner.textContent.trim()).toBe(component.workspaceInfoData.owner);
-    expect(approver.textContent.trim()).toBe(component.workspaceInfoData.approver);
-    expect(member.textContent.trim()).toBe(component.workspaceInfoData.members);
-    expect(role.textContent.trim()).toBe(component.workspaceInfoData.your_role);
-    expect(metadata_version.textContent.trim()).toBe(component.workspaceInfoData.master_metadata_version);
+    expect(name.textContent.trim()).toBe(component.workspaceInfoData.workspaceName);
+    expect(owner.textContent.trim()).toBe(component.workspaceInfoData.owner.name);
+    expect(approver.textContent.trim()).toBe('NULL');
+    const memberNames = [];
+    component.workspaceInfoData.members.forEach((mem) => {
+      memberNames.push(mem.user.name);
+    });
+    expect(member.textContent.trim()).toBe(memberNames.join(','));
+    expect(role.textContent.trim()).toBe('NULL');
+    expect(metadata_version.textContent.trim()).toBe(component.workspaceInfoData.masterMetadataVersion.toString());
     disposeMe.unsubscribe();
   });
   // ToDo: revisit again
