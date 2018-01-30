@@ -33,16 +33,16 @@
               <td class="mm-info-data">{{wsAccess.user.name}}</td>
               <td class="mm-info-data">{{wsAccess.workspaceRole.name}}</td>
               <td class="toggle-expand">
-                <i class="fa fa-plus-circle fa-lg expand archon-icon disp-bl" (click)="generatePrivilegeDetails($event, wsAccess)"></i>
-                <i class="fa fa-minus-circle fa-lg collapse archon-icon disp-bl" (click)="generatePrivilegeDetails($event, wsAccess)"></i>
+                <i class="fa fa-plus-circle fa-lg expand archon-icon disp-bl" id="showPermission-{{i}}" (click)="showPermission(i, $event, wsAccess)"></i>
+                <i class="fa fa-minus-circle fa-lg collapse archon-icon disp-bl" *ngIf="varArray[i]" (click)="hidePermission(i, $event, wsAccess)"></i>
               </td>
               <td>
                 <i (click)="onDelete(i)" class="fa fa-trash-o archon-icon disp-bl"></i>
               </td>
             </tr>
-            <tr [attr.data-user-id]="wsAccess?.user?.id" class="mem-priv-row toggle-collapse">
+            <tr [attr.user-id]="wsAccess?.user?.id" class="mem-priv-row" *ngIf="varArray[i]">
               <td colspan="5">
-                <app-manage-member-privileges *ngIf="showMemPriv" [wsAccess]="wsAccess"></app-manage-member-privileges>
+                <app-manage-member-privileges [wsAccess]="wsAccess"></app-manage-member-privileges>
               </td>
               <td class="hide"></td>
               <td class="hide"></td>
