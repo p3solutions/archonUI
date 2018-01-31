@@ -1,3 +1,4 @@
+<app-navbar *ngIf="showNavBar"></app-navbar>
 <div>
   <div class="row">
     <div class="col-md-6">
@@ -9,15 +10,13 @@
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
           Workspace Info
+          <i *ngIf="!isAvailable" class="fa fa-spinner fa-spin fa-1x"></i>
         </h3>
       </div>
     </div>
   </div>
   <div class="row">
     <div id="workspace-info" class="workspace-panel-content">
-      <div *ngIf="!isAvailable" class="column col-md-12">
-        <i class="fa fa-spinner fa-spin fa-3x"></i>
-      </div>
       <table *ngIf="isAvailable" id="workspace-info-table" class="table table-hover">
         <tbody>
           <tr>
@@ -34,29 +33,39 @@
           </tr>
           <tr>
             <td>
-              <b>Members</b>
+              <b>Approver(s)</b>
+            </td>
+            <td class="ws-info-data">{{(workspaceInfoData?.approvers) ? workspaceInfoData?.approver : 'NULL'}}
+              <!-- <a [routerLink]="['/user-profile', workspaceInfoData?.approvers.id]"> -->
+              <span class="fa fa-pencil archon-icon m-l-10 m-r-10"></span>
+              <!-- </a> -->
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Members(s)</b>
             </td>
             <td class="ws-info-data">
               <span *ngFor="let member of workspaceInfoData?.members; let isLast = last">
                 {{member?.user?.name}}{{isLast ? '' : ','}}
               </span>
-              <a [routerLink]="['../../manage-members',workspaceInfoData?.id]">
+              <a [routerLink]="['/workspace/workspace-dashboard/manage-members',workspaceInfoData?.id]">
                 <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>
           </tr>
           <tr>
             <td>
-              <b>Your role</b>
+              <b>Your Role</b>
             </td>
-            <td class="ws-info-data">{{workspaceInfoData?.your_role}}</td>
+            <td class="ws-info-data">{{workspaceInfoData?.loggedInUserRole?.name}}</td>
           </tr>
           <tr>
             <td>
               <b>Metadata Version</b>
             </td>
             <td class="ws-info-data">{{workspaceInfoData?.masterMetadataVersion}}
-              <a [routerLink]="['../../manage-master-metadata',workspaceInfoData?.id]">
+              <a [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">
                 <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>

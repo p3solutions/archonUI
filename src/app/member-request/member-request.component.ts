@@ -10,13 +10,14 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class MemberRequestComponent implements OnInit {
 
   memberRequestData: MemberRequestData[];
-  isAvailable = false;
+  isAvailable : boolean;
 
   constructor(private memberRequestService: MemberRequestService,
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.isAvailable = false;
     this.getMemberRequestData();
   }
   getMemberRequestData() {

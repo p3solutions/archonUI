@@ -2,3 +2,6 @@
     width: 100%;
     margin: 0;
 }
+td {
+    vertical-align: middle !important;
+}

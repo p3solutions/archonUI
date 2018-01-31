@@ -29,7 +29,7 @@
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
               {{userInfo?.name}}
               <span>
-                <i class="m-10 glyphicon glyphicon-pencil link" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
+                <i class="fa fa-pencil archon-icon" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
               </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">
@@ -43,8 +43,8 @@
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
               {{userInfo?.email}}
               <!-- <span>
-                 <i class="m-10 glyphicon glyphicon-pencil link"  data-toggle="modal" data-target="#editProfileModal"></i>
-                <i class="m-10 glyphicon glyphicon-pencil"></i>                
+                 <i class="fa fa-pencil archon-icon"  data-toggle="modal" data-target="#editProfileModal"></i>
+                <i class="m-10 fa fa-pencil archon-icon"></i>                
               </span> -->
             </td>
             <td *ngIf="!userInfo" class="text-center">
@@ -59,7 +59,7 @@
               {{userInfo?.roleList?.join(', ')}}
               <!-- <span>
                 <a [routerLink]="" class="m-10">Edit
-                <i class="m-10 glyphicon glyphicon-pencil"></i>
+                <i class="m-10 fa fa-pencil archon-icon"></i>
               </a>
               </span> -->
             </td>
@@ -72,8 +72,8 @@
               <b>Workspaces</b>
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
-                <span class="m-r-10" *ngFor="let workspace of userInfo?.workspaceList; let isLast=last">
-                   <a [routerLink]="">{{workspace.name}}</a>{{isLast ? '' : ', '}}
+                <span class="m-r-10" *ngFor="let ws of workspaceList; let isLast=last">
+                   <a [routerLink]="['/workspace/workspace-info',ws?.id]">{{ws?.workspaceName}}</a>{{isLast ? '' : ', '}}
                 </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">

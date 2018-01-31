@@ -95,17 +95,17 @@ import { ManageMemberPrivilegesComponent } from './manage-member-privileges/mana
         imports: [
                 BrowserModule,
                 FormsModule,
-                HttpClientModule,
                 // HttpClientInMemoryWebApiModule.forRoot(
-                //     InMemoryDataService,
-                //     { dataEncapsulation: false }
-                // ),
-                AppRoutingModule,
+                        //     InMemoryDataService,
+                        //     { dataEncapsulation: false }
+                        // ),
+                FormsModule,
                 AuthModule,
-                DataTablesModule,
                 ReactiveFormsModule,
+                DataTablesModule,
                 MatTableModule,
-                FormsModule
+                AppRoutingModule,
+                HttpClientModule
         ],
         providers: [
                 JwtHelper,

@@ -17,5 +17,4 @@ export class WorkspaceHeaderInfoComponent implements OnChanges {
     const updatedWS: SimpleChange = changes.selectedWorkspace;
     this.currentWorkspace = updatedWS.currentValue;
   }
-
 }

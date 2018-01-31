@@ -10,6 +10,7 @@ export class WorkspaceServicesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('visited WorkspaceServicesComponent');
   }
 
 }

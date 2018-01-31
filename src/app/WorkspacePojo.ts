@@ -12,6 +12,12 @@ export class RolePojo {
     name: string;
 }
 
+export class MemberPojo {
+    createdAt: number;
+    updatedAt: number;
+    user: UserPojo;
+    workspaceRole: RolePojo;
+}
 export class DatabasePojo {
     id: string;
     name: string;
@@ -23,7 +29,8 @@ export class WorkspacePojo {
     updatedAt: number;
     workspaceName: string;
     owner: OwnerPojo;
-    workspaceRole: RolePojo;
+    loggedInUserRole: RolePojo;
     masterMetadataVersion: number;
-    databases: DatabasePojo;
+    members: MemberPojo[];
+    databases: DatabasePojo[];
 }
