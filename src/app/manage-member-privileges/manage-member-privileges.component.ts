@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, keyframes } from '@angular/core';
 import { ManageMembers } from '../managemembers';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { WorkspaceRolesPojo } from '../WorkspacePojo';
@@ -23,11 +23,12 @@ export class ManageMemberPrivilegesComponent implements OnInit {
   constructor(private manageMembersService: ManageMembersService) { }
 
   ngOnInit() {
+    console.log(this.wsAccess);
     this.showRoleDropdown = false;
     this.showServiceDropdown = false;
     this.serviceList = this.getServiceList();
     if (!this.wsRoleList || this.wsRoleList.length === 0) { // it will not fetch from backend if value already is passed
-      this.getWSRoleList();
+      this.getWSRoleList(this.wsAccess.workspaceRole.id);
     }
     this.permissionList = this.getPermissionList();
   }
@@ -50,18 +51,12 @@ export class ManageMemberPrivilegesComponent implements OnInit {
     ];
   }
 
-  getWSRoleList() {
+  getWSRoleList(selectedRoleId) {
     this.manageMembersService.getwsRoleList()
       .subscribe(res => {
-        console.log('fetched', res);
         this.wsRoleList = res;
         this.fetchedWSRoleList.emit(this.wsRoleList); // pass the fetched value to parent component for re-use
       });
-   /*  return [
-      { íd: '123a', name: 'ROLE_MEMBER' },
-      { íd: '123b', name: 'ROLE_OWNER' },
-      { íd: '123c', name: 'ROLE_APPROVER'},
-    ]; */
   }
 
   toggleRoleDropdown() {

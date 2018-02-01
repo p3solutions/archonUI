@@ -16,6 +16,7 @@ export class WorkspaceRolesPojo {
     createdAt: number;
     updatedAt: number;
     roleName: string;
+    selected: boolean;
 }
 export class MemberPojo {
     createdAt: number;

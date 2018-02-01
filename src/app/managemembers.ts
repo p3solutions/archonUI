@@ -4,5 +4,5 @@ export interface ManageMembers {
     createdAt: number;
     updatedAt: number;
     user: UserPojo;
-    role: RolePojo;
+    workspaceRole: RolePojo;
 }
