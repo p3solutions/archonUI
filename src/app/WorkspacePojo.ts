@@ -11,7 +11,12 @@ export class RolePojo {
     id: string;
     name: string;
 }
-
+export class WorkspaceRolesPojo {
+    id: string;
+    createdAt: number;
+    updatedAt: number;
+    roleName: string;
+}
 export class MemberPojo {
     createdAt: number;
     updatedAt: number;

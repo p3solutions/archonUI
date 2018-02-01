@@ -11,7 +11,10 @@ import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class ManageMembersService {
-  getWSMembersUrl = 'http://13.58.89.64:9000/workspaces/access?workspaceId=';
+  url = 'http://13.58.89.64:9000/';
+  wSMembersUrl = 'workspaces/access?workspaceId=';
+  wSroleListUrl = 'admin/roles/workspace';
+  wsDelAccessUrl = 'workspaces/access/remove/{{id}}';
   headers: HttpHeaders;
 
   constructor(private http: HttpClient,
@@ -20,23 +23,36 @@ export class ManageMembersService {
     }
 
   getWSMembers(workspaceId): Observable<ManageMembers[]> {
-    return this.http.get<ManageMembers[]>(this.getWSMembersUrl + workspaceId, { headers: this.headers })
+    const URL = this.url + this.wSMembersUrl + workspaceId;
+    return this.http.get<ManageMembers[]>(URL, { headers: this.headers })
       .map(this.extractWSAccess)
       .pipe(catchError(this.handleError('managemembers', []))
     );
   }
 
+  getwsRoleList() {
+    const URL = this.url + this.wSroleListUrl;
+    return this.http.get<ManageMembers[]>(URL, { headers: this.headers })
+      .map(this.extractWSROles)
+      .pipe(catchError(this.handleError('getwsRoleList', []))
+      );
+  }
+
   deleteManageMembersData(indexObject): Observable<ManageMembers[]> {
     // deleteHero (hero: Hero | number): Observable<Hero> {
     // const id = typeof hero === 'number' ? hero : hero.id;
-    // const url = `${this.heroesUrl}/${id}`;
-    return this.http.delete<ManageMembers[]>(this.getWSMembersUrl).pipe(
+    const URL = this.url + this.wsDelAccessUrl;
+    return this.http.delete<ManageMembers[]>(URL).pipe(
       catchError(this.handleError('managemembers', []))
       // tap(_ => this.log(`deleted hero id=${id}`)),
       // catchError(this.handleError<Hero>('deleteHero'))
     );
   }
 
+  private extractWSROles(res: any) {
+    const data = res.data.workspaceRoles;
+    return data || [];
+  }
   private extractWSAccess(res: any) {
     const data = res.data.workspaceAccess;
     return data || [];

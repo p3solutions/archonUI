@@ -6,7 +6,7 @@
       <span *ngIf="showRoleDropdown">
         <select>
           <option hidden selected="true">Select</option>
-          <option *ngFor="let wsR of wsRoleList" [value]="wsR?.name" [attr.role-id]="wsR?.id">{{wsR?.name}}</option>
+          <option *ngFor="let wsR of wsRoleList"  [attr.role-id]="wsR?.id">{{wsR?.roleName}}</option>
         </select>
       </span>
     </td>

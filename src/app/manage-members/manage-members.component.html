@@ -42,7 +42,8 @@
             </tr>
             <tr [attr.user-id]="wsAccess?.user?.id" class="mem-priv-row" *ngIf="varArray[i]">
               <td colspan="5">
-                <app-manage-member-privileges [wsAccess]="wsAccess"></app-manage-member-privileges>
+                <app-manage-member-privileges [wsAccess]="wsAccess" [wsRoleList]="passedWSRoleList" (fetchedWSRoleList)="setPassedWSRoleList($event)"
+                ></app-manage-member-privileges>
               </td>
               <td class="hide"></td>
               <td class="hide"></td>

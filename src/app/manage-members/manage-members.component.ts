@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ManageMembers } from '../managemembers';
 import { ManageMembersService } from './manage-members.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-// import 'rxjs/add/operator/switchMap';
+import { WorkspaceRolesPojo } from '../WorkspacePojo';
 import { UserinfoService } from '../userinfo.service';
+import { ManageUserRoles } from '../manage-user-roles';
 
 @Component({
   selector: 'app-manage-members',
@@ -11,13 +12,14 @@ import { UserinfoService } from '../userinfo.service';
   styleUrls: ['./manage-members.component.css']
 })
 export class ManageMembersComponent implements OnInit {
-  workspaceId;
-
+  workspaceId: string;
   manageMembers: ManageMembers[];
   isAvailable = false;
   memberPrivilegeParam: any;
   showMemPriv = false;
   varArray = [];
+  @Input() passedWSRoleList: any;
+  @Output() passedWSRoleListChange = new EventEmitter<WorkspaceRolesPojo[]>();
 
   constructor(
     private manageMembersService: ManageMembersService,
@@ -32,6 +34,10 @@ export class ManageMembersComponent implements OnInit {
       this.workspaceId = params.id;
       this.getManageMembersData(this.workspaceId);
     });
+  }
+
+  setPassedWSRoleList(passedValue) {
+    this.passedWSRoleList = passedValue; // re-use the passed value in child component
   }
 
   generatePrivVariables(len) {
