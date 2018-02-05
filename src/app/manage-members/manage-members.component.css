@@ -30,18 +30,7 @@ span,i {
 .mem-priv-row {
     display: table-row;
 }
-/* .toggle-expand.mem-priv-row {
-  display: table-row;
+.tooltip-left-45 [data-tooltip]:before {
+  left: 45%;
 }
 
-.toggle-expand .expand,
-.toggle-collapse .collapse{
-    display: block;
-}
-
-.toggle-expand .collapse,
-.toggle-collapse .expand,
-.toggle-collapse.mem-priv-row {
-    display: none;
-}
- */

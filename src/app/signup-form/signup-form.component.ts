@@ -17,6 +17,8 @@ export class SignupFormComponent implements OnInit {
   signUpForm: FormGroup;
   responseData: any;
   errorObject: ErrorObject;
+  enableSignUpBtn = true;
+  inProgress = false;
   msg= 100;
 
   constructor(
@@ -27,6 +29,7 @@ export class SignupFormComponent implements OnInit {
 
   ngOnInit() {
     this.createSignUpForm();
+    setTimeout(this.enableSignUp(), 3000);
   }
   createSignUpForm() {
     this.signUpForm = new FormGroup({
@@ -35,9 +38,11 @@ export class SignupFormComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
       // confirmPassword: new FormControl('', [Validators.required])
     });
+    // console.log('aloksignup', this.signUpForm, this.signUpForm.value);
   }
 
   onSignUp() {
+    this.inProgress = true;
     this.signup = this.signUpForm.value;
     this.signupService.signUp(this.signup).subscribe(
       data => {
@@ -48,6 +53,7 @@ export class SignupFormComponent implements OnInit {
         this.msg = 200;
       },
       (err: HttpErrorResponse) => {
+        this.inProgress = false;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('An error occurred:', err.error.message);
@@ -63,6 +69,13 @@ export class SignupFormComponent implements OnInit {
         }
       }
     );
+  }
+  enableSignUp() {
+    if (this.signUpForm.value.emailAddress && this.signUpForm.value.password && this.signUpForm.value.name) {
+      this.enableSignUpBtn = true;
+    } else {
+      this.enableSignUpBtn = false;
+    }
   }
 }
 

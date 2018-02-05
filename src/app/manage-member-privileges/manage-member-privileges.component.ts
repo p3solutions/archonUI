@@ -66,10 +66,10 @@ export class ManageMemberPrivilegesComponent implements OnInit {
     this.showServiceDropdown = true;
   }
 
-  update() {
+  updateRole() {
     this.roleUpdated = true;
   }
-  assign() {
+  assignPermission() {
     this.permitUpdated = true;
   }
 }

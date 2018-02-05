@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        <a (click)="gotoDashboard()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
         </a>
       </div>
       <div class="col-md-8">
@@ -32,12 +32,18 @@
               <td class="col-md-1">{{i + 1}}</td>
               <td class="mm-info-data col-md-4">{{wsAccess.user.name}}</td>
               <td class="mm-info-data col-md-3">{{wsAccess.workspaceRole.name}}</td>
-              <td class="toggle-expand col-md-3">
-                <i class="fa fa-plus-circle fa-lg expand archon-icon disp-bl" id="showPermission-{{i}}" (click)="showPermission(i, $event, wsAccess)"></i>
-                <i class="fa fa-minus-circle fa-lg collapse archon-icon disp-bl" *ngIf="varArray[i]" (click)="hidePermission(i, $event, wsAccess)"></i>
+              <td class="toggle-expand col-md-3 tooltip-left-45">
+                <div data-tooltip="Expand" (click)="showPermission(i, $event, wsAccess)">
+                  <i class="fa fa-plus-circle fa-lg expand archon-icon disp-bl" id="showPermission-{{i}}"></i>
+                </div>
+                <div *ngIf="varArray[i]" data-tooltip="Hide" (click)="hidePermission(i, $event, wsAccess)">
+                  <i class="fa fa-minus-circle fa-lg collapse archon-icon disp-bl"></i>
+                </div>
               </td>
               <td class="col-md-1">
-                <i (click)="onDelete(i)" class="fa fa-trash-o archon-icon disp-bl"></i>
+                <div data-tooltip="Delete" (click)="onDelete(i)">
+                  <i class="fa fa-trash-o archon-icon disp-bl"></i>
+                </div>
               </td>
             </tr>
             <tr [attr.user-id]="wsAccess?.user?.id" class="mem-priv-row" *ngIf="varArray[i]">
