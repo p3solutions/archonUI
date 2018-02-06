@@ -1,33 +1,21 @@
 <div class="col-md-12 workspace-header-info">
   <div class="col-md-4">
     <div class="col-md-12">Workspace
-      <i *ngIf="!currentWorkspace" class="fa fa-spinner fa-spin fa-1x"></i>
+      <span [ngClass]="{'archon-loading-icon' : !currentWorkspace?.workspaceName}"></span>
     </div>
     <div class="col-md-12 title">{{currentWorkspace?.workspaceName}}
     </div>
-    <!-- use trimming class -->
-    <!-- <div *ngIf="!currentWorkspace">
-      <i class="fa fa-spinner fa-spin loading"></i>
-    </div> -->
   </div>
   <div class="col-md-3">
     <div class="col-md-12">Role
-        <i *ngIf="!currentWorkspace" class="fa fa-spinner fa-spin fa-1x"></i>
+      <span [ngClass]="{'archon-loading-icon' : !currentWorkspace?.workspaceName}"></span>
     </div>
     <div class="col-md-12 title">{{currentWorkspace?.workspaceRole?.name}}</div>
-    <!-- use trimming class -->
-    <!-- <div *ngIf="!currentWorkspace">
-      <i class="fa fa-spinner fa-spin loading"></i>
-    </div> -->
   </div>
   <div class="col-md-5">
-    <div class="col-md-12">Master Metadata Version 
-        <i *ngIf="!currentWorkspace" class="fa fa-spinner fa-spin fa-1x"></i>
+    <div class="col-md-12">Master Metadata Version
+      <span [ngClass]="{'archon-loading-icon' : true}"></span>
     </div>
     <div class="col-md-12 title">{{currentWorkspace?.masterMetadataVersion}}</div>
-    <!-- use trimming class -->
-    <!-- <div *ngIf="!currentWorkspace">
-      <i class="fa fa-spinner fa-spin loading"></i>
-    </div> -->
   </div>
 </div>

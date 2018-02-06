@@ -462,6 +462,39 @@ i.link:hover {
   vertical-align: -15%;
 }
 
+/* .loading-icon {
+  position: relative;
+  margin-left: 20px;
+  width: 20px;
+  height: 20px; 
+  margin:50px auto;
+  -webkit-animation: fa-spin 120s infinite linear;
+  animation: fa-spin 120s infinite linear;
+}
+
+.loading-icon:before {
+  /* display: inline; */
+  /* content: "\f110";
+  font-family: FontAwesome;
+  font-size:20px;
+  position: absolute;
+  top: 0;  */
+/* }  */
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
 /* Data tables */
 
 /* Data tabes end */
+.archon-loading-icon:before {
+    content: "\F110";
+    font: normal normal normal 14px/1 FontAwesome;
+    box-sizing: border-box;
+    position: absolute;
+    display: inline;
+    margin-top: 5px;
+    margin-left: 10px;
+    -webkit-animation: spinner .6s linear infinite;
+    animation: spinner 2s linear infinite
+}
