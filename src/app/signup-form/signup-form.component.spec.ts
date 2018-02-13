@@ -4,7 +4,7 @@ import { SignupFormComponent } from './signup-form.component';
 import { SignupFormService } from './signup-form.service';
 import { ManageMembers } from '../managemembers';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ManageMembersService } from '../manage-members.service';
+import { ManageMembersService } from '../manage-members/manage-members.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -82,7 +82,6 @@ describe('SignupFormComponent', () => {
     expect(emailAddressDummy).toBe(component.responseData['emailAddress']);
     expect(passwordDummy).toBe(component.responseData['password']);
     console.log('Backened returned code', component.msg);
-   
   });
 
 

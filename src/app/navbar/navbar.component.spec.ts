@@ -72,7 +72,7 @@ describe('NavbarComponent', () => {
     expect(userName.textContent.trim()).toBe('');
   });
 
-  it('Should display the username in Navbar for any user', () => {
+  xit('Should display the username in Navbar for any user', () => {
     const userName: Element = navbarTag.querySelector('li.user-menu>a');
     // while spying on real service, mocked info is returned
     spyOn(infoService, 'getinfo').and.returnValue(getInfo());
@@ -82,7 +82,7 @@ describe('NavbarComponent', () => {
     disposeMe.unsubscribe();
   });
 
-  it('Should display username, Manage-link, notifications in Navbar for Admin role', () => {
+  xit('Should display username, Manage-link, notifications in Navbar for Admin role', () => {
     // to test for Admin, set role = 'Admin'
     info.role = 'Admin';
     // while spying on real service, mocked info is returned

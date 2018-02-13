@@ -28,9 +28,9 @@ span,i {
 }
 
 .mem-priv-row {
-    display: none;
+    display: table-row;
 }
-.toggle-expand.mem-priv-row {
+/* .toggle-expand.mem-priv-row {
   display: table-row;
 }
 
@@ -44,4 +44,4 @@ span,i {
 .toggle-collapse.mem-priv-row {
     display: none;
 }
-
+ */

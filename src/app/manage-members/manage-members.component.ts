@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ManageMembers } from '../managemembers';
 import { ManageMembersService } from './manage-members.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
+// import 'rxjs/add/operator/switchMap';
 import { UserinfoService } from '../userinfo.service';
 
 @Component({
@@ -17,6 +17,8 @@ export class ManageMembersComponent implements OnInit {
   isAvailable = false;
   memberPrivilegeParam: any;
   showMemPriv = false;
+  varMap = new Map();
+  varArray = [];
 
   constructor(
     private manageMembersService: ManageMembersService,
@@ -33,10 +35,17 @@ export class ManageMembersComponent implements OnInit {
     });
   }
 
+  generatePrivVariables(len) {
+    for (let i = 0; i < len; i++) {
+      this.varMap.set('showMemPriv' + i, false);
+      this.varArray[i] = false;
+    }
+  }
   getManageMembersData(workspaceId) {
     this.manageMembersService.getWSMembers(workspaceId)
       .subscribe(res => {
         this.isAvailable = true;
+        this.generatePrivVariables(res.length);
         this.manageMembers = res;
       });
   }
@@ -50,30 +59,28 @@ export class ManageMembersComponent implements OnInit {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
-  toggleClasses(_selector, classNameA, classNameB) {
-    if (_selector.hasClass(classNameA)) {
-      _selector.addClass(classNameB);
-      _selector.removeClass(classNameA);
-    } else {
-      _selector.addClass(classNameA);
-      _selector.removeClass(classNameB);
-    }
+  hideElementById(id) {
+    const e = document.getElementById(id);
+    e.style.display = 'none';
   }
-  generatePrivilegeDetails(_event, wsAccess) {
+  showElementById(id) {
+    const e = document.getElementById(id);
+    e.style.display = 'block';
+  }
+  showPermission(i, _event, wsAccess) {
     _event.stopPropagation();
-    const _viewMore = $(_event.target).parents('td');
-    this.toggleClasses(_viewMore, 'toggle-expand', 'toggle-collapse');
-    const _dataRow = $('tr[data-user-id="' + wsAccess.user.id + '"]');
-    if (_dataRow.find('app-manage-member-privileges').length === 0) {
-      this.showMemPriv = true;
-    }
-    this.toggleClasses(_dataRow, 'toggle-expand', 'toggle-collapse');
-    this.memberPrivilegeParam = {
+    this.hideElementById('showPermission-' + i);
+    this.varArray[i] = true;
+    /* this.memberPrivilegeParam = {
       id: this.userinfoService.getUserId(),
       userId: wsAccess.user.id,
       workspaceId: this.workspaceId,
       roleId: wsAccess.workspaceRole.id
-    };
+    }; */
   }
-
+  hidePermission(i, _event, wsAccess) {
+    _event.stopPropagation();
+    this.showElementById('showPermission-' + i);
+    this.varArray[i] = false;
+  }
 }
