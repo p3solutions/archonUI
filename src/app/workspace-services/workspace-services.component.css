@@ -1,0 +1,31 @@
+.btn-box{
+    text-align: left;
+    width:620px;
+    height: 110px;
+    margin-top : 25px;
+
+}
+button{
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: default;    
+}
+#rightArrow{
+    float: right;
+    margin-top : 40px;
+    /* margin-left: 4px; */
+}
+.approved{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+  .pending{
+    color: #85C1E9
+  }

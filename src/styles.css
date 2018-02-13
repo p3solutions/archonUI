@@ -498,3 +498,7 @@ i.link:hover {
     -webkit-animation: spinner .6s linear infinite;
     animation: spinner 2s linear infinite
 }
+.service-title {
+  width: 550px;
+  font-size: 24px;
+}

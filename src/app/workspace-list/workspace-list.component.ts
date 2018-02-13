@@ -29,6 +29,7 @@ export class WorkspaceListComponent implements OnInit {
     getWorkspaceListInfo(id: string) {
         this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
+
         });
     }
     gotoManagementPanel() {

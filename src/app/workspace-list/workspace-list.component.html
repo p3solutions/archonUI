@@ -24,11 +24,11 @@
       <div *ngIf="!workspaceListInfo" class="column col-md-12">
         <i class="fa fa-spinner fa-spin fa-3x"></i>
       </div>
-      <div *ngFor="let ws of workspaceListInfo">
-        <button type="button" class="btn-primary" id="workspace-list-btn">
+      <div *ngFor="let ws of workspaceListInfo" [ngClass]="{'approved' : ws.workspaceState=='APPROVED'}">
+        <button type="button" id="workspace-list-btn">
           <div class="btn-box">
             <div class="title">
-              <h2>{{ws.workspaceName}}</h2>
+              <h2>{{ws.workspaceName}}{{ws.workspaceState}}</h2>
             </div>
             <div class="right-arrow">
               <span>
@@ -37,9 +37,9 @@
             </div>
             <div class="body">
               <p>Databases(s) :
-                  <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
-                    {{db?.name}}{{isLast ? '' : ', '}}
-                  </span>
+                <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
+                  {{db?.name}}{{isLast ? '' : ', '}}
+                </span>
               </p>
             </div>
             <div class="footer">
