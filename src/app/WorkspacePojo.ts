@@ -18,11 +18,17 @@ export class WorkspaceRolesPojo {
     roleName: string;
     selected: boolean;
 }
+export class ServiceActionsPojo {
+    serviceName: string;
+    serviceId: string;
+    serviceActionType: string;
+}
 export class MemberPojo {
     createdAt: number;
     updatedAt: number;
     user: UserPojo;
     workspaceRole: RolePojo;
+    serviceActions: ServiceActionsPojo;
 }
 export class DatabasePojo {
     id: string;
@@ -39,4 +45,5 @@ export class WorkspacePojo {
     masterMetadataVersion: number;
     members: MemberPojo[];
     databases: DatabasePojo[];
+    workspaceState: string;
 }

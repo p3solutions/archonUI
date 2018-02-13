@@ -1,2 +1,3 @@
-<app-workspace-header></app-workspace-header>
+<app-workspace-header (serviceActionsListEvent) = "receiveServiceActionsListEvent($event)"></app-workspace-header>
 <router-outlet></router-outlet>
+<!-- <app-workspace-services [serviceActions] = "serviceActionsList" ></app-workspace-services> -->

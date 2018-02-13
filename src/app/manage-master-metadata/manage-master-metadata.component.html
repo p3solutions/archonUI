@@ -8,8 +8,8 @@
       </div>
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
-Master Metadata
-          <i *ngIf="!isProgress" class="fa fa-spinner fa-spin fa-1x"></i>
+          Manage Master Metadata
+          <span [ngClass]="{'archon-loading-icon' : !isProgress}"></span>
         </h3>
       </div>
     </div>

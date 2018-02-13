@@ -10,7 +10,7 @@
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
           Workspace Info
-          <i *ngIf="!isAvailable" class="fa fa-spinner fa-spin fa-1x"></i>
+          <span [ngClass]="{'archon-loading-icon' : !isAvailable}"></span>
         </h3>
       </div>
     </div>
@@ -80,3 +80,4 @@
     </div>
   </div>
 </div>
+<!-- <app-workspace-dashboard [serviceActions] = "serviceActionsList"></app-workspace-dashboard> -->

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input, OnInit, SimpleChanges, SimpleChange } from '@angular/core';
+import { serviceActionsPojo } from '../WorkspacePojo';
+import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dashboard.service';
+import { WorkspaceServicesService } from './workspace-services.service';
 
 @Component({
   selector: 'app-workspace-services',
@@ -6,11 +9,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workspace-services.component.css']
 })
 export class WorkspaceServicesComponent implements OnInit {
+  // @Input() private serviceActions: serviceActionsPojo[];
+  // @Input() private serviceName : string;
+  // @Input() private serviceId : string;
+  // @Input() private serviceType : string;
+  private serviceActions : serviceActionsPojo[];
+  constructor(private workspaceService : WorkspaceServicesService){ }
 
-  constructor() { }
-
-  ngOnInit() {
-    console.log('visited WorkspaceServicesComponent');
+  // ngOnChanges(changes: SimpleChanges) {
+  //   const serviceActions: SimpleChange = changes.serviceActions;
+  //   const serviceActionArray = serviceActions.currentValue;
+  //   console.log(serviceActionArray, "updated serviceActionArray");
+  // }
+  ngOnInit(){
+    this.workspaceService.serviceActionUpdated.subscribe(
+      (serviceActions) =>{
+        this.serviceActions = serviceActions;
+      }
+    )
   }
-
 }
