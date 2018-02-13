@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { serviceActionsPojo } from '../WorkspacePojo';
+import { ServiceActionsPojo } from '../WorkspacePojo';
 import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dashboard.service';
 @Component({
   selector: 'app-workspace-dashboard',
@@ -7,20 +7,17 @@ import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dash
   styleUrls: ['./workspace-dashboard.component.css']
 })
 export class WorkspaceDashboardComponent implements OnInit {
-  serviceActionsList: serviceActionsPojo[] = [];
-  name : string = "chandru ashwin";
+  serviceActionsList: ServiceActionsPojo[] = [];
   // @Output() passServiceActions: any = new EventEmitter<any>();
 
-  constructor(){
+  constructor() {
   }
   ngOnInit() {
 
   }
   receiveServiceActionsListEvent($event) {
-    console.log("Dashboardcalling")
     this.serviceActionsList = $event;
-    console.log(this.serviceActionsList);
+    console.log('Dashboardcalling', this.serviceActionsList);
     // this.passServiceActions.emit(this.serviceActionsList);
-
   }
 }

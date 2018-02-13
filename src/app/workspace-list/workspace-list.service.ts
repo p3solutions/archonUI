@@ -15,24 +15,28 @@ import { WorkspacePojo } from '../WorkspacePojo';
 export class WorkspaceListService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
-  URL = 'http://13.58.89.64:9000/workspaces?ownerId=';
+  // URL = 'http://13.58.89.64:9000/workspaces?ownerId=';
   wSListByUidUrl = 'http://13.58.89.64:9000/workspaces?userId=';
-  constructor(
-    private http: HttpClient,
-    private userinfoService: UserinfoService
-  ) { }
-
+  private headers;
+  constructor(private http: HttpClient,
+    private userinfoService: UserinfoService) {
+  this.headers = new HttpHeaders(
+    {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
+    });
+  }
   getList(id: string): Observable<WorkspacePojo[]> {
-    const URL = this.URL + id;
-    return this.http.get<WorkspacePojo[]>(URL, { headers: this.userinfoService.getHeaders() })
+    const url = this.wSListByUidUrl + id;
+    return this.http.get<WorkspacePojo[]>(url, { headers: this.userinfoService.getHeaders() })
       .map(this.extractWorkspaces)
     .pipe(catchError(this.handleError('workspace-getList()', []))
     );
   }
 
   getListOfWorkspaceByUserId(id: string): Observable<WorkspacePojo[]> {
-    this.wSListByUidUrl = this.URL + id;
-    return this.http.get<WorkspacePojo[]>(this.wSListByUidUrl, { headers: this.userinfoService.getHeaders() })
+    const url = this.wSListByUidUrl + id;
+    return this.http.get<WorkspacePojo[]>(url, { headers: this.userinfoService.getHeaders() })
       .map(this.extractWorkspaces)
       .pipe(catchError(this.handleError('workspace-getList()', []))
     );

@@ -5,7 +5,7 @@ import { UserinfoService } from '../userinfo.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
-import { WorkspacePojo, MemberPojo, serviceActionsPojo } from '../WorkspacePojo';
+import { WorkspacePojo, MemberPojo, ServiceActionsPojo } from '../WorkspacePojo';
 
 @Component({
   selector: 'app-workspace-info',
@@ -46,7 +46,7 @@ export class WorkspaceInfoComponent implements OnInit {
     this.showNavBar = window.location.pathname === this.wsIndiPageUrl;
   }
   getWorkspaceInfo(workspaceId) {
-    console.log("workspace id : ", workspaceId);
+    console.log('workspace id : ', workspaceId);
     this.workspaceinfoservice.getWorkSpaceInfo(workspaceId).subscribe(data => {
       // console.log(data);
       this.isAvailable = true;
@@ -71,8 +71,7 @@ export class WorkspaceInfoComponent implements OnInit {
     }
   }
 
-    gotoDashboard() {
-      this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-    }
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
 }
-

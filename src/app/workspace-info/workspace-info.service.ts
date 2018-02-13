@@ -16,11 +16,10 @@ export class WorkspaceInfoService {
   ) { }
   getWorkSpaceInfo(id: string): Observable<WorkspacePojo> {
     const URL = this.workspaceinfoUrl + id;
-    return this.http.get<WorkspacePojo>(URL, { headers: this.userinfoService.getHeaders() })   
+    return this.http.get<WorkspacePojo>(URL, { headers: this.userinfoService.getHeaders() })
     .map(this.extractWorkspace)
     .pipe(catchError(this.handleError<WorkspacePojo>('getworkinfo'))
     );
-    
   }
   private extractWorkspace(res: any) {
     const data = res.data.workspaces;

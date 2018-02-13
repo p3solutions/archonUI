@@ -24,7 +24,6 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.getUserInfo();
   }
-
   getUserInfo() {
     this.userinfoService.getUserInfo().subscribe((res) => {
       if (res.data && res.success && res.data.user) {
@@ -35,6 +34,9 @@ export class UserProfileComponent implements OnInit {
         };
         this.getWorkspaceList(this.userInfo.id);
         if (res.data.user.globalRoles && res.data.user.globalRoles.length) {
+          this.workspaceListService.getListOfWorkspaceByUserId(this.userInfo.id).subscribe((wsList: WorkspacePojo[]) => {
+            this.userInfo.workspaceList = wsList;
+          });
           this.userInfo.roleList = [];
           res.data.user.globalRoles.forEach(role => {
             this.userInfo.roleList.push(role.roleName);

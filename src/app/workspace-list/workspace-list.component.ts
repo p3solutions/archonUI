@@ -36,3 +36,5 @@ export class WorkspaceListComponent implements OnInit {
         this.router.navigate(['workspace/management-panel']);
     }
 }
+
+

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
-import { WorkspacePojo, serviceActionsPojo } from '../WorkspacePojo';
+import { WorkspacePojo, ServiceActionsPojo } from '../WorkspacePojo';
 import { Info } from '../info';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
@@ -12,17 +12,17 @@ import { WorkspaceServicesService } from '../workspace-services/workspace-servic
 })
 export class WorkspaceHeaderComponent implements OnInit {
   userWorkspaceArray: WorkspacePojo[];
-  serviceActionsList : serviceActionsPojo;
+  serviceActionsList: ServiceActionsPojo;
   userId: string;
   userRole: any;
   selectedWorkspaceName: string;
   currentWorkspace: WorkspacePojo;
   fn: any;
-  @Output() serviceActionsListEvent = new EventEmitter<serviceActionsPojo[]>();
+  @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsPojo[]>();
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
-    private workspaceService : WorkspaceServicesService
+    private workspaceService: WorkspaceServicesService
   ) { }
 
   ngOnInit() {
@@ -57,7 +57,7 @@ export class WorkspaceHeaderComponent implements OnInit {
   selectWorkspace(selectedWorkspace: WorkspacePojo) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
-    //Assigning Serviceactions of first member as it is common for all
+    // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
     this.workspaceService.passServiceActions(this.serviceActionsList);
     // this.serviceActionsListEvent.emit(this.serviceActionsList);

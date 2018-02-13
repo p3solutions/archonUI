@@ -1,9 +1,9 @@
 export class WorkspaceInfo {
     id: string;
-    name: string;
+    workspaceName: string;
     owner: string;
-    approver: string;
+    approvers: string;
     members: string;
     your_role: string;
-    master_metadata_version: string;
+    masterMetadataVersion: string;
 }
