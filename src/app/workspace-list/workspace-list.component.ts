@@ -15,6 +15,7 @@ export class WorkspaceListComponent implements OnInit {
     jwtHelper: JwtHelper = new JwtHelper();
     token_data: any;
     workspaceListInfo: WorkspacePojo[];
+    isProgress: boolean;
     constructor(
         private workspaceListService: WorkspaceListService,
         private router: Router
@@ -24,12 +25,13 @@ export class WorkspaceListComponent implements OnInit {
         this.accessToken = localStorage.getItem('accessToken');
         this.token_data = this.jwtHelper.decodeToken(this.accessToken);
         this.getWorkspaceListInfo(this.token_data.user.id);
+        this.isProgress = true;
     }
 
     getWorkspaceListInfo(id: string) {
         this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
-
+            this.isProgress = false;
         });
     }
     gotoManagementPanel() {

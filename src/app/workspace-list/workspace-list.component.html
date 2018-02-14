@@ -7,8 +7,9 @@
         </a>
       </div>
       <div class="col-md-8">
-        <h3>
+        <h3 class="workspace-panel-heading">
           Workspaces
+          <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
         </h3>
       </div>
     </div>
@@ -20,34 +21,46 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-md-6 col-md-offset-1">
-      <div *ngIf="!workspaceListInfo" class="column col-md-12">
-        <i class="fa fa-spinner fa-spin fa-3x"></i>
-      </div>
-      <div *ngFor="let ws of workspaceListInfo" [ngClass]="{'approved' : ws.workspaceState=='APPROVED'}">
-        <button type="button" id="workspace-list-btn">
-          <div class="btn-box">
-            <div class="title">
-              <h2 class="wsList">{{ws.workspaceName}}{{ws.workspaceState}}</h2>
+    <div class="col-md-6 col-md-offset-1" *ngFor="let ws of workspaceListInfo" [ngClass]="{'pending' : ws.workspaceState == 'PENDING', 'rejected' : ws.workspaceState == 'REJECTED'}">
+      <button type="button" id="workspace-list-btn" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{ws.workspaceName}}">
+        <div class="btn-box">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="title">
+                <h2>{{ws.workspaceName}}</h2>
+              </div>
             </div>
-            <div class="right-arrow">
-              <span>
-                <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
-              </span>
-            </div>
-            <div class="body">
-              <p>Databases(s) :
-                <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
-                  {{db?.name}}{{isLast ? '' : ', '}}
-                </span>
-              </p>
-            </div>
-            <div class="footer">
-              <p id="right">LastUpdatedTime : {{ws.updatedAt}}</p>
-              <p id="bottom">MetadataVersion : {{ws.masterMetadataVersion}}</p>
+            <div class="col-sm-4 requestPending" *ngIf="ws.workspaceState == 'PENDING'">
+              <p>Request Pending
+                <p>
             </div>
           </div>
-        </button>
-      </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="trim-text body">
+                <h4>Databases(s) :
+                  <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
+                    {{db?.name}}{{isLast ? '' : ', '}}
+                  </span>
+                </h4>
+              </div>
+            </div>
+            <span class="rightArrow">
+              <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float : right"></i>
+            </span>
+          </div>
+          <div class="row" id="redC">
+            <div class="col-sm-4">
+              <div>
+                <h4 class="leftFooter">Metadata Version : {{ws.masterMetadataVersion}}</h4>
+              </div>
+              <div>
+                <h4 class="rightFooter">Last Updated Time : {{ws.updatedAt}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </button>
     </div>
   </div>
+</div>

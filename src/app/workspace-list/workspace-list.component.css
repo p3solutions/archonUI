@@ -1,42 +1,56 @@
-h3{
-    float: left;
-
-}
-#workspace-add{
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    font-size: 15px;
-    margin-top:20px;
-    width:60%;
-    height: 50px;
-    text-align: center;
-    padding: 3px;
-    float: right;
-}
-#one{
-    background-color: red;
+#workspace-add {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-size: 15px;
+  margin-top: 20px;
+  width: 60%;
+  height: 60px;
+  text-align: center;
+  padding: 3px;
+  float: right;
 }
 
-.btn-box{
-    text-align: left;
-    width:600px;
-    height: 110px;
-}
-button{
-    border-radius: 4px;
-    text-decoration: none;
-    display: inline-block;
-    margin: 3px 10px;
+.btn-box {
+  text-align: left;
+  width: 600px;
+  height: 125px;
 }
 
-p{
-    line-height: 150%;
+button {
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 3px 10px;
+  text-transform: none;
 }
-h2{
-    line-height: 100%;
+
+.pending button {
+  background-color: lightskyblue;
 }
-#right{
-    margin-left:230px;
+
+.requestPending {
+  margin-top: 27px;
+  margin-left: 80px;
 }
-#bottom{
-    margin-top : -32px;
+
+.body {
+  margin-top: 0px;
+}
+
+.leftFooter {
+  float: left;
+}
+
+.rightFooter {
+  margin-left: 290px;
+}
+
+.rightArrow i {
+  margin-top: -5px;
+}
+
+.title h2 {
+  white-space: nowrap;
+  width: 10em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
