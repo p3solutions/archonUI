@@ -21,23 +21,23 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-md-6 col-md-offset-1" *ngFor="let ws of workspaceListInfo" [ngClass]="{'pending' : ws.workspaceState == 'PENDING', 'rejected' : ws.workspaceState == 'REJECTED'}">
+    <div class="col-md-6 col-md-offset-1" *ngFor="let ws of workspaceListInfo" [ngClass]="{'ws-pending' : ws.workspaceState == 'PENDING', 'ws-rejected' : ws.workspaceState == 'REJECTED'}">
       <button type="button" id="workspace-list-btn" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{ws.workspaceName}}">
         <div class="btn-box">
           <div class="row">
             <div class="col-sm-4">
-              <div class="title">
+              <div class="trim-text">
                 <h2>{{ws.workspaceName}}</h2>
               </div>
             </div>
-            <div class="col-sm-4 requestPending" *ngIf="ws.workspaceState == 'PENDING'">
+            <div class="col-sm-4 ws-requestPending" *ngIf="ws.workspaceState == 'PENDING'">
               <p>Request Pending
                 <p>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-4">
-              <div class="trim-text body">
+              <div class="trim-text ws-body">
                 <h4>Databases(s) :
                   <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
                     {{db?.name}}{{isLast ? '' : ', '}}
@@ -45,17 +45,17 @@
                 </h4>
               </div>
             </div>
-            <span class="rightArrow">
-              <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float : right"></i>
+            <span class="ws-rightArrow">
+              <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
             </span>
           </div>
-          <div class="row" id="redC">
+          <div class="row">
             <div class="col-sm-4">
               <div>
-                <h4 class="leftFooter">Metadata Version : {{ws.masterMetadataVersion}}</h4>
+                <h4 class="ws-leftFooter">Metadata Version : {{ws.masterMetadataVersion}}</h4>
               </div>
               <div>
-                <h4 class="rightFooter">Last Updated Time : {{ws.updatedAt}}</h4>
+                <h4 class="ws-rightFooter">Last Updated Time : {{ws.updatedAt}}</h4>
               </div>
             </div>
           </div>

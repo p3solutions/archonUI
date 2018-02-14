@@ -23,34 +23,35 @@ button {
   text-transform: none;
 }
 
-.pending button {
+.ws-pending button {
   background-color: lightskyblue;
 }
 
-.requestPending {
+.ws-requestPending {
   margin-top: 27px;
   margin-left: 80px;
 }
 
-.body {
+.ws-body {
+  margin-top: -10px;
+}
+
+.ws-leftFooter {
+  float: left;
   margin-top: 0px;
 }
 
-.leftFooter {
-  float: left;
-}
-
-.rightFooter {
+.ws-rightFooter {
   margin-left: 290px;
+  margin-top: 0px;
 }
 
-.rightArrow i {
+.ws-rightArrow i {
   margin-top: -5px;
+  float: right;
 }
 
-.title h2 {
-  white-space: nowrap;
-  width: 10em;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.trim-text h2 {
+  width: 8em;
+  display: inline-block;
 }
