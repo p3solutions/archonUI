@@ -23,7 +23,7 @@ button {
   text-transform: none;
 }
 
-.ws-pending button {
+.ws-rejections, .ws-pending button {
   background-color: lightskyblue;
 }
 
@@ -54,4 +54,8 @@ button {
 .trim-text h2 {
   width: 8em;
   display: inline-block;
+}
+
+.modal-title{
+  float: left;
 }

@@ -34,7 +34,6 @@ export class DatabasePojo {
     id: string;
     name: string;
 }
-
 export class WorkspacePojo {
     id: number;
     createdAt: number;
