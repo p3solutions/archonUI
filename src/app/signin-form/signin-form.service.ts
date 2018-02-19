@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
@@ -11,7 +12,7 @@ import { Signin } from '../signin';
 @Injectable()
 export class SigninFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private signinUrl = 'http://13.58.89.64:9000/auth/login';
+  private signinUrl = environment.apiUrl + 'auth/login';
 
   constructor(private http: HttpClient) { }
   signIn(signin_info: Signin): Observable<any> {

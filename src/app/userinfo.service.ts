@@ -7,6 +7,7 @@ import { Info } from './info';
 import { JwtHelper } from 'angular2-jwt';
 import { Http, Headers, Response } from '@angular/http';
 import { ErrorObject } from './error-object';
+import { environment } from '../environments/environment';
 @Injectable()
 export class UserinfoService {
   accessToken: string;
@@ -36,7 +37,7 @@ export class UserinfoService {
   }
 
   getUserInfoUrl() {
-    return 'http://13.58.89.64:9000/users/' + this.getUserId();
+    return environment.apiUrl + 'users/' + this.getUserId();
   }
 
   getAuthKey() {

@@ -30,7 +30,7 @@
   </td>
   </tr>
   <tr *ngFor="let serv of serviceList; let i = index; let firstIndex = first;">
-    <th class="col-md-4 archon-names" [ngClass]="{'archon-names-100': (serv.name.length < 12)}">
+    <th class="col-md-4 archon-names" [ngClass]="{'archon-names-100': (serv?.name?.length < 12)}">
       <div [attr.data-tooltip]="serv?.name">
         <span class="trim-text w-180">{{serv?.name}}</span>
       </div>
@@ -40,8 +40,7 @@
       <span *ngIf="showServiceDropdown">
         <select>
           <option hidden selected="true">Select</option>
-          <option *ngFor="let permit of permissionList" [value]="permit.permission"
-           [attr.permission-id]="permit.id">{{permit.permission}}</option>
+          <option *ngFor="let permit of permissionList" [value]="permit" [attr.data-tooltip]="permit">{{permit}}</option>
         </select>
       </span>
     </td>

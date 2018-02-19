@@ -142,8 +142,8 @@ export class AuthHttp {
             request.headers = new Headers();
         }
         headers.forEach((header: Object) => {
-            let key: string = Object.keys(header)[0];
-            let headerValue: string = (header as any)[key];
+            const key: string = Object.keys(header)[0];
+            const headerValue: string = (header as any)[key];
             (request.headers as Headers).set(key, headerValue);
         });
     }
@@ -157,11 +157,11 @@ export class AuthHttp {
         // }
 
         // from this point url is always an instance of Request;
-        let req: Request = url as Request;
+        const req: Request = url as Request;
 
         // Create a cold observable and load the token just in time
         return Observable.defer(() => {
-            let token: string | Promise<string> = this.config.tokenGetter();
+            const token: string | Promise<string> = this.config.tokenGetter();
             if (token instanceof Promise) {
                 return Observable.fromPromise(token).mergeMap((jwtToken: string) => this.requestWithToken(req, jwtToken));
             } else {
@@ -221,8 +221,8 @@ export class JwtHelper {
 
     // credits for decoder goes to https://github.com/atk
     private b64decode(str: string): string {
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-        let output: string = '';
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+        let output = '';
 
         str = String(str).replace(/=+$/, '');
 

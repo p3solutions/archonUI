@@ -8,9 +8,7 @@ import { MemberRequestComponent } from '../member-request/member-request.compone
 export class HeaderPanelComponent implements OnInit {
 
   constructor() { }
-  
-  objMemberRequest : MemberRequestComponent;
-  componentTitle : string = '';
+
   ngOnInit() {
     }
 
