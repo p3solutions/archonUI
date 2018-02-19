@@ -20,7 +20,7 @@
     </div>
     <div class="col-md-4 col-md-offset-7">
       <button type="button" class="btn  ws-rejections" id="workspace-add" data-toggle="modal" data-target="#rejectedList">Rejected
-        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+        <!-- <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> -->
       </button>
       <div id="rejectedList" role="dialog" class="modal fade">
         <div class="modal-dialog modal-lg">
@@ -72,11 +72,17 @@
               <div class="col-sm-4">
                 <div class="trim-text">
                   <h2>{{ws.workspaceName}}</h2>
+                  <span *ngIf="ws.workspaceState == 'APPROVED'">
+                    <i class="fa fa-trash-o fa-2x ws-trash-icon icon-disabled" aria-hidden="true"></i>
+                  </span>
                 </div>
               </div>
               <div class="col-sm-4 ws-requestPending" *ngIf="ws.workspaceState == 'PENDING'">
                 <p>Request Pending
-                  <p>
+                  <span>
+                    <i class="fa fa-trash-o fa-2x icon-disabled" aria-hidden="true" id="ws-pending-trash"></i>
+                  </span>
+                </p>
               </div>
             </div>
             <div class="row">

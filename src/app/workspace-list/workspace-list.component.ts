@@ -32,6 +32,7 @@ export class WorkspaceListComponent implements OnInit {
     getWorkspaceListInfo(id: string) {
         this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
+            console.log(this.workspaceListInfo);
             this.isProgress = false;
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
         });
@@ -46,7 +47,6 @@ export class WorkspaceListComponent implements OnInit {
                 this.rejectedWorkspaceListInfo.push(wsListInfo[i]);
             }
         }
-        console.log(this.rejectedWorkspaceListInfo);
     }
 }
 
