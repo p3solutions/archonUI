@@ -5,13 +5,13 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-
 import { Signup } from '../signup';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SignupFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private signupUrl = 'http://13.58.89.64:9000/auth/signup';
+  private signupUrl = environment.apiUrl + 'auth/signup';
 
   constructor(private http: HttpClient) { }
   signUp(signup_info: Signup): Observable<Signup> {

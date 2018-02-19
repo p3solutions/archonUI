@@ -6,11 +6,12 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { NewPasswordSetter } from './newpasswordsetter';
+import { environment } from '../../environments/environment';
 @Injectable()
 export class EnterNewpasswordService {
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private forgotPasswordUrl = 'http://13.58.89.64:9000/auth/pwd-reset';
+  private forgotPasswordUrl = environment.apiUrl + 'auth/pwd-reset';
 
   constructor(private http: HttpClient) { }
 

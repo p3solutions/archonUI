@@ -10,13 +10,15 @@ import { JwtHelper } from 'angular2-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceInfo } from '../workspace-info/workspace-info';
 import { WorkspacePojo } from '../WorkspacePojo';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class WorkspaceListService {
+
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
-  // URL = 'http://13.58.89.64:9000/workspaces?ownerId=';
-  wSListByUidUrl = 'http://13.58.89.64:9000/workspaces?userId=';
+
+  wSListByUidUrl = environment.apiUrl + 'workspaces?userId=';
   private headers;
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {

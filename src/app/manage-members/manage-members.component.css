@@ -34,3 +34,22 @@ span,i {
   left: 45%;
 }
 
+tr.shown .fa-plus-circle {
+  content: "\f056";
+}
+
+th.disp-bl {
+    display: table-column;
+}
+.toggle .toggle-show {
+    display: none;
+}
+
+.toggle-hide {
+  display: none;
+}
+
+.toggle .toggle-hide {
+  display: block;
+}
+

@@ -11,6 +11,7 @@ import { ManageUserRoles } from '../manage-user-roles';
 import { headersToString } from 'selenium-webdriver/http';
 import { Data } from '@angular/router/src/config';
 import { GlobalRoles } from '../global-roles';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ChangeUserRoleService {
@@ -19,10 +20,10 @@ export class ChangeUserRoleService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
-
-  private getAllUsersUrl = 'http://13.58.89.64:9000/users';
-  private getGlobalRoleUrl = 'http://13.58.89.64:9000/admin/roles/global';
-  private changeGlobalRoleUrl = 'http://13.58.89.64:9000/users/';
+  private apiUrl = environment.apiUrl;
+  private getAllUsersUrl = this.apiUrl + 'users';
+  private getGlobalRoleUrl = this.apiUrl + 'admin/roles/global';
+  private changeGlobalRoleUrl = this.apiUrl + 'users/';
 
   constructor(private http: HttpClient) { }
 

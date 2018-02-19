@@ -8,12 +8,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { ManageMembers } from '../managemembers';
 import { UserinfoService } from '../userinfo.service';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ManageMembersService {
-  url = 'http://13.58.89.64:9000/';
-  wSMembersUrl = 'workspaces/access?workspaceId=';
+  apiUrl = environment.apiUrl;
+  wSMembersUrl = 'workspaces/';
   wSroleListUrl = 'admin/roles/workspace';
+  serviceActionsUrl = 'public/roles/actions';
   wsDelAccessUrl = 'workspaces/access/remove/{{id}}';
   headers: HttpHeaders;
 
@@ -23,26 +25,34 @@ export class ManageMembersService {
     }
 
   getWSMembers(workspaceId): Observable<ManageMembers[]> {
-    const URL = this.url + this.wSMembersUrl + workspaceId;
-    return this.http.get<ManageMembers[]>(URL, { headers: this.headers })
-      .map(this.extractWSAccess)
+    const url = this.apiUrl + this.wSMembersUrl + workspaceId;
+    return this.http.get<ManageMembers[]>(url, { headers: this.headers })
+      .map(this.extractWSMembers)
       .pipe(catchError(this.handleError('managemembers', []))
     );
   }
 
-  getwsRoleList() {
-    const URL = this.url + this.wSroleListUrl;
-    return this.http.get<ManageMembers[]>(URL, { headers: this.headers })
+  getwsRoleList(): Observable<any> {
+    const url = this.apiUrl + this.wSroleListUrl;
+    return this.http.get<any[]>(url, { headers: this.headers })
       .map(this.extractWSROles)
       .pipe(catchError(this.handleError('getwsRoleList', []))
+      );
+  }
+
+  getServiceActions(): Observable<any> {
+    const url = this.apiUrl + this.serviceActionsUrl;
+    return this.http.get<any>(url, { headers: this.headers })
+      .map(this.extractServiceActions)
+      .pipe(catchError(this.handleError('getServiceActions'))
       );
   }
 
   deleteManageMembersData(indexObject): Observable<ManageMembers[]> {
     // deleteHero (hero: Hero | number): Observable<Hero> {
     // const id = typeof hero === 'number' ? hero : hero.id;
-    const URL = this.url + this.wsDelAccessUrl;
-    return this.http.delete<ManageMembers[]>(URL).pipe(
+    const url = this.apiUrl + this.wsDelAccessUrl;
+    return this.http.delete<ManageMembers[]>(url).pipe(
       catchError(this.handleError('managemembers', []))
       // tap(_ => this.log(`deleted hero id=${id}`)),
       // catchError(this.handleError<Hero>('deleteHero'))
@@ -53,10 +63,15 @@ export class ManageMembersService {
     const data = res.data.workspaceRoles;
     return data || [];
   }
-  private extractWSAccess(res: any) {
-    const data = res.data.workspaceAccess;
+  private extractWSMembers(res: any) {
+    const data = res.data.workspaces.members;
     return data || [];
   }
+  private extractServiceActions(res: any) {
+    const data = res.data.serviceActions;
+    return data || [];
+  }
+
   // * Handle Http operation that failed.
   // * Let the app continue.
   // * @param operation - name of the operation that failed

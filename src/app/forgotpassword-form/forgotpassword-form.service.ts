@@ -5,12 +5,13 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { Forgotpassword } from '../forgotpassword';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ForgotpasswordFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   // The URL to the API
-  forgotPasswordUrl = 'http://13.58.89.64:9000/auth/pwd-link';
+  forgotPasswordUrl = environment.apiUrl + 'auth/pwd-link';
   constructor(private http: HttpClient) { }
 
   forgotPassword(forgotpassword_info: Forgotpassword): Observable<any> {

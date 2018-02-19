@@ -6,6 +6,7 @@ import { error } from 'util';
 import { catchError } from 'rxjs/operators/catchError';
 import { JwtHelper } from 'angular2-jwt';
 import { of } from 'rxjs/observable/of';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ChangePasswordService {
@@ -13,7 +14,7 @@ export class ChangePasswordService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
-  private getUsersUrl = 'http://13.58.89.64:9000/users/';
+  private getUsersUrl = environment.apiUrl + 'users/';
   accessToken: string;
   token_data: any;
   userId: string;

@@ -5,10 +5,11 @@ import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
 import { WorkspacePojo } from './WorkspacePojo';
 import { UserinfoService } from './userinfo.service';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class UserWorkspaceService {
-
+  apiUrl = environment.apiUrl;
   constructor(
     private http: HttpClient,
     private userinfoService: UserinfoService
@@ -21,11 +22,11 @@ export class UserWorkspaceService {
     return data || [];
   }
   getUserWorkspaceUrl() {
-    return 'http://13.58.89.64:9000/workspaces?userId=' + this.userinfoService.getUserId();
+    return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
   }
 
   getWorkspaceByOwnerIdUrl() {
-    return 'http://13.58.89.64:9000/workspaces?ownerId=' + this.userinfoService.getUserId();
+    return this.apiUrl + 'workspaces?ownerId=' + this.userinfoService.getUserId();
   }
 
   getUserWorkspaceList(): Observable<WorkspacePojo[]> {
