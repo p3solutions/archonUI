@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-import { Manage_Master_Metadata } from './master-metadata-data';
+import { ManageMasterMetadata } from './master-metadata-data';
 @Injectable()
 export class ManageMasterMetadataService {
 
@@ -18,16 +18,16 @@ export class ManageMasterMetadataService {
   constructor(private http: HttpClient) { }
 
 
-  getManageMasterMetaData(): Observable<Manage_Master_Metadata[]> {
-      return this.http.get<Manage_Master_Metadata[]>(this.manage_master_metadataUrl).pipe(
+  getManageMasterMetaData(): Observable<ManageMasterMetadata[]> {
+      return this.http.get<ManageMasterMetadata[]>(this.manage_master_metadataUrl).pipe(
       catchError(this.handleError('master-meta data', []))
     );
   }
-   removeManageMasterData(manageMasterObj: Manage_Master_Metadata | number): Observable<Manage_Master_Metadata> {
+   removeManageMasterData(manageMasterObj: ManageMasterMetadata | number): Observable<ManageMasterMetadata> {
     const slNo = typeof manageMasterObj === 'number' ? manageMasterObj : manageMasterObj.slNo;
     const url = '${this.manage_master_metadataUrl}/${slNo}';
-    return this.http.delete<Manage_Master_Metadata>(url).pipe(
-      catchError(this.handleError<Manage_Master_Metadata>('master-meta data')));
+    return this.http.delete<ManageMasterMetadata>(url).pipe(
+      catchError(this.handleError<ManageMasterMetadata>('master-meta data')));
   }
 
 

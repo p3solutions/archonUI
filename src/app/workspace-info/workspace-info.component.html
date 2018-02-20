@@ -3,8 +3,8 @@
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        <a (click)="gotoDashboard()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
         </a>
       </div>
       <div class="col-md-8">
@@ -37,7 +37,7 @@
             </td>
             <td class="ws-info-data">{{(workspaceInfoData?.approvers) ? workspaceInfoData?.approver : 'NULL'}}
               <!-- <a [routerLink]="['/user-profile', workspaceInfoData?.approvers.id]"> -->
-              <span class="fa fa-pencil archon-icon m-l-10 m-r-10"></span>
+              <span data-tooltip="Edit"><a class="fa fa-pencil archon-icon m-l-10 m-r-10"></a></span>
               <!-- </a> -->
             </td>
           </tr>
@@ -49,7 +49,7 @@
               <span *ngFor="let member of workspaceInfoData?.members; let isLast = last">
                 {{member?.user?.name}}{{isLast ? '' : ','}}
               </span>
-              <a [routerLink]="['/workspace/workspace-dashboard/manage-members',workspaceInfoData?.id]">
+              <a data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-members',workspaceInfoData?.id]">
                 <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>
@@ -62,10 +62,10 @@
           </tr>
           <tr>
             <td>
-              <b>Metadata Version</b>
+              <b>Master Metadata Version</b>
             </td>
             <td class="ws-info-data">{{workspaceInfoData?.masterMetadataVersion}}
-              <a [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">
+              <a data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">
                 <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>

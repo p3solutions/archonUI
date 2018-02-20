@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-md-4">
       <div class="col-md-1 back-arrow">
-        <a (click)="gotoManagementPanel()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        <a (click)="gotoManagementPanel()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
         </a>
       </div>
       <div class="col-md-8">
@@ -28,7 +28,7 @@
         <button type="button" id="workspace-list-btn">
           <div class="btn-box">
             <div class="title">
-              <h2>{{ws.workspaceName}}{{ws.workspaceState}}</h2>
+              <h2 class="wsList">{{ws.workspaceName}}{{ws.workspaceState}}</h2>
             </div>
             <div class="right-arrow">
               <span>

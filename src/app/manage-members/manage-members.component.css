@@ -30,18 +30,26 @@ span,i {
 .mem-priv-row {
     display: table-row;
 }
-/* .toggle-expand.mem-priv-row {
-  display: table-row;
+.tooltip-left-45 [data-tooltip]:before {
+  left: 45%;
 }
 
-.toggle-expand .expand,
-.toggle-collapse .collapse{
-    display: block;
+tr.shown .fa-plus-circle {
+  content: "\f056";
 }
 
-.toggle-expand .collapse,
-.toggle-collapse .expand,
-.toggle-collapse.mem-priv-row {
+th.disp-bl {
+    display: table-column;
+}
+.toggle .toggle-show {
     display: none;
 }
- */
+
+.toggle-hide {
+  display: none;
+}
+
+.toggle .toggle-hide {
+  display: block;
+}
+

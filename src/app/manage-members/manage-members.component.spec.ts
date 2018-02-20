@@ -1,5 +1,5 @@
 import { ManageMembersComponent } from './manage-members.component';
-import { ManageMembers } from '../managemembers';
+import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from './manage-members.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -60,7 +60,7 @@ describe('ManageMembersComponent', () => {
     const role = rowArray[2];
     const workspaceAccess = component.manageMembers[0];
     expect(member.textContent.trim()).toBe(workspaceAccess.user.name);
-    expect(role.textContent.trim()).toBe(workspaceAccess.role.name);
+    expect(role.textContent.trim()).toBe(workspaceAccess.workspaceRole.name);
   });
 // this shouldn't be executed on production
   it('Should work the delete functionality, by deleting one member-info', () => {

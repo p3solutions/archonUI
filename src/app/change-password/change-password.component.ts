@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ChangePasswordService } from './change-password.service';
 import { ErrorObject } from '../error-object';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ChangePassword } from '../ChangePassword';
+import { ChangePassword } from '../change-password';
 import { HttpErrorResponse } from '@angular/common/http';
 
 
@@ -18,11 +18,14 @@ export class ChangePasswordComponent implements OnInit {
   oldPassword: string;
   newPassword: string;
   confirmPassword: string;
+  enableChangePassBtn = false;
+  inProgress = false;
   @Input() userId: string;
   constructor(private changePasswordService: ChangePasswordService) { }
 
   ngOnInit() {
     this.createForm();
+    setTimeout(this.enablePassword(), 3000);
   }
   createForm() {
     this.changePasswordForm = new FormGroup({
@@ -51,6 +54,7 @@ export class ChangePasswordComponent implements OnInit {
     return this.errorObject;
   }
   changeUserPassword() {
+    this.inProgress = true;
     if (this.isPasswordNotValidated()) {
       return false;
     }
@@ -59,13 +63,13 @@ export class ChangePasswordComponent implements OnInit {
       newPassword: this.newPassword,
       oldPassword: this.changePasswordForm.value.oldPassword
     };
-
     this.changePasswordService.changePassword(param).subscribe((res) => {
       (<HTMLButtonElement>document.querySelector('#changePasswordModal .cancel')).click();
 
       console.log(res, 'changeUserPassword');
     },
       (err: HttpErrorResponse) => {
+        this.inProgress = false;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('An error occurred:', err.error.message);
@@ -78,6 +82,14 @@ export class ChangePasswordComponent implements OnInit {
           console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }
       });
+  }
+  enablePassword() {
+    if (this.changePasswordForm.value.oldPassword && this.changePasswordForm.value.newPassword
+      && this.changePasswordForm.value.confirmPassword) {
+      this.enableChangePassBtn = true;
+    } else {
+      this.enableChangePassBtn = false;
+    }
   }
 
 

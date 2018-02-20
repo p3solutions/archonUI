@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
-import { WorkspacePojo } from './WorkspacePojo';
+import { WorkspaceObject } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class UserWorkspaceService {
-
+  apiUrl = environment.apiUrl;
   constructor(
     private http: HttpClient,
     private userinfoService: UserinfoService
@@ -21,17 +22,17 @@ export class UserWorkspaceService {
     return data || [];
   }
   getUserWorkspaceUrl() {
-    return 'http://13.58.89.64:9000/workspaces?userId=' + this.userinfoService.getUserId();
+    return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
   }
 
   getWorkspaceByOwnerIdUrl() {
-    return 'http://13.58.89.64:9000/workspaces?ownerId=' + this.userinfoService.getUserId();
+    return this.apiUrl + 'workspaces?ownerId=' + this.userinfoService.getUserId();
   }
 
-  getUserWorkspaceList(): Observable<WorkspacePojo[]> {
-    return this.http.get<WorkspacePojo[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders()})
+  getUserWorkspaceList(): Observable<WorkspaceObject[]> {
+    return this.http.get<WorkspaceObject[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders()})
     .map(this.extractWorkspaces)
-    .pipe(catchError(this.handleError<WorkspacePojo[]>('getUserWorkspaces')));
+    .pipe(catchError(this.handleError<WorkspaceObject[]>('getUserWorkspaces')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

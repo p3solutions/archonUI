@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ManageMasterMetadataComponent } from './manage-master-metadata.component';
 import { ManageMasterMetadataService } from './manage-master-metadata.service';
-import { Manage_Master_Metadata } from '../master-metadata-data';
+import { ManageMasterMetadata } from '../master-metadata-data';
 import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
@@ -24,7 +24,7 @@ describe('ManageMasterMetadataComponent', () => {
     { slNo: '4', version: '3.00', description: 'Null', createdDate: '20/11/2017 04.05 PM' },
     { slNo: '5', version: '4.69', description: 'Null', createdDate: '20/11/2017 04.05 PM' }
   ];
-  const simpleObservable = new Observable<Manage_Master_Metadata>((observer) => {
+  const simpleObservable = new Observable<ManageMasterMetadata>((observer) => {
     observer.next(master_metadataMock);
     observer.complete();
   });

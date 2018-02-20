@@ -5,6 +5,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
 import { JwtHelper } from 'angular2-jwt';
 import { Http, Headers, Response } from '@angular/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class WorkspaceLandingPageService {
@@ -17,7 +18,7 @@ export class WorkspaceLandingPageService {
     private http: HttpClient
   ) {
     this.http = http;
-    this.workspacesForUserUrl = 'http://13.58.89.64:9000/users/' + this.getUserId();
+    this.workspacesForUserUrl = environment.apiUrl + 'users/' + this.getUserId();
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.getAuthKey()

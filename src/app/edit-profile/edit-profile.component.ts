@@ -11,7 +11,7 @@ export class EditProfileComponent implements OnInit {
   @Input() username: string;
   @Input() useremail: string;
   @Input() userid: string;
-  @Output() onUpdateProfile = new EventEmitter<boolean>();
+  @Output() updateProfile = new EventEmitter<boolean>();
   nameLoader: boolean;
   emailLoader: boolean;
   oldUserInfo: object;
@@ -52,7 +52,7 @@ export class EditProfileComponent implements OnInit {
         this.useremail = res.data.emailAddress;
         this.nameLoader = this.emailLoader = false;
         (<HTMLButtonElement>document.querySelector('#editProfileModal .cancel')).click();
-        this.onUpdateProfile.emit(true);
+        this.updateProfile.emit(true);
       }
     });
   }

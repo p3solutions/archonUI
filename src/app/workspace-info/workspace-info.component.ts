@@ -5,7 +5,7 @@ import { UserinfoService } from '../userinfo.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
-import { WorkspacePojo, MemberPojo, serviceActionsPojo } from '../WorkspacePojo';
+import { WorkspaceObject, MemberObject, ServiceActionsObject } from '../workspace-objects';
 
 @Component({
   selector: 'app-workspace-info',
@@ -13,15 +13,15 @@ import { WorkspacePojo, MemberPojo, serviceActionsPojo } from '../WorkspacePojo'
   styleUrls: ['./workspace-info.component.css']
 })
 export class WorkspaceInfoComponent implements OnInit {
-  workspaceInfoData = new WorkspacePojo();
+  workspaceInfoData = new WorkspaceObject();
   @Input() workspaceId: string;
   isAvailable: boolean;
   loggedUserId: string;
   showNavBar = false;
   wsIndiPageUrl: string;
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
+    private router: Router,
     private workspaceinfoservice: WorkspaceInfoService,
     private userinfoservice: UserinfoService
   ) {
@@ -46,7 +46,7 @@ export class WorkspaceInfoComponent implements OnInit {
     this.showNavBar = window.location.pathname === this.wsIndiPageUrl;
   }
   getWorkspaceInfo(workspaceId) {
-    console.log("workspace id : ", workspaceId);
+    console.log('workspace id : ', workspaceId);
     this.workspaceinfoservice.getWorkSpaceInfo(workspaceId).subscribe(data => {
       // console.log(data);
       this.isAvailable = true;
@@ -55,7 +55,7 @@ export class WorkspaceInfoComponent implements OnInit {
     });
   }
 
-  setLoggedInUserRole(membersArray: MemberPojo[]) {
+  setLoggedInUserRole(membersArray: MemberObject[]) {
     const BreakException = {};
     try {
       membersArray.forEach(member => {
@@ -71,8 +71,7 @@ export class WorkspaceInfoComponent implements OnInit {
     }
   }
 
-    gotoDashboard() {
-      this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-    }
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
 }
-

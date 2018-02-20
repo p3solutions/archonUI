@@ -1,4 +1,4 @@
-export class PasswordReset{
-    password : string;
-    confirmPassword : string
+export class PasswordReset {
+    password: string;
+    confirmPassword: string;
 }

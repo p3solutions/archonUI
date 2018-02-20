@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
-import { WorkspacePojo, serviceActionsPojo } from '../WorkspacePojo';
+import { WorkspaceObject, ServiceActionsObject } from '../workspace-objects';
 import { Info } from '../info';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
@@ -11,18 +11,18 @@ import { WorkspaceServicesService } from '../workspace-services/workspace-servic
   styleUrls: ['./workspace-header.component.css']
 })
 export class WorkspaceHeaderComponent implements OnInit {
-  userWorkspaceArray: WorkspacePojo[];
-  serviceActionsList : serviceActionsPojo;
+  userWorkspaceArray: WorkspaceObject[];
+  serviceActionsList: ServiceActionsObject;
   userId: string;
   userRole: any;
   selectedWorkspaceName: string;
-  currentWorkspace: WorkspacePojo;
+  currentWorkspace: WorkspaceObject;
   fn: any;
-  @Output() serviceActionsListEvent = new EventEmitter<serviceActionsPojo[]>();
+  @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsObject[]>();
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
-    private workspaceService : WorkspaceServicesService
+    private workspaceService: WorkspaceServicesService
   ) { }
 
   ngOnInit() {
@@ -54,10 +54,10 @@ export class WorkspaceHeaderComponent implements OnInit {
     console.log('creating new workspace function pending!');
   }
 
-  selectWorkspace(selectedWorkspace: WorkspacePojo) {
+  selectWorkspace(selectedWorkspace: WorkspaceObject) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
-    //Assigning Serviceactions of first member as it is common for all
+    // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
     this.workspaceService.passServiceActions(this.serviceActionsList);
     // this.serviceActionsListEvent.emit(this.serviceActionsList);

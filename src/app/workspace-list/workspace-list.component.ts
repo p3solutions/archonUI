@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkspacePojo } from '../WorkspacePojo';
+import { WorkspaceObject } from '../workspace-objects';
 import { WorkspaceListService } from './workspace-list.service';
 import { JwtHelper } from 'angular2-jwt';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -14,7 +14,7 @@ export class WorkspaceListComponent implements OnInit {
     accessToken: string;
     jwtHelper: JwtHelper = new JwtHelper();
     token_data: any;
-    workspaceListInfo: WorkspacePojo[];
+    workspaceListInfo: WorkspaceObject[];
     constructor(
         private workspaceListService: WorkspaceListService,
         private router: Router
@@ -36,3 +36,5 @@ export class WorkspaceListComponent implements OnInit {
         this.router.navigate(['workspace/management-panel']);
     }
 }
+
+
