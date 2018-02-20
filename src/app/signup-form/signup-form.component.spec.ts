@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignupFormComponent } from './signup-form.component';
 import { SignupFormService } from './signup-form.service';
-import { ManageMembers } from '../managemembers';
+import { ManageMembers } from '../manage-members';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { By } from '@angular/platform-browser';
@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { JwtHelper } from 'angular2-jwt';
 import { SigninFormService } from '../signin-form/signin-form.service';
-import { Signup } from '../signup';
+import { SignUp } from '../sign-up';
 import { ErrorObject } from '../error-object';
 
 describe('SignupFormComponent', () => {
@@ -30,13 +30,13 @@ describe('SignupFormComponent', () => {
     emailAddress: 'alok.user@test.com',
     password: '12345'
   };
-  const simpleObservable = new Observable<Signup>((observer) => {
+  const simpleObservable = new Observable<SignUp>((observer) => {
     // observable execution
     observer.next(signUpData);
     observer.complete();
   });
   let disposeMe;
-  const onSignUp = function (): Observable<Signup> {
+  const onSignUp = function (): Observable<SignUp> {
     disposeMe = simpleObservable.subscribe();
     return simpleObservable;
   };

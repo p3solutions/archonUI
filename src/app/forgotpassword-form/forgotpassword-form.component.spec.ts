@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotpasswordFormComponent } from './forgotpassword-form.component';
 import { ForgotpasswordFormService } from './forgotpassword-form.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ManageMembers } from '../managemembers';
+import { ManageMembers } from '../manage-members';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';

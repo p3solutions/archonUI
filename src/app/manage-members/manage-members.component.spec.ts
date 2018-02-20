@@ -1,5 +1,5 @@
 import { ManageMembersComponent } from './manage-members.component';
-import { ManageMembers } from '../managemembers';
+import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from './manage-members.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';

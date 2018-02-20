@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, keyframes, Directive, ViewContainerRef } from '@angular/core';
-import { ManageMembers } from '../managemembers';
+import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from '../manage-members/manage-members.service';
-import { WorkspaceRolesPojo } from '../WorkspacePojo';
+import { WorkspaceRolesObject } from '../workspace-objects';
 
 @Component({
   selector: 'app-manage-member-privileges',
@@ -13,8 +13,8 @@ export class ManageMemberPrivilegesComponent implements OnInit {
   @Input() wsAccess: ManageMembers;
   serviceList: any;
   permissionList: any;
-  @Input() wsRoleList: WorkspaceRolesPojo[];
-  @Output() fetchedWSRoleList = new EventEmitter<WorkspaceRolesPojo[]>();
+  @Input() wsRoleList: WorkspaceRolesObject[];
+  @Output() fetchedWSRoleList = new EventEmitter<WorkspaceRolesObject[]>();
   showRoleDropdown: any;
   showServiceDropdown: any;
   roleUpdated = false;

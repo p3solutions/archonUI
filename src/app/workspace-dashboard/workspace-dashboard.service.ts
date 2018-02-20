@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
-import { ServiceActionsPojo } from '../WorkspacePojo';
+import { ServiceActionsObject } from '../workspace-objects';
 @Injectable()
 export class WorkspaceDashboardService {
-  serviceActionsList: ServiceActionsPojo[] = [];
-  private serviceActions = new Subject<ServiceActionsPojo>();
+  serviceActionsList: ServiceActionsObject[] = [];
+  private serviceActions = new Subject<ServiceActionsObject>();
   serviceActionsSetted$ = this.serviceActions.asObservable();
 
- setServiceActions(obj: ServiceActionsPojo) {
+ setServiceActions(obj: ServiceActionsObject) {
     this.serviceActions.next(obj);
  }
  getServiceActions() {

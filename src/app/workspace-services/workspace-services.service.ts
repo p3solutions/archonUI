@@ -1,13 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { ServiceActionsPojo } from '../WorkspacePojo';
+import { ServiceActionsObject } from '../workspace-objects';
 
 
 @Injectable()
 export class WorkspaceServicesService {
-  serviceActionUpdated: EventEmitter<ServiceActionsPojo> = new EventEmitter();
+  serviceActionUpdated: EventEmitter<ServiceActionsObject> = new EventEmitter();
   constructor() { }
-  public setServiceActions: ServiceActionsPojo;
-  passServiceActions(serviceActions: ServiceActionsPojo) {
+  public setServiceActions: ServiceActionsObject;
+  passServiceActions(serviceActions: ServiceActionsObject) {
     this.setServiceActions = serviceActions;
     this.serviceActionUpdated.emit(this.setServiceActions);
 

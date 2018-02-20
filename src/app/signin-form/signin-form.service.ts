@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
-import { Signin } from '../signin';
+import { SignIn } from '../sign-in';
 
 @Injectable()
 export class SigninFormService {
@@ -15,8 +15,8 @@ export class SigninFormService {
   private signinUrl = environment.apiUrl + 'auth/login';
 
   constructor(private http: HttpClient) { }
-  signIn(signin_info: Signin): Observable<any> {
-    return this.http.post<Signin>(this.signinUrl, signin_info, { headers: this.headers });
+  signIn(signin_info: SignIn): Observable<any> {
+    return this.http.post<SignIn>(this.signinUrl, signin_info, { headers: this.headers });
   }
 
   /*
