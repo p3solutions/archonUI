@@ -1,13 +1,18 @@
-.btn-box{
-    text-align: left;
-    width:520px;
-    height: 100px;
-    margin-top : 25px;
-    margin-left : -25px;
+.btn-box {
+  text-align: left;
+  width: 520px;
+  height: 110px;
+  margin-top: 25px;
 }
-button{
-    border-radius: 4px;
-    text-decoration: none;
-    display: inline-block;
-    cursor: default;    
+
+button {
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: default;
+}
+
+#rightArrow {
+  float: right;
+  margin-top: 40px;
 }

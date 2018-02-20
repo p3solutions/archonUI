@@ -7,8 +7,9 @@
         </a>
       </div>
       <div class="col-md-8">
-        <h3>
+        <h3 class="workspace-panel-heading">
           Workspaces
+          <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
         </h3>
       </div>
     </div>
@@ -17,37 +18,104 @@
         <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
       </button>
     </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-6 col-md-offset-1">
-      <div *ngIf="!workspaceListInfo" class="column col-md-12">
-        <i class="fa fa-spinner fa-spin fa-3x"></i>
-      </div>
-      <div *ngFor="let ws of workspaceListInfo" [ngClass]="{'approved' : ws.workspaceState=='APPROVED'}">
-        <button type="button" id="workspace-list-btn">
-          <div class="btn-box">
-            <div class="title">
-              <h2 class="wsList">{{ws.workspaceName}}{{ws.workspaceState}}</h2>
+    <div class="col-md-4 col-md-offset-7">
+      <button type="button" class="btn  ws-rejections" id="workspace-add" data-toggle="modal" data-target="#rejectedList">Rejected
+        <!-- <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> -->
+      </button>
+      <div id="rejectedList" role="dialog" class="modal fade">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">
+                <strong>Rejected Workspace List</strong>
+              </h4>
             </div>
-            <div class="right-arrow">
-              <span>
-                <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
+            <div class="modal-body">
+              <table datatable id="ws-rejected-table" class="table table-hover table-bordered" *ngIf="!isProgress">
+                <thead>
+                  <tr>
+                    <th>Workspace Name</th>
+                    <th>Databases(s)</th>
+                    <th>Metadata Version</th>
+                    <th>Last Updated Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let ws of rejectedWorkspaceListInfo">
+                    <td class="ws-rej-data">{{ws.workspaceName}}</td>
+                    <td class="ws-rej-data">
+                      <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
+                        {{db?.name}}{{isLast ? '' : ', '}}
+                      </span>
+                    </td>
+                    <td class="ws-rej-data">{{ws.masterMetadataVersion}}</td>
+                    <td class="ws-rej-data">{{ws.updatedAt}}</td>
+                    <!-- <td>
+                          <a href="#">Details</a>
+                        </td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-1" *ngFor="let ws of workspaceListInfo" [ngClass]="{'ws-pending' : ws.workspaceState == 'PENDING'}">
+        <button type="button" id="workspace-list-btn" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{ws.workspaceName}}"
+          *ngIf="ws.workspaceState != 'REJECTED'">
+          <div class="btn-box">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="trim-text">
+                  <h2>{{ws.workspaceName}}</h2>
+                </div>
+              </div>
+              <div class="col-sm-4" *ngIf="ws.workspaceState == 'APPROVED'">
+                <p class="ws-approved-trace-icon">
+                  <span>
+                    <i class="fa fa-trash-o fa-lg icon-disabled" aria-hidden="true"></i>
+                  </span>
+                </p>
+              </div>
+              <div class="col-sm-4 ws-requestPending" *ngIf="ws.workspaceState == 'PENDING'">
+                <p>Request Pending
+                  <span>
+                    <i class="fa fa-trash-o fa-lg icon-disabled" aria-hidden="true" id="ws-pending-trash"></i>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="trim-text ws-body">
+                  <h4>Databases(s) :
+                    <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
+                      {{db?.name}}{{isLast ? '' : ', '}}
+                    </span>
+                  </h4>
+                </div>
+              </div>
+              <span class="ws-rightArrow">
+                <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
               </span>
             </div>
-            <div class="body">
-              <p>Databases(s) :
-                <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
-                  {{db?.name}}{{isLast ? '' : ', '}}
-                </span>
-              </p>
-            </div>
-            <div class="footer">
-              <p id="right">LastUpdatedTime : {{ws.updatedAt}}</p>
-              <p id="bottom">MetadataVersion : {{ws.masterMetadataVersion}}</p>
+            <div class="row">
+              <div class="col-sm-4">
+                <div>
+                  <h4 class="ws-leftFooter">Metadata Version : {{ws.masterMetadataVersion}}</h4>
+                </div>
+                <div>
+                  <h4 class="ws-rightFooter">Last Updated Time : {{ws.updatedAt}}</h4>
+                </div>
+              </div>
             </div>
           </div>
         </button>
       </div>
     </div>
   </div>
+</div>
