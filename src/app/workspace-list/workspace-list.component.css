@@ -23,14 +23,16 @@ button {
   text-transform: none;
 }
 
-.ws-rejections, .ws-pending button {
+.ws-rejections,
+.ws-pending button {
   background-color: lightskyblue;
 }
 
 .ws-requestPending {
-  margin-top: 17px;
-  margin-left: 80px;
+  margin-top: 25px;
+  margin-left: -23px;
 }
+
 .ws-body {
   margin-top: -10px;
 }
@@ -55,12 +57,11 @@ button {
   display: inline-block;
 }
 
-.modal-title{
+.modal-title {
   float: left;
 }
-.ws-trash-icon{
-  margin-left: 45px;
-}
-#ws-pending-trash{
-  font-size: 2em;
+
+.ws-approved-trace-icon {
+  margin-top: 25px;
+  margin-left: -25px;
 }

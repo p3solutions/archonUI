@@ -69,18 +69,22 @@
           *ngIf="ws.workspaceState != 'REJECTED'">
           <div class="btn-box">
             <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-6">
                 <div class="trim-text">
                   <h2>{{ws.workspaceName}}</h2>
-                  <span *ngIf="ws.workspaceState == 'APPROVED'">
-                    <i class="fa fa-trash-o fa-2x ws-trash-icon icon-disabled" aria-hidden="true"></i>
-                  </span>
                 </div>
+              </div>
+              <div class="col-sm-4" *ngIf="ws.workspaceState == 'APPROVED'">
+                <p class="ws-approved-trace-icon">
+                  <span>
+                    <i class="fa fa-trash-o fa-lg icon-disabled" aria-hidden="true"></i>
+                  </span>
+                </p>
               </div>
               <div class="col-sm-4 ws-requestPending" *ngIf="ws.workspaceState == 'PENDING'">
                 <p>Request Pending
                   <span>
-                    <i class="fa fa-trash-o fa-2x icon-disabled" aria-hidden="true" id="ws-pending-trash"></i>
+                    <i class="fa fa-trash-o fa-lg icon-disabled" aria-hidden="true" id="ws-pending-trash"></i>
                   </span>
                 </p>
               </div>
