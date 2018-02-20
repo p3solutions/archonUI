@@ -45,3 +45,7 @@ export class WorkspaceObject {
     databases: DatabaseObject[];
     workspaceState: string;
 }
+
+export interface AnyObject {
+    [key: string]: any;
+}

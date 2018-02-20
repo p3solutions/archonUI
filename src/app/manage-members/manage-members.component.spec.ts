@@ -69,7 +69,7 @@ describe('ManageMembersComponent', () => {
     expect(component.onDelete).toBeTruthy();
     let delButtons = fixture.debugElement.queryAll(By.css('.del-member-info'));
     const btnsBeforeDel = delButtons.length;
-    component.onDelete(0); // calling on first member-info
+    component.onDelete(0, null); // calling on first member-info
     fixture.detectChanges();
     delButtons = fixture.debugElement.queryAll(By.css('.del-member-info'));
     const btnsAfterDel = delButtons.length;
