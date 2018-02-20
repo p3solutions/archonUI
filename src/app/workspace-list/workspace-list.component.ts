@@ -40,7 +40,7 @@ export class WorkspaceListComponent implements OnInit {
     gotoManagementPanel() {
         this.router.navigate(['workspace/management-panel']);
     }
-    setRejectedWorkspaceListInfo(wsListInfo: WorkspacePojo[]) {
+    setRejectedWorkspaceListInfo(wsListInfo: WorkspaceObject[]) {
         let i;
         for (i in wsListInfo) {
             if (wsListInfo[i].workspaceState === 'REJECTED') {
