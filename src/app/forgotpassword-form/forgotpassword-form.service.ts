@@ -4,7 +4,7 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { Forgotpassword } from '../forgotpassword';
+import { ForgotPassword } from '../forgot-password';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -14,8 +14,8 @@ export class ForgotpasswordFormService {
   forgotPasswordUrl = environment.apiUrl + 'auth/pwd-link';
   constructor(private http: HttpClient) { }
 
-  forgotPassword(forgotpassword_info: Forgotpassword): Observable<any> {
-    return this.http.post<Forgotpassword>(this.forgotPasswordUrl, forgotpassword_info, { headers: this.headers });
+  forgotPassword(forgotpassword_info: ForgotPassword): Observable<any> {
+    return this.http.post<ForgotPassword>(this.forgotPasswordUrl, forgotpassword_info, { headers: this.headers });
   }
 
   /**

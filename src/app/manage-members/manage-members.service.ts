@@ -6,10 +6,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-import { ManageMembers } from '../managemembers';
+import { ManageMembers } from '../manage-members';
 import { UserinfoService } from '../userinfo.service';
 import { environment } from '../../environments/environment';
-import { AnyObject } from '../WorkspacePojo';
+import { AnyObject } from '../workspace-objects';
 
 @Injectable()
 export class ManageMembersService {
@@ -68,8 +68,8 @@ export class ManageMembersService {
   }
   deleteManageMembersData(param: AnyObject): Observable<any> {
     const url = this.apiUrl + this.wsDelAccessUrl + param.id;
-    return this.http.delete<any>(url).pipe(
-      catchError(this.handleError('deleteManageMembersData', []))
+    return this.http.delete<any>(url)
+    .pipe(catchError(this.handleError('deleteManageMembersData', []))
       // tap(_ => this.log(`deleted hero id=${id}`)),
       // catchError(this.handleError<Hero>('deleteHero'))
     );

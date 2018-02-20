@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, OnInit, SimpleChanges, SimpleChange } from '@angular/core';
-import { ServiceActionsPojo } from '../WorkspacePojo';
+import { ServiceActionsObject } from '../workspace-objects';
 import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dashboard.service';
 import { WorkspaceServicesService } from './workspace-services.service';
 
@@ -13,7 +13,7 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceName : string;
   // @Input() private serviceId : string;
   // @Input() private serviceType : string;
-  private serviceActions: ServiceActionsPojo[];
+  private serviceActions: ServiceActionsObject[];
   constructor(private workspaceService: WorkspaceServicesService) { }
 
   // ngOnChanges(changes: SimpleChanges) {

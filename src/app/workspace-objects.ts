@@ -1,52 +1,51 @@
-export class UserPojo {
+export class UserObject {
     id: string;
     name: string;
 }
-export class OwnerPojo {
+export class OwnerObject {
     id: string;
     name: string;
 }
-
-export class RolePojo {
+export class RoleObject {
     id: string;
     name: string;
 }
-export class WorkspaceRolesPojo {
+export class WorkspaceRolesObject {
     id: string;
     createdAt: number;
     updatedAt: number;
     roleName: string;
     selected: boolean;
 }
-export class ServiceActionsPojo {
+export class ServiceActionsObject {
     serviceName: string;
     serviceId: string;
     serviceActionType: string;
 }
-export class MemberPojo {
+export class MemberObject {
     createdAt: number;
     updatedAt: number;
-    user: UserPojo;
-    workspaceRole: RolePojo;
-    serviceActions: ServiceActionsPojo;
+    user: UserObject;
+    workspaceRole: RoleObject;
+    serviceActions: ServiceActionsObject;
 }
-export class DatabasePojo {
+export class DatabaseObject {
     id: string;
     name: string;
 }
-
-export class WorkspacePojo {
+export class WorkspaceObject {
     id: number;
     createdAt: number;
     updatedAt: number;
     workspaceName: string;
-    owner: OwnerPojo;
-    loggedInUserRole: RolePojo;
+    owner: OwnerObject;
+    loggedInUserRole: RoleObject;
     masterMetadataVersion: number;
-    members: MemberPojo[];
-    databases: DatabasePojo[];
+    members: MemberObject[];
+    databases: DatabaseObject[];
     workspaceState: string;
 }
+
 export interface AnyObject {
     [key: string]: any;
 }

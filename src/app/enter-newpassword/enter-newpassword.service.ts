@@ -5,7 +5,7 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { NewPasswordSetter } from './newpasswordsetter';
+import { NewPasswordSetter } from './new-password-setter';
 import { environment } from '../../environments/environment';
 @Injectable()
 export class EnterNewpasswordService {

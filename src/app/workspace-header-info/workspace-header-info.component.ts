@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
-import { WorkspacePojo } from '../WorkspacePojo';
+import { WorkspaceObject } from '../workspace-objects';
 
 @Component({
   selector: 'app-workspace-header-info',
@@ -8,7 +8,7 @@ import { WorkspacePojo } from '../WorkspacePojo';
   styleUrls: ['./workspace-header-info.component.css']
 })
 export class WorkspaceHeaderInfoComponent implements OnChanges {
-  currentWorkspace: WorkspacePojo;
+  currentWorkspace: WorkspaceObject;
   @Input() selectedWorkspace;
 
   constructor( ) { }

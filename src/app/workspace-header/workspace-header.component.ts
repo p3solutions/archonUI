@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
-import { WorkspacePojo, ServiceActionsPojo } from '../WorkspacePojo';
+import { WorkspaceObject, ServiceActionsObject } from '../workspace-objects';
 import { Info } from '../info';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
@@ -11,14 +11,14 @@ import { WorkspaceServicesService } from '../workspace-services/workspace-servic
   styleUrls: ['./workspace-header.component.css']
 })
 export class WorkspaceHeaderComponent implements OnInit {
-  userWorkspaceArray: WorkspacePojo[];
-  serviceActionsList: ServiceActionsPojo;
+  userWorkspaceArray: WorkspaceObject[];
+  serviceActionsList: ServiceActionsObject;
   userId: string;
   userRole: any;
   selectedWorkspaceName: string;
-  currentWorkspace: WorkspacePojo;
+  currentWorkspace: WorkspaceObject;
   fn: any;
-  @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsPojo[]>();
+  @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsObject[]>();
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
@@ -54,7 +54,7 @@ export class WorkspaceHeaderComponent implements OnInit {
     console.log('creating new workspace function pending!');
   }
 
-  selectWorkspace(selectedWorkspace: WorkspacePojo) {
+  selectWorkspace(selectedWorkspace: WorkspaceObject) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
     // Assigning Serviceactions of first member as it is common for all

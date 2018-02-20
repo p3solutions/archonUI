@@ -9,7 +9,7 @@ import 'rxjs/add/operator/do';
 import { JwtHelper } from 'angular2-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceInfo } from '../workspace-info/workspace-info';
-import { WorkspacePojo } from '../WorkspacePojo';
+import { WorkspaceObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -28,17 +28,17 @@ export class WorkspaceListService {
       'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
     });
   }
-  getList(id: string): Observable<WorkspacePojo[]> {
+  getList(id: string): Observable<WorkspaceObject[]> {
     const url = this.wSListByUidUrl + id;
-    return this.http.get<WorkspacePojo[]>(url, { headers: this.userinfoService.getHeaders() })
+    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() })
       .map(this.extractWorkspaces)
     .pipe(catchError(this.handleError('workspace-getList()', []))
     );
   }
 
-  getListOfWorkspaceByUserId(id: string): Observable<WorkspacePojo[]> {
+  getListOfWorkspaceByUserId(id: string): Observable<WorkspaceObject[]> {
     const url = this.wSListByUidUrl + id;
-    return this.http.get<WorkspacePojo[]>(url, { headers: this.userinfoService.getHeaders() })
+    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() })
       .map(this.extractWorkspaces)
       .pipe(catchError(this.handleError('workspace-getList()', []))
     );

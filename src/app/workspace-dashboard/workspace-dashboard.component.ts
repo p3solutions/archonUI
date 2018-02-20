@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ServiceActionsPojo } from '../WorkspacePojo';
+import { ServiceActionsObject } from '../workspace-objects';
 import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dashboard.service';
 @Component({
   selector: 'app-workspace-dashboard',
@@ -7,7 +7,7 @@ import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dash
   styleUrls: ['./workspace-dashboard.component.css']
 })
 export class WorkspaceDashboardComponent implements OnInit {
-  serviceActionsList: ServiceActionsPojo[] = [];
+  serviceActionsList: ServiceActionsObject[] = [];
   // @Output() passServiceActions: any = new EventEmitter<any>();
 
   constructor() {

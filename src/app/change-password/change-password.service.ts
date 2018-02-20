@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { ChangePassword } from '../ChangePassword';
+import { ChangePassword } from '../change-password';
 import { error } from 'util';
 import { catchError } from 'rxjs/operators/catchError';
 import { JwtHelper } from 'angular2-jwt';

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ManageMembers } from '../managemembers';
+import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from './manage-members.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { WorkspaceRolesPojo, RolePojo, AnyObject } from '../WorkspacePojo';
+import { WorkspaceRolesObject, RoleObject, AnyObject } from '../workspace-objects';
 import { UserinfoService } from '../userinfo.service';
 import { ManageUserRoles } from '../manage-user-roles';
 
@@ -19,9 +19,9 @@ export class ManageMembersComponent implements OnInit {
   showMemPriv = false;
   varArray = [];
   @Input() passedWSRoleList: any;
-  @Output() passedWSRoleListChange = new EventEmitter<WorkspaceRolesPojo[]>();
+  @Output() passedWSRoleListChange = new EventEmitter<WorkspaceRolesObject[]>();
   table: any;
-  wsRoleList: WorkspaceRolesPojo[];
+  wsRoleList: WorkspaceRolesObject[];
   permissionList: string[];
 
   constructor(

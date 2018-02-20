@@ -5,7 +5,7 @@ import { UserinfoService } from '../userinfo.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
-import { WorkspacePojo, MemberPojo, ServiceActionsPojo } from '../WorkspacePojo';
+import { WorkspaceObject, MemberObject, ServiceActionsObject } from '../workspace-objects';
 
 @Component({
   selector: 'app-workspace-info',
@@ -13,7 +13,7 @@ import { WorkspacePojo, MemberPojo, ServiceActionsPojo } from '../WorkspacePojo'
   styleUrls: ['./workspace-info.component.css']
 })
 export class WorkspaceInfoComponent implements OnInit {
-  workspaceInfoData = new WorkspacePojo();
+  workspaceInfoData = new WorkspaceObject();
   @Input() workspaceId: string;
   isAvailable: boolean;
   loggedUserId: string;
@@ -55,7 +55,7 @@ export class WorkspaceInfoComponent implements OnInit {
     });
   }
 
-  setLoggedInUserRole(membersArray: MemberPojo[]) {
+  setLoggedInUserRole(membersArray: MemberObject[]) {
     const BreakException = {};
     try {
       membersArray.forEach(member => {
