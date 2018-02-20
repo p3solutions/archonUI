@@ -6,26 +6,26 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { UserinfoService } from '../userinfo.service';
 import { Router } from '@angular/router/src/router';
-import { WorkspacePojo } from '../WorkspacePojo';
+import { WorkspaceObject } from '../workspace-objects';
+import { environment } from '../../environments/environment';
 @Injectable()
 export class WorkspaceInfoService {
-  workspaceinfoUrl = 'http://13.58.89.64:9000/workspaces/';
+  workspaceinfoUrl = environment.apiUrl + 'workspaces/';
   constructor(
     private http: HttpClient,
     private userinfoService: UserinfoService
   ) { }
-  getWorkSpaceInfo(id: string): Observable<WorkspacePojo> {
+  getWorkSpaceInfo(id: string): Observable<WorkspaceObject> {
     const URL = this.workspaceinfoUrl + id;
-    return this.http.get<WorkspacePojo>(URL, { headers: this.userinfoService.getHeaders() })
-    .map(this.extractWorkspace)
-    .pipe(catchError(this.handleError<WorkspacePojo>('getworkinfo'))
-    );
+    return this.http.get<WorkspaceObject>(URL, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractWorkspace)
+      .pipe(catchError(this.handleError<WorkspaceObject>('getworkinfo'))
+      );
   }
   private extractWorkspace(res: any) {
     const data = res.data.workspaces;
     return data || [];
   }
-
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

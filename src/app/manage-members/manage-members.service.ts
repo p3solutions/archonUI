@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-import { ManageMembers } from '../managemembers';
+import { ManageMembers } from '../manage-members';
 import { UserinfoService } from '../userinfo.service';
 import { environment } from '../../environments/environment';
 

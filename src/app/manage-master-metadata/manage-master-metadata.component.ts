@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ManageMasterMetadataService } from './manage-master-metadata.service';
-import { Manage_Master_Metadata } from '../master-metadata-data';
+import { ManageMasterMetadata } from '../master-metadata-data';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 @Component({
   selector: 'app-manage-master-metadata',
@@ -9,7 +9,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class ManageMasterMetadataComponent implements OnInit {
 
-  manage_Master_Metadata: Manage_Master_Metadata[];
+  manage_Master_Metadata: ManageMasterMetadata[];
 
   isProgress: boolean;
 
@@ -32,7 +32,7 @@ export class ManageMasterMetadataComponent implements OnInit {
       });
   }
 
-  deleteManageMasterRecord(obj: Manage_Master_Metadata) {
+  deleteManageMasterRecord(obj: ManageMasterMetadata) {
     this.manage_Master_Metadata = this.manage_Master_Metadata.filter(h => h !== obj);
     this.manage_Master_MetadataService.removeManageMasterData(obj).subscribe();
   }

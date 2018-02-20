@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Signup } from '../signup';
+import { SignUp } from '../sign-up';
 import { SignupFormService } from './signup-form.service';
 import { ErrorObject } from '../error-object';
 import { AuthenticationService } from '../authentication/authentication.service';
@@ -13,13 +13,13 @@ import { AuthenticationService } from '../authentication/authentication.service'
   styleUrls: ['./signup-form.component.css']
 })
 export class SignupFormComponent implements OnInit {
-  signup: Signup;
+  signup: SignUp;
   signUpForm: FormGroup;
   responseData: any;
   errorObject: ErrorObject;
   enableSignUpBtn = true;
   inProgress = false;
-  msg= 100;
+  msg = 100;
 
   constructor(
     private signupService: SignupFormService,

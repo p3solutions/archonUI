@@ -4,7 +4,7 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceListInfo } from '../workspace-list/workspace-list-data';
 import { WorkspaceListService } from '../workspace-list/workspace-list.service';
 import { Router } from '@angular/router';
-import { WorkspacePojo } from '../WorkspacePojo';
+import { WorkspaceObject } from '../workspace-objects';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,7 +13,7 @@ import { WorkspacePojo } from '../WorkspacePojo';
 })
 export class UserProfileComponent implements OnInit {
   userInfo: any;
-  workspaceList: WorkspacePojo[];
+  workspaceList: WorkspaceObject[];
 
   constructor(
     private userinfoService: UserinfoService,
@@ -34,7 +34,7 @@ export class UserProfileComponent implements OnInit {
         };
         this.getWorkspaceList(this.userInfo.id);
         if (res.data.user.globalRoles && res.data.user.globalRoles.length) {
-          this.workspaceListService.getListOfWorkspaceByUserId(this.userInfo.id).subscribe((wsList: WorkspacePojo[]) => {
+          this.workspaceListService.getListOfWorkspaceByUserId(this.userInfo.id).subscribe((wsList: WorkspaceObject[]) => {
             this.userInfo.workspaceList = wsList;
           });
           this.userInfo.roleList = [];

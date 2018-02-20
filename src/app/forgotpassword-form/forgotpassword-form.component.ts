@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Forgotpassword } from '../forgotpassword';
+import { ForgotPassword } from '../forgot-password';
 import { ForgotpasswordFormService } from './forgotpassword-form.service';
 import { ErrorObject } from '../error-object';
 import { SuccessObject } from '../success-object';
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./forgotpassword-form.component.css']
 })
 export class ForgotpasswordFormComponent implements OnInit {
-  forgotpassword: Forgotpassword;
+  forgotpassword: ForgotPassword;
   forgotPasswordForm: FormGroup;
   errorObject: ErrorObject;
   successObject: SuccessObject;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PasswordReset } from './password-reset';
-import { NewPasswordSetter } from './newpasswordsetter';
+import { NewPasswordSetter } from './new-password-setter';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { EnterNewpasswordService } from './enter-newpassword.service';
 import { ErrorObject } from '../error-object';

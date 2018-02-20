@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ChangePasswordService } from './change-password.service';
 import { ErrorObject } from '../error-object';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ChangePassword } from '../ChangePassword';
+import { ChangePassword } from '../change-password';
 import { HttpErrorResponse } from '@angular/common/http';
 
 
@@ -84,7 +84,7 @@ export class ChangePasswordComponent implements OnInit {
       });
   }
   enablePassword() {
-    if (this.changePasswordForm.value.oldPassword && this.changePasswordForm.value.newPassword 
+    if (this.changePasswordForm.value.oldPassword && this.changePasswordForm.value.newPassword
       && this.changePasswordForm.value.confirmPassword) {
       this.enableChangePassBtn = true;
     } else {

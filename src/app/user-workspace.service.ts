@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
-import { WorkspacePojo } from './WorkspacePojo';
+import { WorkspaceObject } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
 import { environment } from '../environments/environment';
 
@@ -29,10 +29,10 @@ export class UserWorkspaceService {
     return this.apiUrl + 'workspaces?ownerId=' + this.userinfoService.getUserId();
   }
 
-  getUserWorkspaceList(): Observable<WorkspacePojo[]> {
-    return this.http.get<WorkspacePojo[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders()})
+  getUserWorkspaceList(): Observable<WorkspaceObject[]> {
+    return this.http.get<WorkspaceObject[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders()})
     .map(this.extractWorkspaces)
-    .pipe(catchError(this.handleError<WorkspacePojo[]>('getUserWorkspaces')));
+    .pipe(catchError(this.handleError<WorkspaceObject[]>('getUserWorkspaces')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

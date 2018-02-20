@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Signin } from '../signin';
+import { SignIn } from '../sign-in';
 import { SigninFormService } from './signin-form.service';
 import { ErrorObject } from '../error-object';
 import { AuthenticationService } from '../authentication/authentication.service';
@@ -13,7 +13,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
   styleUrls: ['./signin-form.component.css']
 })
 export class SigninFormComponent implements OnInit {
-  signin: Signin;
+  signin: SignIn;
   signInForm: FormGroup;
   responseData: any;
   errorObject: ErrorObject;
