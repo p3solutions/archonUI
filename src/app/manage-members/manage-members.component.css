@@ -21,6 +21,27 @@ span,i {
   background: transparent;
 }
 
+.manage-members {
+    padding: 30px;
+    height: 400px;
+    overflow-y: auto;
+}
 
+.mem-priv-row {
+    display: table-row;
+}
+/* .toggle-expand.mem-priv-row {
+  display: table-row;
+}
 
+.toggle-expand .expand,
+.toggle-collapse .collapse{
+    display: block;
+}
 
+.toggle-expand .collapse,
+.toggle-collapse .expand,
+.toggle-collapse.mem-priv-row {
+    display: none;
+}
+ */

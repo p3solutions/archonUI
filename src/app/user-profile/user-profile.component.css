@@ -1,0 +1,26 @@
+.col-title {
+  width: 200px;
+  vertical-align: middle;
+}
+
+.col-info-data {
+  width: 500px;
+  padding: 0px 5px;
+  vertical-align: middle;
+}
+
+.col-info-data>.trim-text {
+  max-width: 450px;
+  min-width: 100px;
+}
+
+#user-info .table-hover {
+  margin-top: 20px;
+  margin-left: 75px;
+  width: 72%;
+  text-align: left;
+}
+
+.text-overflow-hid {
+  overflow: hidden;
+}

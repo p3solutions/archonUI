@@ -1,3 +1,4 @@
+<app-navbar *ngIf="showNavBar"></app-navbar>
 <div>
   <div class="row">
     <div class="col-md-6">
@@ -9,60 +10,63 @@
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
           Workspace Info
+          <span [ngClass]="{'archon-loading-icon' : !isAvailable}"></span>
         </h3>
       </div>
     </div>
   </div>
   <div class="row">
     <div id="workspace-info" class="workspace-panel-content">
-      <table id="workspace-info-table" class="table table-hover">
+      <table *ngIf="isAvailable" id="workspace-info-table" class="table table-hover">
         <tbody>
           <tr>
             <td>
               <b>Name</b>
             </td>
-            <td class="ws-info-data">{{this.workspaceInfoData['name']}}</td>
+            <td class="ws-info-data">{{workspaceInfoData?.workspaceName}}</td>
           </tr>
           <tr>
             <td>
               <b>Owner</b>
             </td>
-            <td class="ws-info-data">{{this.workspaceInfoData['owner']}}</td>
+            <td class="ws-info-data">{{workspaceInfoData?.owner?.name}}</td>
           </tr>
           <tr>
             <td>
-              <b>Approver</b>
+              <b>Approver(s)</b>
             </td>
-            <td class="ws-info-data">{{this.workspaceInfoData['approver']}}
-              <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
-              </a>
+            <td class="ws-info-data">{{(workspaceInfoData?.approvers) ? workspaceInfoData?.approver : 'NULL'}}
+              <!-- <a [routerLink]="['/user-profile', workspaceInfoData?.approvers.id]"> -->
+              <span class="fa fa-pencil archon-icon m-l-10 m-r-10"></span>
+              <!-- </a> -->
             </td>
           </tr>
           <tr>
             <td>
-              <b>Members</b>
+              <b>Members(s)</b>
             </td>
             <td class="ws-info-data">
-              {{this.workspaceInfoData['members']}}
-              <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
+              <span *ngFor="let member of workspaceInfoData?.members; let isLast = last">
+                {{member?.user?.name}}{{isLast ? '' : ','}}
+              </span>
+              <a [routerLink]="['/workspace/workspace-dashboard/manage-members',workspaceInfoData?.id]">
+                <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>
           </tr>
           <tr>
             <td>
-              <b>Role</b>
+              <b>Your Role</b>
             </td>
-            <td class="ws-info-data">{{this.workspaceInfoData['your_role']}}</td>
+            <td class="ws-info-data">{{workspaceInfoData?.loggedInUserRole?.name}}</td>
           </tr>
           <tr>
             <td>
               <b>Metadata Version</b>
             </td>
-            <td class="ws-info-data">{{this.workspaceInfoData['master_metadata_version']}}
-              <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
+            <td class="ws-info-data">{{workspaceInfoData?.masterMetadataVersion}}
+              <a [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">
+                <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
               </a>
             </td>
           </tr>
@@ -76,3 +80,4 @@
     </div>
   </div>
 </div>
+<!-- <app-workspace-dashboard [serviceActions] = "serviceActionsList"></app-workspace-dashboard> -->

@@ -1,5 +1,8 @@
+import { UserPojo, RolePojo } from './WorkspacePojo';
+
 export interface ManageMembers {
-    sl_no: string;
-    member: string;
-    role: string;
+    createdAt: number;
+    updatedAt: number;
+    user: UserPojo;
+    role: RolePojo;
 }

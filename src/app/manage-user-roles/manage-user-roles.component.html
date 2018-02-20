@@ -1,0 +1,56 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-1 back-arrow">
+        <a (click)="gotoManagementPanel()">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        </a>
+      </div>
+      <div class="col-md-8">
+        <h3 class="workspace-panel-heading">
+          Manage User Roles
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div id="manager-user" class="workspace-panel-content">
+      <table datatable id="manage-user-role-info-table" class="table table-hover table-bordered" *ngIf="isAvailable">
+        <thead>
+          <tr>
+            <th>Sl No</th>
+            <th>Name</th>
+            <th>Email Address</th>
+            <th>Created At</th>
+            <th>Global Role</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of this.manageUserRolesRequestData; let i = index">
+            <td class="mm-info-data">{{i+1}}</td>
+            <td class="mm-info-data">
+              <a href="">{{user.name}}</a>
+            </td>
+            <td class="mm-info-data">{{user.emailAddress}}</td>
+            <td class="mm-info-data">{{user.createdAt}}</td>
+            <td class="mm-info-data">{{user.globalRoles[0].roleName}}</td>
+            <td>
+              <a href="" data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id)">
+                Change Role
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="workspace-panel-content">
+      <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
+    </div>
+  </div>
+</div>
+<app-change-user-role [selectedUserId]="selectedUserId" (onConfirm)="onConfirm($event)" class="modal fade" id="myModal1" role="dialog">
+  some other content
+</app-change-user-role>

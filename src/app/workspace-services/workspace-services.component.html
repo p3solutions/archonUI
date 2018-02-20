@@ -1,18 +1,33 @@
-<div class="row">
-  <div class="col-md-6">
-    <h3 class="workspace-panel-heading">
-      Services
-    </h3>
-  </div>
-</div>
-<div class="row">
-    <div class="service-btn-block">
-        <button class="btn btn-primary btn-lg btn-block">
-            <div>
-                <h3 class="service-button">Metalyzer</h3>
-                <p>a description about the service you are going to click <a href="#">learn more</a></p>
-                <span class="service-info">last metadata generated on <strong>29 Dec 2017</strong></span>
-            </div>
-        </button>
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-1 back-arrow">
+        <a (click)="gotoDashboard()">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        </a>
+      </div>
+      <div class="col-md-8">
+        <h3 class="workspace-panel-heading">
+          Services
+        </h3>
+      </div>
     </div>
+  </div>
+  <div class="row">
+    <div id="service-actions-info" class="workspace-panel-content" *ngFor="let service of serviceActions">
+      <button type="button" class="btn-primary" data-placement="top" title="{{service?.serviceName}}">
+        <div class="btn-box">
+          <div class="col-md-10" [attr.serviceid]="service?.id">
+            <div class="trim-text service-title">Service Name : {{service?.serviceName}}</div>
+            <h4>Service Action Type : {{service?.serviceActionType}}</h4>
+          </div>
+          <div class="col-md-2 btn-lg-arrow" id="rightArrow">
+            <span hidden>
+              <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
 </div>

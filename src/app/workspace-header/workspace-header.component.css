@@ -54,3 +54,9 @@
   overflow: hidden;
   background-color: #eceeef;
 }
+  #selectedWorkspace .dropdown-toggle {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  text-align: right;
+  width: 195px;
+}

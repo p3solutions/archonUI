@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MemberRequestService } from '../member-request.service';
+import { MemberRequestService } from './member-request.service';
 import { MemberRequestData } from '../member-request-data';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 @Component({
@@ -10,13 +10,14 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class MemberRequestComponent implements OnInit {
 
   memberRequestData: MemberRequestData[];
-  isAvailable = false;
+  isAvailable : boolean;
 
   constructor(private memberRequestService: MemberRequestService,
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.isAvailable = false;
     this.getMemberRequestData();
   }
   getMemberRequestData() {

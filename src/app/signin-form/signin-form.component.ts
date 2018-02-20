@@ -42,7 +42,8 @@ export class SigninFormComponent implements OnInit {
       data => {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
-        console.log(data);
+        localStorage.setItem('accessToken', data.data.accessToken);
+        localStorage.setItem('refreshToken', data.data.refreshToken);
         this.router.navigate(['/workspace']);
       },
       (err: HttpErrorResponse) => {
@@ -53,7 +54,7 @@ export class SigninFormComponent implements OnInit {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
-          this.errorObject.message = err.error.message;
+          this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = !err.error.success;
           console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }

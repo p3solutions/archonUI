@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ManageMembers } from '../managemembers';
-import { ManageMembersService } from '../manage-members.service';
+import { ManageMembersService } from './manage-members.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+// import 'rxjs/add/operator/switchMap';
+import { UserinfoService } from '../userinfo.service';
 
 @Component({
   selector: 'app-manage-members',
@@ -9,32 +11,47 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./manage-members.component.css']
 })
 export class ManageMembersComponent implements OnInit {
+  workspaceId;
 
-  manageMembersRequestData: ManageMembers[];
+  manageMembers: ManageMembers[];
   isAvailable = false;
+  memberPrivilegeParam: any;
+  showMemPriv = false;
+  varMap = new Map();
+  varArray = [];
 
   constructor(
     private manageMembersService: ManageMembersService,
+    private userinfoService: UserinfoService,
+    private route: ActivatedRoute,
     private router: Router
-  ) {
-    this.getManageMembersData();
-  }
+  ) { }
 
   ngOnInit() {
-    this.getManageMembersData();
+    this.route.params.subscribe(params => {
+      this.isAvailable = false;
+      this.workspaceId = params.id;
+      this.getManageMembersData(this.workspaceId);
+    });
   }
-  getManageMembersData() {
 
-    this.manageMembersService.getManageMembersDetails()
-      .subscribe(data => {
-        this.manageMembersRequestData = data;
+  generatePrivVariables(len) {
+    for (let i = 0; i < len; i++) {
+      this.varMap.set('showMemPriv' + i, false);
+      this.varArray[i] = false;
+    }
+  }
+  getManageMembersData(workspaceId) {
+    this.manageMembersService.getWSMembers(workspaceId)
+      .subscribe(res => {
         this.isAvailable = true;
+        this.generatePrivVariables(res.length);
+        this.manageMembers = res;
       });
-     console.log('manage-members-component', this.manageMembersRequestData);
   }
 
   onDelete(e: any): void {
-    this.manageMembersRequestData = this.manageMembersRequestData.filter(h => h !== this.manageMembersRequestData[e]);
+    this.manageMembers = this.manageMembers.filter(h => h !== this.manageMembers[e]);
     this.manageMembersService.deleteManageMembersData(e).subscribe();
   }
 
@@ -42,5 +59,28 @@ export class ManageMembersComponent implements OnInit {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
-
+  hideElementById(id) {
+    const e = document.getElementById(id);
+    e.style.display = 'none';
+  }
+  showElementById(id) {
+    const e = document.getElementById(id);
+    e.style.display = 'block';
+  }
+  showPermission(i, _event, wsAccess) {
+    _event.stopPropagation();
+    this.hideElementById('showPermission-' + i);
+    this.varArray[i] = true;
+    /* this.memberPrivilegeParam = {
+      id: this.userinfoService.getUserId(),
+      userId: wsAccess.user.id,
+      workspaceId: this.workspaceId,
+      roleId: wsAccess.workspaceRole.id
+    }; */
+  }
+  hidePermission(i, _event, wsAccess) {
+    _event.stopPropagation();
+    this.showElementById('showPermission-' + i);
+    this.varArray[i] = false;
+  }
 }
