@@ -47,3 +47,6 @@ export class WorkspacePojo {
     databases: DatabasePojo[];
     workspaceState: string;
 }
+export interface AnyObject {
+    [key: string]: any;
+}

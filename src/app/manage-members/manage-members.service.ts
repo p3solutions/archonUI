@@ -9,6 +9,7 @@ import 'rxjs/add/operator/do';
 import { ManageMembers } from '../managemembers';
 import { UserinfoService } from '../userinfo.service';
 import { environment } from '../../environments/environment';
+import { AnyObject } from '../WorkspacePojo';
 
 @Injectable()
 export class ManageMembersService {
@@ -16,7 +17,8 @@ export class ManageMembersService {
   wSMembersUrl = 'workspaces/';
   wSroleListUrl = 'admin/roles/workspace';
   serviceActionsUrl = 'public/roles/actions';
-  wsDelAccessUrl = 'workspaces/access/remove/{{id}}';
+  wsDelAccessUrl = 'workspaces/access/remove/';
+  updateWSRole = 'workspaces/access/';
   headers: HttpHeaders;
 
   constructor(private http: HttpClient,
@@ -35,31 +37,52 @@ export class ManageMembersService {
   getwsRoleList(): Observable<any> {
     const url = this.apiUrl + this.wSroleListUrl;
     return this.http.get<any[]>(url, { headers: this.headers })
-      .map(this.extractWSROles)
+      .map(this.extractWSRoles)
       .pipe(catchError(this.handleError('getwsRoleList', []))
       );
   }
 
   getServiceActions(): Observable<any> {
-    const url = this.apiUrl + this.serviceActionsUrl;
+  const url = this.apiUrl + this.serviceActionsUrl;
+  return this.http.get<any>(url, { headers: this.headers })
+    .map(this.extractServiceActions)
+    .pipe(catchError(this.handleError('getServiceActions'))
+    );
+  }
+  updateRole(params: AnyObject) {
+    params.id = this.userinfoService.getUserId(); // loggedIn user id
+    const url = this.apiUrl + this.updateRole + params.id;
+    return this.http.get<any>(url, { headers: this.headers })
+      .map(this.extractData)
+      .pipe(catchError(this.handleError('updateRole'))
+    );
+  }
+  updateServiceActions(params: AnyObject) {
+    params.userId = this.userinfoService.getUserId();
+    const url = this.apiUrl + `users/${params.userId}/roles/actions`;
+    console.log('updateServiceActions params:', params);
     return this.http.get<any>(url, { headers: this.headers })
       .map(this.extractServiceActions)
-      .pipe(catchError(this.handleError('getServiceActions'))
-      );
+      .pipe(catchError(this.handleError('updateServiceActions'))
+    );
   }
-
-  deleteManageMembersData(indexObject): Observable<ManageMembers[]> {
-    // deleteHero (hero: Hero | number): Observable<Hero> {
-    // const id = typeof hero === 'number' ? hero : hero.id;
-    const url = this.apiUrl + this.wsDelAccessUrl;
-    return this.http.delete<ManageMembers[]>(url).pipe(
-      catchError(this.handleError('managemembers', []))
+  deleteManageMembersData(param: AnyObject): Observable<any> {
+    const url = this.apiUrl + this.wsDelAccessUrl + param.id;
+    return this.http.delete<any>(url).pipe(
+      catchError(this.handleError('deleteManageMembersData', []))
       // tap(_ => this.log(`deleted hero id=${id}`)),
       // catchError(this.handleError<Hero>('deleteHero'))
     );
   }
 
-  private extractWSROles(res: any) {
+
+  private extractData(res: any) {
+    const data = res.data;
+    console.log('roles success data:', data);
+    return data || [];
+  }
+
+  private extractWSRoles(res: any) {
     const data = res.data.workspaceRoles;
     return data || [];
   }
