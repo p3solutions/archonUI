@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, Inject, OnDestroy } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkspaceObject, ServiceActionsObject } from '../workspace-objects';
 import { Info } from '../info';
@@ -10,7 +10,7 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
   templateUrl: './workspace-header.component.html',
   styleUrls: ['./workspace-header.component.css']
 })
-export class WorkspaceHeaderComponent implements OnInit {
+export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   userWorkspaceArray: WorkspaceObject[];
   serviceActionsList: ServiceActionsObject;
   userId: string;
@@ -37,7 +37,12 @@ export class WorkspaceHeaderComponent implements OnInit {
     this.getUserWorkspaceList();
     this.userRole = this.userinfoService.getUserRoles();
   }
-
+  ngOnDestroy() {
+    console.log('removing viewContainerRef');
+    if (this.viewContainerRef) {
+      this.viewContainerRef.remove(0);
+    }
+  }
   getUserWorkspaceList() {
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
@@ -61,6 +66,7 @@ export class WorkspaceHeaderComponent implements OnInit {
   openCreateWSModal() {
     if (this.viewContainerRef.get(0)) {
       // open existing dynamic component
+      document.getElementById('openCreateWSmodal').click();
     } else {
       // inject dynamic component
       this.dynamicLoaderService.setRootViewContainerRef(this.viewContainerRef);

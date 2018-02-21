@@ -1,3 +1,119 @@
-<p>
-  new-workspace works!
-</p>
+<div hidden id="openCreateWSmodal" data-toggle="modal" data-target="#createWSModal"></div>
+<div class="modal fade" id="createWSModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="worskspace">
+    <div class="modal-content text-left">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Create New Workspace</h4>
+      </div>
+
+      <div class="modal-body row">
+        
+      <form >
+<!-- carousel -->
+        <div id="createWSModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#createWSModal-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#createWSModal-carousel" data-slide-to="1"></li>
+            <li data-target="#createWSModal-carousel" data-slide-to="2"></li>
+          </ol>
+        
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+
+            <div class="item active form-group">
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Workspace Name</div>
+                  <div class="col-md-8">
+                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                  </div>
+                </div>
+                
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Creation Date</div>
+                  <div class="col-md-8">{{today | date:'dd-MMM-yyyy'}}</div>
+                </div>
+                
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Owner</div>
+                  <div class="col-md-8">{{loggedInUser?.name}}</div>
+                </div>
+
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Description / Notes</div>
+                  <div class="col-md-8">
+                    <textarea [(ngModel)]="wsDesc" name="wsDesc"></textarea>
+                  </div>
+                </div>
+            </div>
+
+            <div class="item form-group second-last second">
+              <div class="col-md-12 row m-10">
+                <h4 >Select Database for: <b>{{wsName}}</b></h4>
+                <div class="p-10-0">
+                  <table id="db-list-table" class="display m-10" cellspacing="0" width="100%" datatable>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Database Name</th>
+                        <th>Owner</th>
+                        <th>Created Date</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="item form-group final">
+                <h4 class="col-md-12">Review Workspace Details:</h4>
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Workspace Name</div>
+                  <div class="col-md-8">{{wsName}}</div>
+                </div>
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Creation Date</div>
+                  <div class="col-md-8">{{today | date:'dd-MMM-yyyy'}}</div>
+                </div>
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Description</div>
+                  <div class="col-md-8">
+                    <textarea value="{{wsDesc}}" disabled></textarea>
+                  </div>
+                </div>
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">DataSources</div>
+                  <div class="col-md-8">
+                    DataSource1, DataSource2, DataSource3
+                  </div>
+                </div>
+            </div>
+
+          </div>
+        
+          <!-- Controls -->
+          <a hidden class="left carousel-control" id="prev-slide" href="#createWSModal-carousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a hidden class="right carousel-control" id="next-slide" href="#createWSModal-carousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event)">Previous</button>
+        <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
+        <button type="button" id="create-btn" class="btn btn-primary hide" (click)="createWS()">Create&nbsp;</button>
+      </div>
+
+    </div>
+  </div>
+</div>

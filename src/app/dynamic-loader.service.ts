@@ -17,11 +17,8 @@ export class DynamicLoaderService {
   addDynamicComponent() {
     const factory = this.factoryResolver
       .resolveComponentFactory(NewWorkspaceComponent);
-    console.log('factory', factory);
     const component = factory
       .create(this.rootViewContainer.parentInjector);
-    console.log('component', component);
     this.rootViewContainer.insert(component.hostView);
-    console.log('rootViewContainer', this.rootViewContainer);
   }
 }

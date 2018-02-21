@@ -1,0 +1,21 @@
+#createWSModal-carousel .form-group {
+    height: 300px;
+    margin: 10px;
+}
+.modal-dialog {
+    margin: 150px auto auto;
+    width: 850px;
+}
+textarea{
+    margin: 0px;
+    height: 155px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 3px;
+    resize: none;
+    width: 515px;
+}
+.error-input {
+    background: #ffc1c1;
+    border-color: #ff5959;
+}

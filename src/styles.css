@@ -411,7 +411,12 @@ table.dataTable.no-footer {
 .m-r-10 {
   margin-right: 10px;
 }
-
+.m-t-10 {
+  margin-top: 10px;
+}
+.p-10-0 {
+  padding: 10px 0;
+}
 .w-180 {
   width: 180px;
 }

@@ -64,6 +64,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     openCreateWSModal() {
         if (this.viewContainerRef.get(0)) {
             // open existing dynamic component
+            document.getElementById('openCreateWSmodal').click();
         } else {
             // inject dynamic component
             this.dynamicLoaderService.setRootViewContainerRef(this.viewContainerRef);

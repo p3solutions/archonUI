@@ -1,6 +1,7 @@
 export class UserObject {
     id: string;
     name: string;
+    emailAddress: string;
 }
 export class OwnerObject {
     id: string;
@@ -44,4 +45,7 @@ export class WorkspaceObject {
     members: MemberObject[];
     databases: DatabaseObject[];
     workspaceState: string;
+}
+export interface AnyObject {
+    [key: string]: any;
 }
