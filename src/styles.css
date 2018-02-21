@@ -13,7 +13,6 @@ h5 {
   font-family: "Montserrat", sans-serif;
 }
 
-
 /* Links */
 
 a,
@@ -38,7 +37,6 @@ input {
   border-radius: 2px;
 }
 
-
 /* Custom default button */
 
 .btn {
@@ -55,7 +53,6 @@ input {
   background-color: #fff;
   border: 1px solid #fff;
 }
-
 
 /* Base structure */
 
@@ -95,7 +92,6 @@ body {
 .cover-container {
   width: 100%;
 }
-
 
 /* Header */
 
@@ -149,7 +145,6 @@ body {
   float: right;
 }
 
-
 /* Cover */
 
 .cover {
@@ -165,14 +160,12 @@ body {
   font-weight: bold;
 }
 
-
 /* Footer */
 
 .layoutfoot {
   color: #999;
   width: 100%
 }
-
 
 /* Start the vertical centering */
 
@@ -449,15 +442,19 @@ i.link:focus,
 i.link:hover {
   text-decoration: none;
 }
+
 .cur-p {
   cursor: pointer;
 }
+
 .col-archon-blue {
   color: #269AF8;
 }
+
 .disp-bl {
   display: block
 }
+
 .archon-icon {
   cursor: pointer;
   color: #269AF8;
@@ -471,7 +468,9 @@ i.link:hover {
   right: 25px;
   margin: 3px;
 }
-.bg-disabled, .bg-disabled:hover {
+
+.bg-disabled,
+.bg-disabled:hover {
   background-color: #ccc !important;
   cursor: default !important;
 }
@@ -483,7 +482,6 @@ i.link:hover {
 .col-archon-blue {
   color: #269AF8;
 }
-
 
 .disp-bl {
   display: block
@@ -501,17 +499,17 @@ i.link:hover {
   color: #ccc;
   cursor: default;
 }
+
 /* Data tables */
 
 /* Data tabes end */
-
-
 
 /**
  * Tooltip Styles
  */
 
 /* Add this attribute to the element that needs a tooltip */
+
 [data-tooltip] {
   position: relative;
   z-index: 2;
@@ -519,6 +517,7 @@ i.link:hover {
 }
 
 /* Hide the tooltip content by default */
+
 [data-tooltip]:before,
 [data-tooltip]:after {
   visibility: hidden;
@@ -529,6 +528,7 @@ i.link:hover {
 }
 
 /* Position tooltip above the element */
+
 [data-tooltip]:before {
   position: absolute;
   bottom: 150%;
@@ -550,6 +550,7 @@ i.link:hover {
 }
 
 /* Triangle hack to make tooltip look like a speech bubble */
+
 [data-tooltip]:after {
   position: absolute;
   bottom: 150%;
@@ -566,6 +567,7 @@ i.link:hover {
 }
 
 /* Show tooltip content on hover */
+
 [data-tooltip]:hover:before,
 [data-tooltip]:hover:after {
   visibility: visible;
@@ -573,15 +575,18 @@ i.link:hover {
   filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
+
 .archon-names {
   text-align: center;
 }
+
 .archon-names [data-tooltip]:before {
   left: 20%;
   line-height: 1.3;
   width: 200px;
 }
-.archon-names-100 [data-tooltip]:before{
+
+.archon-names-100 [data-tooltip]:before {
   left: 38%;
   width: 100px;
 }
@@ -598,24 +603,29 @@ i.link:hover {
 /**
  * Tooltip Styles End
  */
+
 @keyframes spinner {
-  to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Data tables */
 
 /* Data tabes end */
+
 .archon-loading-icon:before {
-    content: "\F110";
-    font: normal normal normal 14px/1 FontAwesome;
-    box-sizing: border-box;
-    position: absolute;
-    display: inline;
-    /* margin-top: 5px; */
-    margin-left: 10px;
-    -webkit-animation: spinner .6s linear infinite;
-    animation: spinner 2s linear infinite
+  content: "\F110";
+  font: normal normal normal 14px/1 FontAwesome;
+  box-sizing: border-box;
+  position: absolute;
+  display: inline;
+  /* margin-top: 5px; */
+  margin-left: 10px;
+  -webkit-animation: spinner .6s linear infinite;
+  animation: spinner 2s linear infinite
 }
+
 .service-title {
   width: 550px;
   font-size: 24px;

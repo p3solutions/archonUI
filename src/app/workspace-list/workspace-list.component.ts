@@ -15,6 +15,8 @@ export class WorkspaceListComponent implements OnInit {
     jwtHelper: JwtHelper = new JwtHelper();
     token_data: any;
     workspaceListInfo: WorkspaceObject[];
+    rejectedWorkspaceListInfo: WorkspaceObject[] = [];
+    isProgress: boolean;
     constructor(
         private workspaceListService: WorkspaceListService,
         private router: Router
@@ -24,16 +26,27 @@ export class WorkspaceListComponent implements OnInit {
         this.accessToken = localStorage.getItem('accessToken');
         this.token_data = this.jwtHelper.decodeToken(this.accessToken);
         this.getWorkspaceListInfo(this.token_data.user.id);
+        this.isProgress = true;
     }
 
     getWorkspaceListInfo(id: string) {
         this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
-
+            console.log(this.workspaceListInfo);
+            this.isProgress = false;
+            this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
         });
     }
     gotoManagementPanel() {
         this.router.navigate(['workspace/management-panel']);
+    }
+    setRejectedWorkspaceListInfo(wsListInfo: WorkspaceObject[]) {
+        let i;
+        for (i in wsListInfo) {
+            if (wsListInfo[i].workspaceState === 'REJECTED') {
+                this.rejectedWorkspaceListInfo.push(wsListInfo[i]);
+            }
+        }
     }
 }
 
