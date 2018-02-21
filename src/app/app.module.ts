@@ -60,6 +60,8 @@ import { ChangePasswordService } from './change-password/change-password.service
 import { ManageMemberPrivilegesComponent } from './manage-member-privileges/manage-member-privileges.component';
 import { WorkspaceDashboardService } from './workspace-dashboard/workspace-dashboard.service';
 import { WorkspaceServicesService } from './workspace-services/workspace-services.service';
+import { NewWorkspaceComponent } from './new-workspace/new-workspace.component';
+import { DynamicLoaderService } from './dynamic-loader.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -92,7 +94,8 @@ import { WorkspaceServicesService } from './workspace-services/workspace-service
                 EditProfileComponent,
                 WorkspaceListComponent,
                 ChangePasswordComponent,
-                ManageMemberPrivilegesComponent
+                ManageMemberPrivilegesComponent,
+                NewWorkspaceComponent
         ],
         imports: [
                 BrowserModule,
@@ -130,8 +133,10 @@ import { WorkspaceServicesService } from './workspace-services/workspace-service
                 WorkspaceLandingPageService,
                 ChangePasswordService,
                 WorkspaceDashboardService,
-                WorkspaceServicesService
+                WorkspaceServicesService,
+                DynamicLoaderService
         ],
-        bootstrap: [AppComponent]
+        bootstrap: [AppComponent],
+        entryComponents: [NewWorkspaceComponent]
 })
 export class AppModule { }
