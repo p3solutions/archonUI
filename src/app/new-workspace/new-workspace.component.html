@@ -24,7 +24,7 @@
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
 
-            <div class="item active form-group">
+            <div class="item  form-group">
                 <div class="col-md-12 row m-10">
                   <div class="col-md-4">Workspace Name</div>
                   <div class="col-md-8">
@@ -50,18 +50,19 @@
                 </div>
             </div>
 
-            <div class="item form-group second-last second">
+            <div class="item form-group second-last second active">
               <div class="col-md-12 row m-10">
                 <h4 >Select Database for: <b>{{wsName}}</b></h4>
-                <div class="p-10-0">
-                  <table id="db-list-table" class="display m-10" cellspacing="0" width="100%" datatable>
+                <div [ngClass]="{'archon-loading-icon' : !isDBAvailable}"></div>
+                <div class="p-10-0 {{isDBAvailable ? '' : 'hide'}}">
+                  <table id="db-list-table" class="display m-10" cellspacing="0" width="100%">
                     <thead>
                       <tr>
-                        <th></th>
                         <th></th>
                         <th>Database Name</th>
                         <th>Owner</th>
                         <th>Created Date</th>
+                        <th></th>
                       </tr>
                     </thead>
                   </table>
@@ -97,11 +98,9 @@
         
           <!-- Controls -->
           <a hidden class="left carousel-control" id="prev-slide" href="#createWSModal-carousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
           </a>
           <a hidden class="right carousel-control" id="next-slide" href="#createWSModal-carousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
           </a>
         </div>

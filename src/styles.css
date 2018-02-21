@@ -626,3 +626,8 @@ i.link:hover {
   width: 550px;
   font-size: 24px;
 }
+input[type="checkbox"].scaleBox {
+  -webkit-transform: scale(1.3);
+  -moz-transform: scale(1.3);
+  transform: scale(1.3);
+}

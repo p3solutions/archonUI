@@ -33,6 +33,7 @@ export class MemberObject {
 export class DatabaseObject {
     id: string;
     name: string;
+    type: string;
 }
 export class WorkspaceObject {
     id: number;
@@ -48,4 +49,17 @@ export class WorkspaceObject {
 }
 export interface AnyObject {
     [key: string]: any;
+}
+
+export class ConfiguredDB {
+    id: string;
+    createdAt: 1519035756;
+    updatedAt: 1519035756;
+    databaseName: string;
+    host: string;
+    type: string;
+    port: number;
+    userName: string;
+    owner: OwnerObject;
+    databaseTypeInfo: DatabaseObject;
 }

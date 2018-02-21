@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserObject, AnyObject } from '../workspace-objects';
+import { UserObject, AnyObject, ConfiguredDB } from '../workspace-objects';
 import { UserinfoService } from '../userinfo.service';
-
+import { UserWorkspaceService } from '../user-workspace.service';
 @Component({
   selector: 'app-new-workspace',
   templateUrl: './new-workspace.component.html',
@@ -13,9 +13,13 @@ export class NewWorkspaceComponent implements OnInit {
   today = new Date();
   wsParam: AnyObject = {};
   databaseIds: string[];
+  supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
+  isDBAvailable= false;
+
   constructor(
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private userWorkspaceService: UserWorkspaceService
   ) { }
 
   ngOnInit() {
@@ -25,9 +29,7 @@ export class NewWorkspaceComponent implements OnInit {
   documentReadyFn() {
     this.loggedInUser = this.userinfoService.getLoggedInUserFromAccessToken();
     document.getElementById('openCreateWSmodal').click();
-    // $('#createWSModal-carousel').carousel({
-    //   interval: false
-    // });
+    this.getSupportedDBs();
   }
   addClass(elementId, classSelector) {
     document.getElementById(elementId).classList.add(classSelector);
@@ -71,5 +73,46 @@ export class NewWorkspaceComponent implements OnInit {
       // throw error
     }
     console.log(this.wsParam);
+  }
+
+  getSupportedDBs() {
+    this.userWorkspaceService.getSupportedDBList()
+    .subscribe( res => {
+      if (res.length > 0) {
+        res.forEach(element => {
+          this.supportedDBs.push(element);
+        });
+        this.isDBAvailable = true;
+        this.generateDBtable({ data: this.supportedDBs});
+      }
+    });
+  }
+  generateDBtable(xData) {
+    console.log(xData, $('#db-list-table'));
+    $('#db-list-table').DataTable({
+      'ajax': function (data, callback, settings) { callback(xData); },
+      'columns': [
+        {
+          'className': 'disp-bl',
+          'orderable': false,
+          'data': null,
+          'defaultContent': `<div data-tooltip="Select" class="select-db">
+                              <input type="checkbox" class="scaleBox" />
+                            </div>`,
+          'title': ''
+        },
+        { 'data': 'databaseName' },
+        { 'data': 'owner.name' },
+        { 'data': 'createdAt' },
+        {
+          'className': 'fa fa-plus-circle fa-lg archon-icon disp-bl',
+          'orderable': false,
+          'data': null,
+          'defaultContent': '',
+          'title': ''
+        }
+      ],
+      'order': [[1, 'asc']]
+    });
   }
 }

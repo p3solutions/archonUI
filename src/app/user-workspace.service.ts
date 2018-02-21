@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
-import { WorkspaceObject } from './workspace-objects';
+import { WorkspaceObject, ConfiguredDB } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
 import { environment } from '../environments/environment';
 
 @Injectable()
 export class UserWorkspaceService {
   apiUrl = environment.apiUrl;
+  getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
   constructor(
     private http: HttpClient,
     private userinfoService: UserinfoService
@@ -17,10 +18,6 @@ export class UserWorkspaceService {
     this.http = http;
   }
 
-  private extractWorkspaces(res: any) {
-    const data = res.data.workspaces;
-    return data || [];
-  }
   getUserWorkspaceUrl() {
     return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
   }
@@ -33,6 +30,22 @@ export class UserWorkspaceService {
     return this.http.get<WorkspaceObject[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders()})
     .map(this.extractWorkspaces)
     .pipe(catchError(this.handleError<WorkspaceObject[]>('getUserWorkspaces')));
+  }
+
+  getSupportedDBList() {
+    return this.http.get<ConfiguredDB[]>(this.getConfiguredDBurl, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractConfiguredDatabases)
+      .pipe(catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList')));
+  }
+
+  private extractWorkspaces(res: any) {
+    const data = res.data.workspaces;
+    return data || [];
+  }
+  private extractConfiguredDatabases(res: any) {
+    console.log('extractConfiguredDatabases', res);
+    const data = res.data.configuredDatabases;
+    return data || [];
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -19,3 +19,6 @@ textarea{
     background: #ffc1c1;
     border-color: #ff5959;
 }
+th.disp-bl {
+  display: table-column;
+}
