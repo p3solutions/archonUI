@@ -1,3 +1,42 @@
-<p>
-  add-members works!
-</p>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-1 back-arrow back-arrow-modal">
+            <a data-tooltip="Back" data-dismiss="modal">
+              <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="col-md-8">
+            <h3 class="popup-panel-heading">
+              Add New Members
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <table datatable id="manage-members-table" class="display" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>User name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input id="box1" type="checkbox" /></td>
+            <td>aaa</td>
+            <td>ccc</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary btn-popup" data-dismiss="modal">Cancel</button>
+      <button type="submit" (click)="changeOnConfirm()" class="btn btn-primary btn-popup" data-dismiss="modal">Confirm</button>
+    </div>
+  </div>
+</div>
