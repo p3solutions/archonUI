@@ -30,3 +30,30 @@ span,i {
 .mem-priv-row {
     display: table-row;
 }
+.tooltip-left-45 [data-tooltip]:before {
+  left: 45%;
+}
+
+tr.shown .fa-plus-circle {
+  content: "\f056";
+}
+
+th.disp-bl {
+    display: table-column;
+}
+.toggle .toggle-show {
+    display: none;
+}
+
+.toggle-hide {
+  display: none;
+}
+
+.toggle .toggle-hide {
+  display: block;
+}
+
+.btn-form {
+    margin-top: 20px;
+}
+
