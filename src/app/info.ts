@@ -1,6 +1,7 @@
+import { RoleObject } from './workspace-objects';
 export class Info {
     id: number;
     username: string;
-    role: string;
+    roles: RoleObject;
     show = false;
 }

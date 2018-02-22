@@ -7,8 +7,8 @@ export class OwnerObject {
     name: string;
 }
 export class RoleObject {
-    id: string;
-    name: string;
+    roleId: string;
+    roleName: string;
 }
 export class WorkspaceRolesObject {
     id: string;

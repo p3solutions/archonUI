@@ -31,17 +31,22 @@ export class WorkspaceLandingPageComponent implements OnInit {
     this.token_data = this.jwtHelper.decodeToken(this.accessToken);
     this.info = new Info();
     this.info.id = this.token_data.user.id;
-    this.info.role = this.token_data.user.role;
+    this.info.roles = this.token_data.roles[0];
     this.info.username = this.token_data.username;
-    if (this.info.role === 'ROLE_ADMIN') {
-      this.info.show = true;
-    }
-    this.workspaceLandingPageService.getWorkspaces().subscribe(info => {
-      this.info = info;
-      if (this.info.role === 'Admin') {
+    if (this.info.roles.roleName === 'ROLE_NOT_ASSIGNED') {
+      this.router.navigate(['workspace/no-workspace']);
+    } else {
+      if (this.info.roles.roleName === 'ROLE_ADMIN') {
         this.info.show = true;
       }
-    });
-    this.router.navigate(['workspace/workspace-dashboard']);
+      this.router.navigate(['workspace/workspace-dashboard']);
+    }
+
+      // this.workspaceLandingPageService.getWorkspaces().subscribe(info => {
+      //   this.info = info;
+      //   if (this.info.roles.roleName === 'ROLE_ADMIN') {
+      //     this.info.show = true;
+      //   }
+      // });
+    }
   }
-}

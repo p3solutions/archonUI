@@ -23,9 +23,9 @@ export class NavbarComponent implements OnInit {
     this.token_data = this.jwtHelper.decodeToken(this.accessToken);
     this.info = new Info();
     this.info.id = this.token_data.user.id;
-    this.info.role = this.token_data.roles[0].roleName;
+    this.info.roles = this.token_data.roles[0];
     this.info.username = this.token_data.user.name;
-    if (this.info.role === 'ROLE_ADMIN') {
+    if (this.info.roles.roleName === 'ROLE_ADMIN') {
       this.info.show = true;
     }
   }
