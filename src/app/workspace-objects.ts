@@ -53,8 +53,9 @@ export interface AnyObject {
 
 export class ConfiguredDB {
     id: string;
-    createdAt: 1519035756;
-    updatedAt: 1519035756;
+    createdAt: number;
+    createdDate: string; // = new Date(this.createdAt).toDateString(); // for formated dates
+    updatedAt: number;
     databaseName: string;
     host: string;
     type: string;

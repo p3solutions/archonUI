@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserObject, AnyObject, ConfiguredDB } from '../workspace-objects';
+import { UserObject, AnyObject, ConfiguredDB, WorkspaceObject } from '../workspace-objects';
 import { UserinfoService } from '../userinfo.service';
 import { UserWorkspaceService } from '../user-workspace.service';
 @Component({
@@ -12,11 +12,14 @@ export class NewWorkspaceComponent implements OnInit {
   loggedInUser: UserObject;
   today = new Date();
   wsParam: AnyObject = {};
-  databaseIds: string[];
   supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
   isDBAvailable= false;
-
+  newWSinfo: WorkspaceObject;
+  databaseIds: string[] = [];
+  selectedDBList: ConfiguredDB[] = [];
+  errorDBselect = false;
+  DBtable: any;
   constructor(
     private userinfoService: UserinfoService,
     private userWorkspaceService: UserWorkspaceService
@@ -55,31 +58,45 @@ export class NewWorkspaceComponent implements OnInit {
       document.getElementById('wsName').focus();
       e.stopPropagation();
     } else {
-      if (document.querySelector('.second-last').classList.contains('active')) {
-        this.removeClass('create-btn', 'hide');
-        this.addClass('next-btn', 'hide');
+      if (document.querySelector('.second-last').classList.contains('active') ) {
+        if (this.databaseIds.length > 0) { // selected at least one DB
+          // restricting to select one, temporarily as per Backend team
+           if (this.databaseIds.length > 1) {
+            alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
+            return false;
+          }
+          // end of restriction to 1 selection
+          this.removeClass('create-btn', 'hide');
+          this.addClass('next-btn', 'hide');
+          document.getElementById('next-slide').click();
+        } else {
+          this.errorDBselect = true; // make it false on click of chkbx
+        }
+      } else {
+        document.getElementById('next-slide').click();
+        this.removeClass('prev-btn', 'hide');
+        this.addClass('cancel-btn', 'hide');
       }
-      document.getElementById('next-slide').click();
-      this.removeClass('prev-btn', 'hide');
-      this.addClass('cancel-btn', 'hide');
     }
   }
 
   createWS() {
     this.wsParam.workspaceName = this.wsName;
-    if (this.databaseIds && this.databaseIds.length > 0) {
-      this.wsParam.databaseIds = this.databaseIds;
-    } else {
-      // throw error
-    }
-    console.log(this.wsParam);
+    this.wsParam.databaseIds = this.databaseIds;
+    this.userWorkspaceService.createNewWorkspace(this.wsParam).subscribe( res => {
+      if (res) {
+        this.newWSinfo = res;
+        this.postCreation();
+      }
+    });
   }
 
   getSupportedDBs() {
     this.userWorkspaceService.getSupportedDBList()
     .subscribe( res => {
-      if (res.length > 0) {
+      if (res && res.length > 0) {
         res.forEach(element => {
+          element.createdDate = new Date(element.createdAt).toDateString();
           this.supportedDBs.push(element);
         });
         this.isDBAvailable = true;
@@ -88,24 +105,25 @@ export class NewWorkspaceComponent implements OnInit {
     });
   }
   generateDBtable(xData) {
-    console.log(xData, $('#db-list-table'));
-    $('#db-list-table').DataTable({
+    const thisComponent = this;
+    this.DBtable = $('#db-list-table').DataTable({
+      'lengthMenu': [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'All']],
       'ajax': function (data, callback, settings) { callback(xData); },
       'columns': [
         {
-          'className': 'disp-bl',
+          'className': 'text-center',
           'orderable': false,
           'data': null,
           'defaultContent': `<div data-tooltip="Select" class="select-db">
-                              <input type="checkbox" class="scaleBox" />
+                              <input type="checkbox" class="scaleBox selected-db" />
                             </div>`,
           'title': ''
         },
         { 'data': 'databaseName' },
         { 'data': 'owner.name' },
-        { 'data': 'createdAt' },
+        { 'data': 'createdDate' },
         {
-          'className': 'fa fa-plus-circle fa-lg archon-icon disp-bl',
+          'className': 'fa fa-plus-circle fa-lg archon-icon disp-bl text-center',
           'orderable': false,
           'data': null,
           'defaultContent': '',
@@ -114,5 +132,81 @@ export class NewWorkspaceComponent implements OnInit {
       ],
       'order': [[1, 'asc']]
     });
+    this.bindCHeckboxClick();
+    $('.dataTables_paginate,.paging_simple_numbers').off('click').on('click', function() {
+      thisComponent.bindCHeckboxClick();
+    });
+  }
+  bindCHeckboxClick() {
+    const thisComponent = this; // this is component's 'this'
+    $('input[type=checkbox].selected-db').off('change').on('change', function () {
+      thisComponent.refreshSelectedDBs(this);
+    });
+  }
+  refreshSelectedDBs(checkbox: HTMLElement) {
+    const _row = $(checkbox).closest('tr');
+    const selDBdata = this.DBtable.row(_row).data();
+    const id = selDBdata.id;
+    if ($(checkbox).is(':checked')) {
+      this.databaseIds.push(id);
+      this.supportedDBs.forEach(db => {
+        if (id === db.id) {
+          this.selectedDBList.push(db);
+        }
+      });
+    } else {
+      this.databaseIds = this.removeElementByValue(this.databaseIds, id);
+      this.selectedDBList = this.removeObjByValue(this.selectedDBList, 'id', id);
+    }
+    if (this.databaseIds.length === 0 ) {
+      this.errorDBselect = true;
+    } else {
+      this.errorDBselect = false;
+    }
+    // console.log('selected DB ids', this.databaseIds, this.selectedDBList);
+  }
+  removeElementByValue(array, value) {
+    return array.filter(function (elem, _index) {
+      return value !== elem;
+    });
+  }
+  removeObjByValue(array, key, value) {
+    return array.filter(function (elem, _index) {
+      return value !== elem[key];
+    });
+  }
+
+  postCreation() {
+    const thisComponent = this; // this is component's 'this'
+    thisComponent.addClass('prev-btn', 'hide');
+    thisComponent.addClass('create-btn', 'hide');
+    thisComponent.removeClass('ok-btn', 'hide');
+    document.getElementById('next-slide').click();
+    $('#selected-db-list-table').DataTable({
+      // 'searching': false,
+      'lengthMenu': [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'All']],
+      'ajax': function (data, callback, settings) { callback({data: thisComponent.selectedDBList}); },
+      'columns': [
+        { 'data': 'databaseName' },
+        { 'data': 'owner.name' },
+        {
+          'className': '',
+          'orderable': false,
+          'data': null,
+          'defaultContent': 'Pending Approval',
+          'title': 'Status'
+        }
+      ],
+      'order': [[0, 'asc']]
+    });
+  }
+  resetCarousel() {
+    this.addClass('ok-btn', 'hide');
+    document.getElementById('next-slide').click();
+    this.removeClass('next-btn', 'hide');
+    this.removeClass('cancel-btn', 'hide');
+    this.wsName = undefined;
+    this.wsNameEmpty = false;
+    this.newWSinfo = null;
   }
 }

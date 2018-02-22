@@ -1,14 +1,20 @@
-#createWSModal-carousel .form-group {
-    height: 300px;
+/* #createWSModal-carousel .form-group {
+    height: 360px;
     margin: 10px;
-}
+} */
 .modal-dialog {
     margin: 150px auto auto;
     width: 850px;
 }
+.msg-modal {
+    width: 600px;
+}
+.msg-footer {
+  text-align: center;
+}
 textarea{
     margin: 0px;
-    height: 155px;
+    height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 3px;
@@ -21,4 +27,8 @@ textarea{
 }
 th.disp-bl {
   display: table-column;
+}
+.table-div {
+    max-height: 330px;
+    overflow: auto;
 }

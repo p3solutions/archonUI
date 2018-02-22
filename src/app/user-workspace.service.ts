@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
-import { WorkspaceObject, ConfiguredDB } from './workspace-objects';
+import { WorkspaceObject, ConfiguredDB, AnyObject } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
 import { environment } from '../environments/environment';
 
@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 export class UserWorkspaceService {
   apiUrl = environment.apiUrl;
   getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
+  createNewWSurl = `${this.apiUrl}workspaces`;
   constructor(
     private http: HttpClient,
     private userinfoService: UserinfoService
@@ -38,12 +39,22 @@ export class UserWorkspaceService {
       .pipe(catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList')));
   }
 
+  createNewWorkspace(params: AnyObject) {
+    params.ownerId = this.userinfoService.getUserId();
+    return this.http.post<WorkspaceObject>(this.createNewWSurl, params, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractData)
+      .pipe(catchError(this.handleError<WorkspaceObject>('createNewWorkspace')));
+  }
+
+  private extractData(res: any) {
+    const data = res.data;
+    return data || [];
+  }
   private extractWorkspaces(res: any) {
     const data = res.data.workspaces;
     return data || [];
   }
   private extractConfiguredDatabases(res: any) {
-    console.log('extractConfiguredDatabases', res);
     const data = res.data.configuredDatabases;
     return data || [];
   }
