@@ -177,7 +177,7 @@ export class ManageMembersComponent implements OnInit {
     const isServiceClick = _this.hasClass('service-click');
     const _serviceActions = _this.closest('table').find('.toggle-child.service-actions');
     if (isUpdate) {
-      if (isServiceClick) {
+      if (isServiceClick) { // update Services functionality
         const permissions = [];
         for (let index = 0; index < _serviceActions.length; index++) {
           const _element = $(_serviceActions[index]);
@@ -192,8 +192,8 @@ export class ManageMembersComponent implements OnInit {
             }
           }
         }
-        const params: AnyObject = { workspaceId: this.workspaceId };
-        if (permissions.length > 0) {
+        const params: AnyObject = { workspaceId: this.workspaceId, userId: $(tr).attr('user-id') };
+        if (permissions.length > 0) { // only update when at least one permission is changed
           params.permissions = permissions;
           this.manageMembersService.updateServiceActions(params).subscribe(res => { // API params are still not confirmed
             // TODO: update data using res
@@ -203,7 +203,7 @@ export class ManageMembersComponent implements OnInit {
             }
           });
         }
-      } else {
+      } else { // update Roles functionality
         const oldRoleId = tr.find('.toggle-show').attr('old-permission');
         const newRoleId = tr.find('.roleList').val();
         if (oldRoleId !== newRoleId && newRoleId !== '0') {
@@ -239,15 +239,14 @@ export class ManageMembersComponent implements OnInit {
                       `;
     });
     roleDropdown += `</select>`;
-    const roleTr = `<tr class="toggle-child">
+    const roleTr = `<tr class="toggle-child" user-id="${wsAccess.user.id}">
                       <th class="col-md-4 archon-names archon-names-100">
                         <div data-tooltip="Role">
                           <span class="trim-text w-180">Role</span>
                         </div>
                       </th>
                       <td class="col-md-5">
-                        <span class="toggle-show" old-role="${wsAccess.workspaceRole.id}" user-id="${wsAccess.user.id}"
-                          >${wsAccess.workspaceRole.name}</span>
+                        <span class="toggle-show" old-role="${wsAccess.workspaceRole.id}">${wsAccess.workspaceRole.name}</span>
                         <span class="toggle-hide">
                           ${roleDropdown}
                         </span>
@@ -273,7 +272,7 @@ export class ManageMembersComponent implements OnInit {
     let serviceTr;
     const serviceLen = wsAccess.serviceActions.length;
     wsAccess.serviceActions.forEach((service, index) => {
-      serviceTr += `<tr class="toggle-child service-actions">
+      serviceTr += `<tr class="toggle-child service-actions" user-id="${wsAccess.user.id}">
                       <th class="col-md-4 archon-names ${(service.serviceName.length < 12) ? 'archon-names-100' : ''}">
                         <div data-tooltip="${service.serviceName}">
                           <span class="trim-text w-180">${service.serviceName}</span>
