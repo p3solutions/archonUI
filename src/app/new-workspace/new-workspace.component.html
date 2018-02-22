@@ -14,16 +14,24 @@
       <!-- carousel -->
         <div id="createWSModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
           <!-- Indicators -->
-          <ol class="carousel-indicators">
+          <ul *ngIf="!newWSinfo" class="multi-step-bars">
+            <li > 
+              <span id="progress-bar" class="bar-expand width-5-pc"></span>
+              <em class="col-md-4 text-center">Workspace Details</em>
+              <em class="col-md-4 text-center">Data Source selection</em>
+              <em class="col-md-4 text-center">Review details</em>
+            </li>
+          </ul>
+
+          <ol class="only carousel-indicators hide">
             <li data-target="#createWSModal-carousel" data-slide-to="0" class="active"></li>
             <li data-target="#createWSModal-carousel" data-slide-to="1"></li>
             <li data-target="#createWSModal-carousel" data-slide-to="2"></li>
           </ol>
-        
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
 
-            <div class="item active form-group">
+            <div step="0" class="item active form-group">
                 <div class="col-md-12 row m-10">
                   <div class="col-md-4">Workspace Name</div>
                   <div class="col-md-8">
@@ -49,7 +57,7 @@
                 </div>
             </div>
 
-            <div class="item form-group second-last second">
+            <div step="1" class="item form-group second-last second">
               <div *ngIf="errorDBselect" class="alert-danger text-center"><strong>Select at least one database!</strong></div>
               <div class="col-md-12">
                 <h4 >Select Database for: <b>{{wsName}}</b></h4>
@@ -72,7 +80,7 @@
               </div>
             </div>
 
-            <div class="item form-group final">
+            <div step="2" class="item form-group final">
                 <div class="col-md-12 row m-10">
                   <div class="col-md-4">Workspace Name</div>
                   <div class="col-md-8">{{wsName}}</div>

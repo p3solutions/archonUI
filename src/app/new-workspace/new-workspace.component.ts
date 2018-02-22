@@ -9,6 +9,7 @@ import { UserWorkspaceService } from '../user-workspace.service';
 })
 export class NewWorkspaceComponent implements OnInit {
   wsName: string;
+  wsDesc: string;
   loggedInUser: UserObject;
   today = new Date();
   wsParam: AnyObject = {};
@@ -20,6 +21,8 @@ export class NewWorkspaceComponent implements OnInit {
   selectedDBList: ConfiguredDB[] = [];
   errorDBselect = false;
   DBtable: any;
+  selectedDBtable: any;
+
   constructor(
     private userinfoService: UserinfoService,
     private userWorkspaceService: UserWorkspaceService
@@ -50,6 +53,7 @@ export class NewWorkspaceComponent implements OnInit {
       this.removeClass('next-btn', 'hide');
     }
     document.getElementById('prev-slide').click();
+    this.handleStepIindicator(false);
   }
 
   nextStep(e) {
@@ -69,20 +73,56 @@ export class NewWorkspaceComponent implements OnInit {
           this.removeClass('create-btn', 'hide');
           this.addClass('next-btn', 'hide');
           document.getElementById('next-slide').click();
+          this.handleStepIindicator(true);
         } else {
           this.errorDBselect = true; // make it false on click of chkbx
         }
       } else {
         document.getElementById('next-slide').click();
+        this.handleStepIindicator(true);
         this.removeClass('prev-btn', 'hide');
         this.addClass('cancel-btn', 'hide');
       }
     }
   }
 
+  handleStepIindicator(isNext) {
+    const slideNo = $('.carousel-inner .item.active').attr('step');
+    console.log('slideNo', slideNo, document.getElementById('progress-bar'));
+    switch (slideNo) {
+      case '0':
+        if (isNext) {
+          this.removeClass('progress-bar', 'width-5-pc');
+          this.removeClass('progress-bar', 'width-33-pc-rev');
+          this.addClass('progress-bar', 'width-33-pc');
+        }
+        break;
+      case '1':
+        if (isNext) {
+          this.removeClass('progress-bar', 'width-33-pc');
+          this.addClass('progress-bar', 'width-66-pc');
+        } else {
+          this.removeClass('progress-bar', 'width-66-pc-rev');
+          this.addClass('progress-bar', 'width-33-pc-rev');
+        }
+        break;
+      case '2':
+        if (isNext) {
+          this.removeClass('progress-bar', 'width-66-pc');
+          this.addClass('progress-bar', 'width-100-pc');
+        } else {
+          this.removeClass('progress-bar', 'width-66-pc');
+          this.addClass('progress-bar', 'width-66-pc-rev');
+        }
+        break;
+      default:
+        break;
+    }
+  }
   createWS() {
     this.wsParam.workspaceName = this.wsName;
     this.wsParam.databaseIds = this.databaseIds;
+    this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.createNewWorkspace(this.wsParam).subscribe( res => {
       if (res) {
         this.newWSinfo = res;
@@ -106,6 +146,9 @@ export class NewWorkspaceComponent implements OnInit {
   }
   generateDBtable(xData) {
     const thisComponent = this;
+    if (this.DBtable) {
+      this.DBtable.destroy();
+    }
     this.DBtable = $('#db-list-table').DataTable({
       'lengthMenu': [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'All']],
       'ajax': function (data, callback, settings) { callback(xData); },
@@ -182,7 +225,10 @@ export class NewWorkspaceComponent implements OnInit {
     thisComponent.addClass('create-btn', 'hide');
     thisComponent.removeClass('ok-btn', 'hide');
     document.getElementById('next-slide').click();
-    $('#selected-db-list-table').DataTable({
+    if (this.selectedDBtable) {
+      this.selectedDBtable.destroy();
+    }
+    this.selectedDBtable = $('#selected-db-list-table').DataTable({
       // 'searching': false,
       'lengthMenu': [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'All']],
       'ajax': function (data, callback, settings) { callback({data: thisComponent.selectedDBList}); },
@@ -207,6 +253,7 @@ export class NewWorkspaceComponent implements OnInit {
     this.removeClass('cancel-btn', 'hide');
     this.wsName = undefined;
     this.wsNameEmpty = false;
+    this.wsDesc = undefined;
     this.newWSinfo = null;
   }
 }
