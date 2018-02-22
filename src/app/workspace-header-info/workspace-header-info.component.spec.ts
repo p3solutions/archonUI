@@ -70,7 +70,7 @@ describe('WorkspaceHeaderInfoComponent', () => {
     const workspaceName: Element = workspaceHeaderInfo.querySelector('div.workspace-name');
     expect(workspaceName.textContent).toContain(component.currentWorkspace.workspaceName);
     const workspaceRole: Element = workspaceHeaderInfo.querySelector('div.workspace-role');
-    expect(workspaceRole.textContent).toContain(component.currentWorkspace.loggedInUserRole.name);
+    expect(workspaceRole.textContent).toContain(component.currentWorkspace.loggedInUserRole.roleName);
     const workspaceMeta: Element = workspaceHeaderInfo.querySelector('div.workspace-master-meta-version');
     expect(workspaceMeta.textContent).toContain(component.currentWorkspace.masterMetadataVersion.toString());
     // disposeMe.unsubscribe();
