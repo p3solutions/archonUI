@@ -3,3 +3,13 @@
     height: 40px;
     overflow-y: auto;
 }
+
+td{
+    font-size: 14px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+th {
+    font-size: 15px;
+    text-align: center;
+}

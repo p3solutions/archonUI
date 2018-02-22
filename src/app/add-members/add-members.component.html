@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="modal-body">
-      <table datatable id="manage-members-table" class="display" cellspacing="0" width="100%">
+      <table datatable id="manage-members-table" class="display" cellspacing="0" width="100%" *ngIf="isProgress">
         <thead>
           <tr>
             <th>Select</th>
@@ -26,10 +26,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let item of this.userList">
             <td><input id="box1" type="checkbox" /></td>
-            <td>aaa</td>
-            <td>ccc</td>
+            <td>{{ item['name'] }}</td>
+            <td>{{ item['emailAddress'] }}</td>
           </tr>
         </tbody>
       </table>

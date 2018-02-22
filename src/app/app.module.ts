@@ -61,6 +61,7 @@ import { ManageMemberPrivilegesComponent } from './manage-member-privileges/mana
 import { WorkspaceDashboardService } from './workspace-dashboard/workspace-dashboard.service';
 import { WorkspaceServicesService } from './workspace-services/workspace-services.service';
 import { AddMembersComponent } from './add-members/add-members.component';
+import { AddMembersService } from './add-members/add-members.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -132,7 +133,8 @@ import { AddMembersComponent } from './add-members/add-members.component';
                 WorkspaceLandingPageService,
                 ChangePasswordService,
                 WorkspaceDashboardService,
-                WorkspaceServicesService
+                WorkspaceServicesService,
+                AddMembersService
         ],
         bootstrap: [AppComponent]
 })
