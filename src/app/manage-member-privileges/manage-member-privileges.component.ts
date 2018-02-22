@@ -29,7 +29,7 @@ export class ManageMemberPrivilegesComponent implements OnInit {
     this.showServiceDropdown = false;
     this.getServiceList();
     if (!this.wsRoleList || this.wsRoleList.length === 0) { // it will not fetch from backend if value already is passed
-      this.getWSRoleList(this.wsAccess.workspaceRole.id);
+      this.getWSRoleList(this.wsAccess.workspaceRole.roleId);
     }
     this.getPermissionList();
   }

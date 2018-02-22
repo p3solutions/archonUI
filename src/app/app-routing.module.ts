@@ -80,28 +80,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
-// , data : {title : 'Manage Member Request for Approvals'}
-// const routes: Routes = [
-//   { path: 'workspace', component: WorkspaceLandingPageComponent, children : [
-//     {
-//       path : 'workspace-panel', component : WorkspacePanelComponent, children : [
-//         {
-//           path : 'member-request',component : MemberRequestComponent, data :{title : 'Manage Member Request'}
-//         },
-//         {
-//           path : 'manage-members',component : MemberRequestComponent, data :{title : 'Manage members of ABC'}
-//         },
-//         {
-//           path : 'manage-master-metadata',component : ManageMasterMetadataComponent, data : {title : 'Manage Master metadata for ABC'}
-//         },
-//         {
-//           path : 'workspace-info',component : MemberRequestComponent, data : {title : 'Workspace Information'}
-//         }
-//       ]
-//     }
-//   ] },

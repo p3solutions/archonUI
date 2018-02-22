@@ -590,6 +590,15 @@ i.link:hover {
   left: 38%;
   width: 100px;
 }
+.tooltip-left-45 [data-tooltip]:before {
+  left: 45%;
+}
+
+.tooltip-exp-coll [data-tooltip]:before {
+  left: 0;
+  width: 110px;
+}
+
 
 /**
  * Tooltip Styles End

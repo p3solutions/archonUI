@@ -60,7 +60,7 @@ describe('ManageMembersComponent', () => {
     const role = rowArray[2];
     const workspaceAccess = component.manageMembers[0];
     expect(member.textContent.trim()).toBe(workspaceAccess.user.name);
-    expect(role.textContent.trim()).toBe(workspaceAccess.workspaceRole.name);
+    expect(role.textContent.trim()).toBe(workspaceAccess.workspaceRole.roleName);
   });
 // this shouldn't be executed on production
   it('Should work the delete functionality, by deleting one member-info', () => {
@@ -69,7 +69,7 @@ describe('ManageMembersComponent', () => {
     expect(component.onDelete).toBeTruthy();
     let delButtons = fixture.debugElement.queryAll(By.css('.del-member-info'));
     const btnsBeforeDel = delButtons.length;
-    component.onDelete(0); // calling on first member-info
+    component.onDelete(0, null); // calling on first member-info
     fixture.detectChanges();
     delButtons = fixture.debugElement.queryAll(By.css('.del-member-info'));
     const btnsAfterDel = delButtons.length;
