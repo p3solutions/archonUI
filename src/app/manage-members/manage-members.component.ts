@@ -135,8 +135,8 @@ export class ManageMembersComponent implements OnInit {
                             </div>`,
           'title': 'Delete'
         }
-      ],
-      'order': [[1, 'asc']]
+      ]
+      // 'order': [[0, 'asc']]
     });
     $('#manage-members-table tbody').off('click', 'td.exp-coll').on('click', 'td.exp-coll', function () {
       const tr = $(this).closest('tr');
@@ -151,6 +151,7 @@ export class ManageMembersComponent implements OnInit {
         rowDataObj.roleList = thisComponent.wsRoleList;
         rowDataObj.permissionList = thisComponent.permissionList;
         const hidTbl = thisComponent.hiddenTable(rowDataObj);
+        console.log('aadjjrtgjrtjgbrtngvjensfjcse jgv ref', row.child(hidTbl));
         row.child(hidTbl).show();
         $(this).find('.fa-plus-circle').addClass('fa-minus-circle').removeClass('fa-plus-circle');
       }
