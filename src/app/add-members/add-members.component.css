@@ -14,7 +14,7 @@ table.scroll {
     /* width: 100%; */ /* Optional */
     /* border-collapse: collapse; */
     border-spacing: 0;
-    border: 1px solid black;
+    border: 1px solid;
 }
 
 table.scroll tbody,
@@ -24,7 +24,6 @@ thead tr th {
     height: 30px;
     line-height: 30px;
     text-align: center;
-    text-align: right;
 }
 
 table.scroll tbody {
@@ -33,13 +32,8 @@ table.scroll tbody {
     /* overflow-x: hidden; */
 }
 
-tbody { border-top: 1px solid; }
+tbody { border-top: 0px; }
 
-tbody td, thead th {
-    /* width: 20%; */ /* Optional */
-    /* border-right: 1px solid black; */
-    /* white-space: nowrap; */
-}
 
 tbody td:last-child, thead th:last-child {
     border-right: none;
