@@ -62,6 +62,8 @@ import { WorkspaceDashboardService } from './workspace-dashboard/workspace-dashb
 import { WorkspaceServicesService } from './workspace-services/workspace-services.service';
 import { NewWorkspaceComponent } from './new-workspace/new-workspace.component';
 import { DynamicLoaderService } from './dynamic-loader.service';
+import { AddMembersComponent } from './add-members/add-members.component';
+import { AddMembersService } from './add-members/add-members.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -95,7 +97,8 @@ import { DynamicLoaderService } from './dynamic-loader.service';
                 WorkspaceListComponent,
                 ChangePasswordComponent,
                 ManageMemberPrivilegesComponent,
-                NewWorkspaceComponent
+                NewWorkspaceComponent,
+                AddMembersComponent
         ],
         imports: [
                 BrowserModule,
@@ -134,7 +137,8 @@ import { DynamicLoaderService } from './dynamic-loader.service';
                 ChangePasswordService,
                 WorkspaceDashboardService,
                 WorkspaceServicesService,
-                DynamicLoaderService
+                DynamicLoaderService,
+                AddMembersService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent]
