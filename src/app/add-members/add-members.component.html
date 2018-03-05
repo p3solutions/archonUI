@@ -20,16 +20,16 @@
       <table datatable id="manage-members-table" class="display scroll" cellspacing="0" width="100%" *ngIf="isProgress">
         <thead>
           <tr style="width: 401px;">
-            <th style="width: 100px;"> Select</th>
-            <th style="width: 180px;">User name</th>
-            <th style="width: 247px;">Email</th>
+            <th style="width: 25px;"> Select</th>
+            <th style="width: 162px;">User name</th>
+            <th style="width: 254px;">Email</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of this.userList">
-            <td style="width: 110px;"><input id="box1" type="checkbox" /></td>
-            <td style="width: 170px;">{{ item['name'] }}</td>
-            <td style="width: 230px;">{{ item['emailAddress'] }}</td>
+            <td style="width: 55px;"><input id="box1" type="checkbox" /></td>
+            <td style="width: 200px;">{{ item['name'] }}</td>
+            <td style="width: 270px;">{{ item['emailAddress'] }}</td>
           </tr>
         </tbody>
       </table>
