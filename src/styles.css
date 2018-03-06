@@ -591,7 +591,26 @@ i.link:hover {
   line-height: 1.3;
   width: 200px;
 }
-
+.archon-names-200 [data-tooltip]:before {
+  width: 200px;
+  bottom: 105%;
+  left: 38%;
+}
+.archon-names-200 [data-tooltip]:after,
+.archon-names-300 [data-tooltip]:after,
+.archon-names-400 [data-tooltip]:after {
+  bottom: 105%;
+}
+.archon-names-300 [data-tooltip]:before {
+  width: 300px;
+  bottom: 105%;
+  left: 28%;
+}
+.archon-names-400 [data-tooltip]:before {
+  width: 400px;
+  bottom: 105%;
+  left: 20%;
+}
 .archon-names-100 [data-tooltip]:before {
   left: 38%;
   width: 100px;
