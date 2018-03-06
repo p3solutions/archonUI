@@ -270,7 +270,7 @@ export class ManageMembersComponent implements OnInit {
                         `;
     });
     permissionDropdown += `</select>`;
-    let serviceTr;
+    let serviceTr = '';
     const serviceLen = wsAccess.serviceActions.length;
     wsAccess.serviceActions.forEach((service, index) => {
       serviceTr += `<tr class="toggle-child service-actions" user-id="${wsAccess.user.id}">
@@ -299,6 +299,9 @@ export class ManageMembersComponent implements OnInit {
       serviceTr += `</tr>`;
     });
     const hiddenTableStyle = `<style>
+                                .table {
+                                  margin-bottom: 0;
+                                }
                                 th.disp-bl {
                                     display: table-column;
                                 }
@@ -330,6 +333,7 @@ export class ManageMembersComponent implements OnInit {
                               </table>
                               ${hiddenTableStyle}
                               `;
+                              // console.log(hiddenTableHtml);
     return hiddenTableHtml;
   }
 }
