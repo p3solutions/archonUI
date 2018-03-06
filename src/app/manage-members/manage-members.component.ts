@@ -302,6 +302,9 @@ export class ManageMembersComponent implements OnInit {
                                 .table {
                                   margin-bottom: 0;
                                 }
+                                .table>tbody>tr>td {
+                                  vertical-align: middle;
+                                }
                                 th.disp-bl {
                                     display: table-column;
                                 }
@@ -318,13 +321,13 @@ export class ManageMembersComponent implements OnInit {
                                   display: none;
                                 }
                                 .edit .role-edit {
-                                  display: table-cell;
+                                  display: block;
                                 }
                                 .toggle .toggle-btn .role-edit {
                                   display: none;
                                 }
                                 .toggle .toggle-btn .role-update {
-                                  display: table-cell;
+                                  display: block;
                                 }
                               </style>`;
     const hiddenTableHtml = `<table cellpadding="5" cellspacing="0" border="0" class="table table-hover table-bordered mem-priv">
