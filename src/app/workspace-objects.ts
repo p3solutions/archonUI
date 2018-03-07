@@ -1,6 +1,7 @@
 export class UserObject {
     id: string;
     name: string;
+    emailAddress: string;
 }
 export class OwnerObject {
     id: string;
@@ -32,6 +33,7 @@ export class MemberObject {
 export class DatabaseObject {
     id: string;
     name: string;
+    type: string;
 }
 export class WorkspaceObject {
     id: number;
@@ -45,7 +47,20 @@ export class WorkspaceObject {
     databases: DatabaseObject[];
     workspaceState: string;
 }
-
 export interface AnyObject {
     [key: string]: any;
+}
+
+export class ConfiguredDB {
+    id: string;
+    createdAt: number;
+    createdDate: string; // = new Date(this.createdAt).toDateString(); // for formated dates
+    updatedAt: number;
+    databaseName: string;
+    host: string;
+    type: string;
+    port: number;
+    userName: string;
+    owner: OwnerObject;
+    databaseTypeInfo: DatabaseObject;
 }

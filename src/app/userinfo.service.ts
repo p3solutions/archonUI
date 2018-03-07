@@ -8,6 +8,7 @@ import { JwtHelper } from 'angular2-jwt';
 import { Http, Headers, Response } from '@angular/http';
 import { ErrorObject } from './error-object';
 import { environment } from '../environments/environment';
+import { UserObject } from './workspace-objects';
 @Injectable()
 export class UserinfoService {
   accessToken: string;
@@ -34,6 +35,11 @@ export class UserinfoService {
   getUserId() {
     this.getTokenData();
     return this.token_data.user.id;
+  }
+
+  getLoggedInUserFromAccessToken(): UserObject {
+    this.getTokenData();
+    return this.token_data.user;
   }
 
   getUserInfoUrl() {

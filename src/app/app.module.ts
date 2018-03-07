@@ -60,6 +60,8 @@ import { ChangePasswordService } from './change-password/change-password.service
 import { ManageMemberPrivilegesComponent } from './manage-member-privileges/manage-member-privileges.component';
 import { WorkspaceDashboardService } from './workspace-dashboard/workspace-dashboard.service';
 import { WorkspaceServicesService } from './workspace-services/workspace-services.service';
+import { NewWorkspaceComponent } from './new-workspace/new-workspace.component';
+import { DynamicLoaderService } from './dynamic-loader.service';
 import { AddMembersComponent } from './add-members/add-members.component';
 import { AddMembersService } from './add-members/add-members.service';
 @NgModule({
@@ -95,6 +97,7 @@ import { AddMembersService } from './add-members/add-members.service';
                 WorkspaceListComponent,
                 ChangePasswordComponent,
                 ManageMemberPrivilegesComponent,
+                NewWorkspaceComponent,
                 AddMembersComponent
         ],
         imports: [
@@ -134,8 +137,10 @@ import { AddMembersService } from './add-members/add-members.service';
                 ChangePasswordService,
                 WorkspaceDashboardService,
                 WorkspaceServicesService,
+                DynamicLoaderService,
                 AddMembersService
         ],
-        bootstrap: [AppComponent]
+        bootstrap: [AppComponent],
+        entryComponents: [NewWorkspaceComponent]
 })
 export class AppModule { }

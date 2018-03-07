@@ -3,6 +3,7 @@
 body {
   font-family: "Montserrat", sans-serif;
   background: #FAFAFA;
+  overflow-x: hidden;
 }
 
 h1,
@@ -411,7 +412,12 @@ table.dataTable.no-footer {
 .m-r-10 {
   margin-right: 10px;
 }
-
+.m-t-10 {
+  margin-top: 10px;
+}
+.p-10-0 {
+  padding: 10px 0;
+}
 .w-180 {
   width: 180px;
 }
@@ -585,7 +591,26 @@ i.link:hover {
   line-height: 1.3;
   width: 200px;
 }
-
+.archon-names-200 [data-tooltip]:before {
+  width: 200px;
+  bottom: 105%;
+  left: 38%;
+}
+.archon-names-200 [data-tooltip]:after,
+.archon-names-300 [data-tooltip]:after,
+.archon-names-400 [data-tooltip]:after {
+  bottom: 105%;
+}
+.archon-names-300 [data-tooltip]:before {
+  width: 300px;
+  bottom: 105%;
+  left: 28%;
+}
+.archon-names-400 [data-tooltip]:before {
+  width: 400px;
+  bottom: 105%;
+  left: 20%;
+}
 .archon-names-100 [data-tooltip]:before {
   left: 38%;
   width: 100px;
@@ -597,6 +622,26 @@ i.link:hover {
 .tooltip-exp-coll [data-tooltip]:before {
   left: 0;
   width: 110px;
+}
+.dropdown-menu.scrollable {
+  max-height: 400px;
+  overflow-x:hidden;
+  overflow-y:scroll;
+}
+.dropdown-menu.scrollable::-webkit-scrollbar {
+  width: 10px;
+  display: none;
+}
+.dropdown-menu.scrollable:hover::-webkit-scrollbar {
+  display: block;
+  cursor: pointer;
+}
+.dropdown-menu.scrollable::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 5px;
+}
+.dropdown-menu.scrollable::-webkit-scrollbar-thumb:active {
+  background-color: grey;
 }
 
 
@@ -630,3 +675,231 @@ i.link:hover {
   width: 550px;
   font-size: 24px;
 }
+input[type="checkbox"].scaleBox {
+  -webkit-transform: scale(1.3);
+  -moz-transform: scale(1.3);
+  transform: scale(1.3);
+}
+ol.multi-step-indicators li {
+  background: #ececec;
+  border-color: black;
+  top: -10px;
+  height: 15px;
+  width: 15px;
+  left: 40%;
+  margin: 0 100px;
+  cursor: default;
+}
+ol.multi-step-indicators {
+  top: -10px;
+  height: 0;
+  bottom: auto;
+  width: 80%;
+  left: 40%;
+
+}
+ol.multi-step-indicators li.visited {
+  background: rgb(74, 222, 65);
+}
+ol.multi-step-indicators li.active {
+  background: #269AF8;
+  height: 15px;
+  margin: 0 100px;  
+  width: 15px;
+}
+/*
+.multi-step-bars {
+  background: #ececec;
+  top: -10px;
+  height: 15px;
+  width: 15px;
+  left: 40%;
+  margin: 0 100px;
+  cursor: default;
+  position: absolute;
+}
+.multi-step-bars li {
+  width: 100px;
+  padding: 11px 16px;
+  background: #ececec;
+  background: linear-gradient(to left, grey 50%, green 50%);
+  background-size: 200% 100%;
+  background-position: left bottom;
+  transition: all 1.5s ease;
+}
+
+.multi-step-bars li.visited {
+  background-position: left bottom;
+} 
+*/
+/* Multi-step progress bar css */
+.multi-step-bars {
+  background: #ececec;
+  top: -25px;
+  height: 20px;
+  list-style: none;
+  width: 100%;
+  padding: 0px 20px;
+  cursor: default;
+  position: absolute;
+}
+.multi-step-bars li span {
+  height: 20px;
+}
+.width-5-pc {
+  background: #1abc9c;
+  width: 5%;
+  -moz-animation: width-5-pc 2s ease;
+  -webkit-animation: width-5-pc 2s ease;
+}
+
+@-moz-keyframes width-5-pc {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 5%;
+  }
+}
+
+@-webkit-keyframes width-5-pc {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 5%;
+  }
+}
+
+.width-33-pc {
+  background: #1abc9c;
+  width: 33%;
+  -moz-animation: width-33-pc 2s ease;
+  -webkit-animation: width-33-pc 2s ease;
+}
+@-moz-keyframes width-33-pc {
+  0% {
+    width: 5%;
+  }
+  100% {
+    width: 33%;
+  }
+}
+@-webkit-keyframes width-33-pc {
+  0% {
+    width: 5%;
+  }
+  100% {
+    width: 33%;
+  }
+}
+
+.width-66-pc {
+  background: #1abc9c;
+  width: 66%;
+  -moz-animation: width-66-pc 2s ease;
+  -webkit-animation: width-66-pc 2s ease;
+}
+@-moz-keyframes width-66-pc {
+  0% {
+    width: 33%;
+  }
+  100% {
+    width: 66%;
+  }
+}
+
+@-webkit-keyframes width-66-pc {
+  0% {
+    width: 33%;
+  }
+  100% {
+    width: 66%;
+  }
+}
+.width-100-pc {
+  background: #1abc9c;
+  width: 100%;
+  -moz-animation: width-100-pc 1s ease;
+  -webkit-animation: width-100-pc 1s ease;
+}
+@-moz-keyframes width-100-pc {
+  0% {
+    width: 66%
+  }
+  100% {
+    width: 100%;
+  }
+}
+@-webkit-keyframes width-100-pc {
+  0% {
+    width: 66%
+  }
+  100% {
+    width: 100%;
+  }
+}
+.width-33-pc-rev {
+  background: #1abc9c;
+   width: 5%; /* starting point to reducted to */
+  -moz-animation: width-33-pc-rev 2s ease;
+  -webkit-animation: width-33-pc-rev 2s ease;
+}
+
+@-moz-keyframes width-33-pc-rev {
+  0% {
+    width: 33%;
+  }
+  100% {
+    width: 5%;
+  }
+}
+
+@-webkit-keyframes width-33-pc-rev {
+  0% {
+    width: 33%;
+  }
+  100% {
+    width: 5%;
+  }
+}
+
+.width-66-pc-rev {
+  background: #1abc9c;
+   width: 33%; /* starting point to reducted to */
+  -moz-animation: width-66-pc-rev 2s ease;
+  -webkit-animation: width-66-pc-rev 2s ease;
+}
+
+@-moz-keyframes width-66-pc-rev {
+  0% {
+    width: 66%;
+  }
+  100% {
+    width: 33%;
+  }
+}
+
+@-webkit-keyframes width-66-pc-rev {
+  0% {
+    width: 66%;
+  }
+  100% {
+    width: 33%;
+  }
+}
+
+.bar-expand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+}
+
+.multi-step-bars li span {
+  height: 20px;
+  float: left;
+}
+/* Multi-step progress bar css */
+
+

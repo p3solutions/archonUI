@@ -13,9 +13,10 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div id="service-actions-info" class="workspace-panel-content" *ngFor="let service of serviceActions">
-      <button type="button" class="btn-primary" data-placement="top" title="{{service?.serviceName}}">
+  <div class="row" id="service-actions-info">
+    <div *ngFor="let service of serviceActions"
+     class="workspace-panel-content {{(service?.serviceName?.length<20) ? 'archon-names-200' : ((service?.serviceName?.length<30) ? 'archon-names-300' : 'archon-names-400')}}">
+      <button type="button" class="btn-primary" data-placement="top" [attr.data-tooltip]="service?.serviceName">
         <div class="btn-box">
           <div class="col-md-10" [attr.serviceid]="service?.id">
             <div class="trim-text service-title">Service Name : {{service?.serviceName}}</div>

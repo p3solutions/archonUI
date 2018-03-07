@@ -3,13 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
-import { WorkspaceObject } from './workspace-objects';
+import { WorkspaceObject, ConfiguredDB, AnyObject } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
 import { environment } from '../environments/environment';
 
 @Injectable()
 export class UserWorkspaceService {
   apiUrl = environment.apiUrl;
+  getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
+  createNewWSurl = `${this.apiUrl}workspaces`;
   constructor(
     private http: HttpClient,
     private userinfoService: UserinfoService
@@ -17,10 +19,6 @@ export class UserWorkspaceService {
     this.http = http;
   }
 
-  private extractWorkspaces(res: any) {
-    const data = res.data.workspaces;
-    return data || [];
-  }
   getUserWorkspaceUrl() {
     return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
   }
@@ -33,6 +31,32 @@ export class UserWorkspaceService {
     return this.http.get<WorkspaceObject[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders()})
     .map(this.extractWorkspaces)
     .pipe(catchError(this.handleError<WorkspaceObject[]>('getUserWorkspaces')));
+  }
+
+  getSupportedDBList() {
+    return this.http.get<ConfiguredDB[]>(this.getConfiguredDBurl, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractConfiguredDatabases)
+      .pipe(catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList')));
+  }
+
+  createNewWorkspace(params: AnyObject) {
+    params.ownerId = this.userinfoService.getUserId();
+    return this.http.post<WorkspaceObject>(this.createNewWSurl, params, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractData)
+      .pipe(catchError(this.handleError<WorkspaceObject>('createNewWorkspace')));
+  }
+
+  private extractData(res: any) {
+    const data = res.data;
+    return data || [];
+  }
+  private extractWorkspaces(res: any) {
+    const data = res.data.workspaces;
+    return data || [];
+  }
+  private extractConfiguredDatabases(res: any) {
+    const data = res.data.configuredDatabases;
+    return data || [];
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

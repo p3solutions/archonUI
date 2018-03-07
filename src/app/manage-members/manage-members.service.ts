@@ -18,7 +18,7 @@ export class ManageMembersService {
   wSroleListUrl = 'admin/roles/workspace';
   serviceActionsUrl = 'public/roles/actions';
   wsDelAccessUrl = 'workspaces/access/remove/';
-  updateWSRole = 'workspaces/access/';
+  updateWSRoleUrl = 'workspaces/access/';
   headers: HttpHeaders;
 
   constructor(private http: HttpClient,
@@ -51,14 +51,13 @@ export class ManageMembersService {
   }
   updateRole(params: AnyObject) {
     params.id = this.userinfoService.getUserId(); // loggedIn user id
-    const url = this.apiUrl + this.updateRole + params.id;
+    const url = this.apiUrl + this.updateWSRoleUrl + params.id;
     return this.http.get<any>(url, { headers: this.headers })
       .map(this.extractData)
       .pipe(catchError(this.handleError('updateRole'))
     );
   }
   updateServiceActions(params: AnyObject) {
-    params.userId = this.userinfoService.getUserId();
     const url = this.apiUrl + `users/${params.userId}/roles/actions`;
     console.log('updateServiceActions params:', params);
     return this.http.get<any>(url, { headers: this.headers })
