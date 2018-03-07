@@ -43,13 +43,22 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
       this.viewContainerRef.remove(0);
     }
   }
+  bindDropdownClick() {
+    console.log('bind');
+    $('#selectedWorkspace a.dropdown-data').off('click').on('click', function () {
+      $('#selectedWorkspace a.dropdown-item').removeClass('selected');
+      $(this).addClass('selected');
+    });
+  }
   getUserWorkspaceList() {
+    const bindCallback = this.bindDropdownClick;
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
       if (res && res.length > 0) {
         const fn = function () {
           const dropdownItem = (<HTMLAnchorElement>document.querySelector('#selectedWorkspace .dropdown-data'));
           if (dropdownItem) {
+            bindCallback();
             dropdownItem.click();
             clearInterval(k);
           }

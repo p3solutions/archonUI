@@ -624,24 +624,24 @@ i.link:hover {
   left: 0;
   width: 110px;
 }
-.dropdown-menu.scrollable {
+.dropdown-menu .scrollable {
   max-height: 400px;
   overflow-x:hidden;
   overflow-y:scroll;
 }
-.dropdown-menu.scrollable::-webkit-scrollbar {
+.dropdown-menu .scrollable::-webkit-scrollbar {
   width: 10px;
   display: none;
 }
-.dropdown-menu.scrollable:hover::-webkit-scrollbar {
+.dropdown-menu .scrollable:hover::-webkit-scrollbar {
   display: block;
   cursor: pointer;
 }
-.dropdown-menu.scrollable::-webkit-scrollbar-thumb {
+.dropdown-menu .scrollable::-webkit-scrollbar-thumb {
   background-color: #ccc;
   border-radius: 5px;
 }
-.dropdown-menu.scrollable::-webkit-scrollbar-thumb:active {
+.dropdown-menu .scrollable::-webkit-scrollbar-thumb:active {
   background-color: grey;
 }
 
