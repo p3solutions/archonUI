@@ -16,10 +16,10 @@ export class ManageMembersComponent implements OnInit {
   manageMembers: ManageMembers[];
   isAvailable = false;
   memberPrivilegeParam: any;
-  showMemPriv = false;
+  // showMemPriv = false;
   varArray = [];
-  @Input() passedWSRoleList: any;
-  @Output() passedWSRoleListChange = new EventEmitter<WorkspaceRolesObject[]>();
+  // @Input() passedWSRoleList: any;
+  // @Output() passedWSRoleListChange = new EventEmitter<WorkspaceRolesObject[]>();
   table: any;
   wsRoleList: WorkspaceRolesObject[];
   permissionList: string[];
@@ -41,20 +41,10 @@ export class ManageMembersComponent implements OnInit {
     this.getPermissionList();
   }
 
-  setPassedWSRoleList(passedValue) {
-    this.passedWSRoleList = passedValue; // re-use the passed value in child component
-  }
-
-  generatePrivVariables(len) {
-    for (let i = 0; i < len; i++) {
-      this.varArray[i] = false;
-    }
-  }
   getManageMembersData(workspaceId) {
     this.manageMembersService.getWSMembers(workspaceId)
     .subscribe(res => {
       this.isAvailable = true;
-      this.generatePrivVariables(res.length);
       this.manageMembers = res;
       this.manageMemTable({data: this.manageMembers});
       });
@@ -70,25 +60,6 @@ export class ManageMembersComponent implements OnInit {
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-  }
-
-  hideElementById(id) {
-    const e = document.getElementById(id);
-    e.style.display = 'none';
-  }
-  showElementById(id) {
-    const e = document.getElementById(id);
-    e.style.display = 'block';
-  }
-  showPermission(i, _event, wsAccess) {
-    _event.stopPropagation();
-    this.hideElementById('showPermission-' + i);
-    this.varArray[i] = true;
-  }
-  hidePermission(i, _event, wsAccess) {
-    _event.stopPropagation();
-    this.showElementById('showPermission-' + i);
-    this.varArray[i] = false;
   }
 
   getRoleList() {
@@ -151,7 +122,6 @@ export class ManageMembersComponent implements OnInit {
         rowDataObj.roleList = thisComponent.wsRoleList;
         rowDataObj.permissionList = thisComponent.permissionList;
         const hidTbl = thisComponent.hiddenTable(rowDataObj);
-        console.log('aadjjrtgjrtjgbrtngvjensfjcse jgv ref', row.child(hidTbl));
         row.child(hidTbl).show();
         $(this).find('.fa-plus-circle').addClass('fa-minus-circle').removeClass('fa-plus-circle');
       }
@@ -223,7 +193,6 @@ export class ManageMembersComponent implements OnInit {
         }
       }
     } else { // edit clicked
-      console.log('edit clicked');
       tr.addClass('toggle');
       if (isServiceClick) {
         _serviceActions.addClass('toggle');
@@ -339,7 +308,6 @@ export class ManageMembersComponent implements OnInit {
                               </table>
                               ${hiddenTableStyle}
                               `;
-                              // console.log(hiddenTableHtml);
     return hiddenTableHtml;
   }
 }
