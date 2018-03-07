@@ -15,11 +15,11 @@
   </div>
   <div class="row" id="service-actions-info">
     <div *ngFor="let service of serviceActions"
-     class="workspace-panel-content {{(service?.serviceName?.length<20) ? 'archon-names-200' : ((service?.serviceName?.length<30) ? 'archon-names-300' : 'archon-names-400')}}">
-      <button type="button" class="btn-primary" data-placement="top" [attr.data-tooltip]="service?.serviceName">
+     class="workspace-panel-content {{(service?.name?.length<12) ? 'archon-names-100 tooltip-left-45 tooltip-btm-105' : 'archon-names-200 tooltip-left-37 tooltip-btm-105'}}" >
+      <button type="button" class="btn-primary" data-placement="top" [attr.data-tooltip]="service?.name">
         <div class="btn-box">
           <div class="col-md-10" [attr.serviceid]="service?.id">
-            <div class="trim-text service-title">Service Name : {{service?.serviceName}}</div>
+            <div class="trim-text service-title">Service Name : {{service?.name}}</div>
             <h4>Service Action Type : {{service?.serviceActionType}}</h4>
           </div>
           <div class="col-md-2 btn-lg-arrow" id="rightArrow">

@@ -24,6 +24,9 @@ export class WorkspaceServicesComponent implements OnInit {
   ngOnInit() {
     this.workspaceService.serviceActionUpdated.subscribe(
       (serviceActions) => {
+        serviceActions.forEach(service => {
+          service.name = service.serviceName.replace('SERVICE', '').split('_').join(' ');
+        });
         this.serviceActions = serviceActions;
       });
   }

@@ -127,7 +127,7 @@ export class ManageMembersComponent implements OnInit {
         { 'data': 'user.name' },
         { 'data': 'workspaceRole.name' },
         {
-          'className': 'col-md-1',
+          'className': 'col-md-1 tooltip-left-37',
           'orderable': false,
           'data': null,
           'defaultContent': `<div data-tooltip="Delete" class="delete-user">
@@ -135,8 +135,8 @@ export class ManageMembersComponent implements OnInit {
                             </div>`,
           'title': 'Delete'
         }
-      ]
-      // 'order': [[0, 'asc']]
+      ],
+      'order': [[1, 'asc']]
     });
     $('#manage-members-table tbody').off('click', 'td.exp-coll').on('click', 'td.exp-coll', function () {
       const tr = $(this).closest('tr');
@@ -241,7 +241,7 @@ export class ManageMembersComponent implements OnInit {
     });
     roleDropdown += `</select>`;
     const roleTr = `<tr class="toggle-child" user-id="${wsAccess.user.id}">
-                      <th class="col-md-4 archon-names archon-names-100">
+                      <th class="col-md-4 text-center tooltip-left-47 tooltip-btm-105">
                         <div data-tooltip="Role">
                           <span class="trim-text w-180">Role</span>
                         </div>
@@ -252,11 +252,11 @@ export class ManageMembersComponent implements OnInit {
                           ${roleDropdown}
                         </span>
                       </td>
-                      <td class="col-md-1 toggle-btn edit">
+                      <td class="col-md-1 toggle-btn edit tooltip-left-37">
                         <div data-tooltip="Edit"  class="role-btn role-edit"
                            owner="${wsAccess.workspaceRole.name === 'ROLE_OWNER' ? 'true' : 'false'}">
-                          <i class="fa fa-pencil archon-icon disp-bl
-                           ${wsAccess.workspaceRole.name === 'ROLE_OWNER' ? 'icon-disabled' : ''}" ></i>
+                          <i class="fa fa-pencil archon-icon disp-bl ${wsAccess.workspaceRole.name === 'ROLE_OWNER' ?
+                           'icon-disabled' : ''}" ></i>
                         </div>
                         <div data-tooltip="Update" class="role-btn role-update">
                           <i class="fa fa-check archon-icon disp-bl" aria-hidden="true"></i>
@@ -273,10 +273,13 @@ export class ManageMembersComponent implements OnInit {
     let serviceTr = '';
     const serviceLen = wsAccess.serviceActions.length;
     wsAccess.serviceActions.forEach((service, index) => {
+      const modifiedServiceName = service.serviceName.replace('SERVICE', '').replace(new RegExp('_', 'gm'), ' ');
       serviceTr += `<tr class="toggle-child service-actions" user-id="${wsAccess.user.id}">
-                      <th class="col-md-4 archon-names ${(service.serviceName.length < 12) ? 'archon-names-100' : ''}">
-                        <div data-tooltip="${service.serviceName}">
-                          <span class="trim-text w-180">${service.serviceName}</span>
+                      <th class="col-md-4 text-center ${(modifiedServiceName.length < 12) ?
+                         'archon-names-100 tooltip-btm-105' :
+                         'archon-names-200 tooltip-left-25 tooltip-btm-105'}">
+                        <div data-tooltip="${modifiedServiceName}">
+                          <span class="trim-text w-250">${modifiedServiceName}</span>
                         </div>
                       </th>
                       <td class="col-md-5">
@@ -287,7 +290,7 @@ export class ManageMembersComponent implements OnInit {
                         </span>
                       </td>`;
       if (index === 0) {
-        serviceTr += `<td rowspan="${serviceLen}" class="col-md-1 toggle-btn tooltip-left-45 edit">
+        serviceTr += `<td rowspan="${serviceLen}" class="col-md-1 toggle-btn tooltip-left-37 edit">
                         <div data-tooltip="Edit" class="role-btn role-edit service-click">
                           <i class="fa fa-pencil archon-icon disp-bl"></i>
                         </div>
