@@ -1,29 +1,35 @@
 <div>
   <div class="row">
-    <!-- <div class="col-md-6"> -->
+    <div class="col-md-6">
       <!-- <div class="col-md-1 back-arrow">
         <a (click)="gotoDashboard()">
           <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
         </a>
       </div> -->
-      <div class="col-md-3">
+      <div class="col-md-offset-1 col-md-8">
         <h3 class="workspace-panel-heading">
           Services
         </h3>
       </div>
-    <!-- </div> -->
+    </div>
   </div>
-  <div class="row" id="service-actions-info">
-    <div *ngFor="let service of serviceActions"
-     class="workspace-panel-content {{(service?.serviceName?.length<20) ? 'archon-names-200' : ((service?.serviceName?.length<30) ? 'archon-names-300' : 'archon-names-400')}}">
-      <button type="button" class="btn-primary" data-placement="top" [attr.data-tooltip]="service?.serviceName">
+  <div class="row">
+    <!-- {{(service?.serviceName?.length<20) ? 'archon-names-200' : ((service?.serviceName?.length<30) ? 'archon-names-300' :
+      'archon-names-400')}} -->
+    <div id="service-actions-info" class="workspace-panel-content">
+      <button type="button" *ngFor="let service of serviceActions" class="btn-primary custom-button" data-toggle="popover" data-placement="top" [title]="service?.serviceName" data-content="Content">
         <div class="btn-box">
           <div class="col-md-10" [attr.serviceid]="service?.id">
-            <div class="trim-text service-title">Service Name : {{service?.serviceName}}</div>
-            <h4>Service Action Type : {{service?.serviceActionType}}</h4>
+            <div class="trim-text title">
+              <h3>{{service?.serviceName}}</h3>
+            </div>
+            <div class="body">
+              <p>Permission : {{service?.serviceActionType}}
+              </p>
+            </div>
           </div>
-          <div class="col-md-2 btn-lg-arrow" id="rightArrow">
-            <span hidden>
+          <div class="col-md-2 btn-lg-arrow">
+            <span>
               <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
             </span>
           </div>
