@@ -421,6 +421,9 @@ table.dataTable.no-footer {
 .w-180 {
   width: 180px;
 }
+.w-250 {
+  width: 250px;
+}
 
 .popup-panel-heading {
   text-align: left;
@@ -582,65 +585,63 @@ i.link:hover {
   opacity: 1;
 }
 
-.archon-names {
-  text-align: center;
-}
-
 .archon-names [data-tooltip]:before {
   left: 20%;
-  line-height: 1.3;
+  line-height: 1.2;
   width: 200px;
-}
-.archon-names-200 [data-tooltip]:before {
-  width: 200px;
-  bottom: 105%;
-  left: 38%;
-}
-.archon-names-200 [data-tooltip]:after,
-.archon-names-300 [data-tooltip]:after,
-.archon-names-400 [data-tooltip]:after {
-  bottom: 105%;
-}
-.archon-names-300 [data-tooltip]:before {
-  width: 300px;
-  bottom: 105%;
-  left: 28%;
-}
-.archon-names-400 [data-tooltip]:before {
-  width: 400px;
-  bottom: 105%;
-  left: 20%;
 }
 .archon-names-100 [data-tooltip]:before {
   left: 38%;
   width: 100px;
 }
+.archon-names-200 [data-tooltip]:before {
+  width: 200px;
+  line-height: 1.2;
+}
+.tooltip-left-20 [data-tooltip]:before {
+  left: 20%;
+}
+.tooltip-left-25 [data-tooltip]:before {
+  left: 25%;
+}
+.tooltip-left-37 [data-tooltip]:before {
+  left: 37%;
+}
 .tooltip-left-45 [data-tooltip]:before {
   left: 45%;
+}
+.tooltip-left-47 [data-tooltip]:before {
+  left: 47%;
+}
+.tooltip-btm-105 [data-tooltip]:before {
+  bottom: 105%;
+}
+.tooltip-btm-105 [data-tooltip]:after {
+  bottom: 105%;
 }
 
 .tooltip-exp-coll [data-tooltip]:before {
   left: 0;
   width: 110px;
 }
-.dropdown-menu.scrollable {
+.dropdown-menu .scrollable {
   max-height: 400px;
   overflow-x:hidden;
   overflow-y:scroll;
 }
-.dropdown-menu.scrollable::-webkit-scrollbar {
+.dropdown-menu .scrollable::-webkit-scrollbar {
   width: 10px;
   display: none;
 }
-.dropdown-menu.scrollable:hover::-webkit-scrollbar {
+.dropdown-menu .scrollable:hover::-webkit-scrollbar {
   display: block;
   cursor: pointer;
 }
-.dropdown-menu.scrollable::-webkit-scrollbar-thumb {
+.dropdown-menu .scrollable::-webkit-scrollbar-thumb {
   background-color: #ccc;
   border-radius: 5px;
 }
-.dropdown-menu.scrollable::-webkit-scrollbar-thumb:active {
+.dropdown-menu .scrollable::-webkit-scrollbar-thumb:active {
   background-color: grey;
 }
 
@@ -671,6 +672,10 @@ i.link:hover {
   animation: spinner 2s linear infinite
 }
 
+.service-title {
+  width: 525px;
+  font-size: 24px;
+}
 input[type="checkbox"].scaleBox {
   -webkit-transform: scale(1.3);
   -moz-transform: scale(1.3);
