@@ -23,50 +23,6 @@
   </div>
   <div class="row">
     <div id="manager-members" class="workspace-panel-content manage-members col-md-7">
-      <!-- <table id="manage-members-info-tabl e" class="table table-hover table-bordered" *ngIf="isAvailable">
-        <thead>
-          <tr>
-            <th>Sl.No</th>
-            <th>Members</th>
-            <th>Role</th>
-            <th>View More</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let wsAccess of manageMembers; let i = index;">
-            <tr class="">
-              <td class="col-md-1">{{i + 1}}</td>
-              <td class="mm-info-data col-md-4">{{wsAccess.user.name}}</td>
-              <td class="mm-info-data col-md-3">{{wsAccess.workspaceRole.name}}</td>
-              <td class="toggle-expand col-md-3 tooltip-left-45">
-                <div data-tooltip="Expand" (click)="showPermission(i, $event, wsAccess)">
-                  <i class="fa fa-plus-circle fa-lg expand archon-icon disp-bl" id="showPermission-{{i}}"></i>
-                </div>
-                <div *ngIf="varArray[i]" data-tooltip="Hide" (click)="hidePermission(i, $event, wsAccess)">
-                  <i class="fa fa-minus-circle fa-lg collapse archon-icon disp-bl"></i>
-                </div>
-              </td>
-              <td class="col-md-1">
-                <div data-tooltip="Delete" (click)="onDelete(i)">
-                  <i class="fa fa-trash-o archon-icon disp-bl"></i>
-                </div>
-              </td>
-            </tr>
-            <tr [attr.user-id]="wsAccess?.user?.id" class="mem-priv-row" *ngIf="varArray[i]">
-              <td colspan="5">
-                <app-manage-member-privileges [wsAccess]="wsAccess" [wsRoleList]="passedWSRoleList" (fetchedWSRoleList)="setPassedWSRoleList($event)"
-                ></app-manage-member-privileges>
-              </td>
-              <td class="hide"></td>
-              <td class="hide"></td>
-              <td class="hide"></td>
-              <td class="hide"></td>
-            </tr>
-          </ng-container>
-        </tbody>
-      </table>
-       -->
       <!-- <div *ngIf="isAvailable"> -->
         <table id="manage-members-table" class="display" cellspacing="0" width="100%">
           <thead>
@@ -79,7 +35,6 @@
           </thead>
         </table>
       <!-- </div> -->
-      <ng-template app-manage-member-privileges></ng-template>
     </div>
   </div>
   <div class="row">
