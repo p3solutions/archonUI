@@ -672,13 +672,10 @@ i.link:hover {
   animation: spinner 2s linear infinite
 }
 
-<<<<<<< HEAD
-=======
 .service-title {
   width: 525px;
   font-size: 24px;
 }
->>>>>>> be3c495e9d0e769a6ee1840b837990fa4a8b76f0
 input[type="checkbox"].scaleBox {
   -webkit-transform: scale(1.3);
   -moz-transform: scale(1.3);
