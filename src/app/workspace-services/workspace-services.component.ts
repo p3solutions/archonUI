@@ -27,7 +27,7 @@ export class WorkspaceServicesComponent implements OnInit {
     this.workspaceService.serviceActionUpdated.subscribe(
       (serviceActions) => {
         this.serviceActions = serviceActions;
-        for (let service of this.serviceActions) {
+        for (const service of this.serviceActions) {
           switch (service.serviceName) {
             case 'SERVICE_METALYZER': {
               service.serviceName = 'Metalyzer';
