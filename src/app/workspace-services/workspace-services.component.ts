@@ -14,7 +14,9 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceId : string;
   // @Input() private serviceType : string;
   private serviceActions: ServiceActionsObject[];
-  constructor(private workspaceService: WorkspaceServicesService) { }
+  constructor(
+    private workspaceService: WorkspaceServicesService
+  ) { }
 
   // ngOnChanges(changes: SimpleChanges) {
   //   const serviceActions: SimpleChange = changes.serviceActions;
@@ -25,6 +27,42 @@ export class WorkspaceServicesComponent implements OnInit {
     this.workspaceService.serviceActionUpdated.subscribe(
       (serviceActions) => {
         this.serviceActions = serviceActions;
+        for (const service of this.serviceActions) {
+          switch (service.serviceName) {
+            case 'SERVICE_METALYZER': {
+              service.serviceName = 'Metalyzer';
+              break;
+            }
+            case 'SERVICE_LIVE_ARCHIVAL': {
+              service.serviceName = 'Live Archival';
+              break;
+            }
+            case 'SERVICE_CUSTOM_SCREEN_BUILDING': {
+              service.serviceName = 'Custom Screen Building';
+              break;
+            }
+            case 'SERVICE_END_2_END_TOOLKIT': {
+              service.serviceName = 'End to End Toolkit';
+              break;
+            }
+            case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
+              service.serviceName = 'Enterprise Data Retrieval Tool';
+              break;
+            }
+            case 'SERVICE_INFOARCHIVE_COMPLETE_APPLICATION_AUTOMATION': {
+              service.serviceName = 'InfoArchive Complete Application Automation';
+              break;
+            }
+            case 'SERVICE_UNSTRUCTURED_DATA_ EXTRACTOR': {
+              service.serviceName = 'Unstructured Data Extractor';
+              break;
+            }
+            // default: {
+            //   service.serviceName = 'No Service Available';
+            //   break;
+            // }
+          }
+        }
       });
   }
 }
