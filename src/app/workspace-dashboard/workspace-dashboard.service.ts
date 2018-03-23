@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import { ServiceActionsObject } from '../workspace-objects';
 @Injectable()
 export class WorkspaceDashboardService {
-  serviceActionsList: ServiceActionsObject[] = [];
+  serviceActionsList: ServiceActionsObject[];
   private serviceActions = new Subject<ServiceActionsObject>();
   serviceActionsSetted$ = this.serviceActions.asObservable();
 
