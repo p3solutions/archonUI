@@ -21,10 +21,13 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 3. Go to /etc/nginx/sites-available and open 'default' file.
 4. Change the 'root' to the point to 'dist' folder.
 5. Change 'location' in the same file to fall back to index.html if the requested link is not found by changing it to this
+
 '''
 try_files $uri /index.html;
 '''
+
 6. Start your server by using the command
+
 '''
 sudo service nginx start
 '''
