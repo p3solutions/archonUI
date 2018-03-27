@@ -14,6 +14,21 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
+## Setup Server Environment
+
+1. Copy the 'dist' file into linux based Server
+2. Install nginx server
+3. Go to /etc/nginx/sites-available and open 'default' file.
+4. Change the 'root' to the point to 'dist' folder.
+5. Change 'location' in the same file to fall back to index.html if the requested link is not found by changing it to this
+'''
+try_files $uri /index.html;
+'''
+6. Start your server by using the command
+'''
+sudo service nginx start
+'''
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
