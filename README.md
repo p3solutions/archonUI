@@ -24,10 +24,10 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ```
 location / {
-                # First attempt to serve request as file, then
-                # as directory, then fall back to displaying index.html.
-                try_files $uri /index.html;
-        }
+    # First attempt to serve request as file, then
+    # fall back to displaying index.html.
+    try_files $uri /index.html;
+}
 ```
 
 6. Start your server by using the command
