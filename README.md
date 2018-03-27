@@ -16,14 +16,18 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Setup Server Environment
 
-1. Copy the 'dist' file into linux based Server
+1. Copy the `dist` folder into linux based Server
 2. Install nginx server
-3. Go to /etc/nginx/sites-available and open 'default' file.
-4. Change the 'root' to the point to 'dist' folder.
-5. Change 'location' in the same file to fall back to index.html if the requested link is not found by changing it to this
+3. Go to `/etc/nginx/sites-available` and open `default` file.
+4. Change the `root` to the point to `dist` folder.
+5. Change `location` in the same file to fall back to `index.html` if the requested link is not found by changing it to this
 
 ```
-try_files $uri /index.html;
+location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying index.html.
+                try_files $uri /index.html;
+        }
 ```
 
 6. Start your server by using the command
