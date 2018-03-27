@@ -72,6 +72,6 @@ export class WorkspaceInfoComponent implements OnInit {
   }
 
   gotoDashboard() {
-    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+    this.router.navigate(['workspace/workspace-dashboard']);
   }
 }

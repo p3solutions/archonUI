@@ -18,54 +18,49 @@ export class WorkspaceServicesComponent implements OnInit {
     private workspaceService: WorkspaceServicesService
   ) { }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   const serviceActions: SimpleChange = changes.serviceActions;
-  //   const serviceActionArray = serviceActions.currentValue;
-  //   console.log(serviceActionArray, "updated serviceActionArray");
-  // }
   ngOnInit() {
-    this.workspaceService.serviceActionUpdated.subscribe(
+    this.workspaceService.serviceActionsUpdated.subscribe(
       (serviceActions) => {
-        serviceActions.forEach(service => {
-          service.name = service.serviceName.replace('SERVICE', '').split('_').join(' ');
-        });
-        this.serviceActions = serviceActions;
-        for (const service of this.serviceActions) {
-          switch (service.serviceName) {
-            case 'SERVICE_METALYZER': {
-              service.serviceName = 'Metalyzer';
-              break;
-            }
-            case 'SERVICE_LIVE_ARCHIVAL': {
-              service.serviceName = 'Live Archival';
-              break;
-            }
-            case 'SERVICE_CUSTOM_SCREEN_BUILDING': {
-              service.serviceName = 'Custom Screen Building';
-              break;
-            }
-            case 'SERVICE_END_2_END_TOOLKIT': {
-              service.serviceName = 'End to End Toolkit';
-              break;
-            }
-            case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
-              service.serviceName = 'Enterprise Data Retrieval Tool';
-              break;
-            }
-            case 'SERVICE_INFOARCHIVE_COMPLETE_APPLICATION_AUTOMATION': {
-              service.serviceName = 'InfoArchive Complete Application Automation';
-              break;
-            }
-            case 'SERVICE_UNSTRUCTURED_DATA_ EXTRACTOR': {
-              service.serviceName = 'Unstructured Data Extractor';
-              break;
-            }
-            // default: {
-            //   service.serviceName = 'No Service Available';
-            //   break;
-            // }
-          }
-        }
+        this.serviceActions = this.updateServiceActions(serviceActions);
       });
+  }
+  updateServiceActions(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
+    for (const service of serviceActions) {
+      switch (service.serviceName) {
+        case 'SERVICE_METALYZER': {
+          service.serviceName = 'Metalyzer';
+          break;
+        }
+        case 'SERVICE_LIVE_ARCHIVAL': {
+          service.serviceName = 'Live Archival';
+          break;
+        }
+        case 'SERVICE_CUSTOM_SCREEN_BUILDING': {
+          service.serviceName = 'Custom Screen Building';
+          break;
+        }
+        case 'SERVICE_END_2_END_TOOLKIT': {
+          service.serviceName = 'End to End Toolkit';
+          break;
+        }
+        case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
+          service.serviceName = 'Enterprise Data Retrieval Tool';
+          break;
+        }
+        case 'SERVICE_INFOARCHIVE_COMPLETE_APPLICATION_AUTOMATION': {
+          service.serviceName = 'InfoArchive Complete Application Automation';
+          break;
+        }
+        case 'SERVICE_UNSTRUCTURED_DATA_ EXTRACTOR': {
+          service.serviceName = 'Unstructured Data Extractor';
+          break;
+        }
+        // default: {
+        //   service.serviceName = 'No Service Available';
+        //   break;
+        // }
+      }
+    }
+    return serviceActions;
   }
 }
