@@ -1,3 +1,153 @@
-<p>
-  add-database-wizard works!
-</p>
+<div hidden id="openCreateAddDBmodal" data-toggle="modal" data-target="#createWSModal"></div>
+<div class="modal fade" id="createWSModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
+    <div class="modal-content text-left">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 *ngIf="!newWSinfo" class="modal-title">Create New Workspace</h4>
+        <h4 *ngIf="newWSinfo" class="modal-title text-center">Message</h4>
+      </div>
+
+      <div class="modal-body row">
+      <!-- carousel -->
+        <div id="createWSModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+          <!-- Indicators -->
+          <ul *ngIf="!newWSinfo" class="multi-step-bars">
+            <li > 
+              <span id="progress-bar" class="bar-expand width-5-pc"></span>
+              <em class="col-md-4 text-center">Workspace Details</em>
+              <em class="col-md-4 text-center">Data Source selection</em>
+              <em class="col-md-4 text-center">Review details</em>
+            </li>
+          </ul>
+
+          <ol class="only carousel-indicators hide">
+            <li data-target="#createWSModal-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#createWSModal-carousel" data-slide-to="1"></li>
+            <li data-target="#createWSModal-carousel" data-slide-to="2"></li>
+          </ol>
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+
+            <div step="0" class="item active form-group">
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Workspace Name</div>
+                  <div class="col-md-8">
+                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                  </div>
+                </div>
+                
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Creation Date</div>
+                  <div class="col-md-8">{{today | date:'dd-MMM-yyyy'}}</div>
+                </div>
+                
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Owner</div>
+                  <div class="col-md-8">{{loggedInUser?.name}}</div>
+                </div>
+
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Description / Notes</div>
+                  <div class="col-md-8">
+                    <textarea [(ngModel)]="wsDesc" name="wsDesc" placeholder="Description / Notes (Optional)"></textarea>
+                  </div>
+                </div>
+            </div>
+
+            <div step="1" class="item form-group second-last second">
+              <div *ngIf="errorDBselect" class="alert-danger text-center"><strong>Select at least one database!</strong></div>
+              <div class="col-md-12">
+                <h4 >Select Database for: <b>{{wsName}}</b></h4>
+                <div [ngClass]="{'archon-loading-icon' : !isDBAvailable}"></div>
+                  <div class="table-div">
+                    <div class="p-10-0 {{isDBAvailable ? '' : 'hide'}}">
+                      <table id="db-list-table" class="display m-10" cellspacing="0" width="100%">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Database Name</th>
+                            <th>Owner</th>
+                            <th>Created Date</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                      </table>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div step="2" class="item form-group final">
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Workspace Name</div>
+                  <div class="col-md-8">{{wsName}}</div>
+                </div>
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Creation Date</div>
+                  <div class="col-md-8">{{today | date:'dd-MMM-yyyy'}}</div>
+                </div>
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">Description</div>
+                  <div class="col-md-8">
+                    <textarea value="{{wsDesc}}" disabled></textarea>
+                  </div>
+                </div>
+                <div class="col-md-12 row m-10">
+                  <div class="col-md-4">DataSources</div>
+                  <div class="col-md-8">
+                    <span class="m-r-10" *ngFor="let db of selectedDBList; let isLast=last">
+                      {{db?.databaseName}}{{isLast ? '' : ', '}}
+                    </span>
+                  </div>
+                </div>
+            </div>
+
+            <div class="item form-group message">
+              <div class="col-md-12 row m-10">
+                <div class="col-md-4">Workspace Name</div>
+                <div class="col-md-8">{{wsName}}</div>
+              </div>
+              <div class="col-md-12 row m-10">
+                <div class="col-md-4">DataSources</div>
+              </div>
+              <div class="col-md-12 table-div">
+                <table id="selected-db-list-table" class="display m-10" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>Database Name</th>
+                      <th>Owner</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+              <div class="col-md-12 row m-10 text-center">
+                Your workspace will be activated once data source approvals is / are obtained from the respective DB owners.
+              </div>              
+            </div>
+          </div>
+        
+          <!-- Controls -->
+          <a hidden class="left carousel-control" id="prev-slide" href="#createWSModal-carousel" role="button" data-slide="prev">
+            <span class="sr-only">Previous</span>
+          </a>
+          <a hidden class="right carousel-control" id="next-slide" href="#createWSModal-carousel" role="button" data-slide="next">
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      <!-- / end of Carousel -->
+      </div>
+      <div class="modal-footer {{newWSinfo ? 'msg-footer' : ''}}">
+        <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event)">Previous</button>
+        <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
+        <button type="button" id="create-btn" class="btn btn-primary hide" (click)="createWS()">Create&nbsp;</button>
+        <button type="button" id="ok-btn" class="btn btn-primary hide" data-dismiss="modal" (click)="resetCarousel()">Done</button>
+      </div>
+
+    </div>
+  </div>
+</div>

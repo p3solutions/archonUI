@@ -10,6 +10,13 @@ export class AddDatabaseWizardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.documentReadyFn();
+  }
+
+  documentReadyFn() {
+    // this.loggedInUser = this.userinfoService.getLoggedInUserFromAccessToken();
+    document.getElementById('openCreateAddDBmodal').click();
+    // this.getSupportedDBs();
   }
 
 }
