@@ -66,6 +66,7 @@ import { AddMembersComponent } from './add-members/add-members.component';
 import { AddMembersService } from './add-members/add-members.service';
 import { DatabaseListService } from './database-list/database-list.service';
 import { DatabaseListComponent } from './database-list/database-list.component';
+import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-wizard.component';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -101,7 +102,8 @@ import { DatabaseListComponent } from './database-list/database-list.component';
                 ManageMemberPrivilegesComponent,
                 NewWorkspaceComponent,
                 AddMembersComponent,
-                DatabaseListComponent
+                DatabaseListComponent,
+                AddDatabaseWizardComponent
         ],
         imports: [
                 BrowserModule,
