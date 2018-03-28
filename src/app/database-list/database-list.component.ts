@@ -13,7 +13,7 @@ export class DatabaseListComponent implements OnInit {
   isProgress: boolean;
   configDBListInfo: any;
   dynamicLoaderService: DynamicLoaderService;
-  @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+  @ViewChild('createNewDatabaseWizard', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   constructor(
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -46,14 +46,14 @@ export class DatabaseListComponent implements OnInit {
     }
   }
   openCreateAddDBmodal() {
-    console.log('alok laok laoka okall')
+    console.log('alok alokaloak', this.viewContainerRef);
     if (this.viewContainerRef.get(0)) {
       // open existing dynamic component
       document.getElementById('openCreateAddDBmodal').click();
     } else {
       // inject dynamic component
       this.dynamicLoaderService.setRootViewContainerRef(this.viewContainerRef);
-      this.dynamicLoaderService.addDynamicComponent();
+      this.dynamicLoaderService.addDynamicComponent1();
     }
   }
 }

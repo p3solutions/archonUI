@@ -6,7 +6,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 *ngIf="!newWSinfo" class="modal-title">Create New Workspace</h4>
+        <h4 *ngIf="!newWSinfo" class="modal-title">Create New Database Connection</h4>
         <h4 *ngIf="newWSinfo" class="modal-title text-center">Message</h4>
       </div>
 
@@ -17,8 +17,8 @@
           <ul *ngIf="!newWSinfo" class="multi-step-bars">
             <li > 
               <span id="progress-bar" class="bar-expand width-5-pc"></span>
-              <em class="col-md-4 text-center">Workspace Details</em>
-              <em class="col-md-4 text-center">Data Source selection</em>
+              <em class="col-md-4 text-center">Connection Details</em>
+              <em class="col-md-4 text-center">Authentication</em>
               <em class="col-md-4 text-center">Review details</em>
             </li>
           </ul>
@@ -33,26 +33,38 @@
 
             <div step="0" class="item active form-group">
                 <div class="col-md-12 row m-10">
-                  <div class="col-md-4">Workspace Name</div>
-                  <div class="col-md-8">
+                  <div class="col-md-2">Profile Name</div>
+                  <div class="col-md-4">
+                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                  </div>
+                  <div class="col-md-2">Database Server</div>
+                  <div class="col-md-4">
                     <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                 </div>
                 
                 <div class="col-md-12 row m-10">
-                  <div class="col-md-4">Creation Date</div>
-                  <div class="col-md-8">{{today | date:'dd-MMM-yyyy'}}</div>
+                  <div class="col-md-2">Host</div>
+                  <div class="col-md-10">
+                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                  </div>
                 </div>
                 
                 <div class="col-md-12 row m-10">
-                  <div class="col-md-4">Owner</div>
-                  <div class="col-md-8">{{loggedInUser?.name}}</div>
+                  <div class="col-md-2">Port</div>
+                  <div class="col-md-4">
+                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                  </div>
+                  <div class="col-md-2">Database Name</div>
+                  <div class="col-md-4">
+                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                  </div>
                 </div>
 
                 <div class="col-md-12 row m-10">
-                  <div class="col-md-4">Description / Notes</div>
-                  <div class="col-md-8">
-                    <textarea [(ngModel)]="wsDesc" name="wsDesc" placeholder="Description / Notes (Optional)"></textarea>
+                  <div class="col-md-2">Default Schema</div>
+                  <div class="col-md-4">
+                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                 </div>
             </div>

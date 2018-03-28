@@ -147,6 +147,6 @@ import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-w
                 DatabaseListService
         ],
         bootstrap: [AppComponent],
-        entryComponents: [NewWorkspaceComponent]
+        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
 })
 export class AppModule { }
