@@ -70,26 +70,30 @@
             </div>
 
             <div step="1" class="item form-group second-last second">
-              <div *ngIf="errorDBselect" class="alert-danger text-center"><strong>Select at least one database!</strong></div>
-              <div class="col-md-12">
-                <h4 >Select Database for: <b>{{wsName}}</b></h4>
-                <div [ngClass]="{'archon-loading-icon' : !isDBAvailable}"></div>
-                  <div class="table-div">
-                    <div class="p-10-0 {{isDBAvailable ? '' : 'hide'}}">
-                      <table id="db-list-table" class="display m-10" cellspacing="0" width="100%">
-                        <thead>
-                          <tr>
-                            <th></th>
-                            <th>Database Name</th>
-                            <th>Owner</th>
-                            <th>Created Date</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                      </table>
-                    </div>
-                </div>
+              <!-- <div *ngIf="errorDBselect" class="alert-danger text-center"><strong>Select at least one database!</strong></div> -->
+              <div class="col-md-12 row m-10">
+                  <div class="col-md-2">UserName</div>
+                  <div class="col-md-4">
+                    <input [(ngModel)]="wsName" placeholder="Enter Databse User Name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                  </div>
               </div>
+              <div class="col-md-12 row m-10">
+                  <div class="col-md-2">Password</div>
+                  <div class="col-md-4">
+                    <input [(ngModel)]="wsName" placeholder="Enter Password" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                  </div>
+                </div>
+                    <!-- <div class="row">
+                        <div class="col-md-2 col-md-offset-4">UserName</div>
+                        <div class="col-md-2"><input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-4">Password</div>
+                        <div class="col-md-2"><input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                        </div>
+                    </div> -->
+                  
             </div>
 
             <div step="2" class="item form-group final">
