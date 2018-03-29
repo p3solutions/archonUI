@@ -58,12 +58,12 @@ export class AddDatabaseWizardComponent implements OnInit {
       e.stopPropagation();
     } else {
       if (document.querySelector('.second-last').classList.contains('active') ) {
-        if (this.databaseIds.length > 0) { // selected at least one DB
+        if (true) { // selected at least one DB
           // restricting to select one, temporarily as per Backend team
-           if (this.databaseIds.length > 1) {
-            alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
-            return false;
-          }
+          //  if (this.databaseIds.length > 1) {
+          //   alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
+          //   return false;
+          // }
           // end of restriction to 1 selection
           this.removeClass('create-btn', 'hide');
           this.addClass('next-btn', 'hide');

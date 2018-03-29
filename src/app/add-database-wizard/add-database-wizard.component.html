@@ -37,7 +37,7 @@
                   <div class="col-md-4">
                     <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
-                  <div class="col-md-2">Database Server</div>
+                  <div class="col-md-2">Database Name</div>
                   <div class="col-md-4">
                     <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
@@ -45,28 +45,32 @@
                 
                 <div class="col-md-12 row m-10">
                   <div class="col-md-2">Host</div>
-                  <div class="col-md-10">
+                  <div class="col-md-4">
+                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                  </div>
+                  <div class="col-md-2">Port</div>
+                  <div class="col-md-4">
                     <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                 </div>
                 
                 <div class="col-md-12 row m-10">
-                  <div class="col-md-2">Port</div>
+                  <div class="col-md-2">Database Server</div>
                   <div class="col-md-4">
                     <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
-                  <div class="col-md-2">Database Name</div>
+                  <div class="col-md-2">Default Schema</div>
                   <div class="col-md-4">
                     <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                 </div>
 
-                <div class="col-md-12 row m-10">
+                <!-- <div class="col-md-12 row m-10">
                   <div class="col-md-2">Default Schema</div>
                   <div class="col-md-4">
                     <input [(ngModel)]="wsName" placeholder="Enter Default Schema name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
-                </div>
+                </div> -->
             </div>
 
             <div step="1" class="item form-group second-last second">
@@ -97,6 +101,40 @@
 
             <div step="2" class="item form-group final">
                 <div class="col-md-12 row m-10">
+                    <div class="col-md-2">Profile Name</div>
+                    <div class="col-md-4">
+                      <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    </div>
+                    <div class="col-md-2">Database Server</div>
+                    <div class="col-md-4">
+                      <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    </div>
+                  </div>
+                  <div class="col-md-12 row m-10">
+                      <div class="col-md-2">Host</div>
+                      <div class="col-md-4">
+                        <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                      </div>
+                      <div class="col-md-2">Port</div>
+                      <div class="col-md-4">
+                        <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                      </div>
+                    </div>
+                    <div class="col-md-12 row m-10">
+                        <div class="col-md-2">Database Name</div>
+                        <div class="col-md-4">
+                          <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                        </div>
+                        <div class="col-md-2">Default Schema</div>
+                        <div class="col-md-4">
+                          <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                        </div>
+                      </div>
+                      <div class="col-md-12 row m-12">
+                          <div class="col-md-12"><button class="btn btn-primary center-block"> Test Connection"</button></div>
+                        </div>
+                    
+                <!-- <div class="col-md-12 row m-10">
                   <div class="col-md-4">Workspace Name</div>
                   <div class="col-md-8">{{wsName}}</div>
                 </div>
@@ -117,7 +155,7 @@
                       {{db?.databaseName}}{{isLast ? '' : ', '}}
                     </span>
                   </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="item form-group message">
