@@ -50,8 +50,8 @@ export class ManageMembersComponent implements OnInit {
       });
   }
 
-  onDelete(userid: any, tr): void {
-    this.manageMembersService.deleteManageMembersData({ id: userid }, this.workspaceId).subscribe(res => {
+  onDelete(id: any, tr): void {
+    this.manageMembersService.deleteManageMembersData({ id: id }, this.workspaceId).subscribe(res => {
       if (res && res.length > 0) {
         tr.remove(); // on success delete the entire row
       }
