@@ -32,3 +32,20 @@ th.disp-bl {
     max-height: 330px;
     overflow: auto;
 }
+
+.dropdown-menu {
+    width: 100%;
+    margin-left: -25px;
+  }
+
+  .scrollable-menu {
+    height: auto;
+    max-height: 160px;
+    overflow-x: hidden;
+    margin-left: -25px;
+
+  }
+
+  .btn-group>.btn:first-child {
+    margin-left: -29px;
+}

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { UserObject, AnyObject, ConfiguredDB, WorkspaceObject } from '../workspace-objects';
+import { UserWorkspaceService } from '../user-workspace.service';
+import { UserinfoService } from '../userinfo.service';
+
 
 @Component({
   selector: 'app-add-database-wizard',
@@ -6,11 +10,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-database-wizard.component.css']
 })
 export class AddDatabaseWizardComponent implements OnInit {
+  dbProfileName: string;
+  dbUserName: string;
+  dbPassword: string;
+  dbPort: string;
+  dbHost: string;
+  dbServer: string;
+  dbName: string;
+  dbDefaultSchema: string;
+
+  databaseName: string;
+  host: string;
+  port: string;
+  schemaName: string;
+  userName: string;
+  password: string;
+
   wsName: string;
   wsDesc: string;
   // loggedInUser: UserObject;
   today = new Date();
-  // wsParam: AnyObject = {};
+  dbParam: AnyObject = {};
   // supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
   isDBAvailable= false;
@@ -20,7 +40,11 @@ export class AddDatabaseWizardComponent implements OnInit {
   errorDBselect = false;
   DBtable: any;
   selectedDBtable: any;
-  constructor() { }
+  
+  constructor(
+    private userinfoService: UserinfoService,
+    private userWorkspaceService: UserWorkspaceService
+  ) { }
 
   ngOnInit() {
     this.documentReadyFn();
@@ -52,6 +76,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   nextStep(e) {
+    this.wsName = this.dbProfileName;
+
     if (!this.wsName) {
       this.wsNameEmpty = true;
       document.getElementById('wsName').focus();
@@ -59,6 +85,9 @@ export class AddDatabaseWizardComponent implements OnInit {
     } else {
       if (document.querySelector('.second-last').classList.contains('active') ) {
         if (true) { // selected at least one DB
+          console.log('jitu loak jitu yu yloak loak l', this.dbProfileName)
+
+
           // restricting to select one, temporarily as per Backend team
           //  if (this.databaseIds.length > 1) {
           //   alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
@@ -69,9 +98,10 @@ export class AddDatabaseWizardComponent implements OnInit {
           this.addClass('next-btn', 'hide');
           document.getElementById('next-slide').click();
           this.handleStepIindicator(true);
-        } else {
-          this.errorDBselect = true; // make it false on click of chkbx
         }
+        // } else {
+        //   this.errorDBselect = true; // make it false on click of chkbx
+        // }
       } else {
         document.getElementById('next-slide').click();
         this.handleStepIindicator(true);
@@ -82,6 +112,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   handleStepIindicator(isNext) {
+
     const slideNo = $('.carousel-inner .item.active').attr('step');
     console.log('slideNo', slideNo, document.getElementById('progress-bar'));
     switch (slideNo) {
@@ -114,16 +145,25 @@ export class AddDatabaseWizardComponent implements OnInit {
         break;
     }
   }
-  // createWS() {
-  //   this.wsParam.workspaceName = this.wsName;
-  //   this.wsParam.databaseIds = this.databaseIds;
-  //   this.addClass('progress-bar', 'width-100-pc');
-  //   this.userWorkspaceService.createNewWorkspace(this.wsParam).subscribe( res => {
-  //     if (res) {
-  //       this.newWSinfo = res;
-  //       this.postCreation();
-  //     }
-  //   });
-  // }
+  createDBConfig() {
+    console.log('alok loak jiyu yu yloak loak l', this.dbProfileName)
+    this.dbParam.dbProfileName = this.dbProfileName;
+    this.dbParam.databaseIds = this.databaseIds;
+    this.dbParam.dbUserName = this.dbUserName;
+    this.dbParam.dbPassword = this.dbPassword;
+    this.dbParam.dbPort = this.dbPort;
+    this.dbParam.dbHost = this.dbHost;
+    this.dbParam.dbServer = this.dbServer;
+    this.dbParam.dbName = this.dbName;
+    this.dbParam.dbDefaultSchema = this.dbDefaultSchema;
+    this.addClass('progress-bar', 'width-100-pc');
+    this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe( res => {
+      if (res) {
+        console.log('iphone', res)
+        // this.newWSinfo = res;
+        // this.postCreation();
+      }
+    });
+  }
 
 }

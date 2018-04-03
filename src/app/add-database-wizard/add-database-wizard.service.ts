@@ -3,12 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
-import { WorkspaceObject, ConfiguredDB, AnyObject } from './workspace-objects';
-import { UserinfoService } from './userinfo.service';
-import { environment } from '../environments/environment';
+// import { WorkspaceObject, ConfiguredDB, AnyObject } from './workspace-objects';
+import { UserinfoService } from '../userinfo.service';
+import { environment } from '../../environments/environment';
+import { UserObject, AnyObject, ConfiguredDB, WorkspaceObject } from '../workspace-objects';
+
 
 @Injectable()
-export class UserWorkspaceService {
+export class AddDatabaseWizardService {
+
   apiUrl = environment.apiUrl;
   getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
   createNewWSurl = `${this.apiUrl}workspaces`;
@@ -19,32 +22,12 @@ export class UserWorkspaceService {
     this.http = http;
   }
 
-  getUserWorkspaceUrl() {
-    return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
-  }
+  // getUserWorkspaceUrl() {
+  //   return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
+  // }
 
   getWorkspaceByOwnerIdUrl() {
     return this.apiUrl + 'workspaces?ownerId=' + this.userinfoService.getUserId();
-  }
-
-  getUserWorkspaceList(): Observable<WorkspaceObject[]> {
-    return this.http.get<WorkspaceObject[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders()})
-    .map(this.extractWorkspaces)
-    .pipe(catchError(this.handleError<WorkspaceObject[]>('getUserWorkspaces')));
-  }
-
-  getSupportedDBList() {
-    return this.http.get<ConfiguredDB[]>(this.getConfiguredDBurl, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractConfiguredDatabases)
-      .pipe(catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList')));
-  }
-
-  // Create new Database Configuration service api
-  createNewDBConfig(dbParam: AnyObject) {
-      dbParam.ownerId = this.userinfoService.getUserId();
-      return this.http.post<WorkspaceObject>(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractData)
-      .pipe(catchError(this.handleError<WorkspaceObject>('createNewDBConfig')));
   }
 
   createNewWorkspace(params: AnyObject) {
@@ -53,6 +36,12 @@ export class UserWorkspaceService {
       .map(this.extractData)
       .pipe(catchError(this.handleError<WorkspaceObject>('createNewWorkspace')));
   }
+  // createNewWorkspace(params: AnyObject) {
+  //   params.ownerId = this.userinfoService.getUserId();
+  //   return this.http.post<WorkspaceObject>(this.createNewWSurl, params, { headers: this.userinfoService.getHeaders() })
+  //     .map(this.extractData)
+  //     .pipe(catchError(this.handleError<WorkspaceObject>('createNewWorkspace')));
+  // }
 
   private extractData(res: any) {
     const data = res.data;
@@ -77,6 +66,5 @@ export class UserWorkspaceService {
       return of(result as T);
     };
   }
-
 
 }
