@@ -47,8 +47,8 @@
                                   Select database <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu scrollable-menu" role="menu">
-                                  <li><a href="#">Action 1</a></li>
-                                  <li><a href="#">Action 2</a></li>
+                                  <li *ngFor="let servername of dbServerList"><a href="#">{{ servername.name }}</a></li>
+                                  <!-- <li><a href="#">Action 2</a></li>
                                   <li><a href="#">Action 3</a></li>
                                   <li><a href="#">Action 4</a></li>
                                   <li><a href="#">Action 5</a></li>
@@ -61,7 +61,7 @@
                                   <li><a href="#">Action 12</a></li>
                                   <li><a href="#">Action 13</a></li>
                                   <li><a href="#">Action 14</a></li>
-                                  <li><a href="#">Very very very very very very long action</a></li>
+                                  <li><a href="#">Very very very very very very long action</a></li> -->
                                 </ul>
                               </div>
                               

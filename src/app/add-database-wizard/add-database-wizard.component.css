@@ -45,7 +45,11 @@ th.disp-bl {
     margin-left: -25px;
 
   }
+  .btn dropdown-toggle {
+      box-shadow: 1px 1px 13px grey;
+  }
 
   .btn-group>.btn:first-child {
     margin-left: -29px;
+    border: grey;
 }

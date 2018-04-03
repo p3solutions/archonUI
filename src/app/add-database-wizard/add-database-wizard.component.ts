@@ -10,14 +10,11 @@ import { UserinfoService } from '../userinfo.service';
   styleUrls: ['./add-database-wizard.component.css']
 })
 export class AddDatabaseWizardComponent implements OnInit {
+
   dbProfileName: string;
-  dbUserName: string;
-  dbPassword: string;
-  dbPort: string;
-  dbHost: string;
   dbServer: string;
   dbName: string;
-  dbDefaultSchema: string;
+  dbServerList: {};
 
   databaseName: string;
   host: string;
@@ -47,9 +44,18 @@ export class AddDatabaseWizardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getAllDBServer();
     this.documentReadyFn();
   }
 
+  getAllDBServer() {
+    this.userWorkspaceService.getAllSupportedDBServer().subscribe( res => {
+      if (res) {
+        this.dbServerList = res.applications.allowedDBs;
+        console.log('iphone iphone iphone', this.dbServerList)
+      }
+    }); 
+  }
   documentReadyFn() {
     // this.loggedInUser = this.userinfoService.getLoggedInUserFromAccessToken();
     document.getElementById('openCreateAddDBmodal').click();
@@ -149,13 +155,13 @@ export class AddDatabaseWizardComponent implements OnInit {
     console.log('alok loak jiyu yu yloak loak l', this.dbProfileName)
     this.dbParam.dbProfileName = this.dbProfileName;
     this.dbParam.databaseIds = this.databaseIds;
-    this.dbParam.dbUserName = this.dbUserName;
-    this.dbParam.dbPassword = this.dbPassword;
-    this.dbParam.dbPort = this.dbPort;
-    this.dbParam.dbHost = this.dbHost;
+    this.dbParam.dbUserName = this.userName;
+    this.dbParam.dbPassword = this.password;
+    this.dbParam.dbPort = this.port;
+    this.dbParam.dbHost = this.host;
     this.dbParam.dbServer = this.dbServer;
     this.dbParam.dbName = this.dbName;
-    this.dbParam.dbDefaultSchema = this.dbDefaultSchema;
+    this.dbParam.dbDefaultSchema = this.schemaName;
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe( res => {
       if (res) {
