@@ -63,4 +63,18 @@ export class ConfiguredDB {
     userName: string;
     owner: OwnerObject;
     databaseTypeInfo: DatabaseObject;
+    
+}
+
+
+export class CreateConfigDB {
+    ownerId : string;
+    databaseName : string;
+    host : string;
+    port : string;
+    schemaName : string;
+    userName : string;
+    password : string;
+    authType : string;
+    supportedDBId : string;
 }

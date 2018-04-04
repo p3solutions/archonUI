@@ -13,7 +13,6 @@ export class AddDatabaseWizardComponent implements OnInit {
 
   dbProfileName: string;
   dbServer: string;
-  dbName: string;
   dbServerList: {};
 
   databaseName: string;
@@ -22,6 +21,9 @@ export class AddDatabaseWizardComponent implements OnInit {
   schemaName: string;
   userName: string;
   password: string;
+  authType = 'JDBC';
+  supportedDBId: string;
+  selectedDBServerName = 'Select Database'
 
   wsName: string;
   wsDesc: string;
@@ -48,11 +50,16 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.documentReadyFn();
   }
 
+  selectDBServer(servername) {
+      this.supportedDBId = servername.id;
+      this.selectedDBServerName = servername.name;
+  }
+  
+
   getAllDBServer() {
     this.userWorkspaceService.getAllSupportedDBServer().subscribe( res => {
       if (res) {
         this.dbServerList = res.applications.allowedDBs;
-        console.log('iphone iphone iphone', this.dbServerList)
       }
     }); 
   }
@@ -91,8 +98,6 @@ export class AddDatabaseWizardComponent implements OnInit {
     } else {
       if (document.querySelector('.second-last').classList.contains('active') ) {
         if (true) { // selected at least one DB
-          console.log('jitu loak jitu yu yloak loak l', this.dbProfileName)
-
 
           // restricting to select one, temporarily as per Backend team
           //  if (this.databaseIds.length > 1) {
@@ -152,16 +157,15 @@ export class AddDatabaseWizardComponent implements OnInit {
     }
   }
   createDBConfig() {
-    console.log('alok loak jiyu yu yloak loak l', this.dbProfileName)
-    this.dbParam.dbProfileName = this.dbProfileName;
-    this.dbParam.databaseIds = this.databaseIds;
-    this.dbParam.dbUserName = this.userName;
-    this.dbParam.dbPassword = this.password;
-    this.dbParam.dbPort = this.port;
-    this.dbParam.dbHost = this.host;
-    this.dbParam.dbServer = this.dbServer;
-    this.dbParam.dbName = this.dbName;
-    this.dbParam.dbDefaultSchema = this.schemaName;
+    // this.dbParam.dbProfileName = this.dbProfileName;
+    this.dbParam.userName = this.userName;
+    this.dbParam.password = this.password;
+    this.dbParam.port = this.port;
+    this.dbParam.host = this.host;
+    this.dbParam.databaseName = this.databaseName;
+    this.dbParam.schemaName = this.schemaName;
+    this.dbParam.supportedDBId = this.supportedDBId;
+    this.dbParam.authType = this.authType;
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe( res => {
       if (res) {

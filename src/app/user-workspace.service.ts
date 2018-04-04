@@ -50,7 +50,8 @@ export class UserWorkspaceService {
   // Create new Database Configuration service api
   createNewDBConfig(dbParam: AnyObject) {
       dbParam.ownerId = this.userinfoService.getUserId();
-      return this.http.post<WorkspaceObject>(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() })
+      console.log('aaaaaaaaaa aaaaaaa aaaaa aaaa', dbParam);
+      return this.http.post(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() })
       .map(this.extractData)
       .pipe(catchError(this.handleError<WorkspaceObject>('createNewDBConfig')));
   }

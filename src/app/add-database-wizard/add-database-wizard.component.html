@@ -44,27 +44,12 @@
                             <div class="col-lg-12">
                               <div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                  Select database <span class="caret"></span>
+                                  {{ selectedDBServerName }} <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu scrollable-menu" role="menu">
-                                  <li *ngFor="let servername of dbServerList"><a href="#">{{ servername.name }}</a></li>
-                                  <!-- <li><a href="#">Action 2</a></li>
-                                  <li><a href="#">Action 3</a></li>
-                                  <li><a href="#">Action 4</a></li>
-                                  <li><a href="#">Action 5</a></li>
-                                  <li><a href="#">Action 6</a></li>
-                                  <li><a href="#">Action 7</a></li>
-                                  <li><a href="#">Action 8</a></li>
-                                  <li><a href="#">Action 9</a></li>
-                                  <li><a href="#">Action 10</a></li>
-                                  <li><a href="#">Action 11</a></li>
-                                  <li><a href="#">Action 12</a></li>
-                                  <li><a href="#">Action 13</a></li>
-                                  <li><a href="#">Action 14</a></li>
-                                  <li><a href="#">Very very very very very very long action</a></li> -->
+                                  <li *ngFor="let servername of dbServerList"><a (click)="selectDBServer(servername)">{{ servername.name }}</a></li>
                                 </ul>
                               </div>
-                              
                             </div>
                           </div>
                         </div>
@@ -79,18 +64,18 @@
                 <div class="col-md-12 row m-10">
                   <div class="col-md-2">Host</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="dbHost" placeholder="Enter Host name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    <input [(ngModel)]="host" placeholder="Enter Host name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                   <div class="col-md-2">Port</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="dbPort" placeholder="Enter Port name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    <input [(ngModel)]="port" placeholder="Enter Port name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                 </div>
                 
                 <div class="col-md-12 row m-10">
                    <div class="col-md-2">Database Name</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="dbName" placeholder="Enter Database name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    <input [(ngModel)]="databaseName" placeholder="Enter Database name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                   <!-- <div class="col-md-2">Database Server</div>
                   <div class="col-md-4">
@@ -109,7 +94,7 @@
                   <!-- </div> -->
                   <div class="col-md-2">Default Schema</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="dbDefaultSchema" placeholder="Enter Default Schema" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    <input [(ngModel)]="schemaName" placeholder="Enter Default Schema" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                 </div>
             </div>
@@ -119,13 +104,13 @@
               <div class="col-md-12 row m-10">
                   <div class="col-md-2">UserName</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="dbUserName" placeholder="Enter Databse User Name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    <input [(ngModel)]="userName" placeholder="Enter Databse User Name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
               </div>
               <div class="col-md-12 row m-10">
                   <div class="col-md-2">Password</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="dbPassword" placeholder="Enter Database Password" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    <input [(ngModel)]="password" placeholder="Enter Database Password" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                 </div>
                     <!-- <div class="row">
@@ -144,35 +129,41 @@
                 <div class="col-md-12 row m-10">
                     <div class="col-md-2">Profile Name</div>
                     <div class="col-md-4">
-                      <input [(ngModel)]="wsName" placeholder="Enter Profile name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                      <label>{{dbProfileName}}</label>
+                      <!-- <input [(ngModel)]="wsName" placeholder="Enter Profile name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
                     </div>
                     <div class="col-md-2">Database Server</div>
                     <div class="col-md-4">
-                      <input [(ngModel)]="wsName" placeholder="Enter Database Server" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                        <label>{{selectedDBServerName}}</label>
+                      <!-- <input [(ngModel)]="wsName" placeholder="Enter Database Server" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
                     </div>
                   </div>
                   <div class="col-md-12 row m-10">
                       <div class="col-md-2">Host</div>
                       <div class="col-md-4">
-                        <input [(ngModel)]="wsName" placeholder="Enter Host name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                          <label>{{host}}</label>
+                        <!-- <input [(ngModel)]="wsName" placeholder="Enter Host name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
                       </div>
                       <div class="col-md-2">Port</div>
                       <div class="col-md-4">
-                        <input [(ngModel)]="wsName" placeholder="Enter Port name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                          <label>{{port}}</label>
+                        <!-- <input [(ngModel)]="wsName" placeholder="Enter Port name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
                       </div>
                     </div>
                     <div class="col-md-12 row m-10">
                         <div class="col-md-2">Database Name</div>
                         <div class="col-md-4">
-                          <input [(ngModel)]="wsName" placeholder="Enter Database name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                            <label>{{databaseName}}</label>
+                          <!-- <input [(ngModel)]="wsName" placeholder="Enter Database name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
                         </div>
                         <div class="col-md-2">Default Schema</div>
                         <div class="col-md-4">
-                          <input [(ngModel)]="wsName" placeholder="Enter Default Schema" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                            <label>{{schemaName}}</label>
+                          <!-- <input [(ngModel)]="wsName" placeholder="Enter Default Schema" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
                         </div>
                       </div>
                       <div class="col-md-12 row m-12">
-                          <div class="col-md-12"><button class="btn btn-primary center-block"> Test Connection"</button></div>
+                          <div class="col-md-12"><button type="button" class="btn btn-primary center-block" disabled> Test Connection"</button></div>
                         </div>
                     
                 <!-- <div class="col-md-12 row m-10">
@@ -238,7 +229,7 @@
         <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
         <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event)">Previous</button>
         <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
-        <button type="button" id="create-btn" class="btn btn-primary hide" (click)="createWS()">Create&nbsp;</button>
+        <button type="button" id="create-btn" class="btn btn-primary hide" (click)="createDBConfig()">Create&nbsp;</button>
         <button type="button" id="ok-btn" class="btn btn-primary hide" data-dismiss="modal" (click)="resetCarousel()">Done</button>
       </div>
 
