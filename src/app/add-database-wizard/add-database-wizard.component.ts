@@ -99,8 +99,6 @@ export class AddDatabaseWizardComponent implements OnInit {
       e.stopPropagation();
     } else {
       if (document.querySelector('.second-last').classList.contains('active') ) {
-        if (true) { // selected at least one DB
-
           // restricting to select one, temporarily as per Backend team
           //  if (this.databaseIds.length > 1) {
           //   alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
@@ -111,7 +109,6 @@ export class AddDatabaseWizardComponent implements OnInit {
           this.addClass('next-btn', 'hide');
           document.getElementById('next-slide').click();
           this.handleStepIindicator(true);
-        }
         // } else {
         //   this.errorDBselect = true; // make it false on click of chkbx
         // }
