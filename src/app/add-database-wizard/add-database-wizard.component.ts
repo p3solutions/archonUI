@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserObject, AnyObject, ConfiguredDB, WorkspaceObject } from '../workspace-objects';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { UserinfoService } from '../userinfo.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   selectedDBtable: any;
   
   constructor(
+    private router: Router,
     private userinfoService: UserinfoService,
     private userWorkspaceService: UserWorkspaceService
   ) { }
@@ -168,12 +170,9 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.dbParam.authType = this.authType;
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe( res => {
-      if (res) {
-        console.log('iphone', res)
-        // this.newWSinfo = res;
-        // this.postCreation();
-      }
     });
+    window.location.reload();
+    // this.router.navigate(['/workspace/database-list']);
   }
 
 }
