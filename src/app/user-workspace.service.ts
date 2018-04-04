@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
-import { WorkspaceObject, ConfiguredDB, AnyObject } from './workspace-objects';
+import { WorkspaceObject, ConfiguredDB, AnyObject, CreateConfigDBObject  } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
 import { environment } from '../environments/environment';
 
@@ -51,7 +51,7 @@ export class UserWorkspaceService {
   createNewDBConfig(dbParam: AnyObject) {
       dbParam.ownerId = this.userinfoService.getUserId();
       console.log('aaaaaaaaaa aaaaaaa aaaaa aaaa', dbParam);
-      return this.http.post(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() })
+      return this.http.post<CreateConfigDBObject>(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() })
       .map(this.extractData)
       .pipe(catchError(this.handleError<WorkspaceObject>('createNewDBConfig')));
   }

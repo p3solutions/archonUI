@@ -67,7 +67,7 @@ export class ConfiguredDB {
 }
 
 
-export class CreateConfigDB {
+export class CreateConfigDBObject {
     ownerId : string;
     databaseName : string;
     host : string;
