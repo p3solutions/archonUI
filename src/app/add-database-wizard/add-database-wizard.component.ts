@@ -167,8 +167,11 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.dbParam.authType = this.authType;
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe( res => {
+      if (res) {
+        document.getElementById("populate-db-list").click();
+      }
     });
-    window.location.reload();
+    // window.location.reload();
     // this.router.navigate(['/workspace/database-list']);
   }
 
