@@ -127,6 +127,8 @@ export class NewWorkspaceComponent implements OnInit {
       if (res) {
         this.newWSinfo = res;
         this.postCreation();
+        // after getting ok response reloading the workspace list 
+        document.getElementById("reload-ws-list").click();
       }
     });
   }
