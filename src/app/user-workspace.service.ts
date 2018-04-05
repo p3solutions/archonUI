@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
-import { WorkspaceObject, ConfiguredDB, AnyObject } from './workspace-objects';
+import { WorkspaceObject, ConfiguredDB, AnyObject, CreateConfigDBObject  } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
 import { environment } from '../environments/environment';
 
@@ -12,6 +12,7 @@ export class UserWorkspaceService {
   apiUrl = environment.apiUrl;
   getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
   createNewWSurl = `${this.apiUrl}workspaces`;
+  getAppConfigUrl = `${this.apiUrl}application/config`;
   constructor(
     private http: HttpClient,
     private userinfoService: UserinfoService
@@ -37,6 +38,22 @@ export class UserWorkspaceService {
     return this.http.get<ConfiguredDB[]>(this.getConfiguredDBurl, { headers: this.userinfoService.getHeaders() })
       .map(this.extractConfiguredDatabases)
       .pipe(catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList')));
+  }
+
+  // get all supported database server name in drop down
+  getAllSupportedDBServer() {
+    return this.http.get(this.getAppConfigUrl, { headers: this.userinfoService.getHeaders()})
+    .map(this.extractData)
+    .pipe(catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList')));
+  }
+  
+  // Create new Database Configuration service api
+  createNewDBConfig(dbParam: AnyObject) {
+      dbParam.ownerId = this.userinfoService.getUserId();
+      console.log('aaaaaaaaaa aaaaaaa aaaaa aaaa', dbParam);
+      return this.http.post<CreateConfigDBObject>(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractData)
+      .pipe(catchError(this.handleError<WorkspaceObject>('createNewDBConfig')));
   }
 
   createNewWorkspace(params: AnyObject) {
