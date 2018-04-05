@@ -15,7 +15,7 @@ export class NewWorkspaceComponent implements OnInit {
   wsParam: AnyObject = {};
   supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
-  isDBAvailable= false;
+  isDBAvailable = false;
   newWSinfo: WorkspaceObject;
   databaseIds: string[] = [];
   selectedDBList: ConfiguredDB[] = [];
