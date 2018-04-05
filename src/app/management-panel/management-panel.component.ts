@@ -24,5 +24,8 @@ export class ManagementPanelComponent implements OnInit {
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
+  gotoConfigDatabaseList() {
+    this.router.navigate(['workspace/database-list']);
+  }
 
 }
