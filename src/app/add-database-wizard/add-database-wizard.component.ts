@@ -24,7 +24,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   password: string;
   authType = 'JDBC';
   supportedDBId: string;
-  selectedDBServerName = 'Select Database'
+  selectedDBServerName = 'Select server'
 
   wsName: string;
   wsDesc: string;
