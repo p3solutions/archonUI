@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserObject, AnyObject, ConfiguredDB, WorkspaceObject } from '../workspace-objects';
+import { UserObject, AnyObject, ConfiguredDB, CreateConfigDBObject } from '../workspace-objects';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { UserinfoService } from '../userinfo.service';
 import { Router } from '@angular/router';
@@ -24,7 +24,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   password: string;
   authType = 'JDBC';
   supportedDBId: string;
-  selectedDBServerName = 'Select server'
+  selectedDBServerName = 'Select server';
+  newWSinfo: CreateConfigDBObject;
 
   wsName: string;
   wsDesc: string;
@@ -122,7 +123,6 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   handleStepIindicator(isNext) {
-
     const slideNo = $('.carousel-inner .item.active').attr('step');
     console.log('slideNo', slideNo, document.getElementById('progress-bar'));
     switch (slideNo) {
@@ -155,6 +155,53 @@ export class AddDatabaseWizardComponent implements OnInit {
         break;
     }
   }
+
+  // reset modal
+  resetCarousel() {
+    this.addClass('ok-btn', 'hide');
+    document.getElementById('next-slide').click();
+    this.removeClass('next-btn', 'hide');
+    this.removeClass('cancel-btn', 'hide');
+    this.newWSinfo = undefined;
+    this.wsName = undefined;
+    this.wsNameEmpty = false;
+    this.wsDesc = undefined;
+    this.dbParam.userName = undefined;
+    this.dbParam.port = undefined;
+    this.dbParam.host = undefined;
+    this.dbParam.databaseName = undefined;
+    this.dbParam.schemaName = undefined;
+
+  }
+
+  postCreation() {
+    const thisComponent = this; // this is component's 'this'
+    thisComponent.addClass('prev-btn', 'hide');
+    thisComponent.addClass('create-btn', 'hide');
+    thisComponent.removeClass('ok-btn', 'hide');
+    document.getElementById('next-slide').click();
+    // if (this.selectedDBtable) {
+    //   this.selectedDBtable.destroy();
+    // }
+    // this.selectedDBtable = $('#selected-db-list-table').DataTable({
+    //   // 'searching': false,
+    //   'lengthMenu': [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'All']],
+    //   'ajax': function (data, callback, settings) { callback({data: thisComponent}); },
+    //   'columns': [
+    //     { 'data': 'databaseName' },
+    //     { 'data': 'owner.name' },
+    //     {
+    //       'className': '',
+    //       'orderable': false,
+    //       'data': null,
+    //       'defaultContent': 'Pending Approval',
+    //       'title': 'Status'
+    //     }
+    //   ],
+    //   'order': [[0, 'asc']]
+    // });
+  }
+
   createDBConfig() {
     // this.dbParam.dbProfileName = this.dbProfileName;
     this.dbParam.userName = this.userName;
@@ -168,7 +215,9 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe( res => {
       if (res) {
+        this.newWSinfo = res
         document.getElementById("populate-db-list").click();
+        this.postCreation();
       }
     });
     // window.location.reload();
