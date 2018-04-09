@@ -98,13 +98,11 @@ export class ManageMembersComponent implements OnInit {
         { 'data': 'user.name' },
         { 'data': 'workspaceRole.name' },
         {
-          'className': 'col-md-1 tooltip-left-37',
-          'orderable': false,
-          'data': null,
-          'defaultContent': `<div data-tooltip="Delete" class="delete-user">
-                              <i class="fa fa-trash-o archon-icon disp-bl"></i>
-                            </div>`,
-          'title': 'Delete'
+          'render': function (data, type, full, meta) {
+            return `<div data-tooltip="Delete" class="delete-user">
+            <i class="fa fa-trash-o archon-icon disp-bl ${full.workspaceRole.name === 'ROLE_OWNER' ?
+                'icon-disabled' : ''}"></i></div>`;
+          }
         }
       ],
       'order': [[1, 'asc']]
@@ -127,6 +125,9 @@ export class ManageMembersComponent implements OnInit {
       }
     });
     $('#manage-members-table tbody').off('click', 'td .delete-user').on('click', 'td .delete-user', function () {
+      if ($(this).find('.icon-disabled').length === 1) {
+        return false;
+      }
       const tr = $(this).closest('tr');
       const row = thisComponent.table.row(tr);
       const rowData: any = row.data();
