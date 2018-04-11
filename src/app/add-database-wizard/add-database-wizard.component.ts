@@ -56,6 +56,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   selectDBServer(servername) {
       this.supportedDBId = servername.id;
       this.selectedDBServerName = servername.name;
+      this.port = servername.defaultPort;
+     
   }
   
 
@@ -63,6 +65,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.userWorkspaceService.getAllSupportedDBServer().subscribe( res => {
       if (res) {
         this.dbServerList = res.applications.allowedDBs;
+        console.log(res.applications.allowedDBs, 'port');
       }
     }); 
   }
