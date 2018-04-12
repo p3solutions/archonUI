@@ -170,11 +170,18 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.wsNameEmpty = false;
     this.wsDesc = undefined;
     this.dbParam.userName = undefined;
+    this.userName =undefined;
     this.dbParam.port = undefined;
+    this.port = undefined;
     this.dbParam.host = undefined;
+    this.host = undefined;
     this.dbParam.databaseName = undefined;
+    this.databaseName = undefined;
     this.dbParam.schemaName = undefined;
-
+    this.schemaName = undefined;
+    this.dbParam.profileName = undefined;
+    this.profileName = undefined;
+    this.selectedDBServerName = 'Select server';
   }
 
   postCreation() {
