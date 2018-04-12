@@ -42,8 +42,8 @@
                       <div class="container">
                           <div class="row">
                             <div class="col-lg-12">
-                              <div class="btn-group">
-                                <button id="blur" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              <div name="wsName" id="wsName" class="btn-group  {{!wsName && wsNameEmpty ? 'error-input' : ''}}  " required>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                   {{ selectedDBServerName }} <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu scrollable-menu" role="menu">
