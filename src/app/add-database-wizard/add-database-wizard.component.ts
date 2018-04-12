@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AddDatabaseWizardComponent implements OnInit {
 
-  dbProfileName: string;
+  profileName: string;
   dbServer: string;
   dbServerList: {};
 
@@ -95,7 +95,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   nextStep(e) {
-    this.wsName = this.dbProfileName;
+    this.wsName = this.profileName;
 
     if (!this.wsName) {
       this.wsNameEmpty = true;
@@ -215,10 +215,12 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.dbParam.schemaName = this.schemaName;
     this.dbParam.supportedDBId = this.supportedDBId;
     this.dbParam.authType = this.authType;
+    this.dbParam.profileName = this.profileName
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe( res => {
       if (res) {
         this.newWSinfo = res
+        console.log('latest testing ', res)
         document.getElementById("populate-db-list").click();
         this.postCreation();
       }
