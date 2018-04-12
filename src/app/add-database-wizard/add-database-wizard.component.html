@@ -35,7 +35,7 @@
                 <div class="col-md-12 row m-10">
                   <div class="col-md-2">Profile Name</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="dbProfileName" placeholder="Enter Profile name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    <input [(ngModel)]="profileName" placeholder="Enter Profile name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                   <div class="col-md-2">Database Server</div>
                   <div class="col-md-3">
@@ -69,7 +69,7 @@
                   </div>
                   <div class="col-md-2">Port</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="port" placeholder="{{(selectedDBServerName == 'Select server') ? 'Enter Port name' :  port}}" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    <input [(ngModel)]="port" placeholder="{{(selectedDBServerName == 'Select server') ? 'Enter Port number' :  port}}" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div>
                 </div>
                 
@@ -150,7 +150,7 @@
                 <div class="col-md-12 row m-10">
                     <div class="col-md-2">Profile Name</div>
                     <div class="col-md-4">
-                      <label>{{dbProfileName}}</label>
+                      <label>{{profileName}}</label>
                       <!-- <input [(ngModel)]="wsName" placeholder="Enter Profile name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
                     </div>
                     <div class="col-md-2">Database Server</div>
