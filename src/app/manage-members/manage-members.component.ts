@@ -52,7 +52,7 @@ export class ManageMembersComponent implements OnInit {
 
   onDelete(id: any, tr): void {
     this.manageMembersService.deleteManageMembersData({ id: id }, this.workspaceId).subscribe(res => {
-      tr.remove();
+      tr.remove(); //Removing the row.
     });
   }
 
