@@ -50,6 +50,11 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
         });
     }
+
+    reloadWSlist() {
+        this.getWorkspaceListInfo(this.token_data.user.id);        
+    }
+
     gotoManagementPanel() {
         this.router.navigate(['workspace/management-panel']);
     }

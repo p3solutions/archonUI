@@ -1,0 +1,48 @@
+#db-add {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-size: 15px;
+  margin-top: 20px;
+  width: 60%;
+  height: 60px;
+  text-align: center;
+  padding: 3px;
+  float: right;
+}
+
+.btn-box {
+  text-align: left;
+  width: 600px;
+  height: 125px;
+}
+
+button {
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 3px 10px;
+  text-transform: capitalize;
+}
+
+.ws-body {
+  margin-top: -10px;
+}
+
+.db-leftFooter {
+  float: left;
+  margin-top: 0px;
+}
+
+.db-rightFooter {
+  margin-left: 290px;
+  margin-top: 0px;
+}
+
+.ws-rightArrow i {
+  margin-top: -5px;
+  float: right;
+}
+
+.trim-text h2 {
+  width: 8em;
+  display: inline-block;
+}

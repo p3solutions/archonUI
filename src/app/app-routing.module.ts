@@ -24,6 +24,7 @@ import { WorkspaceListComponent } from './workspace-list/workspace-list.componen
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
+import { DatabaseListComponent } from './database-list/database-list.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,8 @@ const routes: Routes = [
         path: 'no-workspace', component: NoWorkspaceComponent
       }, {
         path: 'workspace-list', component: WorkspaceListComponent
+      }, {
+        path: 'database-list', component: DatabaseListComponent
       }, {
         path: 'management-panel', component: ManagementPanelComponent
       }, {

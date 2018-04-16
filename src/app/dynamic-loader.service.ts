@@ -1,5 +1,6 @@
 import { ComponentFactoryResolver, Injectable, Inject, ReflectiveInjector, ViewContainerRef } from '@angular/core';
 import { NewWorkspaceComponent } from './new-workspace/new-workspace.component';
+import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-wizard.component';
 @Injectable()
 export class DynamicLoaderService {
 
@@ -21,4 +22,12 @@ export class DynamicLoaderService {
       .create(this.rootViewContainer.parentInjector);
     this.rootViewContainer.insert(component.hostView);
   }
+  addDynamicComponent1() {
+    const factory = this.factoryResolver
+      .resolveComponentFactory(AddDatabaseWizardComponent);
+    const component = factory
+      .create(this.rootViewContainer.parentInjector);
+    this.rootViewContainer.insert(component.hostView);
+  }
+
 }
