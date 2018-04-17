@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AddDatabaseWizardComponent implements OnInit {
 
-  dbProfileName: string;
+  profileName: string;
   dbServer: string;
   dbServerList: {};
 
@@ -56,6 +56,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   selectDBServer(servername) {
       this.supportedDBId = servername.id;
       this.selectedDBServerName = servername.name;
+      this.port = servername.defaultPort;
+     
   }
   
 
@@ -63,6 +65,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.userWorkspaceService.getAllSupportedDBServer().subscribe( res => {
       if (res) {
         this.dbServerList = res.applications.allowedDBs;
+        console.log(res.applications.allowedDBs, 'port');
       }
     }); 
   }
@@ -92,7 +95,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   nextStep(e) {
-    this.wsName = this.dbProfileName;
+    this.wsName = this.profileName;
 
     if (!this.wsName) {
       this.wsNameEmpty = true;
@@ -167,11 +170,18 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.wsNameEmpty = false;
     this.wsDesc = undefined;
     this.dbParam.userName = undefined;
+    this.userName =undefined;
     this.dbParam.port = undefined;
+    this.port = undefined;
     this.dbParam.host = undefined;
+    this.host = undefined;
     this.dbParam.databaseName = undefined;
+    this.databaseName = undefined;
     this.dbParam.schemaName = undefined;
-
+    this.schemaName = undefined;
+    this.dbParam.profileName = undefined;
+    this.profileName = undefined;
+    this.selectedDBServerName = 'Select server';
   }
 
   postCreation() {
@@ -212,10 +222,12 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.dbParam.schemaName = this.schemaName;
     this.dbParam.supportedDBId = this.supportedDBId;
     this.dbParam.authType = this.authType;
+    this.dbParam.profileName = this.profileName
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe( res => {
       if (res) {
         this.newWSinfo = res
+        console.log('latest testing ', res)
         document.getElementById("populate-db-list").click();
         this.postCreation();
       }
