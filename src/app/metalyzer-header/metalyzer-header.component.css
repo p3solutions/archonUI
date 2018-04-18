@@ -1,0 +1,17 @@
+.title-headers,
+.ws-name,
+.phase-config {
+  padding-top: 1%;
+  padding-left: 3%;
+  font-size: 14px;
+  font-weight: 300;
+  float: left;
+}
+
+p {
+  display: inline;
+}
+
+.phase-config {
+  padding-left: 2%;
+}

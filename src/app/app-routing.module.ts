@@ -25,6 +25,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 import { DatabaseListComponent } from './database-list/database-list.component';
+import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.component';
+import { MetalyzerComponent } from './metalyzer/metalyzer.component';
 
 const routes: Routes = [
   {
@@ -57,7 +59,10 @@ const routes: Routes = [
           }, {
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
           }]
-      }]
+      },
+      {
+        path: 'metalyzer', component: MetalyzerComponent
+      } ]
   },
   {
     path: '', component: LandingPageComponent, children: [

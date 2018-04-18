@@ -2,7 +2,7 @@ import { Component, OnChanges, Input, OnInit, SimpleChanges, SimpleChange } from
 import { ServiceActionsObject } from '../workspace-objects';
 import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dashboard.service';
 import { WorkspaceServicesService } from './workspace-services.service';
-
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -15,9 +15,14 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceType : string;
   private serviceActions: ServiceActionsObject[];
   constructor(
+    private router: Router,
     private workspaceService: WorkspaceServicesService
   ) { }
 
+  forwardLink(serviceName: string) {
+    this.router.navigate(['workspace/metalyzer']);
+
+  }
   ngOnInit() {
     this.workspaceService.serviceActionsUpdated.subscribe(
       (serviceActions) => {

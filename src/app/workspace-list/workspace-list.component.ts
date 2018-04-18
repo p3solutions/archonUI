@@ -52,7 +52,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     reloadWSlist() {
-        this.getWorkspaceListInfo(this.token_data.user.id);        
+        this.getWorkspaceListInfo(this.token_data.user.id);
     }
 
     gotoManagementPanel() {

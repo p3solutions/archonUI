@@ -67,6 +67,9 @@ import { AddMembersService } from './add-members/add-members.service';
 import { DatabaseListService } from './database-list/database-list.service';
 import { DatabaseListComponent } from './database-list/database-list.component';
 import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-wizard.component';
+import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.component';
+import { MetalyzerComponent } from './metalyzer/metalyzer.component';
+import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -103,7 +106,10 @@ import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-w
                 NewWorkspaceComponent,
                 AddMembersComponent,
                 DatabaseListComponent,
-                AddDatabaseWizardComponent
+                AddDatabaseWizardComponent,
+                MetalyzerHeaderComponent,
+                MetalyzerComponent,
+                MetalyzerConfigurationComponent
         ],
         imports: [
                 BrowserModule,
