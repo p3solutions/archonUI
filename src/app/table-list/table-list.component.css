@@ -1,0 +1,33 @@
+#table-list {
+  margin-left: 35px;
+}
+
+.input-group {
+  padding: 5%;
+}
+
+#title-name {
+  padding-right: 64%;
+  margin-top: -20px;
+}
+
+#table-view-body {
+  height: 350px;
+}
+
+#right-side {
+  margin-top: -20px;
+}
+
+h3 {
+  padding: 15%;
+}
+.form-control{
+    height: 40px;
+    border-radius: 20px;
+}
+.inner-addon {
+    padding-left: 10%;
+    padding-right: 10%;
+    border-radius: 2%;
+}
