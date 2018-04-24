@@ -1,0 +1,50 @@
+#table-list {
+  margin-left: 35px;
+}
+
+.input-group {
+  padding: 5%;
+}
+
+#title-name {
+  padding-right: 64%;
+  margin-top: -20px;
+}
+
+#table-view-body {
+  height: 350px;
+}
+
+#right-side {
+  margin-top: -20px;
+}
+
+h3 {
+  padding: 15%;
+}
+
+.form-control {
+  height: 40px;
+  border-radius: 20px;
+  width: 270px;
+  margin-left: 8px;
+}
+
+.form-control-feedback {
+  position: relative;
+  margin-top: -34px;
+  margin-left: 240px;
+  height: 32px;
+  color: #269af8;
+  line-height: 30px;
+}
+
+.inner-addon {
+  padding-left: 10%;
+  padding-right: 10%;
+  border-radius: 2%;
+}
+
+#search-body {
+  padding: 4%;
+}

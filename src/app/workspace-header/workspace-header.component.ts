@@ -5,6 +5,7 @@ import { Info } from '../info';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { DynamicLoaderService } from '../dynamic-loader.service';
+import { WorkspaceHeaderService } from './workspace-header.service';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -26,6 +27,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
     private workspaceService: WorkspaceServicesService,
+    private workspaceHeaderService: WorkspaceHeaderService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
   ) {
@@ -86,6 +88,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
+    this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace.workspaceName);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
     this.workspaceService.passServiceActions(this.serviceActionsList);

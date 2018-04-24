@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-metalyzer-configuration',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MetalyzerConfigurationComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
+  }
+  gotoAnalysis() {
+    this.router.navigate(['workspace/metalyzer/analysis']);
   }
 
 }

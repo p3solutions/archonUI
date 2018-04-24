@@ -70,6 +70,9 @@ import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-w
 import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.component';
 import { MetalyzerComponent } from './metalyzer/metalyzer.component';
 import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
+import { TableListComponent } from './table-list/table-list.component';
+import { WorkspaceHeaderService } from './workspace-header/workspace-header.service';
+import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -109,15 +112,16 @@ import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metal
                 AddDatabaseWizardComponent,
                 MetalyzerHeaderComponent,
                 MetalyzerComponent,
-                MetalyzerConfigurationComponent
+                MetalyzerConfigurationComponent,
+                TableListComponent
         ],
         imports: [
                 BrowserModule,
                 FormsModule,
                 // HttpClientInMemoryWebApiModule.forRoot(
-                        //     InMemoryDataService,
-                        //     { dataEncapsulation: false }
-                        // ),
+                //     InMemoryDataService,
+                //     { dataEncapsulation: false }
+                // ),
                 FormsModule,
                 AuthModule,
                 ReactiveFormsModule,
@@ -150,7 +154,9 @@ import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metal
                 WorkspaceServicesService,
                 DynamicLoaderService,
                 AddMembersService,
-                DatabaseListService
+                DatabaseListService,
+                WorkspaceHeaderService,
+                MetalyzerHeaderService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
