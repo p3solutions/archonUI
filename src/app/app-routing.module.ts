@@ -27,6 +27,8 @@ import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.
 import { DatabaseListComponent } from './database-list/database-list.component';
 import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.component';
 import { MetalyzerComponent } from './metalyzer/metalyzer.component';
+import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
+import { TableListComponent } from './table-list/table-list.component';
 
 const routes: Routes = [
   {
@@ -61,8 +63,16 @@ const routes: Routes = [
           }]
       },
       {
-        path: 'metalyzer', component: MetalyzerComponent
-      } ]
+        path: 'metalyzer', component: MetalyzerComponent, children: [
+          {
+            path: '', redirectTo: '/configuration', pathMatch: 'full'
+          }, {
+            path: 'configuration', component: MetalyzerConfigurationComponent
+          }, {
+            path: 'analysis', component: TableListComponent
+          }
+        ]
+      }]
   },
   {
     path: '', component: LandingPageComponent, children: [

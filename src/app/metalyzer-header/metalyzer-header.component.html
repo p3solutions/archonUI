@@ -4,26 +4,53 @@
       <div class="title-headers">
         <a href="#">Home</a>
         <i class="fa fa-chevron-right"></i>
-        <a href="#">ABC</a>
+        <a href="#">{{wsName}}</a>
         <i class="fa fa-chevron-right"></i>
         <a href="#">Metalyzer</a>
-        <i class="fa fa-chevron-right">
-          <p>Configuration</p>
-        </i>
+        <i class="fa fa-chevron-right"></i>
+        <a href="#">Configuration</a>
+        <i class="fa fa-chevron-right"></i>
+        <p>Analysis</p>
       </div>
     </div>
     <div class="row">
       <div class="ws-name">
-        <p>Workspace: ABC</p>
+        <p>WorkspaceName: {{wsName}}</p>
+      </div>
+      <div class="dropdown col-md-1 .col-md-offset-3">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="export">Export As
+          <span>
+            <i class="fa fa-angle-down"></i>
+          </span>
+        </button>
+        <ul class="dropdown-menu" id="export-list">
+          <li>
+            <a href="#">Export As</a>
+          </li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="btn">View Relationship
+          <span>
+            <i class="fa fa-angle-down"></i>
+          </span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a href="#">Selected Table</a>
+          </li>
+          <li>
+            <a href="#">Overall</a>
+          </li>
+        </ul>
       </div>
     </div>
     <div classs="row">
       <div class="phase-config">
-        <p>Phase: Configuration</p>
+        <p>Phase: {{config_type}}</p>
         <br>
       </div>
     </div>
   </div>
 </div>
 <hr>
-<app-metalyzer-configuration></app-metalyzer-configuration>

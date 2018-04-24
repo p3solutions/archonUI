@@ -20,7 +20,7 @@ export class WorkspaceServicesComponent implements OnInit {
   ) { }
 
   forwardLink(serviceName: string) {
-    this.router.navigate(['workspace/metalyzer']);
+    this.router.navigate(['workspace/metalyzer/configuration']);
 
   }
   ngOnInit() {

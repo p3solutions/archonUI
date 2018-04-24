@@ -15,3 +15,31 @@ p {
 .phase-config {
   padding-left: 2%;
 }
+
+.dropdown {
+  float: right;
+  margin-right: 200px;
+}
+
+#export {
+  width: 180%;
+  background-color: #DCDCDC;
+  border-radius: 5px;
+  margin-left: -150px;
+  text-transform: capitalize;
+}
+
+#export-list {
+  margin-left: -95px;
+}
+
+#btn {
+  width: 110%;
+  background-color: #DCDCDC;
+  border-radius: 5px;
+  text-transform: capitalize;
+}
+
+span {
+  float: right;
+}
