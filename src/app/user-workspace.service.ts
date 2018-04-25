@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
-import { WorkspaceObject, ConfiguredDB, AnyObject, CreateConfigDBObject  } from './workspace-objects';
+import { WorkspaceObject, ConfiguredDB, AnyObject, CreateConfigDBObject } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
 import { environment } from '../environments/environment';
 
@@ -29,9 +29,9 @@ export class UserWorkspaceService {
   }
 
   getUserWorkspaceList(): Observable<WorkspaceObject[]> {
-    return this.http.get<WorkspaceObject[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders()})
-    .map(this.extractWorkspaces)
-    .pipe(catchError(this.handleError<WorkspaceObject[]>('getUserWorkspaces')));
+    return this.http.get<WorkspaceObject[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders() })
+      .map(this.extractWorkspaces)
+      .pipe(catchError(this.handleError<WorkspaceObject[]>('getUserWorkspaces')));
   }
 
   getSupportedDBList() {
@@ -42,16 +42,15 @@ export class UserWorkspaceService {
 
   // get all supported database server name in drop down
   getAllSupportedDBServer() {
-    return this.http.get(this.getAppConfigUrl, { headers: this.userinfoService.getHeaders()})
-    .map(this.extractData)
-    .pipe(catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList')));
+    return this.http.get(this.getAppConfigUrl, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractData)
+      .pipe(catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList')));
   }
-  
+
   // Create new Database Configuration service api
   createNewDBConfig(dbParam: AnyObject) {
-      dbParam.ownerId = this.userinfoService.getUserId();
-      console.log('aaaaaaaaaa aaaaaaa aaaaa aaaa', dbParam);
-      return this.http.post<CreateConfigDBObject>(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() })
+    dbParam.ownerId = this.userinfoService.getUserId();
+    return this.http.post<CreateConfigDBObject>(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() })
       .map(this.extractData)
       .pipe(catchError(this.handleError<WorkspaceObject>('createNewDBConfig')));
   }
