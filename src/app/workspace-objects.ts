@@ -63,18 +63,25 @@ export class ConfiguredDB {
     userName: string;
     owner: OwnerObject;
     databaseTypeInfo: DatabaseObject;
-    
+
 }
 
 
 export class CreateConfigDBObject {
-    ownerId : string;
-    databaseName : string;
-    host : string;
-    port : string;
-    schemaName : string;
-    userName : string;
-    password : string;
-    authType : string;
-    supportedDBId : string;
+    ownerId: string;
+    databaseName: string;
+    host: string;
+    port: string;
+    schemaName: string;
+    userName: string;
+    password: string;
+    authType: string;
+    supportedDBId: string;
+}
+
+
+export class RelationshipInfoObject {
+    secondaryTable: string;
+    definitionType: string;
+    joinName: string;
 }

@@ -3,6 +3,7 @@ import { ServiceActionsObject } from '../workspace-objects';
 import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dashboard.service';
 import { WorkspaceServicesService } from './workspace-services.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+// import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -14,14 +15,19 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceId : string;
   // @Input() private serviceType : string;
   private serviceActions: ServiceActionsObject[];
+  private wsName: string;
   constructor(
     private router: Router,
-    private workspaceService: WorkspaceServicesService
+    private workspaceService: WorkspaceServicesService,
+    // private workspaceHeaderService: WorkspaceHeaderService
   ) { }
 
   forwardLink(serviceName: string) {
+    // this.wsName = this.workspaceHeaderService.getSeletectedWorkspace();
+    console.log('WorkkkkkkkkkkkkkkkkkkkkkkssssssapnceName', this.wsName);
+    // this.router.navigate(['workspace/metalyzer']); //Add
     this.router.navigate(['workspace/metalyzer/configuration']);
-
+    // this.router.navigate(['workspace/metalyzer/configuration', this.wsName]);
   }
   ngOnInit() {
     this.workspaceService.serviceActionsUpdated.subscribe(

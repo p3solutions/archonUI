@@ -71,6 +71,9 @@ import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.co
 import { MetalyzerComponent } from './metalyzer/metalyzer.component';
 import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
 import { TableListComponent } from './table-list/table-list.component';
+import { WorkspaceHeaderService } from './workspace-header/workspace-header.service';
+import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
+import { TableListService } from './table-list/table-list.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -117,9 +120,9 @@ import { TableListComponent } from './table-list/table-list.component';
                 BrowserModule,
                 FormsModule,
                 // HttpClientInMemoryWebApiModule.forRoot(
-                        //     InMemoryDataService,
-                        //     { dataEncapsulation: false }
-                        // ),
+                //     InMemoryDataService,
+                //     { dataEncapsulation: false }
+                // ),
                 FormsModule,
                 AuthModule,
                 ReactiveFormsModule,
@@ -152,7 +155,10 @@ import { TableListComponent } from './table-list/table-list.component';
                 WorkspaceServicesService,
                 DynamicLoaderService,
                 AddMembersService,
-                DatabaseListService
+                DatabaseListService,
+                WorkspaceHeaderService,
+                MetalyzerHeaderService,
+                TableListService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]

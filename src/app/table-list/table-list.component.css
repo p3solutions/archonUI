@@ -48,3 +48,15 @@ h3 {
 #search-body {
   padding: 4%;
 }
+
+.list-group-item{
+  margin-left: 25px;
+  width: 200%;
+  text-transform: capitalize;
+  margin-bottom: -15px;
+  text-align: left;
+}
+a{
+  text-decoration: none;
+  color: black;
+}

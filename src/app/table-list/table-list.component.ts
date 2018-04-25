@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { TableListService } from './table-list.service';
 @Component({
   selector: 'app-table-list',
   templateUrl: './table-list.component.html',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableListComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(
+    private tablelistService: TableListService
+  ) {  }
+  private tableList: string[];
   ngOnInit() {
+    this.tablelistService.getTableList().subscribe(result => {
+      this.tableList = result;
+      console.log(this.tableList, 'TTTTTTTTTTTTTTTTTTTT');
+    });
   }
 
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { MetalyzerHeaderService } from './metalyzer-header.service';
 @Component({
   selector: 'app-metalyzer-header',
   templateUrl: './metalyzer-header.component.html',
@@ -8,19 +10,16 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class MetalyzerHeaderComponent implements OnInit {
 
   private wsName: string;
-  private config_type = 'Configuration';
-  private isConfig = false;
+  private config_type: string;
+  private isConfig: boolean;
   constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+    private workspaceHeaderService: WorkspaceHeaderService,
+    private metalyzerHeaderService: MetalyzerHeaderService
+  ) {
+  }
 
   ngOnInit() {
-    this.wsName = this.route.snapshot.paramMap.get('wsname');
-    console.log(this.wsName, 'cccccccccccccccccccccccccc');
-  }
-  updateHeader() {
-    this.config_type = 'Analysis';
-    this.isConfig = true;
+    this.wsName = this.workspaceHeaderService.getSeletectedWorkspace();
   }
 }

@@ -8,6 +8,13 @@
         </div>
         <div class="row" id="title-name">
           <h2>Tables</h2>
+          <!-- <span *ngFor="let table of tableList" class="w3-sidebar w3-bar-block w3-light-grey">
+              <a href="#" class="w3-bar-item w3-button">{{table}}</a>
+              <br>
+              </span> -->
+          <ul class="list-group" *ngFor="let table of tableList">
+            <a href="#"><li class="list-group-item">{{table}}</li></a>
+          </ul>
         </div>
       </div>
     </div>

@@ -63,6 +63,7 @@ const routes: Routes = [
           }]
       },
       {
+        // 'metalyzer/:wsname'
         path: 'metalyzer', component: MetalyzerComponent, children: [
           {
             path: '', redirectTo: '/configuration', pathMatch: 'full'
