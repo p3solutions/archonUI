@@ -15,7 +15,6 @@ export class AddDatabaseWizardComponent implements OnInit {
   profileName: string;
   dbServer: string;
   dbServerList: {};
-
   databaseName: string;
   host: string;
   port: string;
@@ -34,14 +33,14 @@ export class AddDatabaseWizardComponent implements OnInit {
   dbParam: AnyObject = {};
   // supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
-  isDBAvailable= false;
+  isDBAvailable = false;
   // newWSinfo: WorkspaceObject;
   databaseIds: string[] = [];
   // selectedDBList: ConfiguredDB[] = [];
   errorDBselect = false;
   DBtable: any;
   selectedDBtable: any;
-  
+
   constructor(
     private router: Router,
     private userinfoService: UserinfoService,
@@ -54,20 +53,20 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   selectDBServer(servername) {
-      this.supportedDBId = servername.id;
-      this.selectedDBServerName = servername.name;
-      this.port = servername.defaultPort;
-     
+    this.supportedDBId = servername.id;
+    this.selectedDBServerName = servername.name;
+    this.port = servername.defaultPort;
+
   }
-  
+
 
   getAllDBServer() {
-    this.userWorkspaceService.getAllSupportedDBServer().subscribe( res => {
+    this.userWorkspaceService.getAllSupportedDBServer().subscribe(res => {
       if (res) {
         this.dbServerList = res.applications.allowedDBs;
         console.log(res.applications.allowedDBs, 'port');
       }
-    }); 
+    });
   }
   documentReadyFn() {
     // this.loggedInUser = this.userinfoService.getLoggedInUserFromAccessToken();
@@ -102,17 +101,17 @@ export class AddDatabaseWizardComponent implements OnInit {
       document.getElementById('wsName').focus();
       e.stopPropagation();
     } else {
-      if (document.querySelector('.second-last').classList.contains('active') ) {
-          // restricting to select one, temporarily as per Backend team
-          //  if (this.databaseIds.length > 1) {
-          //   alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
-          //   return false;
-          // }
-          // end of restriction to 1 selection
-          this.removeClass('create-btn', 'hide');
-          this.addClass('next-btn', 'hide');
-          document.getElementById('next-slide').click();
-          this.handleStepIindicator(true);
+      if (document.querySelector('.second-last').classList.contains('active')) {
+        // restricting to select one, temporarily as per Backend team
+        //  if (this.databaseIds.length > 1) {
+        //   alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
+        //   return false;
+        // }
+        // end of restriction to 1 selection
+        this.removeClass('create-btn', 'hide');
+        this.addClass('next-btn', 'hide');
+        document.getElementById('next-slide').click();
+        this.handleStepIindicator(true);
         // } else {
         //   this.errorDBselect = true; // make it false on click of chkbx
         // }
@@ -170,7 +169,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.wsNameEmpty = false;
     this.wsDesc = undefined;
     this.dbParam.userName = undefined;
-    this.userName =undefined;
+    this.userName = undefined;
     this.dbParam.port = undefined;
     this.port = undefined;
     this.dbParam.host = undefined;
@@ -222,13 +221,13 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.dbParam.schemaName = this.schemaName;
     this.dbParam.supportedDBId = this.supportedDBId;
     this.dbParam.authType = this.authType;
-    this.dbParam.profileName = this.profileName
+    this.dbParam.profileName = this.profileName;
     this.addClass('progress-bar', 'width-100-pc');
-    this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe( res => {
+    this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
       if (res) {
-        this.newWSinfo = res
-        console.log('latest testing ', res)
-        document.getElementById("populate-db-list").click();
+        this.newWSinfo = res;
+        console.log('latest testing ', res);
+        document.getElementById('populate-db-list').click();
         this.postCreation();
       }
     });
