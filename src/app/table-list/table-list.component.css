@@ -47,9 +47,10 @@
 
 .list-group-item {
   margin-left: 25px;
+  margin-bottom: -15px;
   /* width: 100%; */
   text-transform: capitalize;
-  margin-bottom: -15px;
+  /* margin-bottom: -15px; */
   text-align: left;
 }
 
@@ -86,7 +87,7 @@ h4 {
 .items-list {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 300px;
+  height: 230px;
   padding-left: 20px;
 }
 
@@ -94,14 +95,43 @@ h4 {
   width: 230%;
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 250px;
+  height: 280px;
+  /* margin-top: 0px; */
 }
 
 .card {
   width: 105%;
-  height: 400px;
+  height: 410px;
 }
 
 button {
   border-color: grey;
+}
+
+.default-load {
+  margin-top: -20px;
+}
+
+.default-info {
+  padding: 20%;
+}
+
+.card-title {
+  float: left;
+}
+
+.header {
+  /* float: left; */
+  margin-left: 25px;
+}
+
+.dropdown {
+  float: right;
+  margin-right: 90px;
+}
+.dropdown-menu{
+  min-width: 200px;
+}
+.data-analyzer {
+  margin-left: 150px;
 }

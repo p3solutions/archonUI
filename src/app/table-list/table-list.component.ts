@@ -8,6 +8,7 @@ import { RelationshipInfoObject } from '../workspace-objects';
 })
 export class TableListComponent implements OnInit {
   private homeStage: boolean;
+  private tableName: string;
   private relationshipInfo: RelationshipInfoObject[];
   constructor(
     private tablelistService: TableListService
@@ -21,6 +22,7 @@ export class TableListComponent implements OnInit {
   }
   loadRelationTable(tableName: string) {
     this.homeStage = false;
+    this.tableName = tableName;
     this.tablelistService.getListOfRelationTable(tableName).subscribe(result => {
       this.relationshipInfo = result;
       console.log(this.relationshipInfo);
