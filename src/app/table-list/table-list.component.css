@@ -64,7 +64,6 @@ h4 {
   display: inline;
   margin-left: 75px;
   float: left;
-  padding-right: 5%;
 }
 
 .well {
@@ -74,7 +73,7 @@ h4 {
 }
 
 #item {
-  text-align: center;
+  text-align: left;
   margin-top: 10px;
 }
 
