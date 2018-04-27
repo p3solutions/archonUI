@@ -15,14 +15,6 @@
   height: 350px;
 }
 
-#right-side {
-  margin-top: -20px;
-}
-
-h3 {
-  padding: 15%;
-}
-
 .form-control {
   height: 40px;
   border-radius: 20px;
@@ -49,14 +41,67 @@ h3 {
   padding: 4%;
 }
 
-.list-group-item{
+.list-group {
+  padding-right: 40px;
+}
+
+.list-group-item {
   margin-left: 25px;
-  width: 200%;
+  /* width: 100%; */
   text-transform: capitalize;
   margin-bottom: -15px;
   text-align: left;
 }
-a{
+
+a {
   text-decoration: none;
   color: black;
+}
+
+.table-header,
+h4 {
+  display: inline;
+  margin-left: 75px;
+  float: left;
+  padding-right: 5%;
+}
+
+.well {
+  margin-left: 40px;
+  width: 90%;
+  margin-top: 5px;
+}
+
+#item {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#trash,
+#down-arrow {
+  font-size: 20px;
+  padding-left: 30px;
+}
+
+.items-list {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 300px;
+  padding-left: 20px;
+}
+
+.tablename-list {
+  width: 230%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 250px;
+}
+
+.card {
+  width: 105%;
+  height: 400px;
+}
+
+button {
+  border-color: grey;
 }

@@ -46,7 +46,7 @@ export class TableListService {
     return data || [];
   }
   private extractRelationTableList(res: any) {
-    const data = res.data.Relationship_Info;
+    const data = res.data.relationship_Info;
     return data || [];
   }
 
