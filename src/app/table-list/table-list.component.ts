@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 @Component({
   selector: 'app-table-list',
   templateUrl: './table-list.component.html',
-  styleUrls: ['./table-list.component.css']
+  styleUrls: ['./table-list.component.css'],
 })
 export class TableListComponent implements OnInit {
+  public search: any = '';
   private homeStage: boolean;
+  private isAvailable: boolean;
   private tableName: string;
   private relationshipInfo: RelationshipInfoObject[];
   constructor(
@@ -16,6 +18,7 @@ export class TableListComponent implements OnInit {
   private tableList: string[];
   ngOnInit() {
     this.homeStage = true;
+    this.isAvailable = true;
     this.tablelistService.getTableList().subscribe(result => {
       this.tableList = result;
     });

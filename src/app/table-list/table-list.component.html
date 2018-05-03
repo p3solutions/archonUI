@@ -2,14 +2,16 @@
   <div class="col-md-3" id="table-list">
     <div class="card">
       <div class="card-body" id="search-body">
-        <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="query" id="listSearch">
+        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        <!-- <div class="form-group has-feedback">
           <input type="text" class="form-control" id="inputSuccess2" autofocus="autofocus" />
-          <span class="glyphicon glyphicon-search form-control-feedback"></span>
-        </div>
+        </div> -->
         <div class="row" id="title-name">
+          <!-- <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span> -->
           <h2>Tables</h2>
           <div class="tablename-list">
-            <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList">
+            <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
               <button type="button" class="btn btn-default list-group-item" (click)="loadRelationTable(table)">{{table}}</button>
             </div>
           </div>
@@ -26,24 +28,39 @@
         <div class="row">
           <h3 class="card-title header">Relationship Info</h3>
           <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li><a href="#">Manual Join</a></li>
-                <li><a href="#">Column-Match Join</a></li>
-                <li><a href="#">SP/View Join</a></li>
-              </ul>
-            </div>
-            <button type="button" class="btn btn-primary data-analyzer">Data Analyzer</button> 
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#">Manual Join</a>
+              </li>
+              <li>
+                <a href="#">Column-Match Join</a>
+              </li>
+              <li>
+                <a href="#">SP/View Join</a>
+              </li>
+            </ul>
+          </div>
+          <button type="button" class="btn btn-primary data-analyzer">Data Analyzer</button>
         </div>
         <div class="row">
-          <h4 class="card-title header">Primary Table: <strong>{{tableName}}</strong></h4>
+          <h4 class="card-title header">Primary Table:
+            <strong>{{tableName}}</strong>
+          </h4>
         </div>
         <hr>
         <div class="row table-headers">
-          <h4><strong>Secondary Table</strong></h4>
-          <h4><strong>Definition Type</strong></h4>
-          <h4><strong>Join Name</strong></h4>
+          <h4>
+            <strong>Secondary Table</strong>
+          </h4>
+          <h4>
+            <strong>Definition Type</strong>
+          </h4>
+          <h4>
+            <strong>Join Name</strong>
+          </h4>
         </div>
         <div class="items-list">
           <div class="well well-sm" *ngFor="let relation of relationshipInfo">

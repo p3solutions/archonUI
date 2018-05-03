@@ -74,6 +74,7 @@ import { TableListComponent } from './table-list/table-list.component';
 import { WorkspaceHeaderService } from './workspace-header/workspace-header.service';
 import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
 import { TableListService } from './table-list/table-list.service';
+import { SearchPipe } from './search.pipe';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -114,7 +115,8 @@ import { TableListService } from './table-list/table-list.service';
                 MetalyzerHeaderComponent,
                 MetalyzerComponent,
                 MetalyzerConfigurationComponent,
-                TableListComponent
+                TableListComponent,
+                SearchPipe
         ],
         imports: [
                 BrowserModule,

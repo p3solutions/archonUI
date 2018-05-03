@@ -2,20 +2,22 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class MetalyzerHeaderService {
-
-  constructor() { }
   private config_type: string;
-  private isConfig: boolean;
+  private isConfig_Mode: boolean;
+  constructor() {
+    this.config_type = 'Configuration';
+    this.isConfig_Mode = true;
+  }
   getConfigType() {
     return this.config_type;
   }
-  getIsConfig(): boolean {
-    return this.isConfig;
+  getIsConfigMode(): boolean {
+    return this.isConfig_Mode;
   }
   setConfigType(config_type: string) {
     this.config_type = config_type;
   }
-  setIsConfig(isConfig: boolean) {
-    this.isConfig = isConfig;
+  setIsConfigMode(isConfig: boolean) {
+    this.isConfig_Mode = isConfig;
   }
 }
