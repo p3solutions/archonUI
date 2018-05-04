@@ -18,9 +18,10 @@ export class TableListComponent implements OnInit {
   private tableList: string[];
   ngOnInit() {
     this.homeStage = true;
-    this.isAvailable = true;
+    this.isAvailable = false;
     this.tablelistService.getTableList().subscribe(result => {
       this.tableList = result;
+      this.isAvailable = true;
     });
   }
   loadRelationTable(tableName: string) {
@@ -28,7 +29,7 @@ export class TableListComponent implements OnInit {
     this.tableName = tableName;
     this.tablelistService.getListOfRelationTable(tableName).subscribe(result => {
       this.relationshipInfo = result;
-      console.log(this.relationshipInfo);
+      // console.log(this.relationshipInfo);
     });
   }
   extractTableInfo(info: string) {
