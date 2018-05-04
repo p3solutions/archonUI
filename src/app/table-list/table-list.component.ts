@@ -10,6 +10,7 @@ export class TableListComponent implements OnInit {
   public search: any = '';
   private homeStage: boolean;
   private isAvailable: boolean;
+  private isRelationShipAvailable: boolean;
   private tableName: string;
   private relationshipInfo: RelationshipInfoObject[];
   constructor(
@@ -19,6 +20,7 @@ export class TableListComponent implements OnInit {
   ngOnInit() {
     this.homeStage = true;
     this.isAvailable = false;
+    this.isRelationShipAvailable = false;
     this.tablelistService.getTableList().subscribe(result => {
       this.tableList = result;
       this.isAvailable = true;
@@ -29,6 +31,7 @@ export class TableListComponent implements OnInit {
     this.tableName = tableName;
     this.tablelistService.getListOfRelationTable(tableName).subscribe(result => {
       this.relationshipInfo = result;
+      this.isRelationShipAvailable = true;
       // console.log(this.relationshipInfo);
     });
   }

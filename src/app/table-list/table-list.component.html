@@ -1,17 +1,17 @@
 <div class="row" id="analysis-view">
   <div class="col-md-3" id="table-list">
     <div class="card">
-      <div class="card-body" id="search-body">
-        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="query" id="listSearch">
-        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+      <div class="card-body">
         <div class="row" id="title-name">
           <h2>Tables
             <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
           </h2>
-          <div class="tablename-list">
-            <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-              <button type="button" class="btn btn-default list-group-item" (click)="loadRelationTable(table)">{{table}}</button>
-            </div>
+        </div>
+        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="query" id="listSearch">
+        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        <div class="tablename-list">
+          <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
+            <button type="button" class="btn btn-default list-group-item" (click)="loadRelationTable(table)">{{table}}</button>
           </div>
         </div>
       </div>
@@ -24,9 +24,11 @@
       </div>
       <div class="card-body" *ngIf="!homeStage">
         <div class="row">
-          <h3 class="card-title header">Relationship Info
-            <span [ngClass]="{'archon-loading-icon' : isAvailable}" id="icon"></span>
-          </h3>
+          <div class="col-sm-3">
+            <h3 class="card-title header" >Relationship Info
+            </h3>
+          </div>
+          <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span>
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
               <span class="caret"></span>
@@ -46,7 +48,7 @@
           <button type="button" class="btn btn-primary data-analyzer">Data Analyzer</button>
         </div>
         <div class="row">
-          <h4 class="card-title header">Primary Table:
+          <h4 class="card-title sub-header">Primary Table:
             <strong>{{tableName}}</strong>
           </h4>
         </div>

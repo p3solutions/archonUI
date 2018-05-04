@@ -8,7 +8,7 @@
 
 #title-name {
   padding-right: 64%;
-  margin-top: -15px;
+  margin-top: 0px;
 }
 
 #table-view-body {
@@ -16,16 +16,17 @@
 }
 
 .form-control {
+  /* margin-top:-10px; */
   height: 40px;
   border-radius: 20px;
-  width: 270px;
+  width: 280px;
   margin-left: 8px;
 }
 
 .form-control-feedback {
   position: relative;
   margin-top: -34px;
-  margin-left: 240px;
+  margin-left: 250px;
   height: 32px;
   color: #269af8;
   line-height: 30px;
@@ -49,7 +50,7 @@
   margin-left: 25px;
   margin-bottom: -15px;
   /* width: 100%; */
-  text-transform: capitalize;
+  text-transform: none;
   /* margin-bottom: -15px; */
   text-align: left;
 }
@@ -86,12 +87,14 @@ h4 {
 .items-list {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 230px;
+  height: 200px;
   padding-left: 20px;
 }
 
 .tablename-list {
-  width: 230%;
+  margin-top: 10px;
+  margin-left: -5px;
+  width: 95%;
   overflow-x: hidden;
   overflow-y: scroll;
   height: 280px;
@@ -121,22 +124,31 @@ button {
 
 .header {
   /* float: left; */
-  margin-left: 25px;
+  margin-left: 20px;
+}
+
+.sub-header {
+  margin-left: 35px;
 }
 
 .dropdown {
   float: right;
   margin-right: 90px;
 }
-.dropdown-menu{
+
+.dropdown-menu {
   min-width: 200px;
 }
+
 .data-analyzer {
-  margin-left: 150px;
+  margin-left: 250px;
 }
+
 #loading-icon {
   margin-left: -8px;
 }
-#icon{
-  margin-left:10px;
+
+.icon {
+  display: inline-block;
+  margin-left: -50px;
 }
