@@ -1,0 +1,62 @@
+/* #createWSModal-carousel .form-group {
+    height: 360px;
+    margin: 10px;
+} */
+.modal-dialog {
+    margin: 150px auto auto;
+    width: 850px;
+}
+.msg-modal {
+    width: 600px;
+}
+.msg-footer {
+  text-align: center;
+}
+textarea{
+    margin: 0px;
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 3px;
+    resize: none;
+    width: 515px;
+}
+.error-input {
+    background: #ffc1c1;
+    border-color: #ff5959;
+}
+th.disp-bl {
+  display: table-column;
+}
+.table-div {
+    max-height: 330px;
+    overflow: auto;
+}
+
+.dropdown-menu {
+    width: 100%;
+    margin-left: -25px;
+  }
+
+  .scrollable-menu {
+    height: auto;
+    max-height: 160px;
+    overflow-x: hidden;
+    margin-left: -20px;
+
+  }
+  .btn dropdown-toggle {
+      box-shadow: 1px 1px 13px grey;
+  }
+
+  .btn-group>.btn:first-child {
+    margin-left: -16px;
+    border-color: grey;
+    block-size: 26px;
+    font-size: 13px;
+    text-align: left;
+    width: 152px;
+   
+}
+
+

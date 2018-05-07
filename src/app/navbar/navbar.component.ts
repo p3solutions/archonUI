@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Info } from '../info';
-import { InfoService } from '../info.service';
 import { JwtHelper } from 'angular2-jwt';
 
 @Component({
@@ -9,24 +8,32 @@ import { JwtHelper } from 'angular2-jwt';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
-  token_data: any;
   info: Info;
-  constructor(private infoservice: InfoService) { }
+  constructor() { }
   ngOnInit() {
-    this.getInfo();
-  }
-  // Get information from the info service
-  getInfo(): void {
-    this.accessToken = localStorage.getItem('accessToken');
-    this.token_data = this.jwtHelper.decodeToken(this.accessToken);
-    this.info = new Info();
-    this.info.id = this.token_data.user.id;
-    this.info.roles = this.token_data.roles[0];
-    this.info.username = this.token_data.user.name;
+    this.info = this.getInfo();
     if (this.info.roles.roleName === 'ROLE_ADMIN') {
       this.info.show = true;
+    } else if (this.info.roles.roleName === 'ROLE_DB_ADMIN') {
+      this.info.show = true;
+    } else if (this.info.roles.roleName === 'ROLE_SUPER_ADMIN') {
+      this.info.show = true;
+    } else if (this.info.roles.roleName === 'ROLE_DB_MEMBER') {
+      this.info.show = true;
     }
+  }
+  // Get information from the info service
+  getInfo(): Info {
+    let info: Info;
+    let accessToken: string;
+    let token_data: any;
+    const jwtHelper: JwtHelper = new JwtHelper();
+    accessToken = localStorage.getItem('accessToken');
+    token_data = jwtHelper.decodeToken(accessToken);
+    info = new Info();
+    info.id = token_data.user.id;
+    info.roles = token_data.roles[0];
+    info.username = token_data.user.name;
+    return info;
   }
 }

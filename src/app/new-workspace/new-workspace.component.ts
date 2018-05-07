@@ -15,7 +15,7 @@ export class NewWorkspaceComponent implements OnInit {
   wsParam: AnyObject = {};
   supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
-  isDBAvailable= false;
+  isDBAvailable = false;
   newWSinfo: WorkspaceObject;
   databaseIds: string[] = [];
   selectedDBList: ConfiguredDB[] = [];
@@ -127,6 +127,8 @@ export class NewWorkspaceComponent implements OnInit {
       if (res) {
         this.newWSinfo = res;
         this.postCreation();
+        // after getting ok response reloading the workspace list 
+        document.getElementById("reload-ws-list").click();
       }
     });
   }

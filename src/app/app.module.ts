@@ -64,6 +64,9 @@ import { NewWorkspaceComponent } from './new-workspace/new-workspace.component';
 import { DynamicLoaderService } from './dynamic-loader.service';
 import { AddMembersComponent } from './add-members/add-members.component';
 import { AddMembersService } from './add-members/add-members.service';
+import { DatabaseListService } from './database-list/database-list.service';
+import { DatabaseListComponent } from './database-list/database-list.component';
+import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-wizard.component';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -98,7 +101,9 @@ import { AddMembersService } from './add-members/add-members.service';
                 ChangePasswordComponent,
                 ManageMemberPrivilegesComponent,
                 NewWorkspaceComponent,
-                AddMembersComponent
+                AddMembersComponent,
+                DatabaseListComponent,
+                AddDatabaseWizardComponent
         ],
         imports: [
                 BrowserModule,
@@ -138,9 +143,10 @@ import { AddMembersService } from './add-members/add-members.service';
                 WorkspaceDashboardService,
                 WorkspaceServicesService,
                 DynamicLoaderService,
-                AddMembersService
+                AddMembersService,
+                DatabaseListService
         ],
         bootstrap: [AppComponent],
-        entryComponents: [NewWorkspaceComponent]
+        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
 })
 export class AppModule { }

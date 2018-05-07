@@ -71,14 +71,14 @@
             <li title="Profile">
               <a [routerLink]="['/user-profile']" class="trim-text">Profile</a>
             </li>
-            <li *ngIf="info?.show" role="separator" class="divider" ></li>
+            <li *ngIf="info?.show" role="separator" class="divider"></li>
             <li *ngIf="info?.show" title="Manage">
               <a routerLink="/workspace/management-panel" class="trim-text">Manage</a>
             </li>
             <li role="separator" class="divider"></li>
             <li title="Logout">
               <a href="" class="info-number">
-                Logout 
+                Logout
                 <!-- <i class="fa fa-sign-out fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Logout"></i> -->
               </a>
             </li>

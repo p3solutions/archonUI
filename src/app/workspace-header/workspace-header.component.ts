@@ -73,6 +73,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   openCreateWSModal() {
+    console.log('alok alok alok alok aloka')
     if (this.viewContainerRef.get(0)) {
       // open existing dynamic component
       document.getElementById('openCreateWSmodal').click();
