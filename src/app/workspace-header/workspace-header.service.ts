@@ -13,14 +13,5 @@ export class WorkspaceHeaderService {
   getSeletectedWorkspace() {
     return this.workspaceName;
   }
-  getServiceActionType(userId: string) {
-    // console.log(this)
-    const members = this.workspace.members;
-    for (let i = 0; i < members.length; i++) {
-      if (members[i].user.id === userId) {
-        return members[i].serviceActions[0].serviceActionType;
-      }
-    }
-    return null;
-  }
+
 }
