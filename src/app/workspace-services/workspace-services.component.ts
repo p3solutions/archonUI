@@ -29,8 +29,10 @@ export class WorkspaceServicesComponent implements OnInit {
   ) { }
 
   forwardLink(service: any) {
-    this.tableListService.setServiceActionType(service.serviceActionType);
-    this.router.navigate(['workspace/metalyzer', service.serviceActionType]);
+    if (service.serviceName === 'Metalyzer') {
+      this.tableListService.setServiceActionType(service.serviceActionType);
+      this.router.navigate(['workspace/metalyzer', service.serviceActionType]);
+    }
   }
   ngOnInit() {
     this.workspaceService.serviceActionsUpdated.subscribe(

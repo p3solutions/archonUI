@@ -20,18 +20,20 @@ export class MetalyzerComponent implements OnInit {
 
   ngOnInit() {
     this.serviceActionType = this.route.snapshot.paramMap.get('serviceActionType');
+    this.tableListService.getTableList().subscribe(result => {
+      this.tableList = result;
+      console.log('tttttttttttttttttttttttt', this.tableList);
+    });
     if (this.serviceActionType === 'READ') {
       this.router.navigate(['/workspace/metalyzer/READ/analysis']);
     } else if (this.serviceActionType === 'WRITE' || this.serviceActionType === 'ALL') {
-      this.tableListService.getTableList().subscribe(result => {
-        this.tableList = result;
-      });
-      if (this.tableList === undefined) {
+      console.log('cccccccccccccccccccccccccccccccccccccccccccccc', this.tableList);
+      if (this.tableList) {
         this.metalyzerHeaderService.setPhase('Analysis');
-        this.router.navigate(['/workspace/metalyzer/READ/analysis']);
+        this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
       } else {
         this.metalyzerHeaderService.setPhase('Configuration');
-        this.router.navigate(['/workspace/metalyzer/WRITE/configuration']);
+        this.router.navigate(['/workspace/metalyzer/ALL/configuration']);
       }
     }
   }
