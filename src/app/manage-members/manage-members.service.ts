@@ -17,21 +17,21 @@ export class ManageMembersService {
   wSMembersUrl = 'workspaces/';
   wSroleListUrl = 'admin/roles/workspace';
   serviceActionsUrl = 'public/roles/actions';
-  wsDelAccessUrl = 'workspaces/access/remove/';
+  wsDelAccessUrl = 'workspaces/access/';
   updateWSRoleUrl = 'workspaces/access/';
   headers: HttpHeaders;
 
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
-      this.headers = userinfoService.getHeaders();
-    }
+    this.headers = userinfoService.getHeaders();
+  }
 
   getWSMembers(workspaceId): Observable<ManageMembers[]> {
     const url = this.apiUrl + this.wSMembersUrl + workspaceId;
     return this.http.get<ManageMembers[]>(url, { headers: this.headers })
       .map(this.extractWSMembers)
       .pipe(catchError(this.handleError('managemembers', []))
-    );
+      );
   }
 
   getwsRoleList(): Observable<any> {
@@ -43,11 +43,11 @@ export class ManageMembersService {
   }
 
   getServiceActions(): Observable<any> {
-  const url = this.apiUrl + this.serviceActionsUrl;
-  return this.http.get<any>(url, { headers: this.headers })
-    .map(this.extractServiceActions)
-    .pipe(catchError(this.handleError('getServiceActions'))
-    );
+    const url = this.apiUrl + this.serviceActionsUrl;
+    return this.http.get<any>(url, { headers: this.headers })
+      .map(this.extractServiceActions)
+      .pipe(catchError(this.handleError('getServiceActions'))
+      );
   }
   updateRole(params: AnyObject) {
     params.id = this.userinfoService.getUserId(); // loggedIn user id
@@ -55,23 +55,24 @@ export class ManageMembersService {
     return this.http.get<any>(url, { headers: this.headers })
       .map(this.extractData)
       .pipe(catchError(this.handleError('updateRole'))
-    );
+      );
   }
   updateServiceActions(params: AnyObject) {
     const url = this.apiUrl + `users/${params.userId}/roles/actions`;
     console.log('updateServiceActions params:', params);
-    return this.http.get<any>(url, { headers: this.headers })
+    return this.http.post<any>(url, params, { headers: this.headers })
       .map(this.extractServiceActions)
       .pipe(catchError(this.handleError('updateServiceActions'))
-    );
+      );
   }
-  deleteManageMembersData(param: AnyObject): Observable<any> {
-    const url = this.apiUrl + this.wsDelAccessUrl + param.id;
-    return this.http.delete<any>(url)
-    .pipe(catchError(this.handleError('deleteManageMembersData', []))
-      // tap(_ => this.log(`deleted hero id=${id}`)),
-      // catchError(this.handleError<Hero>('deleteHero'))
-    );
+  deleteManageMembersData(param: AnyObject, wsId: string): Observable<any> {
+    const url = this.apiUrl + this.wsDelAccessUrl + wsId + '/member?userId=' + param.id;
+    console.log(url);
+    return this.http.delete<any>(url, { headers: this.headers })
+      .pipe(catchError(this.handleError('deleteManageMembersData', []))
+        // tap(_ => this.log(`deleted hero id=${id}`)),
+        // catchError(this.handleError<Hero>('deleteHero'))
+      );
   }
 
 

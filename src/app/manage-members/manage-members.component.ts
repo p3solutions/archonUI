@@ -43,18 +43,16 @@ export class ManageMembersComponent implements OnInit {
 
   getManageMembersData(workspaceId) {
     this.manageMembersService.getWSMembers(workspaceId)
-    .subscribe(res => {
-      this.isAvailable = true;
-      this.manageMembers = res;
-      this.manageMemTable({data: this.manageMembers});
+      .subscribe(res => {
+        this.isAvailable = true;
+        this.manageMembers = res;
+        this.manageMemTable({ data: this.manageMembers });
       });
   }
 
   onDelete(id: any, tr): void {
-    this.manageMembersService.deleteManageMembersData({id: id}).subscribe( res => {
-      if (res && res.length > 0) {
-        tr.remove(); // on success delete the entire row
-      }
+    this.manageMembersService.deleteManageMembersData({ id: id }, this.workspaceId).subscribe(res => {
+      tr.remove(); //Removing the row.
     });
   }
 
@@ -98,13 +96,11 @@ export class ManageMembersComponent implements OnInit {
         { 'data': 'user.name' },
         { 'data': 'workspaceRole.name' },
         {
-          'className': 'col-md-1 tooltip-left-37',
-          'orderable': false,
-          'data': null,
-          'defaultContent': `<div data-tooltip="Delete" class="delete-user">
-                              <i class="fa fa-trash-o archon-icon disp-bl"></i>
-                            </div>`,
-          'title': 'Delete'
+          'render': function (data, type, full, meta) {
+            return `<div data-tooltip="Delete" class="delete-user">
+            <i class="fa fa-trash-o archon-icon disp-bl ${full.workspaceRole.name === 'ROLE_OWNER' ?
+                'icon-disabled' : ''}"></i></div>`;
+          }
         }
       ],
       'order': [[1, 'asc']]
@@ -127,21 +123,24 @@ export class ManageMembersComponent implements OnInit {
       }
     });
     $('#manage-members-table tbody').off('click', 'td .delete-user').on('click', 'td .delete-user', function () {
+      if ($(this).find('.icon-disabled').length === 1) {
+        return false;
+      }
       const tr = $(this).closest('tr');
       const row = thisComponent.table.row(tr);
       const rowData: any = row.data();
-      thisComponent.onDelete(rowData.id, tr);
+      thisComponent.onDelete(rowData.user.id, tr);
     });
     $('#manage-members-table tbody')
       .off('click', '.toggle-btn .role-edit, .toggle-btn .role-update')
       .on('click', '.toggle-btn .role-edit, .toggle-btn .role-update', function () {
-         // true for owner, false for other roles, null for services-edit-btn
-      if ($(this).hasClass('role-edit') && $(this).attr('owner') !== 'true') {
-        thisComponent.toggleDropdown($(this), false);
-      } else if ($(this).hasClass('role-update')) {
-        thisComponent.toggleDropdown($(this), true);
-      }
-    });
+        // true for owner, false for other roles, null for services-edit-btn
+        if ($(this).hasClass('role-edit') && $(this).attr('owner') !== 'true') {
+          thisComponent.toggleDropdown($(this), false);
+        } else if ($(this).hasClass('role-update')) {
+          thisComponent.toggleDropdown($(this), true);
+        }
+      });
   }
   toggleDropdown(_this, isUpdate) {
     const tr = _this.closest('tr');
@@ -183,13 +182,13 @@ export class ManageMembersComponent implements OnInit {
             workspaceId: this.workspaceId,
             workspaceRoleId: newRoleId
           };
-            this.manageMembersService.updateRole(params).subscribe(res => { // API params are still not confirmed
-              // TODO: update row data / dataTable data  using res
-              console.log('updateRole returns', res);
-              if (res && res.length > 0) {
-                tr.removeClass('toggle');
-              }
-            });
+          this.manageMembersService.updateRole(params).subscribe(res => { // API params are still not confirmed
+            // TODO: update row data / dataTable data  using res
+            console.log('updateRole returns', res);
+            if (res && res.length > 0) {
+              tr.removeClass('toggle');
+            }
+          });
         }
       }
     } else { // edit clicked
@@ -225,7 +224,7 @@ export class ManageMembersComponent implements OnInit {
                         <div data-tooltip="Edit"  class="role-btn role-edit"
                            owner="${wsAccess.workspaceRole.name === 'ROLE_OWNER' ? 'true' : 'false'}">
                           <i class="fa fa-pencil archon-icon disp-bl ${wsAccess.workspaceRole.name === 'ROLE_OWNER' ?
-                           'icon-disabled' : ''}" ></i>
+        'icon-disabled' : ''}" ></i>
                         </div>
                         <div data-tooltip="Update" class="role-btn role-update">
                           <i class="fa fa-check archon-icon disp-bl" aria-hidden="true"></i>
@@ -245,8 +244,8 @@ export class ManageMembersComponent implements OnInit {
       const modifiedServiceName = service.serviceName.replace('SERVICE', '').replace(new RegExp('_', 'gm'), ' ');
       serviceTr += `<tr class="toggle-child service-actions" user-id="${wsAccess.user.id}">
                       <th class="col-md-4 text-center ${(modifiedServiceName.length < 12) ?
-                         'archon-names-100 tooltip-btm-105' :
-                         'archon-names-200 tooltip-left-25 tooltip-btm-105'}">
+          'archon-names-100 tooltip-btm-105' :
+          'archon-names-200 tooltip-left-25 tooltip-btm-105'}">
                         <div data-tooltip="${modifiedServiceName}">
                           <span class="trim-text w-250">${modifiedServiceName}</span>
                         </div>
