@@ -16,8 +16,7 @@ export class MetalyzerConfigurationComponent implements OnInit {
   ngOnInit() {
   }
   gotoAnalysis() {
-    this.metalyzerHeaderService.setConfigType('Analysis');
-    this.metalyzerHeaderService.setIsConfigMode(false);
-    this.router.navigate(['workspace/metalyzer/analysis']);
+    this.metalyzerHeaderService.setPhase('Analysis');
+    this.router.navigate(['workspace/metalyzer/READ/analysis']);
   }
 }

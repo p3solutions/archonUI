@@ -64,10 +64,8 @@ const routes: Routes = [
       },
       {
         // 'metalyzer/:wsname'
-        path: 'metalyzer', component: MetalyzerComponent, children: [
+        path: 'metalyzer/:serviceActionType', component: MetalyzerComponent, children: [
           {
-            path: '', redirectTo: '/configuration', pathMatch: 'full'
-          }, {
             path: 'configuration', component: MetalyzerConfigurationComponent
           }, {
             path: 'analysis', component: TableListComponent

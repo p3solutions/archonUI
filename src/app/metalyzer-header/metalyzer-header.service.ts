@@ -1,23 +1,15 @@
 import { Injectable } from '@angular/core';
-
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class MetalyzerHeaderService {
-  private config_type: string;
-  private isConfig_Mode: boolean;
+  private phase = new BehaviorSubject<string>('Analysis');
+  cast = this.phase.asObservable();
   constructor() {
-    this.config_type = 'Configuration';
-    this.isConfig_Mode = true;
   }
-  getConfigType() {
-    return this.config_type;
+  setPhase(phase: string) {
+    this.phase.next(phase);
   }
-  getIsConfigMode(): boolean {
-    return this.isConfig_Mode;
-  }
-  setConfigType(config_type: string) {
-    this.config_type = config_type;
-  }
-  setIsConfigMode(isConfig: boolean) {
-    this.isConfig_Mode = isConfig;
+  getPhase() {
+    return this.phase;
   }
 }

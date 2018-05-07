@@ -14,7 +14,7 @@ import { environment } from '../../environments/environment';
 export class TableListService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
-
+  private serviceActionType: string;
   tableListUrl = environment.apiUrl + '/metadata/tableList';
   relationTableListUrl = environment.apiUrl + '/metadata/';
   private headers;
@@ -50,7 +50,12 @@ export class TableListService {
     return data || [];
   }
 
-
+  setServiceActionType(serviceActionType: string) {
+    this.serviceActionType = serviceActionType;
+  }
+  getServiceActionType() {
+    return this.serviceActionType;
+  }
   // * Handle Http operation that failed.
   // * Let the app continue.
   // * @param operation - name of the operation that failed

@@ -77,7 +77,7 @@
                 <p>{{relation.joinName}}</p>
               </div>
               <div class="col-3 col-sm-2" id="item">
-                <i class="fa fa-trash" id="trash"></i>
+                <i class="fa fa-trash" id="trash" *ngIf="serviceActionType === 'WRITE' || serviceActionType === 'ALL'"></i>
                 <i class="fa fa-chevron-down" id="down-arrow"></i>
               </div>
             </div>

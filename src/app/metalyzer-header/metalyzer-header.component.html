@@ -9,15 +9,15 @@
         <a href="#">Metalyzer</a>
         <i class="fa fa-chevron-right"></i>
         <a href="#">Configuration</a>
-        <i class="fa fa-chevron-right"></i>
-        <p *ngIf="false">Analysis</p>
+        <i *ngIf="phase == 'Analysis'" class="fa fa-chevron-right"></i>
+        <p *ngIf="phase == 'Analysis'">Analysis</p>
       </div>
     </div>
     <div class="row">
       <div class="ws-name">
         <p>WorkspaceName: {{wsName}}</p>
       </div>
-      <div class="dropdown col-md-1 .col-md-offset-3" >
+      <div class="dropdown col-md-1 .col-md-offset-3" *ngIf="phase == 'Analysis'">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="export">Export As
           <span>
             <i class="fa fa-angle-down"></i>
@@ -30,7 +30,7 @@
           </li>
         </ul>
       </div>
-      <div class="dropdown" *ngIf="isAnalysis_Mode">
+      <div class="dropdown" *ngIf="phase == 'Analysis'">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="btn">View Relationship
           <span>
             <i class="fa fa-angle-down"></i>
@@ -48,7 +48,7 @@
     </div>
     <div classs="row">
       <div class="phase-config">
-        <p>Phase: {{config_type}}</p>
+        <p>Phase: {{phase}}</p>
         <br>
       </div>
     </div>

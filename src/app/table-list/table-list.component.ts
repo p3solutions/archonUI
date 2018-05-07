@@ -13,6 +13,7 @@ export class TableListComponent implements OnInit {
   private isRelationShipAvailable: boolean;
   private tableName: string;
   private relationshipInfo: RelationshipInfoObject[];
+  private serviceActionType: string;
   constructor(
     private tablelistService: TableListService
   ) { }
@@ -26,6 +27,7 @@ export class TableListComponent implements OnInit {
       this.isAvailable = true;
     });
   }
+
   loadRelationTable(tableName: string) {
     this.homeStage = false;
     this.tableName = tableName;
@@ -34,9 +36,7 @@ export class TableListComponent implements OnInit {
       this.isRelationShipAvailable = true;
       // console.log(this.relationshipInfo);
     });
-  }
-  extractTableInfo(info: string) {
-
+    this.serviceActionType = this.tablelistService.getServiceActionType();
   }
 
 }

@@ -18,7 +18,7 @@
       'archon-names-400')}} -->
     <div id="service-actions-info" class="workspace-panel-content">
       <button type="button" *ngFor="let service of serviceActions" class="btn-primary custom-button" data-toggle="popover" data-placement="top"
-        [title]="service?.serviceName" data-content="Content" (click)="forwardLink(service.serviceName)">
+        [title]="service?.serviceName" data-content="Content" (click)="forwardLink(service)">
         <div class="btn-box">
           <div class="col-md-10" [attr.serviceid]="service?.id">
             <div class="trim-text title">
