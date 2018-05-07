@@ -1,0 +1,89 @@
+<div class="row" id="analysis-view">
+  <div class="col-md-3" id="table-list">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" id="title-name">
+          <h2>Tables
+            <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
+          </h2>
+        </div>
+        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="query" id="listSearch">
+        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        <div class="tablename-list">
+          <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
+            <button type="button" class="btn btn-default list-group-item" (click)="loadRelationTable(table)">{{table}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8 col-md-offset-2.5">
+    <div class="card">
+      <div class="card-body default-load" *ngIf="homeStage">
+        <h2 class="default-info">Choose one of the listed tables to view relationship information with other tables</h2>
+      </div>
+      <div class="card-body" *ngIf="!homeStage">
+        <div class="row">
+          <div class="col-sm-3">
+            <h3 class="card-title header" >Relationship Info
+            </h3>
+          </div>
+          <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span>
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#">Manual Join</a>
+              </li>
+              <li>
+                <a href="#">Column-Match Join</a>
+              </li>
+              <li>
+                <a href="#">SP/View Join</a>
+              </li>
+            </ul>
+          </div>
+          <button type="button" class="btn btn-primary data-analyzer">Data Analyzer</button>
+        </div>
+        <div class="row">
+          <h4 class="card-title sub-header">Primary Table:
+            <strong>{{tableName}}</strong>
+          </h4>
+        </div>
+        <hr>
+        <div class="row table-headers">
+          <h4>
+            <strong>Secondary Table</strong>
+          </h4>
+          <h4>
+            <strong>Definition Type</strong>
+          </h4>
+          <h4>
+            <strong>Join Name</strong>
+          </h4>
+        </div>
+        <div class="items-list">
+          <div class="well well-sm" *ngFor="let relation of relationshipInfo">
+            <div class="row">
+              <div class="col-3 col-sm-3" id="item">
+                <p>{{relation.secondaryTable}}</p>
+              </div>
+              <div class="col-3 col-sm-3" id="item">
+                <p>{{relation.definitionType}}</p>
+              </div>
+              <div class="col-3 col-sm-4" id="item">
+                <p>{{relation.joinName}}</p>
+              </div>
+              <div class="col-3 col-sm-2" id="item">
+                <i class="fa fa-trash" id="trash" *ngIf="serviceActionType === 'WRITE' || serviceActionType === 'ALL'"></i>
+                <i class="fa fa-chevron-down" id="down-arrow"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

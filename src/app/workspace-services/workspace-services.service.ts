@@ -20,6 +20,7 @@ export class WorkspaceServicesService {
     if (localStorage) {
       const data = localStorage.getItem('serviceActions');
       this.serviceActionsUpdated.next(JSON.parse(data));
+      console.log(data, 'ccccccccccccccccccc');
     }
   }
 }

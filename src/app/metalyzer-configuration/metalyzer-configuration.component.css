@@ -1,0 +1,37 @@
+table {
+  margin-left: 10%;
+  width: 70%;
+  table-layout: fixed;
+  border-spacing: 7px;
+  border-collapse: separate;
+  margin: 0px auto;
+}
+
+.closing {
+  border-bottom: 1pt solid black;
+  width: 223%;
+}
+
+td {
+  text-align: left;
+  font-size: 16px;
+}
+
+.left,
+.middle {
+  width: 45%;
+}
+
+.middle {
+  margin-top: 10px;
+}
+
+#footer {
+  margin-top: 25px;
+  float: right;
+}
+
+button {
+  margin-right: 50px;
+  margin-bottom: 10px;
+}
