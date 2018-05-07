@@ -2,7 +2,11 @@ import { Component, OnChanges, Input, OnInit, SimpleChanges, SimpleChange } from
 import { ServiceActionsObject } from '../workspace-objects';
 import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dashboard.service';
 import { WorkspaceServicesService } from './workspace-services.service';
-
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { UserinfoService } from '../userinfo.service';
+import { TableListService } from '../table-list/table-list.service';
+// import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -14,10 +18,20 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceId : string;
   // @Input() private serviceType : string;
   private serviceActions: ServiceActionsObject[];
+  private wsName: string;
+  private metalyzerMode: string;
   constructor(
-    private workspaceService: WorkspaceServicesService
+    private router: Router,
+    private workspaceService: WorkspaceServicesService,
+    private userInfoService: UserinfoService,
+    private workspaceHeaderService: WorkspaceHeaderService,
+    private tableListService: TableListService
   ) { }
 
+  forwardLink(service: any) {
+    this.tableListService.setServiceActionType(service.serviceActionType);
+    this.router.navigate(['workspace/metalyzer', service.serviceActionType]);
+  }
   ngOnInit() {
     this.workspaceService.serviceActionsUpdated.subscribe(
       (serviceActions) => {

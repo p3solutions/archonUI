@@ -67,6 +67,14 @@ import { AddMembersService } from './add-members/add-members.service';
 import { DatabaseListService } from './database-list/database-list.service';
 import { DatabaseListComponent } from './database-list/database-list.component';
 import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-wizard.component';
+import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.component';
+import { MetalyzerComponent } from './metalyzer/metalyzer.component';
+import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
+import { TableListComponent } from './table-list/table-list.component';
+import { WorkspaceHeaderService } from './workspace-header/workspace-header.service';
+import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
+import { TableListService } from './table-list/table-list.service';
+import { SearchPipe } from './search.pipe';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -103,15 +111,20 @@ import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-w
                 NewWorkspaceComponent,
                 AddMembersComponent,
                 DatabaseListComponent,
-                AddDatabaseWizardComponent
+                AddDatabaseWizardComponent,
+                MetalyzerHeaderComponent,
+                MetalyzerComponent,
+                MetalyzerConfigurationComponent,
+                TableListComponent,
+                SearchPipe
         ],
         imports: [
                 BrowserModule,
                 FormsModule,
                 // HttpClientInMemoryWebApiModule.forRoot(
-                        //     InMemoryDataService,
-                        //     { dataEncapsulation: false }
-                        // ),
+                //     InMemoryDataService,
+                //     { dataEncapsulation: false }
+                // ),
                 FormsModule,
                 AuthModule,
                 ReactiveFormsModule,
@@ -144,7 +157,10 @@ import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-w
                 WorkspaceServicesService,
                 DynamicLoaderService,
                 AddMembersService,
-                DatabaseListService
+                DatabaseListService,
+                WorkspaceHeaderService,
+                MetalyzerHeaderService,
+                TableListService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]

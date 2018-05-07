@@ -1,0 +1,64 @@
+<div class="phase-configuration">
+  <div class="row">
+    <table>
+      <tr>
+        <td class="left" rowspan="2">Choose working mode:</td>
+        <td class="middle">
+          <input type="radio" value="Private" name="work-mode" /> Private
+        </td>
+        <td class="right" rowspan="2">
+          <i class="fa fa-info-circle fa-2x"></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="middle">
+          <input type="radio" value="Public" name="work-mode" /> Public
+        </td>
+      </tr>
+      <hr class="closing">
+      <tr>
+        <td class="left" rowspan="4">Choose modes:</td>
+        <td class="middle">
+          <input type="checkbox" value="mode" name="schema"> Schema
+        </td>
+        <td class="right" rowspan="4">
+          <i class="fa fa-info-circle fa-2x"></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="middle">
+          <input type="checkbox" value="mode" name="column-match"> Column Match
+        </td>
+      </tr>
+      <tr>
+        <td class="middle">
+          <input type="checkbox" value="mode" name="store-procedure"> Stored Procedures/View
+        </td>
+      </tr>
+      <tr>
+        <td class="middle">
+          <input type="checkbox" value="mode" name="data-crawl"> Data Crawl
+        </td>
+      </tr>
+      <hr class="closing">
+      <tr>
+        <td class="left" rowspan="2">Include Master metadata copy results for Phase-2 analysis</td>
+        <td class="middle">
+          <input type="radio" value="yes" name="phase2-analaysis"> Yes(Recommended)
+        </td>
+        <td class="right" rowspan="2">
+          <i class="fa fa-info-circle fa-2x"></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="middle">
+          <input type="radio" value="no" name="phase2-analaysis"> No
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="row" id="footer">
+    <button type="button" class="btn btn-primary">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="gotoAnalysis()">Start Analysis</button>
+  </div>
+</div>
