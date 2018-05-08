@@ -18,8 +18,7 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceId : string;
   // @Input() private serviceType : string;
   private serviceActions: ServiceActionsObject[];
-  private wsName: string;
-  private metalyzerMode: string;
+  private wsId_Mode: string;
   constructor(
     private router: Router,
     private workspaceService: WorkspaceServicesService,
@@ -28,10 +27,11 @@ export class WorkspaceServicesComponent implements OnInit {
     private tableListService: TableListService
   ) { }
 
-  forwardLink(service: any) {
+  gotoMetalyzer(service: any) {
     if (service.serviceName === 'Metalyzer') {
       this.tableListService.setServiceActionType(service.serviceActionType);
-      this.router.navigate(['workspace/metalyzer', service.serviceActionType]);
+      this.wsId_Mode = this.workspaceHeaderService.getSeletectedWorkspace().concat('_', service.serviceActionType);
+      this.router.navigate(['workspace/metalyzer', this.wsId_Mode]);
     }
   }
   ngOnInit() {

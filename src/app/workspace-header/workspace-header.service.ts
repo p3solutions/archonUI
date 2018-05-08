@@ -4,14 +4,12 @@ import { Injectable } from '@angular/core';
 export class WorkspaceHeaderService {
 
   constructor() { }
-  private workspaceName: string;
-  private workspace: any;
-  setSelectedWorkspace(workspace: any) {
-    this.workspaceName = workspace.workspaceName;
-    this.workspace = workspace;
+  private workspaceId: string;
+  setSelectedWorkspace(workspaceId: any) {
+    this.workspaceId = workspaceId;
   }
   getSeletectedWorkspace() {
-    return this.workspaceName;
+    return this.workspaceId;
   }
 
 }

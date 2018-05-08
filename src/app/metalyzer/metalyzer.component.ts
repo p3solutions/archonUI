@@ -19,7 +19,9 @@ export class MetalyzerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.serviceActionType = this.route.snapshot.paramMap.get('serviceActionType');
+    const paramValue = this.route.snapshot.paramMap.get('serviceActionType').split('_');
+    this.metalyzerHeaderService.setWorkspaceId(paramValue[0]);
+    this.serviceActionType = paramValue[1];
     if (this.serviceActionType === 'READ') {
       this.router.navigate(['/workspace/metalyzer/READ/analysis']);
     } else if (this.serviceActionType === 'WRITE' || this.serviceActionType === 'ALL') {
@@ -35,5 +37,6 @@ export class MetalyzerComponent implements OnInit {
       });
     }
   }
+
 
 }

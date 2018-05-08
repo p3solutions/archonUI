@@ -63,7 +63,6 @@ const routes: Routes = [
           }]
       },
       {
-        // 'metalyzer/:wsname'
         path: 'metalyzer/:serviceActionType', component: MetalyzerComponent, children: [
           {
             path: 'configuration', component: MetalyzerConfigurationComponent

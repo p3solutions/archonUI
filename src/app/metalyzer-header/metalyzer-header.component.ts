@@ -24,6 +24,8 @@ export class MetalyzerHeaderComponent implements OnInit {
       .subscribe(data => {
         this.phase = data;
       });
-    this.wsName = this.workspaceHeaderService.getSeletectedWorkspace();
+    this.metalyzerHeaderService.getWorkspaceName().subscribe(result => {
+      this.wsName = result;
+    });
   }
 }
