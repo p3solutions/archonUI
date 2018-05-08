@@ -14,6 +14,7 @@ export class MetalyzerConfigurationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.metalyzerHeaderService.setPhase('Configuration');
   }
   gotoAnalysis() {
     this.metalyzerHeaderService.setPhase('Analysis');
