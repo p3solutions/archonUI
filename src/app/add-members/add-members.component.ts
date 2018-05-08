@@ -8,22 +8,29 @@ import { AddMembersService } from './add-members.service';
 })
 export class AddMembersComponent implements OnInit {
   userList = [];
-  isProgress: boolean;
+  // isProgress: boolean;
   constructor( private addMembersService: AddMembersService ) { }
 
   ngOnInit() {
-    this.isProgress = false;
+    // this.isProgress = false;
     this.getUserList();
   }
 
   getUserList() {
+    // this.isProgress = true;
     this.addMembersService.getAllUsers()
     .subscribe(res => {
-      this.userList = res;
-      console.log('add-members function console', this.userList[1]['name']);
-      this.isProgress = true;
+      res.forEach((user: any) => {
+        if (user.globalRoles[0].roleName === 'ROLE_MEMBER' || user.globalRoles[0].roleName === 'ROLE_ADMIN' ||
+            user.globalRoles[0].roleName === 'ROLE_NOT_ASSIGNED') {
+            this.userList.push(user);
+        }
+      });
+      // this.isProgress = false;
     });
-
   }
 
+  addMembers() {
+    //
+  }
 }
