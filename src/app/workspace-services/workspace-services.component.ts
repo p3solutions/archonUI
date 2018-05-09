@@ -5,8 +5,6 @@ import { WorkspaceServicesService } from './workspace-services.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserinfoService } from '../userinfo.service';
-import { TableListService } from '../table-list/table-list.service';
-// import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -23,13 +21,11 @@ export class WorkspaceServicesComponent implements OnInit {
     private router: Router,
     private workspaceService: WorkspaceServicesService,
     private userInfoService: UserinfoService,
-    private workspaceHeaderService: WorkspaceHeaderService,
-    private tableListService: TableListService
+    private workspaceHeaderService: WorkspaceHeaderService
   ) { }
 
   gotoMetalyzer(service: any) {
     if (service.serviceName === 'Metalyzer') {
-      this.tableListService.setServiceActionType(service.serviceActionType);
       this.wsId_Mode = this.workspaceHeaderService.getSeletectedWorkspace().concat('_', service.serviceActionType);
       this.router.navigate(['workspace/metalyzer', this.wsId_Mode]);
     }

@@ -19,9 +19,10 @@ export class MetalyzerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const paramValue = this.route.snapshot.paramMap.get('serviceActionType').split('_');
+    const paramValue = this.route.snapshot.paramMap.get('wsId_Mode').split('_');
     this.metalyzerHeaderService.setWorkspaceId(paramValue[0]);
     this.serviceActionType = paramValue[1];
+    this.tableListService.setServiceActionType(this.serviceActionType);
     if (this.serviceActionType === 'READ') {
       this.router.navigate(['/workspace/metalyzer/READ/analysis']);
     } else if (this.serviceActionType === 'WRITE' || this.serviceActionType === 'ALL') {
