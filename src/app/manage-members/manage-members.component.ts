@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from './manage-members.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { WorkspaceRolesObject, RoleObject, AnyObject } from '../workspace-objects';
+import { WorkspaceRolesObject, RoleObject, AnyObject, MemberObject } from '../workspace-objects';
 import { UserinfoService } from '../userinfo.service';
 import { ManageUserRoles } from '../manage-user-roles';
 
@@ -16,6 +16,7 @@ export class ManageMembersComponent implements OnInit {
   manageMembers: ManageMembers[];
   isAvailable = false;
   memberPrivilegeParam: any;
+  exisitingUserIds = [];
   // showMemPriv = false;
   varArray = [];
   // @Input() passedWSRoleList: any;
@@ -47,12 +48,15 @@ export class ManageMembersComponent implements OnInit {
         this.isAvailable = true;
         this.manageMembers = res;
         this.manageMemTable({ data: this.manageMembers });
+        this.manageMembers.forEach((member: MemberObject) => {
+          this.exisitingUserIds.push(member.user.id);
+        });
       });
   }
 
   onDelete(id: any, tr): void {
     this.manageMembersService.deleteManageMembersData({ id: id }, this.workspaceId).subscribe(res => {
-      tr.remove(); //Removing the row.
+      tr.remove(); // Removing the row.
     });
   }
 
