@@ -113,9 +113,12 @@ export class AddMembersComponent implements OnInit, OnChanges {
     }
   }
 
-  setRole(user, e) {
+  setRole(user, event) {
+    // depends on the html structure order
+    const checkbox: HTMLInputElement = event.target.parentNode.parentNode.childNodes[1].childNodes[0];
+    checkbox.click();
     const index = this.selectedUserIdList.indexOf(user);
-    const roleId = e.target.value;
+    const roleId = event.target.value;
     if (index !== -1) {
       this.selectedUserIdList[index].roleId = roleId;
     }
