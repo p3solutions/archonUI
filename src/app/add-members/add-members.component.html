@@ -43,7 +43,7 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary btn-popup" data-dismiss="modal">Cancel</button>
-      <button type="button" (click)="addMembers()" class="btn btn-primary btn-popup">Add
+      <button type="button" (click)="addMembers()" class="btn btn-primary btn-popup" disabled="{{(isLoading || isProgress) ? 'true' : null }}">Add
         <span [ngClass]="{'archon-loading-icon' : isProgress}"></span>
       </button>
 
