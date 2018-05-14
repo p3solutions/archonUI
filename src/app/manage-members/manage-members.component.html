@@ -43,5 +43,6 @@
     </div>
   </div>
 </div>
-<app-add-members *ngIf="exisitingUserIds.length > 0" class="modal fade" id="add-member-modal" role="dialog" [existingUsers]="exisitingUserIds">
+<app-add-members *ngIf="exisitingUserIds.length > 0" [existingUsers]="exisitingUserIds" (updateExistingUsers)="onUpdateExistingUsers($event)"
+ class="modal fade" id="add-member-modal" role="dialog">
 </app-add-members>
