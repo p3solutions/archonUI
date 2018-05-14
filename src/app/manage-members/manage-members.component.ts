@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WorkspaceRolesObject, RoleObject, AnyObject, MemberObject } from '../workspace-objects';
 import { UserinfoService } from '../userinfo.service';
 import { ManageUserRoles } from '../manage-user-roles';
+import { ErrorObject } from '../error-object';
 
 @Component({
   selector: 'app-manage-members',
@@ -17,14 +18,13 @@ export class ManageMembersComponent implements OnInit {
   isAvailable = false;
   memberPrivilegeParam: any;
   exisitingUserIds = [];
-  // showMemPriv = false;
   varArray = [];
-  // @Input() passedWSRoleList: any;
-  // @Output() passedWSRoleListChange = new EventEmitter<WorkspaceRolesObject[]>();
   table: any;
   wsRoleList: WorkspaceRolesObject[];
   permissionList: string[];
-
+  extModifiedExistingUsers = [];
+  deleteMemberId: any;
+  deleteNotif = new ErrorObject();
   constructor(
     private manageMembersService: ManageMembersService,
     private userinfoService: UserinfoService,
@@ -46,18 +46,39 @@ export class ManageMembersComponent implements OnInit {
     this.manageMembersService.getWSMembers(workspaceId)
       .subscribe(res => {
         this.isAvailable = true;
+      console.log(res);
         this.manageMembers = res;
         this.manageMemTable({ data: this.manageMembers });
+        this.exisitingUserIds = [];
         this.manageMembers.forEach((member: MemberObject) => {
           this.exisitingUserIds.push(member.user.id);
         });
       });
   }
 
-  onDelete(id: any, tr): void {
-    this.manageMembersService.deleteManageMembersData({ id: id }, this.workspaceId).subscribe(res => {
-      tr.remove(); // Removing the row.
+confirmDelete(): void {
+  this.manageMembersService.deleteManageMembersData({ id: this.deleteMemberId }, this.workspaceId).subscribe(res => {
+    if (res && res.success) {
+      // tr.remove(); // Removing the row.
+      this.postDelete();
+      console.log(this.exisitingUserIds);
+    } else {
+      this.deleteNotif.show = true;
+      this.deleteNotif.message = res.data;
+    }
     });
+  }
+  closeErrorMsg() {
+    this.deleteNotif = new ErrorObject();
+  }
+  postDelete() {
+    const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
+    close.click();
+    this.getManageMembersData(this.workspaceId);
+    this.extModifiedExistingUsers = [];
+    this.extModifiedExistingUsers = this.exisitingUserIds;
+    const index = this.exisitingUserIds.indexOf(this.deleteMemberId);
+    this.exisitingUserIds.splice(index, 1);
   }
 
   gotoDashboard() {
@@ -102,8 +123,11 @@ export class ManageMembersComponent implements OnInit {
         {
           'render': function (data, type, full, meta) {
             return `<div data-tooltip="Delete" class="delete-user">
+            <a data-toggle="modal" href="#confirmDelMemModal">
             <i class="fa fa-trash-o archon-icon disp-bl ${full.workspaceRole.name === 'ROLE_OWNER' ?
-                'icon-disabled' : ''}"></i></div>`;
+                'icon-disabled' : ''}"></i>
+              </a>
+            </div>`;
           }
         }
       ],
@@ -133,7 +157,8 @@ export class ManageMembersComponent implements OnInit {
       const tr = $(this).closest('tr');
       const row = thisComponent.table.row(tr);
       const rowData: any = row.data();
-      thisComponent.onDelete(rowData.user.id, tr);
+      thisComponent.deleteMemberId = rowData.user.id;
+      // thisComponent.onDelete(rowData.user.id, tr);
     });
     $('#manage-members-table tbody')
       .off('click', '.toggle-btn .role-edit, .toggle-btn .role-update')
@@ -312,5 +337,12 @@ export class ManageMembersComponent implements OnInit {
                               ${hiddenTableStyle}
                               `;
     return hiddenTableHtml;
+  }
+
+  onUpdateExistingUsers(e) {
+    console.log('onUpdateExistingUsers called');
+    if (e) {
+      this.getManageMembersData(this.workspaceId);
+    }
   }
 }

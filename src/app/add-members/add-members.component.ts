@@ -21,6 +21,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
   isProgress: boolean;
   isLoading = false;
   @Output() updateExistingUsers = new EventEmitter<boolean>(); // child to parent
+  @Input() extModifiedExistingUsers: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,9 +38,9 @@ export class AddMembersComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges) {
-    console.log('existingUsers', this.existingUsers);
-    if (change.existingUsers && change.existingUsers.currentValue) {
-      this.existingUsers = change.existingUsers.currentValue;
+    if ((change.existingUsers && change.existingUsers.currentValue) ||
+      (change.extModifiedExistingUsers && change.extModifiedExistingUsers.currentValue)) {
+      this.existingUsers = change.existingUsers ? change.existingUsers.currentValue : change.extModifiedExistingUsers.currentValue;
       this.getUserList();
     }
   }
@@ -62,7 +63,6 @@ export class AddMembersComponent implements OnInit, OnChanges {
             }
             if (existingUserIndex === undefined) {
               this.userList.push(user);
-              console.log('got user', user);
             }
           }
       });
@@ -82,7 +82,6 @@ export class AddMembersComponent implements OnInit, OnChanges {
       this.errorObject.show = true;
     } else {
       this.selectedUserIdList.forEach(user => {
-        console.log(user.roleId);
         if (!user.roleId || user.roleId === 'Select') {
           this.errorObject.message = 'A role is not assigned.';
           this.errorObject.show = true;
@@ -93,7 +92,6 @@ export class AddMembersComponent implements OnInit, OnChanges {
   }
   addMembers() {
     if (this.isAddMemberReady()) {
-      console.log('adding members', this.selectedUserIdList);
       this.isProgress = true;
       this.selectedUserIdList.forEach(user => {
         const params = {
@@ -103,7 +101,6 @@ export class AddMembersComponent implements OnInit, OnChanges {
         };
         this.addMembersService.addMembers(params)
         .subscribe(res => {
-          console.log(res);
           if (res.success) {
             this.isProgress = false;
             this.selectedUserIdList = [];
@@ -118,13 +115,14 @@ export class AddMembersComponent implements OnInit, OnChanges {
   setRole(user, e) {
     const index = this.selectedUserIdList.indexOf(user);
     const roleId = e.target.value;
-    this.selectedUserIdList[index].roleId = roleId;
-    console.log(this.selectedUserIdList, 'set role');
+    if (index !== -1) {
+      this.selectedUserIdList[index].roleId = roleId;
+    }
   }
   updateSelectList(user: any, event) {
     const checked = event.target.checked;
     if (checked) {
-      // user.roleId = e.target.parentNode.parentNode.children[2].children[0].value; // depends on the html structure order
+      user.roleId = event.target.parentNode.parentNode.children[2].children[0].value; // depends on the html structure order
       this.selectedUserIdList.push(user);
       if (this.errorObject) {
         this.errorObject = null;
@@ -133,7 +131,6 @@ export class AddMembersComponent implements OnInit, OnChanges {
       const index = this.selectedUserIdList.indexOf(user);
       this.selectedUserIdList.splice(index, 1);
     }
-    console.log(this.selectedUserIdList);
   }
   closeErrorMsg() {
     this.errorObject = null;
