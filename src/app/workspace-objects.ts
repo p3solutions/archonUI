@@ -11,6 +11,7 @@ export class RoleObject {
     id: string;
     roleId: string;
     roleName: string;
+    name: string;
     createdAt: number;
     updatedAt: number;
     softDeleted: boolean;

@@ -22,6 +22,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
   isLoading = false;
   @Output() updateExistingUsers = new EventEmitter<boolean>(); // child to parent
   @Input() extModifiedExistingUsers: any;
+  @Input() ownerAlreadyExist: boolean;
 
   constructor(
     private route: ActivatedRoute,

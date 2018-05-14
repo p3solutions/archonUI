@@ -10,7 +10,7 @@
           </div>
           <div class="col-md-8">
             <h3 class="popup-panel-heading">
-              Add New Members 
+              Add New Members
                 <span [ngClass]="{'archon-loading-icon' : isLoading}"></span>
             </h3>
           </div>
@@ -33,7 +33,8 @@
             <td style="width: 170px;">
               <select class="member-role" (change)="setRole(item, $event)">
                 <option hidden selected="true">Select</option>
-                <option *ngFor="let role of wsRoleList" [value]="role.id" [attr.data-tooltip]="role.roleName">{{role.roleName}}</option>
+                <option *ngFor="let role of wsRoleList" [value]="role.id" [attr.data-tooltip]="role.roleName"
+                 disabled="{{(ownerAlreadyExist && role.roleName === 'ROLE_OWNER') ? 'true' : null }}">{{role.roleName}}</option>
               </select>
             </td>
           </tr>

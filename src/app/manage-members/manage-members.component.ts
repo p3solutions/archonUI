@@ -25,6 +25,9 @@ export class ManageMembersComponent implements OnInit {
   extModifiedExistingUsers = [];
   deleteMemberId: any;
   deleteNotif = new ErrorObject();
+  delProgress = false;
+  ownerAlreadyExist = false;
+
   constructor(
     private manageMembersService: ManageMembersService,
     private userinfoService: UserinfoService,
@@ -46,22 +49,25 @@ export class ManageMembersComponent implements OnInit {
     this.manageMembersService.getWSMembers(workspaceId)
       .subscribe(res => {
         this.isAvailable = true;
-      console.log(res);
         this.manageMembers = res;
         this.manageMemTable({ data: this.manageMembers });
         this.exisitingUserIds = [];
         this.manageMembers.forEach((member: MemberObject) => {
+          if (member.workspaceRole.name === 'ROLE_OWNER') {
+            this.ownerAlreadyExist = true;
+          }
           this.exisitingUserIds.push(member.user.id);
         });
       });
   }
 
 confirmDelete(): void {
+  this.delProgress = true;
   this.manageMembersService.deleteManageMembersData({ id: this.deleteMemberId }, this.workspaceId).subscribe(res => {
+    this.delProgress = false;
     if (res && res.success) {
       // tr.remove(); // Removing the row.
       this.postDelete();
-      console.log(this.exisitingUserIds);
     } else {
       this.deleteNotif.show = true;
       this.deleteNotif.message = res.data;
