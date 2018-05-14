@@ -1,47 +1,60 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, SimpleChanges, OnChanges, EventEmitter } from '@angular/core';
 import { AddMembersService } from './add-members.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { ManageMembersService } from '../manage-members/manage-members.service';
+import { ErrorObject } from '../error-object';
 
 @Component({
   selector: 'app-add-members',
   templateUrl: './add-members.component.html',
   styleUrls: ['./add-members.component.css']
 })
-export class AddMembersComponent implements OnInit {
+export class AddMembersComponent implements OnInit, OnChanges {
   userList = [];
   @Input() existingUsers: any;
   selectedUserIdList = [];
   workspaceId: string;
   wsRoleList = [];
-  // isProgress: boolean;
+  errorObject: ErrorObject;
+  isOwnerExist: boolean;
+  isProgress: boolean;
+  isLoading = false;
+  @Output() updateExistingUsers = new EventEmitter<boolean>(); // child to parent
+
   constructor(
     private route: ActivatedRoute,
     private addMembersService: AddMembersService,
     private manageMembersService: ManageMembersService
-   ) { }
+   ) {
+      this.route.params.subscribe(params => {
+        this.workspaceId = params.id;
+      });
+    }
 
   ngOnInit() {
-    // this.isProgress = false;
-    console.log('existingUsers', this.existingUsers);
     this.getRoleList();
-    this.getUserList();
-    this.route.params.subscribe(params => {
-      this.workspaceId = params.id;
-    });
+  }
+
+  ngOnChanges(change: SimpleChanges) {
+    console.log('existingUsers', this.existingUsers);
+    if (change.existingUsers && change.existingUsers.currentValue) {
+      this.existingUsers = change.existingUsers.currentValue;
+      this.getUserList();
+    }
   }
 
   getUserList() {
-    // this.isProgress = true;
+    this.isLoading = true;
+    this.userList = [];
     this.addMembersService.getAllUsers()
     .subscribe(res => {
       res.forEach((user: any) => {
+        this.isLoading = false;
         if (user.globalRoles[0].roleName === 'ROLE_MEMBER' || user.globalRoles[0].roleName === 'ROLE_ADMIN' ||
         user.globalRoles[0].roleName === 'ROLE_NOT_ASSIGNED') {
             let existingUserIndex;
             for (let i = 0; i < this.existingUsers.length; i++) {
-              console.log(this.existingUsers[i] === user.id);
               if (this.existingUsers[i] === user.id) {
                 existingUserIndex = i;
                 break;
@@ -49,11 +62,10 @@ export class AddMembersComponent implements OnInit {
             }
             if (existingUserIndex === undefined) {
               this.userList.push(user);
+              console.log('got user', user);
             }
-            // console.log(this.userList.length);
           }
       });
-      // this.isProgress = false;
     });
   }
 
@@ -63,23 +75,70 @@ export class AddMembersComponent implements OnInit {
     });
   }
 
+  isAddMemberReady() {
+    this.errorObject = new ErrorObject;
+    if (this.selectedUserIdList.length === 0) {
+      this.errorObject.message = 'No user is selected.';
+      this.errorObject.show = true;
+    } else {
+      this.selectedUserIdList.forEach(user => {
+        console.log(user.roleId);
+        if (!user.roleId || user.roleId === 'Select') {
+          this.errorObject.message = 'A role is not assigned.';
+          this.errorObject.show = true;
+        }
+      });
+    }
+    return !this.errorObject.show;
+  }
   addMembers() {
-    const params = {};
-    this.addMembersService.addMembers(params)
-    .subscribe(res => {
-      console.log(res);
-    });
+    if (this.isAddMemberReady()) {
+      console.log('adding members', this.selectedUserIdList);
+      this.isProgress = true;
+      this.selectedUserIdList.forEach(user => {
+        const params = {
+          'userId': user.id,
+          'workspaceId': this.workspaceId,
+          'workspaceRoleId': user.roleId
+        };
+        this.addMembersService.addMembers(params)
+        .subscribe(res => {
+          console.log(res);
+          if (res.success) {
+            this.isProgress = false;
+            this.selectedUserIdList = [];
+            this.errorObject = null;
+            this.updateExistingUsers.emit(true);
+          }
+        });
+      });
+    }
   }
 
-  updateSelectList(id: string, e) {
-    const checked = e.target.checked;
+  setRole(user, e) {
+    const index = this.selectedUserIdList.indexOf(user);
+    const roleId = e.target.value;
+    this.selectedUserIdList[index].roleId = roleId;
+    console.log(this.selectedUserIdList, 'set role');
+  }
+  updateSelectList(user: any, event) {
+    const checked = event.target.checked;
     if (checked) {
-      this.selectedUserIdList.push(id);
+      // user.roleId = e.target.parentNode.parentNode.children[2].children[0].value; // depends on the html structure order
+      this.selectedUserIdList.push(user);
+      if (this.errorObject) {
+        this.errorObject = null;
+      }
     } else {
-      const index = this.selectedUserIdList.indexOf(id);
+      const index = this.selectedUserIdList.indexOf(user);
       this.selectedUserIdList.splice(index, 1);
     }
-    // console.log(this.selectedUserIdList);
+    console.log(this.selectedUserIdList);
+  }
+  closeErrorMsg() {
+    this.errorObject = null;
   }
 
+  // role selection check before adding members
+  // owner can be selected only once for a WS, if it already exist, disable owner option in dropdown
 }
