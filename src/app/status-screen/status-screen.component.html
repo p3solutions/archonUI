@@ -1,0 +1,67 @@
+<div class="workspacelist-container">
+  <div class="row">
+    
+    <div class="col-md-4">
+      <div class="col-md-1 back-arrow">
+        <a (click)="gotoBack()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+        </a>
+      </div>
+
+      <div class="col-md-8">
+        <h3 class="workspace-panel-heading">
+          Status Monitor <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !statusList}"></span>
+        </h3>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="row">
+        <div id="status-monitor" class="workspace-panel-content col-md-11">
+          <table id="status-table" datatable class="display text-center" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th></th>
+                  <th class="text-center">Job ID</th>
+                  <th class="text-center">Scheduled Time</th>
+                  <th class="text-center">Start Time</th>
+                  <th class="text-center">End Time</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Details</th>
+                  <th class="text-center">Retry</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let statusObj of statusList; let ind = index">
+                <td>{{ind + 1}}</td>
+                <td>{{statusObj.jobId}}</td>
+                <td>{{statusObj.scheduledTime | date: 'short'}}</td>
+                <td>{{statusObj.startTime | date: 'short'}}</td>
+                <td>{{statusObj.endTime | date: 'short'}}</td>
+                <td>
+                  <i *ngIf="statusObj.status === 'completed'" class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
+                  <i *ngIf="statusObj.status === 'failed'" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
+                  <i *ngIf="statusObj.status === 'running'" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
+                </td>
+                <td>
+                    <i (click)="showStatusInfo(statusObj.jobId)" class="fa fa-info-circle col-archon-blue fa-lg" aria-hidden="true"></i>
+                </td>
+                <td>
+                    <i *ngIf="statusObj.status === 'failed'" class="fa fa-repeat col-orange fa-lg" aria-hidden="true"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="workspace-panel-content">
+        <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
