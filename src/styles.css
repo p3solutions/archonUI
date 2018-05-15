@@ -491,6 +491,15 @@ i.link:hover {
 .col-archon-blue {
   color: #269AF8;
 }
+.col-green {
+  color: #009E11;
+}
+.col-red {
+  color: #CF2A28;
+}
+.col-orange {
+  color: #FFA13B;
+}
 
 .disp-bl {
   display: block
