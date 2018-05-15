@@ -39,15 +39,27 @@
                 <td>{{statusObj.startTime | date: 'short'}}</td>
                 <td>{{statusObj.endTime | date: 'short'}}</td>
                 <td>
-                  <i *ngIf="statusObj.status === 'completed'" class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
-                  <i *ngIf="statusObj.status === 'failed'" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
-                  <i *ngIf="statusObj.status === 'running'" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
+                  <span *ngIf="statusObj.status === 'completed'" >
+                    <i class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
+                    <span class="hide">completed</span>
+                  </span>
+                  <span *ngIf="statusObj.status === 'failed'" >
+                    <i *ngIf="statusObj.status === 'failed'" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
+                    <span class="hide">failed</span>
+                  </span>
+                  <span *ngIf="statusObj.status === 'running'" >
+                    <i *ngIf="statusObj.status === 'running'" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
+                    <span class="hide">running</span>
+                  </span>
                 </td>
                 <td>
                     <i (click)="showStatusInfo(statusObj.jobId)" class="fa fa-info-circle col-archon-blue fa-lg" aria-hidden="true"></i>
                 </td>
                 <td>
-                    <i *ngIf="statusObj.status === 'failed'" class="fa fa-repeat col-orange fa-lg" aria-hidden="true"></i>
+                  <span *ngIf="statusObj.status === 'failed'" >
+                    <i class="fa fa-repeat col-orange fa-lg" aria-hidden="true"></i>
+                    <span class="hide">retry</span>
+                  </span>
                 </td>
               </tr>
             </tbody>
