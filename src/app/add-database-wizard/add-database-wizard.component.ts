@@ -41,6 +41,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   errorDBselect = false;
   DBtable: any;
   selectedDBtable: any;
+  dbTestConnectionSuccessMsg: string;
+  dbTestConnectionErrorMsg: string;
 
   constructor(
     private router: Router,
@@ -63,10 +65,17 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.testDbParam.schemaName = this.schemaName;
     this.testDbParam.supportedDBId = this.supportedDBId;
     this.testDbParam.authType = this.authType;
-    // this.dbParam.profileName = this.profileName;
+    this.testDbParam.profileName = this.profileName;
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(res => {
       if (res) {
-        console.log('latest db connection ', res);
+        this.dbTestConnectionErrorMsg = "";
+        this.dbTestConnectionSuccessMsg = "DB Connection Successful.";
+        console.log('clicked on test connection', res);
+
+      }
+      else {
+        this.dbTestConnectionSuccessMsg = "";
+        this.dbTestConnectionErrorMsg = "failed try again with correct db configuration.";
       }
     });
   }
@@ -101,6 +110,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   prevStep(e) {
+    this.dbTestConnectionSuccessMsg= undefined;
+    this.dbTestConnectionErrorMsg= undefined;
     if (document.querySelector('.second').classList.contains('active')) {
       this.addClass('prev-btn', 'hide');
       this.removeClass('cancel-btn', 'hide');
@@ -199,6 +210,8 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.schemaName = undefined;
     this.dbParam.profileName = undefined;
     this.profileName = undefined;
+    this.dbTestConnectionSuccessMsg= undefined;
+    this.dbTestConnectionErrorMsg= undefined;
     this.selectedDBServerName = 'Select server';
   }
 

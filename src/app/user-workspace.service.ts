@@ -22,6 +22,7 @@ export class UserWorkspaceService {
   }
 
   checkDBConnection(testDbParam: AnyObject) {
+    testDbParam.ownerId = this.userinfoService.getUserId();
     return this.http.post(this.checkDbConnectionUrl, testDbParam, { headers: this.userinfoService.getHeaders() })
     .map(this.extractData)
       .pipe(catchError(this.handleError<WorkspaceObject>('createNewWorkspace')));
