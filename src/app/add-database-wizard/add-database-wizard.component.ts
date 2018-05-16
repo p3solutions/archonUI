@@ -66,10 +66,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     // this.dbParam.profileName = this.profileName;
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(res => {
       if (res) {
-        this.newWSinfo = res;
         console.log('latest db connection ', res);
-        // document.getElementById('populate-db-list').click();
-        // this.postCreation();
       }
     });
   }
