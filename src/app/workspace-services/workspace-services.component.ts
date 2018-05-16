@@ -5,6 +5,8 @@ import { WorkspaceServicesService } from './workspace-services.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserinfoService } from '../userinfo.service';
+import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
+import { TableListService } from '../table-list/table-list.service';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -17,17 +19,33 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceType : string;
   private serviceActions: ServiceActionsObject[];
   private wsId_Mode: string;
+  private tableList: any;
   constructor(
     private router: Router,
     private workspaceService: WorkspaceServicesService,
     private userInfoService: UserinfoService,
-    private workspaceHeaderService: WorkspaceHeaderService
+    private workspaceHeaderService: WorkspaceHeaderService,
+    private metalyzerHeaderService: MetalyzerHeaderService,
+    private tableListService: TableListService
   ) { }
-
   gotoMetalyzer(service: any) {
     if (service.serviceName === 'Metalyzer') {
-      this.wsId_Mode = this.workspaceHeaderService.getSeletectedWorkspace().concat('_', service.serviceActionType);
-      this.router.navigate(['workspace/metalyzer', this.wsId_Mode]);
+      this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSeletectedWorkspace());
+      this.tableListService.setServiceActionType(service.serviceActionType);
+      if (service.serviceActionType === 'READ') {
+        this.router.navigate(['/workspace/metalyzer/READ/analysis']);
+      } else if (service.serviceActionType === 'WRITE' || service.serviceActionType === 'ALL') {
+        this.tableListService.getTableList().subscribe(result => {
+          this.tableList = result;
+          if (this.tableList !== undefined) {
+            this.metalyzerHeaderService.setPhase('Analysis');
+            this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+          } else {
+            this.metalyzerHeaderService.setPhase('Configuration');
+            this.router.navigate(['/workspace/metalyzer/ALL/configuration']);
+          }
+        });
+      }
     }
   }
   ngOnInit() {
