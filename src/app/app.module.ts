@@ -75,6 +75,7 @@ import { WorkspaceHeaderService } from './workspace-header/workspace-header.serv
 import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
 import { TableListService } from './table-list/table-list.service';
 import { SearchPipe } from './search.pipe';
+import { StatusScreenComponent } from './status-screen/status-screen.component';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -116,7 +117,8 @@ import { SearchPipe } from './search.pipe';
                 MetalyzerComponent,
                 MetalyzerConfigurationComponent,
                 TableListComponent,
-                SearchPipe
+                SearchPipe,
+                StatusScreenComponent
         ],
         imports: [
                 BrowserModule,

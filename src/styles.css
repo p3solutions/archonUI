@@ -424,6 +424,9 @@ table.dataTable.no-footer {
 .w-250 {
   width: 250px;
 }
+.m-l-30 {
+  margin-left: 30px;
+}
 
 .popup-panel-heading {
   text-align: left;
