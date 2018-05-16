@@ -31,6 +31,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   // loggedInUser: UserObject;
   today = new Date();
   dbParam: AnyObject = {};
+  testDbParam: AnyObject = {};
   // supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
   isDBAvailable = false;
@@ -50,6 +51,27 @@ export class AddDatabaseWizardComponent implements OnInit {
   ngOnInit() {
     this.getAllDBServer();
     this.documentReadyFn();
+  }
+
+  testDbConnection() {
+    console.log('clicked on test connection');
+    this.testDbParam.userName = this.userName;
+    this.testDbParam.password = this.password;
+    this.testDbParam.port = this.port;
+    this.testDbParam.host = this.host;
+    this.testDbParam.databaseName = this.databaseName;
+    this.testDbParam.schemaName = this.schemaName;
+    this.testDbParam.supportedDBId = this.supportedDBId;
+    this.testDbParam.authType = this.authType;
+    // this.dbParam.profileName = this.profileName;
+    this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(res => {
+      if (res) {
+        this.newWSinfo = res;
+        console.log('latest db connection ', res);
+        // document.getElementById('populate-db-list').click();
+        // this.postCreation();
+      }
+    });
   }
 
   selectDBServer(servername) {

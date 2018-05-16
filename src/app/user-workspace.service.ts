@@ -13,11 +13,18 @@ export class UserWorkspaceService {
   getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
   createNewWSurl = `${this.apiUrl}workspaces`;
   getAppConfigUrl = `${this.apiUrl}application/config`;
+  checkDbConnectionUrl = `${this.apiUrl}dbs/configured/connection`;
   constructor(
     private http: HttpClient,
     private userinfoService: UserinfoService
   ) {
     this.http = http;
+  }
+
+  checkDBConnection(testDbParam: AnyObject) {
+    return this.http.post(this.checkDbConnectionUrl, testDbParam, { headers: this.userinfoService.getHeaders() })
+    .map(this.extractData)
+      .pipe(catchError(this.handleError<WorkspaceObject>('createNewWorkspace')));
   }
 
   getUserWorkspaceUrl() {
