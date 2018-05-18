@@ -687,13 +687,13 @@ export class StatusScreenComponent implements OnInit {
   getJobOrigins() {
     this.statusService.getJobOrigins().subscribe((res) => {
       this.jobOriginList = res;
-      console.log(res);
+      // console.log(res);
     });
   }
   getJobStatuses() {
     this.statusService.getJobStatuses().subscribe((res) => {
       this.jobStatusList = res;
-      console.log(res);
+      // console.log(res);
     });
   }
   // filter for services
@@ -708,7 +708,6 @@ export class StatusScreenComponent implements OnInit {
     this.selectedJD = jobDetails;
     this.selectedJD.job_id = jobId;
     this.selectedJD.status = status;
-    console.log(this.selectedJD);
     // $('[rel="popover"]').popover({
     //   container: 'body',
     //   html: true,
