@@ -33,7 +33,7 @@
 
 .dropdown-item {
   display: block;
-  width: 100%;
+  /* width: 100%; */
   padding: 3px 25px;
   clear: both;
   font-size: 16px;
@@ -46,12 +46,18 @@
   text-decoration: none;
 }
 
+.dropdown-menu,
+.dropdown-menu a {
+  width: 160px;
+  margin: 0;
+}
 .dropdown-menu a:focus,
 .dropdown-menu a:hover {
   color: #262626;
   text-decoration: none;
   background-color: lightskyblue;
   cursor: pointer;
+  margin: 0;  
 }
 
 .dropdown-item.selected {
@@ -69,6 +75,5 @@
   /* background-color: #fff; */
   border: 1px solid #ccc;
   text-align: right;
-  min-width: 160px;
+  width: 160px;
 }
-

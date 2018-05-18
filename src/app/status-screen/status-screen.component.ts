@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { ServiceActionsObject } from '../workspace-objects';
+import * as  $ from 'jquery';
+import { StatusService } from './status.service';
 
 @Component({
   selector: 'app-status-screen',
@@ -10,186 +12,712 @@ import { ServiceActionsObject } from '../workspace-objects';
 })
 export class StatusScreenComponent implements OnInit {
   statusList: any;
-  serviceActions = [];
-  jobStatusList = new Set();
-  currentService: any;
-  currentJobStatus: any;
+  jobOriginList = [];
+  jobStatusList = [];
+  selectedJobOrigin: any;
+  selectedJobStatus: any;
+  selectedJD: any;
 
   constructor(
     private router: Router,
-    private workspaceService: WorkspaceServicesService
+    private workspaceService: WorkspaceServicesService,
+    private statusService: StatusService
   ) { }
 
   ngOnInit() {
+    this.getJobOrigins();
+    this.getJobStatuses();
     this.getStatusList();
-    this.getServiceActions();
   }
 
-  gotoBack() {
-    this.router.navigate(['workspace/management-panel']);
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
   getStatusList() {
+    this.statusList = [];
     this.statusList = [
       {
-        jobId: '3b305afd',
-        scheduledTime: 1526328703470,
-        startTime: 1526328703470,
-        endTime: 1526328704470,
-        status: 'completed'
+        job_id: '3b305afd',
+        job_origin: 'DB_PROFILE',
+        scheduled_time: 1526328703470,
+        started_time: 1526328703470,
+        end_time: 1526328704470,
+        status: 'SUCCESS',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'SUCCESS',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'SUCCESS',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305afe',
-        scheduledTime: 1526328784470,
-        startTime: 15261279723478,
-        endTime: 1526328704470,
-        status: 'failed'
+        job_id: '3b305afe',
+        job_origin: 'DB_PROFILE',
+        scheduled_time: 1526328784470,
+        started_time: 15261279723478,
+        end_time: 1526328704470,
+        status: 'FAILED',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305aff',
-        scheduledTime: 1526378783478,
-        startTime: 1526381252998,
-        endTime: 1626499383778,
-        status: 'running'
+        job_id: '3b305aff',
+        job_origin: 'END_TO_END_TOOLKIT',
+        scheduled_time: 1526378783478,
+        started_time: 1526381252998,
+        end_time: 1626499383778,
+        status: 'IN_PROGRESS',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'IN_PROGRESS',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305afa',
-        scheduledTime: 1526378783478,
-        startTime: 1526479783478,
-        endTime: 1626499733778,
-        status: 'completed'
+        job_id: '3b305afa',
+        job_origin: 'LIVE_ARCHIVAL',
+        scheduled_time: 1526378783478,
+        started_time: 1526479783478,
+        end_time: 1626499733778,
+        status: 'SCHEDULED',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'SCHEDULED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305afe',
-        scheduledTime: 1526328784470,
-        startTime: 15261279723478,
-        endTime: 1526328704470,
-        status: 'failed'
+        job_id: '3b305afe',
+        job_origin: 'METALYZER',
+        scheduled_time: 1526328784470,
+        started_time: 15261279723478,
+        end_time: 1526328704470,
+        status: 'FAILED',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305aff',
-        scheduledTime: 1526378783478,
-        startTime: 1526381252998,
-        endTime: 1626499383778,
-        status: 'running'
+        job_id: '3b305aff',
+        job_origin: 'DB_PROFILE',
+        scheduled_time: 1526378783478,
+        started_time: 1526381252998,
+        end_time: 1626499383778,
+        status: 'IN_PROGRESS',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'IN_PROGRESS',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305afa',
-        scheduledTime: 1526378783478,
-        startTime: 1526479783478,
-        endTime: 1626499733778,
-        status: 'completed'
+        job_id: '3b305afa',
+        job_origin: 'LIVE_ARCHIVAL',
+        scheduled_time: 1526378783478,
+        started_time: 1526479783478,
+        end_time: 1626499733778,
+        status: 'SCHEDULED',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'SCHEDULED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305afe',
-        scheduledTime: 1526328784470,
-        startTime: 15261279723478,
-        endTime: 1526328704470,
-        status: 'failed'
+        job_id: '3b305afe',
+        job_origin: 'END_TO_END_TOOLKIT',
+        scheduled_time: 1526328784470,
+        started_time: 15261279723478,
+        end_time: 1526328704470,
+        status: 'FAILED',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305aff',
-        scheduledTime: 1526378783478,
-        startTime: 1526381252998,
-        endTime: 1626499383778,
-        status: 'running'
+        job_id: '3b305aff',
+        job_origin: 'END_TO_END_TOOLKIT',
+        scheduled_time: 1526378783478,
+        started_time: 1526381252998,
+        end_time: 1626499383778,
+        status: 'IN_PROGRESS',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'IN_PROGRESS',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305afa',
-        scheduledTime: 1526378783478,
-        startTime: 1526479783478,
-        endTime: 1626499733778,
-        status: 'completed'
+        job_id: '3b305afa',
+        job_origin: 'METALYZER',
+        scheduled_time: 1526378783478,
+        started_time: 1526479783478,
+        end_time: 1626499733778,
+        status: 'SCHEDULED',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'SCHEDULED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305afa',
-        scheduledTime: 1526378783478,
-        startTime: 1526479783478,
-        endTime: 1626499733778,
-        status: 'completed'
+        job_id: '3b305afa',
+        job_origin: 'METALYZER',
+        scheduled_time: 1526378783478,
+        started_time: 1526479783478,
+        end_time: 1626499733778,
+        status: 'SUCCESS',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'SUCCESS',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305afe',
-        scheduledTime: 1526328784470,
-        startTime: 15261279723478,
-        endTime: 1526328704470,
-        status: 'failed'
+        job_id: '3b305afe',
+        job_origin: 'END_TO_END_TOOLKIT',
+        scheduled_time: 1526328784470,
+        started_time: 15261279723478,
+        end_time: 1526328704470,
+        status: 'FAILED',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305aff',
-        scheduledTime: 1526378783478,
-        startTime: 1526381252998,
-        endTime: 1626499383778,
-        status: 'running'
+        job_id: '3b305aff',
+        job_origin: 'METALYZER',
+        scheduled_time: 1526378783478,
+        started_time: 1526381252998,
+        end_time: 1626499383778,
+        status: 'IN_PROGRESS',
+        job_details: {
+          attempts: [
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'FAILED',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            },
+            {
+              job_info: {
+                run_time: 0,
+                run_attempt: 0,
+                status: 'IN_PROGRESS',
+                scheduled_time: 1526328703470,
+                started_time: 1526328703470,
+                end_time: 1526328704470,
+              },
+              message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+            }
+          ],
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          }
+        }
       },
       {
-        jobId: '3b305afa',
-        scheduledTime: 1526378783478,
-        startTime: 1526479783478,
-        endTime: 1626499733778,
-        status: 'completed'
+        job_id: '3b305afa',
+        job_origin: 'DB_PROFILE',
+        scheduled_time: 1526378783478,
+        started_time: 1526479783478,
+        end_time: 1626499733778,
+        status: 'SUCCESS',
+        job_details: {
+          input: {
+            user_name: 'root',
+            host_ip_address: '127.0.0.1',
+            database_server: 'MySQL',
+            schema_name: 'user_profiles',
+            execution_command: 'Mode Analysis (Background Run)',
+            database_name: 'user_profiles',
+            inc_schema_mode: 'Yes',
+            inc_column_mode: 'Yes',
+            inc_spv_mode: 'Yes',
+            port_no: 3306
+          },
+        attempts: [
+          {
+            job_info: {
+              run_time: 0,
+              run_attempt: 0,
+              status: 'FAILED',
+              scheduled_time: 1526328703470,
+              started_time: 1526328703470,
+              end_time: 1526328704470,
+            },
+            message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+          },
+          {
+            job_info: {
+              run_time: 0,
+              run_attempt: 0,
+              status: 'SUCCESS',
+              scheduled_time: 1526328703470,
+              started_time: 1526328703470,
+              end_time: 1526328704470,
+            },
+            message: ['Metadata Analyst Failed', 'Metadata Analyst Completed']
+          }
+        ]
+      }
       }
     ];
-    this.statusList.forEach(status => {
-      this.jobStatusList.add(status.status);
-    });
-    console.log(this.jobStatusList);
   }
 
-  getServiceActions() {
-    this.workspaceService.serviceActionsUpdated.subscribe(
-      (serviceActions) => {
-        this.serviceActions = this.updateServiceActions(serviceActions);
-      });
+  getJobOrigins() {
+    this.statusService.getJobOrigins().subscribe((res) => {
+      this.jobOriginList = res;
+      console.log(res);
+    });
   }
-  updateServiceActions(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
-    for (const service of serviceActions) {
-      switch (service.serviceName) {
-        case 'SERVICE_METALYZER': {
-          service.serviceName = 'Metalyzer';
-          break;
-        }
-        case 'SERVICE_LIVE_ARCHIVAL': {
-          service.serviceName = 'Live Archival';
-          break;
-        }
-        case 'SERVICE_CUSTOM_SCREEN_BUILDING': {
-          service.serviceName = 'Custom Screen Building';
-          break;
-        }
-        case 'SERVICE_END_2_END_TOOLKIT': {
-          service.serviceName = 'End to End Toolkit';
-          break;
-        }
-        case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
-          service.serviceName = 'Enterprise Data Retrieval Tool';
-          break;
-        }
-        case 'SERVICE_INFOARCHIVE_COMPLETE_APPLICATION_AUTOMATION': {
-          service.serviceName = 'InfoArchive Complete Application Automation';
-          break;
-        }
-        case 'SERVICE_UNSTRUCTURED_DATA_ EXTRACTOR': {
-          service.serviceName = 'Unstructured Data Extractor';
-          break;
-        }
-        // default: {
-        //   service.serviceName = 'No Service Available';
-        //   break;
-        // }
-      }
-    }
-    return serviceActions;
+  getJobStatuses() {
+    this.statusService.getJobStatuses().subscribe((res) => {
+      this.jobStatusList = res;
+      console.log(res);
+    });
   }
   // filter for services
-  selectService(selectedItem) {
-    this.currentService = selectedItem;
+  selectJobOrigin(selectedItem) {
+    this.selectedJobOrigin = selectedItem;
   }
   // filter for job status
   selectJobStatus(selectedItem) {
-    this.currentJobStatus = selectedItem;
+    this.selectedJobStatus = selectedItem;
   }
-  showStatusInfo(jobId) {
-    
+  showStatusInfo(status, jobId, jobDetails) {
+    this.selectedJD = jobDetails;
+    this.selectedJD.job_id = jobId;
+    this.selectedJD.status = status;
+    console.log(this.selectedJD);
+    // $('[rel="popover"]').popover({
+    //   container: 'body',
+    //   html: true,
+    //   content: function () {
+    //     var clone = $($(this).data('popover-content')).clone(true).removeClass('hide');
+    //     return clone;
+    //   }
+    // }).click(function (e) {
+    //   e.preventDefault();
+    // });
   }
 }
