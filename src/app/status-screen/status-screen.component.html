@@ -257,14 +257,14 @@
                           <div class="col-md-3 trim-text tabular-div-column" title="{{attempt?.job_info.status}}">
                             {{attempt?.job_info.status}}
                           </div>
-                          <div class="col-md-3 trim-text tabular-div-column" title="{{attempt?.job_info.status}}">
-                            {{attempt?.job_info.scheduled_time}}
+                          <div class="col-md-3 trim-text tabular-div-column" title="{{attempt?.job_info.scheduled_time}}">
+                            {{attempt?.job_info.scheduled_time | date: 'medium'}}
                           </div>
-                          <div class="col-md-3 trim-text tabular-div-column" title="{{attempt?.job_info.status}}">
-                            {{attempt?.job_info.started_time}}
+                          <div class="col-md-3 trim-text tabular-div-column" title="{{attempt?.job_info.started_time}}">
+                            {{attempt?.job_info.started_time | date: 'medium'}}
                           </div>
-                          <div class="col-md-3 trim-text tabular-div-column" title="{{attempt?.job_info.status}}">
-                            {{attempt?.job_info   .end_time}}
+                          <div class="col-md-3 trim-text tabular-div-column" title="{{attempt?.job_info.end_time}}">
+                            {{attempt?.job_info.end_time | date: 'medium'}}
                           </div>
                         </div>
                       </div>
