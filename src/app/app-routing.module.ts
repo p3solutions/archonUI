@@ -45,6 +45,8 @@ const routes: Routes = [
       }, {
         path: 'manage-user-roles', component: ManageUserRolesComponent
       }, {
+        path: 'status', component: StatusScreenComponent
+      }, {
         path: 'workspace-info/:id', component: WorkspaceInfoComponent
       }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
@@ -72,8 +74,6 @@ const routes: Routes = [
             path: 'analysis', component: TableListComponent
           }
         ]
-      }, {
-        path: 'status', component: StatusScreenComponent
       }]
   },
   {
