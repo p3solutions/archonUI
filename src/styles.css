@@ -971,4 +971,17 @@ ol.multi-step-indicators li.active {
   border-left: 1px solid #dddddd;
   border-right: 1px solid #dddddd;
 }
+.accordion-link .accordion-coll-show {
+  display: none;
+}
+.accordion-link .accordion-coll-hide {
+  display: block;
+}
+.accordion-link .collapsed .accordion-coll-show {
+  display: block;
+}
+.accordion-link .collapsed .accordion-coll-hide {
+  display: none;
+}
+
 

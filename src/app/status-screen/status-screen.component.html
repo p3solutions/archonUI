@@ -195,9 +195,14 @@
             </div> -->
 
             <div class="panel panel-default">
-              <div class="panel-heading">
+              <div onclick="console.log(this);" class="panel-heading cur-p accordion-link" data-toggle="collapse" data-parent="#accordion" attr.href="#collapse-inputs">
                 <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse-inputs">Inputs</a>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse-inputs">
+                    Inputs
+                    <i class="fa fa-minus-circle accordion-coll-hide fa-lg pull-left" aria-hidden="true"></i>
+                    <i class="fa fa-plus-circle accordion-coll-show fa-lg pull-left" aria-hidden="true"></i>
+                      <span class="pull-right"> Status: </span>                    
+                  </a>
                 </h4>
               </div>
               <div id="collapse-inputs" class="panel-collapse collapse in tabular-div">
@@ -216,15 +221,17 @@
 
             <div *ngFor="let attempt of selectedJD.attempts | reverseArray; let ind = index;" class="">
               <div class="panel panel-default">
-                <div class="panel-heading">
+                <div  onclick="console.log(this);"class="panel-heading cur-p accordion-link" data-toggle="collapse" data-parent="#accordion" attr.href="#collapse-job-{{ind}}">
                   <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse-job-{{ind}}">Retry #{{selectedJD.attempts.length - ind}}
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse-job-{{ind}}" class="collapsed">Attempt #{{selectedJD.attempts.length - ind}}
                       <span class="pull-right"> Status: 
                         <i *ngIf="attempt.job_info.status === 'SUCCESS'" class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
                         <i *ngIf="attempt.job_info.status === 'FAILED'" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
                         <i *ngIf="attempt.job_info.status === 'SCHEDULED'" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
                         <i *ngIf="attempt.job_info.status === 'IN_PROGRESS'" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
                       </span>
+                      <i class="fa fa-minus-circle accordion-coll-hide fa-lg pull-left" aria-hidden="true"></i>
+                      <i class="fa fa-plus-circle accordion-coll-show fa-lg pull-left" aria-hidden="true"></i>
                     </a>
                   </h4>
                 </div>
