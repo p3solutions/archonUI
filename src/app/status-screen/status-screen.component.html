@@ -195,13 +195,12 @@
             </div> -->
 
             <div class="panel panel-default">
-              <div onclick="console.log(this);" class="panel-heading cur-p accordion-link" data-toggle="collapse" data-parent="#accordion" attr.href="#collapse-inputs">
+              <div class="panel-heading accordion-link" data-toggle="collapse" data-parent="#accordion" attr.href="#collapse-inputs">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse-inputs">
                     Inputs
                     <i class="fa fa-minus-circle accordion-coll-hide fa-lg pull-left" aria-hidden="true"></i>
                     <i class="fa fa-plus-circle accordion-coll-show fa-lg pull-left" aria-hidden="true"></i>
-                      <span class="pull-right"> Status: </span>                    
                   </a>
                 </h4>
               </div>
@@ -221,7 +220,7 @@
 
             <div *ngFor="let attempt of selectedJD.attempts | reverseArray; let ind = index;" class="">
               <div class="panel panel-default">
-                <div  onclick="console.log(this);"class="panel-heading cur-p accordion-link" data-toggle="collapse" data-parent="#accordion" attr.href="#collapse-job-{{ind}}">
+                <div class="panel-heading cur-p accordion-link" data-toggle="collapse" data-parent="#accordion" attr.href="#collapse-job-{{ind}}">
                   <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse-job-{{ind}}" class="collapsed">Attempt #{{selectedJD.attempts.length - ind}}
                       <span class="pull-right"> Status: 
