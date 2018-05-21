@@ -13,11 +13,17 @@ export class ChangeUserRoleComponent implements OnInit {
   @Output() onConfirm = new EventEmitter<boolean>();
   globalRoleId: string;
   globalRolesRequestData: GlobalRoles[];
+  preSelectedUserRole = '';
+
+
   constructor(
-    private changeUserRoleService: ChangeUserRoleService
+    private changeUserRoleService: ChangeUserRoleService,
+
   ) { }
 
   ngOnInit() {
+    console.log('selected role', document.getElementById('preSelectedRoles')
+  )
     this.getGlobalRoleData();
   }
 
@@ -25,7 +31,7 @@ export class ChangeUserRoleComponent implements OnInit {
     this.changeUserRoleService.getGlobalRoleDetails()
       .subscribe(res => {
         this.globalRolesRequestData = res;
-        console.log(this.globalRolesRequestData);
+        console.log(this.selectedUserId,'get global role data',this.globalRolesRequestData);
       });
   }
 
@@ -37,7 +43,6 @@ export class ChangeUserRoleComponent implements OnInit {
     this.changeUserRoleService.changeGlobalRoleDetails(this.selectedUserId, this.globalRoleId)
     .subscribe((res) => {
       this.onConfirm.emit(true);
-      console.log(res);
     });
     // this.manageUserRolesRequestData[this.index]['globalRoles'][0]['roleName'] = this.choosedRole;
   }

@@ -37,7 +37,7 @@
             <td class="mm-info-data">{{user.createdAt}}</td>
             <td class="mm-info-data">{{user.globalRoles[0].roleName}}</td>
             <td>
-              <a href="" data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id)">
+              <a id="preSelectedRoles" name={{user.globalRoles[0].roleName}} href="" data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id)">
                 Change Role
               </a>
             </td>
