@@ -460,7 +460,12 @@ i.link:focus,
 i.link:hover {
   text-decoration: none;
 }
-
+.hide {
+  display: none;
+}
+.vis-hide {
+  visibility: hidden;
+}
 .cur-p {
   cursor: pointer;
 }
