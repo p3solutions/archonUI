@@ -9,21 +9,21 @@
 
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
-          Status Monitor <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !statusList}"></span>
+          Status Monitor <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span>
         </h3>
       </div>
     </div>
 
-    <div class="col-md-12 m-l-45">
+    <div class="col-md-12 m-l-45" *ngIf="loadStatus">
       <div class="btn-group col-md-2 p-0">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
           title="{{selectedJobOrigin? selectedJobOrigin : 'JOB ORIGIN: All'}}">
           {{selectedJobOrigin? selectedJobOrigin : ('JOB ORIGIN: All')}}
         </button>
-        <div class="dropdown-menu " id="service-list-dropdown">
+        <div class="dropdown-menu">
           <div class="scrollable">
-            <a class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL"
-            (click)="selectJobOrigin()">JOB ORIGIN: ALL</a>
+            <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL"
+            (click)="selectJobOrigin('')">JOB ORIGIN: ALL</a>
             <div class="dropdown-divider"></div>
              <a class="dropdown-item dropdown-data trim-text" *ngFor="let jOrigin of jobOriginList" title="{{jOrigin}}"
              (click)="selectJobOrigin(jOrigin)" >{{jOrigin}}</a>
@@ -31,45 +31,44 @@
         </div>
       </div>
       <div class="btn-group col-md-2 p-0">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
           title="{{selectedJobStatus? selectedJobStatus : 'JOB STATUS: ALL'}}">
           {{selectedJobStatus? selectedJobStatus : 'JOB STATUS: All'}}
         </button>
-        <div class="dropdown-menu " id="service-list-dropdown">
+        <div class="dropdown-menu">
           <div class="scrollable">
-            <a class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL"
-              (click)="selectJobStatus()">JOB STATUS: All</a>
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL"
+              (click)="selectJobStatus('')">JOB STATUS: All</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item dropdown-data trim-text" *ngFor="let jStatus of jobStatusList" title="{{jStatus}}"
              (click)="selectJobStatus(jStatus)">{{jStatus}}</a>
           </div>
         </div>
       </div>
-      <div class="pull-left">
-        <i (click)="getStatusList()" class="fa fa-refresh col-archon-blue fa-lg cur-p" aria-hidden="true"></i>
-      </div>      
+      <div class="btn-group col-md-3 p-0">
+        <input id="job-search-box" class="searchbox pull-left" placeholder="Search table" (keyup)="searchText($event)"/>
+        <i (click)="refreshStatusTable()" class="fa fa-refresh col-archon-blue fa-2x cur-p" aria-hidden="true"></i>
+      </div>
     </div>
     
-    <div class="col-md-12">
+    <div class="col-md-12 {{!loadStatus?'vis-hide':''}}">
       <div class="row">
-        <div id="status-monitor" class="workspace-panel-content col-md-11">
-          <table id="status-table" datatable class="display text-center" cellspacing="0" width="100%">
+        <div class="workspace-panel-content col-md-11">
+          <table id="status-table" class="display text-center" cellspacing="0" width="100%">
             <thead>
               <tr>
-                <th></th>
-                  <th class="text-center">Job ID</th>
-                  <th class="text-center">Job Origin</th>
-                  <th class="text-center">Scheduled Time</th>
-                  <th class="text-center">Start Time</th>
-                  <th class="text-center">End Time</th>
-                  <th class="text-center">Status</th>
-                  <th class="text-center">Details</th>
-                  <th class="text-center">Retry</th>
+                <th class="text-center">Job ID</th>
+                <th class="text-center">Job Origin</th>
+                <th class="text-center">Scheduled Time</th>
+                <th class="text-center">Start Time</th>
+                <th class="text-center">End Time</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Details</th>
+                <th class="text-center">Retry</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let statusObj of statusList; let ind = index">
-                <td>{{ind + 1}}</td>
+              <tr *ngFor="let statusObj of statusList;">
                 <td>{{statusObj.job_id}}</td>
                 <td>{{statusObj.job_origin}}</td>
                 <td>{{statusObj.scheduled_time | date: 'medium'}}</td>
@@ -78,11 +77,11 @@
                 <td>
                   <span *ngIf="statusObj.status === 'SUCCESS'">
                     <i class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
-                    <span class="hide">SUCCESS, completed</span>
+                    <span class="hide">SUCCESS completed</span>
                   </span>
                   <span *ngIf="statusObj.status === 'FAILED'">
                     <i class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
-                    <span class="hide">FAILED</span>
+                    <span class="hide">FAILED failed</span>
                   </span>
                   <span *ngIf="statusObj.status === 'SCHEDULED'">
                     <i class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
@@ -90,7 +89,7 @@
                   </span>
                   <span *ngIf="statusObj.status === 'IN_PROGRESS'">
                     <i class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
-                    <span class="hide">in progress</span>
+                    <span class="hide">in_progress in progress</span>
                   </span>
                 </td>
                 <td>
@@ -107,12 +106,6 @@
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="workspace-panel-content">
-        <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
       </div>
     </div>
 
