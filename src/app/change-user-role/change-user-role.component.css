@@ -1,5 +1,27 @@
 .modal-body {
-  height: 252px;
+  height: 222px;
   margin-top: 15px;
   margin-left: 53px;
 }
+
+.form-horizontal .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: center;
+    padding-right: 43px;
+}
+
+.form-control-static {
+  min-height: 12px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.form-control {
+  height: 27px;
+  border-radius: 2px;
+  width: 79%;
+}
+
