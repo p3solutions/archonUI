@@ -33,6 +33,7 @@
             <label class="col-md-4 control-label">Choose new role</label>
             <div class="col-md-6">
               <select #roleSelector class="form-control" (change)="getGlobalId(roleSelector.value)">
+                  <option id="selected-role" value="" disabled selected hidden>choose role</option>
                 <option *ngFor="let role of globalRolesRequestData" value="{{role.id}}">{{role.roleName}}</option>
               </select>
             </div>

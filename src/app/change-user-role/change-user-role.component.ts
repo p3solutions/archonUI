@@ -16,6 +16,7 @@ export class ChangeUserRoleComponent implements OnInit {
   preSelectedUserRole = '';
 
 
+
   constructor(
     private changeUserRoleService: ChangeUserRoleService,
 
@@ -31,7 +32,7 @@ export class ChangeUserRoleComponent implements OnInit {
     this.changeUserRoleService.getGlobalRoleDetails()
       .subscribe(res => {
         this.globalRolesRequestData = res;
-        console.log(this.selectedUserId,'get global role data',this.globalRolesRequestData);
+        console.log('get global role data',this.globalRolesRequestData);
       });
   }
 
