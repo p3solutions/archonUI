@@ -43,7 +43,6 @@ export class ChangeUserRoleService {
   }
 
   changeGlobalRoleDetails(userid, globalid) {
-    console.log('demo demo demo demo dem o', userid)
     const body = {
       userId: userid,
       globalRoleId: globalid
