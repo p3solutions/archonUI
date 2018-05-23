@@ -16,15 +16,12 @@ export class ChangeUserRoleComponent implements OnInit {
   preSelectedUserRole = '';
 
 
-
   constructor(
     private changeUserRoleService: ChangeUserRoleService,
 
   ) { }
 
   ngOnInit() {
-    console.log('selected role', document.getElementById('preSelectedRoles')
-  )
     this.getGlobalRoleData();
   }
 
@@ -32,7 +29,6 @@ export class ChangeUserRoleComponent implements OnInit {
     this.changeUserRoleService.getGlobalRoleDetails()
       .subscribe(res => {
         this.globalRolesRequestData = res;
-        console.log('get global role data',this.globalRolesRequestData);
       });
   }
 
