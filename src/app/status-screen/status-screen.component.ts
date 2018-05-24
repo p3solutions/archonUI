@@ -17,12 +17,13 @@ export class StatusScreenComponent implements OnInit {
   jobStatusList = [];
   selectedJobOrigin = '';
   selectedJobStatus = '';
-  selectedJD: any;
+  selectedJD: any = {};
   statusTable: any;
   currentTableId = '#status-table';
   dataTableApi: any;
   loadStatus= false;
   searchBoxText = '';
+  refreshClick = false;
 
   constructor(
     private router: Router,
@@ -42,54 +43,74 @@ export class StatusScreenComponent implements OnInit {
 
   getStatusList() {
     this.statusList = [];
-    this.statusList = statusArray;
-    const _this = this;
-    setTimeout(function () {
-      _this.loadStatus = true;
-      _this.createStatusTable();
-    }, 500);
+    const _thisComponent = this;
+    this.statusService.getStatusList().subscribe(res => {
+      console.log(res);
+      this.statusList = res;
+      setTimeout(function () {
+        _thisComponent.loadStatus = true;
+        _thisComponent.createStatusTable();
+      }, 100);
+    });
   }
 
   getJobOrigins() {
     this.statusService.getJobOrigins().subscribe((res) => {
       this.jobOriginList = res;
-      // console.log(res);
     });
   }
   getJobStatuses() {
     this.statusService.getJobStatuses().subscribe((res) => {
       this.jobStatusList = res;
-      // console.log(res);
     });
   }
   searchTable() {
-    const searchKeyword = `${this.selectedJobOrigin} ${this.selectedJobStatus} ${this.searchBoxText}`;
-    console.log(searchKeyword, 'searchKeyword');
-    if ((searchKeyword).trim().length > 0) {
-      this.statusTable.table(this.currentTableId).search(searchKeyword).draw();
-    } else {
-      this.statusTable.table(this.currentTableId).search('').columns().search('').draw();
+    if (!this.refreshClick) {
+      const searchKeyword = `${this.selectedJobOrigin} ${this.selectedJobStatus} ${this.searchBoxText}`;
+      console.log(searchKeyword, 'searchKeyword');
+      if ((searchKeyword).trim().length > 0) {
+        this.statusTable.table(this.currentTableId).search(searchKeyword).draw();
+      } else {
+        this.statusTable.table(this.currentTableId).search('').columns().search('').draw();
+      }
     }
   }
   // filter for services
   selectJobOrigin(selectedItem) {
+    if (selectedItem !== '') {
+      this.refreshClick = false;
+    }
     this.selectedJobOrigin = selectedItem;
     this.searchTable();
   }
   // filter for job status
   selectJobStatus(selectedItem) {
+    if (selectedItem !== '') {
+      this.refreshClick = false;
+    }
     this.selectedJobStatus = selectedItem;
     this.searchTable();
   }
   searchText(_event) {
-    this.searchBoxText = _event.target.value;
+    const selectedItem = _event.target.value;
+    if (selectedItem !== '') {
+      this.refreshClick = false;
+    }
+    this.searchBoxText = selectedItem;
     this.searchTable();
   }
 
-  showStatusInfo(status, jobId, jobDetails) {
-    this.selectedJD = jobDetails;
-    this.selectedJD.job_id = jobId;
+  showStatusDetails(jobId, status, jobDetails, inputs) {
+    this.selectedJD = {};
+    this.selectedJD.id = jobId;
+    if (jobDetails.length > 0) {
+      const lastIndex = jobDetails.length - 1;
+      this.selectedJD.jobId = jobId + ' ~ ' + jobDetails[lastIndex].runAttempt;
+    }
     this.selectedJD.status = status;
+    this.selectedJD.jobDetails = jobDetails;
+    this.selectedJD.inputs = inputs;
+    console.log(this.selectedJD);
   }
 
   createStatusTable() {
@@ -101,12 +122,18 @@ export class StatusScreenComponent implements OnInit {
       {
       'order': [[0, 'asc']]
     });
-    document.querySelector('#status-table_wrapper #status-table_filter').classList.add('vis-hide');
+    if (document.querySelector('#status-table_wrapper #status-table_filter')) {
+      document.querySelector('#status-table_wrapper #status-table_filter').classList.add('vis-hide');
+    }
   }
   refreshStatusTable() {
+    this.refreshClick = true;
     (<HTMLInputElement>document.querySelector('#job-search-box')).value = '';
     document.getElementById('job-origin-all').click();
     document.getElementById('job-status-all').click();
+    this.searchBoxText = '';
+    this.selectedJobOrigin = '';
+    this.selectedJobStatus = '';
     this.getStatusList();
   }
 }
