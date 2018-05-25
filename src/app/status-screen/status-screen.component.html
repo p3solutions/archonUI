@@ -55,56 +55,6 @@
       <div class="row">
         <div class="workspace-panel-content col-md-11">
           <table id="status-table" class="display text-center" cellspacing="0" width="100%">
-            <!-- <thead>
-              <tr>
-                <th class="text-center">Job ID</th>
-                <th class="text-center">Job Origin</th>
-                <th class="text-center">Scheduled Time</th>
-                <th class="text-center">Start Time</th>
-                <th class="text-center">End Time</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Details</th>
-                <th class="text-center">Retry</th>
-              </tr>
-            </thead> -->
-            <!-- <tbody>
-              <tr *ngFor="let statusObj of statusList;">
-                <td>{{statusObj.id}}</td>
-                <td>{{statusObj.jobOrigin}}</td>
-                <td>{{statusObj.jobInfo?.scheduledTime | date: 'medium'}}</td>
-                <td>{{statusObj.jobInfo?.startTime | date: 'medium'}}</td>
-                <td>{{statusObj.jobInfo?.endTime | date: 'medium'}}</td>
-                <td>
-                  <span *ngIf="statusObj.jobInfo?.jobStatus === 'SUCCESS'">
-                    <i class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
-                    <span class="hide">SUCCESS completed</span>
-                  </span>
-                  <span *ngIf="statusObj.jobInfo?.jobStatus === 'FAILED'">
-                    <i class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
-                    <span class="hide">FAILED failed</span>
-                  </span>
-                  <span *ngIf="statusObj.jobInfo?.jobStatus === 'SCHEDULED'">
-                    <i class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
-                    <span class="hide">scheduled</span>
-                  </span>
-                  <span *ngIf="statusObj.jobInfo?.jobStatus === 'IN_PROGRESS'">
-                    <i class="fa fa-circle-o-notch fa-spin col-yellow fa-lg" aria-hidden="true"></i>
-                    <span class="hide">in_progress in progress</span>
-                  </span>
-                </td>
-                <td>
-                    <i data-toggle="modal" data-target="#jobDetailsModal" class="fa fa-info-circle  fa-lg {{statusObj.jobDetails.length > 0 ? 'col-archon-blue cur-p' : 'icon-disabled'}}"
-                      aria-hidden="true" title="Click to see more"
-                      (click)="statusObj.jobDetails.length > 0 ? showStatusDetails(statusObj.id, statusObj.jobInfo?.jobStatus, statusObj.jobDetails, statusObj.inputs) : null"></i>
-                </td>
-                <td>
-                  <span *ngIf="statusObj.jobInfo?.jobStatus === 'FAILED'" >
-                    <i class="fa fa-repeat col-orange fa-lg" aria-hidden="true"></i>
-                    <span class="hide">retry, repeat</span>
-                  </span>
-                </td>
-              </tr>
-            </tbody> -->
           </table>
         </div>
       </div>
