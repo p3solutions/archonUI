@@ -79,6 +79,7 @@ import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { StatusService } from './status-screen/status.service';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
+import { CommonUtilityService } from './common-utility.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -168,7 +169,8 @@ import { ReverseArrayPipe } from './reverse.pipe';
                 WorkspaceHeaderService,
                 MetalyzerHeaderService,
                 TableListService,
-                StatusService
+                StatusService,
+                CommonUtilityService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
