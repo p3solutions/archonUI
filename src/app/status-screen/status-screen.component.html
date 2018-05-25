@@ -1,5 +1,5 @@
 <div class="workspacelist-container">
-    
+
     <div class="col-md-4">
       <div class="col-md-1 back-arrow">
         <a (click)="gotoDashboard()" data-tooltip="Back">
@@ -55,7 +55,7 @@
       <div class="row">
         <div class="workspace-panel-content col-md-11">
           <table id="status-table" class="display text-center" cellspacing="0" width="100%">
-            <thead>
+            <!-- <thead>
               <tr>
                 <th class="text-center">Job ID</th>
                 <th class="text-center">Job Origin</th>
@@ -66,8 +66,8 @@
                 <th class="text-center">Details</th>
                 <th class="text-center">Retry</th>
               </tr>
-            </thead>
-            <tbody>
+            </thead> -->
+            <!-- <tbody>
               <tr *ngFor="let statusObj of statusList;">
                 <td>{{statusObj.id}}</td>
                 <td>{{statusObj.jobOrigin}}</td>
@@ -104,7 +104,7 @@
                   </span>
                 </td>
               </tr>
-            </tbody>
+            </tbody> -->
           </table>
         </div>
       </div>
@@ -114,6 +114,8 @@
 
 
 
+
+<button data-toggle="modal" data-target="#jobDetailsModal" id="job-details-modal" class="hide"></button>
 
 <div class="modal fade" id="jobDetailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
