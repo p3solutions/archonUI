@@ -400,7 +400,9 @@ table.dataTable.no-footer {
 .text-center {
   text-align: center;
 }
-
+.p-0 {
+  padding: 0;
+}
 .m-10 {
   margin: 10px;
 }
@@ -415,6 +417,10 @@ table.dataTable.no-footer {
 .m-t-10 {
   margin-top: 10px;
 }
+.m-b-10 {
+  margin-bottom: 10px;
+}
+
 .p-10-0 {
   padding: 10px 0;
 }
@@ -423,6 +429,9 @@ table.dataTable.no-footer {
 }
 .w-250 {
   width: 250px;
+}
+.m-l-45 {
+  margin-left: 45px;
 }
 
 .popup-panel-heading {
@@ -451,7 +460,12 @@ i.link:focus,
 i.link:hover {
   text-decoration: none;
 }
-
+.hide {
+  display: none;
+}
+.vis-hide {
+  visibility: hidden;
+}
 .cur-p {
   cursor: pointer;
 }
@@ -491,7 +505,18 @@ i.link:hover {
 .col-archon-blue {
   color: #269AF8;
 }
-
+.col-green {
+  color: #009E11;
+}
+.col-red {
+  color: #CF2A28;
+}
+.col-orange {
+  color: #FFA13B;
+}
+.col-yellow {
+  color: #FFCA28;
+}
 .disp-bl {
   display: block
 }
@@ -918,3 +943,52 @@ ol.multi-step-indicators li.active {
   display: inline-block;
   margin: 4px 1px;
 }
+
+.panel-title {
+  font-weight: bold;  
+}
+.tabular-div .tabular-div-row {
+  border-top: 1px solid #dddddd;
+  border-bottom: none;
+}
+.tabular-div .tabular-div-row:last-child {
+  border-bottom: 1px solid #dddddd;
+}
+.tabular-div .tabular-div-row:nth-child(even) {
+  background-color: #fff;
+}
+.tabular-div .tabular-div-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+.tabular-div .tabular-div-row:hover {
+  background-color: whitesmoke;
+}
+
+.tabular-div .tabular-div-column {
+  border-left: 1px solid #dddddd;
+  border-right: none;
+}
+.tabular-div .tabular-div-column:last-child {
+  border-right: 1px solid #dddddd;
+}
+.tabular-div .tabular-div-column.column-header {
+  font-weight: bold;
+}
+.tabular-div-row.tabular-div-column {
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+}
+.accordion-link .accordion-coll-show {
+  display: none;
+}
+.accordion-link .accordion-coll-hide {
+  display: block;
+}
+.accordion-link .collapsed .accordion-coll-show {
+  display: block;
+}
+.accordion-link .collapsed .accordion-coll-hide {
+  display: none;
+}
+
+
