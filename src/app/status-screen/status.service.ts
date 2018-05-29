@@ -12,6 +12,7 @@ export class StatusService {
   getJobOriginsUrl = environment.apiUrl + 'jobStatus/jobOrigins';
   getJobStatusesUrl = environment.apiUrl + 'jobStatus/jobStatuses';
   getStatusListUrl = environment.apiUrl + 'jobStatus/jobList?userId=';
+  getRetryStatusUrl = environment.apiUrl + 'jobStatus/jobRetry';
 
   constructor(
     private http: HttpClient,
@@ -38,6 +39,12 @@ export class StatusService {
     const url = this.getStatusListUrl + this.userinfoService.getUserId();
     return this.http.get<any>(url, { headers: this.getHeaders() })
       .map(this.extractJobStatusList)
+      .pipe(catchError(this.handleError<any>('getUserInfo')));
+  }
+  setRetryStatus(jobId): Observable<any> {
+    const url = this.getRetryStatusUrl;
+    const param  = { 'userId': this.userinfoService.getUserId(), 'jobId': jobId};
+    return this.http.post<any>(url, param, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 

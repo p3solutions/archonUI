@@ -116,10 +116,10 @@
                     <h4 class="panel-title">
                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse-job-{{ind}}" class="collapsed">Attempt #{{selectedJD.jobDetails.length - ind}}
                         <span class="pull-right"> Status: 
-                          <i *ngIf="attempt.jobInfoList[0].jobStatus === 'SUCCESS'" class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
-                          <i *ngIf="attempt.jobInfoList[0].jobStatus === 'FAILED'" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
-                          <i *ngIf="attempt.jobInfoList[0].jobStatus === 'SCHEDULED'" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
-                          <i *ngIf="attempt.jobInfoList[0].jobStatus === 'IN_PROGRESS'" class="fa fa-circle-o-notch fa-spin col-yellow fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === 'SUCCESS'" class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === 'FAILED'" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === 'SCHEDULED'" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === 'IN_PROGRESS'" class="fa fa-circle-o-notch fa-spin col-yellow fa-lg" aria-hidden="true"></i>
                         </span>
                         <i class="fa fa-caret-up accordion-coll-hide fa-lg pull-left" aria-hidden="true"></i>
                         <i class="fa fa-caret-down accordion-coll-show fa-lg pull-left" aria-hidden="true"></i>
@@ -127,44 +127,44 @@
                     </h4>
                   </div>
 
-                  <div id="collapse-job-{{ind}}" class="panel-collapse collapse tabular-div">
+                  <div id="collapse-job-{{ind}}" class="panel-collapse collapse tabular-div {{(jobRetry && ind === 0) ? 'in' : ''}}">
                     <div class="panel-body">
                         <div>
                           <div class="col-md-12 p-0 tabular-div-row">
                             <div class="col-md-4 tabular-div-column column-header" title="Job Status">
                               Job Status
                             </div>
-                            <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfoList[0].jobStatus}}">
-                              {{attempt?.jobInfoList[0].jobStatus}}
+                            <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfo.jobStatus}}">
+                              {{attempt?.jobInfo.jobStatus}}
                             </div>
                           </div>
                           <div class="col-md-12 p-0 tabular-div-row">
                             <div class="col-md-4 tabular-div-column column-header" title="Scheduled Time">
                               Scheduled Time
                             </div>
-                            <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfoList[0].scheduledTime | date: 'medium'}}">
-                              {{attempt?.jobInfoList[0].scheduledTime | date: 'medium'}}
+                            <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfo.scheduledTime | date: 'medium'}}">
+                              {{attempt?.jobInfo.scheduledTime | date: 'medium'}}
                             </div>
                           </div>
                           <div class="col-md-12 p-0 tabular-div-row">
                             <div class="col-md-4 tabular-div-column column-header" title="Start Time">
                               Start Time
                             </div>
-                            <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfoList[0].startTime | date: 'medium'}}">
-                              {{attempt?.jobInfoList[0].startTime | date: 'medium'}}
+                            <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfo.startTime | date: 'medium'}}">
+                              {{attempt?.jobInfo.startTime | date: 'medium'}}
                             </div>
                           </div>
                           <div class="col-md-12 p-0 tabular-div-row m-b-10">
                             <div class="col-md-4 tabular-div-column column-header" title="End Time">
                               End Time
                             </div>
-                            <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfoList[0].endTime | date: 'medium'}}">
-                              {{attempt?.jobInfoList[0].endTime | date: 'medium'}}
+                            <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfo.endTime | date: 'medium'}}">
+                              {{attempt?.jobInfo.endTime | date: 'medium'}}
                             </div>
                           </div>
                         </div>
-                        <div *ngFor="let msg of attempt.message" class="col-md-12 tabular-div-row tabular-div-column trim-text" title="{{msg}}">
-                          {{msg}}
+                        <div *ngFor="let msgObj of attempt.jobMessage" class="col-md-12 tabular-div-row tabular-div-column trim-text" title="{{msgObj.message}}">
+                          {{msgObj.message}}
                         </div>
 
                     </div>
@@ -179,7 +179,16 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancel" data-dismiss="modal">OK</button>
+        <button type="button" class="btn {{jobRetry ? 'btn-secondary  m-r-10' : 'btn-primary'}} cancel" data-dismiss="modal">{{jobRetry ? 'Cancel' : 'OK'}}</button>
+        <button *ngIf="jobRetry" type="button" class="btn btn-primary" (click)="retryJob()">Retry
+            <span [ngClass]="{'archon-loading-icon' : retryLoader}"></span>
+        </button>
+        <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible m-t-10 m-b-10" role="alert">
+          <button type="button" class="close"  (click)="closeErrorMsg()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Error!</strong> {{errorObject?.message}}
+        </div>
       </div>
 
     </div>

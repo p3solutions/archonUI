@@ -6,6 +6,7 @@ import { ServiceActionsObject } from '../workspace-objects';
 import { StatusService } from './status.service';
 import { statusArray } from '../hardcoded-collection';
 import { CommonUtilityService } from '../common-utility.service';
+import { ErrorObject } from '../error-object';
 
 @Component({
   selector: 'app-status-screen',
@@ -13,7 +14,7 @@ import { CommonUtilityService } from '../common-utility.service';
   styleUrls: ['./status-screen.component.css']
 })
 export class StatusScreenComponent implements OnInit {
-  statusList: any;
+  jobList: any;
   jobOriginList = [];
   jobStatusList = [];
   selectedJobOrigin = '';
@@ -25,6 +26,9 @@ export class StatusScreenComponent implements OnInit {
   loadStatus= false;
   searchBoxText = '';
   refreshClick = false;
+  jobRetry = false;
+  retryLoader = false;
+  errorObject: ErrorObject;
 
   constructor(
     private router: Router,
@@ -44,15 +48,16 @@ export class StatusScreenComponent implements OnInit {
   }
 
   getStatusList() {
-    this.statusList = [];
+    this.jobList = [];
     const _thisComponent = this;
     this.statusService.getStatusList().subscribe(res => {
+      console.log('jobList', res);
       res.forEach(element => {
-        _thisComponent.statusList.push(element);
+        _thisComponent.jobList.push(element);
       });
       setTimeout(function () {
         _thisComponent.loadStatus = true;
-        _thisComponent.createStatusTable({'data': _thisComponent.statusList});
+        _thisComponent.createStatusTable({'data': _thisComponent.jobList});
       }, 100);
     });
   }
@@ -181,7 +186,7 @@ export class StatusScreenComponent implements OnInit {
             'render':  function (data, type, rowData) {
                         let html = '';
                         if (rowData.jobInfo.jobStatus === 'FAILED') {
-                          html = `<i class="job-repeat fa fa-repeat col-orange fa-lg" aria-hidden="true"></i>
+                          html = `<i class="job-repeat job-details fa fa-repeat col-orange fa-lg cur-p" aria-hidden="true"></i>
                                   <span class="hide">retry, repeat</span>`;
                         }
                         return html;
@@ -196,18 +201,23 @@ export class StatusScreenComponent implements OnInit {
     $(this.currentTableId)
     .off('click', '.job-details')
     .on('click', '.job-details', function () {
+      thisComponent.jobRetry = false;
       const index = $(this).closest('tr').index();
       const rowData = thisComponent.statusTable.row(index).data();
       const jobId = rowData.id;
       const status = rowData.jobInfo.jobStatus;
       const jobDetails = rowData.jobDetails;
       const inputs = rowData.inputs;
+      if ($(this).hasClass('job-repeat') ) {
+        thisComponent.jobRetry = true;
+      }
       thisComponent.showStatusDetails(jobId, status, jobDetails, inputs);
       $('#job-details-modal').click();
     });
   }
   refreshStatusTable() {
     this.refreshClick = true;
+    this.loadStatus = false;
     (<HTMLInputElement>document.querySelector('#job-search-box')).value = '';
     document.getElementById('job-origin-all').click();
     document.getElementById('job-status-all').click();
@@ -215,6 +225,24 @@ export class StatusScreenComponent implements OnInit {
     this.selectedJobOrigin = '';
     this.selectedJobStatus = '';
     this.getStatusList();
+  }
+
+  retryJob() {
+    this.retryLoader = true;
+    this.statusService.setRetryStatus(this.selectedJD.id).subscribe( res => {
+      console.log(res);
+      this.retryLoader = false;
+      if (res && res.success) {
+        this.jobRetry = false;
+        this.getStatusList(); // not executing this.refreshStatusTable(); such that current search state is maintained
+        const cancelBtn: HTMLButtonElement = document.querySelector('#jobDetailsModal .cancel');
+        cancelBtn.click();
+      } else {
+        this.errorObject = new ErrorObject;
+        this.errorObject.message = res.errorMessage;
+        this.errorObject.show = true;
+      }
+    });
   }
 
 }
