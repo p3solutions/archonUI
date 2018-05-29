@@ -51,7 +51,6 @@ export class StatusScreenComponent implements OnInit {
     this.jobList = [];
     const _thisComponent = this;
     this.statusService.getStatusList().subscribe(res => {
-      console.log('jobList', res);
       res.forEach(element => {
         _thisComponent.jobList.push(element);
       });
@@ -230,7 +229,6 @@ export class StatusScreenComponent implements OnInit {
   retryJob() {
     this.retryLoader = true;
     this.statusService.setRetryStatus(this.selectedJD.id).subscribe( res => {
-      console.log(res);
       this.retryLoader = false;
       if (res && res.success) {
         this.jobRetry = false;
@@ -245,4 +243,7 @@ export class StatusScreenComponent implements OnInit {
     });
   }
 
+  closeErrorMsg() {
+    this.errorObject = null;
+  }
 }
