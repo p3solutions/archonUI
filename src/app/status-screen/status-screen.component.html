@@ -180,7 +180,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn {{jobRetry ? 'btn-secondary  m-r-10' : 'btn-primary'}} cancel" data-dismiss="modal">{{jobRetry ? 'Cancel' : 'OK'}}</button>
-        <button *ngIf="jobRetry" type="button" class="btn btn-primary" (click)="retryJob()">Retry
+        <button *ngIf="jobRetry" type="button" class="btn btn-primary" (click)="retryJob()" disabled="{{retryLoader ? 'true' : null}}">Retry
             <span [ngClass]="{'archon-loading-icon' : retryLoader}"></span>
         </button>
         <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible m-t-10 m-b-10" role="alert">
