@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddDatabaseWizardComponent } from './add-database-wizard.component';
 
-describe('AddDatabaseWizardComponent', () => {
+xdescribe ('AddDatabaseWizardComponent', () => {
   let component: AddDatabaseWizardComponent;
   let fixture: ComponentFixture<AddDatabaseWizardComponent>;
 

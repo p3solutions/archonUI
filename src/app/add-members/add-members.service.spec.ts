@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { AddMembersService } from './add-members.service';
 
-describe('AddMembersService', () => {
+xdescribe('AddMembersService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [AddMembersService]
