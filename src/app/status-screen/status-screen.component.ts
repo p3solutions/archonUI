@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { ServiceActionsObject } from '../workspace-objects';
-// import * as  $ from 'jquery';
 import { StatusService } from './status.service';
 import { statusArray } from '../hardcoded-collection';
 import { CommonUtilityService } from '../common-utility.service';
@@ -23,7 +22,7 @@ export class StatusScreenComponent implements OnInit {
   statusTable: any;
   currentTableId = '#status-table';
   dataTableApi: any;
-  loadStatus= false;
+  loadStatus = false;
   searchBoxText = '';
   refreshClick = false;
   jobRetry = false;
