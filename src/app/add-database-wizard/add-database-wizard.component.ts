@@ -56,7 +56,6 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   testDbConnection() {
-    console.log('clicked on test connection');
     this.testDbParam.userName = this.userName;
     this.testDbParam.password = this.password;
     this.testDbParam.port = this.port;
@@ -69,15 +68,17 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(res => {
       if (res) {
         this.dbTestConnectionErrorMsg = "";
-        this.dbTestConnectionSuccessMsg = "DB Connection Successful.";
-        console.log('clicked on test connection', res);
+        this.dbTestConnectionSuccessMsg = res.connection.message;
+        console.log('clicked on test connection', res, res.connection.message);
 
       }
-      else {
-        this.dbTestConnectionSuccessMsg = "";
-        this.dbTestConnectionErrorMsg = "failed try again with correct db configuration.";
-      }
+      // else {
+      //   console.log('clicked on failed connection');
+      //   this.dbTestConnectionSuccessMsg = "";
+      //   this.dbTestConnectionErrorMsg = "failed try again with correct db configuration.";
+      // }
     });
+    (err) => { console.log('error', err) };
   }
 
   selectDBServer(servername) {

@@ -38,6 +38,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getUserWorkspaceList();
     this.userRole = this.userinfoService.getUserRoles();
+    localStorage.setItem('currentworkspacename', '');
   }
   ngOnDestroy() {
     console.log('removing viewContainerRef');
@@ -88,6 +89,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
+    localStorage.setItem('currentworkspacename', this.selectedWorkspaceName)
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
