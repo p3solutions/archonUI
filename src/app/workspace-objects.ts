@@ -79,7 +79,6 @@ export class CreateConfigDBObject {
     supportedDBId: string;
 }
 
-
 export class RelationshipInfoObject {
     secondaryTable: string;
     definitionType: string;

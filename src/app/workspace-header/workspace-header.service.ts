@@ -12,7 +12,6 @@ export class WorkspaceHeaderService {
   }
   getSeletectedWorkspace() {
     return this.workspaceName;
-
   }
   getServiceActionType(userId: string) {
     // console.log(this)
