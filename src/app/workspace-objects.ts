@@ -85,3 +85,5 @@ export class RelationshipInfoObject {
     definitionType: string;
     joinName: string;
 }
+
+
