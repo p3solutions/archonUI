@@ -2,13 +2,13 @@
   <div classs="metalyzer-header">
     <div class="row">
       <div class="title-headers">
-        <a href="#">Home</a>
+        <a [routerLink] = "['/workspace/workspace-dashboard']">Home</a>
         <i class="fa fa-chevron-right"></i>
-        <a href="#">{{wsName}}</a>
+        <a [routerLink] = "['/workspace/workspace-dashboard']">{{wsName}}</a>
         <i class="fa fa-chevron-right"></i>
-        <a href="#">Metalyzer</a>
+        <a [routerLink] = "['/workspace/workspace-dashboard']">Metalyzer</a>
         <i class="fa fa-chevron-right"></i>
-        <a href="#">Configuration</a>
+        <a [routerLink] = "['/workspace/metalyzer/ALL/configuration']">Configuration</a>
         <i *ngIf="phase == 'Analysis'" class="fa fa-chevron-right"></i>
         <p *ngIf="phase == 'Analysis'">Analysis</p>
       </div>

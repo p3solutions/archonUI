@@ -89,8 +89,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
-    localStorage.setItem('currentworkspacename', this.selectedWorkspaceName)
-    this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
+    this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace.id);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
     this.workspaceService.passServiceActions(this.serviceActionsList);

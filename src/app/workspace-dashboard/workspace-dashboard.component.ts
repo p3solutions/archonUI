@@ -8,7 +8,6 @@ import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dash
 })
 export class WorkspaceDashboardComponent implements OnInit {
   serviceActionsList: ServiceActionsObject[] = [];
-  // @Output() passServiceActions: any = new EventEmitter<any>();
 
   constructor() {
   }
@@ -18,6 +17,5 @@ export class WorkspaceDashboardComponent implements OnInit {
   receiveServiceActionsListEvent($event) {
     this.serviceActionsList = $event;
     console.log('Dashboardcalling', this.serviceActionsList);
-    // this.passServiceActions.emit(this.serviceActionsList);
   }
 }

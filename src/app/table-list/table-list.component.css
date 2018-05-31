@@ -1,5 +1,5 @@
 #table-list {
-  margin-left: 35px;
+  margin-left: 5px;
 }
 
 .input-group {
@@ -19,14 +19,14 @@
   /* margin-top:-10px; */
   height: 40px;
   border-radius: 20px;
-  width: 280px;
-  margin-left: 8px;
+  width: 257px;
+  margin-left: 20px;
 }
 
 .form-control-feedback {
   position: relative;
   margin-top: -34px;
-  margin-left: 250px;
+  margin-left: 240px;
   height: 32px;
   color: #269af8;
   line-height: 30px;
