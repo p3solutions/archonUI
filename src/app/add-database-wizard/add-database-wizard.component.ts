@@ -31,6 +31,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   // loggedInUser: UserObject;
   today = new Date();
   dbParam: AnyObject = {};
+  testDbParam: AnyObject = {};
   // supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
   isDBAvailable = false;
@@ -40,6 +41,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   errorDBselect = false;
   DBtable: any;
   selectedDBtable: any;
+  dbTestConnectionSuccessMsg: string;
+  dbTestConnectionErrorMsg: string;
 
   constructor(
     private router: Router,
@@ -50,6 +53,32 @@ export class AddDatabaseWizardComponent implements OnInit {
   ngOnInit() {
     this.getAllDBServer();
     this.documentReadyFn();
+  }
+
+  testDbConnection() {
+    this.testDbParam.userName = this.userName;
+    this.testDbParam.password = this.password;
+    this.testDbParam.port = this.port;
+    this.testDbParam.host = this.host;
+    this.testDbParam.databaseName = this.databaseName;
+    this.testDbParam.schemaName = this.schemaName;
+    this.testDbParam.supportedDBId = this.supportedDBId;
+    this.testDbParam.authType = this.authType;
+    this.testDbParam.profileName = this.profileName;
+    this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(res => {
+      if (res) {
+        this.dbTestConnectionErrorMsg = "";
+        this.dbTestConnectionSuccessMsg = res.connection.message;
+        console.log('clicked on test connection', res, res.connection.message);
+
+      }
+      // else {
+      //   console.log('clicked on failed connection');
+      //   this.dbTestConnectionSuccessMsg = "";
+      //   this.dbTestConnectionErrorMsg = "failed try again with correct db configuration.";
+      // }
+    });
+    (err) => { console.log('error', err) };
   }
 
   selectDBServer(servername) {
@@ -82,6 +111,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   prevStep(e) {
+    this.dbTestConnectionSuccessMsg= undefined;
+    this.dbTestConnectionErrorMsg= undefined;
     if (document.querySelector('.second').classList.contains('active')) {
       this.addClass('prev-btn', 'hide');
       this.removeClass('cancel-btn', 'hide');
@@ -180,6 +211,8 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.schemaName = undefined;
     this.dbParam.profileName = undefined;
     this.profileName = undefined;
+    this.dbTestConnectionSuccessMsg= undefined;
+    this.dbTestConnectionErrorMsg= undefined;
     this.selectedDBServerName = 'Select server';
   }
 

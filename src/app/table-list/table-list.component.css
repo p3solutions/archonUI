@@ -152,3 +152,19 @@ button {
   display: inline-block;
   margin-left: -50px;
 }
+
+.form-control[_ngcontent-c5] {
+  height: 40px;
+  border-radius: 20px;
+  width: 261px;
+  margin-left: 18px;
+}
+
+.form-control-feedback[_ngcontent-c5] {
+  position: relative;
+  margin-top: -34px;
+  margin-left: 243px;
+  height: 32px;
+  color: #269af8;
+  line-height: 30px;
+}

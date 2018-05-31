@@ -9,6 +9,7 @@
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
           Manage User Roles
+          <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
         </h3>
       </div>
     </div>
@@ -36,7 +37,7 @@
             <td class="mm-info-data">{{user.createdAt}}</td>
             <td class="mm-info-data">{{user.globalRoles[0].roleName}}</td>
             <td>
-              <a href="" data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id)">
+              <a href="" id="preSelectedRoles" name={{preSelectedRole}} data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id, user.globalRoles[0].roleName)">
                 Change Role
               </a>
             </td>
@@ -54,3 +55,4 @@
 <app-change-user-role [selectedUserId]="selectedUserId" (onConfirm)="onConfirm($event)" class="modal fade" id="myModal1" role="dialog">
   some other content
 </app-change-user-role>
+<!-- <a id="preSelectedRoles" name={{preSelectedRole}}></a> -->

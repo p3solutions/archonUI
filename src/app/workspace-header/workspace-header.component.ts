@@ -38,6 +38,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getUserWorkspaceList();
     this.userRole = this.userinfoService.getUserRoles();
+    localStorage.setItem('currentworkspacename', '');
   }
   ngOnDestroy() {
     console.log('removing viewContainerRef');

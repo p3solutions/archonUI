@@ -2,7 +2,6 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { MetalyzerHeaderService } from './metalyzer-header.service';
-// import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-metalyzer-header',
@@ -10,14 +9,15 @@ import { MetalyzerHeaderService } from './metalyzer-header.service';
   styleUrls: ['./metalyzer-header.component.css']
 })
 export class MetalyzerHeaderComponent implements OnInit {
-
   private wsName: string;
   private phase: string;
   constructor(
     private router: Router,
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService
-  ) {  }
+  ) {
+
+  }
 
   ngOnInit() {
     this.metalyzerHeaderService.cast
@@ -28,4 +28,5 @@ export class MetalyzerHeaderComponent implements OnInit {
       this.wsName = result;
     });
   }
+  
 }

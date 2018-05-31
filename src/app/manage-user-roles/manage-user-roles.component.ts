@@ -15,8 +15,10 @@ import { ChangeGlobalRole } from '../change-global-role';
 })
 export class ManageUserRolesComponent implements OnInit {
   isAvailable = false;
+  isProgress: boolean;
   manageUserRolesRequestData: ManageUserRoles[];
   selectedUserId: string;
+  preSelectedRole: any;
   constructor(
     private manageUserRolesService: ManageUserRolesService,
     private router: Router
@@ -24,16 +26,21 @@ export class ManageUserRolesComponent implements OnInit {
 
   ngOnInit() {
     this.getManageUserRolesData();
+    this.isProgress = true;
+
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
       .subscribe(res => {
         this.manageUserRolesRequestData = res;
         this.isAvailable = true;
+        this.isProgress = false;
       });
   }
-  getUserId(id) {
+  getUserId(id, roleName) {
     this.selectedUserId = id;
+    this.preSelectedRole = roleName;
+    document.getElementById("selected-role").innerHTML = this.preSelectedRole;
   }
 
   gotoManagementPanel() {
@@ -47,3 +54,4 @@ export class ManageUserRolesComponent implements OnInit {
   }
 
 }
+
