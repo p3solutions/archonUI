@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { ServiceActionsObject } from '../workspace-objects';
 import { StatusService } from './status.service';
-import { statusArray } from '../hardcoded-collection';
+import { jobArray } from '../hardcoded-collection';
 import { CommonUtilityService } from '../common-utility.service';
 import { ErrorObject } from '../error-object';
+// import * as $ from 'jquery';
 
 @Component({
   selector: 'app-status-screen',
@@ -39,17 +40,17 @@ export class StatusScreenComponent implements OnInit {
   ngOnInit() {
     this.getJobOrigins();
     this.getJobStatuses();
-    this.getStatusList();
+    this.getJobList();
   }
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
-  getStatusList() {
+  getJobList() {
     this.jobList = [];
     const _thisComponent = this;
-    this.statusService.getStatusList().subscribe(res => {
+    this.statusService.getJobList().subscribe(res => {
       res.forEach(element => {
         _thisComponent.jobList.push(element);
       });
@@ -222,7 +223,7 @@ export class StatusScreenComponent implements OnInit {
     this.searchBoxText = '';
     this.selectedJobOrigin = '';
     this.selectedJobStatus = '';
-    this.getStatusList();
+    this.getJobList();
   }
 
   retryJob() {
@@ -231,7 +232,7 @@ export class StatusScreenComponent implements OnInit {
       this.retryLoader = false;
       if (res && res.success) {
         this.jobRetry = false;
-        this.getStatusList(); // not executing this.refreshStatusTable(); such that current search state is maintained
+        this.getJobList(); // not executing this.refreshStatusTable(); such that current search state is maintained
         const cancelBtn: HTMLButtonElement = document.querySelector('#jobDetailsModal .cancel');
         cancelBtn.click();
       } else {

@@ -35,7 +35,7 @@ export class StatusService {
       .pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
-  getStatusList(): Observable<any> {
+  getJobList(): Observable<any> {
     const url = this.getStatusListUrl + this.userinfoService.getUserId();
     return this.http.get<any>(url, { headers: this.getHeaders() })
       .map(this.extractJobStatusList)
