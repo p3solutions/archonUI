@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { ServiceActionsObject } from '../workspace-objects';
 import { StatusService } from './status.service';
-import { jobArray } from '../hardcoded-collection';
 import { CommonUtilityService } from '../common-utility.service';
 import { ErrorObject } from '../error-object';
 // import * as $ from 'jquery';
