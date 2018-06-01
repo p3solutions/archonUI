@@ -17,7 +17,6 @@ import { DebugElement } from '@angular/core';
 import { Locator } from 'protractor';
 
 describe('StatusScreenComponent', () => {
-  let debugElement: DebugElement;
   let component: StatusScreenComponent;
   let fixture: ComponentFixture<StatusScreenComponent>;
   let testBedService: any;
@@ -133,6 +132,14 @@ describe('StatusScreenComponent', () => {
     // testing for searchBox existence
     const searchBox = document.querySelector('#job-search-box');
     expect(searchBox).toBeTruthy();
+
+    // testing for refresh-button existence
+    const refreshButton = document.querySelector('i.fa-refresh');
+    expect(refreshButton).toBeTruthy();
+
+    // testing for back-button existence
+    const backButton = document.querySelector('i.fa-arrow-left');
+    expect(backButton).toBeTruthy();
 
     disposeMe.get('getJobOrigins').unsubscribe();
     disposeMe.get('getJobOrigins').unsubscribe();
