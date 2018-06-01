@@ -81,7 +81,8 @@ describe('SignupFormComponent', () => {
     expect(nameDummy).toBe(component.responseData['name']);
     expect(emailAddressDummy).toBe(component.responseData['emailAddress']);
     expect(passwordDummy).toBe(component.responseData['password']);
-    console.log('Backened returned code', component.msg);
+    disposeMe.unsubscribe();
+    // console.log('Backened returned code', component.msg);
   });
 
 
