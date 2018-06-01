@@ -12,7 +12,7 @@ import { UserinfoService } from '../userinfo.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { Observable } from 'rxjs/Observable';
 import { jobArray, jobOriginArray, jobStatusArray } from '../hardcoded-collection';
-import { By } from 'selenium-webdriver';
+import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Locator } from 'protractor';
 
@@ -25,6 +25,7 @@ describe('StatusScreenComponent', () => {
   'wOTc3IiwiZW1haWxBZGRyZXNzIjoiZGJhZG1pbkB0ZXN0LmNvbSJ9LCJpc3MiOiJhcHBsaWNhdGlvbiIsImlhdCI6MTUyNzY4Nzc5MiwiZXhwIjoxNTI3Nzc0MTkyfQ' +
   '.822cmi5CYPIHFgMba7D-LwsdLvFpphMw6FdU8FAs6RYdGKXtr36EugH_EUCbqxccjCAx4EwUBW9swXDSTRjiWA';
   localStorage.setItem('accessToken', loggedInAccessToken); // inserting logged in user info
+  let debugElement: DebugElement;
 
   const getSimpleObservable = function(data) {
     return new Observable<any>((observer) => {
@@ -73,6 +74,7 @@ describe('StatusScreenComponent', () => {
     fixture = TestBed.createComponent(StatusScreenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    debugElement = fixture.debugElement;
     testBedService = TestBed.get(StatusService);
   });
 
@@ -86,8 +88,6 @@ describe('StatusScreenComponent', () => {
     })
   );
 
-  // DataTable is not created at runtime, hence not expecting data from html elements,
-  // just expecting before & after function calls
 
   it('Should contain the jobOriginList as response when getJobOrigins() is called', () => {
     expect(component.jobOriginList.length === 0).toBeTruthy();
@@ -115,30 +115,30 @@ describe('StatusScreenComponent', () => {
     fixture.detectChanges();
     expect(component.jobList.length > 0).toBeTruthy();
 
-    // testing first dropdown of filter JobStatus
     spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses());
     component.getJobStatuses();
     fixture.detectChanges();
-    const jStatus = document.querySelector('.j-status');
-    expect(jStatus.textContent).toBe(component.jobStatusList[0]);
+    // testing first dropdown of filter JobStatus
+    const jStatusFilter0 = debugElement.query(By.css('.j-status')).nativeElement.innerText;
+    expect(jStatusFilter0).toBe(component.jobStatusList[0]);
 
-    // testing first dropdown of filter JobOrigin
     spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins());
     component.getJobOrigins();
     fixture.detectChanges();
-    const jOrigin = document.querySelector('.j-origin');
-    expect(jOrigin.textContent).toBe(component.jobOriginList[0]);
+    // testing first dropdown of filter JobOrigin
+    const jOriginFilter0 = debugElement.query(By.css('.j-origin')).nativeElement.innerText;
+    expect(jOriginFilter0).toBe(component.jobOriginList[0]);
 
     // testing for searchBox existence
-    const searchBox = document.querySelector('#job-search-box');
+    const searchBox = debugElement.query(By.css('#job-search-box')).nativeNode;
     expect(searchBox).toBeTruthy();
 
     // testing for refresh-button existence
-    const refreshButton = document.querySelector('i.fa-refresh');
+    const refreshButton = debugElement.query(By.css('i.fa-refresh')).nativeNode;
     expect(refreshButton).toBeTruthy();
 
     // testing for back-button existence
-    const backButton = document.querySelector('i.fa-arrow-left');
+    const backButton = debugElement.query(By.css('i.fa-arrow-left')).nativeNode;
     expect(backButton).toBeTruthy();
 
     disposeMe.get('getJobOrigins').unsubscribe();
@@ -146,4 +146,7 @@ describe('StatusScreenComponent', () => {
     disposeMe.get('getJobList').unsubscribe();
   });
 
+  it('Should filtered data be available on table', () => {
+    console.log(component);
+  });
 });
