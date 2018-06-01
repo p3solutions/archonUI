@@ -10,7 +10,7 @@ xdescribe('WorkspaceMgmtPanelComponent', () => {
   let fixture: ComponentFixture<WorkspaceMgmtPanelComponent>;
   let de: DebugElement;
   let workspaceMgmtPanel: HTMLElement;
-]
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ WorkspaceMgmtPanelComponent ]
