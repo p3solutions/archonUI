@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="btn-group col-md-3 p-0">
-        <input id="job-search-box" class="searchbox pull-left" placeholder="Search table" (keyup)="searchText($event)"/>
+        <input id="job-search-box" class="searchbox pull-left" placeholder="Search table" (keyup)="searchText($event.target.value)"/>
         <i (click)="refreshStatusTable()" class="fa fa-refresh col-archon-blue fa-2x cur-p" aria-hidden="true"></i>
       </div>
     </div>

@@ -28,6 +28,7 @@ export class StatusScreenComponent implements OnInit {
   jobRetry = false;
   retryLoader = false;
   errorObject: ErrorObject;
+  searchKeyword: any;
 
   constructor(
     private router: Router,
@@ -72,9 +73,9 @@ export class StatusScreenComponent implements OnInit {
   }
   searchTable() {
     if (!this.refreshClick) {
-      const searchKeyword = `${this.selectedJobOrigin} ${this.selectedJobStatus} ${this.searchBoxText}`;
-      if ((searchKeyword).trim().length > 0) {
-        this.statusTable.table(this.currentTableId).search(searchKeyword).draw();
+      this.searchKeyword = `${this.selectedJobOrigin} ${this.selectedJobStatus} ${this.searchBoxText}`;
+      if ((this.searchKeyword).trim().length > 0) {
+        this.statusTable.table(this.currentTableId).search(this.searchKeyword).draw();
       } else {
         this.statusTable.table(this.currentTableId).search('').columns().search('').draw();
       }
@@ -96,8 +97,7 @@ export class StatusScreenComponent implements OnInit {
     this.selectedJobStatus = selectedItem;
     this.searchTable();
   }
-  searchText(_event) {
-    const selectedItem = _event.target.value;
+  searchText(selectedItem) {
     if (selectedItem !== '') {
       this.refreshClick = false;
     }

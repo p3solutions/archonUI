@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, tick, fakeAsync, flush } from '@angular/core/testing';
 
 import { StatusScreenComponent } from './status-screen.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,11 +15,13 @@ import { jobArray, jobOriginArray, jobStatusArray } from '../hardcoded-collectio
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Locator } from 'protractor';
+import { Router, ActivatedRoute } from '@angular/router';
 
 describe('StatusScreenComponent', () => {
   let component: StatusScreenComponent;
   let fixture: ComponentFixture<StatusScreenComponent>;
   let testBedService: any;
+  let routerService: any;
   const loggedInAccessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYmFkbWluQHRlc3QuY29tIiwicm9sZXMiOlt7InJvbGVJZCI6IjVhYzVjNmJkYTU0Z' +
   'Dc1MDNhNmI4MDkxOSIsInJvbGVOYW1lIjoiUk9MRV9EQl9BRE1JTiJ9XSwidXNlciI6eyJuYW1lIjoiZGJhZG1pbiIsImlkIjoiNWFjNWRjNjUyZTZjOTkwODYxODM' +
   'wOTc3IiwiZW1haWxBZGRyZXNzIjoiZGJhZG1pbkB0ZXN0LmNvbSJ9LCJpc3MiOiJhcHBsaWNhdGlvbiIsImlhdCI6MTUyNzY4Nzc5MiwiZXhwIjoxNTI3Nzc0MTkyfQ' +
@@ -35,19 +37,29 @@ describe('StatusScreenComponent', () => {
   };
 
   const disposeMe = new Map();
-  const getJobList = function (): Observable<any> {
-    const pvtObservable = getSimpleObservable(jobArray);
+  const getJobList = function (data): Observable<any> {
+    const pvtObservable = getSimpleObservable(data);
     disposeMe.set('getJobList', pvtObservable.subscribe());
     return pvtObservable;
   };
-  const getJobOrigins = function (): Observable<any> {
-    const pvtObservable = getSimpleObservable(jobOriginArray);
+  const getJobOrigins = function (data): Observable<any> {
+    const pvtObservable = getSimpleObservable(data);
     disposeMe.set('getJobOrigins', pvtObservable.subscribe());
     return pvtObservable;
   };
-  const getJobStatuses = function (): Observable<any> {
-    const pvtObservable = getSimpleObservable(jobStatusArray);
+  const getJobStatuses = function (data): Observable<any> {
+    const pvtObservable = getSimpleObservable(data);
     disposeMe.set('getJobStatuses', pvtObservable.subscribe());
+    return pvtObservable;
+  };
+  const selectJobOrigin = function (data): Observable<any> {
+    const pvtObservable = getSimpleObservable(data);
+    disposeMe.set('selectJobOrigin', pvtObservable.subscribe());
+    return pvtObservable;
+  };
+  const showStatusDetails = function (data): Observable<any> {
+    const pvtObservable = getSimpleObservable(data);
+    disposeMe.set('showStatusDetails', pvtObservable.subscribe());
     return pvtObservable;
   };
 
@@ -76,6 +88,7 @@ describe('StatusScreenComponent', () => {
     fixture.detectChanges();
     debugElement = fixture.debugElement;
     testBedService = TestBed.get(StatusService);
+    routerService = TestBed.get(Router);
   });
 
   it('should create', () => {
@@ -91,7 +104,7 @@ describe('StatusScreenComponent', () => {
 
   it('Should contain the jobOriginList as response when getJobOrigins() is called', () => {
     expect(component.jobOriginList.length === 0).toBeTruthy();
-    spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins());
+    spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins(jobOriginArray));
     component.getJobOrigins();
     fixture.detectChanges();
     expect(component.jobOriginList.length > 0).toBeTruthy();
@@ -100,7 +113,7 @@ describe('StatusScreenComponent', () => {
 
   it('Should contain the jobStatusList as response when getJobStatuses() is called', () => {
     expect(component.jobStatusList.length === 0).toBeTruthy();
-    spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses());
+    spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses(jobStatusArray));
     component.getJobStatuses();
     fixture.detectChanges();
     expect(component.jobStatusList.length > 0).toBeTruthy();
@@ -109,44 +122,78 @@ describe('StatusScreenComponent', () => {
 
   it('Should contain the job-list as response when getJobList() is called, then all the filters avilable', () => {
     expect(component.jobList.length === 0).toBeTruthy();
-    spyOn(testBedService, 'getJobList').and.returnValue(getJobList());
+    spyOn(testBedService, 'getJobList').and.returnValue(getJobList(jobArray));
     component.loadStatus = true;
     component.getJobList();
     fixture.detectChanges();
     expect(component.jobList.length > 0).toBeTruthy();
 
-    spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses());
+    spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses(jobStatusArray));
     component.getJobStatuses();
     fixture.detectChanges();
     // testing first dropdown of filter JobStatus
-    const jStatusFilter0 = debugElement.query(By.css('.j-status')).nativeElement.innerText;
-    expect(jStatusFilter0).toBe(component.jobStatusList[0]);
+    const jStatusFilter = debugElement.query(By.css('.j-status'));
+    expect(jStatusFilter.nativeElement.innerText).toBe(component.jobStatusList[0]);
 
-    spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins());
+    spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins(jobOriginArray));
     component.getJobOrigins();
     fixture.detectChanges();
     // testing first dropdown of filter JobOrigin
-    const jOriginFilter0 = debugElement.query(By.css('.j-origin')).nativeElement.innerText;
-    expect(jOriginFilter0).toBe(component.jobOriginList[0]);
+    const jOriginFilter = debugElement.query(By.css('.j-origin'));
+    expect(jOriginFilter.nativeElement.innerText).toBe(component.jobOriginList[0]);
 
     // testing for searchBox existence
-    const searchBox = debugElement.query(By.css('#job-search-box')).nativeNode;
-    expect(searchBox).toBeTruthy();
+    const searchBox = debugElement.query(By.css('#job-search-box'));
+    expect(searchBox.nativeNode).toBeTruthy();
 
     // testing for refresh-button existence
-    const refreshButton = debugElement.query(By.css('i.fa-refresh')).nativeNode;
-    expect(refreshButton).toBeTruthy();
+    const refreshButton = debugElement.query(By.css('i.fa-refresh'));
+    expect(refreshButton.nativeNode).toBeTruthy();
 
     // testing for back-button existence
-    const backButton = debugElement.query(By.css('i.fa-arrow-left')).nativeNode;
-    expect(backButton).toBeTruthy();
+    const backButton = debugElement.query(By.css('i.fa-arrow-left'));
+    expect(backButton.nativeNode).toBeTruthy();
+
+    // testing for filter verifications
+    jOriginFilter.triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(component.selectedJobOrigin).toBe(jOriginFilter.nativeElement.innerText);
+
+    jStatusFilter.triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(component.selectedJobStatus).toBe(jStatusFilter.nativeElement.innerText);
+
+    // datatable Fn executed but statusTable is not stored, hence throwing error in calling component.searchText()
+    // searchBox.nativeElement.value = 'success';
+    // component.searchText(searchBox.nativeElement.value);
+    // fixture.detectChanges();
+    // expect(component.searchBoxText).toContain(searchBox.nativeElement.value);
+
+    // refresh button refreshes filters
+    debugElement.query(By.css('i.fa-refresh')).triggerEventHandler('click', null);
+    expect(component.selectedJobOrigin).toBe('');
+    expect(component.selectedJobStatus).toBe('');
+    // const getJobListSpy = spyOn(component, 'getJobList');
+    // expect(getJobListSpy).toHaveBeenCalled();
+
+    // job-details functionality verification
+    // const firstJob = component.jobList[0];
+    // const showStatusDetailsSpy = spyOn(component, 'showStatusDetails');
+    // component.showStatusDetails(firstJob._id, firstJob.jobInfo.jobStatus, firstJob.jobDetails, firstJob.input);
+    // fixture.detectChanges();
+    // expect(showStatusDetailsSpy).toHaveBeenCalled();
+    // console.log(component.selectedJD.id, firstJob);
+    // expect(component.selectedJD.id).toBe(firstJob._id);
+
+    // Back button should go to Dashboard
+    const routerSpy = spyOn(routerService, 'navigate');
+    component.gotoDashboard();
+    fixture.detectChanges();
+    expect(routerSpy).toHaveBeenCalledWith(['workspace/workspace-dashboard/workspace-services']);
 
     disposeMe.get('getJobOrigins').unsubscribe();
     disposeMe.get('getJobOrigins').unsubscribe();
     disposeMe.get('getJobList').unsubscribe();
   });
 
-  it('Should filtered data be available on table', () => {
-    console.log(component);
-  });
 });
