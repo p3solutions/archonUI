@@ -73,29 +73,12 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.testDbParam.authType = this.authType;
     this.testDbParam.profileName = this.profileName;
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(data => {
-      // if (res) {
         this.dbTestConnectionErrorMsg = "";
-        
-      //   console.log('clicked on test connection', res, res.connection.message);
-      // }
-      // else {
-      //   console.log('clicked on failed connection');
-      //   this.dbTestConnectionSuccessMsg = "";
-      //   this.dbTestConnectionErrorMsg = "failed try again with correct db configuration.";
-      // }
-
-
         this.responseData = data;
         this.dbTestConnectionSuccessMsg = this.responseData.data.connection.message
-        // this.authenticationService.authenticateHelper(this.responseData.data._x);
-        // localStorage.setItem('accessToken', data.data.accessToken);
-        // localStorage.setItem('refreshToken', data.data.refreshToken);
-        // this.router.navigate(['/workspace']);
-        console.log('inside first', this.responseData.data.connection.message)
       },
       (error: HttpErrorResponse) => {
         this.dbTestConnectionSuccessMsg = '';
-        console.log('samsung samsung', error.error)
         this.dbTestConnectionErrorMsg = error.error.errorMessage
    
       }
