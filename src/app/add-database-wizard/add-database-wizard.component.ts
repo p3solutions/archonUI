@@ -3,6 +3,10 @@ import { UserObject, AnyObject, ConfiguredDB, CreateConfigDBObject } from '../wo
 import { UserWorkspaceService } from '../user-workspace.service';
 import { UserinfoService } from '../userinfo.service';
 import { Router } from '@angular/router';
+import { ErrorObject } from '../error-object';
+import { HttpErrorResponse } from '@angular/common/http';
+
+
 
 
 @Component({
@@ -25,6 +29,9 @@ export class AddDatabaseWizardComponent implements OnInit {
   supportedDBId: string;
   selectedDBServerName = 'Select server';
   newWSinfo: CreateConfigDBObject;
+
+  responseData: any;
+  errorObject: ErrorObject;
 
   wsName: string;
   wsDesc: string;
@@ -65,20 +72,34 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.testDbParam.supportedDBId = this.supportedDBId;
     this.testDbParam.authType = this.authType;
     this.testDbParam.profileName = this.profileName;
-    this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(res => {
-      if (res) {
+    this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(data => {
+      // if (res) {
         this.dbTestConnectionErrorMsg = "";
-        this.dbTestConnectionSuccessMsg = res.connection.message;
-        console.log('clicked on test connection', res, res.connection.message);
-
-      }
+        
+      //   console.log('clicked on test connection', res, res.connection.message);
+      // }
       // else {
       //   console.log('clicked on failed connection');
       //   this.dbTestConnectionSuccessMsg = "";
       //   this.dbTestConnectionErrorMsg = "failed try again with correct db configuration.";
       // }
-    });
-    (err) => { console.log('error', err) };
+
+
+        this.responseData = data;
+        this.dbTestConnectionSuccessMsg = this.responseData.data.connection.message
+        // this.authenticationService.authenticateHelper(this.responseData.data._x);
+        // localStorage.setItem('accessToken', data.data.accessToken);
+        // localStorage.setItem('refreshToken', data.data.refreshToken);
+        // this.router.navigate(['/workspace']);
+        console.log('inside first', this.responseData.data.connection.message)
+      },
+      (error: HttpErrorResponse) => {
+        this.dbTestConnectionSuccessMsg = '';
+        console.log('samsung samsung', error.error)
+        this.dbTestConnectionErrorMsg = error.error.errorMessage
+   
+      }
+    );
   }
 
   selectDBServer(servername) {

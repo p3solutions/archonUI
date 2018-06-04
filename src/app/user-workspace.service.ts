@@ -24,12 +24,11 @@ export class UserWorkspaceService {
   checkDBConnection(testDbParam: AnyObject) {
     testDbParam.ownerId = this.userinfoService.getUserId();
     return this.http.post(this.checkDbConnectionUrl, testDbParam, { headers: this.userinfoService.getHeaders() })
-    .map(this.extractData)
-      .pipe(catchError(this.handleError<WorkspaceObject>('createNewWorkspace')));
+    // .map(this.extractData)
+    //   .pipe(catchError(this.handleError<any>('test-db-connection')));
   }
 
   
-
   getUserWorkspaceUrl() {
     return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
   }
@@ -73,6 +72,7 @@ export class UserWorkspaceService {
   }
 
   private extractData(res: any) {
+    console.log('error data returned', res)
     const data = res.data;
     return data || [];
   }
@@ -88,7 +88,7 @@ export class UserWorkspaceService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      // console.error(error); // log to console instead
+      console.error(error); // log to console instead
       // TODO: better job of transforming error for user consumption
       // this.log(`${operation} failed: ${error.message}`);
       // Let the app keep running by returning an empty result.
