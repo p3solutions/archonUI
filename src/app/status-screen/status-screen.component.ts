@@ -13,22 +13,21 @@ import { ErrorObject } from '../error-object';
   styleUrls: ['./status-screen.component.css']
 })
 export class StatusScreenComponent implements OnInit {
-  jobList: any;
+  jobList: any = [];
   jobOriginList = [];
   jobStatusList = [];
   selectedJobOrigin = '';
   selectedJobStatus = '';
   selectedJD: any = {};
-  statusTable: any;
+  statusTable: any = null;
   currentTableId = '#status-table';
-  dataTableApi: any;
   loadStatus = false;
   searchBoxText = '';
   refreshClick = false;
   jobRetry = false;
   retryLoader = false;
   errorObject: ErrorObject;
-  searchKeyword: any;
+  searchKeyword: any = '';
 
   constructor(
     private router: Router,

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject, tick, fakeAsync, flush } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, tick, fakeAsync, flush, flushMicrotasks } from '@angular/core/testing';
 
 import { StatusScreenComponent } from './status-screen.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,8 +14,7 @@ import { Observable } from 'rxjs/Observable';
 import { jobArray, jobOriginArray, jobStatusArray } from '../hardcoded-collection';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { Locator } from 'protractor';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 describe('StatusScreenComponent', () => {
   let component: StatusScreenComponent;
@@ -90,6 +89,10 @@ describe('StatusScreenComponent', () => {
     testBedService = TestBed.get(StatusService);
     routerService = TestBed.get(Router);
   });
+  afterEach(() => {
+    fixture.destroy();
+    component = null;
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -102,34 +105,40 @@ describe('StatusScreenComponent', () => {
   );
 
 
-  it('Should contain the jobOriginList as response when getJobOrigins() is called', () => {
+  it('DI, Should contain the jobOriginList as response when getJobOrigins() is called', fakeAsync( () => {
     expect(component.jobOriginList.length === 0).toBeTruthy();
     spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins(jobOriginArray));
     component.getJobOrigins();
+    flushMicrotasks();
     fixture.detectChanges();
     expect(component.jobOriginList.length > 0).toBeTruthy();
     disposeMe.get('getJobOrigins').unsubscribe();
-  });
+  }));
 
-  it('Should contain the jobStatusList as response when getJobStatuses() is called', () => {
+  it('DI, Should contain the jobStatusList as response when getJobStatuses() is called', fakeAsync( () => {
     expect(component.jobStatusList.length === 0).toBeTruthy();
     spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses(jobStatusArray));
     component.getJobStatuses();
+    flushMicrotasks();
     fixture.detectChanges();
     expect(component.jobStatusList.length > 0).toBeTruthy();
     disposeMe.get('getJobOrigins').unsubscribe();
-  });
+  }));
 
-  it('Should contain the job-list as response when getJobList() is called, then all the filters avilable', () => {
+  it('DI, Should contain the job-list as response when getJobList() is called, then all the filters avilable',
+  // fakeAsync(
+   () => {
     expect(component.jobList.length === 0).toBeTruthy();
     spyOn(testBedService, 'getJobList').and.returnValue(getJobList(jobArray));
     component.loadStatus = true;
     component.getJobList();
+    // flushMicrotasks();
     fixture.detectChanges();
     expect(component.jobList.length > 0).toBeTruthy();
 
     spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses(jobStatusArray));
     component.getJobStatuses();
+    // flushMicrotasks();
     fixture.detectChanges();
     // testing first dropdown of filter JobStatus
     const jStatusFilter = debugElement.query(By.css('.j-status'));
@@ -137,6 +146,7 @@ describe('StatusScreenComponent', () => {
 
     spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins(jobOriginArray));
     component.getJobOrigins();
+    // flushMicrotasks();
     fixture.detectChanges();
     // testing first dropdown of filter JobOrigin
     const jOriginFilter = debugElement.query(By.css('.j-origin'));
@@ -156,10 +166,12 @@ describe('StatusScreenComponent', () => {
 
     // testing for filter verifications
     jOriginFilter.triggerEventHandler('click', null);
+    // flushMicrotasks();
     fixture.detectChanges();
     expect(component.selectedJobOrigin).toBe(jOriginFilter.nativeElement.innerText);
 
     jStatusFilter.triggerEventHandler('click', null);
+    // flushMicrotasks();
     fixture.detectChanges();
     expect(component.selectedJobStatus).toBe(jStatusFilter.nativeElement.innerText);
 
@@ -194,6 +206,8 @@ describe('StatusScreenComponent', () => {
     disposeMe.get('getJobOrigins').unsubscribe();
     disposeMe.get('getJobOrigins').unsubscribe();
     disposeMe.get('getJobList').unsubscribe();
-  });
+  })
+// )
+;
 
 });
