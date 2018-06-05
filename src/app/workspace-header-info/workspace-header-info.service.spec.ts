@@ -10,6 +10,8 @@ describe('WorkspaceHeaderInfoService', () => {
   });
 
   it('should be created', inject([WorkspaceHeaderInfoService], (service: WorkspaceHeaderInfoService) => {
+    console.log('File name: workspace-header-info.service.spec.ts  executed');
     expect(service).toBeTruthy();
+    expect(service.dataAvailable).toBeFalsy();
   }));
 });
