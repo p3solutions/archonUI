@@ -31,7 +31,7 @@
           <tr *ngFor="let user of this.manageUserRolesRequestData; let i = index">
             <td class="mm-info-data">{{i+1}}</td>
             <td class="mm-info-data">
-              <a href="">{{user.name}}</a>
+              <a (click)='getUserProfile(user)' href="">{{user.name}}</a>
             </td>
             <td class="mm-info-data">{{user.emailAddress}}</td>
             <td class="mm-info-data">{{user.createdAt}}</td>

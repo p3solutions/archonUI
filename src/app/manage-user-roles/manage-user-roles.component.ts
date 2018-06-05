@@ -53,5 +53,9 @@ export class ManageUserRolesComponent implements OnInit {
     }
   }
 
+  getUserProfile(userobj) {
+    this.router.navigate(['user-profile']);
+  }
+
 }
 
