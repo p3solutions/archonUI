@@ -2,7 +2,7 @@ import { PipeTransform, Pipe } from '@angular/core';
 // returns an array of keys of the given Object
 @Pipe({ name: 'reverseArray' })
 export class ReverseArrayPipe implements PipeTransform {
-    transform(srcArray, args: any[]): any {
+    transform(srcArray): any {
         // console.log(srcArray, 'srcArr');
         const reversedArray = [];
         for (let i = srcArray.length; i > 0; i--) {
