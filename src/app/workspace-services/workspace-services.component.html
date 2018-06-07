@@ -1,11 +1,6 @@
 <div>
   <div class="row">
     <div class="col-md-6">
-      <!-- <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
-        </a>
-      </div> -->
       <div class="col-md-offset-1 col-md-8">
         <h3 class="workspace-panel-heading">
           Services
@@ -14,8 +9,6 @@
     </div>
   </div>
   <div class="row">
-    <!-- {{(service?.serviceName?.length<20) ? 'archon-names-200' : ((service?.serviceName?.length<30) ? 'archon-names-300' :
-      'archon-names-400')}} -->
     <div id="service-actions-info" class="workspace-panel-content">
       <button type="button" *ngFor="let service of serviceActions" class="btn-primary custom-button" data-toggle="popover" data-placement="top"
         [title]="service?.serviceName" data-content="Content" (click)="gotoMetalyzer(service)">
