@@ -69,7 +69,7 @@
           </a>
           <ul class="dropdown-menu">
             <li title="Profile">
-              <a [routerLink]="['/user-profile']" class="trim-text">Profile</a>
+              <a [routerLink]="['/user-profile']" (click)='callUserProfile()' class="trim-text">Profile</a>
             </li>
             <li *ngIf="info?.show" role="separator" class="divider"></li>
             <li *ngIf="info?.show" title="Manage">
