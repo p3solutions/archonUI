@@ -19,6 +19,7 @@ p {
 h2 {
   line-height: 100%;
 }
+/* Carousel overriding css */
 .carousel-inner {
   height: 450px;
 }
@@ -26,6 +27,33 @@ h2 {
   border: 1px solid #A0A0A0;
   margin: 0 5px;
 }
+.glyphicon-chevron-left, .glyphicon-chevron-right {
+  content: '';
+}
+.carousel-control {
+  background: none;
+}
+.carousel-control .fa-chevron-left {
+  display: inline-block;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+
+}
+.carousel-control .fa-chevron-right {
+  display: inline-block;
+  right: 50%;
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+
+}
+.carousel-indicators {
+  bottom: 10px;
+}
+/* End of Carousel overriding css */
+
 .flex-container {
   display: flex;
   padding: 90px 30px 30px 30px;

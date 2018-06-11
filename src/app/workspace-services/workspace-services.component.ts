@@ -55,19 +55,6 @@ export class WorkspaceServicesComponent implements OnInit {
         this.serviceActions = this.groupOutArray(serviceActionsList, 3);
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({'interval': false});
-        console.log($('#serviceCarousel').data()['bs.carousel'], '#serviceCarousel');
-        // let carousel;
-        // let k;
-        // const findCarouselFn = function () {
-        //   console.log(carousel, 'trying');
-        //   carousel = $('#serviceCarousel');
-        //   console.log(carousel, 'found');
-        //   if (carousel) {
-        //     carousel.data()['bs.carousel'].options.interval = false;
-        //     clearInterval(k);
-        //   }
-        // };
-        // k = setInterval(findCarouselFn, 100);
       });
   }
   updateServiceActions(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
