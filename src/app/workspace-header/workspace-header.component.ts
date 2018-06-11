@@ -47,7 +47,6 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     }
   }
   bindDropdownClick() {
-    console.log('bind');
     $('#selectedWorkspace a.dropdown-data').off('click').on('click', function () {
       $('#selectedWorkspace a.dropdown-item').removeClass('selected');
       $(this).addClass('selected');
