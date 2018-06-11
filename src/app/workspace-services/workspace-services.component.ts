@@ -52,7 +52,7 @@ export class WorkspaceServicesComponent implements OnInit {
     this.workspaceService.serviceActionsUpdated.subscribe(
       (serviceActions) => {
         const serviceActionsList = this.updateServiceActions(serviceActions);
-        this.serviceActions = this.groupOutArray(serviceActionsList, 2);
+        this.serviceActions = this.groupOutArray(serviceActionsList, 3);
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({'interval': false});
         console.log($('#serviceCarousel').data()['bs.carousel'], '#serviceCarousel');

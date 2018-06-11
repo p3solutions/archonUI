@@ -43,8 +43,9 @@ h2 {
   padding: 20px;
   font-size: 30px;
   cursor: pointer;
-  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
   margin: 0 15px;
+  box-shadow: 0 17px 30px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+
 }
 .flex-cards:last-child {
   margin-right: 15px;
