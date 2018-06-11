@@ -19,6 +19,7 @@ export class WorkspaceRolesObject {
     selected: boolean;
 }
 export class ServiceActionsObject {
+    iconName: string;
     serviceName: string;
     serviceId: string;
     serviceActionType: string;
