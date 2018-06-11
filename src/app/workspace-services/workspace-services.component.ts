@@ -51,7 +51,23 @@ export class WorkspaceServicesComponent implements OnInit {
   ngOnInit() {
     this.workspaceService.serviceActionsUpdated.subscribe(
       (serviceActions) => {
-        this.serviceActions = this.updateServiceActions(serviceActions);
+        const serviceActionsList = this.updateServiceActions(serviceActions);
+        this.serviceActions = this.groupOutArray(serviceActionsList, 2);
+        const carousel: any = $('#serviceCarousel');
+        carousel.carousel({'interval': false});
+        console.log($('#serviceCarousel').data()['bs.carousel'], '#serviceCarousel');
+        // let carousel;
+        // let k;
+        // const findCarouselFn = function () {
+        //   console.log(carousel, 'trying');
+        //   carousel = $('#serviceCarousel');
+        //   console.log(carousel, 'found');
+        //   if (carousel) {
+        //     carousel.data()['bs.carousel'].options.interval = false;
+        //     clearInterval(k);
+        //   }
+        // };
+        // k = setInterval(findCarouselFn, 100);
       });
   }
   updateServiceActions(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
@@ -59,30 +75,37 @@ export class WorkspaceServicesComponent implements OnInit {
       switch (service.serviceName) {
         case 'SERVICE_METALYZER': {
           service.serviceName = 'Metalyzer';
+          service.iconName = 'metalyzer.png';
           break;
         }
         case 'SERVICE_LIVE_ARCHIVAL': {
           service.serviceName = 'Live Archival';
+          service.iconName = 'livearchival.png';
           break;
         }
         case 'SERVICE_CUSTOM_SCREEN_BUILDING': {
           service.serviceName = 'Custom Screen Building';
+          service.iconName = 'livearchival.png';
           break;
         }
         case 'SERVICE_END_2_END_TOOLKIT': {
           service.serviceName = 'End to End Toolkit';
+          service.iconName = 'endtoendtoolkit.png';
           break;
         }
         case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
           service.serviceName = 'Enterprise Data Retrieval Tool';
+          service.iconName = 'livearchival.png';
           break;
         }
         case 'SERVICE_INFOARCHIVE_COMPLETE_APPLICATION_AUTOMATION': {
           service.serviceName = 'InfoArchive Complete Application Automation';
+          service.iconName = 'livearchival.png';
           break;
         }
         case 'SERVICE_UNSTRUCTURED_DATA_ EXTRACTOR': {
           service.serviceName = 'Unstructured Data Extractor';
+          service.iconName = 'livearchival.png';
           break;
         }
         // default: {
@@ -92,5 +115,26 @@ export class WorkspaceServicesComponent implements OnInit {
       }
     }
     return serviceActions;
+  }
+
+  groupOutArray(list, groupNumber) {
+    let index = 0;
+    let array = [];
+    let groupedArray = [];
+    if (groupNumber > 1) {
+      list.forEach(element => {
+        if (index === groupNumber) {
+          groupedArray.push(array);
+          index = 0;
+          array = [];
+        }
+        array.push(element);
+        index++;
+      });
+      groupedArray.push(array);
+    } else {
+      groupedArray = list;
+    }
+    return groupedArray;
   }
 }

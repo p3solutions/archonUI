@@ -8,27 +8,51 @@
       </div>
     </div>
   </div>
+  
   <div class="row">
-    <div id="service-actions-info" class="workspace-panel-content">
-      <button type="button" *ngFor="let service of serviceActions" class="btn-primary custom-button" data-toggle="popover" data-placement="top"
-        [title]="service?.serviceName" data-content="Content" (click)="gotoMetalyzer(service)">
-        <div class="btn-box">
-          <div class="col-md-10" [attr.serviceid]="service?.id">
-            <div class="trim-text title">
-              <h3>{{service?.serviceName}}</h3>
-            </div>
-            <div class="body">
-              <p>Permission : {{service?.serviceActionType}}
-              </p>
+    <div class="workspace-panel-content">
+      <div class="" >
+      <div id="serviceCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li  *ngFor="let serviceGroup of serviceActions; let ind = index" data-target="#serviceCarousel" data-slide-to="ind" class="{{ind === 0 ? 'active' : ''}}"></li>
+          </ol>
+        
+          <div class="carousel-inner">
+            <div *ngFor="let serviceGroup of serviceActions; let ind = index;" class="item {{ind === 0 ? 'active' : ''}}">
+              <div class="flex-container">
+              <div *ngFor="let service of serviceGroup;"  class="flex-cards" >
+                <div [title]="service?.serviceName" (click)="gotoMetalyzer(service)" [attr.serviceid]="service?.id">
+                  <div class="flex-card-header">
+                    <img class="icon-img"  [attr.src]="'assets/' + service.iconName" />
+                  </div>
+                  <div class="trim-text flex-card-title">
+                    {{service?.serviceName}}
+                  </div>
+                </div>
+                <div class="flex-cards-bar">
+                  Permission : {{service?.serviceActionType}}
+                </div>
+              </div>
+              </div>
+
             </div>
           </div>
-          <div class="col-md-2 btn-lg-arrow">
-            <span>
-              <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
-            </span>
-          </div>
+
+          <a class="left carousel-control" href="#serviceCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#serviceCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+          </a>
+
         </div>
-      </button>
+
+      </div>
     </div>
   </div>
+
+  
 </div>
