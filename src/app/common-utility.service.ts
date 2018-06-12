@@ -24,4 +24,24 @@ export class CommonUtilityService {
         const mediumFormat = month + ' ' + day + ', ' + year + ', ' + mmhhss + ampm;
         return mediumFormat;
     }
+    groupOutArray(list, groupNumber) {
+      let index = 0;
+      let array = [];
+      let groupedArray = [];
+      if (groupNumber > 1) {
+        list.forEach(element => {
+          if (index === groupNumber) {
+            groupedArray.push(array);
+            index = 0;
+            array = [];
+          }
+          array.push(element);
+          index++;
+        });
+        groupedArray.push(array);
+      } else {
+        groupedArray = list;
+      }
+      return groupedArray;
+    }
 }
