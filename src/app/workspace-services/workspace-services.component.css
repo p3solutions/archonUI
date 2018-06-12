@@ -29,6 +29,7 @@ h2 {
 }
 .glyphicon-chevron-left, .glyphicon-chevron-right {
   content: '';
+  background-color: #269AF8;
 }
 .carousel-control {
   background: none;
@@ -78,7 +79,7 @@ h2 {
   margin-right: 15px;
 }
 .flex-cards:hover {
-  background-color: rgba(38, 154, 248, 0.5);
+  background-color: #269AF8;;
 }
 .flex-card-header {
   height: 130px;
