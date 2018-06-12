@@ -79,7 +79,7 @@ h2 {
   margin-right: 15px;
 }
 .flex-cards:hover {
-  background-color: #269AF8;;
+  background-color: rgba(38, 154, 248, 0.5);
 }
 .flex-card-header {
   height: 130px;
