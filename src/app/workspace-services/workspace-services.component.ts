@@ -7,6 +7,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserinfoService } from '../userinfo.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { TableListService } from '../table-list/table-list.service';
+import { CommonUtilityService } from '../common-utility.service';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -26,14 +27,15 @@ export class WorkspaceServicesComponent implements OnInit {
     private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService,
-    private tableListService: TableListService
+    private tableListService: TableListService,
+    private commonUtilityService: CommonUtilityService
   ) { }
 
   ngOnInit() {
     this.workspaceService.serviceActionsUpdated.subscribe(
       (serviceActions) => {
         const serviceActionsList = this.updateServiceActions(serviceActions);
-        this.serviceActions = this.groupOutArray(serviceActionsList, 3);
+        this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({'interval': false});
       });
@@ -114,25 +116,5 @@ export class WorkspaceServicesComponent implements OnInit {
     } else {
       card.classList.remove('reveal');
     }
-  }
-  groupOutArray(list, groupNumber) {
-    let index = 0;
-    let array = [];
-    let groupedArray = [];
-    if (groupNumber > 1) {
-      list.forEach(element => {
-        if (index === groupNumber) {
-          groupedArray.push(array);
-          index = 0;
-          array = [];
-        }
-        array.push(element);
-        index++;
-      });
-      groupedArray.push(array);
-    } else {
-      groupedArray = list;
-    }
-    return groupedArray;
   }
 }
