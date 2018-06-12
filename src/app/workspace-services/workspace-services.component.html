@@ -1,4 +1,4 @@
-<div>
+  <div>
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-offset-1 col-md-8">
@@ -18,19 +18,29 @@
           <div class="carousel-inner">
             <div *ngFor="let serviceGroup of serviceActions; let ind = index;" class="item {{ind === 0 ? 'active' : ''}}">
               <div class="flex-container">
-                <div *ngFor="let service of serviceGroup;"  class="flex-cards" >
-                  <div [title]="service?.serviceName" (click)="gotoMetalyzer(service)" [attr.serviceid]="service?.id">
-                    <div class="flex-card-header">
-                      <img class="icon-img"  [attr.src]="'assets/' + service.iconName" />
-                    </div>
+                
+                <div *ngFor="let service of serviceGroup;"  class="flex-cards" id="flex-cards-{{service?.serviceId}}" >
+                  <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
+                    <img class="icon-img"  [attr.src]="'assets/' + service.iconName" />
+                  </div>
+                  <div class="flex-cards-bar">
                     <div class="trim-text flex-card-title">
                       {{service?.serviceName}}
                     </div>
+                    <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+                      <i class="fa fa-plus"></i>
+                    </span>
                   </div>
-                  <div class="flex-cards-bar">
-                    Permission : {{service?.serviceActionType}}
+                  <div class="card-reveal">
+                    <p class="">Permission : {{service?.serviceActionType}}
+                      <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+                        <i class="fa fa-minus pull-right"></i>
+                      </span>
+                    </p>
+                    <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
                   </div>
                 </div>
+
               </div>
 
             </div>
@@ -46,6 +56,8 @@
           </a>
 
         </div>
+
+          
 
   </div>
 

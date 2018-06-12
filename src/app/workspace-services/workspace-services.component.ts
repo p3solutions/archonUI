@@ -28,6 +28,16 @@ export class WorkspaceServicesComponent implements OnInit {
     private metalyzerHeaderService: MetalyzerHeaderService,
     private tableListService: TableListService
   ) { }
+
+  ngOnInit() {
+    this.workspaceService.serviceActionsUpdated.subscribe(
+      (serviceActions) => {
+        const serviceActionsList = this.updateServiceActions(serviceActions);
+        this.serviceActions = this.groupOutArray(serviceActionsList, 3);
+        const carousel: any = $('#serviceCarousel');
+        carousel.carousel({'interval': false});
+      });
+  }
   gotoMetalyzer(service: any) {
     if (service.serviceName === 'Metalyzer') {
       this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSeletectedWorkspace());
@@ -47,15 +57,6 @@ export class WorkspaceServicesComponent implements OnInit {
         });
       }
     }
-  }
-  ngOnInit() {
-    this.workspaceService.serviceActionsUpdated.subscribe(
-      (serviceActions) => {
-        const serviceActionsList = this.updateServiceActions(serviceActions);
-        this.serviceActions = this.groupOutArray(serviceActionsList, 3);
-        const carousel: any = $('#serviceCarousel');
-        carousel.carousel({'interval': false});
-      });
   }
   updateServiceActions(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
     for (const service of serviceActions) {
@@ -104,6 +105,16 @@ export class WorkspaceServicesComponent implements OnInit {
     return serviceActions;
   }
 
+  toggleCard(id, toShow, _event) {
+    _event.stopPropagation();
+    const cardId = `flex-cards-${id}`;
+    const card = document.getElementById(cardId);
+    if (toShow) {
+      card.classList.add('reveal');
+    } else {
+      card.classList.remove('reveal');
+    }
+  }
   groupOutArray(list, groupNumber) {
     let index = 0;
     let array = [];

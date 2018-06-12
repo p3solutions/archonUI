@@ -70,10 +70,9 @@ h2 {
   height: 220px;
   padding: 20px;
   font-size: 30px;
-  cursor: pointer;
   margin: 0 15px;
   box-shadow: 0 17px 30px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-
+  overflow: hidden;
 }
 .flex-cards:last-child {
   margin-right: 15px;
@@ -82,11 +81,14 @@ h2 {
   background-color: rgba(38, 154, 248, 0.5);
 }
 .flex-card-header {
-  height: 100px;
+  height: 130px;
+  /* margin: 25px 0; */
+  cursor: pointer;
   padding: 15px;
 }
 .flex-card-title {
-  width: 258px;
+  text-align: left;
+  width: 220px;
 }
 .flex-cards-bar {
   position: absolute;
@@ -95,21 +97,35 @@ h2 {
   left: 0;
   right: 0;
   font-size: 20px;
-  padding: 10px 5px;
+  padding: 10px;
   border-top: 1px solid #E0E0E0;
   height: 50px;
-  /* transition: left 200ms cubic-bezier(0.075, 0.82, 0.165, 1); */
-  /* transition: left 200ms cubic-bezier(38, 154, 248, 0.849); */
-  /* boz-sizing: border-box; */
 }
 .icon-img {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
 }
-.flex-card-subtitle {
-  outline: none;
-  position: relative;
-  display: inline-block;
-  line-height: 52px;
-  padding: 0 16px;
+
+.card-reveal{
+  text-align: left;
+  padding:24px;
+  position:absolute;
+  background-color:#fff;
+  width:100%;
+  overflow-y:auto;
+  left:0;
+  top:100%;
+  height:100%;
+  z-index:3;
+  -webkit-transition-property: top; /* Safari */
+  -webkit-transition-duration: 0.2s; /* Safari */
+  transition-property: top;
+  transition-duration: 0.2s;
+}
+.reveal .card-reveal {
+  top: 0;
+}
+.card-toggle{
+  cursor:pointer;
+  padding: 0px 10px 0 0;
 }
