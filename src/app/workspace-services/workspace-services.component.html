@@ -19,7 +19,7 @@
             <div *ngFor="let serviceGroup of serviceActions; let ind = index;" class="item {{ind === 0 ? 'active' : ''}}">
               <div class="flex-container">
                 
-                <div *ngFor="let service of serviceGroup;"  class="flex-cards" id="flex-cards-{{service?.serviceId}}" >
+                <div *ngFor="let service of serviceGroup;"  class="flex-cards card" id="flex-cards-{{service?.serviceId}}" >
                   <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
                     <img class="icon-img"  [attr.src]="'assets/' + service.iconName" />
                   </div>
