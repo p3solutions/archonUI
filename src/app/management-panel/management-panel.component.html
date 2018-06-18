@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div id="management-role-info" class="workspace-panel-content">
       <button (click)=gotoConfigDatabaseList() type="button" class="btn-primary custom-button">
         <div class="btn-box">
@@ -88,5 +88,146 @@
         </div>
       </button>
     </div>
+  </div> -->
+
+
+
+  <div class="flex-container">
+                
+    <div class="flex-cards card">
+      <div class="flex-card-header" [title]="service?.serviceName" (click)=gotoConfigDatabaseList()>
+        <img class="icon-img"  [attr.src]="'assets/metalyzer.png'" />
+      </div>
+      <div class="flex-cards-bar">
+        <div class="trim-text flex-card-title">
+          Databases
+        </div>
+        <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+          <i class="fa fa-plus archon-icon"></i>
+        </span>
+      </div>
+      <div class="card-reveal">
+        <p class="">Permission : {{service?.serviceActionType}}
+          <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+            <i class="fa fa-minus archon-icon"></i>
+          </span>
+        </p>
+        <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
+      </div>
+    </div>
+
+    <div class="flex-cards card">
+      <div class="flex-card-header" [title]="service?.serviceName" (click)=gotoWorkspaceList()>
+        <img class="icon-img"  [attr.src]="'assets/endtoendtoolkit.png'" />
+      </div>
+      <div class="flex-cards-bar">
+        <div class="trim-text flex-card-title">
+          Workspaces
+        </div>
+        <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+          <i class="fa fa-plus archon-icon"></i>
+        </span>
+      </div>
+      <div class="card-reveal">
+        <p class="">Permission : {{service?.serviceActionType}}
+          <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+            <i class="fa fa-minus archon-icon"></i>
+          </span>
+        </p>
+        <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
+      </div>
+    </div>
+    <div class="flex-cards card">
+      <div class="flex-card-header" [title]="service?.serviceName" (click)=gotoManageUserRoles()>
+        <img class="icon-img"  [attr.src]="'assets/livearchival.png'" />
+      </div>
+      <div class="flex-cards-bar">
+        <div class="trim-text flex-card-title">
+          Users
+        </div>
+        <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+          <i class="fa fa-plus archon-icon"></i>
+        </span>
+      </div>
+      <div class="card-reveal">
+        <p class="">Permission : {{service?.serviceActionType}}
+          <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+            <i class="fa fa-minus archon-icon"></i>
+          </span>
+        </p>
+        <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
+      </div>
+    </div>
+
   </div>
+  
+  <div class="flex-container">
+      <div class="flex-cards card">
+          <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
+            <img class="icon-img"  [attr.src]="'assets/endtoendtoolkit.png'" />
+          </div>
+          <div class="flex-cards-bar">
+            <div class="trim-text flex-card-title">
+              Permissions
+            </div>
+            <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+              <i class="fa fa-plus archon-icon"></i>
+            </span>
+          </div>
+          <div class="card-reveal">
+            <p class="">Permission : {{service?.serviceActionType}}
+              <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+                <i class="fa fa-minus archon-icon"></i>
+              </span>
+            </p>
+            <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
+          </div>
+        </div>
+      <div class="flex-cards card">
+          <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
+            <img class="icon-img"  [attr.src]="'assets/livearchival.png'" />
+          </div>
+          <div class="flex-cards-bar">
+            <div class="trim-text flex-card-title">
+              {{service?.serviceName}}
+            </div>
+            <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+              <i class="fa fa-plus archon-icon"></i>
+            </span>
+          </div>
+          <div class="card-reveal">
+            <p class="">Permission : {{service?.serviceActionType}}
+              <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+                <i class="fa fa-minus archon-icon"></i>
+              </span>
+            </p>
+            <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
+          </div>
+        </div>
+        <div class="flex-cards card">
+            <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
+              <img class="icon-img"  [attr.src]="'assets/endtoendtoolkit.png'" />
+            </div>
+            <div class="flex-cards-bar">
+              <div class="trim-text flex-card-title">
+                {{service?.serviceName}}
+              </div>
+              <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+                <i class="fa fa-plus archon-icon"></i>
+              </span>
+            </div>
+            <div class="card-reveal">
+              <p class="">Permission : {{service?.serviceActionType}}
+                <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+                  <i class="fa fa-minus archon-icon"></i>
+                </span>
+              </p>
+              <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
+            </div>
+          </div>
+  </div>
+
+
+
+
 </div>

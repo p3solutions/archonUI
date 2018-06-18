@@ -1,4 +1,4 @@
-.btn-box{
+/* .btn-box{
     padding: 5px;
     text-align: left;
     width:520px;
@@ -19,3 +19,144 @@ p{
 h2{
     line-height: 100%;
 }
+
+
+
+ */
+
+
+
+
+
+
+
+ #rightArrow {
+    float: right;
+    margin-top: 40px;
+  }
+  
+  .service-title {
+    width: 550px;
+    font-size: 24px;
+  }
+  
+  #insidecontainer {
+    padding-left: 5px;
+  }
+  
+  p {
+    line-height: 150%;
+  }
+  
+  h2 {
+    line-height: 100%;
+  }
+  /* Carousel overriding css */
+  .carousel-inner {
+    height: 450px;
+  }
+  .carousel-indicators>li {
+    border: 1px solid #A0A0A0;
+    margin: 0 5px;
+  }
+  .glyphicon-chevron-left, .glyphicon-chevron-right {
+    content: '';
+    background-color: #269AF8;
+  }
+  .carousel-control {
+    background: none;
+  }
+  .carousel-control .fa-chevron-left {
+    display: inline-block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+  
+  }
+  .carousel-control .fa-chevron-right {
+    display: inline-block;
+    right: 50%;
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+  
+  }
+  .carousel-indicators {
+    bottom: 10px;
+  }
+  /* End of Carousel overriding css */
+  
+  .flex-container {
+    display: flex;
+    padding: 90px 30px 30px 30px;
+    justify-content: center;
+    height: 283px;
+  }
+  
+  .flex-cards {
+    position: relative;
+    background-color: #fff;
+    border-radius: 2px;
+    width: 320px;
+    height: 220px;
+    padding: 20px;
+    font-size: 30px;
+    margin: 0 15px;
+    overflow: hidden;
+  }
+  .flex-cards:last-child {
+    margin-right: 15px;
+  }
+  .flex-cards:hover {
+    background-color: rgba(38, 154, 248, 0.5);
+  }
+  .flex-card-header {
+    height: 130px;
+    /* margin: 25px 0; */
+    cursor: pointer;
+    padding: 15px;
+  }
+  .flex-card-title {
+    text-align: left;
+    width: 220px;
+  }
+  .flex-cards-bar {
+    position: absolute;
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    padding: 10px;
+    border-top: 1px solid #E0E0E0;
+    height: 50px;
+  }
+  .icon-img {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .card-reveal{
+    text-align: left;
+    padding: 20px 10px 20px 20px;
+    position: absolute;
+    background-color:#fff;
+    width: 100%;
+    overflow-y: auto;
+    left: 0;
+    top: 100%;
+    height: 100%;
+    z-index: 3;
+    -webkit-transition-property: top; /* Safari */
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-property: top;
+    transition-duration: 0.2s;
+  }
+  .reveal .card-reveal {
+    top: 0;
+  }
+  .card-toggle{
+    cursor: pointer;
+    padding: 0px 10px 0 0;
+  }
