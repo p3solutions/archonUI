@@ -42,7 +42,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     }
     this.configDBListService.getListOfConfigDatabases().subscribe(result => {
       this.configDBListInfo = result;
-      console.log(this.configDBListInfo);
+      console.log('job job job job ',this.configDBListInfo);
       this.isProgress = false;
     });
   }
@@ -57,7 +57,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     }
   }
   openCreateAddDBmodal() {
-    console.log('alok alokaloak', this.viewContainerRef);
     if (this.viewContainerRef.get(0)) {
       // open existing dynamic component
       document.getElementById('openCreateAddDBmodal').click();
@@ -65,6 +64,17 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       // inject dynamic component
       this.dynamicLoaderService.setRootViewContainerRef(this.viewContainerRef);
       this.dynamicLoaderService.addDynamicComponent1();
+    }
+  }
+  toggleCard(id, toShow, _event) {
+    _event.stopPropagation();
+    const cardId = `flex-cards-${id}`;
+    const card = document.getElementById(cardId);
+    if (toShow) {
+      card.classList.add('reveal');
+      console.log('clicked clicked clicked', id, card.classList)
+    } else {
+      card.classList.remove('reveal');
     }
   }
 }
