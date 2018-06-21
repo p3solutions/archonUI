@@ -104,23 +104,6 @@ h2 {
   width: 100px;
   height: 100px;
 }
-
-.card-reveal{
-  text-align: left;
-  padding: 20px 10px 20px 20px;
-  position: absolute;
-  background-color:#fff;
-  width: 100%;
-  overflow-y: auto;
-  left: 0;
-  top: 100%;
-  height: 100%;
-  z-index: 3;
-  -webkit-transition-property: top; /* Safari */
-  -webkit-transition-duration: 0.2s; /* Safari */
-  transition-property: top;
-  transition-duration: 0.2s;
-}
 .reveal .card-reveal {
   top: 0;
 }

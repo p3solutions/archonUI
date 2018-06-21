@@ -28,13 +28,13 @@
                       {{service?.serviceName}}
                     </div>
                     <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
-                      <i class="fa fa-plus archon-icon"></i>
+                      <i class="fa fa-caret-up archon-icondown"></i>
                     </span>
                   </div>
                   <div class="card-reveal">
                     <p class="">Permission : {{service?.serviceActionType}}
                       <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
-                        <i class="fa fa-minus archon-icon"></i>
+                        <i class="fa fa-caret-down archon-iconup"></i>
                       </span>
                     </p>
                     <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
