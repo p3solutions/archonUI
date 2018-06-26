@@ -22,6 +22,7 @@
       <button type="button" class="btn  ws-rejections" id="workspace-add" data-toggle="modal" data-target="#rejectedList">Rejected
         <!-- <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> -->
       </button>
+      </div>
       <div id="rejectedList" role="dialog" class="modal fade">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -61,9 +62,8 @@
           </div>
         </div>
       </div>
-    </div>
     <br>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-6 col-md-offset-1" *ngFor="let ws of workspaceListInfo" [ngClass]="{'ws-pending' : ws.workspaceState == 'PENDING'}">
         <button type="button" id="workspace-list-btn" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{ws.workspaceName}}"
           *ngIf="ws.workspaceState != 'REJECTED'">
@@ -116,7 +116,79 @@
           </div>
         </button>
       </div>
-    </div>
+    </div> -->
+
+
+
+    <div class="flex-container">
+      <div class="flex-cards card">
+          <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
+            <img class="icon-img"  [attr.src]="'assets/endtoendtoolkit.png'" />
+          </div>
+          <div class="flex-cards-bar">
+            <div class="trim-text flex-card-title">
+              Permissions
+            </div>
+            <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+              <i class="fa fa-caret-up archon-icondown"></i>
+            </span>
+          </div>
+          <div class="card-reveal">
+            <p class="">Permission : {{service?.serviceActionType}}
+              <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+                <i class="fa fa-caret-down archon-iconup"></i>
+              </span>
+            </p>
+            <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
+          </div>
+        </div>
+      <div class="flex-cards card">
+          <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
+            <img class="icon-img"  [attr.src]="'assets/livearchival.png'" />
+          </div>
+          <div class="flex-cards-bar">
+            <div class="trim-text flex-card-title">
+              {{service?.serviceName}}
+            </div>
+            <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+              <i class="fa fa-caret-up archon-icondown"></i>
+            </span>
+          </div>
+          <div class="card-reveal">
+            <p class="">Permission : {{service?.serviceActionType}}
+              <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+                <i class="fa fa-caret-down archon-iconup"></i>
+              </span>
+            </p>
+            <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
+          </div>
+        </div>
+        <div class="flex-cards card">
+            <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
+              <img class="icon-img"  [attr.src]="'assets/endtoendtoolkit.png'" />
+            </div>
+            <div class="flex-cards-bar">
+              <div class="trim-text flex-card-title">
+                {{service?.serviceName}}
+              </div>
+              <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+                <i class="fa fa-caret-up archon-icondown"></i>
+              </span>
+            </div>
+            <div class="card-reveal">
+              <p class="">Permission : {{service?.serviceActionType}}
+                <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+                  <i class="fa fa-caret-down archon-icondoup"></i>
+                </span>
+              </p>
+              <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
+            </div>
+          </div>
+  </div>
+
+
+
+
   </div>
 </div>
 <button style="display: none" id="reload-ws-list" (click)="reloadWSlist()"></button>
