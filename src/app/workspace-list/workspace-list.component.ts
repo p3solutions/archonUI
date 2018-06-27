@@ -16,8 +16,10 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     token_data: any;
     workspaceListInfo: WorkspaceObject[];
     rejectedWorkspaceListInfo: WorkspaceObject[] = [];
-    isProgress: boolean;
+    isProgress: boolean;                                                                        
     dynamicLoaderService: DynamicLoaderService;
+    flexContainer: number;
+    flexContainerArray= [];
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     constructor(
@@ -45,7 +47,13 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     getWorkspaceListInfo(id: string) {
         this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
-            // console.log(this.workspaceListInfo);
+            this.flexContainer = this.workspaceListInfo.length/4;
+            if(this.workspaceListInfo.length %4! == 0) {
+                this.flexContainer+=1;
+            }
+            for(var i = 0 ; i<this.flexContainer;i++) {
+                this.flexContainerArray.push(i+1);
+            }
             this.isProgress = false;
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
         });
@@ -76,6 +84,23 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             this.dynamicLoaderService.addDynamicComponent();
         }
     }
+    toggleCard(id, toShow, _event) {
+        _event.stopPropagation();
+        const cardId = `flex-cards-${id}`;
+        const card = document.getElementById(cardId);
+        if (toShow) {
+          card.classList.add('reveal');
+        } else {
+          card.classList.remove('reveal');
+        }
+      }
+      chunks(size) {
+        console.log("function called chunks", size, this.workspaceListInfo)
+        let results = [];
+          results.push(this.workspaceListInfo.splice(size-4, 4*size));
+        console.log('workspaces list **************', results[0]);
+        return results[0];
+      };
 }
 
 

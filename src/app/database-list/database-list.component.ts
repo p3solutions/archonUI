@@ -72,7 +72,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     const card = document.getElementById(cardId);
     if (toShow) {
       card.classList.add('reveal');
-      console.log('clicked clicked clicked', id, card.classList)
     } else {
       card.classList.remove('reveal');
     }

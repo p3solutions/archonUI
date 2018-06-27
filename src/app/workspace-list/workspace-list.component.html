@@ -117,29 +117,31 @@
 
 
 
-    <div class="flex-container">
-        <div class="flex-cards card" *ngFor="let ws of workspaceListInfo" id="flex-cards-{{db?.id}}">
-            <div class="flex-card-header" [title]="service?.serviceName">
-              <img class="icon-img"  [attr.src]="'assets/endtoendtoolkit.png'" />
-            </div>
-            <div class="flex-cards-bar">
-              <div class="trim-text flex-card-title">
-                {{service?.serviceName}}
-              </div>
-              <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
-                <i class="fa fa-caret-up archon-icondown"></i>
-              </span>
-            </div>
-            <div class="card-reveal">
-              <p class="">Permission : {{service?.serviceActionType}}
-                <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
-                  <i class="fa fa-caret-down archon-icondoup"></i>
-                </span>
-              </p>
-              <p > Description: Here is some more information about this product that is only revealed once clicked on.</p>
-            </div>
+  <div class="flex-container" *ngFor="let i of flexContainerArray">
+    <div class="flex-cards card" *ngFor="let ws of chunks(i);" id="flex-cards-{{db?.id}}">
+        <div class="flex-card-header" [title]="service?.service.serviceName">
+          <img class="icon-img"  [attr.src]="'assets/endtoendtoolkit.png'" />
+        </div> 
+        <div class="flex-cards-bar">
+          <div class="trim-text flex-card-title">
+            {{ws.workspaceName}}
           </div>
-  </div>
+          <span class="pull-right card-toggle" (click)="toggleCard(db?.id, true, $event)" title="Click for more info">
+            <i class="fa fa-caret-up archon-icondown"></i>
+          </span>
+        </div>
+        <div class="card-reveal">
+          <p class="">
+            <span class="pull-right card-toggle" (click)="toggleCard(db?.id, false, $event)" title="CLick to hide info">
+              <i class="fa fa-caret-down archon-iconup"></i>
+            </span>
+          </p>
+          <!-- <p > Host: {{db?.host}}</p>
+          <p > Owner: {{db.owner.name}}</p>
+          <p > Server Type: {{db?.type}}</p> -->
+        </div>
+      </div>
+</div>
   </div>
 </div>
 <button style="display: none" id="reload-ws-list" (click)="reloadWSlist()"></button>
