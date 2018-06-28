@@ -4,6 +4,8 @@ import { WorkspaceListService } from './workspace-list.service';
 import { JwtHelper } from 'angular2-jwt';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
+import { CommonUtilityService } from '../common-utility.service';
+
 
 @Component({
     selector: 'app-workspace-list',
@@ -18,15 +20,16 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     rejectedWorkspaceListInfo: WorkspaceObject[] = [];
     isProgress: boolean;                                                                        
     dynamicLoaderService: DynamicLoaderService;
-    flexContainer: number;
-    flexContainerArray= [];
+    private workspaceActions: any;
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
         @Inject(ViewContainerRef) viewContainerRef,
         private workspaceListService: WorkspaceListService,
-        private router: Router
+        private router: Router,
+        private commonUtilityService: CommonUtilityService
+
     ) {
         this.dynamicLoaderService = dynamicLoaderService;
         this.viewContainerRef = viewContainerRef;
@@ -47,15 +50,10 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     getWorkspaceListInfo(id: string) {
         this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
-            this.flexContainer = this.workspaceListInfo.length/4;
-            if(this.workspaceListInfo.length %4! == 0) {
-                this.flexContainer+=1;
-            }
-            for(var i = 0 ; i<this.flexContainer;i++) {
-                this.flexContainerArray.push(i+1);
-            }
             this.isProgress = false;
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
+            this.workspaceActions = this.commonUtilityService.groupOutArray(this.workspaceListInfo, 3);
+            console.log('workspace list actions', this.workspaceActions)
         });
     }
 
@@ -84,8 +82,11 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             this.dynamicLoaderService.addDynamicComponent();
         }
     }
-    toggleCard(id, toShow, _event) {
-        _event.stopPropagation();
+
+    toggleCard(id, toShow, event: Event) {
+        event.stopPropagation();
+        event.preventDefault();
+        console.log('clicked', id, event.stopPropagation);
         const cardId = `flex-cards-${id}`;
         const card = document.getElementById(cardId);
         if (toShow) {
@@ -94,13 +95,6 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
           card.classList.remove('reveal');
         }
       }
-      chunks(size) {
-        console.log("function called chunks", size, this.workspaceListInfo)
-        let results = [];
-          results.push(this.workspaceListInfo.splice(size-4, 4*size));
-        console.log('workspaces list **************', results[0]);
-        return results[0];
-      };
 }
 
 

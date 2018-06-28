@@ -59,7 +59,7 @@
           </div>
         </div>
       </div> -->
-    <br>
+    <!-- <br> -->
     <!-- <div class="row">
       <div class="col-md-6 col-md-offset-1" *ngFor="let ws of workspaceListInfo" [ngClass]="{'ws-pending' : ws.workspaceState == 'PENDING'}">
         <button type="button" id="workspace-list-btn" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{ws.workspaceName}}"
@@ -116,32 +116,38 @@
     </div> -->
 
 
-
-  <div class="flex-container" *ngFor="let i of flexContainerArray">
-    <div class="flex-cards card" *ngFor="let ws of chunks(i);" id="flex-cards-{{db?.id}}">
+  <div class="flex-container" *ngFor="let workspaceGroupObj of workspaceActions">
+    <div class="flex-cards card" *ngFor="let ws of workspaceGroupObj" id="flex-cards-{{ws?.id}}">
         <div class="flex-card-header" [title]="service?.service.serviceName">
           <img class="icon-img"  [attr.src]="'assets/endtoendtoolkit.png'" />
         </div> 
         <div class="flex-cards-bar">
           <div class="trim-text flex-card-title">
-            {{ws.workspaceName}}
+            {{ws?.workspaceName}}
           </div>
-          <span class="pull-right card-toggle" (click)="toggleCard(db?.id, true, $event)" title="Click for more info">
+          <span class="pull-right card-toggle" (click)="toggleCard(ws?.id, true, $event)" title="Click for more info">
             <i class="fa fa-caret-up archon-icondown"></i>
           </span>
         </div>
         <div class="card-reveal">
           <p class="">
-            <span class="pull-right card-toggle" (click)="toggleCard(db?.id, false, $event)" title="CLick to hide info">
+            <span class="pull-right card-toggle" (click)="toggleCard(ws?.id, false, $event)" title="CLick to hide info">
               <i class="fa fa-caret-down archon-iconup"></i>
             </span>
           </p>
-          <!-- <p > Host: {{db?.host}}</p>
-          <p > Owner: {{db.owner.name}}</p>
-          <p > Server Type: {{db?.type}}</p> -->
+          <p > Databases(S): <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
+                      {{db?.name}}{{isLast ? '' : ', '}}
+                    </span></p>
+          <p > Metadata Version: {{ws?.masterMetadataVersion}}</p>
+          <p > Last Updated Time: {{ws?.updatedAt}}</p>
+          <p  *ngIf="ws.workspaceState == 'PENDING'">Request Pending
+            <span>
+              <i class="fa fa-trash-o fa-lg icon-disabled" aria-hidden="true" id="ws-pending-trash"></i>
+            </span>
+          </p>
         </div>
       </div>
-</div>
+</div> 
   </div>
 </div>
 <button style="display: none" id="reload-ws-list" (click)="reloadWSlist()"></button>
