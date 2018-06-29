@@ -88,7 +88,7 @@ button {
   border-radius: 4px;
   text-decoration: none;
   display: inline-block;
-  margin: 3px 20px;
+  margin: 3px -65px;
   text-transform: capitalize;
 }
 
