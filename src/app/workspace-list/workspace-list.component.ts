@@ -86,7 +86,6 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     toggleCard(id, toShow, event: Event) {
         event.stopPropagation();
         event.preventDefault();
-        console.log('clicked', id, event.stopPropagation);
         const cardId = `flex-cards-${id}`;
         const card = document.getElementById(cardId);
         if (toShow) {
