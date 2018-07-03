@@ -21,53 +21,16 @@
   </div>
 
 </div>
-  <!-- <div class="row">
-    <div class="col-md-6 col-md-offset-1" *ngFor="let db of configDBListInfo">
-      <button type="button" id="db-list-btn" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{db.databaseName}}">
-        <div class="btn-box">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="trim-text">
-                <h2>{{db.profileName}}</h2>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="trim-text ws-body">
-                <h4>Host : {{db.host}}
-                </h4>
-              </div>
-            </div>
-            <span class="ws-rightArrow">
-              <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
-            </span>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div>
-                <h4 class="db-leftFooter">Owner : {{db.owner.name}}</h4>
-              </div>
-              <div>
-                <h4 class="db-rightFooter">Server Type : {{db.type}}</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </button>
-    </div>
-  </div> -->
 
 
-
-  <div class="flex-container">
-    <div class="flex-cards card" *ngFor="let db of configDBListInfo" id="flex-cards-{{db?.id}}">
+  <div class="flex-container" *ngFor="let dbListGroupObj of dbListActions">
+    <div class="flex-cards card" *ngFor="let db of dbListGroupObj" id="flex-cards-{{db?.id}}">
         <div class="flex-card-header" [title]="service?.service.serviceName">
           <img class="icon-img"  [attr.src]="'assets/endtoendtoolkit.png'" />
-        </div>
+        </div> 
         <div class="flex-cards-bar">
           <div class="trim-text flex-card-title">
-            {{db.profileName}}
+            {{db?.profileName}}
           </div>
           <span class="pull-right card-toggle" (click)="toggleCard(db?.id, true, $event)" title="Click for more info">
             <i class="fa fa-caret-up archon-icondown"></i>
@@ -84,9 +47,7 @@
           <p > Server Type: {{db?.type}}</p>
         </div>
       </div>
-</div>
-
-
+</div> 
 
 <button style="display: none" id="populate-db-list" (click)="getConfigDBList()"></button>
 
