@@ -152,3 +152,30 @@ button {
   display: inline-block;
   margin-left: -50px;
 }
+.dataA-panel-body {
+  height: 325px;
+}
+.dataA-scrollable-div {
+  overflow: auto;
+  max-height: 300px;
+}
+.primary-col-chkbx {
+  margin: 4px 5px;
+}
+#analysis-view .card {
+  height: 500px;
+}
+#analysis-view .tablename-list {
+  height: 370px;
+}
+#analysis-view .search-input {
+  margin-left: 20px;
+  width: 300px;
+}
+#analysis-view .form-control-feedback {
+  margin-left: 280px;
+}
+.col-loader {
+  padding: 2px 15px;
+  float: right;
+}

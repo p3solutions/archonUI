@@ -15,16 +15,11 @@ export class TableListService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   private serviceActionType: string;
-  tableListUrl = environment.apiUrl + '/metadata/tableList';
+  tableListUrl = environment.apiUrl + '/tables';
   relationTableListUrl = environment.apiUrl + '/metadata/';
-  private headers;
+  columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
-    this.headers = new HttpHeaders(
-      {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
-      });
   }
   getTableList(): Observable<string[]> {
     return this.http.get<string[]>(this.tableListUrl, { headers: this.userinfoService.getHeaders() })
@@ -40,6 +35,13 @@ export class TableListService {
       .pipe(catchError(this.handleError('relationtable-getListOfRelationTable()', []))
       );
   }
+  getColumnsByTableName(tableName) {
+    console.log('Fetching columns for:', tableName);
+    const url = this.columnUrl + tableName;
+    return this.http.get<any[]>(url, {headers: this.userinfoService.getHeaders()})
+    .map(this.extractTablesMeta)
+    .pipe(catchError(this.handleError('getColumnsByTableName()', [])));
+  }
 
   private extractTables(res: any) {
     const data = res.data.tables;
@@ -50,6 +52,11 @@ export class TableListService {
     return data || [];
   }
 
+  private extractTablesMeta(res: any) {
+    console.log(res);
+    const data = res.data.tables_meta.table_columns;
+    return data || [];
+  }
   setServiceActionType(serviceActionType: string) {
     this.serviceActionType = serviceActionType;
   }
@@ -77,6 +84,4 @@ export class TableListService {
   private log(message: string) {
     console.log(message);
   }
-
-
 }

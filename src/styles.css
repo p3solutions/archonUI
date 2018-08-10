@@ -410,9 +410,12 @@ table.dataTable.no-footer {
 .m-l-10 {
   margin-left: 10px;
 }
+.m-l-20 {
+  margin-left: 20px!important;
+}
 
 .m-r-10 {
-  margin-right: 10px;
+  margin-right: 10px!important;
 }
 .m-t-10 {
   margin-top: 10px;
@@ -778,7 +781,6 @@ ol.multi-step-indicators li.active {
   -moz-animation: width-5-pc 2s ease;
   -webkit-animation: width-5-pc 2s ease;
 }
-
 @-moz-keyframes width-5-pc {
   0% {
     width: 0px;
@@ -787,7 +789,6 @@ ol.multi-step-indicators li.active {
     width: 5%;
   }
 }
-
 @-webkit-keyframes width-5-pc {
   0% {
     width: 0px;
@@ -796,6 +797,29 @@ ol.multi-step-indicators li.active {
     width: 5%;
   }
 }
+
+/* .width-5-25-pc {
+  background: #1abc9c;
+  width: 25%;
+  -moz-animation: width-5-25-pc 2s ease;
+  -webkit-animation: width-5-25-pc 2s ease;
+}
+@-moz-keyframes width-5-25-pc {
+  0% {
+    width: 5%;
+  }
+  100% {
+    width: 25%;
+  }
+}
+@-webkit-keyframes width-5-25-pc {
+  0% {
+    width: 5%;
+  }
+  100% {
+    width: 25%;
+  }
+} */
 
 .width-33-pc {
   background: #1abc9c;
@@ -820,6 +844,28 @@ ol.multi-step-indicators li.active {
   }
 }
 
+/* .width-25-50-pc {
+  background: #1abc9c;
+  width: 50%;
+  -moz-animation: width-25-50-pc 2s ease;
+  -webkit-animation: width-25-50-pc 2s ease;
+}
+@-moz-keyframes width-25-50-pc {
+  0% {
+    width: 25%;
+  }
+  100% {
+    width: 50%;
+  }
+}
+@-webkit-keyframes width-25-50-pc {
+  0% {
+    width: 25%;
+  }
+  100% {
+    width: 50%;
+  }
+} */
 .width-66-pc {
   background: #1abc9c;
   width: 66%;
@@ -834,7 +880,6 @@ ol.multi-step-indicators li.active {
     width: 66%;
   }
 }
-
 @-webkit-keyframes width-66-pc {
   0% {
     width: 33%;
@@ -843,6 +888,28 @@ ol.multi-step-indicators li.active {
     width: 66%;
   }
 }
+/* .width-50-75-pc {
+  background: #1abc9c;
+  width: 75%;
+  -moz-animation: width-50-75-pc 2s ease;
+  -webkit-animation: width-50-75-pc 2s ease;
+}
+@-moz-keyframes width-50-75-pc {
+  0% {
+    width: 50%;
+  }
+  100% {
+    width: 75%;
+  }
+}
+@-webkit-keyframes width-50-75-pc {
+  0% {
+    width: 50%;
+  }
+  100% {
+    width: 75%;
+  }
+} */
 .width-100-pc {
   background: #1abc9c;
   width: 100%;
@@ -865,13 +932,57 @@ ol.multi-step-indicators li.active {
     width: 100%;
   }
 }
+/* .width-75-100-pc {
+  background: #1abc9c;
+  width: 100%;
+  -moz-animation: width-75-100-pc 1s ease;
+  -webkit-animation: width-75-100-pc 1s ease;
+}
+@-moz-keyframes width-75-100-pc {
+  0% {
+    width: 75%
+  }
+  100% {
+    width: 100%;
+  }
+}
+@-webkit-keyframes width-75-100-pc {
+  0% {
+    width: 75%
+  }
+  100% {
+    width: 100%;
+  }
+} */
+
+/* .width-5-25-pc-rev {
+  background: #1abc9c;
+   width: 5%;
+  -moz-animation: width-5-25-pc-rev 2s ease;
+  -webkit-animation: width-5-25-pc-rev 2s ease;
+}
+@-moz-keyframes width-5-25-pc-rev {
+  0% {
+    width: 25%;
+  }
+  100% {
+    width: 5%;
+  }
+}
+@-webkit-keyframes width-5-25-pc-rev {
+  0% {
+    width: 25%;
+  }
+  100% {
+    width: 5%;
+  }
+} */
 .width-33-pc-rev {
   background: #1abc9c;
    width: 5%; /* starting point to reducted to */
   -moz-animation: width-33-pc-rev 2s ease;
   -webkit-animation: width-33-pc-rev 2s ease;
 }
-
 @-moz-keyframes width-33-pc-rev {
   0% {
     width: 33%;
@@ -880,7 +991,6 @@ ol.multi-step-indicators li.active {
     width: 5%;
   }
 }
-
 @-webkit-keyframes width-33-pc-rev {
   0% {
     width: 33%;
@@ -889,7 +999,28 @@ ol.multi-step-indicators li.active {
     width: 5%;
   }
 }
-
+/* .width-25-50-pc-rev {
+  background: #1abc9c;
+   width: 25%;
+  -moz-animation: width-25-50-pc-rev 2s ease;
+  -webkit-animation: width-25-50-pc-rev 2s ease;
+}
+@-moz-keyframes width-25-50-pc-rev {
+  0% {
+    width: 50%;
+  }
+  100% {
+    width: 25%;
+  }
+}
+@-webkit-keyframes width-25-50-pc-rev {
+  0% {
+    width: 50%;
+  }
+  100% {
+    width: 25%;
+  }
+} */
 .width-66-pc-rev {
   background: #1abc9c;
    width: 33%; /* starting point to reducted to */
@@ -914,7 +1045,28 @@ ol.multi-step-indicators li.active {
     width: 33%;
   }
 }
-
+/* .width-50-75-pc-rev {
+  background: #1abc9c;
+   width: 50%;
+  -moz-animation: width-50-75-pc-rev 2s ease;
+  -webkit-animation: width-50-75-pc-rev 2s ease;
+}
+@-moz-keyframes width-50-75-pc-rev {
+  0% {
+    width: 75%;
+  }
+  100% {
+    width: 50%;
+  }
+}
+@-webkit-keyframes width-50-75-pc-rev {
+  0% {
+    width: 75%;
+  }
+  100% {
+    width: 50%;
+  }
+} */
 .bar-expand {
   position: absolute;
   left: 0;
