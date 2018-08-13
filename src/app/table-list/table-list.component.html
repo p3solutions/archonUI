@@ -152,7 +152,7 @@
                             {{pColumn.column_name}}
                           </div>
                           <div class="col-md-4 tabular-div-column" title="">
-                            50 %
+                            {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
                           </div>
                         </div>
                       </div>
@@ -210,7 +210,7 @@
                                 {{sColumn.column_name}}
                               </div>
                               <div class="col-md-4 tabular-div-column" title="">
-                                50 %
+                                {{sColumn.confidence_score ? sColumn.confidence_score : 0}} %
                               </div>
                             </div>
                           </div>

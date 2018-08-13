@@ -80,6 +80,7 @@ export class TableListComponent implements OnInit {
       } else {
         this.secColArray = columns;
         // this.secColLoader = false;
+        this.selectedSecCol.clear();
       }
     });
   }
@@ -96,15 +97,15 @@ export class TableListComponent implements OnInit {
     const secTblVal = tableColMap.get(column.table_name);
     if (secTblVal) {
       secTblVal.push(column);
-      console.log('isPrimary', isPrimary, 'pushed', secTblVal);
+      // console.log('isPrimary', isPrimary, 'pushed', secTblVal);
     } else {
       tableColMap.set(column.table_name, [column]);
-      console.log('isPrimary', isPrimary, '1st push', tableColMap);
+      // console.log('isPrimary', isPrimary, '1st push', tableColMap);
     }
   }
   removeFromTblColMap(column, isPrimary) {
     const tableColMap = isPrimary ? this.selectedPrimColMap : this.selectedSecColMap;
-    console.log('isPrimary', isPrimary, tableColMap);
+    // console.log('isPrimary', isPrimary, tableColMap);
     const secTblVal = tableColMap.get(column.table_name);
     for (let ind = 0; ind < secTblVal.length; ind++) {
       if (secTblVal[ind] === column) {
@@ -112,7 +113,7 @@ export class TableListComponent implements OnInit {
         break;
       }
     }
-    console.log('isPrimary', isPrimary, 'deleted', tableColMap);
+    // console.log('isPrimary', isPrimary, 'deleted', tableColMap);
   }
   togglePrimaryColumns(_event, column) {
     const target = _event.target;

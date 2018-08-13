@@ -53,7 +53,15 @@ export class TableListService {
   }
 
   private extractTablesMeta(res: any) {
-    console.log(res);
+    const tableKeys = res.data.tables_meta.table_keys;
+    const tableColumns = res.data.tables_meta.table_columns;
+    tableKeys.forEach(key => {
+      tableColumns.forEach(col => {
+        if (key.column_name === col.column_name) {
+          col.confidence_score = key.confidence_score * 100;
+        }
+      });
+    });
     const data = res.data.tables_meta.table_columns;
     return data || [];
   }
