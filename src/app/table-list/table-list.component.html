@@ -9,9 +9,11 @@
         </div>
         <input type="text" class="form-control search-input" placeholder="Search" [(ngModel)]="query" id="listSearch">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
-        <div class="tablename-list">
+        <div class="tablename-list da-table-parent">
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-            <button type="button" class="btn btn-default list-group-item" (click)="loadRelationTable(table)">{{table.table_name}}</button>
+            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.table_name}}
+              <i class="fa fa-angle-right unselected"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -134,7 +136,7 @@
                         </div>
                       </div>
                       <div class="col-md-12">
-                        {{selectedPrimCol.size}} out of {{primColArray.length}} selected
+                        {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
                       </div>
                       <div class="tabular-div col-md-4 dataA-scrollable-div">
                         <div class="col-md-12 p-0 tabular-div-row">
@@ -147,8 +149,8 @@
                           </div>
                         </div>
                         <div class="col-md-12 p-0 tabular-div-row" *ngFor="let pColumn of primColArray">
-                          <div class="col-md-8 tabular-div-column" title=" {{pColumn}}">
-                          <input id="{{pColumn}}" type="checkbox" (change)="togglePrimaryColumns($event, pColumn)" class="m-r-10">
+                          <div class="col-md-8 tabular-div-column" title="{{pColumn.column_name}}">
+                          <input id="{{pColumn}}" type="checkbox" (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
                             {{pColumn.column_name}}
                           </div>
                           <div class="col-md-4 tabular-div-column" title="">
@@ -166,7 +168,7 @@
                         <div class="col-md-9 tabular-div-row p-0">
                           <div class="tabular-div-column column-header">
                               Number of Rows to consider for Analysis
-                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="{{secTblArray.length}}">
+                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="{{secTblArray.length > 0 ? secTblArray.length : null}}">
                           </div>
                         </div>
                       </div>
@@ -180,18 +182,21 @@
                               Secondary Table
                             </div>
                           </div>
-                          <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray">
-                            <div class="col-md-12 tabular-div-column" title=" {{secTbl}}">
-                              <input id="{{secTbl.table_name}}" type="checkbox" (change)="toggleSecTbl($event)" class="m-r-10">
-                              {{secTbl.table_name}}
+                          <div class="da-table-parent">
+                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray">
+                              <div class="col-md-12 tabular-div-column cur-p da-table" title="{{secTbl.table_name}}" (click)="highlightTable($event, false, secTbl)">
+                                <input id="{{secTbl.table_name}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl.table_name)" class="m-r-10">
+                                {{secTbl.table_name}}
+                                <i class="fa fa-angle-right unselected"></i>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      <div *ngIf="selectedSecTbl.size > 0" class="col-md-6" style="height: 295px;">
+                      <div *ngIf="secColArray.length > 0" class="col-md-6" style="height: 295px;">
                           <div class="col-md-12">
-                            {{selectedSecCol.size}} out of {{secColArray.length}} selected
+                            {{selectedSecColMap.size}} out of {{secColArray.length}} selected
                           </div>
                           <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
                             <div class="col-md-12 p-0 tabular-div-row">
@@ -204,8 +209,8 @@
                               </div>
                             </div>
                             <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray">
-                              <div class="col-md-8 tabular-div-column" title=" {{sColumn}}">
-                                <input id="{{sColumn.column_name}}" type="checkbox" (change)="toggleSecColumns($event, sColumn)"
+                              <div class="col-md-8 tabular-div-column" title="{{sColumn.column_name}}">
+                                <input id="{{sColumn.column_name}}" type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
                                 checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10">
                                 {{sColumn.column_name}}
                               </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, Pipe } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
-import { InMemoryDataService } from '../in-memory-data.service';
+
 @Component({
   selector: 'app-table-list',
   templateUrl: './table-list.component.html',
@@ -19,13 +19,14 @@ export class TableListComponent implements OnInit {
   primColArray = [];
   secColArray = [];
   secTblArray = [];
-  selectedPrimColMap = new Map();
-  selectedSecColMap = new Map();
+  selectedPrimColMap = new Map(); // map of primary column name, true
+  selectedSecColMap = new Map(); // map of secondary column name, true
   dataAModal = false;
   analysisRowCount = 3;
-  selectedPrimCol = new Map();
-  selectedSecTbl = new Map();
-  selectedSecCol = new Map();
+  // selectedPrimCol = new Map();
+  selectedSecTbl = new Map(); // map of secondary table name, true
+  secTblColMap = new Map();
+  // selectedSecCol = new Map();
   enableNextBtn = false;
   // primColLoader = false;
   // secColLoader = false;
@@ -50,7 +51,7 @@ export class TableListComponent implements OnInit {
     this.homeStage = true;
     this.dataAModal = false;
     this.selectedPrimTbl = table;
-    this.secTblArray = [];
+    this.resetDataAModal();
     // this.tablelistService.getListOfRelationTable(this.selectedPrimTbl.table_name).subscribe(result => {
     //   this.relationshipInfo = result;
     //   this.isRelationShipAvailable = true;
@@ -65,7 +66,7 @@ export class TableListComponent implements OnInit {
     this.getColumnsByTableName(this.selectedPrimTbl.table_name, true);
     this.resetDataAModal();
   }
-  getColumnsByTableName(table_name, isPrime) {
+  getColumnsByTableName(tableName, isPrime) {
     if (isPrime) {
       this.primColArray = [];
       // this.primColLoader = true;
@@ -73,15 +74,16 @@ export class TableListComponent implements OnInit {
       this.secColArray = [];
       // this.secColLoader = true;
     }
-    this.tablelistService.getColumnsByTableName(table_name)
+    this.tablelistService.getColumnsByTableName(tableName)
     .subscribe((columns) => {
       if (isPrime) {
         this.primColArray = columns;
         // this.primColLoader = false;
       } else {
+        this.secTblColMap.set(tableName, columns);
         this.secColArray = columns;
         // this.secColLoader = false;
-        this.selectedSecCol.clear();
+        this.selectedSecColMap.clear();
       }
     });
   }
@@ -91,63 +93,94 @@ export class TableListComponent implements OnInit {
   }
   resetDataAModal() {
     this.enableNextBtn = false;
+    this.secTblArray = [];
+    this.selectedSecColMap.clear();
   }
-
-  addToTblColMap(column, isPrimary) {
-    const tableColMap = isPrimary ? this.selectedPrimColMap : this.selectedSecColMap;
-    const secTblVal = tableColMap.get(column.table_name);
-    if (secTblVal) {
-      secTblVal.push(column);
-      // console.log('isPrimary', isPrimary, 'pushed', secTblVal);
+  toggleColSelection(_event, isPrimary, column) {
+    const isChecked = _event.target.checked ? true : false;
+    if (isPrimary) {
+      for (let i = 0; i < this.primColArray.length; i++) {
+        if (this.primColArray[i].column_name === column.column_name) {
+          this.primColArray[i].selected = isChecked;
+          if (isChecked) {
+            this.selectedPrimColMap.set(column.column_name, true);
+          } else {
+            this.selectedPrimColMap.delete(column.column_name);
+          }
+          break;
+        }
+      }
     } else {
-      tableColMap.set(column.table_name, [column]);
-      // console.log('isPrimary', isPrimary, '1st push', tableColMap);
+      for (let i = 0; i < this.primColArray.length; i++) {
+        if (this.secColArray[i].column_name === column.column_name) {
+          this.secColArray[i].selected = isChecked;
+          if (isChecked) {
+            this.selectedSecColMap.set(column.column_name, true);
+          } else {
+            this.selectedSecColMap.delete(column.column_name);
+          }
+          break;
+        }
+      }
     }
+    this.enableDisableNextBtn();
   }
-  removeFromTblColMap(column, isPrimary) {
-    const tableColMap = isPrimary ? this.selectedPrimColMap : this.selectedSecColMap;
-    // console.log('isPrimary', isPrimary, tableColMap);
-    const secTblVal = tableColMap.get(column.table_name);
-    for (let ind = 0; ind < secTblVal.length; ind++) {
-      if (secTblVal[ind] === column) {
-        secTblVal.splice(ind, 1);
+  toggleSecTblSelection(_event, tableName) {
+    const isChecked = _event.target.checked;
+    for (let i = 0; i < this.secTblArray.length; i++) {
+      if (this.secTblArray[i].table_name === tableName) {
+        this.secTblArray[i].selected = isChecked;
+        if (isChecked) {
+          this.selectedSecTbl.set(tableName, true);
+        } else {
+          this.selectedSecTbl.delete(tableName);
+          // sec col reset selection
+          this.secColArray.forEach(col => {
+            col.selected = false;
+          });
+          this.selectedSecColMap.clear();
+        }
         break;
       }
     }
-    // console.log('isPrimary', isPrimary, 'deleted', tableColMap);
-  }
-  togglePrimaryColumns(_event, column) {
-    const target = _event.target;
-    if (target.checked) {
-      this.selectedPrimCol.set(target.id, true);
-      this.addToTblColMap(column, true);
-    } else {
-      this.selectedPrimCol.delete(target.id);
-      this.removeFromTblColMap(column, true);
-    }
     this.enableDisableNextBtn();
   }
-  toggleSecTbl(_event) {
-    const target = _event.target;
-    if (target.checked) {
-      this.selectedSecTbl.set(target.id, true);
-      this.getColumnsByTableName(target.id, false);
+  toggleTblSelection(_event) {
+    const parentDiv = $(_event.target).parents('.da-table-parent');
+    const children = $(parentDiv).find('.da-table');
+    children.each((i, el) => {
+      el.classList.remove('selected');
+    });
+    if (_event.target.classList.contains('da-table')) {
+      _event.target.classList.add('selected');
     } else {
-      this.selectedSecTbl.delete(target.id);
+      $(_event.target).parents('.da-table').addClass('selected');
     }
-    this.enableDisableNextBtn();
   }
-  toggleSecColumns(_event, column) {
-    const target = _event.target;
-    if (target.checked) {
-      column.selected = true;
-      this.selectedSecCol.set(column.column_name, true);
-      this.addToTblColMap(column, false);
+  highlightTable(_event, isPrime, table) {
+    this.toggleTblSelection(_event);
+    if (isPrime) {
+      this.loadRelationTable(table);
     } else {
-      this.selectedSecCol.delete(column.column_name);
-      this.removeFromTblColMap(column, false);
+      const secTbl = _event.target.children.namedItem(table.table_name);
+      if (secTbl) {
+        secTbl.checked = true;
+      }
+      this.showSecTblCols(table.table_name);
     }
-    this.enableDisableNextBtn();
+  }
+  showSecTblCols(tableName) {
+    if (this.secTblColMap.has(tableName)) {
+      this.secColArray = this.secTblColMap.get(tableName);
+      this.selectedSecColMap.clear();
+      this.secColArray.forEach(col => {
+        if (col.selected) {
+          this.selectedSecColMap.set(col.column_name, true);
+        }
+      });
+    } else {
+      this.getColumnsByTableName(tableName, false);
+    }
   }
   generateSecTblArray() {
     if (this.secTblArray.length === 0) {
@@ -157,7 +190,7 @@ export class TableListComponent implements OnInit {
         }
       });
     }
-    this.enableNextBtn = this.selectedSecTbl.size > 0;
+    // this.enableNextBtn = this.selectedSecTbl.size > 0;
   }
   getCurrentStep() {
     return document.querySelector('#dataAModal-carousel .item.active').getAttribute('step');
@@ -166,13 +199,13 @@ export class TableListComponent implements OnInit {
     const currentStep = this.getCurrentStep();
     switch (currentStep) {
       case '0':
-        this.enableNextBtn = this.selectedPrimCol.size > 0;
+        this.enableNextBtn = this.selectedPrimColMap.size > 0;
         break;
       case '1':
         this.enableNextBtn = this.selectedSecColMap.size > 0;
         break;
       case '2':
-        this.enableNextBtn = this.selectedSecCol.size > 0;
+        // this.enableNextBtn = this.selectedSecCol.size > 0;
         break;
       // case '3':
       //   this.enableNextBtn = this.selectedPrimCol.size > 0;
