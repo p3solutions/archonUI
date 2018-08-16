@@ -50,6 +50,7 @@ export class TableListComponent implements OnInit {
     this.homeStage = true;
     this.dataAModal = false;
     this.selectedPrimTbl = table;
+    this.secTblArray = [];
     // this.tablelistService.getListOfRelationTable(this.selectedPrimTbl.table_name).subscribe(result => {
     //   this.relationshipInfo = result;
     //   this.isRelationShipAvailable = true;
@@ -149,12 +150,13 @@ export class TableListComponent implements OnInit {
     this.enableDisableNextBtn();
   }
   generateSecTblArray() {
-    this.tableList.forEach((el) => {
-      // console.log(el, this.selectedPrimTbl, el !== this.selectedPrimTbl);
-      if (el !== this.selectedPrimTbl) {
-        this.secTblArray.push(el);
-      }
-    });
+    if (this.secTblArray.length === 0) {
+      this.tableList.forEach((el) => {
+        if (el !== this.selectedPrimTbl) {
+          this.secTblArray.push(el);
+        }
+      });
+    }
     this.enableNextBtn = this.selectedSecTbl.size > 0;
   }
   getCurrentStep() {
