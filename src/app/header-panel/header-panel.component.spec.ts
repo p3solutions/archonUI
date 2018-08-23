@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HeaderPanelComponent } from './header-panel.component';
 
 describe('HeaderPanelComponent', () => {
@@ -8,7 +7,9 @@ describe('HeaderPanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderPanelComponent ]
+      declarations: [
+        HeaderPanelComponent
+       ]
     })
     .compileComponents();
   }));
@@ -19,7 +20,7 @@ describe('HeaderPanelComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
