@@ -1,11 +1,18 @@
 import { TestBed, inject } from '@angular/core/testing';
-
 import { AddMembersService } from './add-members.service';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-xdescribe('AddMembersService', () => {
+describe('AddMembersService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AddMembersService]
+      imports: [
+        HttpClientModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        AddMembersService, HttpClientModule
+      ]
     });
   });
 
