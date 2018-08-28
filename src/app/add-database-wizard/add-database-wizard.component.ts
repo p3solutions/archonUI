@@ -14,7 +14,7 @@ export class AddDatabaseWizardComponent implements OnInit {
 
   profileName: string;
   dbServer: string;
-  dbServerList: {};
+  dbServerList = [];
   databaseName: string;
   host: string;
   port: string;
@@ -85,7 +85,6 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.port = servername.defaultPort;
 
   }
-
 
   getAllDBServer() {
     this.userWorkspaceService.getAllSupportedDBServer().subscribe(res => {
