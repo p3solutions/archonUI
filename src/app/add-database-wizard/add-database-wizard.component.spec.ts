@@ -46,10 +46,8 @@ xdescribe ('AddDatabaseWizardComponent', () => {
 
   it('Should getAllDBServer', () => {
     expect(component.dbServerList.length === 0).toBeTruthy();
-    console.log('get All DB Server', component);
     spyOn(testBedService, 'getAllDBServer').and.returnValue(getAllDBServer());
     component.getAllDBServer();
-    // flushMicrotasks();
     fixture.detectChanges();
     expect(component.dbServerList.length > 0).toBeTruthy();
     disposeMe.get('getAllDBServer').unsubscribe();

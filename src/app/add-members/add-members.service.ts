@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-import { ManageUserRoles } from '../manage-user-roles';
-import { headersToString } from 'selenium-webdriver/http';
-import { Data } from '@angular/router/src/config';
-import { GlobalRoles } from '../global-roles';
 import { environment } from '../../environments/environment';
 import { AddMembers } from '../add-members';
 

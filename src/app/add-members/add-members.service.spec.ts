@@ -1,30 +1,12 @@
-import { TestBed, inject , async, getTestBed, fakeAsync, tick, flush, flushMicrotasks, ComponentFixture } from '@angular/core/testing';
+import { TestBed, inject , async, fakeAsync, flushMicrotasks, ComponentFixture } from '@angular/core/testing';
 import { AddMembersService } from './add-members.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BaseRequestOptions, Http, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { Http, Response, ResponseOptions, XHRBackend } from '@angular/http';
 
 describe('AddMembersService', () => {
-  let mockBackend: MockBackend;
-  let addMembersService: AddMembersService;
-  // let setupConnections;
-  const getAllUsersResponse = [
-    {'id': '5ac5cda32e6c9905ef23b54b', 'createdAt': 1522912675, 'updatedAt': 1522912675, 'name': 'User', 'emailAddress': 'user@test.com',
-  'globalRoles': [{'id': '5ac5c6bda54d7503a6b80916', 'createdAt': 1522910907, 'updatedAt': 1535533386, 'roleName': 'ROLE_MEMBER',
-  'softDeleted': false}], 'softDeleted': false},
-  {'id': '5ac5d7af2e6c990861830974', 'createdAt': 1522915246, 'updatedAt': 1522915246, 'name': 'admin', 'emailAddress': 'admin@test.com',
-  'globalRoles': [{'id': '5ac5c6bda54d7503a6b80915', 'createdAt': 1522910907, 'updatedAt': 1535533386, 'roleName': 'ROLE_ADMIN',
-  'softDeleted': false}], 'softDeleted': false},
-  {'id': '5ac763622e6c9951ab2df429', 'createdAt': 1523016546, 'updatedAt': 1523016546, 'name': 'chandruashwin',
-  'emailAddress': 'chandru@test.com', 'globalRoles': [{'id': '5ac5c6bda54d7503a6b80916', 'createdAt': 1522910907,
-  'updatedAt': 1535533386, 'roleName': 'ROLE_MEMBER', 'softDeleted': false}], 'softDeleted': false}
-  ];
-  const loggedInAccessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYmFkbWluQHRlc3QuY29tIiwicm9sZXMiOlt7InJvbGVJZCI6IjVhYzVjNmJkYTU0Z' +
-  'Dc1MDNhNmI4MDkxOSIsInJvbGVOYW1lIjoiUk9MRV9EQl9BRE1JTiJ9XSwidXNlciI6eyJuYW1lIjoiZGJhZG1pbiIsImlkIjoiNWFjNWRjNjUyZTZjOTkwODYxODM' +
-  'wOTc3IiwiZW1haWxBZGRyZXNzIjoiZGJhZG1pbkB0ZXN0LmNvbSJ9LCJpc3MiOiJhcHBsaWNhdGlvbiIsImlhdCI6MTUyNzY4Nzc5MiwiZXhwIjoxNTI3Nzc0MTkyfQ' +
-  '.822cmi5CYPIHFgMba7D-LwsdLvFpphMw6FdU8FAs6RYdGKXtr36EugH_EUCbqxccjCAx4EwUBW9swXDSTRjiWA';
-  localStorage.setItem('accessToken', loggedInAccessToken); // inserting logged in user info
+  let backend: MockBackend;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,56 +15,68 @@ describe('AddMembersService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        BaseRequestOptions,
-        MockBackend,
+        { provide: MockBackend, useClass: MockBackend },
+        { provide: XHRBackend, useExisting: MockBackend },
         AddMembersService,
-        HttpClientModule,
-        {
-          deps: [
-              MockBackend,
-              BaseRequestOptions
-          ],
-          provide: Http,
-          useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backendInstance, defaultOptions);
-          }
-        }
+        HttpClientModule
       ]
     });
-    mockBackend = TestBed.get(MockBackend);
-    addMembersService = TestBed.get(AddMembersService);
-    // setupConnections = function(backend: MockBackend, options: any) {
-    //   console.log('mockBackend', mockBackend);
-    //   backend.connections.subscribe((connection: MockConnection) => {
-    //         console.log('connection.request', connection.request);
-    //           const responseOptions = new ResponseOptions(options);
-    //           const response = new Response(responseOptions);
-    //           connection.mockRespond(response);
-    //   });
-    // };
+    backend = TestBed.get(MockBackend);
+    spyOn(Http.prototype, 'request').and.callThrough();
   });
-  afterEach( fakeAsync( () => {
-    mockBackend.resolveAllConnections();
-    flush();
+
+  afterEach(() => backend.verifyNoPendingRequests());
+
+  it('should be created', inject([AddMembersService], (service: AddMembersService) => {
+    expect(service).toBeTruthy();
   }));
-  it('should be created', () => {
-    expect(addMembersService).toBeTruthy();
-  });
-  it('should getAllUsers', fakeAsync(() => {
-    // setupConnections(mockBackend, getAllUsersResponse);
-    mockBackend.connections.subscribe((connection: MockConnection) => {
-      // console.log('connection.request', connection.request);
-      connection.mockRespond(new Response(<ResponseOptions>{
-        body: JSON.stringify(getAllUsersResponse)
-      }));
-    });
-    // console.log('calling srvc');
-    const prom = addMembersService.getAllUsers();
-    tick();
-    flushMicrotasks();
-    prom.subscribe( res => {
-      // console.log('res', res);
-    });
-    // console.log('should getAllUsers', addMembersService);
-  }));
+
+  it(`should emit 'true' for 200 Ok`, fakeAsync(inject([ AddMembersService, MockBackend ],
+    (service: AddMembersService, mockBackend: MockBackend) => {
+      // 1. prepare fake response from `MockBackend`
+      mockBackend.connections.subscribe((c: MockConnection) => {
+        // 3. respond to `AddMembersService` with a 200 Ok
+        c.mockRespond(new Response(new ResponseOptions({
+          body: {},
+          status: 200
+        })));
+      });
+      // 2. dispatch the http request
+      const prom = service.getAllUsers();
+      // tick();
+      flushMicrotasks();
+      prom
+      .subscribe((res) => {
+        // 4. ensure that `AddMembersService` respond data with success
+        console.log('res', res);
+        expect(res).toBeTruthy();
+      });
+  })));
+
+  it(`should emit 'false' for 401 Unauthorized`, async(inject([ AddMembersService, MockBackend ],
+    (service: AddMembersService, mockBackend: MockBackend) => {
+    // 0. prepare fake response from `MockBackend`
+      mockBackend.connections.subscribe((c: MockConnection) => {
+      // 2a. expect `AddMembersService` to make a proper request
+      // expect(c.request.url).toBe('auth/login');
+      // expect(c.request.method).toBe(RequestMethod.Post);
+      // expect(c.request.headers.get('Content-Type'))
+        // .toBe('application/x-www-form-urlencoded');
+      // 2b. expect request body to contain form data
+      // expect(c.request.getBody()).toBe(/* ... */);
+      // 3. respond to `AddMembersService` with a 401 Unauthorized
+      c.mockRespond(new Response(new ResponseOptions({
+        body: '',
+        status: 401
+        })));
+      });
+
+    // 1. dispatch the http request
+    service.getAllUsers()
+      .subscribe((res) => {
+        // 4. ensure that `AddMembersService` reports login failure
+        expect(res).toBeFalsy();
+      });
+  })));
+
 });
