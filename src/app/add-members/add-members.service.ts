@@ -31,7 +31,8 @@ export class AddMembersService {
   }
 
 
-  getAllUsers(): Observable<ManageUserRoles[]> {
+  getAllUsers(): Observable<AddMembers[]> {
+    console.log('in service');
     return this.http.get<AddMembers[]>(this.getAllUsersUrl, { headers: this.headers }).map(this.extractData).pipe(
       catchError(this.handleError('addmembers', []))
     );
