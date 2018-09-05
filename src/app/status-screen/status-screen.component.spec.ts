@@ -16,7 +16,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 
-describe('StatusScreenComponent', () => {
+xdescribe('StatusScreenComponent', () => {
   let component: StatusScreenComponent;
   let fixture: ComponentFixture<StatusScreenComponent>;
   let testBedService: any;

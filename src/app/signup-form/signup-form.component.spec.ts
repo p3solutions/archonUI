@@ -20,7 +20,7 @@ import { SignUp } from '../sign-up';
 import { ErrorObject } from '../error-object';
 import { Router } from '@angular/router';
 
-describe('SignupFormComponent', () => {
+xdescribe('SignupFormComponent', () => {
   let component: SignupFormComponent;
   let fixture: ComponentFixture<SignupFormComponent>;
   // tslint:disable-next-line:prefer-const
