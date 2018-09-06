@@ -1,14 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChangeUserRoleComponent } from './change-user-role.component';
+import { ChangeUserRoleService } from './change-user-role.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
 
-xdescribe('ChangeUserRoleComponent', () => {
+describe('ChangeUserRoleComponent', () => {
   let component: ChangeUserRoleComponent;
   let fixture: ComponentFixture<ChangeUserRoleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangeUserRoleComponent ]
+      declarations: [ ChangeUserRoleComponent ],
+      imports: [
+        HttpClientModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        // reference the new instance of formBuilder from above
+        ChangeUserRoleService
+      ]
     })
     .compileComponents();
   }));
