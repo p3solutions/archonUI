@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject, flushMicrotasks, fakeAsync } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { ChangePasswordComponent } from './change-password.component';
 import { ChangePasswordService } from './change-password.service';
@@ -18,13 +18,14 @@ describe('ChangePasswordComponent', () => {
       observer.complete();
     });
   };
-
   const disposeMe = new Map();
-  const getJobList = function (data): Observable<any> {
+  const changePassword = function (data): Observable<any> {
     const pvtObservable = getSimpleObservable(data);
-    disposeMe.set('getJobList', pvtObservable.subscribe());
+    disposeMe.set('changePassword', pvtObservable.subscribe());
     return pvtObservable;
   };
+  const response = {success: true, httpStatus: 200};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ChangePasswordComponent ],
@@ -47,9 +48,9 @@ describe('ChangePasswordComponent', () => {
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     component.changePasswordForm = formBuilder.group({
-      oldPassword: null,
-      newPassword: null,
-      confirmPassword: null
+      oldPassword: 123456,
+      newPassword: 123456,
+      confirmPassword: 123456
     });
     fixture.detectChanges();
     testBedService = TestBed.get(ChangePasswordService);
@@ -64,5 +65,18 @@ describe('ChangePasswordComponent', () => {
       expect(injectService).toBe(testBedService);
     })
   );
+
+  it('Should get change password success when changeUserPassword() is called', fakeAsync( () => {
+    expect(component.inProgress).toBeFalsy();
+    spyOn(testBedService, 'changePassword').and.returnValue(changePassword(response));
+    component.changeUserPassword();
+    flushMicrotasks();
+    fixture.detectChanges();
+    expect(component.inProgress).toBeTruthy();
+    testBedService.changePassword().subscribe(res => {
+      expect(res).toEqual(response);
+    });
+    disposeMe.get('changePassword').unsubscribe();
+  }));
 
 });
