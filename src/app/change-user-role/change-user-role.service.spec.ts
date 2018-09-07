@@ -1,11 +1,24 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { ChangeUserRoleService } from './change-user-role.service';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MockBackend } from '@angular/http/testing';
+import { XHRBackend } from '@angular/http';
 
-xdescribe('ChangeUserRoleService', () => {
+describe('ChangeUserRoleService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ChangeUserRoleService]
+      imports: [
+        HttpClientModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        { provide: MockBackend, useClass: MockBackend },
+        { provide: XHRBackend, useExisting: MockBackend },
+        ChangeUserRoleService,
+        HttpClientModule
+      ]
     });
   });
 
