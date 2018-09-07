@@ -25,7 +25,6 @@ export class ChangeUserRoleComponent implements OnInit {
     this.changeUserRoleService.getGlobalRoleDetails()
       .subscribe(res => {
         this.globalRolesRequestData = res;
-        console.log(this.globalRolesRequestData);
       });
   }
 
