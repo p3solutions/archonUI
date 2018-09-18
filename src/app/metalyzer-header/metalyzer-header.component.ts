@@ -28,5 +28,5 @@ export class MetalyzerHeaderComponent implements OnInit {
       this.wsName = result;
     });
   }
-  
+
 }
