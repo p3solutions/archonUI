@@ -65,7 +65,7 @@ export class UserinfoService {
       pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
-  getAllUsers(){
+  getAllUsers() {
     return this.http.get<any>(this.getAllUserInfoUrl(), {headers: this.getHeaders()}).
     pipe(catchError(this.handleError<any>('getUserInfo')));
   }
