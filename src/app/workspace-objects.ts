@@ -46,6 +46,7 @@ export class WorkspaceObject {
     members: MemberObject[];
     databases: DatabaseObject[];
     workspaceState: string;
+    lastUpdatedTime: string; // for testing purpose, it is string format
 }
 export interface AnyObject {
     [key: string]: any;

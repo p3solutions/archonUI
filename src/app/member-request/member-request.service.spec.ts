@@ -4,7 +4,7 @@ import { HttpModule, Http, Response, ResponseOptions, XHRBackend } from '@angula
 import { HttpClient, HttpHeaders, HttpHandler } from '@angular/common/http';
 import { MockBackend } from '@angular/http/testing';
 
-describe('MemberRequestService', () => {
+xdescribe('MemberRequestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],

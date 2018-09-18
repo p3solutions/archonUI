@@ -47,7 +47,7 @@ export class ManageUserRolesComponent implements OnInit {
     this.router.navigate(['workspace/management-panel']);
   }
 
-  onConfirm(confirm: boolean) {
+  onconfirm(confirm: boolean) {
     if (confirm) {
       this.getManageUserRolesData();
     }

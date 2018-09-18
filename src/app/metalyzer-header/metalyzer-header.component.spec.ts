@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MetalyzerHeaderComponent } from './metalyzer-header.component';
 
-describe('MetalyzerHeaderComponent', () => {
+xdescribe('MetalyzerHeaderComponent', () => {
   let component: MetalyzerHeaderComponent;
   let fixture: ComponentFixture<MetalyzerHeaderComponent>;
 

@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { EnterNewpasswordService } from './enter-newpassword.service';
 
-describe('EnterNewpasswordService', () => {
+xdescribe('EnterNewpasswordService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [EnterNewpasswordService]

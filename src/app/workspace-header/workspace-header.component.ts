@@ -6,6 +6,7 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { WorkspaceHeaderService } from './workspace-header.service';
+import { sample } from 'rxjs/operators';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -14,7 +15,6 @@ import { WorkspaceHeaderService } from './workspace-header.service';
 export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   userWorkspaceArray: WorkspaceObject[];
   serviceActionsList: ServiceActionsObject;
-  userId: string;
   userRole: any;
   selectedWorkspaceName: string;
   currentWorkspace: WorkspaceObject;
@@ -22,7 +22,6 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsObject[]>();
-
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
