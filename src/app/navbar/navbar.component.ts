@@ -36,4 +36,7 @@ export class NavbarComponent implements OnInit {
     info.username = token_data.user.name;
     return info;
   }
+  callUserProfile() {
+    localStorage.setItem('userId','');
+  }
 }

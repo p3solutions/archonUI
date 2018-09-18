@@ -27,7 +27,6 @@ export class ManageUserRolesComponent implements OnInit {
   ngOnInit() {
     this.getManageUserRolesData();
     this.isProgress = true;
-
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
@@ -51,6 +50,10 @@ export class ManageUserRolesComponent implements OnInit {
     if (confirm) {
       this.getManageUserRolesData();
     }
+  }
+
+  getUserProfile(userobj) {
+    localStorage.setItem('userId', userobj.id)
   }
 
 }
