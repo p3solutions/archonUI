@@ -45,6 +45,9 @@ export class UserinfoService {
   getUserInfoUrl() {
     return environment.apiUrl + 'users/' + this.getUserId();
   }
+  getAllUserInfoUrl() {
+    return environment.apiUrl + 'users';
+  }
 
   getAuthKey() {
     return localStorage.getItem('accessToken');
@@ -60,6 +63,11 @@ export class UserinfoService {
   getUserInfo(): Observable<any> {
     return this.http.get<any>(this.getUserInfoUrl(), {headers: this.getHeaders()}).
       pipe(catchError(this.handleError<any>('getUserInfo')));
+  }
+
+  getAllUsers(){
+    return this.http.get<any>(this.getAllUserInfoUrl(), {headers: this.getHeaders()}).
+    pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
   updateUserProfile(params: any) {
