@@ -15,7 +15,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ChangeUserRoleService {
-
+  passedUserId: string;
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
@@ -47,7 +47,8 @@ export class ChangeUserRoleService {
       userId: userid,
       globalRoleId: globalid
     };
-    return this.http.patch(this.changeGlobalRoleUrl + userid + '/roles/global', body, { headers: this.headers }).pipe(
+    this.passedUserId = userid;
+    return this.http.patch(this.changeGlobalRoleUrl + this.passedUserId + '/roles/global', body, { headers: this.headers }).pipe(
       catchError(this.handleError('changeGlobalRoles', []))
     );
   }

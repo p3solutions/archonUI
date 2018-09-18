@@ -1,10 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from './manage-members.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { WorkspaceRolesObject, RoleObject, AnyObject } from '../workspace-objects';
-import { UserinfoService } from '../userinfo.service';
-import { ManageUserRoles } from '../manage-user-roles';
 
 @Component({
   selector: 'app-manage-members',
@@ -26,7 +24,6 @@ export class ManageMembersComponent implements OnInit {
 
   constructor(
     private manageMembersService: ManageMembersService,
-    private userinfoService: UserinfoService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -52,7 +49,7 @@ export class ManageMembersComponent implements OnInit {
 
   onDelete(id: any, tr): void {
     this.manageMembersService.deleteManageMembersData({ id: id }, this.workspaceId).subscribe(res => {
-      tr.remove(); //Removing the row.
+      tr.remove(); // Removing the row.
     });
   }
 

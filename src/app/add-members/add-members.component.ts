@@ -20,7 +20,7 @@ export class AddMembersComponent implements OnInit {
     this.addMembersService.getAllUsers()
     .subscribe(res => {
       this.userList = res;
-      console.log('add-members function console', this.userList[1]['name']);
+      // console.log('add-members function console', this.userList[1]['name']);
       this.isProgress = true;
     });
 

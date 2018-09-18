@@ -10,7 +10,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class MemberRequestComponent implements OnInit {
 
   memberRequestData: MemberRequestData[];
-  isAvailable : boolean;
+  isAvailable: boolean;
 
   constructor(private memberRequestService: MemberRequestService,
     private router: Router

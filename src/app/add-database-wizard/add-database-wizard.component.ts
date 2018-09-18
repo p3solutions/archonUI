@@ -14,7 +14,7 @@ export class AddDatabaseWizardComponent implements OnInit {
 
   profileName: string;
   dbServer: string;
-  dbServerList: {};
+  dbServerList = [];
   databaseName: string;
   host: string;
   port: string;
@@ -67,7 +67,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.testDbParam.profileName = this.profileName;
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(res => {
       if (res) {
-        this.dbTestConnectionErrorMsg = "";
+        this.dbTestConnectionErrorMsg = '';
         this.dbTestConnectionSuccessMsg = res.connection.message;
         console.log('clicked on test connection', res, res.connection.message);
 
@@ -78,7 +78,7 @@ export class AddDatabaseWizardComponent implements OnInit {
       //   this.dbTestConnectionErrorMsg = "failed try again with correct db configuration.";
       // }
     });
-    (err) => { console.log('error', err) };
+    // (err) => { console.log('error', err) };
   }
 
   selectDBServer(servername) {
@@ -87,7 +87,6 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.port = servername.defaultPort;
 
   }
-
 
   getAllDBServer() {
     this.userWorkspaceService.getAllSupportedDBServer().subscribe(res => {
@@ -111,8 +110,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   prevStep(e) {
-    this.dbTestConnectionSuccessMsg= undefined;
-    this.dbTestConnectionErrorMsg= undefined;
+    this.dbTestConnectionSuccessMsg = undefined;
+    this.dbTestConnectionErrorMsg = undefined;
     if (document.querySelector('.second').classList.contains('active')) {
       this.addClass('prev-btn', 'hide');
       this.removeClass('cancel-btn', 'hide');
@@ -211,8 +210,8 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.schemaName = undefined;
     this.dbParam.profileName = undefined;
     this.profileName = undefined;
-    this.dbTestConnectionSuccessMsg= undefined;
-    this.dbTestConnectionErrorMsg= undefined;
+    this.dbTestConnectionSuccessMsg = undefined;
+    this.dbTestConnectionErrorMsg = undefined;
     this.selectedDBServerName = 'Select server';
   }
 

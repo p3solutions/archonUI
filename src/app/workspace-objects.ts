@@ -46,6 +46,7 @@ export class WorkspaceObject {
     members: MemberObject[];
     databases: DatabaseObject[];
     workspaceState: string;
+    lastUpdatedTime: string; // for testing purpose, it is string format
 }
 export interface AnyObject {
     [key: string]: any;
@@ -79,9 +80,10 @@ export class CreateConfigDBObject {
     supportedDBId: string;
 }
 
-
 export class RelationshipInfoObject {
     secondaryTable: string;
     definitionType: string;
     joinName: string;
 }
+
+
