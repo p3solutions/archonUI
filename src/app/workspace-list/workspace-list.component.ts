@@ -4,6 +4,8 @@ import { WorkspaceListService } from './workspace-list.service';
 import { JwtHelper } from 'angular2-jwt';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
+import { CommonUtilityService } from '../common-utility.service';
+
 
 @Component({
     selector: 'app-workspace-list',
@@ -18,19 +20,21 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     rejectedWorkspaceListInfo: WorkspaceObject[] = [];
     isProgress: boolean;
     dynamicLoaderService: DynamicLoaderService;
+    private workspaceActions: any;
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
         @Inject(ViewContainerRef) viewContainerRef,
         private workspaceListService: WorkspaceListService,
-        private router: Router
+        private router: Router,
+        private commonUtilityService: CommonUtilityService
+
     ) {
         this.dynamicLoaderService = dynamicLoaderService;
         this.viewContainerRef = viewContainerRef;
     }
     ngOnDestroy() {
-        console.log('removing viewContainerRef');
         if (this.viewContainerRef) {
             this.viewContainerRef.remove(0);
         }
@@ -45,9 +49,9 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     getWorkspaceListInfo(id: string) {
         this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
-            // console.log(this.workspaceListInfo);
             this.isProgress = false;
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
+            this.workspaceActions = this.commonUtilityService.groupOutArray(this.workspaceListInfo, 3);
         });
     }
 
@@ -75,6 +79,10 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             this.dynamicLoaderService.setRootViewContainerRef(this.viewContainerRef);
             this.dynamicLoaderService.addDynamicComponent();
         }
+    }
+
+    toggleCard(cardId, toShow, _event) {
+        this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
     }
 }
 
