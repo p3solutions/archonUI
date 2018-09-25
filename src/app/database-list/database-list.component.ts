@@ -70,14 +70,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       this.dynamicLoaderService.addDynamicComponent1();
     }
   }
-  toggleCard(id, toShow, _event) {
-    _event.stopPropagation();
-    const cardId = `flex-cards-${id}`;
-    const card = document.getElementById(cardId);
-    if (toShow) {
-      card.classList.add('reveal');
-    } else {
-      card.classList.remove('reveal');
-    }
+  toggleCard(cardId, toShow, _event) {
+   this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
   }
 }
