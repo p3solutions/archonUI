@@ -40,6 +40,7 @@ export class WorkspaceServicesComponent implements OnInit {
         carousel.carousel({'interval': false});
       });
   }
+
   gotoMetalyzer(service: any) {
     if (service.serviceName === 'Metalyzer') {
       this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSeletectedWorkspace());
@@ -107,14 +108,7 @@ export class WorkspaceServicesComponent implements OnInit {
     return serviceActions;
   }
 
-  toggleCard(id, toShow, _event) {
-    _event.stopPropagation();
-    const cardId = `flex-cards-${id}`;
-    const card = document.getElementById(cardId);
-    if (toShow) {
-      card.classList.add('reveal');
-    } else {
-      card.classList.remove('reveal');
-    }
+  toggleCard(cardId, toShow, _event) {
+    this.commonUtilityService.toggleCard(cardId, toShow, _event);
   }
 }

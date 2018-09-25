@@ -16,10 +16,10 @@
           </ol>
         
           <div class="carousel-inner">
-            <div *ngFor="let serviceGroup of serviceActions; let ind = index;" class="item {{ind === 0 ? 'active' : ''}}">
+            <div *ngFor="let serviceGroup of serviceActions; let indRow = index;" class="item {{indRow === 0 ? 'active' : ''}}">
               <div class="flex-container">
                 
-                <div *ngFor="let service of serviceGroup;"  class="flex-cards card" id="flex-cards-{{service?.serviceId}}" >
+                <div *ngFor="let service of serviceGroup; let indCol = index;"  class="flex-cards card" id="{{'flex-cards-' + indRow + '-' + indCol}}" >
                   <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
                     <img class="icon-img"  [attr.src]="'assets/' + service.iconName" />
                   </div>
@@ -27,13 +27,13 @@
                     <div class="trim-text flex-card-title">
                       {{service?.serviceName}}
                     </div>
-                    <span class="pull-right card-toggle" (click)="toggleCard(service?.serviceId, true, $event)" title="Click for more info">
+                    <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), true, $event)" title="Click for more info">
                       <i class="fa fa-caret-up archon-icondown"></i>
                     </span>
                   </div>
                   <div class="card-reveal">
                     <p class="">Permission : {{service?.serviceActionType}}
-                      <span class="pull-right card-toggle" (click)="toggleCard(service.serviceId, false, $event)" title="CLick to hide info">
+                      <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), false, $event)" title="Click to hide info">
                         <i class="fa fa-caret-down archon-iconup"></i>
                       </span>
                     </p>
