@@ -19,10 +19,12 @@ button {
   border-radius: 4px;
   text-decoration: none;
   display: inline-block;
-  margin: 3px 10px;
+  margin: 10px !important;
   text-transform: none;
 }
-
+button.close {
+  margin-top: -2px !important;
+}
 .ws-rejections,
 .ws-pending button {
   background-color: lightskyblue;
