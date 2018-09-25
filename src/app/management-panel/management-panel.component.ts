@@ -57,7 +57,6 @@ export class ManagementPanelComponent implements OnInit {
           break;
       }
       case 'Permissions' : {
-          this.gotoConfigDatabaseList();
           break;
       }
       default: console.log('Not configured for ', panel.panelName);
