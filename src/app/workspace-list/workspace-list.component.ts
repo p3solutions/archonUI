@@ -18,7 +18,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     token_data: any;
     workspaceListInfo: WorkspaceObject[];
     rejectedWorkspaceListInfo: WorkspaceObject[] = [];
-    isProgress: boolean;                                                                        
+    isProgress: boolean;
     dynamicLoaderService: DynamicLoaderService;
     private workspaceActions: any;
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
@@ -35,7 +35,6 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.viewContainerRef = viewContainerRef;
     }
     ngOnDestroy() {
-        console.log('removing viewContainerRef');
         if (this.viewContainerRef) {
             this.viewContainerRef.remove(0);
         }
@@ -82,17 +81,9 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         }
     }
 
-    toggleCard(id, toShow, event: Event) {
-        event.stopPropagation();
-        event.preventDefault();
-        const cardId = `flex-cards-${id}`;
-        const card = document.getElementById(cardId);
-        if (toShow) {
-          card.classList.add('reveal');
-        } else {
-          card.classList.remove('reveal');
-        }
-      }
+    toggleCard(cardId, toShow, _event) {
+        this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
+    }
 }
 
 
