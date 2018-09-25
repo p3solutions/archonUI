@@ -55,7 +55,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('removing viewContainerRef');
     if (this.viewContainerRef) {
       this.viewContainerRef.remove(0);
     }
