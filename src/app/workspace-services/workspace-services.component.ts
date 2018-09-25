@@ -18,6 +18,7 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceName : string;
   // @Input() private serviceId : string;
   // @Input() private serviceType : string;
+  defDesc = 'Description: Here is some more information about this product that is only revealed once clicked on.';
   private serviceActions: ServiceActionsObject[];
   private wsId_Mode: string;
   private tableList: any;
@@ -32,10 +33,9 @@ export class WorkspaceServicesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.workspaceService.serviceActionsUpdated.subscribe(
-      (serviceActions) => {
-        const serviceActionsList = this.updateServiceActions(serviceActions);
-        this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
+    this.workspaceService.serviceActionsUpdated.subscribe((serviceActions) => {
+      const serviceActionsList = this.updateServiceActions(serviceActions);
+      this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({'interval': false});
       });
