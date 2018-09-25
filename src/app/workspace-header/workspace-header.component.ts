@@ -40,13 +40,11 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     localStorage.setItem('currentworkspacename', '');
   }
   ngOnDestroy() {
-    console.log('removing viewContainerRef');
     if (this.viewContainerRef) {
       this.viewContainerRef.remove(0);
     }
   }
   bindDropdownClick() {
-    console.log('bind');
     $('#selectedWorkspace a.dropdown-data').off('click').on('click', function () {
       $('#selectedWorkspace a.dropdown-item').removeClass('selected');
       $(this).addClass('selected');
