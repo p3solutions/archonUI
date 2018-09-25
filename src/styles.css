@@ -410,14 +410,14 @@ table.dataTable.no-footer {
 }
 
 .m-l-10 {
-  margin-left: 10px;
+  margin-left: 10px!important;
 }
 .m-l-20 {
   margin-left: 20px!important;
 }
 
 .m-r-10 {
-  margin-right: 10px;
+  margin-right: 10px!important;
 }
 .m-t-10 {
   margin-top: 10px;
