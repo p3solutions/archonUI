@@ -456,6 +456,9 @@ i.link:hover {
 .cur-p {
   cursor: pointer;
 }
+.cur-def{
+  cursor: default !important;
+}
 
 .col-archon-blue {
   color: #269AF8;
