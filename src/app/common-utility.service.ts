@@ -44,7 +44,7 @@ export class CommonUtilityService {
     }
     return groupedArray;
   }
-  toggleCard(cardId, toShow, _event) {
+  toggleFlexCard(cardId, toShow, _event) {
     _event.stopPropagation();
     const card = document.getElementById(cardId);
     if (toShow) {

@@ -77,6 +77,6 @@ export class ManagementPanelComponent implements OnInit {
     this.router.navigate(['workspace/database-list']);
   }
   toggleCard(cardId, toShow, _event) {
-    this.commonUtilityService.toggleCard(cardId, toShow, _event);
+    this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
   }
 }

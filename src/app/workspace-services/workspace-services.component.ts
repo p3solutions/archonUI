@@ -109,6 +109,6 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   toggleCard(cardId, toShow, _event) {
-    this.commonUtilityService.toggleCard(cardId, toShow, _event);
+    this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
   }
 }
