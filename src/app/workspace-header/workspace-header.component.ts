@@ -6,7 +6,6 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { WorkspaceHeaderService } from './workspace-header.service';
-import { sample } from 'rxjs/operators';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -15,6 +14,7 @@ import { sample } from 'rxjs/operators';
 export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   userWorkspaceArray: WorkspaceObject[];
   serviceActionsList: ServiceActionsObject;
+  userId: string;
   userRole: any;
   selectedWorkspaceName: string;
   currentWorkspace: WorkspaceObject;
@@ -22,6 +22,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsObject[]>();
+
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
@@ -37,14 +38,15 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getUserWorkspaceList();
     this.userRole = this.userinfoService.getUserRoles();
-    localStorage.setItem('currentworkspacename', '');
   }
   ngOnDestroy() {
+    console.log('removing viewContainerRef');
     if (this.viewContainerRef) {
       this.viewContainerRef.remove(0);
     }
   }
   bindDropdownClick() {
+    console.log('bind');
     $('#selectedWorkspace a.dropdown-data').off('click').on('click', function () {
       $('#selectedWorkspace a.dropdown-item').removeClass('selected');
       $(this).addClass('selected');
@@ -86,7 +88,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
-    this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace.id);
+    this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
     this.workspaceService.passServiceActions(this.serviceActionsList);

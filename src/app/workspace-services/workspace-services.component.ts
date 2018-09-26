@@ -43,7 +43,7 @@ export class WorkspaceServicesComponent implements OnInit {
 
   gotoMetalyzer(service: any) {
     if (service.serviceName === 'Metalyzer') {
-      this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSeletectedWorkspace());
+      this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSelectedWorkspaceId());
       this.tableListService.setServiceActionType(service.serviceActionType);
       if (service.serviceActionType === 'READ') {
         this.router.navigate(['/workspace/metalyzer/READ/analysis']);

@@ -124,7 +124,8 @@ import { CommonUtilityService } from './common-utility.service';
                 SearchPipe,
                 StatusScreenComponent,
                 KeysPipe,
-                ReverseArrayPipe
+                ReverseArrayPipe,
+                SearchPipe
         ],
         imports: [
                 BrowserModule,
@@ -170,7 +171,8 @@ import { CommonUtilityService } from './common-utility.service';
                 MetalyzerHeaderService,
                 TableListService,
                 StatusService,
-                CommonUtilityService
+                CommonUtilityService,
+                TableListService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
