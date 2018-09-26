@@ -1,5 +1,5 @@
 #table-list {
-  margin-left: 5px;
+  margin-left: 35px;
 }
 
 .input-group {
@@ -15,18 +15,10 @@
   height: 350px;
 }
 
-.form-control {
-  /* margin-top:-10px; */
-  height: 40px;
-  border-radius: 20px;
-  width: 257px;
-  margin-left: 20px;
-}
-
 .form-control-feedback {
   position: relative;
   margin-top: -34px;
-  margin-left: 240px;
+  margin-left: 250px;
   height: 32px;
   color: #269af8;
   line-height: 30px;
@@ -68,6 +60,7 @@ h4 {
 .table-header {
   float: left;
 }
+
 .well {
   margin-left: 40px;
   width: 90%;
@@ -200,10 +193,9 @@ input[type='checkbox'] {
 .form-control {
   height: 40px;
   border-radius: 20px;
-  width: 261px;
-  margin-left: 18px;
+  width: 85%;
+  margin-left: 20px;
 }
-
 .form-control-feedback {
   position: relative;
   margin-top: -34px;
