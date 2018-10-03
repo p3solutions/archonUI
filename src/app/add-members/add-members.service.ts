@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { catchError } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
+import { ManageUserRoles } from '../manage-user-roles';
+import { headersToString } from 'selenium-webdriver/http';
+import { Data } from '@angular/router/src/config';
+import { GlobalRoles } from '../global-roles';
 import { environment } from '../../environments/environment';
 import { AddMembers } from '../add-members';
 
@@ -17,6 +22,7 @@ export class AddMembersService {
   });
   private apiUrl = environment.apiUrl;
   private getAllUsersUrl = this.apiUrl + 'users';
+  private addMembersUrl = this.apiUrl + '/workspaces/access';
 
   constructor(private http: HttpClient) { }
 
@@ -26,9 +32,14 @@ export class AddMembersService {
   }
 
 
-  getAllUsers(): Observable<AddMembers[]> {
+  getAllUsers(): Observable<ManageUserRoles[]> {
     return this.http.get<AddMembers[]>(this.getAllUsersUrl, { headers: this.headers }).map(this.extractData).pipe(
-      catchError(this.handleError('addmembers', []))
+      catchError(this.handleError('getAllUsers', []))
+    );
+  }
+  addMembers(params: any): Observable<any> {
+    return this.http.post(this.addMembersUrl, params, { headers: this.headers }).pipe(
+      catchError(this.handleError('addmembers', {}))
     );
   }
 

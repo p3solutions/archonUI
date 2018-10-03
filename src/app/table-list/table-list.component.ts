@@ -1,7 +1,6 @@
 import { Component, OnInit, Pipe } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
-
 @Component({
   selector: 'app-table-list',
   templateUrl: './table-list.component.html',
@@ -13,6 +12,7 @@ export class TableListComponent implements OnInit {
   private isAvailable: boolean;
   private isRelationShipAvailable: boolean;
   private selectedPrimTbl: any;
+  private tableName: string;
   private relationshipInfo: RelationshipInfoObject[];
   private serviceActionType: string;
   private tableList: string[];
@@ -36,8 +36,8 @@ export class TableListComponent implements OnInit {
   constructor(
     private tablelistService: TableListService
   ) { }
-
   ngOnInit() {
+    // this.homeStage = true;
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
     this.getTableList();
@@ -46,7 +46,6 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getTableList().subscribe(res => {
       this.tableList = res;
       this.isAvailable = true;
-      // console.log(this.tableList);
     });
   }
 

@@ -9,7 +9,7 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkspaceHeaderInfoComponent } from '../workspace-header-info/workspace-header-info.component';
 import { WorkspaceMgmtPanelComponent } from '../workspace-mgmt-panel/workspace-mgmt-panel.component';
 
-xdescribe('WorkspaceHeaderComponent', () => {
+describe('WorkspaceHeaderComponent', () => {
   let component: WorkspaceHeaderComponent;
   let fixture: ComponentFixture<WorkspaceHeaderComponent>;
   let de: DebugElement;
