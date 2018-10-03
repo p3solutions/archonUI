@@ -80,6 +80,7 @@ import { StatusService } from './status-screen/status.service';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
 import { CommonUtilityService } from './common-utility.service';
+import { RolePipe } from './role.pipe';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -125,7 +126,8 @@ import { CommonUtilityService } from './common-utility.service';
                 StatusScreenComponent,
                 KeysPipe,
                 ReverseArrayPipe,
-                SearchPipe
+                SearchPipe,
+                RolePipe
         ],
         imports: [
                 BrowserModule,
