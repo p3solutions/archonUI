@@ -65,7 +65,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.testDbParam.supportedDBId = this.supportedDBId;
     this.testDbParam.authType = this.authType;
     this.testDbParam.profileName = this.profileName;
-    this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe(res => {
+    this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
       if (res) {
         this.dbTestConnectionErrorMsg = '';
         this.dbTestConnectionSuccessMsg = res.connection.message;
