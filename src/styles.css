@@ -1035,3 +1035,6 @@ ol.multi-step-indicators li.active {
   color: #ccc;
   cursor: default;
 }
+.carousel-indicators {
+  display: none !important;
+}
