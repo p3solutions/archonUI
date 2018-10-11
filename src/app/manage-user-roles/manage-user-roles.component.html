@@ -28,7 +28,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of this.manageUserRolesRequestData | role ; let i = index">
+          <tr *ngFor="let user of this.manageUserRolesRequestData | globalRole ; let i = index">
             <td class="mm-info-data">{{i+1}}</td>
             <td class="mm-info-data">
               <a (click)='getUserProfile(user)' [routerLink]="['/user-profile']" class="trim-text">{{user.name}}</a>
