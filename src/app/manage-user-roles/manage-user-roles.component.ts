@@ -39,7 +39,7 @@ export class ManageUserRolesComponent implements OnInit {
   getUserId(id, roleName) {
     this.selectedUserId = id;
     this.preSelectedRole = roleName;
-    document.getElementById("selected-role").innerHTML = this.preSelectedRole;
+    document.getElementById('selected-role').innerHTML = this.preSelectedRole;
   }
 
   gotoManagementPanel() {
@@ -53,7 +53,7 @@ export class ManageUserRolesComponent implements OnInit {
   }
 
   getUserProfile(userobj) {
-    localStorage.setItem('userId', userobj.id)
+    localStorage.setItem('userId', userobj.id);
   }
 
 }
