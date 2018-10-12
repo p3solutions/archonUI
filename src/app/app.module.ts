@@ -77,6 +77,10 @@ import { TableListService } from './table-list/table-list.service';
 import { SearchPipe } from './search.pipe';
 import { CommonUtilityService } from './common-utility.service';
 import { RolePipe } from './role.pipe';
+import { StatusService } from './status-screen/status.service';
+import { StatusScreenComponent } from './status-screen/status-screen.component';
+import { KeysPipe } from './keys.pipe';
+import { ReverseArrayPipe } from './reverse.pipe';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -119,9 +123,9 @@ import { RolePipe } from './role.pipe';
                 MetalyzerConfigurationComponent,
                 TableListComponent,
                 SearchPipe,
-                // StatusScreenComponent,
-                // KeysPipe,
-                // ReverseArrayPipe,
+                StatusScreenComponent,
+                KeysPipe,
+                ReverseArrayPipe,
                 SearchPipe,
                 RolePipe
         ],
@@ -168,7 +172,7 @@ import { RolePipe } from './role.pipe';
                 WorkspaceHeaderService,
                 MetalyzerHeaderService,
                 TableListService,
-                // StatusService,
+                StatusService,
                 CommonUtilityService,
                 TableListService
         ],
