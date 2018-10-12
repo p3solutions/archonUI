@@ -28,10 +28,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of this.manageUserRolesRequestData; let i = index">
+          <tr *ngFor="let user of this.manageUserRolesRequestData | globalRole ; let i = index">
             <td class="mm-info-data">{{i+1}}</td>
             <td class="mm-info-data">
-              <a href="">{{user.name}}</a>
+              <a (click)='getUserProfile(user)' [routerLink]="['/user-profile']" class="trim-text">{{user.name}}</a>
             </td>
             <td class="mm-info-data">{{user.emailAddress}}</td>
             <td class="mm-info-data">{{user.createdAt}}</td>
@@ -52,7 +52,7 @@
     </div>
   </div>
 </div>
-<app-change-user-role [selectedUserId]="selectedUserId" (onConfirm)="onConfirm($event)" class="modal fade" id="myModal1" role="dialog">
+<app-change-user-role [selectedUserId]="selectedUserId" (onconfirm)="onconfirm($event)" class="modal fade" id="myModal1" role="dialog">
   some other content
 </app-change-user-role>
 <!-- <a id="preSelectedRoles" name={{preSelectedRole}}></a> -->

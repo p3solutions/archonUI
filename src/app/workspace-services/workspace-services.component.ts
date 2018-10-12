@@ -43,7 +43,7 @@ export class WorkspaceServicesComponent implements OnInit {
 
   gotoMetalyzer(service: any) {
     if (service.serviceName === 'Metalyzer') {
-      this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSeletectedWorkspace());
+      this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSelectedWorkspaceId());
       this.tableListService.setServiceActionType(service.serviceActionType);
       if (service.serviceActionType === 'READ') {
         this.router.navigate(['/workspace/metalyzer/READ/analysis']);
@@ -62,47 +62,49 @@ export class WorkspaceServicesComponent implements OnInit {
     }
   }
   updateServiceActions(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
-    for (const service of serviceActions) {
-      switch (service.serviceName) {
-        case 'SERVICE_METALYZER': {
-          service.serviceName = 'Metalyzer';
-          service.iconName = 'metalyzer.png';
-          break;
+    if (serviceActions) {
+      for (const service of serviceActions) {
+        switch (service.serviceName) {
+          case 'SERVICE_METALYZER': {
+            service.serviceName = 'Metalyzer';
+            service.iconName = 'metalyzer.png';
+            break;
+          }
+          case 'SERVICE_LIVE_ARCHIVAL': {
+            service.serviceName = 'Live Archival';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          case 'SERVICE_CUSTOM_SCREEN_BUILDING': {
+            service.serviceName = 'Custom Screen Building';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          case 'SERVICE_END_2_END_TOOLKIT': {
+            service.serviceName = 'End to End Toolkit';
+            service.iconName = 'endtoendtoolkit.png';
+            break;
+          }
+          case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
+            service.serviceName = 'Enterprise Data Retrieval Tool';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          case 'SERVICE_INFOARCHIVE_COMPLETE_APPLICATION_AUTOMATION': {
+            service.serviceName = 'InfoArchive Complete Application Automation';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          case 'SERVICE_UNSTRUCTURED_DATA_ EXTRACTOR': {
+            service.serviceName = 'Unstructured Data Extractor';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          // default: {
+          //   service.serviceName = 'No Service Available';
+          //   break;
+          // }
         }
-        case 'SERVICE_LIVE_ARCHIVAL': {
-          service.serviceName = 'Live Archival';
-          service.iconName = 'livearchival.png';
-          break;
-        }
-        case 'SERVICE_CUSTOM_SCREEN_BUILDING': {
-          service.serviceName = 'Custom Screen Building';
-          service.iconName = 'livearchival.png';
-          break;
-        }
-        case 'SERVICE_END_2_END_TOOLKIT': {
-          service.serviceName = 'End to End Toolkit';
-          service.iconName = 'endtoendtoolkit.png';
-          break;
-        }
-        case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
-          service.serviceName = 'Enterprise Data Retrieval Tool';
-          service.iconName = 'livearchival.png';
-          break;
-        }
-        case 'SERVICE_INFOARCHIVE_COMPLETE_APPLICATION_AUTOMATION': {
-          service.serviceName = 'InfoArchive Complete Application Automation';
-          service.iconName = 'livearchival.png';
-          break;
-        }
-        case 'SERVICE_UNSTRUCTURED_DATA_ EXTRACTOR': {
-          service.serviceName = 'Unstructured Data Extractor';
-          service.iconName = 'livearchival.png';
-          break;
-        }
-        // default: {
-        //   service.serviceName = 'No Service Available';
-        //   break;
-        // }
       }
     }
     return serviceActions;

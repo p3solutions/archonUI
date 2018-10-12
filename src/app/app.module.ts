@@ -76,6 +76,7 @@ import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.serv
 import { TableListService } from './table-list/table-list.service';
 import { SearchPipe } from './search.pipe';
 import { CommonUtilityService } from './common-utility.service';
+import { RolePipe } from './role.pipe';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -117,7 +118,12 @@ import { CommonUtilityService } from './common-utility.service';
                 MetalyzerComponent,
                 MetalyzerConfigurationComponent,
                 TableListComponent,
-                SearchPipe
+                SearchPipe,
+                // StatusScreenComponent,
+                // KeysPipe,
+                // ReverseArrayPipe,
+                SearchPipe,
+                RolePipe
         ],
         imports: [
                 BrowserModule,
@@ -162,7 +168,9 @@ import { CommonUtilityService } from './common-utility.service';
                 WorkspaceHeaderService,
                 MetalyzerHeaderService,
                 TableListService,
-                CommonUtilityService
+                // StatusService,
+                CommonUtilityService,
+                TableListService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]

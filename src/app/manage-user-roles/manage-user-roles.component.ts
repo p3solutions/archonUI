@@ -27,7 +27,6 @@ export class ManageUserRolesComponent implements OnInit {
   ngOnInit() {
     this.getManageUserRolesData();
     this.isProgress = true;
-
   }
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
@@ -40,17 +39,21 @@ export class ManageUserRolesComponent implements OnInit {
   getUserId(id, roleName) {
     this.selectedUserId = id;
     this.preSelectedRole = roleName;
-    document.getElementById("selected-role").innerHTML = this.preSelectedRole;
+    document.getElementById('selected-role').innerHTML = this.preSelectedRole;
   }
 
   gotoManagementPanel() {
     this.router.navigate(['workspace/management-panel']);
   }
 
-  onConfirm(confirm: boolean) {
+  onconfirm(confirm: boolean) {
     if (confirm) {
       this.getManageUserRolesData();
     }
+  }
+
+  getUserProfile(userobj) {
+    localStorage.setItem('userId', userobj.id);
   }
 
 }

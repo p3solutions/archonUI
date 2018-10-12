@@ -12,15 +12,15 @@ export class WorkspacePanelComponent implements OnInit {
   //   this.editName = data.crisis.name;
   //   this.crisis = data.crisis;
   // });
-  
-  componentTitle : string = 'chandruashiwn';
-  sub : any;
-  constructor(private route : ActivatedRoute) {
+
+  componentTitle: String = 'chandruashiwn';
+  sub: any;
+  constructor(private route: ActivatedRoute) {
     // this.route.data.subscribe((data => {
     //   console.log('data',data);
     // }));
   //  this.componentTitle = this.route.snapshot.paramMap.get('title');
-  
+
    }
 
   ngOnInit() {

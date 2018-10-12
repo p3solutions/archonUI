@@ -1,97 +1,99 @@
 <div class="workspacelist-container">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="col-md-1 back-arrow">
-        <a (click)="gotoManagementPanel()" data-tooltip="Back">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-        </a>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="col-md-1 back-arrow">
+          <a (click)="gotoManagementPanel()" data-tooltip="Back">
+            <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-md-8">
+          <h3 class="workspace-panel-heading">
+            Workspaces
+            <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
+          </h3>
+        </div>
       </div>
-      <div class="col-md-8">
-        <h3 class="workspace-panel-heading">
-          Workspaces
-          <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
-        </h3>
+      <div class="col-md-4 col-md-offset-3">
+        <button type="button" class="btn btn-primary" id="workspace-add" (click)="openCreateWSModal()">Create New Workspace
+          <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+        </button>
       </div>
-    </div>
-    <div class="col-md-4 col-md-offset-3">
-      <button type="button" class="btn btn-primary" id="workspace-add" (click)="openCreateWSModal()">Create New Workspace
-        <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-      </button>
-    </div>
-    <div class="col-md-4 col-md-offset-7">
-      <button type="button" class="btn  ws-rejections" id="workspace-add" data-toggle="modal" data-target="#rejectedList">Rejected
-      </button>
-    </div>
-      <div id="rejectedList" role="dialog" class="modal fade">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">
-                <strong>Rejected Workspace List</strong>
-              </h4>
-            </div>
-            <div class="modal-body">
-              <table datatable id="ws-rejected-table" class="table table-hover table-bordered" *ngIf="!isProgress">
-                <thead>
-                  <tr>
-                    <th>Workspace Name</th>
-                    <th>Databases(s)</th>
-                    <th>Metadata Version</th>
-                    <th>Last Updated Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let ws of rejectedWorkspaceListInfo">
-                    <td class="ws-rej-data">{{ws.workspaceName}}</td>
-                    <td class="ws-rej-data">
-                      <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
-                        {{db?.name}}{{isLast ? '' : ', '}}
-                      </span>
-                    </td>
-                    <td class="ws-rej-data">{{ws.masterMetadataVersion}}</td>
-                    <td class="ws-rej-data">{{ws.updatedAt}}</td>
-                  </tr>
-                </tbody>
-              </table>
+      <div class="col-md-4 col-md-offset-7">
+        <button type="button" class="btn  ws-rejections" id="workspace-add" data-toggle="modal" data-target="#rejectedList">Rejected
+        </button>
+      </div>
+        <div id="rejectedList" role="dialog" class="modal fade">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                  <strong>Rejected Workspace List</strong>
+                </h4>
+              </div>
+              <div class="modal-body">
+                <table datatable id="ws-rejected-table" class="table table-hover table-bordered" *ngIf="!isProgress">
+                  <thead>
+                    <tr>
+                      <th>Workspace Name</th>
+                      <th>Databases(s)</th>
+                      <th>Metadata Version</th>
+                      <th>Last Updated Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let ws of rejectedWorkspaceListInfo">
+                      <td class="ws-rej-data">{{ws.workspaceName}}</td>
+                      <td class="ws-rej-data">
+                        <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
+                          {{db?.name}}{{isLast ? '' : ', '}}
+                        </span>
+                      </td>
+                      <td class="ws-rej-data">{{ws.masterMetadataVersion}}</td>
+                      <td class="ws-rej-data">{{ws.updatedAt}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    
-    <div class="flex-container" *ngFor="let workspaceGroupObj of workspaceActions; let indRow = index">
-      <div class="flex-cards card" *ngFor="let ws of workspaceGroupObj; let indCol = index" id="{{'flex-cards-' + indRow + '-' + indCol}}">
-          <div class="flex-card-header cur-def" [title]="ws?.workspaceName">
-            <img class="icon-img"  [attr.src]="'assets/metalyzer.png'" />
-          </div> 
-          <div class="flex-cards-bar">
-            <div class="trim-text flex-card-title">
-              {{ws?.workspaceName}}
+      
+      <div class="flex-container" *ngFor="let workspaceGroupObj of workspaceActions; let indRow = index">
+        <div class="flex-cards card" *ngFor="let ws of workspaceGroupObj; let indCol = index" id="{{'flex-cards-' + indRow + '-' + indCol}}">
+            <div class="flex-card-header cur-def" [title]="ws?.workspaceName">
+              <img class="icon-img"  [attr.src]="'assets/metalyzer.png'" />
+            </div> 
+            <div class="flex-cards-bar">
+              <div class="trim-text flex-card-title">
+                {{ws?.workspaceName}}
+              </div>
+              <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), true, $event)" title="Click for more info">
+                <i class="fa fa-caret-up archon-icondown"></i>
+              </span>
             </div>
-            <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), true, $event)" title="Click for more info">
-              <i class="fa fa-caret-up archon-icondown"></i>
-            </span>
+            <div class="card-reveal">
+              <p class="">
+                <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), false, $event)" title="Click to hide info">
+                  <i class="fa fa-caret-down archon-iconup"></i>
+                </span>
+              </p>
+              <p > Databases(S): <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">{{db?.name}}{{isLast ? '' : ', '}}</span></p>
+              <p > Metadata Version: {{ws?.masterMetadataVersion}}</p>
+              <p > Last Updated Time: {{ws?.updatedAt | date: "dd MMM, yyyy"}}</p>
+              <p  *ngIf="ws.workspaceState == 'PENDING'">Request Pending
+                <span>
+                  <i class="fa fa-trash-o fa-lg icon-disabled" aria-hidden="true" id="ws-pending-trash"></i>
+                </span>
+              </p>
+            </div>
           </div>
-          <div class="card-reveal">
-            <p class="">
-              <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), false, $event)" title="Click to hide info">
-                <i class="fa fa-caret-down archon-iconup"></i>
-              </span>
-            </p>
-            <p > Databases(S): <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">{{db?.name}}{{isLast ? '' : ', '}}</span></p>
-            <p > Metadata Version: {{ws?.masterMetadataVersion}}</p>
-            <p > Last Updated Time: {{ws?.updatedAt | date: "dd MMM, yyyy"}}</p>
-            <p  *ngIf="ws.workspaceState == 'PENDING'">Request Pending
-              <span>
-                <i class="fa fa-trash-o fa-lg icon-disabled" aria-hidden="true" id="ws-pending-trash"></i>
-              </span>
-            </p>
-          </div>
-        </div>
+      </div>
+  
     </div>
 
   </div>
-</div>
-
-<button style="display: none" id="reload-ws-list" (click)="reloadWSlist()"></button>
-<ng-template #createNewWorkspace></ng-template>
+  
+  <button style="display: none" id="reload-ws-list" (click)="reloadWSlist()"></button>
+  <ng-template #createNewWorkspace></ng-template>
+  

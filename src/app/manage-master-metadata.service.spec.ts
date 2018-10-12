@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ManageMasterMetadataService } from './manage-master-metadata.service';
 
-describe('ManageMasterMetadataService', () => {
+xdescribe('ManageMasterMetadataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule, HttpClientTestingModule],

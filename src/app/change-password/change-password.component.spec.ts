@@ -1,14 +1,45 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed, inject, flushMicrotasks, fakeAsync } from '@angular/core/testing';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { ChangePasswordComponent } from './change-password.component';
+import { ChangePasswordService } from './change-password.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { JwtHelper } from 'angular2-jwt';
+import { Observable } from 'rxjs/Observable';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
+  const formBuilder: FormBuilder = new FormBuilder();
+  let testBedService: any;
+  const getSimpleObservable = function(data) {
+    return new Observable<any>((observer) => {
+      observer.next(data); // observable execution
+      observer.complete();
+    });
+  };
+  const disposeMe = new Map();
+  const changePassword = function (data): Observable<any> {
+    const pvtObservable = getSimpleObservable(data);
+    disposeMe.set('changePassword', pvtObservable.subscribe());
+    return pvtObservable;
+  };
+  const response = {success: true, httpStatus: 200};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangePasswordComponent ]
+      declarations: [ ChangePasswordComponent ],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        // reference the new instance of formBuilder from above
+        ChangePasswordService,
+        JwtHelper,
+        { provide: FormBuilder, useValue: formBuilder }
+      ]
     })
     .compileComponents();
   }));
@@ -16,10 +47,36 @@ describe('ChangePasswordComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
+    component.changePasswordForm = formBuilder.group({
+      oldPassword: 123456,
+      newPassword: 123456,
+      confirmPassword: 123456
+    });
     fixture.detectChanges();
+    testBedService = TestBed.get(ChangePasswordService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('ChangePasswordService injected via inject(...) and TestBed.get(...) should be the same instance',
+    inject([ChangePasswordService], (injectService: ChangePasswordService) => {
+      expect(injectService).toBe(testBedService);
+    })
+  );
+
+  it('Should get change password success when changeUserPassword() is called', fakeAsync( () => {
+    expect(component.inProgress).toBeFalsy();
+    spyOn(testBedService, 'changePassword').and.returnValue(changePassword(response));
+    component.changeUserPassword();
+    flushMicrotasks();
+    fixture.detectChanges();
+    expect(component.inProgress).toBeTruthy();
+    testBedService.changePassword().subscribe(res => {
+      expect(res).toEqual(response);
+    });
+    disposeMe.get('changePassword').unsubscribe();
+  }));
+
 });
