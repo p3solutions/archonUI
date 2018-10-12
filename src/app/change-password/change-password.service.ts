@@ -18,7 +18,7 @@ export class ChangePasswordService {
   accessToken: string;
   token_data: any;
   userId: string;
-
+  passwordParam: object;
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelper
@@ -28,8 +28,8 @@ export class ChangePasswordService {
 
   changePassword(param) {
     const URL = this.getUsersUrl + this.userId + '/pwd';
-    console.log('service param', param);
-    return this.http.patch(URL, param, { headers: this.headers });
+    this.passwordParam = param;
+    return this.http.patch(URL, this.passwordParam, { headers: this.headers });
     // .pipe(
     // catchError(this.handleError('changePassword'))
     // );

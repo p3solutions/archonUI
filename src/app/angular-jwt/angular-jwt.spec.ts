@@ -17,7 +17,7 @@ const noExpiryToken = encodeTestToken({
   'admin': true
 });
 
-describe('AuthConfig', () => {
+xdescribe('AuthConfig', () => {
   'use strict';
 
   it('should have default values', () => {

@@ -11,8 +11,15 @@
           <a [routerLink]="['/workspace/workspace-dashboard']">Home
           </a>
         </li>
-        <li>
-          <a href="#">My Activities</a>
+        <li class="dropdown user-menu">
+          <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Activities
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li title="Status Monitor">
+              <a [routerLink]="['/workspace/status']" class="trim-text">Status</a>
+            </li>
+          </ul>
         </li>
         <li role="presentation" class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -69,7 +76,7 @@
           </a>
           <ul class="dropdown-menu">
             <li title="Profile">
-              <a [routerLink]="['/user-profile']" class="trim-text">Profile</a>
+              <a [routerLink]="['/user-profile']" (click)='callUserProfile()' class="trim-text">Profile</a>
             </li>
             <li *ngIf="info?.show" role="separator" class="divider"></li>
             <li *ngIf="info?.show" title="Manage">

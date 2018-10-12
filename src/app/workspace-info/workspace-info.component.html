@@ -36,7 +36,9 @@
               <b>Approver(s)</b>
             </td>
             <td class="ws-info-data">{{(workspaceInfoData?.approvers) ? workspaceInfoData?.approver : 'NULL'}}
+              <a [routerLink]="['/user-profile', workspaceInfoData?.approvers.id]">
               <span data-tooltip="Edit"><a class="fa fa-pencil archon-icon m-l-10 m-r-10"></a></span>
+              </a>
             </td>
           </tr> -->
           <tr>
@@ -60,7 +62,7 @@
           </tr>
           <tr>
             <td>
-              <b>Master Metadata Version</b>
+              <b>Manage Metadata Version</b>
             </td>
             <td class="ws-info-data">{{workspaceInfoData?.masterMetadataVersion}}
               <a data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">

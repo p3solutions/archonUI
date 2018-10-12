@@ -24,6 +24,7 @@ export class WorkspaceRolesObject {
     selected: boolean;
 }
 export class ServiceActionsObject {
+    iconName: string;
     serviceName: string;
     serviceId: string;
     serviceActionType: string;
@@ -53,6 +54,7 @@ export class WorkspaceObject {
     members: MemberObject[];
     databases: DatabaseObject[];
     workspaceState: string;
+    lastUpdatedTime: string; // for testing purpose, it is string format
     softDeleted: boolean;
 }
 export interface AnyObject {

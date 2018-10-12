@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { WorkspaceListService } from './workspace-list.service';
 
-describe('WorkspaceListService', () => {
+xdescribe('WorkspaceListService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [WorkspaceListService]

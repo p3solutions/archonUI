@@ -15,14 +15,6 @@
   height: 350px;
 }
 
-.form-control {
-  /* margin-top:-10px; */
-  height: 40px;
-  border-radius: 20px;
-  width: 280px;
-  margin-left: 8px;
-}
-
 .form-control-feedback {
   position: relative;
   margin-top: -34px;
@@ -64,6 +56,8 @@ a {
 h4 {
   display: inline;
   margin-left: 75px;
+}
+.table-header {
   float: left;
 }
 
@@ -151,4 +145,62 @@ button {
 .icon {
   display: inline-block;
   margin-left: -50px;
+}
+.dataA-panel-body {
+  height: 325px;
+}
+.dataA-scrollable-div {
+  overflow: auto;
+  max-height: 300px;
+}
+.primary-col-chkbx {
+  margin: 4px 5px;
+}
+#analysis-view .card {
+  height: 500px;
+}
+#analysis-view .tablename-list {
+  height: 370px;
+}
+#analysis-view .search-input {
+  margin-left: 20px;
+  width: 85%;
+}
+#analysis-view .form-control-feedback {
+  margin-left: 280px;
+}
+.col-loader {
+  padding: 2px 15px;
+  float: right;
+}
+.da-table.selected {
+  border: 1px solid #269AF8;
+}
+input[type='checkbox'] {
+  cursor: pointer;
+}
+.unselected {
+  display: none;
+  float: right;
+  padding: 3px 0;
+  color: #269AF8;
+}
+.selected .unselected {
+  display: block;
+}
+
+/* overriding css */
+.form-control {
+  height: 40px;
+  border-radius: 20px;
+  width: 85%;
+  margin-left: 20px;
+}
+.form-control-feedback {
+  position: relative;
+  margin-top: -34px;
+  margin-left: 243px;
+  height: 32px;
+  color: #269af8;
+  line-height: 30px;
 }

@@ -22,7 +22,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsObject[]>();
-
+  fetchTimeout = 3000;
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
@@ -63,8 +63,11 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
             bindCallback();
             dropdownItem.click();
             clearInterval(k);
+          } else if ((currentTime + this.fetchTimeout) > (new Date().getTime())) {
+            clearInterval(k);
           }
         };
+        const currentTime = new Date().getTime();
         const k = setInterval(fn, 500);
       }
     });

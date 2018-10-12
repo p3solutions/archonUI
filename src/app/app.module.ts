@@ -75,6 +75,12 @@ import { WorkspaceHeaderService } from './workspace-header/workspace-header.serv
 import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
 import { TableListService } from './table-list/table-list.service';
 import { SearchPipe } from './search.pipe';
+import { StatusScreenComponent } from './status-screen/status-screen.component';
+import { StatusService } from './status-screen/status.service';
+import { KeysPipe } from './keys.pipe';
+import { ReverseArrayPipe } from './reverse.pipe';
+import { CommonUtilityService } from './common-utility.service';
+import { RolePipe } from './role.pipe';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -116,7 +122,12 @@ import { SearchPipe } from './search.pipe';
                 MetalyzerComponent,
                 MetalyzerConfigurationComponent,
                 TableListComponent,
-                SearchPipe
+                SearchPipe,
+                StatusScreenComponent,
+                KeysPipe,
+                ReverseArrayPipe,
+                SearchPipe,
+                RolePipe
         ],
         imports: [
                 BrowserModule,
@@ -160,6 +171,9 @@ import { SearchPipe } from './search.pipe';
                 DatabaseListService,
                 WorkspaceHeaderService,
                 MetalyzerHeaderService,
+                TableListService,
+                StatusService,
+                CommonUtilityService,
                 TableListService
         ],
         bootstrap: [AppComponent],
