@@ -77,7 +77,6 @@ export class AddDatabaseWizardComponent implements OnInit {
         this.dbTestConnectionErrorMsg = '';
         this.dbTestConnectionSuccessMsg = res.connection.message;
         console.log('clicked on test connection', res, res.connection.message);
-
       }
       // else {
       //   console.log('clicked on failed connection');
