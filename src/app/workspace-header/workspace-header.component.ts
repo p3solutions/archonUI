@@ -22,7 +22,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsObject[]>();
-
+  fetchTimeout = 3000;
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
@@ -38,7 +38,6 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getUserWorkspaceList();
     this.userRole = this.userinfoService.getUserRoles();
-    localStorage.setItem('currentworkspacename', '');
   }
   ngOnDestroy() {
     console.log('removing viewContainerRef');
@@ -64,8 +63,11 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
             bindCallback();
             dropdownItem.click();
             clearInterval(k);
+          } else if ((currentTime + this.fetchTimeout) > (new Date().getTime())) {
+            clearInterval(k);
           }
         };
+        const currentTime = new Date().getTime();
         const k = setInterval(fn, 500);
       }
     });
@@ -89,7 +91,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
-    this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace.id);
+    this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
     this.workspaceService.passServiceActions(this.serviceActionsList);

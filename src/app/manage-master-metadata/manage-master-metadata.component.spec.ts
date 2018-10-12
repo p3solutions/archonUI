@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 
-describe('ManageMasterMetadataComponent', () => {
+xdescribe('ManageMasterMetadataComponent', () => {
   let component: ManageMasterMetadataComponent;
   let fixture: ComponentFixture<ManageMasterMetadataComponent>;
   let de: DebugElement;

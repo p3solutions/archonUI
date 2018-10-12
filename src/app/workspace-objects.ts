@@ -8,8 +8,13 @@ export class OwnerObject {
     name: string;
 }
 export class RoleObject {
+    id: string;
     roleId: string;
     roleName: string;
+    name: string;
+    createdAt: number;
+    updatedAt: number;
+    softDeleted: boolean;
 }
 export class WorkspaceRolesObject {
     id: string;
@@ -19,16 +24,19 @@ export class WorkspaceRolesObject {
     selected: boolean;
 }
 export class ServiceActionsObject {
+    iconName: string;
     serviceName: string;
     serviceId: string;
     serviceActionType: string;
 }
 export class MemberObject {
+    id: string;
     createdAt: number;
     updatedAt: number;
     user: UserObject;
     workspaceRole: RoleObject;
     serviceActions: ServiceActionsObject;
+    softDeleted: boolean;
 }
 export class DatabaseObject {
     id: string;
@@ -46,6 +54,8 @@ export class WorkspaceObject {
     members: MemberObject[];
     databases: DatabaseObject[];
     workspaceState: string;
+    lastUpdatedTime: string; // for testing purpose, it is string format
+    softDeleted: boolean;
 }
 export interface AnyObject {
     [key: string]: any;
@@ -79,10 +89,9 @@ export class CreateConfigDBObject {
     supportedDBId: string;
 }
 
+
 export class RelationshipInfoObject {
     secondaryTable: string;
     definitionType: string;
     joinName: string;
 }
-
-

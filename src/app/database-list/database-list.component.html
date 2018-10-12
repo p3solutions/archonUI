@@ -1,61 +1,56 @@
 <div class="workspacelist-container">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="col-md-1 back-arrow">
-        <a (click)="gotoManagementPanel()" data-tooltip="Back">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-        </a>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="col-md-1 back-arrow">
+          <a (click)="gotoManagementPanel()" data-tooltip="Back">
+            <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-md-8">
+          <h3 class="workspace-panel-heading">
+            Databases
+            <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
+          </h3>
+        </div>
       </div>
-      <div class="col-md-8">
-        <h3 class="workspace-panel-heading">
-          Databases
-          <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
-        </h3>
+      <div class="col-md-4 col-md-offset-4">
+        <button *ngIf="info?.show" type="button" class="btn btn-primary" (click)="openCreateAddDBmodal()" id="db-add">Add New Database Connection
+          <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
-    <div class="col-md-4 col-md-offset-3">
-      <button *ngIf="info?.show" type="button" class="btn btn-primary" (click)="openCreateAddDBmodal()" id="db-add">Add New Database Connection
-        <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-      </button>
-    </div>
+  
   </div>
-  <div class="row">
-    <div class="col-md-6 col-md-offset-1" *ngFor="let db of configDBListInfo">
-      <button type="button" id="db-list-btn" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{db.databaseName}}">
-        <div class="btn-box">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="trim-text">
-                <h2>{{db.profileName}}</h2>
-              </div>
+  
+  
+    <div class="flex-container" *ngFor="let dbListGroupObj of dbListActions; let indRow = index">
+  
+      <div class="flex-cards card" *ngFor="let db of dbListGroupObj; let indCol = index" id="{{'flex-cards-' + indRow + '-' + indCol}}">
+          <div class="flex-card-header cur-def" [title]="db?.profileName">
+            <img class="icon-img"  [attr.src]="'assets/livearchival.png'" />
+          </div> 
+          <div class="flex-cards-bar">
+            <div class="trim-text flex-card-title">
+              {{db?.profileName}}
             </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="trim-text ws-body">
-                <h4>Host : {{db.host}}
-                </h4>
-              </div>
-            </div>
-            <span class="ws-rightArrow">
-              <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
+            <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), true, $event)" title="Click for more info">
+              <i class="fa fa-caret-up archon-icondown"></i>
             </span>
           </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <div>
-                <h4 class="db-leftFooter">Owner : {{db.owner.name}}</h4>
-              </div>
-              <div>
-                <h4 class="db-rightFooter">Server Type : {{db.type}}</h4>
-              </div>
-            </div>
+          <div class="card-reveal">
+            <p class="">
+              <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), false, $event)" title="Click to hide info">
+                <i class="fa fa-caret-down archon-iconup"></i>
+              </span>
+            </p>
+            <p > Host: {{db?.host}}</p>
+            <p > Owner: {{db.owner.name}}</p>
+            <p > Server Type: {{db?.type}}</p>
           </div>
         </div>
-      </button>
-    </div>
-  </div>
-</div>
-<button style="display: none" id="populate-db-list" (click)="getConfigDBList()"></button>
-
-<ng-template #createNewDatabaseWizard></ng-template>
+  
+  </div> 
+  
+  <button style="display: none" id="populate-db-list" (click)="getConfigDBList()"></button>
+  
+  <ng-template #createNewDatabaseWizard></ng-template>

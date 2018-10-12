@@ -1,41 +1,64 @@
 <div>
-  <div class="row">
-    <div class="col-md-6">
-      <!-- <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
-        </a>
-      </div> -->
-      <div class="col-md-offset-1 col-md-8">
-        <h3 class="workspace-panel-heading">
-          Services
-        </h3>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="col-md-offset-1 col-md-8">
+          <h3 class="workspace-panel-heading">
+            Services
+          </h3>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <!-- {{(service?.serviceName?.length<20) ? 'archon-names-200' : ((service?.serviceName?.length<30) ? 'archon-names-300' :
-      'archon-names-400')}} -->
-    <div id="service-actions-info" class="workspace-panel-content">
-      <button type="button" *ngFor="let service of serviceActions" class="btn-primary custom-button" data-toggle="popover" data-placement="top"
-        [title]="service?.serviceName" data-content="Content" (click)="gotoMetalyzer(service)">
-        <div class="btn-box">
-          <div class="col-md-10" [attr.serviceid]="service?.id">
-            <div class="trim-text title">
-              <h3>{{service?.serviceName}}</h3>
+    
+    <div class="row">
+        <div id="serviceCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li  *ngFor="let serviceGroup of serviceActions; let ind = index" data-target="#serviceCarousel" data-slide-to="ind" class="{{ind === 0 ? 'active' : ''}}"></li>
+            </ol>
+          
+            <div class="carousel-inner">
+              <div *ngFor="let serviceGroup of serviceActions; let indRow = index;" class="item {{indRow === 0 ? 'active' : ''}}">
+                <div class="flex-container">
+                  
+                  <div *ngFor="let service of serviceGroup; let indCol = index;"  class="flex-cards card" id="{{'flex-cards-' + indRow + '-' + indCol}}" >
+                    <div class="flex-card-header" [title]="service?.serviceName" (click)="gotoMetalyzer(service)">
+                      <img class="icon-img"  [attr.src]="'assets/' + service.iconName" />
+                    </div>
+                    <div class="flex-cards-bar">
+                      <div class="trim-text flex-card-title">
+                        {{service?.serviceName}}
+                      </div>
+                      <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), true, $event)" title="Click for more info">
+                        <i class="fa fa-caret-up archon-icondown"></i>
+                      </span>
+                    </div>
+                    <div class="card-reveal">
+                      <p class="">Permission : {{service?.serviceActionType}}
+                        <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), false, $event)" title="Click to hide info">
+                          <i class="fa fa-caret-down archon-iconup"></i>
+                        </span>
+                      </p>
+                      <p>{{service.desc ? service.desc : defDesc}}</p>
+                    </div>
+                  </div>
+  
+                </div>
+  
+              </div>
             </div>
-            <div class="body">
-              <p>Permission : {{service?.serviceActionType}}
-              </p>
-            </div>
+  
+            <a class="left carousel-control" href="#serviceCarousel" data-slide="prev" [ngClass]="{'carousel-control-disabled' : (serviceActions && serviceActions.length < 2) }">
+              <span class="fa fa-chevron-left fa-2x col-archon-blue"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#serviceCarousel" data-slide="next" [ngClass]="{'carousel-control-disabled' : (serviceActions && serviceActions.length < 2) }">
+              <span class="fa fa-chevron-right fa-2x col-archon-blue"></span>
+              <span class="sr-only">Next</span>
+            </a>
+  
           </div>
-          <div class="col-md-2 btn-lg-arrow">
-            <span>
-              <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
-            </span>
-          </div>
-        </div>
-      </button>
+  
+  
     </div>
+  
   </div>
-</div>
+  

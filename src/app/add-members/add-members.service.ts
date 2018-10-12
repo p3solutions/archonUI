@@ -22,6 +22,7 @@ export class AddMembersService {
   });
   private apiUrl = environment.apiUrl;
   private getAllUsersUrl = this.apiUrl + 'users';
+  private addMembersUrl = this.apiUrl + '/workspaces/access';
 
   constructor(private http: HttpClient) { }
 
@@ -33,7 +34,12 @@ export class AddMembersService {
 
   getAllUsers(): Observable<ManageUserRoles[]> {
     return this.http.get<AddMembers[]>(this.getAllUsersUrl, { headers: this.headers }).map(this.extractData).pipe(
-      catchError(this.handleError('addmembers', []))
+      catchError(this.handleError('getAllUsers', []))
+    );
+  }
+  addMembers(params: any): Observable<any> {
+    return this.http.post(this.addMembersUrl, params, { headers: this.headers }).pipe(
+      catchError(this.handleError('addmembers', {}))
     );
   }
 

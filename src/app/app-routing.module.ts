@@ -29,6 +29,7 @@ import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.co
 import { MetalyzerComponent } from './metalyzer/metalyzer.component';
 import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
 import { TableListComponent } from './table-list/table-list.component';
+import { StatusScreenComponent } from './status-screen/status-screen.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,8 @@ const routes: Routes = [
         path: 'management-panel', component: ManagementPanelComponent
       }, {
         path: 'manage-user-roles', component: ManageUserRolesComponent
+      }, {
+        path: 'status', component: StatusScreenComponent
       }, {
         path: 'workspace-info/:id', component: WorkspaceInfoComponent
       }, {

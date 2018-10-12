@@ -4,6 +4,7 @@ import { DatabaseListService } from './database-list.service';
 import { Router } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { CommonUtilityService } from '../common-utility.service';
 import { Info } from '../info';
 
 @Component({
@@ -16,12 +17,15 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   configDBListInfo: any;
   info: Info;
   dynamicLoaderService: DynamicLoaderService;
+  private dbListActions: any;
   @ViewChild('createNewDatabaseWizard', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   constructor(
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
-    private router: Router) {
+    private router: Router,
+    private commonUtilityService: CommonUtilityService
+    ) {
     this.dynamicLoaderService = dynamicLoaderService;
     this.viewContainerRef = viewContainerRef;
   }
@@ -42,8 +46,8 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     }
     this.configDBListService.getListOfConfigDatabases().subscribe(result => {
       this.configDBListInfo = result;
-      console.log(this.configDBListInfo);
       this.isProgress = false;
+      this.dbListActions = this.commonUtilityService.groupOutArray(this.configDBListInfo, 3);
     });
   }
   gotoManagementPanel() {
@@ -51,13 +55,11 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('removing viewContainerRef');
     if (this.viewContainerRef) {
       this.viewContainerRef.remove(0);
     }
   }
   openCreateAddDBmodal() {
-    console.log('alok alokaloak', this.viewContainerRef);
     if (this.viewContainerRef.get(0)) {
       // open existing dynamic component
       document.getElementById('openCreateAddDBmodal').click();
@@ -66,5 +68,8 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       this.dynamicLoaderService.setRootViewContainerRef(this.viewContainerRef);
       this.dynamicLoaderService.addDynamicComponent1();
     }
+  }
+  toggleCard(cardId, toShow, _event) {
+   this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
   }
 }

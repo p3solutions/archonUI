@@ -39,6 +39,9 @@ sudo service nginx start
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Testing guides:
+https://codecraft.tv/courses/angular/unit-testing/overview/ 
+https://medium.com/spektrakel-blog/angular-testing-snippets-services-over-http-f1e2c439f1d2
 
 ## Running end-to-end tests
 

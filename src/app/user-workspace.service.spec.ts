@@ -1,20 +1,22 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserWorkspaceService } from './user-workspace.service';
+import { UserinfoService } from './userinfo.service';
 
-describe('UserWorkspaceService', () => {
+xdescribe('UserWorkspaceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
-        HttpClientTestingModule
+        HttpClientModule
       ],
-      providers: [UserWorkspaceService, HttpClientModule]
+      providers: [
+        UserWorkspaceService,
+        UserinfoService
+      ]
     });
   });
 
-  // it('should be created', inject([UserWorkspaceService], (service: UserWorkspaceService) => {
-  //   expect(service).toBeTruthy();
-  // }));
+  it('should be created', inject([UserWorkspaceService], (service: UserWorkspaceService) => {
+    expect(service).toBeTruthy();
+  }));
 });
