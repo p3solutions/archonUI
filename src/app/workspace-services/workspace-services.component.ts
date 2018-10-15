@@ -34,6 +34,15 @@ export class WorkspaceServicesComponent implements OnInit {
 
   ngOnInit() {
     this.workspaceService.serviceActionsUpdated.subscribe((serviceActions) => {
+      // hard-coded values for adhoc-query-builder
+      serviceActions.push(
+        {
+          iconName: 'querybuilder.png',
+          serviceActionType: 'ALL',
+          serviceId: '5ac5c6d0a54d7503ad946537',
+          serviceName: 'Adhoc Query Builder'
+        }
+      );
       const serviceActionsList = this.updateServiceActions(serviceActions);
       this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
         const carousel: any = $('#serviceCarousel');
