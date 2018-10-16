@@ -3,6 +3,7 @@ import { UserObject, AnyObject, ConfiguredDB, CreateConfigDBObject } from '../wo
 import { UserWorkspaceService } from '../user-workspace.service';
 import { UserinfoService } from '../userinfo.service';
 import { Router } from '@angular/router';
+import * as $ from 'jquery';
 
 
 @Component({
