@@ -35,7 +35,7 @@
                 <div class="col-md-12 row m-10">
                   <div class="col-md-2">Profile Name</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="profileName" placeholder="Enter Profile name" name="profileName" id="profileName" class="{{!profileName && profileNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event, profileName)" required/>
+                    <input [(ngModel)]="profileName" placeholder="Enter Profile name" name="profileName" id="profileName" class="{{!profileName && profileNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event, profileName)" required />
                   </div>
                   <div class="col-md-2">Database Server</div>
                   <div class="col-md-3">
@@ -43,11 +43,11 @@
                           <div class="row">
                             <div class="col-lg-12">
                               <div name="wsName" id="wsName" class="btn-group  {{!wsName && wsNameEmpty ? 'error-input' : ''}} " required>
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                   {{ selectedDBServerName }} <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu scrollable-menu" role="menu">
-                                  <li *ngFor="let servername of dbServerList"><a (click)="selectDBServer(servername)">{{ servername.name }}</a></li>
+                                  <li *ngFor="let servername of dbServerList"><a (click)="selectDBServer(servername); step0Validation($event, servername)" >{{ servername.name }}</a></li>
                                 </ul>
                               </div>
                             </div>
@@ -95,7 +95,7 @@
                   <!-- </div> -->
                   <div class="col-md-2">Default Schema</div>
                   <div class="col-md-4">
-                    <input [(ngModel)]="schemaName" placeholder="Enter Default Schema" name="schemaName" id="schemaName" class="{{!schemaName && schemaNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event, schemaName)" required/>
+                    <input [(ngModel)]="schemaName"  placeholder="Enter Default Schema" name="schemaName" id="schemaName" class="{{!schemaName && schemaNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event, schemaName)" required/>
                   </div>
                 </div>
                 <div class="col-md-12 row m-10">

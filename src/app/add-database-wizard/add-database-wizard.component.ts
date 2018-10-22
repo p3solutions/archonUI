@@ -5,6 +5,8 @@ import { UserinfoService } from '../userinfo.service';
 import { Router } from '@angular/router';
 import { ErrorObject } from '../error-object';
 import { HttpErrorResponse } from '@angular/common/http';
+import { first } from 'rxjs/operators';
+import { _localeFactory } from '@angular/core/src/application_module';
 
 
 
@@ -41,6 +43,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   testDbParam: AnyObject = {};
   // supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
+  profileNameEmpty = false;
   isDBAvailable = false;
   // newWSinfo: WorkspaceObject;
   databaseIds: string[] = [];
@@ -109,10 +112,12 @@ export class AddDatabaseWizardComponent implements OnInit {
     document.getElementById('openCreateAddDBmodal').click();
     // this.getSupportedDBs();
   }
-  step0Validation(_event, profileName, selectedDBServerName, host, port, databaseName, schemaName) {
-    if (!this.profileName || !this.host || !this.port || !this.databaseName || !this.schemaName) {
+  step0Validation(_event, profileName, host, port, databaseName, schemaName) {
+    if (!this.profileName.trim() || !this.host.trim() || !this.port || !this.databaseName.trim() || !this.schemaName.trim()) {
       this.step0Empty = false;
-    }  else {
+    } else if (this.selectedDBServerName === 'Select server') {
+      this.step0Empty = false;
+    } else {
       this.step0Empty = true;
     }
     this.enableDisableNextBtn();
@@ -120,17 +125,15 @@ export class AddDatabaseWizardComponent implements OnInit {
   step1Validation(_event, userName, password) {
   console.log(this.userName, !this.userName);
 
-      if (!this.userName || !this.password ) {
-        console.log(!this.userName, 'username');
+      if (!this.userName.trim() || !this.password.trim() ) {
       this.step1Empty = false;
-    }  else {
+    } else {
       this.step1Empty = true;
     }
     this.enableDisableNextBtn();
   }
   enableDisableNextBtn() {
     const currentStep =  $('.carousel-inner .item.active').attr('step');
-    console.log(currentStep);
     switch (currentStep) {
       case '0':
         this.enableNextBtn = this.step0Empty === true;
@@ -159,6 +162,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   prevStep(e) {
     this.dbTestConnectionSuccessMsg = undefined;
     this.dbTestConnectionErrorMsg = undefined;
+    this.enableNextBtn = this.step0Empty === true;
     if (document.querySelector('.second').classList.contains('active')) {
       this.addClass('prev-btn', 'hide');
       this.removeClass('cancel-btn', 'hide');
@@ -201,7 +205,7 @@ export class AddDatabaseWizardComponent implements OnInit {
           this.removeClass('progress-bar', 'width-5-pc');
           this.removeClass('progress-bar', 'width-33-pc-rev');
           this.addClass('progress-bar', 'width-33-pc');
-          this.enableNextBtn = false;
+          this.enableNextBtn = this.step1Empty === true;
         }
         break;
       case '1':
