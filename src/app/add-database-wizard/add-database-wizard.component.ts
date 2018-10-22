@@ -18,15 +18,15 @@ import { _localeFactory } from '@angular/core/src/application_module';
 })
 export class AddDatabaseWizardComponent implements OnInit {
 
-  profileName: string;
+  profileName = '';
   dbServer: string;
   dbServerList = [];
-  databaseName: string;
-  host: string;
+  databaseName = '';
+  host = '';
   port: string;
-  schemaName: string;
-  userName: string;
-  password: string;
+  schemaName = '';
+  userName = '';
+  password = '';
   authType = 'JDBC';
   supportedDBId: string;
   selectedDBServerName = 'Select server';
