@@ -26,7 +26,6 @@ export class MetalyzerHeaderService {
   }
   setWorkspaceId(workspaceId: string) {
     this.workspaceId = workspaceId;
-    console.log('reloading page ', this.workspaceId)
   }
   getWorkspaceName(): Observable<string> {
     const URL = this.workspaceinfoUrl + this.workspaceId;

@@ -5,7 +5,7 @@ import { WorkspaceMgmtPanelComponent } from './workspace-mgmt-panel.component';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-describe('WorkspaceMgmtPanelComponent', () => {
+xdescribe('WorkspaceMgmtPanelComponent', () => {
   let component: WorkspaceMgmtPanelComponent;
   let fixture: ComponentFixture<WorkspaceMgmtPanelComponent>;
   let de: DebugElement;
