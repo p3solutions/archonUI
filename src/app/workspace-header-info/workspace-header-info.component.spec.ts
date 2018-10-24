@@ -7,7 +7,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-xdescribe('WorkspaceHeaderInfoComponent', () => {
+describe('WorkspaceHeaderInfoComponent', () => {
   let component: WorkspaceHeaderInfoComponent;
   let fixture: ComponentFixture<WorkspaceHeaderInfoComponent>;
   let de: DebugElement;

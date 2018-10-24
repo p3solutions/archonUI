@@ -18,7 +18,6 @@ import { JwtHelper } from 'angular2-jwt';
 import { SigninFormService } from '../signin-form/signin-form.service';
 import { SignUp } from '../sign-up';
 import { ErrorObject } from '../error-object';
-import { Router } from '@angular/router';
 
 xdescribe('SignupFormComponent', () => {
   let component: SignupFormComponent;
@@ -41,7 +40,6 @@ xdescribe('SignupFormComponent', () => {
     disposeMe = simpleObservable.subscribe();
     return simpleObservable;
   };
-  let router: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -70,13 +68,11 @@ xdescribe('SignupFormComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     signUpService = TestBed.get(SignupFormService);
-    router = TestBed.get(Router);
   });
 
 
   it('Should display the response for signup-form component', () => {
     spyOn(signUpService, 'signUp').and.returnValue(onSignUp());
-    spyOn(router, 'navigate');
     component.onSignUp();
     fixture.detectChanges();
     const nameDummy = component.responseData['name'];
@@ -85,8 +81,7 @@ xdescribe('SignupFormComponent', () => {
     expect(nameDummy).toBe(component.responseData['name']);
     expect(emailAddressDummy).toBe(component.responseData['emailAddress']);
     expect(passwordDummy).toBe(component.responseData['password']);
-    disposeMe.unsubscribe();
-    // console.log('Backened returned code', component.msg);
+    console.log('Backened returned code', component.msg);
   });
 
 

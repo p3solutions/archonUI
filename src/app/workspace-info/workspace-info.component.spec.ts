@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 import { HttpClientModule } from '@angular/common/http';
 
-xdescribe('WorkspaceInfoComponent', () => {
+describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
   let fixture: ComponentFixture<WorkspaceInfoComponent>;
   let de: DebugElement;

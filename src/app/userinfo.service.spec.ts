@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { UserinfoService } from './userinfo.service';
 
-xdescribe('UserinfoService', () => {
+describe('UserinfoService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [UserinfoService]
