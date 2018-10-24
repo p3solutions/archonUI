@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManagementPanelComponent } from './management-panel.component';
 
-xdescribe('ManagementPanelComponent', () => {
+describe('ManagementPanelComponent', () => {
   let component: ManagementPanelComponent;
   let fixture: ComponentFixture<ManagementPanelComponent>;
 

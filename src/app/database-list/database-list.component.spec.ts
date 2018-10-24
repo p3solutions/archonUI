@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatabaseListComponent } from './database-list.component';
 
-xdescribe('DatabaseListComponent', () => {
+describe('DatabaseListComponent', () => {
   let component: DatabaseListComponent;
   let fixture: ComponentFixture<DatabaseListComponent>;
 

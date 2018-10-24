@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { WorkspaceLandingPageService } from './workspace-landing-page.service';
 
-xdescribe('WorkspaceLandingPageService', () => {
+describe('WorkspaceLandingPageService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [WorkspaceLandingPageService]

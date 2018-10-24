@@ -8,7 +8,7 @@ import { InfoService } from '../info.service';
 import { Info } from '../info';
 import { Observable } from 'rxjs/Observable';
 
-xdescribe('NavbarComponent', () => {
+describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
   let de: DebugElement;

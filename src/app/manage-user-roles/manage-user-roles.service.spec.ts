@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { ManageUserRolesService } from './manage-user-roles.service';
 
-xdescribe('ManageUserRolesService', () => {
+describe('ManageUserRolesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ManageUserRolesService]

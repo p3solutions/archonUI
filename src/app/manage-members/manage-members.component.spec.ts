@@ -10,7 +10,6 @@ import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 
-
 xdescribe('ManageMembersComponent', () => {
   let component: ManageMembersComponent;
   let fixture: ComponentFixture<ManageMembersComponent>;
@@ -64,7 +63,7 @@ xdescribe('ManageMembersComponent', () => {
     expect(role.textContent.trim()).toBe(workspaceAccess.workspaceRole.roleName);
   });
 // this shouldn't be executed on production
-  xit('Should work the delete functionality, by deleting one member-info', () => {
+  it('Should work the delete functionality, by deleting one member-info', () => {
     spyOn(manageMembersService, 'getManageMembersData').and.returnValue(simpleObservable);
     fixture.detectChanges();
     // expect(component.onDelete).toBeTruthy();

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MetalyzerConfigurationComponent } from './metalyzer-configuration.component';
 
-xdescribe('MetalyzerConfigurationComponent', () => {
+describe('MetalyzerConfigurationComponent', () => {
   let component: MetalyzerConfigurationComponent;
   let fixture: ComponentFixture<MetalyzerConfigurationComponent>;
 
