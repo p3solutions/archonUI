@@ -34,7 +34,8 @@ export class WorkspaceServicesComponent implements OnInit {
 
   ngOnInit() {
     this.workspaceService.serviceActionsUpdated.subscribe((serviceActions) => {
-      // hard-coded values for adhoc-query-builder
+      // hard-coded values for adhoc-query-builder,
+      // NOTE: whenever this function is called it adds a duplicate of this hard-coded service object
       serviceActions.push(
         {
           iconName: 'querybuilder.png',
