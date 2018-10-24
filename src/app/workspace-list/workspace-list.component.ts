@@ -5,6 +5,8 @@ import { JwtHelper } from 'angular2-jwt';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { CommonUtilityService } from '../common-utility.service';
+import { archonConfig } from '../config';
+import { archonEnums } from '../enum.config';
 
 
 @Component({
@@ -60,12 +62,12 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     gotoManagementPanel() {
-        this.router.navigate(['workspace/management-panel']);
+        this.router.navigateByUrl(archonConfig.Urls.managementPanelRoute);
     }
     setRejectedWorkspaceListInfo(wsListInfo: WorkspaceObject[]) {
         let i;
         for (i in wsListInfo) {
-            if (wsListInfo[i].workspaceState === 'REJECTED') {
+            if (wsListInfo[i].workspaceState === archonEnums.rejected) {
                 this.rejectedWorkspaceListInfo.push(wsListInfo[i]);
             }
         }

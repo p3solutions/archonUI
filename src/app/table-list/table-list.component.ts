@@ -1,6 +1,7 @@
 import { Component, OnInit, Pipe } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
+import { archonEnums } from '../enum.config';
 @Component({
   selector: 'app-table-list',
   templateUrl: './table-list.component.html',
@@ -33,6 +34,8 @@ export class TableListComponent implements OnInit {
   prefixSecTblId = 'secTbl_';
   secTblColJoiner = '$$';
   selectedTblsColsObj: any = {};
+  write = archonEnums.write;
+  all = archonEnums.all;
   constructor(
     private tablelistService: TableListService
   ) { }

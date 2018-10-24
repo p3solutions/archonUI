@@ -5,6 +5,8 @@ import { JwtHelper } from 'angular2-jwt';
 import { Info } from '../info';
 import { InfoService } from '../info.service';
 import { WorkspaceLandingPageService } from './workspace-landing-page.service';
+import { archonEnums } from '../enum.config';
+import { archonConfig } from '../config';
 
 @Component({
   selector: 'app-workspace-landing-page',
@@ -33,13 +35,13 @@ export class WorkspaceLandingPageComponent implements OnInit {
     this.info.id = this.token_data.user.id;
     this.info.roles = this.token_data.roles[0];
     this.info.username = this.token_data.username;
-    if (this.info.roles.roleName === 'ROLE_NOT_ASSIGNED') {
-      this.router.navigate(['workspace/no-workspace']);
+    if (this.info.roles.roleName === archonEnums.not_assigned) {
+      this.router.navigateByUrl(archonConfig.Urls.noworkspaceRoute);
     } else {
-      if (this.info.roles.roleName === 'ROLE_ADMIN') {
+      if (this.info.roles.roleName === archonEnums.admin) {
         this.info.show = true;
       }
-      this.router.navigate(['workspace/workspace-dashboard']);
+      this.router.navigateByUrl(archonConfig.Urls.dashboardRoute);
     }
 
       // this.workspaceLandingPageService.getWorkspaces().subscribe(info => {

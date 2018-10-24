@@ -7,6 +7,7 @@ import { WorkspaceServicesService } from '../workspace-services/workspace-servic
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { WorkspaceHeaderService } from './workspace-header.service';
 import {archonConfig} from '../config';
+import { archonEnums } from '../enum.config';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -22,6 +23,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   currentWorkspace: WorkspaceObject;
   fn: any;
   dynamicLoaderService: DynamicLoaderService;
+  workspace = archonEnums.workspace;
+  member = archonEnums.member;
   @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsObject[]>();
   fetchTimeout = 3000;
