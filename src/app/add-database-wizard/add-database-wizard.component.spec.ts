@@ -4,7 +4,7 @@ import { AddDatabaseWizardComponent } from './add-database-wizard.component';
 import { Observable } from 'rxjs/Observable';
 import { UserWorkspaceService } from '../user-workspace.service';
 
-describe('AddDatabaseWizardComponent', () => {
+xdescribe ('AddDatabaseWizardComponent', () => {
   let component: AddDatabaseWizardComponent;
   let fixture: ComponentFixture<AddDatabaseWizardComponent>;
   let testBedService: any;

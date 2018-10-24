@@ -63,7 +63,7 @@ xdescribe('ManageMembersComponent', () => {
     expect(role.textContent.trim()).toBe(workspaceAccess.workspaceRole.roleName);
   });
 // this shouldn't be executed on production
-  it('Should work the delete functionality, by deleting one member-info', () => {
+  xit('Should work the delete functionality, by deleting one member-info', () => {
     spyOn(manageMembersService, 'getManageMembersData').and.returnValue(simpleObservable);
     fixture.detectChanges();
     // expect(component.onDelete).toBeTruthy();

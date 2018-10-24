@@ -56,6 +56,7 @@ export class WorkspaceObject {
     workspaceState: string;
     lastUpdatedTime: string; // for testing purpose, it is string format
     softDeleted: boolean;
+    databaseList: any[];
 }
 export interface AnyObject {
     [key: string]: any;
