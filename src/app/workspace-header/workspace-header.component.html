@@ -14,8 +14,8 @@
           </div>
           <div class="dropdown-divider" *ngIf="userRole?.roleName == 'ROLE_MEMBER'"></div>
           <a class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_MEMBER'" (click)="contactAdmin()">Contact Your Admin</a>
-          <div class="dropdown-divider" *ngIf="userRole?.roleName == 'ROLE_ADMIN' && userWorkspaceArray?.length > 0"></div>
-          <a class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_ADMIN'" (click)="openCreateWSModal()">+ Create workspace</a>
+          <div class="dropdown-divider" *ngIf="enableWorkspace && userWorkspaceArray?.length > 0"></div>
+          <a class="dropdown-item" *ngIf="enableWorkspace" (click)="openCreateWSModal()">+ Create workspace</a>       
         </div>
         <!-- <select  #selectedWorkspace (change)="onChange(selectedWorkspace.value)">
           <option class="dropdown-item" *ngIf="userWorkspaceArray && userWorkspaceArray.length === 0" selected="selected" value="0">{{selectedWorkspaceName? selectedWorkspaceName : 'SELECT WORKSPACE'}}</option>

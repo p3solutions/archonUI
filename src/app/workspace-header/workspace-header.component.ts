@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, Inject, OnDestroy } from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
-import { WorkspaceObject, ServiceActionsObject } from '../workspace-objects';
+import { WorkspaceObject, ServiceActionsObject, ConfiguredDB } from '../workspace-objects';
 import { Info } from '../info';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { WorkspaceHeaderService } from './workspace-header.service';
+import {archonConfig} from '../config';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -16,6 +17,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   serviceActionsList: ServiceActionsObject;
   userId: string;
   userRole: any;
+  enableWorkspace = false;
   selectedWorkspaceName: string;
   currentWorkspace: WorkspaceObject;
   fn: any;
@@ -38,9 +40,9 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getUserWorkspaceList();
     this.userRole = this.userinfoService.getUserRoles();
+    this.enableWorkspace = archonConfig.workSpaceAllowedAdmins.includes(this.userRole.roleName);
   }
   ngOnDestroy() {
-    console.log('removing viewContainerRef');
     if (this.viewContainerRef) {
       this.viewContainerRef.remove(0);
     }

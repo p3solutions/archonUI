@@ -6,6 +6,7 @@ import { WorkspaceRolesObject, RoleObject, AnyObject, MemberObject } from '../wo
 import { UserinfoService } from '../userinfo.service';
 import { ManageUserRoles } from '../manage-user-roles';
 import { ErrorObject } from '../error-object';
+// import * as $ from 'jquery';
 
 @Component({
   selector: 'app-manage-members',
