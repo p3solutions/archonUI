@@ -4,11 +4,7 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { UserinfoService } from '../userinfo.service';
 import { Router } from '@angular/router';
 import { ErrorObject } from '../error-object';
-import { HttpErrorResponse } from '@angular/common/http';
-import { first } from 'rxjs/operators';
-import { _localeFactory } from '@angular/core/src/application_module';
-
-
+import * as $ from 'jquery';
 
 
 @Component({
