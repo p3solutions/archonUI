@@ -80,7 +80,7 @@ export class AddDatabaseWizardComponent implements OnInit {
       //  console.log('clicked on test connection', res, res.connection.message);
       } else {
          this.dbTestConnectionSuccessMsg = '';
-         this.dbTestConnectionErrorMsg = 'failed try again with correct db configuration.';
+         this.dbTestConnectionErrorMsg = 'Failed! Try again with correct DB configuration.';
        }
     });
     // (err) => { console.log('error', err) };
