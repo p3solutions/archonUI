@@ -81,13 +81,11 @@ export class AddDatabaseWizardComponent implements OnInit {
       if (res) {
         this.dbTestConnectionErrorMsg = '';
         this.dbTestConnectionSuccessMsg = res.connection.message;
-        console.log('clicked on test connection', res, res.connection.message);
-      }
-      // else {
-      //   console.log('clicked on failed connection');
-      //   this.dbTestConnectionSuccessMsg = "";
-      //   this.dbTestConnectionErrorMsg = "failed try again with correct db configuration.";
-      // }
+      //  console.log('clicked on test connection', res, res.connection.message);
+      } else {
+         this.dbTestConnectionSuccessMsg = '';
+         this.dbTestConnectionErrorMsg = 'failed try again with correct db configuration.';
+       }
     });
     // (err) => { console.log('error', err) };
   }
@@ -123,8 +121,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.enableDisableNextBtn();
   }
   step1Validation(_event, userName, password) {
-  console.log(this.userName, !this.userName);
-
+  // console.log(this.userName, !this.userName);
       if (!this.userName.trim() || !this.password.trim() ) {
       this.step1Empty = false;
     } else {
@@ -140,7 +137,6 @@ export class AddDatabaseWizardComponent implements OnInit {
         break;
       case '1':
         this.enableNextBtn = this.step1Empty === true;
-        console.log(this.enableNextBtn, 'ture');
         break;
       case '2':
         // this.enableNextBtn = this.selectedSecCol.size > 0;
@@ -198,7 +194,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     }
   handleStepIindicator(isNext) {
     const slideNo = $('.carousel-inner .item.active').attr('step');
-    console.log('slideNo', slideNo, document.getElementById('progress-bar'));
+   //  console.log('slideNo', slideNo, document.getElementById('progress-bar'));
     switch (slideNo) {
       case '0':
         if (isNext) {
