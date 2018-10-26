@@ -49,7 +49,7 @@ export class SignupFormComponent implements OnInit {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
         // console.log('data', this.responseData);
-        this.router.navigate(['sign-in']);
+        this.router.navigate(['/sign-in']);
         this.msg = 200;
       },
       (err: HttpErrorResponse) => {

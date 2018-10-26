@@ -53,8 +53,6 @@ export class AddDatabaseWizardComponent implements OnInit {
   step0Empty = false;
   step1Empty = false;
   constructor(
-    private router: Router,
-    private userinfoService: UserinfoService,
     private userWorkspaceService: UserWorkspaceService
   ) { }
 
