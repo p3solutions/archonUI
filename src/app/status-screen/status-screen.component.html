@@ -32,8 +32,8 @@
       </div>
       <div class="btn-group col-md-2 p-0">
         <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          title="{{selectedJobStatus? selectedJobStatus : {{jobOriginAll}}}}">
-          {{selectedJobStatus? selectedJobStatus : {{jobOriginAll}}}}
+          title="{{selectedJobStatus? selectedJobStatus : jobOriginAll}}">
+          {{selectedJobStatus? selectedJobStatus : jobOriginAll}}
         </button>
         <div class="dropdown-menu">
           <div class="scrollable">
@@ -116,10 +116,10 @@
                     <h4 class="panel-title">
                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse-job-{{ind}}" class="collapsed">Attempt #{{selectedJD.jobDetails.length - ind}}
                         <span class="pull-right"> Status: 
-                          <i *ngIf="attempt.jobInfo.jobStatus === {{success}}" class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
-                          <i *ngIf="attempt.jobInfo.jobStatus === {{failure}}" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
-                          <i *ngIf="attempt.jobInfo.jobStatus === {{schudeled}}" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
-                          <i *ngIf="attempt.jobInfo.jobStatus === {{in_progress}}" class="fa fa-circle-o-notch fa-spin col-yellow fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === success" class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === failure" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === schudeled" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === in_progress" class="fa fa-circle-o-notch fa-spin col-yellow fa-lg" aria-hidden="true"></i>
                         </span>
                         <i class="fa fa-caret-up accordion-coll-hide fa-lg pull-left" aria-hidden="true"></i>
                         <i class="fa fa-caret-down accordion-coll-show fa-lg pull-left" aria-hidden="true"></i>
