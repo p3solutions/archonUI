@@ -15,7 +15,7 @@ import { AnyObject } from '../workspace-objects';
 export class ManageMembersService {
   apiUrl = environment.apiUrl;
   wSMembersUrl = 'workspaces/';
-  wSroleListUrl = 'admin/roles/workspace';
+  wSroleListUrl = 'roles/workspace';
   serviceActionsUrl = 'public/roles/actions';
   wsDelAccessUrl = 'workspaces/access/';
   updateWSRoleUrl = 'workspaces/access/';
