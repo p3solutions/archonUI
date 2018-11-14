@@ -138,7 +138,7 @@ export class NewWorkspaceComponent implements OnInit {
     .subscribe( res => {
       if (res && res.length > 0) {
         res.forEach(element => {
-          element.createdDate = new Date(element.createdAt).toDateString();
+          element.createdDate = new Date(element.createdAt * 1000).toDateString();
           this.supportedDBs.push(element);
         });
         this.isDBAvailable = true;
@@ -164,16 +164,17 @@ export class NewWorkspaceComponent implements OnInit {
                             </div>`,
           'title': ''
         },
+        { 'data': 'profileName' },
         { 'data': 'databaseName' },
         { 'data': 'owner.name' },
         { 'data': 'createdDate' },
-        {
-          'className': 'fa fa-plus-circle fa-lg archon-icon disp-bl text-center',
-          'orderable': false,
-          'data': null,
-          'defaultContent': '',
-          'title': ''
-        }
+        // {
+        //   'className': 'fa fa-plus-circle fa-lg archon-icon disp-bl text-center',
+        //   'orderable': false,
+        //   'data': null,
+        //   'defaultContent': '',
+        //   'title': ''
+        // }
       ],
       'order': [[1, 'asc']]
     });
