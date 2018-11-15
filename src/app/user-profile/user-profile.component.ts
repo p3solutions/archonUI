@@ -3,7 +3,6 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceListService } from '../workspace-list/workspace-list.service';
 import { Router } from '@angular/router';
 import { WorkspaceObject } from '../workspace-objects';
-import { archonConfig } from '../config';
 
 @Component({
   selector: 'app-user-profile',
@@ -76,7 +75,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   gotoDashboard() {
-    this.router.navigateByUrl(archonConfig.Urls.workspaceServiceRoute);
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
   onUpdateProfile(confirm: boolean) {

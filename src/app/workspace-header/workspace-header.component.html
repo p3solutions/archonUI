@@ -6,14 +6,14 @@
     <div class="col-md-3">
       <div class="btn-group" id="selectedWorkspace">
         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{selectedWorkspaceName ? selectedWorkspaceName : workspace}}
+          {{selectedWorkspaceName ? selectedWorkspaceName : 'SELECT WORKSPACE'}}
         </button>
         <div class="dropdown-menu " id="workspace-list-dropdown">
           <div class="scrollable" *ngIf="userWorkspaceArray">
             <a class="dropdown-item dropdown-data" *ngFor="let ws of userWorkspaceArray" (click)="selectWorkspace(ws)" id="{{ws.id}}">{{ws.workspaceName}}</a>
           </div>
-          <div class="dropdown-divider" *ngIf="userRole?.roleName == member"></div>
-          <a class="dropdown-item" *ngIf="userRole?.roleName == member" (click)="contactAdmin()">Contact Your Admin</a>
+          <div class="dropdown-divider" *ngIf="userRole?.roleName == 'ROLE_MEMBER'"></div>
+          <a class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_MEMBER'" (click)="contactAdmin()">Contact Your Admin</a>
           <div class="dropdown-divider" *ngIf="enableWorkspace && userWorkspaceArray?.length > 0"></div>
           <a class="dropdown-item" *ngIf="enableWorkspace" (click)="openCreateWSModal()">+ Create workspace</a>       
         </div>

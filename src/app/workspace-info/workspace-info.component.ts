@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { Http, Headers, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { WorkspaceObject, MemberObject, ServiceActionsObject } from '../workspace-objects';
-import { archonConfig } from '../config';
 
 @Component({
   selector: 'app-workspace-info',
@@ -73,6 +72,6 @@ export class WorkspaceInfoComponent implements OnInit {
   }
 
   gotoDashboard() {
-    this.router.navigateByUrl(archonConfig.Urls.dashboardRoute);
+    this.router.navigate(['workspace/workspace-dashboard']);
   }
 }

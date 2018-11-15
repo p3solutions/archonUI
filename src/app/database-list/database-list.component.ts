@@ -6,8 +6,6 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonUtilityService } from '../common-utility.service';
 import { Info } from '../info';
-import { archonConfig } from '../config';
-
 
 @Component({
   selector: 'app-database-list',
@@ -20,7 +18,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   info: Info;
   dynamicLoaderService: DynamicLoaderService;
   private dbListActions: any;
-  // routeUrl = managementPanelRoute;
   @ViewChild('createNewDatabaseWizard', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   constructor(
     private configDBListService: DatabaseListService,
@@ -40,7 +37,11 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   getConfigDBList() {
     const navbarComponent = new NavbarComponent();
     this.info = navbarComponent.getInfo();
-    if (archonConfig.dataBaseListRoles.includes(this.info.roles.roleName)) {
+    if (this.info.roles.roleName === 'ROLE_DB_ADMIN') {
+      this.info.show = true;
+    } else if (this.info.roles.roleName === 'ROLE_SUPER_ADMIN') {
+      this.info.show = true;
+    } else if (this.info.roles.roleName === 'ROLE_DB_MEMBER') {
       this.info.show = true;
     }
     this.configDBListService.getListOfConfigDatabases().subscribe(result => {
@@ -50,7 +51,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     });
   }
   gotoManagementPanel() {
-    this.router.navigateByUrl(archonConfig.Urls.managementPanelRoute);
+    this.router.navigate(['workspace/management-panel']);
   }
 
   ngOnDestroy() {

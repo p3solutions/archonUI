@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MemberRequestService } from './member-request.service';
 import { MemberRequestData } from '../member-request-data';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { archonConfig } from '../config';
 @Component({
   selector: 'app-member-request',
   templateUrl: './member-request.component.html',
@@ -29,6 +28,6 @@ export class MemberRequestComponent implements OnInit {
       });
   }
   gotoDashboard() {
-    this.router.navigateByUrl(archonConfig.Urls.workspaceServiceRoute);
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 }

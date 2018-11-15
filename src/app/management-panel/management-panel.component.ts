@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CommonUtilityService } from '../common-utility.service';
-import { archonConfig } from '../config';
 
 @Component({
   selector: 'app-management-panel',
@@ -65,16 +64,16 @@ export class ManagementPanelComponent implements OnInit {
   }
 
   gotoManageUserRoles() {
-    this.router.navigateByUrl(archonConfig.Urls.userRolesRoute);
+    this.router.navigate(['workspace/manage-user-roles']);
   }
   gotoWorkspaceList() {
-    this.router.navigateByUrl(archonConfig.Urls.wokspaceRoute);
+    this.router.navigate(['workspace/workspace-list']);
   }
   gotoDashboard() {
-    this.router.navigateByUrl(archonConfig.Urls.workspaceServiceRoute);
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
   gotoConfigDatabaseList() {
-    this.router.navigateByUrl(archonConfig.Urls.databaseListRoute);
+    this.router.navigate(['workspace/database-list']);
   }
   toggleCard(cardId, toShow, _event) {
     this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
