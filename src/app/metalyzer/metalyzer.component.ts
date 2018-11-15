@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
+import { archonEnums } from '../enum.config';
+import { archonConfig } from '../config';
 @Component({
   selector: 'app-metalyzer',
   templateUrl: './metalyzer.component.html',
@@ -20,18 +22,18 @@ export class MetalyzerComponent implements OnInit {
 
   ngOnInit() {
     this.serviceActionType = this.route.snapshot.paramMap.get('serviceActionType');
-    if (this.serviceActionType === 'READ') {
-      this.router.navigate(['/workspace/metalyzer/READ/analysis']);
-    } else if (this.serviceActionType === 'WRITE' || this.serviceActionType === 'ALL') {
+    if (this.serviceActionType === archonEnums.read) {
+      this.router.navigateByUrl(archonConfig.Urls.metalyzerReadRoute);
+    } else if (this.serviceActionType === archonEnums.read || this.serviceActionType === archonEnums.all) {
       this.tableListService.getTableList().subscribe(result => {
         this.tableList = result;
       });
       if (this.tableList === undefined) {
         this.metalyzerHeaderService.setPhase('Analysis');
-        this.router.navigate(['/workspace/metalyzer/READ/analysis']);
+        this.router.navigateByUrl(archonConfig.Urls.metalyzerReadRoute);
       } else {
         this.metalyzerHeaderService.setPhase('Configuration');
-        this.router.navigate(['/workspace/metalyzer/WRITE/configuration']);
+        this.router.navigateByUrl(archonConfig.Urls.metalyzerWriteRoute);
       }
     }
   }
