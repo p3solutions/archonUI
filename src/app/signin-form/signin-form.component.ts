@@ -6,7 +6,6 @@ import { SignIn } from '../sign-in';
 import { SigninFormService } from './signin-form.service';
 import { ErrorObject } from '../error-object';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { archonConfig } from '../config';
 
 @Component({
   selector: 'app-signin-form',
@@ -49,8 +48,7 @@ export class SigninFormComponent implements OnInit {
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
         localStorage.setItem('accessToken', data.data.accessToken);
         localStorage.setItem('refreshToken', data.data.refreshToken);
-        this.router.navigateByUrl(archonConfig.Urls.workSpaceRoute);
-//         this.handleRedirection();
+        this.handleRedirection();
       },
       (err: HttpErrorResponse) => {
         this.inProgress = false;

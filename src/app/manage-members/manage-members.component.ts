@@ -6,9 +6,7 @@ import { WorkspaceRolesObject, RoleObject, AnyObject, MemberObject } from '../wo
 import { UserinfoService } from '../userinfo.service';
 import { ManageUserRoles } from '../manage-user-roles';
 import { ErrorObject } from '../error-object';
-import * as $ from 'jquery';
-import { archonEnums } from '../enum.config';
-import { archonConfig } from '../config';
+// import * as $ from 'jquery';
 
 @Component({
   selector: 'app-manage-members',
@@ -56,7 +54,7 @@ export class ManageMembersComponent implements OnInit {
         this.manageMemTable({ data: this.manageMembers });
         this.exisitingUserIds = [];
         this.manageMembers.forEach((member: MemberObject) => {
-          if (member.workspaceRole.name === archonEnums.owner) {
+          if (member.workspaceRole.name === 'ROLE_OWNER') {
             this.ownerAlreadyExist = true;
           }
           this.exisitingUserIds.push(member.user.id);
@@ -91,7 +89,7 @@ confirmDelete(): void {
   }
 
   gotoDashboard() {
-    this.router.navigateByUrl(archonConfig.Urls.workspaceServiceRoute);
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
   getRoleList() {
@@ -133,7 +131,7 @@ confirmDelete(): void {
           'render': function (data, type, full, meta) {
             return `<div data-tooltip="Delete" class="delete-user">
             <a data-toggle="modal" href="#confirmDelMemModal">
-            <i class="fa fa-trash-o archon-icon disp-bl ${full.workspaceRole.name === archonEnums.owner ?
+            <i class="fa fa-trash-o archon-icon disp-bl ${full.workspaceRole.name === 'ROLE_OWNER' ?
                 'icon-disabled' : ''}"></i>
               </a>
             </div>`;
@@ -242,7 +240,7 @@ confirmDelete(): void {
                         `;
     wsAccess.roleList.forEach(role => {
       roleDropdown += `
-                        <option  value="${role.id}" ${role.roleName === archonEnums.owner ? 'disabled' : ''}>${role.roleName}</option>
+                        <option  value="${role.id}" ${role.roleName === 'ROLE_OWNER' ? 'disabled' : ''}>${role.roleName}</option>
                       `;
     });
     roleDropdown += `</select>`;
@@ -261,7 +259,7 @@ confirmDelete(): void {
                       <td class="col-md-1 toggle-btn edit tooltip-left-37">
                         <div data-tooltip="Edit"  class="role-btn role-edit"
                            owner="${wsAccess.workspaceRole.name === 'ROLE_OWNER' ? 'true' : 'false'}">
-                          <i class="fa fa-pencil archon-icon disp-bl ${wsAccess.workspaceRole.name === archonEnums.owner ?
+                          <i class="fa fa-pencil archon-icon disp-bl ${wsAccess.workspaceRole.name === 'ROLE_OWNER' ?
         'icon-disabled' : ''}" ></i>
                         </div>
                         <div data-tooltip="Update" class="role-btn role-update">

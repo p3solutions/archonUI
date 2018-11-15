@@ -19,7 +19,6 @@ export class ManageMemberPrivilegesComponent implements OnInit {
   showServiceDropdown: any;
   roleUpdated = false;
   permitUpdated = false;
-  workSpaceId = '5a587bd090689754178847c1';
 
   constructor(private manageMembersService: ManageMembersService,
     public viewContainerRef: ViewContainerRef) { }

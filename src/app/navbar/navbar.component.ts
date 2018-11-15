@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Info } from '../info';
 import { JwtHelper } from 'angular2-jwt';
-import { archonConfig } from '../config';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +12,13 @@ export class NavbarComponent implements OnInit {
   constructor() { }
   ngOnInit() {
     this.info = this.getInfo();
-    if (archonConfig.navBarAllowedAdmins.includes(this.info.roles.roleName)) {
+    if (this.info.roles.roleName === 'ROLE_ADMIN') {
+      this.info.show = true;
+    } else if (this.info.roles.roleName === 'ROLE_DB_ADMIN') {
+      this.info.show = true;
+    } else if (this.info.roles.roleName === 'ROLE_SUPER_ADMIN') {
+      this.info.show = true;
+    } else if (this.info.roles.roleName === 'ROLE_DB_MEMBER') {
       this.info.show = true;
     }
   }
@@ -32,6 +37,6 @@ export class NavbarComponent implements OnInit {
     return info;
   }
   callUserProfile() {
-    localStorage.setItem('userId', '');
+    localStorage.setItem('userId','');
   }
 }

@@ -5,7 +5,6 @@ import { ServiceActionsObject } from '../workspace-objects';
 import { StatusService } from './status.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { ErrorObject } from '../error-object';
-import { archonEnums } from '../enum.config';
 // import * as $ from 'jquery';
 
 @Component({
@@ -29,12 +28,6 @@ export class StatusScreenComponent implements OnInit {
   retryLoader = false;
   errorObject: ErrorObject;
   searchKeyword: any = '';
-  jobOriginAll = 'JOB ORIGIN: ALL';
-  jobStatusAll = 'JOB STATUS: ALL';
-  success = archonEnums.success;
-  failure = archonEnums.failure;
-  in_progress = archonEnums.in_progress;
-  schudeled = archonEnums.scheduled;
 
   constructor(
     private router: Router,

@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 import { Data } from '@angular/router/src/config';
 import { GlobalRoles } from '../global-roles';
 import { ChangeGlobalRole } from '../change-global-role';
-import { archonConfig } from '../config';
 
 
 @Component({
@@ -44,7 +43,7 @@ export class ManageUserRolesComponent implements OnInit {
   }
 
   gotoManagementPanel() {
-    this.router.navigateByUrl(archonConfig.Urls.managementPanelRoute);
+    this.router.navigate(['workspace/management-panel']);
   }
 
   onconfirm(confirm: boolean) {

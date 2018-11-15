@@ -8,8 +8,6 @@ import { UserinfoService } from '../userinfo.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { TableListService } from '../table-list/table-list.service';
 import { CommonUtilityService } from '../common-utility.service';
-import { archonEnums } from '../enum.config';
-import { archonConfig } from '../config';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -54,20 +52,20 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   gotoMetalyzer(service: any) {
-    if (service.serviceName === archonEnums.metalyzer) {
+    if (service.serviceName === 'Metalyzer') {
       this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSelectedWorkspaceId());
       this.tableListService.setServiceActionType(service.serviceActionType);
-      if (service.serviceActionType === archonEnums.read) {
-        this.router.navigateByUrl(archonConfig.Urls.metalyzerReadRoute);
-      } else if (service.serviceActionType === archonEnums.write || service.serviceActionType === archonEnums.all) {
+      if (service.serviceActionType === 'READ') {
+        this.router.navigate(['/workspace/metalyzer/READ/analysis']);
+      } else if (service.serviceActionType === 'WRITE' || service.serviceActionType === 'ALL') {
         this.tableListService.getTableList().subscribe(result => {
           this.tableList = result;
           if (this.tableList !== undefined) {
             this.metalyzerHeaderService.setPhase('Analysis');
-            this.router.navigateByUrl(archonConfig.Urls.metalyzerAllRoute);
+            this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
           } else {
             this.metalyzerHeaderService.setPhase('Configuration');
-            this.router.navigateByUrl(archonConfig.Urls.metalyzerAllConfigRoute);
+            this.router.navigate(['/workspace/metalyzer/ALL/configuration']);
           }
         });
       }

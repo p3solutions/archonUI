@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { ErrorObject } from '../error-object';
-import {archonConfig} from '../config';
 
 @Component({
   selector: 'app-add-members',
@@ -54,7 +53,8 @@ export class AddMembersComponent implements OnInit, OnChanges {
     .subscribe(res => {
       res.forEach((user: any) => {
         this.isLoading = false;
-        if (archonConfig.addMembersRoles.includes(user.globalRoles[0].roleName)) {
+        if (user.globalRoles[0].roleName === 'ROLE_MEMBER' || user.globalRoles[0].roleName === 'ROLE_ADMIN' ||
+        user.globalRoles[0].roleName === 'ROLE_NOT_ASSIGNED') {
             let existingUserIndex;
             for (let i = 0; i < this.existingUsers.length; i++) {
               if (this.existingUsers[i] === user.id) {

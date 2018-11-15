@@ -17,13 +17,13 @@
     <div class="col-md-12 m-l-45" *ngIf="loadStatus">
       <div class="btn-group col-md-2 p-0">
         <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          title="{{selectedJobOrigin? selectedJobOrigin : jobOriginAll}}">
-          {{selectedJobOrigin? selectedJobOrigin : jobOriginAll}}
+          title="{{selectedJobOrigin? selectedJobOrigin : 'JOB ORIGIN: All'}}">
+          {{selectedJobOrigin? selectedJobOrigin : ('JOB ORIGIN: All')}}
         </button>
         <div class="dropdown-menu">
           <div class="scrollable">
-            <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" title="{{jobOriginAll}}"
-            (click)="selectJobOrigin('')">{{jobOriginAll}}</a>
+            <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL"
+            (click)="selectJobOrigin('')">JOB ORIGIN: ALL</a>
             <div class="dropdown-divider"></div>
              <a class="dropdown-item dropdown-data trim-text j-origin" *ngFor="let jOrigin of jobOriginList" title="{{jOrigin}}"
              (click)="selectJobOrigin(jOrigin)" >{{jOrigin}}</a>
@@ -32,13 +32,13 @@
       </div>
       <div class="btn-group col-md-2 p-0">
         <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          title="{{selectedJobStatus? selectedJobStatus : jobOriginAll}}">
-          {{selectedJobStatus? selectedJobStatus : jobOriginAll}}
+          title="{{selectedJobStatus? selectedJobStatus : 'JOB STATUS: ALL'}}">
+          {{selectedJobStatus? selectedJobStatus : 'JOB STATUS: All'}}
         </button>
         <div class="dropdown-menu">
           <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" title="{{jobOriginAll}}"
-              (click)="selectJobStatus('')">{{obStatusAll}}</a>
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL"
+              (click)="selectJobStatus('')">JOB STATUS: All</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item dropdown-data trim-text j-status" *ngFor="let jStatus of jobStatusList" title="{{jStatus}}"
              (click)="selectJobStatus(jStatus)">{{jStatus}}</a>
@@ -116,10 +116,10 @@
                     <h4 class="panel-title">
                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse-job-{{ind}}" class="collapsed">Attempt #{{selectedJD.jobDetails.length - ind}}
                         <span class="pull-right"> Status: 
-                          <i *ngIf="attempt.jobInfo.jobStatus === success" class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
-                          <i *ngIf="attempt.jobInfo.jobStatus === failure" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
-                          <i *ngIf="attempt.jobInfo.jobStatus === schudeled" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
-                          <i *ngIf="attempt.jobInfo.jobStatus === in_progress" class="fa fa-circle-o-notch fa-spin col-yellow fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === 'SUCCESS'" class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === 'FAILED'" class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === 'SCHEDULED'" class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
+                          <i *ngIf="attempt.jobInfo.jobStatus === 'IN_PROGRESS'" class="fa fa-circle-o-notch fa-spin col-yellow fa-lg" aria-hidden="true"></i>
                         </span>
                         <i class="fa fa-caret-up accordion-coll-hide fa-lg pull-left" aria-hidden="true"></i>
                         <i class="fa fa-caret-down accordion-coll-show fa-lg pull-left" aria-hidden="true"></i>
