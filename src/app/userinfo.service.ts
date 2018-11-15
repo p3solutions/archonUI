@@ -9,15 +9,17 @@ import { Http, Headers, Response } from '@angular/http';
 import { ErrorObject } from './error-object';
 import { environment } from '../environments/environment';
 import { UserObject } from './workspace-objects';
+import { Router } from '@angular/router';
 @Injectable()
 export class UserinfoService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   token_data: any;
   errorObject: ErrorObject;
-
+  private loginUrl = 'sign-in';
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     this.http = http;
   }
@@ -102,6 +104,13 @@ export class UserinfoService {
       this.errorObject = null;
     }
     return null;
+  }
+
+  redirectOnSessionTimedOut() {
+    // TODO: show alert about losing unsaved data
+    const sessionTimedOutUrl = this.router.url;
+    localStorage.setItem('sessionTimedOutUrl', sessionTimedOutUrl);
+    this.router.navigateByUrl(this.loginUrl);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

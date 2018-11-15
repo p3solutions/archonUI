@@ -3,6 +3,7 @@ import { UserObject, AnyObject, ConfiguredDB, CreateConfigDBObject } from '../wo
 import { UserWorkspaceService } from '../user-workspace.service';
 import { UserinfoService } from '../userinfo.service';
 import { Router } from '@angular/router';
+import { ErrorObject } from '../error-object';
 import * as $ from 'jquery';
 
 
@@ -13,19 +14,22 @@ import * as $ from 'jquery';
 })
 export class AddDatabaseWizardComponent implements OnInit {
 
-  profileName: string;
+  profileName = '';
   dbServer: string;
   dbServerList = [];
-  databaseName: string;
-  host: string;
+  databaseName = '';
+  host = '';
   port: string;
-  schemaName: string;
-  userName: string;
-  password: string;
+  schemaName = '';
+  userName = '';
+  password = '';
   authType = 'JDBC';
   supportedDBId: string;
   selectedDBServerName = 'Select server';
   newWSinfo: CreateConfigDBObject;
+
+  responseData: any;
+  errorObject: ErrorObject;
 
   wsName: string;
   wsDesc: string;
@@ -35,6 +39,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   testDbParam: AnyObject = {};
   // supportedDBs: ConfiguredDB[] = [];
   wsNameEmpty = false;
+  profileNameEmpty = false;
   isDBAvailable = false;
   // newWSinfo: WorkspaceObject;
   databaseIds: string[] = [];
@@ -44,10 +49,10 @@ export class AddDatabaseWizardComponent implements OnInit {
   selectedDBtable: any;
   dbTestConnectionSuccessMsg: string;
   dbTestConnectionErrorMsg: string;
-
+  enableNextBtn = false;
+  step0Empty = false;
+  step1Empty = false;
   constructor(
-    private router: Router,
-    private userinfoService: UserinfoService,
     private userWorkspaceService: UserWorkspaceService
   ) { }
 
@@ -70,14 +75,11 @@ export class AddDatabaseWizardComponent implements OnInit {
       if (res) {
         this.dbTestConnectionErrorMsg = '';
         this.dbTestConnectionSuccessMsg = res.connection.message;
-        console.log('clicked on test connection', res, res.connection.message);
-
-      }
-      // else {
-      //   console.log('clicked on failed connection');
-      //   this.dbTestConnectionSuccessMsg = "";
-      //   this.dbTestConnectionErrorMsg = "failed try again with correct db configuration.";
-      // }
+      //  console.log('clicked on test connection', res, res.connection.message);
+      } else {
+         this.dbTestConnectionSuccessMsg = '';
+         this.dbTestConnectionErrorMsg = 'Failed! Try again with correct DB configuration.';
+       }
     });
     // (err) => { console.log('error', err) };
   }
@@ -102,7 +104,44 @@ export class AddDatabaseWizardComponent implements OnInit {
     document.getElementById('openCreateAddDBmodal').click();
     // this.getSupportedDBs();
   }
-
+  step0Validation(_event, profileName, host, port, databaseName, schemaName) {
+    if (!this.profileName.trim() || !this.host.trim() || !this.port || !this.databaseName.trim() || !this.schemaName.trim()) {
+      this.step0Empty = false;
+    } else if (this.selectedDBServerName === 'Select server') {
+      this.step0Empty = false;
+    } else {
+      this.step0Empty = true;
+    }
+    this.enableDisableNextBtn();
+  }
+  step1Validation(_event, userName, password) {
+  // console.log(this.userName, !this.userName);
+      if (!this.userName.trim() || !this.password.trim() ) {
+      this.step1Empty = false;
+    } else {
+      this.step1Empty = true;
+    }
+    this.enableDisableNextBtn();
+  }
+  enableDisableNextBtn() {
+    const currentStep =  $('.carousel-inner .item.active').attr('step');
+    switch (currentStep) {
+      case '0':
+        this.enableNextBtn = this.step0Empty === true;
+        break;
+      case '1':
+        this.enableNextBtn = this.step1Empty === true;
+        break;
+      case '2':
+        // this.enableNextBtn = this.selectedSecCol.size > 0;
+        break;
+      // case '3':
+      //   this.enableNextBtn = this.selectedPrimCol.size > 0;
+      //   break;
+      default:
+        break;
+    }
+  }
   addClass(elementId, classSelector) {
     document.getElementById(elementId).classList.add(classSelector);
   }
@@ -113,6 +152,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   prevStep(e) {
     this.dbTestConnectionSuccessMsg = undefined;
     this.dbTestConnectionErrorMsg = undefined;
+    this.enableNextBtn = this.step0Empty === true;
     if (document.querySelector('.second').classList.contains('active')) {
       this.addClass('prev-btn', 'hide');
       this.removeClass('cancel-btn', 'hide');
@@ -125,14 +165,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   nextStep(e) {
-    this.wsName = this.profileName;
-
-    if (!this.wsName) {
-      this.wsNameEmpty = true;
-      document.getElementById('wsName').focus();
-      e.stopPropagation();
-    } else {
-      if (document.querySelector('.second-last').classList.contains('active')) {
+         if (document.querySelector('.second-last').classList.contains('active')) {
         // restricting to select one, temporarily as per Backend team
         //  if (this.databaseIds.length > 1) {
         //   alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
@@ -153,27 +186,26 @@ export class AddDatabaseWizardComponent implements OnInit {
         this.addClass('cancel-btn', 'hide');
       }
     }
-  }
-
   handleStepIindicator(isNext) {
     const slideNo = $('.carousel-inner .item.active').attr('step');
-    console.log('slideNo', slideNo, document.getElementById('progress-bar'));
+   //  console.log('slideNo', slideNo, document.getElementById('progress-bar'));
     switch (slideNo) {
       case '0':
         if (isNext) {
           this.removeClass('progress-bar', 'width-5-pc');
           this.removeClass('progress-bar', 'width-33-pc-rev');
           this.addClass('progress-bar', 'width-33-pc');
+          this.enableNextBtn = this.step1Empty === true;
         }
         break;
       case '1':
         if (isNext) {
           this.removeClass('progress-bar', 'width-33-pc');
           this.addClass('progress-bar', 'width-66-pc');
-        } else {
+          } else {
           this.removeClass('progress-bar', 'width-66-pc-rev');
           this.addClass('progress-bar', 'width-33-pc-rev');
-        }
+          }
         break;
       case '2':
         if (isNext) {

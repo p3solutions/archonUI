@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtHelper } from 'angular2-jwt';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { MatTableModule } from '@angular/material';
@@ -75,12 +75,15 @@ import { WorkspaceHeaderService } from './workspace-header/workspace-header.serv
 import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
 import { TableListService } from './table-list/table-list.service';
 import { SearchPipe } from './search.pipe';
-import { StatusScreenComponent } from './status-screen/status-screen.component';
+import { CommonUtilityService } from './common-utility.service';
+import { RolePipe } from './role.pipe';
 import { StatusService } from './status-screen/status.service';
+import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
 import { CommonUtilityService } from './common-utility.service';
 import { RolePipe } from './role.pipe';
+import { ArchonHttpInterceptor } from './archon-http-interceptor';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -174,7 +177,11 @@ import { RolePipe } from './role.pipe';
                 TableListService,
                 StatusService,
                 CommonUtilityService,
-                TableListService
+                {
+                        provide: HTTP_INTERCEPTORS,
+                        useClass: ArchonHttpInterceptor,
+                        multi: true
+                }
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]

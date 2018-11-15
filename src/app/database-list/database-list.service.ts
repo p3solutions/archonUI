@@ -18,14 +18,8 @@ export class DatabaseListService {
   jwtHelper: JwtHelper = new JwtHelper();
 
   configDBListUrl = environment.apiUrl + '/dbs/configured';
-  private headers;
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
-    this.headers = new HttpHeaders(
-      {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
-      });
   }
   getListOfConfigDatabases(): Observable<ConfiguredDB[]> {
     return this.http.get<ConfiguredDB[]>(this.configDBListUrl, { headers: this.userinfoService.getHeaders() })
