@@ -61,21 +61,16 @@ h4 {
   float: left;
 }
 
-.well {
-  margin-left: 40px;
-  width: 90%;
-  margin-top: 5px;
-}
-
 #item {
-  text-align: left;
   margin-top: 10px;
+  text-align: center;
 }
 
 #trash,
 #down-arrow {
   font-size: 20px;
   padding-left: 30px;
+  cursor: pointer;
 }
 
 .items-list {
@@ -125,12 +120,12 @@ button {
   margin-left: 35px;
 }
 
-.dropdown {
+.droparrow {
   float: right;
   margin-right: 90px;
 }
 
-.dropdown-menu {
+.droparrow-menu {
   min-width: 200px;
 }
 
@@ -203,4 +198,24 @@ input[type='checkbox'] {
   height: 32px;
   color: #269af8;
   line-height: 30px;
+}
+
+.table-headers{
+  text-align: left;
+}
+
+.panel-header{
+  margin-left: 40px;
+  width: 90%;
+  margin-top: 5px;
+}
+
+.panel-heading.collapsed .fa-chevron-up,
+.panel-heading .fa-chevron-down {
+  display: none;
+}
+
+.panel-heading.collapsed .fa-chevron-down,
+.panel-heading .fa-chevron-up {
+  display: inline-block;
 }
