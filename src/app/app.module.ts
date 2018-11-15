@@ -75,8 +75,10 @@ import { WorkspaceHeaderService } from './workspace-header/workspace-header.serv
 import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
 import { TableListService } from './table-list/table-list.service';
 import { SearchPipe } from './search.pipe';
-import { StatusScreenComponent } from './status-screen/status-screen.component';
+import { CommonUtilityService } from './common-utility.service';
+import { RolePipe } from './role.pipe';
 import { StatusService } from './status-screen/status.service';
+import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
 import { CommonUtilityService } from './common-utility.service';

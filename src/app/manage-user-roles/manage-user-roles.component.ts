@@ -56,5 +56,8 @@ export class ManageUserRolesComponent implements OnInit {
     localStorage.setItem('userId', userobj.id);
   }
 
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
 }
 

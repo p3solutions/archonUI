@@ -50,7 +50,7 @@ th.disp-bl {
   }
 
   .btn-group>.btn:first-child {
-    margin-left: -16px;
+    margin-left: -14px;
     border-color: grey;
     block-size: 26px;
     font-size: 13px;

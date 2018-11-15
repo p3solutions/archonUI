@@ -10,7 +10,6 @@ import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 
-
 xdescribe('ManageMembersComponent', () => {
   let component: ManageMembersComponent;
   let fixture: ComponentFixture<ManageMembersComponent>;

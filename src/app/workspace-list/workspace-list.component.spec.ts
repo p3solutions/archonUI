@@ -190,6 +190,7 @@ xdescribe('WorkspaceListComponent', () => {
     disposeMe = simpleObservable.subscribe();
     return simpleObservable;
   };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, HttpClientModule],
@@ -215,13 +216,13 @@ xdescribe('WorkspaceListComponent', () => {
     const databaseList = rowArray[1];
     const lastUpdatedTime = rowArray[2];
     const masterMetadataVersion = rowArray[3];
-    // console.log(version,'--',workspaceName.textContent,'--',databaseList.textContent.substring(15),'--',
-    // lastUpdatedTime.textContent.substring(19),'--',masterMetadataVersion.textContent.substring(18));
-    const dbList = component.workspaceListInfo[0].databases;
-    const dbNameCSV = dbList.join( (dbList.length > 1 ? ', ' : '' ));
+    // console.log(version,'--',workspaceName.textContent,'--',
+    // databaseList.textContent.substring(15),'--',lastUpdatedTime.textContent.substring(19),
+    // '--',masterMetadataVersion.textContent.substring(18));
     expect(workspaceName.textContent.trim()).toBe(component.workspaceListInfo[0].workspaceName);
-    expect(databaseList.textContent.substring(15)).toBe(dbNameCSV);
-    expect(masterMetadataVersion.textContent.substring(18)).toContain(component.workspaceListInfo[0].masterMetadataVersion.toString());
+    expect(databaseList.textContent.substring(15)).toBe(component.workspaceListInfo[0].databaseList);
+    const wsListInfo: any = component.workspaceListInfo[0];
+    expect(masterMetadataVersion.textContent.substring(18)).toContain(wsListInfo.masterMetadataVersion);
     expect(lastUpdatedTime.textContent.substring(18)).toBe(component.workspaceListInfo[0].lastUpdatedTime);
 
   });
