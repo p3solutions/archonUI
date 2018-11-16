@@ -20,6 +20,9 @@ export class SignupFormComponent implements OnInit {
   enableSignUpBtn = true;
   inProgress = false;
   msg = 100;
+  message = 'User Successfully Registered. Re-directing to Sign-In Page.';
+  successMessage = false;
+  thisComponent = this;
 
   constructor(
     private signupService: SignupFormService,
@@ -47,10 +50,13 @@ export class SignupFormComponent implements OnInit {
     this.signupService.signUp(this.signup).subscribe(
       data => {
         this.responseData = data;
+         if (this.responseData.httpStatus === 200) {
+          this.errorObject = new ErrorObject;
+          this.errorObject.show = false;
+          this.successMessage = true;
+          setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 6000);
+         }
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
-        // console.log('data', this.responseData);
-        this.router.navigate(['/sign-in']);
-        this.msg = 200;
       },
       (err: HttpErrorResponse) => {
         this.inProgress = false;

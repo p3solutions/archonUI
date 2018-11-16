@@ -53,19 +53,18 @@ export class TableListComponent implements OnInit {
     this.homeStage = true;
     this.dataAModal = false;
     this.selectedPrimTbl = table;
-    // this.resetDataAModal();
-    // this.tablelistService.getListOfRelationTable(this.selectedPrimTbl.table_name).subscribe(result => {
-    //   this.relationshipInfo = result;
-    //   this.isRelationShipAvailable = true;
-    //   // console.log(this.relationshipInfo);
-    // });
+    this.resetDataAModal();
+    this.tablelistService.getListOfRelationTable(this.selectedPrimTbl).subscribe(result => {
+    this.relationshipInfo = result;
+    this.isRelationShipAvailable = true;
+    });
     this.serviceActionType = this.tablelistService.getServiceActionType();
   }
 
   openDataAModal() {
     this.homeStage = false;
     this.dataAModal = true;
-    this.getColumnsByTableName(this.selectedPrimTbl.table_name, true);
+    this.getColumnsByTableName(this.selectedPrimTbl, true);
     this.resetDataAModal();
   }
   getColumnsByTableName(tableName, isPrime) {
@@ -182,16 +181,16 @@ export class TableListComponent implements OnInit {
       this.loadRelationTable(table);
       this.resetDataAModal();
     } else {
-      const secTbl = _event.target.children.namedItem(this.prefixSecTblId + table.table_name.toLowerCase());
+      const secTbl = _event.target.children.namedItem(this.prefixSecTblId + table.toLowerCase());
       if (secTbl) {
         secTbl.checked = true;
       }
-      this.showSecTblCols(table.table_name);
+      this.showSecTblCols(table);
     }
   }
-  showSecTblCols(tableName) {
-    if (this.secTblColMap.has(tableName)) {
-      this.secColArray = this.secTblColMap.get(tableName);
+  showSecTblCols(table) {
+    if (this.secTblColMap.has(table)) {
+      this.secColArray = this.secTblColMap.get(table);
       this.selectedSecColMap.clear();
       this.secColArray.forEach(col => {
         if (col.selected) {
@@ -199,7 +198,7 @@ export class TableListComponent implements OnInit {
         }
       });
     } else {
-      this.getColumnsByTableName(tableName, false);
+      this.getColumnsByTableName(table, false);
     }
   }
   generateSecTblArray() {
