@@ -78,7 +78,7 @@
           Currently no relationshiop information available
         </h5>
         <div class="items-list">
-          <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo">
+          <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo; let i=index;">
             <div class="row">
               <div class="col-3 col-sm-3" id="item">
                 <p>{{relation.secondaryTable}}</p>
@@ -98,12 +98,22 @@
                 </a>
               </div>
             </div>
-            <!-- <div class="collapse" id="collapseExample">
-              <div class="card card-body">Hey
-              </div>
-            </div> -->
             <div class="panel-collapse collapse" id="collapseExample">
-              <div class="panel-footer">Hey
+              <div class="panel-footer">
+                <div class="col col-md-6">Primary Table Column
+                </div>
+                <div class="col col-md-6">Secondary Table Column
+                  </div>
+                  <hr id="hrtab">
+                  <div class="col col-md-6">PT Column 1
+                  </div>
+                  <div class="col col-md-6">ST Column 1
+                  </div>
+                  <hr id="hrtab">
+                  <div class="col col-md-12">
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editColumnModal">Edit</button>
+                      <button type="button" class="btn btn-primary Close" data-toggle="collapse" data-target="#collapseExample">Close</button>
+                  </div>
               </div>
             </div>
           </div>

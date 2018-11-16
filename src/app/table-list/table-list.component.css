@@ -210,12 +210,13 @@ input[type='checkbox'] {
   margin-top: 5px;
 }
 
-.panel-heading.collapsed .fa-chevron-up,
-.panel-heading .fa-chevron-down {
-  display: none;
+.panel-footer{
+  height: auto;
+  overflow: auto;
 }
 
-.panel-heading.collapsed .fa-chevron-down,
-.panel-heading .fa-chevron-up {
-  display: inline-block;
+#hrtab{
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: 1px solid #e8e2e2;
 }
