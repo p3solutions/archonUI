@@ -81,8 +81,6 @@ import { StatusService } from './status-screen/status.service';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
-import { CommonUtilityService } from './common-utility.service';
-import { RolePipe } from './role.pipe';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 @NgModule({
         declarations: [
