@@ -11,7 +11,7 @@
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <div class="tablename-list da-table-parent">
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.table_name}}
+            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table}}
               <i class="fa fa-angle-right unselected"></i>
             </button>
           </div>
@@ -57,21 +57,28 @@
         </div>
         <hr>
         <div class="row table-headers" *ngIf="isRelationShipAvailable">
+          <div class="col-3 col-sm-3">
           <h4>
             <strong>Secondary Table</strong>
           </h4>
+        </div>
+        <div class="col-3 col-sm-3">
           <h4>
             <strong>Definition Type</strong>
           </h4>
+        </div>
+        <div class="col-3 col-sm-4">
           <h4>
             <strong>Join Name</strong>
           </h4>
+        </div>
+        <div class="col-3 col-sm-2"></div>
         </div>
         <h5 *ngIf="!isRelationShipAvailable">
           Currently no relationshiop information available
         </h5>
         <div class="items-list">
-          <div class="well well-sm" *ngFor="let relation of relationshipInfo">
+          <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo;let ind=index;">
             <div class="row">
               <div class="col-3 col-sm-3" id="item">
                 <p>{{relation.secondaryTable}}</p>
@@ -86,9 +93,27 @@
                 <a href="#">
                   <i class="fa fa-trash" id="trash" *ngIf="serviceActionType === 'WRITE' || serviceActionType === 'ALL'"></i>
                 </a>
-                <a href="#">
+                <a data-toggle="collapse" href="#collapseExample-{{ind}}">
                   <i class="fa fa-chevron-down" id="down-arrow"></i>
                 </a>
+              </div>
+            </div>
+            <div class="panel-collapse collapse" id="collapseExample-{{ind}}">
+              <div class="panel-footer">
+                <div class="col col-md-6">Primary Table Column
+                </div>
+                <div class="col col-md-6">Secondary Table Column
+                  </div>
+                  <hr id="hrtab">
+                  <div class="col col-md-6">PT Column 1
+                  </div>
+                  <div class="col col-md-6">ST Column 1
+                  </div>
+                  <hr id="hrtab">
+                  <div class="col col-md-12">
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editColumnModal">Edit</button>
+                      <button type="button" class="btn btn-primary Close" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
+                  </div>
               </div>
             </div>
           </div>

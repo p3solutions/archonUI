@@ -57,6 +57,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     const bindCallback = this.bindDropdownClick;
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
+      // console.log(this.userWorkspaceArray);
       if (res && res.length > 0) {
         const fn = function () {
           const dropdownItem = (<HTMLAnchorElement>document.querySelector('#selectedWorkspace .dropdown-data'));

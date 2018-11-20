@@ -15,7 +15,7 @@ export class TableListService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   private serviceActionType: string;
-  tableListUrl = environment.apiUrl + '/tables';
+  tableListUrl = environment.apiUrl + 'metadata/tableList';
   relationTableListUrl = environment.apiUrl + '/metadata/';
   columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
   constructor(private http: HttpClient,
