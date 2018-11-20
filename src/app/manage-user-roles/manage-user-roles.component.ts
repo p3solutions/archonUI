@@ -16,6 +16,9 @@ import { ChangeGlobalRole } from '../change-global-role';
 export class ManageUserRolesComponent implements OnInit {
   isAvailable = false;
   isProgress: boolean;
+  message: string;
+  successMessage = false;
+  errorMessage = false;
   manageUserRolesRequestData: ManageUserRoles[];
   selectedUserId: string;
   preSelectedRole: any;
@@ -28,6 +31,14 @@ export class ManageUserRolesComponent implements OnInit {
     this.getManageUserRolesData();
     this.isProgress = true;
   }
+  receiveSuccessMessage($event) {
+    if (true === $event) {
+      this.successMessage = true;
+      } else {
+      this.errorMessage = true;
+      }
+   }
+
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
       .subscribe(res => {
