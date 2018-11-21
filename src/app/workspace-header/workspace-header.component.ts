@@ -7,6 +7,7 @@ import { WorkspaceServicesService } from '../workspace-services/workspace-servic
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { WorkspaceHeaderService } from './workspace-header.service';
 import {archonConfig} from '../config';
+import { Router, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -30,6 +31,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     private userinfoService: UserinfoService,
     private workspaceService: WorkspaceServicesService,
     private workspaceHeaderService: WorkspaceHeaderService,
+    private router: Router,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
   ) {
@@ -98,6 +100,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
     this.workspaceService.passServiceActions(this.serviceActionsList);
     // this.serviceActionsListEvent.emit(this.serviceActionsList);
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
   onChange(val) {
     // const ws = JSON.stringify(val);
