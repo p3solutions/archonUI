@@ -52,6 +52,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   enableNextBtn = false;
   step0Empty = false;
   step1Empty = false;
+  createdb: boolean;
   constructor(
     private userWorkspaceService: UserWorkspaceService
   ) { }
@@ -288,14 +289,23 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.dbParam.authType = this.authType;
     this.dbParam.profileName = this.profileName;
     this.addClass('progress-bar', 'width-100-pc');
-    this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
+    this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
       if (res) {
-        this.newWSinfo = res;
-        console.log('latest testing ', res);
-        document.getElementById('populate-db-list').click();
-        this.postCreation();
-      }
+        this.createdb = true;
+        } else {
+         this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
+       }
     });
+    if (this.createdb) {
+      this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
+        if (res) {
+          this.newWSinfo = res;
+          console.log('latest testing ', res);
+          document.getElementById('populate-db-list').click();
+          this.postCreation();
+        }
+      });
+      }
     // window.location.reload();
     // this.router.navigate(['/workspace/database-list']);
   }
