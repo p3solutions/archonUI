@@ -62,4 +62,6 @@
   border: 1px solid #ccc;
   text-align: right;
   width: 195px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
