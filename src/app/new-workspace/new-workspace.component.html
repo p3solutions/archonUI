@@ -35,7 +35,7 @@
                 <div class="col-md-12 row m-10">
                   <div class="col-md-4">Workspace Name</div>
                   <div class="col-md-8">
-                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
+                    <input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" maxlength="25" required/>
                   </div>
                 </div>
                 

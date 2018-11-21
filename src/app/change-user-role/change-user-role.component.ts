@@ -11,7 +11,13 @@ export class ChangeUserRoleComponent implements OnInit {
 
   @Input() selectedUserId: string;
   @Output() onconfirm = new EventEmitter<boolean>();
+  @Output() messageSuccessEvent = new EventEmitter<string>();
+  @Output() messageErrorEvent = new EventEmitter<string>();
   globalRoleId: string;
+  message = 'Hola Mundo!';
+  successMessage: any;
+  errorMessage: any;
+  responseData: any;
   globalRolesRequestData: GlobalRoles[];
   constructor(
     private changeUserRoleService: ChangeUserRoleService
@@ -34,11 +40,21 @@ export class ChangeUserRoleComponent implements OnInit {
 
   changeOnConfirm() {
     this.changeUserRoleService.changeGlobalRoleDetails(this.selectedUserId, this.globalRoleId)
-    .subscribe((res) => {
+    .subscribe(data => {
       this.onconfirm.emit(true);
-      console.log(res);
+      this.responseData = data;
+      if (this.responseData) {
+        this.sendSuccessMessage();
+        }
     });
     // this.manageUserRolesRequestData[this.index]['globalRoles'][0]['roleName'] = this.choosedRole;
   }
-
+  sendSuccessMessage() {
+    if (this.responseData.httpStatus === 200) {
+      this.successMessage = true;
+    } else {
+      this.successMessage = false;
+    }
+    this.messageSuccessEvent.emit(this.successMessage);
+    }
 }
