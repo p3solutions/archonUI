@@ -45,6 +45,7 @@ export class TableListComponent implements OnInit {
   getTableList() {
     this.tablelistService.getTableList().subscribe(res => {
       this.tableList = res;
+      console.log(this.tableList);
       this.isAvailable = true;
     });
   }
@@ -178,6 +179,7 @@ export class TableListComponent implements OnInit {
   highlightTable(_event, isPrime, table) {
     this.toggleTblSelection(_event);
     if (isPrime) {
+      this.tableName = table;
       this.loadRelationTable(table);
       this.resetDataAModal();
     } else {
