@@ -23,6 +23,7 @@ export class ManageUserRolesComponent implements OnInit {
   errorMessage = false;
   manageUserRolesRequestData: ManageUserRoles[];
   selectedUserId: string;
+  userName: string;
   preSelectedRole: any;
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
@@ -70,9 +71,11 @@ export class ManageUserRolesComponent implements OnInit {
         this.isProgress = false;
       });
   }
-  getUserId(id, roleName) {
+  getUserId(id, roleName, userName) {
+    this.successMessage = false;
     this.selectedUserId = id;
     this.preSelectedRole = roleName;
+    this.userName = userName;
     document.getElementById('selected-role').innerHTML = this.preSelectedRole;
   }
 
