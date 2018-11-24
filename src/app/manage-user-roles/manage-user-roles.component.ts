@@ -72,6 +72,7 @@ export class ManageUserRolesComponent implements OnInit {
       });
   }
   getUserId(id, roleName, userName) {
+    this.errorMessage = false;
     this.successMessage = false;
     this.selectedUserId = id;
     this.preSelectedRole = roleName;
