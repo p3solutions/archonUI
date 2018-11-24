@@ -1,3 +1,4 @@
+<app-navbar *ngIf="showNavBar"></app-navbar>
 <div class="row" id="analysis-view">
   <div class="col-md-3" id="table-list">
     <div class="card">
@@ -11,7 +12,7 @@
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <div class="tablename-list da-table-parent">
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table.tableName)">{{table.tableName}}
+            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.tableName}}
               <i class="fa fa-angle-right unselected"></i>
             </button>
           </div>
@@ -53,9 +54,9 @@
         </div>
         </div>
         <div class="row col col-md-12 primary-table">
-          <h3 class="card-title sub-header">Primary Table:
+          <h4 class="card-title sub-header">Primary Table:
             <strong>{{tableName}}</strong>
-          </h3>
+          </h4>
         </div>
         <hr>
         <div class="row table-headers" *ngIf="isRelationShipAvailable">
@@ -80,7 +81,7 @@
           Currently no relationshiop information available
         </h5>
         <div class="items-list">
-          <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo;let ind=index;">
+          <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo.relationshipInfo;let ind=index;">
             <div class="row">
               <div class="col-3 col-sm-3" id="item">
                 <p>{{relation.secondaryTable}}</p>
@@ -100,16 +101,16 @@
                 </a>
               </div>
             </div>
-            <div class="panel-collapse collapse" id="collapseExample-{{ind}}">
+            <div class="panel-collapse collapse" id="collapseExample-{{ind}}" *ngFor="let x of relation.tableJoinListInfo">
               <div class="panel-footer">
                 <div class="col col-md-6">Primary Table Column
                 </div>
                 <div class="col col-md-6">Secondary Table Column
                   </div>
                   <hr id="hrtab">
-                  <div class="col col-md-6">PT Column 1
+                  <div class="col col-md-6">{{x.primaryTable}}
                   </div>
-                  <div class="col col-md-6">ST Column 1
+                  <div class="col col-md-6">{{x.secondaryTable}}
                   </div>
                   <hr id="hrtab">
                   <div class="col col-md-12">

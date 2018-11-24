@@ -1,6 +1,8 @@
-import { Component, OnInit, Pipe } from '@angular/core';
+import { Component, OnInit, Pipe, Input } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+
 @Component({
   selector: 'app-table-list',
   templateUrl: './table-list.component.html',
@@ -33,8 +35,11 @@ export class TableListComponent implements OnInit {
   prefixSecTblId = 'secTbl_';
   secTblColJoiner = '$$';
   selectedTblsColsObj: any = {};
+  workspaceID: any;
+  selectedPrimTblID: any;
   constructor(
-    private tablelistService: TableListService
+    private tablelistService: TableListService,
+    private workspaceHeaderService: WorkspaceHeaderService
   ) { }
   ngOnInit() {
     // this.homeStage = true;
@@ -43,9 +48,10 @@ export class TableListComponent implements OnInit {
     this.getTableList();
   }
   getTableList() {
-    this.tablelistService.getTableList().subscribe(res => {
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
-      console.log(this.tableList);
+      // console.log(this.tableList);
       this.isAvailable = true;
     });
   }
@@ -53,9 +59,10 @@ export class TableListComponent implements OnInit {
   loadRelationTable(table: any) {
     this.homeStage = true;
     this.dataAModal = false;
-    this.selectedPrimTbl = table;
+    this.selectedPrimTblID = table.id;
+    this.selectedPrimTbl = table.tableName;
     this.resetDataAModal();
-    this.tablelistService.getListOfRelationTable(this.selectedPrimTbl).subscribe(result => {
+    this.tablelistService.getListOfRelationTable(this.selectedPrimTblID).subscribe(result => {
     this.relationshipInfo = result;
     this.isRelationShipAvailable = true;
     });
@@ -179,7 +186,7 @@ export class TableListComponent implements OnInit {
   highlightTable(_event, isPrime, table) {
     this.toggleTblSelection(_event);
     if (isPrime) {
-      this.tableName = table;
+      this.tableName = table.tableName;
       this.loadRelationTable(table);
       this.resetDataAModal();
     } else {
@@ -259,7 +266,7 @@ export class TableListComponent implements OnInit {
       primColArray.push(key);
     });
     this.selectedTblsColsObj.primary = {
-      'table' : this.selectedPrimTbl.table_name,
+      'table' : this.selectedPrimTbl,
       'columns': primColArray
     };
     this.selectedTblsColsObj.secondary = [];

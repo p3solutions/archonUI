@@ -74,7 +74,7 @@
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
                 <span class="m-r-10" *ngFor="let ws of userInfo.workspaceList; let isLast=last">
-                   <a [routerLink]="['/workspace/workspace-info',ws?.id]">{{ws?.workspaceName}}</a>{{isLast ? '' : ', '}}
+                   <a [routerLink]="['/workspace/workspace-dashboard/workspace-info/',ws?.id]">{{ws?.workspaceName}}</a>{{isLast ? '' : ', '}}
                 </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">

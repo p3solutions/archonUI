@@ -10,25 +10,26 @@ import { JwtHelper } from 'angular2-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
+import { WorkspaceObject } from '../workspace-objects';
 @Injectable()
 export class TableListService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   private serviceActionType: string;
-  tableListUrl = environment.apiUrl + 'meta/tableslist';
-  relationTableListUrl = environment.apiUrl + '/metadata/';
+  tableListUrl = environment.apiUrl + 'meta/tableslist?workspaceId=';
+  relationTableListUrl = environment.apiUrl + '/meta/tablesRelationShip?tableId=';
   columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
   }
-  getTableList(): Observable<string[]> {
-    return this.http.get<string[]>(this.tableListUrl, { headers: this.userinfoService.getHeaders() })
+
+  getTableList(workspaceId): Observable<string[]> {
+    return this.http.get<string[]>(this.tableListUrl + workspaceId, { headers: this.userinfoService.getHeaders() })
       .map(this.extractTables)
       .pipe(catchError(this.handleError('tables-getTableList()', []))
       );
   }
-
-  getListOfRelationTable(id: string): Observable<RelationshipInfoObject[]> {
+  getListOfRelationTable(id): Observable<RelationshipInfoObject[]> {
     const url = this.relationTableListUrl + id;
     return this.http.get<RelationshipInfoObject[]>(url, { headers: this.userinfoService.getHeaders() })
       .map(this.extractRelationTableList)
@@ -48,7 +49,7 @@ export class TableListService {
     return data || [];
   }
   private extractRelationTableList(res: any) {
-    const data = res.data.relationship_Info;
+    const data = res.data[0];
     return data || [];
   }
 

@@ -92,7 +92,23 @@ export class CreateConfigDBObject {
 
 
 export class RelationshipInfoObject {
-    secondaryTable: string;
-    definitionType: string;
-    joinName: string;
+        relationshipInfo: [
+        {
+        tableId: string;
+        primaryTable: string;
+        secondaryTable: string;
+        definitionType: string;
+        joinName: string;
+        tableJoinListInfo: [
+            {
+                primaryTable: string;
+                primaryColumn: string;
+                secondaryTable: string;
+                secondaryColumn: string;
+            }
+        ];
+createdAt: string;
+updatedAt: string;
+softDeleted: boolean;
+}];
 }

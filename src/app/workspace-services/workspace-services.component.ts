@@ -22,6 +22,7 @@ export class WorkspaceServicesComponent implements OnInit {
   private serviceActions: ServiceActionsObject[];
   private wsId_Mode: string;
   private tableList: any;
+  workspaceID: any;
   constructor(
     private router: Router,
     private workspaceService: WorkspaceServicesService,
@@ -52,13 +53,14 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   gotoMetalyzer(service: any) {
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (service.serviceName === 'Metalyzer') {
       this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSelectedWorkspaceId());
       this.tableListService.setServiceActionType(service.serviceActionType);
       if (service.serviceActionType === 'READ') {
         this.router.navigate(['/workspace/metalyzer/READ/analysis']);
       } else if (service.serviceActionType === 'WRITE' || service.serviceActionType === 'ALL') {
-        this.tableListService.getTableList().subscribe(result => {
+        this.tableListService.getTableList(this.workspaceID).subscribe(result => {
           this.tableList = result;
           if (this.tableList !== undefined) {
             this.metalyzerHeaderService.setPhase('Analysis');
