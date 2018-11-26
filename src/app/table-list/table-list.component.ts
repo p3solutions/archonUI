@@ -63,8 +63,8 @@ export class TableListComponent implements OnInit {
     this.selectedPrimTbl = table.tableName;
     this.resetDataAModal();
     this.tablelistService.getListOfRelationTable(this.selectedPrimTblID).subscribe(result => {
-    this.relationshipInfo = result;
-    this.isRelationShipAvailable = true;
+      this.relationshipInfo = result;
+      this.isRelationShipAvailable = true;
     });
     this.serviceActionType = this.tablelistService.getServiceActionType();
   }

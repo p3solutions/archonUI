@@ -117,6 +117,7 @@ export class StatusScreenComponent implements OnInit {
   }
 
   createStatusTable(xData) {
+    console.log(xData);
     const thisComponent = this;
     if (this.statusTable) {
       this.statusTable.destroy();

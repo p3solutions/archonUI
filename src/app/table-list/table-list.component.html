@@ -81,7 +81,7 @@
           Currently no relationshiop information available
         </h5>
         <div class="items-list">
-          <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo.relationshipInfo;let ind=index;">
+          <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo;let ind=index;">
             <div class="row">
               <div class="col-3 col-sm-3" id="item">
                 <p>{{relation.secondaryTable}}</p>
@@ -101,7 +101,7 @@
                 </a>
               </div>
             </div>
-            <div class="panel-collapse collapse" id="collapseExample-{{ind}}" *ngFor="let x of relation.tableJoinListInfo">
+            <div class="panel-collapse collapse" id="collapseExample-{{ind}}" *ngFor="let x of relation.joinListInfo">
               <div class="panel-footer">
                 <div class="col col-md-6">Primary Table Column
                 </div>

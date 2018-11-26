@@ -16,7 +16,7 @@ export class TableListService {
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
   private serviceActionType: string;
-  tableListUrl = environment.apiUrl + 'meta/tableslist?workspaceId=';
+  tableListUrl = environment.apiUrl + 'meta/tablesList?workspaceId=';
   relationTableListUrl = environment.apiUrl + '/meta/tablesRelationShip?tableId=';
   columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
   constructor(private http: HttpClient,
@@ -45,11 +45,11 @@ export class TableListService {
   }
 
   private extractTables(res: any) {
-    const data = res.data;
+    const data = res.data.tableList;
     return data || [];
   }
   private extractRelationTableList(res: any) {
-    const data = res.data[0];
+    const data = res.data.relationshipInfo;
     return data || [];
   }
 
