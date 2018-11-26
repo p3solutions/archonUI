@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserObject, AnyObject, ConfiguredDB, WorkspaceObject } from '../workspace-objects';
 import { UserinfoService } from '../userinfo.service';
 import { UserWorkspaceService } from '../user-workspace.service';
+import { CommonUtilityService } from '../common-utility.service';
 @Component({
   selector: 'app-new-workspace',
   templateUrl: './new-workspace.component.html',
@@ -25,7 +26,8 @@ export class NewWorkspaceComponent implements OnInit {
 
   constructor(
     private userinfoService: UserinfoService,
-    private userWorkspaceService: UserWorkspaceService
+    private userWorkspaceService: UserWorkspaceService,
+    private commonutilityService: CommonUtilityService
   ) { }
 
   ngOnInit() {
@@ -138,7 +140,7 @@ export class NewWorkspaceComponent implements OnInit {
     .subscribe( res => {
       if (res && res.length > 0) {
         res.forEach(element => {
-          element.createdDate = new Date(element.createdAt * 1000).toDateString();
+          element.createdDate = this.commonutilityService.getDisplayTime(element.createdAt * 1000);
           this.supportedDBs.push(element);
         });
         this.isDBAvailable = true;
