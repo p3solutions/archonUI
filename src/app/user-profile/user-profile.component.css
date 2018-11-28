@@ -62,3 +62,7 @@ header,
   margin: 4em 0;
   text-align: center;
 }
+
+.ws-info-data {
+  cursor: pointer;
+}
