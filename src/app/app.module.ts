@@ -81,6 +81,7 @@ import { StatusService } from './status-screen/status.service';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
+import { EditRelationshipInfoComponent } from './edit-relationship-info/edit-relationship-info.component';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -127,7 +128,8 @@ import { ReverseArrayPipe } from './reverse.pipe';
                 KeysPipe,
                 ReverseArrayPipe,
                 SearchPipe,
-                RolePipe
+                RolePipe,
+                EditRelationshipInfoComponent
         ],
         imports: [
                 BrowserModule,
