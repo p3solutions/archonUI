@@ -19,7 +19,7 @@
             </button>
             <strong>You don't have privileges to Change Role</strong>
           </div>
-          <div *ngIf="successMessage" class="alert alert-success alert-dismissible" role="alert">
+          <div *ngIf="successMessage" class="alert alert-success" role="alert" data-auto-dismiss="2000">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -48,10 +48,10 @@
               <a (click)='getUserProfile(user)' [routerLink]="['/user-profile']" class="trim-text">{{user.name}}</a>
             </td>
             <td class="mm-info-data">{{user.emailAddress}}</td>
-            <td class="mm-info-data">{{user.createdAt * 1000 | date}}</td>
+            <td class="mm-info-data">{{user.createdAt * 1000 | date:'MMM/dd/yyyy'}}</td>
             <td class="mm-info-data">{{user.globalRoles[0].roleName}}</td>
             <td>
-              <a href="" id="preSelectedRoles" name={{preSelectedRole}} data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id, user.globalRoles[0].roleName)">
+              <a href="" id="preSelectedRoles" name={{preSelectedRole}} data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id, user.globalRoles[0].roleName, user.name)">
                 Change Role
               </a>
             </td>
@@ -66,7 +66,7 @@
     </div>
   </div>
 </div>
-<app-change-user-role [selectedUserId]="selectedUserId" (messageSuccessEvent)="receiveSuccessMessage($event)" (onconfirm)="onconfirm($event)" class="modal fade" id="myModal1" role="dialog">
+<app-change-user-role [selectedUserId]="selectedUserId" [preSelectedRole]="preSelectedRole" [userName]="userName" (messageSuccessEvent)="receiveSuccessMessage($event)" (onconfirm)="onconfirm($event)" class="modal fade" id="myModal1" role="dialog">
   some other content
 </app-change-user-role>
 <!-- <a id="preSelectedRoles" name={{preSelectedRole}}></a> -->

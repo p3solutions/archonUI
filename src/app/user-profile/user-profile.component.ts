@@ -12,6 +12,8 @@ import { WorkspaceObject } from '../workspace-objects';
 export class UserProfileComponent implements OnInit {
   userInfo: any;
   workspaceList: WorkspaceObject[];
+  onUpdate: boolean;
+  successMessage: boolean;
 
   constructor(
     private userinfoService: UserinfoService,
@@ -23,6 +25,7 @@ export class UserProfileComponent implements OnInit {
     this.getUserInfo();
   }
   getUserInfo() {
+    this.onUpdate = true;
     const userData = localStorage.getItem('userId');
     if (userData) {
     this.userinfoService.getAllUsers().subscribe((data) => {
@@ -71,6 +74,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   focusOnInputBox() {
+    this.successMessage = false;
     setTimeout(() => document.getElementById('userName').focus(), 500);
   }
 
@@ -80,6 +84,8 @@ export class UserProfileComponent implements OnInit {
 
   onUpdateProfile(confirm: boolean) {
     if (confirm) {
+      this.onUpdate = false;
+      this.successMessage = true;
       this.getUserInfo();
     }
   }

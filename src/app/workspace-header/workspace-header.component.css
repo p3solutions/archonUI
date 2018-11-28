@@ -65,3 +65,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.scrollable {
+  height: auto;
+  max-height: 200px;
+  width: 195px;
+  overflow-x: hidden;
+}

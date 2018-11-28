@@ -10,11 +10,12 @@ import { GlobalRoles } from '../global-roles';
 export class ChangeUserRoleComponent implements OnInit {
 
   @Input() selectedUserId: string;
+  @Input() preSelectedRole: string;
+  @Input() userName: string;
   @Output() onconfirm = new EventEmitter<boolean>();
   @Output() messageSuccessEvent = new EventEmitter<string>();
   @Output() messageErrorEvent = new EventEmitter<string>();
   globalRoleId: string;
-  message = 'Hola Mundo!';
   successMessage: any;
   errorMessage: any;
   responseData: any;

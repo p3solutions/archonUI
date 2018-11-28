@@ -130,7 +130,7 @@ button {
 }
 
 .data-analyzer {
-  margin-left: 250px;
+  margin-top: 10px;
 }
 
 #loading-icon {
@@ -219,4 +219,9 @@ input[type='checkbox'] {
   margin-top: 20px;
   margin-bottom: 10px;
   border: 1px solid #e8e2e2;
+}
+
+.primary-table {
+  padding-left: 32px;
+  padding-bottom: 20px;
 }

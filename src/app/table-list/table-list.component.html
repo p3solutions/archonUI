@@ -1,3 +1,4 @@
+<app-navbar *ngIf="showNavBar"></app-navbar>
 <div class="row" id="analysis-view">
   <div class="col-md-3" id="table-list">
     <div class="card">
@@ -11,7 +12,7 @@
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <div class="tablename-list da-table-parent">
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table}}
+            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.tableName}}
               <i class="fa fa-angle-right unselected"></i>
             </button>
           </div>
@@ -25,14 +26,14 @@
         <h2 class="default-info">Choose one of the listed tables to view relationship information with other tables</h2>
       </div>
       <div class="card-body" *ngIf="homeStage">
-        <div class="row">
-          <div class="col-sm-3">
+        <div class="col col-md-12">
+          <div class="col col-md-4">
             <h3 class="card-title header">Relationship Info
             </h3>
           </div>
           <!-- <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span> -->
          
-          <div class="dropdown">
+          <div class="dropdown" class="col col-md-4 data-analyzer">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
               <span class="caret"></span>
             </button>
@@ -48,9 +49,11 @@
               </li>
             </ul>
           </div>
+          <div class="col col-md-4">
           <button type="button" class="btn btn-primary data-analyzer" (click)="openDataAModal()">Data Analyzer</button>
         </div>
-        <div class="row">
+        </div>
+        <div class="row col col-md-12 primary-table">
           <h4 class="card-title sub-header">Primary Table:
             <strong>{{tableName}}</strong>
           </h4>
@@ -98,16 +101,16 @@
                 </a>
               </div>
             </div>
-            <div class="panel-collapse collapse" id="collapseExample-{{ind}}">
+            <div class="panel-collapse collapse" id="collapseExample-{{ind}}" *ngFor="let x of relation.joinListInfo">
               <div class="panel-footer">
                 <div class="col col-md-6">Primary Table Column
                 </div>
                 <div class="col col-md-6">Secondary Table Column
                   </div>
                   <hr id="hrtab">
-                  <div class="col col-md-6">PT Column 1
+                  <div class="col col-md-6">{{x.primaryTable}}
                   </div>
-                  <div class="col col-md-6">ST Column 1
+                  <div class="col col-md-6">{{x.secondaryTable}}
                   </div>
                   <hr id="hrtab">
                   <div class="col col-md-12">
