@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ViewContainerRef, Inject, OnDestroy} from '@angular/core';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkspaceObject, ServiceActionsObject, ConfiguredDB } from '../workspace-objects';
 import { Info } from '../info';
@@ -8,6 +8,8 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { WorkspaceHeaderService } from './workspace-header.service';
 import {archonConfig} from '../config';
 import { Router, RouterModule } from '@angular/router';
+import { UserProfileService } from '../user-profile/user-profile.service';
+
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -26,12 +28,15 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   @Output() serviceActionsListEvent = new EventEmitter<ServiceActionsObject[]>();
   fetchTimeout = 3000;
+  userSelectedWorkspace: string;
+
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
     private workspaceService: WorkspaceServicesService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private router: Router,
+    private userProfileService: UserProfileService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
   ) {
@@ -40,7 +45,13 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
-    this.getUserWorkspaceList();
+    this.userProfileService.userSelectedWorkspace.subscribe(data =>
+      this.userSelectedWorkspace = data);
+    if (this.userSelectedWorkspace) {
+      this.loaduserSelectedWorkspace(this.userSelectedWorkspace);
+    } else {
+      this.getUserWorkspaceList();
+    }
     this.userRole = this.userinfoService.getUserRoles();
     this.enableWorkspace = archonConfig.workSpaceAllowedAdmins.includes(this.userRole.roleName);
   }
@@ -75,6 +86,12 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
         const k = setInterval(fn, 500);
       }
     });
+  }
+
+  loaduserSelectedWorkspace(selectedWorkspace) {
+    this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
+    this.userWorkspaceArray = res; });
+    this.selectWorkspace(selectedWorkspace);
   }
 
   contactAdmin() {
