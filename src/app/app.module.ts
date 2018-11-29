@@ -176,16 +176,13 @@ import { UserProfileService } from './user-profile/user-profile.service';
                 TableListService,
                 StatusService,
                 CommonUtilityService,
-<<<<<<< HEAD
                 {
                         provide: HTTP_INTERCEPTORS,
                         useClass: ArchonHttpInterceptor,
                         multi: true
-                }
-=======
+                },
                 TableListService,
                 UserProfileService
->>>>>>> 45fc3082ba131a996c072321aaff4479f0966816
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
