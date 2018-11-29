@@ -4,6 +4,7 @@ import { WorkspaceListService } from '../workspace-list/workspace-list.service';
 import { Router } from '@angular/router';
 import { WorkspaceObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { UserProfileService } from './user-profile.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,7 +21,8 @@ export class UserProfileComponent implements OnInit {
     private userinfoService: UserinfoService,
     private workspaceListService: WorkspaceListService,
     private workspaceHeaderService: WorkspaceHeaderService,
-    private router: Router
+    private router: Router,
+    private userProfileService: UserProfileService
   ) { }
 
   ngOnInit() {
@@ -101,6 +103,7 @@ export class UserProfileComponent implements OnInit {
   setWorkspace(ws) {
     // this.workspaceHeaderService.setSelectedWorkspace(ws);
     console.log(ws);
+    this.userProfileService.changeWorkspace(ws);
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 }

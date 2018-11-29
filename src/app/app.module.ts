@@ -81,6 +81,7 @@ import { StatusService } from './status-screen/status.service';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
+import { UserProfileService } from './user-profile/user-profile.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -174,7 +175,8 @@ import { ReverseArrayPipe } from './reverse.pipe';
                 TableListService,
                 StatusService,
                 CommonUtilityService,
-                TableListService
+                TableListService,
+                UserProfileService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
