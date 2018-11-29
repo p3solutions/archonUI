@@ -97,7 +97,7 @@ export class UserinfoService {
       return this.errorObject;
     }
     if (this.getUpdatedName() === user.username && this.getUpdatedEmail() === user.useremail) {
-      this.errorObject.message = 'Name or email is not changed';
+      this.errorObject.message = 'Name is not Updated';
       return this.errorObject;
     }
     if (this.errorObject) {

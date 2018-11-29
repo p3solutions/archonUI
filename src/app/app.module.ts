@@ -82,6 +82,7 @@ import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
+import { UserProfileService } from './user-profile/user-profile.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -179,7 +180,9 @@ import { ArchonHttpInterceptor } from './archon-http-interceptor';
                         provide: HTTP_INTERCEPTORS,
                         useClass: ArchonHttpInterceptor,
                         multi: true
-                }
+                },
+                TableListService,
+                UserProfileService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
