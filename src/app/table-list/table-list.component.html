@@ -108,17 +108,20 @@
                 <div class="col col-md-6">Secondary Table Column
                   </div>
                   <hr id="hrtab">
-                  <div class="col col-md-6">{{x.primaryTable}}
+                  <div class="col col-md-6">{{x.primaryColumn}}
                   </div>
-                  <div class="col col-md-6">{{x.secondaryTable}}
+                  <div class="col col-md-6">{{x.secondaryColumn}}
                   </div>
                   <hr id="hrtab">
                   <div class="col col-md-12">
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#openEditRelationshipModal">Edit</button>
                       <button type="button" class="btn btn-primary Close" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
-                  </div>
+                  </div>  
               </div>
             </div>
+                            
+<app-edit-relationship-info class="modal fade" id="openEditRelationshipModal" role="dialog"></app-edit-relationship-info>
+
           </div>
         </div>
       </div>
@@ -294,5 +297,3 @@
     </div>
   </div>
 </div>
-
-<app-edit-relationship-info class="modal fade" id="openEditRelationshipModal" role="dialog"></app-edit-relationship-info>

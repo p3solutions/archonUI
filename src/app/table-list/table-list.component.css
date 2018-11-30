@@ -70,13 +70,14 @@ h4 {
 #down-arrow {
   font-size: 20px;
   padding-left: 30px;
+  color: #269af8;
   cursor: pointer;
 }
 
 .items-list {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 200px;
+  height: 280px;
   padding-left: 20px;
 }
 
@@ -162,7 +163,7 @@ button {
   width: 85%;
 }
 #analysis-view .form-control-feedback {
-  margin-left: 280px;
+  margin-left: 240px;
 }
 .col-loader {
   padding: 2px 15px;
