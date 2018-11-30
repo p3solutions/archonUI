@@ -1,12 +1,12 @@
 import {
-    Http,
+    HttpClient,
     Headers,
     Request,
     RequestOptions,
     RequestOptionsArgs,
     RequestMethod,
     Response,
-    HttpModule
+    HttpClientModule
 } from '@angular/http';
 import { Injectable, Provider, NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -96,7 +96,7 @@ export class AuthHttp {
     private config: IAuthConfig;
     public tokenStream: Observable<string>;
 
-    constructor(options: AuthConfig, private http: Http, private defOpts?: RequestOptions) {
+    constructor(options: AuthConfig, private http: HttpClient, private defOpts?: RequestOptions) {
         this.config = options.getConfig();
 
         this.tokenStream = new Observable<string>((obs: any) => {
@@ -312,8 +312,8 @@ export function tokenNotExpired(tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME,
 export const AUTH_PROVIDERS: Provider[] = [
     {
         provide: AuthHttp,
-        deps: [Http, RequestOptions],
-        useFactory: (http: Http, options: RequestOptions) => {
+        deps: [HttpClient, RequestOptions],
+        useFactory: (http: HttpClient, options: RequestOptions) => {
             return new AuthHttp(new AuthConfig(), http, options);
         }
     }
@@ -323,8 +323,8 @@ export function provideAuth(config?: IAuthConfigOptional): Provider[] {
     return [
         {
             provide: AuthHttp,
-            deps: [Http, RequestOptions],
-            useFactory: (http: Http, options: RequestOptions) => {
+            deps: [HttpClient, RequestOptions],
+            useFactory: (http: HttpClient, options: RequestOptions) => {
                 return new AuthHttp(new AuthConfig(config), http, options);
             }
         }
@@ -372,7 +372,7 @@ function objectAssign(target: any, ...source: any[]) {
  * @experimental
  */
 @NgModule({
-    imports: [HttpModule],
+    imports: [HttpClientModule],
     providers: [AuthHttp, JwtHelper]
 })
 export class AuthModule {

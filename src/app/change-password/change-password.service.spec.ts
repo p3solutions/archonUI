@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { JwtHelper } from 'angular2-jwt';
-import { Http, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { HttpClient, Response, ResponseOptions, XHRBackend } from '@angular/http';
 
 describe('ChangePasswordService', () => {
   let backend: MockBackend;
@@ -25,7 +25,7 @@ describe('ChangePasswordService', () => {
       ]
     });
     backend = TestBed.get(MockBackend);
-    spyOn(Http.prototype, 'request').and.callThrough();
+    spyOn(HttpClient.prototype, 'request').and.callThrough();
   });
   afterEach(() => backend.verifyNoPendingRequests());
 

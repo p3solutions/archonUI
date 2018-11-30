@@ -37,7 +37,7 @@ export class ArchonHttpInterceptor implements HttpInterceptor {
         // console.log('Processing http error', response);
         if (response) {
             if (response.error) {
-                console.log(`Http error message "${response.error.errorMessage}"`);
+                console.log(`HttpClient error message "${response.error.errorMessage}"`);
             }
             if (response.status === 401) {
                 this.userinfoService.redirectOnSessionTimedOut();

@@ -1,13 +1,13 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { MemberRequestService } from './member-request.service';
-import { HttpModule, Http, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { HttpClientModule, HttpClient, Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpHandler } from '@angular/common/http';
 import { MockBackend } from '@angular/http/testing';
 
 xdescribe('MemberRequestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      imports: [HttpClientModule],
       providers: [MemberRequestService, HttpClient, HttpHandler, { provide: XHRBackend, useClass: MockBackend }]
     });
   });

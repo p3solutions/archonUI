@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, Headers, Response } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 import { ServiceActionsObject } from '../workspace-objects';
 @Injectable()

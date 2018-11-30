@@ -7,7 +7,7 @@ import { jobArray, jobOriginArray, jobStatusArray } from '../hardcoded-collectio
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
+import { BaseRequestOptions, HttpClient, Response, ResponseOptions } from '@angular/http';
 import { environment } from '../../environments/environment';
 
 xdescribe('StatusService', () => {
@@ -62,9 +62,9 @@ xdescribe('StatusService', () => {
               MockBackend,
               BaseRequestOptions
           ],
-          provide: Http,
+          provide: HttpClient,
           useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
-              return new Http(backendInstance, defaultOptions);
+              return new HttpClient(backendInstance, defaultOptions);
           }
         }
       ]

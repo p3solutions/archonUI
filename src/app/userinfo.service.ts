@@ -5,7 +5,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
 import { Info } from './info';
 import { JwtHelper } from 'angular2-jwt';
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, Headers, Response } from '@angular/http';
 import { ErrorObject } from './error-object';
 import { environment } from '../environments/environment';
 import { UserObject } from './workspace-objects';

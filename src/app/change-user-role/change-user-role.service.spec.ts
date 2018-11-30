@@ -4,7 +4,7 @@ import { ChangeUserRoleService } from './change-user-role.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { XHRBackend, Http, ResponseOptions, Response } from '@angular/http';
+import { XHRBackend, HttpClient, ResponseOptions, Response } from '@angular/http';
 
 describe('ChangeUserRoleService', () => {
   let backend: MockBackend;
@@ -23,7 +23,7 @@ describe('ChangeUserRoleService', () => {
       ]
     });
     backend = TestBed.get(MockBackend);
-    spyOn(Http.prototype, 'request').and.callThrough();
+    spyOn(HttpClient.prototype, 'request').and.callThrough();
   });
   afterEach(() => backend.verifyNoPendingRequests());
 
