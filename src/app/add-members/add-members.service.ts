@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClient, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
+
+
 import { ManageUserRoles } from '../manage-user-roles';
 import { headersToString } from 'selenium-webdriver/http';
 import { Data } from '@angular/router/src/config';
@@ -33,7 +32,8 @@ export class AddMembersService {
 
 
   getAllUsers(): Observable<ManageUserRoles[]> {
-    return this.http.get<AddMembers[]>(this.getAllUsersUrl, { headers: this.headers }).map(this.extractData).pipe(
+    return this.http.get<AddMembers[]>(this.getAllUsersUrl, { headers: this.headers }).pipe(
+      map(this.extractData),
       catchError(this.handleError('getAllUsers', []))
     );
   }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import { ChangePassword } from '../change-password';
 import { error } from 'util';
-import { catchError } from 'rxjs/operators/catchError';
+import { catchError } from 'rxjs/operators';
 import { JwtHelper } from 'angular2-jwt';
-import { of } from 'rxjs/observable/of';
 import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
 

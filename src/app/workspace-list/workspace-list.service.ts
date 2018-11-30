@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClient, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
+
+
+
 import { JwtHelper } from 'angular2-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceInfo } from '../workspace-info/workspace-info';
@@ -22,25 +22,25 @@ export class WorkspaceListService {
   private headers;
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
-  this.headers = new HttpHeaders(
-    {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
-    });
+    this.headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
+      });
   }
   getList(id: string): Observable<WorkspaceObject[]> {
     const url = this.wSListByUidUrl + id;
-    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractWorkspaces)
-    .pipe(catchError(this.handleError('workspace-getList()', []))
-    );
+    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractWorkspaces),
+      catchError(this.handleError('workspace-getList()', []))
+      );
   }
 
   getListOfWorkspaceByUserId(id: string): Observable<WorkspaceObject[]> {
     const url = this.wSListByUidUrl + id;
-    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractWorkspaces)
-      .pipe(catchError(this.handleError('workspace-getList()', []))
+    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractWorkspaces),
+      catchError(this.handleError('workspace-getList()', []))
     );
   }
 

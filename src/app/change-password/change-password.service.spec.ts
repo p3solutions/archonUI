@@ -5,7 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { JwtHelper } from 'angular2-jwt';
-import { HttpClient, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 
 describe('ChangePasswordService', () => {
   let backend: MockBackend;

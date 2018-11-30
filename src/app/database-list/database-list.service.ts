@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClient, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
+
+
 import { JwtHelper } from 'angular2-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { ConfiguredDB, DatabaseObject } from '../workspace-objects';
@@ -22,9 +21,10 @@ export class DatabaseListService {
     private userinfoService: UserinfoService) {
   }
   getListOfConfigDatabases(): Observable<ConfiguredDB[]> {
-    return this.http.get<ConfiguredDB[]>(this.configDBListUrl, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractConfigDB)
-      .pipe(catchError(this.handleError('database-getList()', [])));
+    return this.http.get<ConfiguredDB[]>(this.configDBListUrl, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractConfigDB),
+      catchError(this.handleError('database-getList()', []))
+    );
   }
   private extractConfigDB(res: any) {
     const data = res.data.configuredDatabases;

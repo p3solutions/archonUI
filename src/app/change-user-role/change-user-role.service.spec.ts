@@ -4,7 +4,8 @@ import { ChangeUserRoleService } from './change-user-role.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { XHRBackend, HttpClient, ResponseOptions, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { XHRBackend, ResponseOptions, Response } from '@angular/http';
 
 describe('ChangeUserRoleService', () => {
   let backend: MockBackend;

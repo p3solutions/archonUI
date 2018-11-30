@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserinfoService } from '../userinfo.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class StatusService {
@@ -24,26 +23,26 @@ export class StatusService {
   }
 
   getJobOrigins(): Observable<any> {
-    return this.http.get<any>(this.getJobOriginsUrl, { headers: this.getHeaders() })
-      .map(this.extractJobOrigins)
-      .pipe(catchError(this.handleError<any>('getUserInfo')));
+    return this.http.get<any>(this.getJobOriginsUrl, { headers: this.getHeaders() }).pipe(
+      map(this.extractJobOrigins),
+      catchError(this.handleError<any>('getUserInfo')));
   }
 
   getJobStatuses(): Observable<any> {
-    return this.http.get<any>(this.getJobStatusesUrl, { headers: this.getHeaders() })
-      .map(this.extractJobStatuses)
-      .pipe(catchError(this.handleError<any>('getUserInfo')));
+    return this.http.get<any>(this.getJobStatusesUrl, { headers: this.getHeaders() }).pipe(
+      map(this.extractJobStatuses),
+      catchError(this.handleError<any>('getUserInfo')));
   }
 
   getJobList(): Observable<any> {
     const url = this.getStatusListUrl + this.userinfoService.getUserId();
-    return this.http.get<any>(url, { headers: this.getHeaders() })
-      .map(this.extractJobStatusList)
-      .pipe(catchError(this.handleError<any>('getUserInfo')));
+    return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
+      map(this.extractJobStatusList),
+      catchError(this.handleError<any>('getUserInfo')));
   }
   setRetryStatus(jobId): Observable<any> {
     const url = this.getRetryStatusUrl;
-    const param  = { 'userId': this.userinfoService.getUserId(), 'jobId': jobId};
+    const param = { 'userId': this.userinfoService.getUserId(), 'jobId': jobId };
     return this.http.post<any>(url, param, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError<any>('getUserInfo')));
   }

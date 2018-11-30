@@ -1,9 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { ServiceActionsObject } from '../workspace-objects';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subject } from 'rxjs/Subject';
+import { Observable ,  Observer ,  BehaviorSubject ,  Subject } from 'rxjs';
 
 @Injectable()
 export class WorkspaceServicesService {

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClient, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
+
+
 import { JwtHelper } from 'angular2-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { RelationshipInfoObject } from '../workspace-objects';
@@ -24,24 +23,24 @@ export class TableListService {
   }
 
   getTableList(workspaceId): Observable<string[]> {
-    return this.http.get<string[]>(this.tableListUrl + workspaceId, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractTables)
-      .pipe(catchError(this.handleError('tables-getTableList()', []))
-      );
+    return this.http.get<string[]>(this.tableListUrl + workspaceId, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractTables),
+      catchError(this.handleError('tables-getTableList()', []))
+    );
   }
   getListOfRelationTable(id): Observable<RelationshipInfoObject[]> {
     const url = this.relationTableListUrl + id;
-    return this.http.get<RelationshipInfoObject[]>(url, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractRelationTableList)
-      .pipe(catchError(this.handleError('relationtable-getListOfRelationTable()', []))
-      );
+    return this.http.get<RelationshipInfoObject[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractRelationTableList),
+      catchError(this.handleError('relationtable-getListOfRelationTable()', []))
+    );
   }
   getColumnsByTableName(tableName) {
     console.log('Fetching columns for:', tableName);
     const url = this.columnUrl + tableName;
-    return this.http.get<any[]>(url, {headers: this.userinfoService.getHeaders()})
-    .map(this.extractTablesMeta)
-    .pipe(catchError(this.handleError('getColumnsByTableName()', [])));
+    return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractTablesMeta),
+      catchError(this.handleError('getColumnsByTableName()', [])));
   }
 
   private extractTables(res: any) {

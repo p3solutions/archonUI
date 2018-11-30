@@ -1,18 +1,7 @@
-import {
-    HttpClient,
-    Headers,
-    Request,
-    RequestOptions,
-    RequestOptionsArgs,
-    RequestMethod,
-    Response,
-    HttpClientModule
-} from '@angular/http';
+import { Headers, Request, RequestOptions, RequestOptionsArgs, RequestMethod, Response } from '@angular/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Injectable, Provider, NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/defer';
-import 'rxjs/add/operator/mergeMap';
+import { Observable } from 'rxjs';
 
 export interface IAuthConfig {
     globalHeaders: Array<Object>;
@@ -236,7 +225,7 @@ export class JwtHelper {
             // get next character
             buffer = str.charAt(idx++);
             // character found in table? initialize bit storage and add its ascii value;
-            ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
+            buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
                 // and if not first of each 4 characters,
                 // convert the first 8 bits to one ascii character
                 bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0
@@ -376,7 +365,7 @@ function objectAssign(target: any, ...source: any[]) {
     providers: [AuthHttp, JwtHelper]
 })
 export class AuthModule {
-    constructor( @Optional() @SkipSelf() parentModule: AuthModule) {
+    constructor(@Optional() @SkipSelf() parentModule: AuthModule) {
         if (parentModule) {
             throw new Error(
                 'AuthModule is already loaded. Import it in the AppModule only');

@@ -1,8 +1,7 @@
 import { HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  throwError as _throw } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { _throw } from 'rxjs/observable/throw';
 import { ArchonResponse } from './archon-response';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { UserinfoService } from './userinfo.service';
