@@ -59,7 +59,7 @@ export class TableListComponent implements OnInit {
   loadRelationTable(table: any) {
     this.homeStage = true;
     this.dataAModal = false;
-    this.selectedPrimTblID = table.id;
+    this.selectedPrimTblID = table.tableId;
     this.selectedPrimTbl = table.tableName;
     this.resetDataAModal();
     this.tablelistService.getListOfRelationTable(this.selectedPrimTblID).subscribe(result => {
@@ -72,10 +72,17 @@ export class TableListComponent implements OnInit {
   openDataAModal() {
     this.homeStage = false;
     this.dataAModal = true;
-    this.getColumnsByTableName(this.selectedPrimTbl, true);
+    this.getColumnsByTableName(this.selectedPrimTblID, true);
     this.resetDataAModal();
   }
-  getColumnsByTableName(tableName, isPrime) {
+  openEditRelationship() {
+    this.getColumnsByTableName(this.selectedPrimTblID, true);
+    this.resetDataAModal();
+  }
+
+  getColumnsByTableName(tableId, isPrime) {
+console.log(isPrime, 'prime');
+
     if (isPrime) {
       this.primColArray = [];
       // this.primColLoader = true;
@@ -83,13 +90,13 @@ export class TableListComponent implements OnInit {
       this.secColArray = [];
       // this.secColLoader = true;
     }
-    this.tablelistService.getColumnsByTableName(tableName)
+    this.tablelistService.getColumnsByTableName(tableId)
     .subscribe((columns) => {
       if (isPrime) {
         this.primColArray = columns;
         // this.primColLoader = false;
       } else {
-        this.secTblColMap.set(tableName, columns);
+        this.secTblColMap.set(tableId, columns);
         this.secColArray = columns;
         // this.secColLoader = false;
         this.selectedSecColMap.clear();

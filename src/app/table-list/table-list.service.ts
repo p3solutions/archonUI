@@ -18,7 +18,8 @@ export class TableListService {
   private serviceActionType: string;
   tableListUrl = environment.apiUrl + 'meta/tablesList?workspaceId=';
   relationTableListUrl = environment.apiUrl + '/meta/tablesRelationShip?tableId=';
-  columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
+  // columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
+   columnUrl = environment.apiUrl + '/table/columnList?tableId=';
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
   }
@@ -36,9 +37,9 @@ export class TableListService {
       .pipe(catchError(this.handleError('relationtable-getListOfRelationTable()', []))
       );
   }
-  getColumnsByTableName(tableName) {
-    console.log('Fetching columns for:', tableName);
-    const url = this.columnUrl + tableName;
+  getColumnsByTableName(tableId) {
+    console.log('Fetching columns for:', this.columnUrl + tableId);
+    const url = this.columnUrl + tableId;
     return this.http.get<any[]>(url, {headers: this.userinfoService.getHeaders()})
     .map(this.extractTablesMeta)
     .pipe(catchError(this.handleError('getColumnsByTableName()', [])));
@@ -54,6 +55,7 @@ export class TableListService {
   }
 
   private extractTablesMeta(res: any) {
+    console.log(res, 'test');
     const tableKeys = res.data.tables_meta.table_keys;
     const tableColumns = res.data.tables_meta.table_columns;
     tableKeys.forEach(key => {
