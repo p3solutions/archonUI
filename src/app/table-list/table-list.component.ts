@@ -59,7 +59,7 @@ export class TableListComponent implements OnInit {
   loadRelationTable(table: any) {
     this.homeStage = true;
     this.dataAModal = false;
-    this.selectedPrimTblID = table.id;
+    this.selectedPrimTblID = table.tableId;
     this.selectedPrimTbl = table.tableName;
     this.resetDataAModal();
     this.tablelistService.getListOfRelationTable(this.selectedPrimTblID).subscribe(result => {

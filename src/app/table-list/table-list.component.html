@@ -72,7 +72,7 @@
         </div>
         <div class="col-3 col-sm-4">
           <h4>
-            <strong>Join Name</strong>
+            <strong>Configuration Mode</strong>
           </h4>
         </div>
         <div class="col-3 col-sm-2"></div>
@@ -90,7 +90,7 @@
                 <p>{{relation.definitionType}}</p>
               </div>
               <div class="col-3 col-sm-4" id="item">
-                <p>{{relation.joinName}}</p>
+                <p>{{relation.configurationModeName}}</p>
               </div>
               <div class="col-3 col-sm-2" id="item">
                 <a href="#">
@@ -103,14 +103,18 @@
             </div>
             <div class="panel-collapse collapse" id="collapseExample-{{ind}}" *ngFor="let x of relation.joinListInfo">
               <div class="panel-footer">
-                <div class="col col-md-6">Primary Table Column
+                <div class="col col-md-3"><strong>Primary Table Column</strong>
                 </div>
-                <div class="col col-md-6">Secondary Table Column
-                  </div>
+                <div class="col col-md-3"><strong>Secondary Table Column</strong>
+                </div>
+                <div class="col col-md-6 text-right"><strong>Join Name: </strong>{{relation.joinName}}
+                </div>
                   <hr id="hrtab">
-                  <div class="col col-md-6">{{x.primaryTable}}
+                  <div class="col col-md-3">{{x.primaryTable}}
                   </div>
-                  <div class="col col-md-6">{{x.secondaryTable}}
+                  <div class="col col-md-3">{{x.secondaryTable}}
+                  </div>
+                  <div class="col col-md-6">&nbsp;
                   </div>
                   <hr id="hrtab">
                   <div class="col col-md-12">
