@@ -78,19 +78,19 @@
         <div class="col-3 col-sm-2"></div>
         </div>
         <h5 *ngIf="!isRelationShipAvailable">
-          Currently no relationshiop information available
+          Currently no relationship information available
         </h5>
         <div class="items-list">
           <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo;let ind=index;">
             <div class="row">
               <div class="col-3 col-sm-3" id="item">
-                <p>{{relation.secondaryTable}}</p>
+                <p>{{relation.secondaryTable.tableName}}</p>
               </div>
               <div class="col-3 col-sm-3" id="item">
                 <p>{{relation.definitionType}}</p>
               </div>
               <div class="col-3 col-sm-4" id="item">
-                <p>{{relation.configurationModeName}}</p>
+                <p>{{relation.analysisMode}}</p>
               </div>
               <div class="col-3 col-sm-2" id="item">
                 <a href="#">
@@ -110,9 +110,9 @@
                 <div class="col col-md-6 text-right"><strong>Join Name: </strong>{{relation.joinName}}
                 </div>
                   <hr id="hrtab">
-                  <div class="col col-md-3">{{x.primaryTable}}
+                  <div class="col col-md-3">{{x.primaryColumn.columnName}}
                   </div>
-                  <div class="col col-md-3">{{x.secondaryTable}}
+                  <div class="col col-md-3">{{x.secondaryColumn.columnName}}
                   </div>
                   <div class="col col-md-6">&nbsp;
                   </div>

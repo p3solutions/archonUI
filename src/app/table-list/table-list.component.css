@@ -225,3 +225,14 @@ input[type='checkbox'] {
   padding-left: 32px;
   padding-bottom: 20px;
 }
+
+ul > li {
+  display:inline-block;     /* This is when the drop down box appears */
+}
+
+ul {
+  text-align:center;
+  width: 202px;
+  margin-left: 35px;
+  position: relative;
+}
