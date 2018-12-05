@@ -1,0 +1,195 @@
+.modal-dialog {
+    margin: 150px auto auto;
+    width: 850px;
+}
+.fa-check-circle {
+    color: #269af8;
+}
+#table-list {
+    margin-left: 2px;
+  }
+  
+  .input-group {
+    padding: 5%;
+  }
+  
+  #title-name {
+    padding-right: 0%;
+    padding-left: 10%;
+    margin-top: 0px;
+  }
+  
+  #table-view-body {
+    height: 300px;
+  }
+  
+  .form-control-feedback {
+    position: relative;
+    margin-top: -34px;
+    margin-left: 200px;
+    height: 32px;
+    color: #269af8;
+    line-height: 30px;
+  }
+  
+  .inner-addon {
+    padding-left: 10%;
+    padding-right: 10%;
+    border-radius: 2%;
+  }
+  
+  #search-body {
+    padding: 4%;
+  }
+  
+  .list-group {
+    padding-right: 40px;
+  }
+  
+  .list-group-item {
+    margin-left: 25px;
+    margin-bottom: -15px;
+    padding: 5px 10px;
+    /* width: 100%; */
+    text-transform: none;
+    /* margin-bottom: -15px; */
+    text-align: left;
+  }
+  
+  a {
+    text-decoration: none;
+    color: black;
+  } 
+  
+  
+  #item {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+   
+  .items-list {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 280px;
+    padding-left: 20px;
+  }
+  
+  .tablename-list {
+    margin-top: 10px;
+    margin-left: -20px;
+    width: 110%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 260px;
+ }
+  
+  .card {
+     height: 330px;
+  }
+  
+  button {
+    border-color: grey;
+  }
+  
+  .default-load {
+    margin-top: -20px;
+  }
+  
+  .default-info {
+    padding: 20%;
+  }
+  
+  .card-title {
+    float: left;
+  }
+  
+  .header {
+    /* float: left; */
+    margin-left: 20px;
+  }
+  
+  .sub-header {
+    margin-left: 35px;
+  }
+  
+  .droparrow {
+    float: right;
+    margin-right: 90px;
+  }
+  
+  .droparrow-menu {
+    min-width: 200px;
+  }
+  
+  .data-analyzer {
+    margin-top: 10px;
+  }
+  
+  #loading-icon {
+    margin-left: -8px;
+  }
+  
+  .icon {
+    display: inline-block;
+    margin-left: -50px;
+  }
+  .dataA-panel-body {
+    height: 325px;
+  }
+  .dataA-scrollable-div {
+    overflow: auto;
+    max-height: 300px;
+  }
+  .primary-col-chkbx {
+    margin: 4px 5px;
+  }
+  #analysis-view .card {
+    height: 500px;
+  }
+  #analysis-view .tablename-list {
+    height: 370px;
+  }
+  #analysis-view .search-input {
+    margin-left: 20px;
+    width: 85%;
+  }
+  #analysis-view .form-control-feedback {
+    margin-left: 240px;
+  }
+  .col-loader {
+    padding: 2px 15px;
+    float: right;
+  }
+  .da-table.selected {
+    border: 1px solid #269AF8;
+  }
+  input[type='checkbox'] {
+    cursor: pointer;
+  }
+  .unselected {
+    display: none;
+    float: right;
+    padding: 3px 0;
+    color: #269AF8;
+  }
+  .selected .unselected {
+    display: block;
+  }
+  
+  /* overriding css */
+  .form-control {
+    height: 35px;
+    border-radius: 15px;
+    width: 96%;
+    margin-left: 2px;
+  }
+  .form-control-feedback {
+    position: relative;
+    margin-top: -34px;
+    margin-left: 143px;
+    height: 32px;
+    color: #269af8;
+    line-height: 30px;
+  }
+  
