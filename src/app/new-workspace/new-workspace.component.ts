@@ -191,7 +191,9 @@ export class NewWorkspaceComponent implements OnInit {
   }
   refreshSelectedDBs(checkbox: HTMLElement) {
     const _row = $(checkbox).closest('tr');
+    // const _row = $(checkbox).prop('checked') ? $(checkbox).closest('tr') : null;
     const selDBdata = this.DBtable.row(_row).data();
+    // console.log(selDBdata);
     const id = selDBdata.id;
     if ($(checkbox).is(':checked')) {
       this.databaseIds.push(id);
