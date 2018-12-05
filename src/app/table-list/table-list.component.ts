@@ -15,7 +15,7 @@ export class TableListComponent implements OnInit {
   private isRelationShipAvailable: boolean;
   private selectedPrimTbl: any;
   private tableName: string;
-  private relationshipInfo: RelationshipInfoObject[];
+  private relationshipInfo: any[];
   private serviceActionType: string;
   private tableList: string[];
   primColArray = [];
