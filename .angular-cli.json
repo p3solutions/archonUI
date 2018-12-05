@@ -34,6 +34,7 @@
       "environments": {
         "local": "environments/environment.ts",
         "dev": "environments/environment.dev.ts",
+        "test": "environments/environment.test.ts",
         "prod": "environments/environment.prod.ts"
       }
     }

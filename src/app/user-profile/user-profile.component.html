@@ -17,7 +17,7 @@
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <strong>Name Changed Successfully</strong>
+      <strong>Name Changed Successfully. Please Logout and Login Again.</strong>
     </div>
     <div class="col-md-3 m-10 pull-right">
       <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary pull-right btn-form">Change Password</button>
@@ -80,7 +80,7 @@
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
                 <span class="m-r-10" *ngFor="let ws of userInfo.workspaceList; let isLast=last">
-                   <a [routerLink]="['/workspace/workspace-dashboard/workspace-info/',ws?.id]">{{ws?.workspaceName}}</a>{{isLast ? '' : ', '}}
+                   <a (click)="setWorkspace(ws)">{{ws?.workspaceName}}</a>{{isLast ? '' : ', '}}
                 </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">
