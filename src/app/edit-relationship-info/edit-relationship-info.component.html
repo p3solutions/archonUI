@@ -12,12 +12,11 @@
         <div id="createWSModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
           <!-- Indicators -->
           <ul class="multi-step-bars">
-            <li > 
-              <em class="col-md-6 text-center">Primary Table:</em>
-              <em class="col-md-6 text-center">Secondary Table:</em>
+            <li> 
+              <em class="col-md-6 text-center">Primary Table:{{primaryTable}}</em>
+              <em class="col-md-6 text-center">Secondary Table:{{secondaryTable}}</em>
             </li>
           </ul>
-
           <ol class="only carousel-indicators hide">
             <li data-target="#createWSModal-carousel" data-slide-to="0" class="active"></li>
           </ol>
@@ -40,7 +39,7 @@
                         <tr>
                           <td><input type="checkbox"></td>
                           <td><i class="fa fa-check-circle" style="font-size:24px"></i></td>
-                          <td>PT Column 1</td>
+                          <td></td>
                           <td>VARCHAR </td>
                           <td> <select class="member-role" >
                               <option hidden selected="true">Select</option>

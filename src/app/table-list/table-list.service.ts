@@ -30,15 +30,15 @@ export class TableListService {
       .pipe(catchError(this.handleError('tables-getTableList()', []))
       );
   }
-  getListOfRelationTable(id): Observable<RelationshipInfoObject[]> {
+  getListOfRelationTable(id): Observable<any[]> {
     const url = this.relationTableListUrl + id;
-    return this.http.get<RelationshipInfoObject[]>(url, { headers: this.userinfoService.getHeaders() })
+    return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() })
       .map(this.extractRelationTableList)
       .pipe(catchError(this.handleError('relationtable-getListOfRelationTable()', []))
       );
   }
   getColumnsByTableName(tableId) {
-    console.log('Fetching columns for:', this.columnUrl + tableId);
+    // console.log('Fetching columns for:', this.columnUrl + tableId);
     const url = this.columnUrl + tableId;
     return this.http.get<any[]>(url, {headers: this.userinfoService.getHeaders()})
     .map(this.extractTablesMeta)
@@ -55,7 +55,6 @@ export class TableListService {
   }
 
   private extractTablesMeta(res: any) {
-    console.log(res, 'test');
     const tableKeys = res.data.tables_meta.table_keys;
     const tableColumns = res.data.tables_meta.table_columns;
     tableKeys.forEach(key => {

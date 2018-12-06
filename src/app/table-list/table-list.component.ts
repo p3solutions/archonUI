@@ -15,7 +15,7 @@ export class TableListComponent implements OnInit {
   private isRelationShipAvailable: boolean;
   private selectedPrimTbl: any;
   private tableName: string;
-  private relationshipInfo: RelationshipInfoObject[];
+  private relationshipInfo: any[];
   private serviceActionType: string;
   private tableList: string[];
   primColArray = [];
@@ -37,6 +37,7 @@ export class TableListComponent implements OnInit {
   selectedTblsColsObj: any = {};
   workspaceID: any;
   selectedPrimTblID: any;
+  editValues: any;
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService
@@ -75,14 +76,12 @@ export class TableListComponent implements OnInit {
     this.getColumnsByTableName(this.selectedPrimTblID, true);
     this.resetDataAModal();
   }
-  openEditRelationship() {
-    this.getColumnsByTableName(this.selectedPrimTblID, true);
-    this.resetDataAModal();
+  openEditRelationship(relation) {
+  console.log(relation);
+  this.editValues = relation;
   }
 
   getColumnsByTableName(tableId, isPrime) {
-console.log(isPrime, 'prime');
-
     if (isPrime) {
       this.primColArray = [];
       // this.primColLoader = true;

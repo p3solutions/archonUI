@@ -60,36 +60,43 @@
         </div>
         <hr>
         <div class="row table-headers" *ngIf="isRelationShipAvailable">
-          <div class="col-3 col-sm-3">
-          <h4>
+          <div class="col col-md-3 sec-width">
+          <h4 id="sec-tab">
             <strong>Secondary Table</strong>
           </h4>
         </div>
-        <div class="col-3 col-sm-3">
+        <div class="col col-md-3 def-width">
           <h4>
             <strong>Definition Type</strong>
           </h4>
         </div>
-        <div class="col-3 col-sm-4">
+        <div class="col col-md-3 conf-width">
+          <h4>
+            <strong>Configuration Mode</strong>
+          </h4>
+        </div>
+        <div class="col col-md-3 join-width">
           <h4>
             <strong>Join Name</strong>
           </h4>
         </div>
-        <div class="col-3 col-sm-2"></div>
         </div>
         <h5 *ngIf="!isRelationShipAvailable">
-          Currently no relationshiop information available
+          Currently no relationship information available
         </h5>
         <div class="items-list">
           <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo;let ind=index;">
             <div class="row">
-              <div class="col-3 col-sm-3" id="item">
-                <p>{{relation.secondaryTable}}</p>
+              <div class="col-2 col-sm-2" id="item">
+                <p>{{relation.secondaryTable.tableName}}</p>
               </div>
-              <div class="col-3 col-sm-3" id="item">
+              <div class="col-2 col-sm-2" id="item">
                 <p>{{relation.definitionType}}</p>
               </div>
-              <div class="col-3 col-sm-4" id="item">
+              <div class="col-2 col-sm-3" id="item">
+                <p>{{relation.analysisMode}}</p>
+              </div>
+              <div class="col-2 col-sm-3" id="item">
                 <p>{{relation.joinName}}</p>
               </div>
               <div class="col-3 col-sm-2" id="item">
@@ -101,30 +108,30 @@
                 </a>
               </div>
             </div>
-            <div class="panel-collapse collapse" id="collapseExample-{{ind}}" *ngFor="let x of relation.joinListInfo">
-              <div class="panel-footer">
-                <div class="col col-md-6">Primary Table Column
+            <div class="panel-collapse collapse" id="collapseExample-{{ind}}">
+              <div class="panel-footer"> 
+                <div class="col col-md-6"><strong>Primary Table Column</strong>
                 </div>
-                <div class="col col-md-6">Secondary Table Column
+                <div class="col col-md-6"><strong>Secondary Table Column</strong>
+                </div>
+                  <hr id="hrtab">
+                  <div *ngFor="let x of relation.joinListInfo">
+                  <div class="col col-md-6">{{x.primaryColumn.columnName}}
+                  </div>
+                  <div class="col col-md-6">{{x.secondaryColumn.columnName}}
                   </div>
                   <hr id="hrtab">
-                  <div class="col col-md-6">{{x.primaryColumn}}
                   </div>
-                  <div class="col col-md-6">{{x.secondaryColumn}}
-                  </div>
-                  <hr id="hrtab">
                   <div class="col col-md-12">
-                      <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#openEditRelationshipModal" (click)="openEditRelationship()">Edit</button>
+                      <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)">Edit </button>
                       <button type="button" class="btn btn-primary Close" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
                   </div>  
               </div>
             </div>
-                            
-<app-edit-relationship-info class="modal fade" id="openEditRelationshipModal" role="dialog"></app-edit-relationship-info>
-
           </div>
         </div>
       </div>
+      <app-edit-relationship-info class="modal fade" id="openEditRelationshipModal" [relation]="editValues" role="dialog"></app-edit-relationship-info>
 <!-- Data Analyzer -->
       <div *ngIf="dataAModal" class="">
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
@@ -297,3 +304,4 @@
     </div>
   </div>
 </div>
+<app-edit-relationship-info class="modal fade" id="openEditRelationshipModal" [relation]="editValues" role="dialog"></app-edit-relationship-info>

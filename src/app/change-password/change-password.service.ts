@@ -7,6 +7,7 @@ import { catchError } from 'rxjs/operators/catchError';
 import { JwtHelper } from 'angular2-jwt';
 import { of } from 'rxjs/observable/of';
 import { environment } from '../../environments/environment';
+import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class ChangePasswordService {
@@ -21,9 +22,9 @@ export class ChangePasswordService {
   passwordParam: object;
   constructor(
     private http: HttpClient,
-    private jwtHelper: JwtHelper
+    private userinfoService: UserinfoService
   ) {
-    this.getUserId();
+    this.userId = this.userinfoService.getUserId();
   }
 
   changePassword(param) {
@@ -33,15 +34,6 @@ export class ChangePasswordService {
     // .pipe(
     // catchError(this.handleError('changePassword'))
     // );
-  }
-  getUserId(): void {
-    this.accessToken = localStorage.getItem('accessToken');
-    this.token_data = this.jwtHelper.decodeToken(this.accessToken);
-    return this.userId = this.token_data.user.id;
-  }
-
-  getAuthKey() {
-    return localStorage.getItem('accessToken');
   }
 
   // * Handle Http operation that failed.
