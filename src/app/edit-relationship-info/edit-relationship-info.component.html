@@ -13,8 +13,8 @@
           <!-- Indicators -->
           <ul class="multi-step-bars">
             <li> 
-              <em class="col-md-6 text-center">Primary Table:{{primaryTable}}</em>
-              <em class="col-md-6 text-center">Secondary Table:{{secondaryTable}}</em>
+              <em class="col-md-6 text-center"><strong>Primary Table: {{primaryTable}}</strong></em>
+              <em class="col-md-6 text-center"><strong>Secondary Table: {{secondaryTable}}</strong></em>
             </li>
           </ul>
           <ol class="only carousel-indicators hide">
@@ -28,23 +28,28 @@
                      <table class="display m-10" cellspacing="0" width="100%">
                         <thead>
                           <tr>
-                            <th style="width: 35px;"></th>
-                            <th style="width: 35px;">Key</th>
+                            <!-- <th style="width: 35px;"></th>
+                            <th style="width: 35px;">Key</th> -->
                             <th style="width: 145px;">Primary Table Column</th>
                             <th style="width: 145px;">Column Type</th>
                             <th style="width: 145px;">Secondary Table Column</th>                           
                           </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                          <td><input type="checkbox"></td>
-                          <td><i class="fa fa-check-circle" style="font-size:24px"></i></td>
-                          <td></td>
-                          <td>VARCHAR </td>
-                          <td> <select class="member-role" >
-                              <option hidden selected="true">Select</option>
-                              <option value="test">address1</option>
-                            </select></td>                         
+                        <tr *ngFor="let x of joinDetailsArray; let ind=index">
+                          <!-- <td><input type="checkbox"></td> -->
+                          <!-- <td><i class="fa fa-check-circle" style="font-size:24px"></i></td> -->
+                          <td>{{x.primaryColumn.columnName}}</td>
+                          <td>{{x.primaryColumn.columnDataType}}</td>
+                          <td> <select *ngIf="x.defaultSecondaryColumn === true" #selected class="member-role" (change)="selectedValues(x,ind, selected.value)">
+                              <option selected>Select</option>
+                              <option [selected]="x.secondaryColumn.columnName == i.columnName" [ngValue]="i" *ngFor="let i of secondaryColumns | secondaryColumn:x.primaryColumn.columnDataType">{{i.columnName}}</option>
+                            </select>
+                            <select *ngIf="x.defaultSecondaryColumn === false" #selected class="member-role" (change)="selectedValues(x,ind, selected.value)">
+                              <option selected>Select</option>
+                              <option  [ngValue]="i" *ngFor="let i of secondaryColumns | secondaryColumn:x.primaryColumn.columnDataType">{{i.columnName}}</option>
+                            </select>
+                          </td>                         
                         </tr>
                       </tbody>
                       </table>
@@ -55,8 +60,8 @@
        </div>
       <div class="modal-footer">
        <button type="button" class="btn btn-primary">Reset</button>
-        <button type="button" class="btn btn-primary">Automatch Columns</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="resetCarousel()">update</button>
+        <!-- <button type="button" class="btn btn-primary">Automatch Columns</button> -->
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateRelation()">update</button>
         <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Close</button>
       </div>
     </div>

@@ -30,8 +30,8 @@ export class TableListService {
       .pipe(catchError(this.handleError('tables-getTableList()', []))
       );
   }
-  getListOfRelationTable(id): Observable<any[]> {
-    const url = this.relationTableListUrl + id;
+  getListOfRelationTable(id, workspaceId): Observable<any[]> {
+    const url = this.relationTableListUrl + id + '&workspaceId=' + workspaceId;
     return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() })
       .map(this.extractRelationTableList)
       .pipe(catchError(this.handleError('relationtable-getListOfRelationTable()', []))

@@ -63,7 +63,7 @@ export class TableListComponent implements OnInit {
     this.selectedPrimTblID = table.tableId;
     this.selectedPrimTbl = table.tableName;
     this.resetDataAModal();
-    this.tablelistService.getListOfRelationTable(this.selectedPrimTblID).subscribe(result => {
+    this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.isRelationShipAvailable = true;
     });
@@ -77,7 +77,6 @@ export class TableListComponent implements OnInit {
     this.resetDataAModal();
   }
   openEditRelationship(relation) {
-  console.log(relation);
   this.editValues = relation;
   }
 

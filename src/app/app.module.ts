@@ -84,6 +84,8 @@ import { ReverseArrayPipe } from './reverse.pipe';
 import { EditRelationshipInfoComponent } from './edit-relationship-info/edit-relationship-info.component';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 import { UserProfileService } from './user-profile/user-profile.service';
+import { EditRelationshipInfoService } from './edit-relationship-info/edit-relationship-info.service';
+import { SecondaryColumnPipe } from './secondary-column.pipe';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -131,7 +133,8 @@ import { UserProfileService } from './user-profile/user-profile.service';
                 ReverseArrayPipe,
                 SearchPipe,
                 RolePipe,
-                EditRelationshipInfoComponent
+                EditRelationshipInfoComponent,
+                SecondaryColumnPipe
         ],
         imports: [
                 BrowserModule,
@@ -184,7 +187,8 @@ import { UserProfileService } from './user-profile/user-profile.service';
                         multi: true
                 },
                 TableListService,
-                UserProfileService
+                UserProfileService,
+                EditRelationshipInfoService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
