@@ -5,3 +5,7 @@
 .fa-check-circle {
     color: #269af8;
 }
+
+#sec_select {
+    width: max-content;
+}

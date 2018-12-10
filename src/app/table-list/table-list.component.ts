@@ -38,6 +38,7 @@ export class TableListComponent implements OnInit {
   workspaceID: any;
   selectedPrimTblID: any;
   editValues: any;
+  tableCopy: any;
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService
@@ -58,6 +59,7 @@ export class TableListComponent implements OnInit {
   }
 
   loadRelationTable(table: any) {
+    this.tableCopy = table;
     this.homeStage = true;
     this.dataAModal = false;
     this.selectedPrimTblID = table.tableId;
@@ -374,5 +376,9 @@ export class TableListComponent implements OnInit {
     const progressSelector = 'progress-bar';
     this.addClass(progressSelector, 'width-100-pc');
     this.addClass('prev-btn', 'hide');
+  }
+
+  refreshRelation($event) {
+  this.loadRelationTable(this.tableCopy);
   }
 }

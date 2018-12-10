@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import 'rxjs/add/observable/empty' ;
+import {Headers} from '@angular/http';
 
 @Injectable()
 export class EditRelationshipInfoService {
@@ -24,8 +24,7 @@ export class EditRelationshipInfoService {
   updateRealation(tableId, workspaceId, joinName , resultArray): Observable<any> {
     const url = this.updateTableListUrl +  workspaceId + '&tableId=' + tableId;
     const param  = {'joinName': joinName, 'joinListInfo': resultArray};
-    console.log(param);
-    return this.http.post<any>(url, param, { headers: this.userinfoService.getHeaders()})
+    return this.http.put<any>(url, param, {headers: this.userinfoService.getHeaders()})
       .pipe(catchError(this.handleError<any>('updateRelation')));
   }
 

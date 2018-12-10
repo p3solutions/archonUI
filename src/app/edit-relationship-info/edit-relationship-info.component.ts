@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { EditRelationshipInfoService } from './edit-relationship-info.service';
-import { JoinValues, SecondaryColumn} from './edit-relationship-info-object';
+import { JoinValues, SecondaryColumn, JoinValueColumn} from './edit-relationship-info-object';
 
 @Component({
   selector: 'app-edit-relationship-info',
@@ -10,10 +10,11 @@ import { JoinValues, SecondaryColumn} from './edit-relationship-info-object';
 export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   @Input() relation: any;
   @Input() workspaceID: any;
+  @Output() updateEvent = new EventEmitter<boolean>();
   primaryTable: string;
   secondaryTable: string;
   userValues: any;
-  joinDetails: JoinValues[];
+  joinDetails: any[];
   primaryColumns = [];
   secondaryColumns = [];
   primaryTableId: any;
@@ -21,6 +22,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   joinDetailsArray: JoinValues[];
   resultantValues: any[] = [];
   joinName: any;
+  removeIndexValue: any[];
 
 
   constructor(private editRelationshipInfo: EditRelationshipInfoService) { }
@@ -32,10 +34,10 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   ngOnChanges(change: SimpleChanges) {
    const value: SimpleChange = change.relation;
    this.userValues = value.currentValue;
-   this.populateValues(this.userValues);
+   this.populateValues();
   }
 
-  populateValues(userValues) {
+  populateValues() {
     this.primaryTable = this.userValues.primaryTable.tableName;
     this.secondaryTable = this.userValues.secondaryTable.tableName;
     this.primaryTableId = this.userValues.primaryTable.tableId;
@@ -43,7 +45,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     this.joinName = this.userValues.joinName;
     this.joinDetails = this.userValues.joinListInfo;
     this.editRelationshipInfo.getColumnsByTableId(this.secondaryTabelId).subscribe(x => {
-    this.secondaryColumns = x;
+      this.secondaryColumns = x;
     });
     this.editRelationshipInfo.getColumnsByTableId(this.primaryTableId).subscribe(x => {
       this.primaryColumns = x;
@@ -71,8 +73,8 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryValues, index , secondaryColumn) {
-    let example: any = {};
-    let insert: number;
+    let example: any;
+    let insert = 0;
     for (const i of this.secondaryColumns) {
       if (i.columnName === secondaryColumn) {
         example = i;
@@ -86,7 +88,11 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           columnName: primaryValues.primaryColumn.columnName,
           dataType: primaryValues.primaryColumn.columnDataType
       },
-      secondaryColumn: example
+      secondaryColumn: {
+        columnId: example.columnId,
+        columnName: example.columnName,
+        dataType: example.columnDataType
+      }
      };
     for (const i of this.resultantValues) {
       if (i.indexData === index) {
@@ -95,7 +101,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.resultantValues.splice(indexx, 1);
           insert = 1;
         } else {
-          insert = 0;
           const indexx = this.resultantValues.indexOf(i);
           this.resultantValues.splice(indexx, 1);
         }
@@ -103,21 +108,39 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     }
     if ( insert === 0) {
       this.resultantValues.push(test);
-    } else if (insert === 1) {
-      console.log();
-    } else {
-      this.resultantValues.push(test);
     }
   }
 
   updateRelation() {
-    for (const i of this.resultantValues) {
+    for (const i of this.joinDetails) {
+      for (const j of this.resultantValues) {
+      if (i.relationshipId === j.relationshipId) {
+      } else {
+      this.resultantValues.push(i);
+      }
+      }
+    }
+    this.removeIndexValue = this.resultantValues;
+    for (const i of this.removeIndexValue) {
       delete i.indexData;
     }
-    this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.resultantValues).subscribe(res => {
+    console.log(this.removeIndexValue);
+    this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
+    .subscribe(res => {
+      this.resultantValues = [];
+      this.removeIndexValue = [];
       if (res && res.success) {
-      console.log('Updated Successfully');
+        this.updateEvent.emit(true);
+        const close: HTMLButtonElement = document.querySelector('.modal-header .close');
+        close.click();
       }
     });
-  }
+   }
+
+   resetSelection() {
+     this.populateValues();
+     this.resultantValues = [];
+     this.removeIndexValue = [];
+}
+
 }

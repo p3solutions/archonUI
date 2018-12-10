@@ -131,7 +131,7 @@
           </div>
         </div>
       </div>
-      <app-edit-relationship-info class="modal fade" id="openEditRelationshipModal" [relation]="editValues" [workspaceID]="workspaceID" role="dialog"></app-edit-relationship-info>
+      <app-edit-relationship-info class="modal fade" (updateEvent)="refreshRelation($event)" id="openEditRelationshipModal" [relation]="editValues" [workspaceID]="workspaceID" role="dialog"></app-edit-relationship-info>
 <!-- Data Analyzer -->
       <div *ngIf="dataAModal" class="">
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">

@@ -41,11 +41,11 @@
                           <!-- <td><i class="fa fa-check-circle" style="font-size:24px"></i></td> -->
                           <td>{{x.primaryColumn.columnName}}</td>
                           <td>{{x.primaryColumn.columnDataType}}</td>
-                          <td> <select *ngIf="x.defaultSecondaryColumn === true" #selected class="member-role" (change)="selectedValues(x,ind, selected.value)">
+                          <td> <select id="sec_select" *ngIf="x.defaultSecondaryColumn === true" #selected class="member-role" (change)="selectedValues(x,ind, selected.value)">
                               <option selected>Select</option>
                               <option [selected]="x.secondaryColumn.columnName == i.columnName" [ngValue]="i" *ngFor="let i of secondaryColumns | secondaryColumn:x.primaryColumn.columnDataType">{{i.columnName}}</option>
                             </select>
-                            <select *ngIf="x.defaultSecondaryColumn === false" #selected class="member-role" (change)="selectedValues(x,ind, selected.value)">
+                            <select id="sec_select" *ngIf="x.defaultSecondaryColumn === false" #selected class="member-role" (change)="selectedValues(x,ind, selected.value)">
                               <option selected>Select</option>
                               <option  [ngValue]="i" *ngFor="let i of secondaryColumns | secondaryColumn:x.primaryColumn.columnDataType">{{i.columnName}}</option>
                             </select>
@@ -59,9 +59,8 @@
             </div>
        </div>
       <div class="modal-footer">
-       <button type="button" class="btn btn-primary">Reset</button>
-        <!-- <button type="button" class="btn btn-primary">Automatch Columns</button> -->
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateRelation()">update</button>
+       <button type="button" class="btn btn-primary" (click)="resetSelection()">Reset</button>
+        <button type="button" class="btn btn-primary" (click)="updateRelation()">update</button>
         <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Close</button>
       </div>
     </div>

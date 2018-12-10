@@ -17,4 +17,9 @@ export class JoinValues {
     columnName: string;
     dataType: string;
  }
+ export class JoinValueColumn {
+    columnId: string;
+    columnName: string;
+    columnDataType: string;
+ }
 
