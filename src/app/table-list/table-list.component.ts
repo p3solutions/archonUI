@@ -45,6 +45,7 @@ export class TableListComponent implements OnInit {
   relationShipIDs = [];
   delProgress: boolean;
   deleteNotif = new ErrorObject();
+  tableCopy: any;
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService
@@ -65,6 +66,7 @@ export class TableListComponent implements OnInit {
   }
 
   loadRelationTable(table: any) {
+    this.tableCopy = table;
     this.homeStage = true;
     this.dataAModal = false;
     this.selectedPrimTblID = table.tableId;
@@ -386,14 +388,10 @@ export class TableListComponent implements OnInit {
     for (const x of this.joinListTemp) {
       this.relationShipIDs.push(x.relationshipId);
     }
-   // console.log(this.relationShipIDs);
    }
 
   confirmDelete(): void {
     this.delProgress = true;
-    console.log(this.primaryTableId);
-    console.log(this.workspaceID);
-    console.log(this.relationShipIDs);
     this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId, this.relationShipIDs).subscribe(res => {
       this.delProgress = false;
       if (res && res.success) {
@@ -411,6 +409,6 @@ export class TableListComponent implements OnInit {
      postDelete() {
        const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
        close.click();
-       this.relationShipIDs = [];
+       this.loadRelationTable(this.tableCopy);
     }
 }

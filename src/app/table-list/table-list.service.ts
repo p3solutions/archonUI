@@ -18,7 +18,7 @@ export class TableListService {
   private serviceActionType: string;
   tableListUrl = environment.apiUrl + 'meta/tablesList?workspaceId=';
   relationTableListUrl = environment.apiUrl + '/meta/tablesRelationShip?tableId=';
-  deleteRelationsUrl = environment.apiUrl + 'meta/relationship?tableId=';
+  deleteRelationsUrl = environment.apiUrl + 'meta/relationship?workspaceId=';
   columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
@@ -38,12 +38,10 @@ export class TableListService {
       );
   }
   deleteRelationInfoData(workspaceID, primaryTableId, relationShipIDs): Observable<any> {
-    const url = this.deleteRelationsUrl + primaryTableId + '&relationshipId=' + workspaceID;
-    console.log(url);
-    return this.http.delete<any>(url, { headers: this.userinfoService.getHeaders() })
+    const url = this.deleteRelationsUrl + workspaceID + '&tableId=' + primaryTableId;
+    const params = {relationshipId: relationShipIDs};
+    return this.http.request<any>('DELETE', url, { body: params,  headers: this.userinfoService.getHeaders() })
       .pipe(catchError(this.handleError('deleteRelationInfoData', []))
-        // tap(_ => this.log(`deleted hero id=${id}`)),
-        // catchError(this.handleError<Hero>('deleteHero'))
       );
   }
   getColumnsByTableName(tableName) {
