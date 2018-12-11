@@ -23,6 +23,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   resultantValues: any[] = [];
   joinName: any;
   removeIndexValue: any[];
+  updateNotif: boolean;
 
 
   constructor(private editRelationshipInfo: EditRelationshipInfoService) { }
@@ -133,9 +134,14 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         this.updateEvent.emit(true);
         const close: HTMLButtonElement = document.querySelector('.modal-header .close');
         close.click();
-      }
+      } else {
+        this.updateNotif = true;
+        }
     });
    }
+   closeErrorMsg() {
+    this.updateNotif = false;
+  }
 
    resetSelection() {
      this.populateValues();

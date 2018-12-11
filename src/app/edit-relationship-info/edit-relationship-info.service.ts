@@ -22,7 +22,7 @@ export class EditRelationshipInfoService {
   }
 
   updateRealation(tableId, workspaceId, joinName , resultArray): Observable<any> {
-    const url = this.updateTableListUrl +  workspaceId + '&tableId=' + tableId;
+    const url = this.updateTableListUrl +  workspaceId + '&tableId=' + 345345;
     const param  = {'joinName': joinName, 'joinListInfo': resultArray};
     return this.http.put<any>(url, param, {headers: this.userinfoService.getHeaders()})
       .pipe(catchError(this.handleError<any>('updateRelation')));
