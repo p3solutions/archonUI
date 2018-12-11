@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtHelper } from 'angular2-jwt';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { MatTableModule } from '@angular/material';
@@ -83,6 +83,8 @@ import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
 import { EditRelationshipInfoComponent } from './edit-relationship-info/edit-relationship-info.component';
 import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
+import { ArchonHttpInterceptor } from './archon-http-interceptor';
+import { UserProfileService } from './user-profile/user-profile.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -178,7 +180,13 @@ import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.compon
                 TableListService,
                 StatusService,
                 CommonUtilityService,
-                TableListService
+                {
+                        provide: HTTP_INTERCEPTORS,
+                        useClass: ArchonHttpInterceptor,
+                        multi: true
+                },
+                TableListService,
+                UserProfileService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]

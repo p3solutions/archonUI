@@ -19,7 +19,7 @@ export class SigninFormComponent implements OnInit {
   errorObject: ErrorObject;
   inProgress = false;
   enableSignInBtn = false;
-
+  workspaceUrl = '/workspace';
   constructor(
     private signinService: SigninFormService,
     private authenticationService: AuthenticationService,
@@ -48,7 +48,7 @@ export class SigninFormComponent implements OnInit {
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
         localStorage.setItem('accessToken', data.data.accessToken);
         localStorage.setItem('refreshToken', data.data.refreshToken);
-        this.router.navigate(['/workspace']);
+        this.handleRedirection();
       },
       (err: HttpErrorResponse) => {
         this.inProgress = false;
@@ -75,5 +75,15 @@ export class SigninFormComponent implements OnInit {
     } else {
       this.enableSignInBtn = false;
     }
+  }
+  handleRedirection() {
+    const sessionTimedOutUrl = localStorage.getItem('sessionTimedOutUrl');
+    const redirectUrl = sessionTimedOutUrl ? sessionTimedOutUrl : this.workspaceUrl;
+    console.log('sessionTimedOutUrl', sessionTimedOutUrl, 'redirectUrl', redirectUrl);
+    if (redirectUrl === sessionTimedOutUrl) {
+      console.log('deleting sessionTimedOutUrl form localStorage');
+      localStorage.removeItem('sessionStorage');
+    }
+    this.router.navigateByUrl(redirectUrl);
   }
 }
