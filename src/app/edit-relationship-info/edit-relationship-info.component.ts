@@ -114,18 +114,23 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
 
   updateRelation() {
     for (const i of this.joinDetails) {
+      let push: boolean;
       for (const j of this.resultantValues) {
-      if (i.relationshipId === j.relationshipId || j.relationshipId === '') {
+      if (i.relationshipId === j.relationshipId) {
+        push = false;
+        break;
       } else {
-      this.resultantValues.push(i);
+         push = true;
       }
+      }
+      if (push === true) {
+        this.resultantValues.push(i);
       }
     }
     this.removeIndexValue = this.resultantValues;
     for (const i of this.removeIndexValue) {
       delete i.indexData;
     }
-    console.log(this.removeIndexValue);
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
     .subscribe(res => {
       this.resultantValues = [];
