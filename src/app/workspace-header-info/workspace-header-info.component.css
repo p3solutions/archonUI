@@ -5,6 +5,8 @@
 .title {
     font-size: 18px;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .loading {
     font-size: 14px;

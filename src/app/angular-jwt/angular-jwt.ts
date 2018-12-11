@@ -142,8 +142,8 @@ export class AuthHttp {
             request.headers = new Headers();
         }
         headers.forEach((header: Object) => {
-            let key: string = Object.keys(header)[0];
-            let headerValue: string = (header as any)[key];
+            const key: string = Object.keys(header)[0];
+            const headerValue: string = (header as any)[key];
             (request.headers as Headers).set(key, headerValue);
         });
     }
@@ -157,11 +157,11 @@ export class AuthHttp {
         // }
 
         // from this point url is always an instance of Request;
-        let req: Request = url as Request;
+        const req: Request = url as Request;
 
         // Create a cold observable and load the token just in time
         return Observable.defer(() => {
-            let token: string | Promise<string> = this.config.tokenGetter();
+            const token: string | Promise<string> = this.config.tokenGetter();
             if (token instanceof Promise) {
                 return Observable.fromPromise(token).mergeMap((jwtToken: string) => this.requestWithToken(req, jwtToken));
             } else {
@@ -213,7 +213,7 @@ export class JwtHelper {
             case 2: { output += '=='; break; }
             case 3: { output += '='; break; }
             default: {
-                throw 'Illegal base64url string!';
+                throw String('Illegal base64url string!');
             }
         }
         return this.b64DecodeUnicode(output);
@@ -221,18 +221,18 @@ export class JwtHelper {
 
     // credits for decoder goes to https://github.com/atk
     private b64decode(str: string): string {
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-        let output: string = '';
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+        let output = '';
 
         str = String(str).replace(/=+$/, '');
 
-        if (str.length % 4 == 1) {
-            throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
+        if (str.length % 4 === 1) {
+            throw new Error('"atob" failed: The string to be decoded is not correctly encoded.');
         }
 
         for (
             // initialize result and counters
-            let bc: number = 0, bs: any, buffer: any, idx: number = 0;
+            let bc = 0, bs: any, buffer: any, idx = 0;
             // get next character
             buffer = str.charAt(idx++);
             // character found in table? initialize bit storage and add its ascii value;
@@ -255,13 +255,13 @@ export class JwtHelper {
     }
 
     public decodeToken(token: string): any {
-        let parts = token.split('.');
+        const parts = token.split('.');
 
         if (parts.length !== 3) {
             throw new Error('JWT must have 3 parts');
         }
 
-        let decoded = this.urlBase64Decode(parts[1]);
+        const decoded = this.urlBase64Decode(parts[1]);
         if (!decoded) {
             throw new Error('Cannot decode the token');
         }
@@ -277,14 +277,14 @@ export class JwtHelper {
             return null;
         }
 
-        let date = new Date(0); // The 0 here is the key, which sets the date to the epoch
+        const date = new Date(0); // The 0 here is the key, which sets the date to the epoch
         date.setUTCSeconds(decoded.exp);
 
         return date;
     }
 
     public isTokenExpired(token: string, offsetSeconds?: number): boolean {
-        let date = this.getTokenExpirationDate(token);
+        const date = this.getTokenExpirationDate(token);
         offsetSeconds = offsetSeconds || 0;
 
         if (date == null) {
@@ -331,8 +331,8 @@ export function provideAuth(config?: IAuthConfigOptional): Provider[] {
     ];
 }
 
-let hasOwnProperty = Object.prototype.hasOwnProperty;
-let propIsEnumerable = Object.prototype.propertyIsEnumerable;
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+const propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
 function toObject(val: any) {
     if (val === null || val === undefined) {
@@ -344,13 +344,13 @@ function toObject(val: any) {
 
 function objectAssign(target: any, ...source: any[]) {
     let from: any;
-    let to = toObject(target);
+    const to = toObject(target);
     let symbols: any;
 
-    for (var s = 0; s < source.length; s++) {
+    for (let s = 0; s < source.length; s++) {
         from = Object(source[s]);
-
-        for (var key in from) {
+        let key;
+        for (key in from) {
             if (hasOwnProperty.call(from, key)) {
                 to[key] = from[key];
             }
@@ -358,7 +358,7 @@ function objectAssign(target: any, ...source: any[]) {
 
         if ((<any>Object).getOwnPropertySymbols) {
             symbols = (<any>Object).getOwnPropertySymbols(from);
-            for (var i = 0; i < symbols.length; i++) {
+            for (let i = 0; i < symbols.length; i++) {
                 if (propIsEnumerable.call(from, symbols[i])) {
                     to[symbols[i]] = from[symbols[i]];
                 }

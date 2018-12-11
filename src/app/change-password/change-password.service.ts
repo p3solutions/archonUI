@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { ChangePassword } from '../ChangePassword';
+import { ChangePassword } from '../change-password';
 import { error } from 'util';
 import { catchError } from 'rxjs/operators/catchError';
 import { JwtHelper } from 'angular2-jwt';
 import { of } from 'rxjs/observable/of';
+import { environment } from '../../environments/environment';
+import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class ChangePasswordService {
@@ -13,34 +15,25 @@ export class ChangePasswordService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
-  private getUsersUrl = 'http://13.58.89.64:9000/users/';
+  private getUsersUrl = environment.apiUrl + 'users/';
   accessToken: string;
   token_data: any;
   userId: string;
-
+  passwordParam: object;
   constructor(
     private http: HttpClient,
-    private jwtHelper: JwtHelper
+    private userinfoService: UserinfoService
   ) {
-    this.getUserId();
+    this.userId = this.userinfoService.getUserId();
   }
 
   changePassword(param) {
     const URL = this.getUsersUrl + this.userId + '/pwd';
-    console.log('service param', param);
-    return this.http.patch(URL, param, { headers: this.headers });
+    this.passwordParam = param;
+    return this.http.patch(URL, this.passwordParam, { headers: this.headers });
     // .pipe(
     // catchError(this.handleError('changePassword'))
     // );
-  }
-  getUserId(): void {
-    this.accessToken = localStorage.getItem('accessToken');
-    this.token_data = this.jwtHelper.decodeToken(this.accessToken);
-    return this.userId = this.token_data.user.id;
-  }
-
-  getAuthKey() {
-    return localStorage.getItem('accessToken');
   }
 
   // * Handle Http operation that failed.

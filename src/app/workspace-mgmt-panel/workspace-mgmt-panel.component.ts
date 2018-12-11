@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./workspace-mgmt-panel.component.css']
 })
 export class WorkspaceMgmtPanelComponent implements OnInit {
+  @Input() workspaceId: string;
 
   constructor() { }
 

@@ -1,0 +1,252 @@
+#table-list {
+  margin-left: 35px;
+}
+
+.input-group {
+  padding: 5%;
+}
+
+#title-name {
+  padding-right: 64%;
+  margin-top: 0px;
+}
+
+#table-view-body {
+  height: 350px;
+}
+
+.form-control-feedback {
+  position: relative;
+  margin-top: -34px;
+  margin-left: 250px;
+  height: 32px;
+  color: #269af8;
+  line-height: 30px;
+}
+
+.inner-addon {
+  padding-left: 10%;
+  padding-right: 10%;
+  border-radius: 2%;
+}
+
+#search-body {
+  padding: 4%;
+}
+
+.list-group {
+  padding-right: 40px;
+}
+
+.list-group-item {
+  margin-left: 25px;
+  margin-bottom: -15px;
+  /* width: 100%; */
+  text-transform: none;
+  /* margin-bottom: -15px; */
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.table-header,
+h4 {
+  display: inline;
+}
+.table-header {
+  float: left;
+}
+
+#item {
+  margin-top: 10px;
+}
+
+#trash,
+#down-arrow {
+  font-size: 20px;
+  padding-left: 30px;
+  cursor: pointer;
+}
+
+.items-list {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 200px;
+  padding-left: 20px;
+}
+
+.tablename-list {
+  margin-top: 10px;
+  margin-left: -5px;
+  width: 95%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 280px;
+  /* margin-top: 0px; */
+}
+
+.card {
+  width: 105%;
+  height: 410px;
+}
+
+button {
+  border-color: grey;
+}
+
+.default-load {
+  margin-top: -20px;
+}
+
+.default-info {
+  padding: 20%;
+}
+
+.card-title {
+  float: left;
+}
+
+.header {
+  /* float: left; */
+  margin-left: 20px;
+}
+
+.sub-header {
+  margin-left: 35px;
+}
+
+.droparrow {
+  float: right;
+  margin-right: 90px;
+}
+
+.droparrow-menu {
+  min-width: 200px;
+}
+
+.data-analyzer {
+  margin-top: 10px;
+}
+
+#loading-icon {
+  margin-left: -8px;
+}
+
+.icon {
+  display: inline-block;
+  margin-left: -50px;
+}
+.dataA-panel-body {
+  height: 325px;
+}
+.dataA-scrollable-div {
+  overflow: auto;
+  max-height: 300px;
+}
+.primary-col-chkbx {
+  margin: 4px 5px;
+}
+#analysis-view .card {
+  height: 500px;
+}
+#analysis-view .tablename-list {
+  height: 370px;
+}
+#analysis-view .search-input {
+  margin-left: 20px;
+  width: 85%;
+}
+#analysis-view .form-control-feedback {
+  margin-left: 280px;
+}
+.col-loader {
+  padding: 2px 15px;
+  float: right;
+}
+.da-table.selected {
+  border: 1px solid #269AF8;
+}
+input[type='checkbox'] {
+  cursor: pointer;
+}
+.unselected {
+  display: none;
+  float: right;
+  padding: 3px 0;
+  color: #269AF8;
+}
+.selected .unselected {
+  display: block;
+}
+
+/* overriding css */
+.form-control {
+  height: 40px;
+  border-radius: 20px;
+  width: 85%;
+  margin-left: 20px;
+}
+.form-control-feedback {
+  position: relative;
+  margin-top: -34px;
+  margin-left: 243px;
+  height: 32px;
+  color: #269af8;
+  line-height: 30px;
+}
+
+.table-headers{
+  text-align: left;
+}
+
+.panel-header{
+  margin-left: 40px;
+  width: 90%;
+  margin-top: 5px;
+}
+
+.panel-footer{
+  height: auto;
+  overflow: auto;
+}
+
+#hrtab{
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: 1px solid #e8e2e2;
+}
+
+.primary-table {
+  padding-left: 32px;
+  padding-bottom: 20px;
+}
+
+ul > li {
+  display:inline-block;     /* This is when the drop down box appears */
+}
+
+ul {
+  text-align:center;
+  width: 202px;
+  margin-left: 35px;
+  position: relative;
+}
+
+#sec-tab {
+margin-left: 38px;
+}
+
+.sec-width {
+width: 22%;
+}
+
+.def-width {
+  width: 18%;
+}
+
+.conf-width{
+  width: 24%;
+}

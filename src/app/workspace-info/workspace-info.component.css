@@ -11,8 +11,19 @@ td {
 }
 
 table {
-  margin-top: 20px;
+  /* margin-top: 10px; */
   margin-left: 75px;
   width: 72%;
   text-align: left;
+}
+
+#voice{
+  overflow-y: auto;
+  display: block;
+  height: 200px;
+  overflow-x:hidden; 
+  margin-right: 130px;
+}
+.workspace-panel-content{
+  margin-top: 10px;
 }

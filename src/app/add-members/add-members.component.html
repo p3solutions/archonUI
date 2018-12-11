@@ -1,0 +1,61 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-1 back-arrow back-arrow-modal">
+            <a data-tooltip="Back" data-dismiss="modal">
+              <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="col-md-8">
+            <h3 class="popup-panel-heading">
+              Add New Members
+                <span [ngClass]="{'archon-loading-icon' : isLoading}"></span>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body" style="height: 452.5px;">
+      <table *ngIf="userList.length > 0" datatable id="manage-members-table" class="display scroll" cellspacing="0" width="100%">
+        <thead>
+          <tr style="width: 455px; text-align: left;">
+            <th style="width: 145px;">User name</th>
+            <th style="width: 160px;">Email</th>
+            <th style="width: 155px;">Roles</th>
+          </tr>
+        </thead>  
+        <tbody>
+          <tr *ngFor="let item of userList" style="width: 455px; text-align: left;" class="member-row">
+            <td style="width: 160px;"><input class="user-select" type="checkbox" (change)="updateSelectList(item, $event)"/>&nbsp;&nbsp;{{item.name}}</td>
+            <td style="width: 175px;">{{item.emailAddress}}</td>
+            <td style="width: 170px;">
+              <select class="member-role" (change)="setRole(item, $event)">
+                <option hidden selected="true">Select</option>
+                <option *ngFor="let role of wsRoleList" [value]="role.id" [attr.data-tooltip]="role.roleName"
+                 disabled="{{(ownerAlreadyExist && role.roleName === 'ROLE_OWNER') ? 'true' : null }}">{{role.roleName}}</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-popup" data-dismiss="modal">Cancel</button>
+      <button type="button" (click)="addMembers()" class="btn btn-primary btn-popup" disabled="{{(isLoading || isProgress) ? 'true' : null }}">Add
+        <span [ngClass]="{'archon-loading-icon' : isProgress}"></span>
+      </button>
+
+      <div *ngIf="errorObject" class="col-md-12 m-t-10 p-10-0">
+        <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible text-center" role="alert">
+          <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Error!</strong> {{errorObject?.message}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

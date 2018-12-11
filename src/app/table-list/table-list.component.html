@@ -1,0 +1,308 @@
+<app-navbar *ngIf="showNavBar"></app-navbar>
+<div class="row" id="analysis-view">
+  <div class="col-md-3" id="table-list">
+    <div class="card">
+      <div class="card-body">
+        <div class="row" id="title-name">
+          <h2>Tables
+            <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
+          </h2>
+        </div>
+        <input type="text" class="form-control search-input" placeholder="Search" [(ngModel)]="query" id="listSearch">
+        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        <div class="tablename-list da-table-parent">
+          <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
+            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.tableName}}
+              <i class="fa fa-angle-right unselected"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8 col-md-offset-2.5">
+    <div class="card">
+      <div class="card-body default-load" *ngIf="!homeStage && !dataAModal">
+        <h2 class="default-info">Choose one of the listed tables to view relationship information with other tables</h2>
+      </div>
+      <div class="card-body" *ngIf="homeStage">
+        <div class="col col-md-12">
+          <div class="col col-md-4">
+            <h3 class="card-title header">Relationship Info
+            </h3>
+          </div>
+          <!-- <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span> -->
+         
+          <div class="dropdown" class="col col-md-4 data-analyzer">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#">Manual Join</a>
+              </li>
+              <li>
+                <a href="#">Column-Match Join</a>
+              </li>
+              <li>
+                <a href="#">SP/View Join</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col col-md-4">
+          <button type="button" class="btn btn-primary data-analyzer" (click)="openDataAModal()">Data Analyzer</button>
+        </div>
+        </div>
+        <div class="row col col-md-12 primary-table">
+          <h4 class="card-title sub-header">Primary Table:
+            <strong>{{tableName}}</strong>
+          </h4>
+        </div>
+        <hr>
+        <div class="row table-headers" *ngIf="isRelationShipAvailable">
+          <div class="col col-md-3 sec-width">
+          <h4 id="sec-tab">
+            <strong>Secondary Table</strong>
+          </h4>
+        </div>
+        <div class="col col-md-3 def-width">
+          <h4>
+            <strong>Definition Type</strong>
+          </h4>
+        </div>
+        <div class="col col-md-3 conf-width">
+          <h4>
+            <strong>Configuration Mode</strong>
+          </h4>
+        </div>
+        <div class="col col-md-3 join-width">
+          <h4>
+            <strong>Join Name</strong>
+          </h4>
+        </div>
+        </div>
+        <h5 *ngIf="!isRelationShipAvailable">
+          Currently no relationship information available
+        </h5>
+        <div class="items-list">
+          <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo;let ind=index;">
+            <div class="row">
+              <div class="col-2 col-sm-2" id="item">
+                <p>{{relation.secondaryTable.tableName}}</p>
+              </div>
+              <div class="col-2 col-sm-2" id="item">
+                <p>{{relation.definitionType}}</p>
+              </div>
+              <div class="col-2 col-sm-3" id="item">
+                <p>{{relation.analysisMode}}</p>
+              </div>
+              <div class="col-2 col-sm-3" id="item">
+                <p>{{relation.joinName}}</p>
+              </div>
+              <div class="col-3 col-sm-2" id="item">
+                <a href="#">
+                  <i class="fa fa-trash" id="trash" *ngIf="serviceActionType === 'WRITE' || serviceActionType === 'ALL'"></i>
+                </a>
+                <a data-toggle="collapse" href="#collapseExample-{{ind}}">
+                  <i class="fa fa-chevron-down" id="down-arrow"></i>
+                </a>
+              </div>
+            </div>
+            <div class="panel-collapse collapse" id="collapseExample-{{ind}}">
+              <div class="panel-footer"> 
+                <div class="col col-md-6"><strong>Primary Table Column</strong>
+                </div>
+                <div class="col col-md-6"><strong>Secondary Table Column</strong>
+                </div>
+                  <hr id="hrtab">
+                  <div *ngFor="let x of relation.joinListInfo">
+                  <div class="col col-md-6">{{x.primaryColumn.columnName}}
+                  </div>
+                  <div class="col col-md-6">{{x.secondaryColumn.columnName}}
+                  </div>
+                  <hr id="hrtab">
+                  </div>
+                  <div class="col col-md-12">
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editColumnModal">Edit</button>
+                      <button type="button" class="btn btn-primary Close" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
+                  </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Data Analyzer -->
+      <div *ngIf="dataAModal" class="">
+        <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
+          <div class="text-left">
+            <div class="modal-header">
+              <div class="col-md-1 back-arrow">
+                <a (click)="gotoBack()" data-tooltip="Back">
+                  <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+                </a>
+              </div>
+              <h4 class="modal-title">Data Analyzer</h4>
+            </div>
+      
+            <div class="modal-body row">
+            <!-- carousel -->
+              <div id="dataAModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                <!-- Indicators -->
+                <ul *ngIf="!newWSinfo" class="multi-step-bars">
+                  <li > 
+                    <span id="progress-bar" class="bar-expand width-5-pc"></span>
+                    <em class="col-md-4 text-center">Primary Column</em>
+                    <em class="col-md-4 text-center">Secondary Table &#38; Column selection</em>
+                    <em class="col-md-4 text-center">Data Analysis</em>
+                  </li>
+                </ul>
+      
+                <ol class="only carousel-indicators hide">
+                  <li data-target="#createWSModal-carousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#createWSModal-carousel" data-slide-to="1"></li>
+                  <li data-target="#createWSModal-carousel" data-slide-to="2"></li>
+                  <li data-target="#createWSModal-carousel" data-slide-to="3"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+      
+                  <div step="0" class="item active form-group">
+                    <div class="panel-body dataA-panel-body">
+                      <div class="tabular-div col-md-12">
+                        <div class="col-md-9 tabular-div-row p-0">
+                          <div class="tabular-div-column column-header">
+                              Number of Rows to consider for Analysis
+                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="{{primColArray.length}}">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
+                      </div>
+                      <div class="tabular-div col-md-4 dataA-scrollable-div">
+                        <div class="col-md-12 p-0 tabular-div-row">
+                          <div class="col-md-8 tabular-div-column column-header" title="Primary Column">
+                            Primary Column
+                            <span class="col-loader" [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
+                          </div>
+                          <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
+                            Suggestion
+                          </div>
+                        </div>
+                        <div class="col-md-12 p-0 tabular-div-row" *ngFor="let pColumn of primColArray">
+                          <div class="col-md-8 tabular-div-column trim-text" title="{{pColumn.column_name}}">
+                          <input id="{{pColumn}}" type="checkbox" (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
+                            {{pColumn.column_name}}
+                          </div>
+                          <div class="col-md-4 tabular-div-column" title="">
+                            {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+      
+                  <div step="1" class="item form-group second second-last">
+                    <div class="panel-body dataA-panel-body">
+                      <div class="tabular-div col-md-12">
+                        <div class="col-md-9 tabular-div-row p-0">
+                          <div class="tabular-div-column column-header">
+                              Number of Rows to consider for Analysis
+                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="{{secTblArray.length > 0 ? secTblArray.length : null}}">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6" style="height: 295px;">
+                        <div class="col-md-12">
+                          {{selectedSecTbl.size}} out of {{secTblArray.length}} selected
+                        </div>
+                        <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
+                          <div class="col-md-12 p-0 tabular-div-row">
+                            <div class="col-md-12 tabular-div-column column-header" title="Secondary Column">
+                              Secondary Table
+                            </div>
+                          </div>
+                          <div class="da-table-parent">
+                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;">
+                              <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.table_name}}" (click)="highlightTable($event, false, secTbl)">
+                                <input id="{{prefixSecTblId + (secTbl.table_name | lowercase)}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
+                                {{secTbl.table_name}}
+                                <i class="fa fa-angle-right unselected"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="secColArray.length > 0" class="col-md-6" style="height: 295px;">
+                          <div class="col-md-12">
+                            {{selectedSecColMap.size}} out of {{secColArray.length}} selected
+                          </div>
+                          <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
+                            <div class="col-md-12 p-0 tabular-div-row">
+                              <div class="col-md-8 tabular-div-column column-header" title="Secondary Column">
+                                Secondary Columns
+                                <span class="col-loader" [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
+                              </div>
+                              <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
+                                Suggestion
+                              </div>
+                            </div>
+                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray">
+                              <div class="col-md-8 tabular-div-column trim-text" title="{{sColumn.column_name}}">
+                                <input id="{{sColumn.table_name + secTblColJoiner + sColumn.column_name}}" type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
+                                checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10">
+                                {{sColumn.column_name}}
+                              </div>
+                              <div class="col-md-4 tabular-div-column" title="">
+                                {{sColumn.confidence_score ? sColumn.confidence_score : 0}} %
+                              </div>
+                            </div>
+                          </div>
+
+                      </div>
+                        
+                    </div>
+                  </div>
+      
+                  <div step="2" class="item form-group final">
+                    <div class="panel-body dataA-panel-body">
+
+                    </div>
+                  </div>
+
+                  <!-- <div step="3" class="item form-group final">
+                  </div>       -->
+  
+                  <div class="item form-group message">
+                  </div>
+              
+                <!-- Controls -->
+                <a hidden class="left carousel-control" id="prev-slide" href="#dataAModal-carousel" role="button" data-slide="prev">
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a hidden class="right carousel-control" id="next-slide" href="#dataAModal-carousel" role="button" data-slide="next">
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            <!-- / end of Carousel -->
+            </div>
+            <div class="modal-footer {{newWSinfo ? 'msg-footer' : ''}}">
+              <!-- <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button> -->
+              <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event)">Previous</button>
+              <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)"
+               disabled="{{enableNextBtn ? null : 'disabled'}}" >&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
+              <button type="button" id="analyse-btn" class="btn btn-primary hide" (click)="dataAnalyse()" disabled>Analyse</button>
+              <!-- <button type="button" id="ok-btn" class="btn btn-primary hide" (click)="resetCarousel()">Done</button> -->
+            </div>
+      
+          </div>
+        </div>
+      </div>
+      
+
+
+    </div>
+  </div>
+</div>

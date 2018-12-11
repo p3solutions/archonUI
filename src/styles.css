@@ -3,6 +3,7 @@
 body {
   font-family: "Montserrat", sans-serif;
   background: #FAFAFA;
+  overflow-x: hidden;
 }
 
 h1,
@@ -12,7 +13,6 @@ h4,
 h5 {
   font-family: "Montserrat", sans-serif;
 }
-
 
 /* Links */
 
@@ -34,16 +34,15 @@ p {
   letter-spacing: 0.2px;
 }
 
-
-/* input {
+input {
   border-radius: 2px;
-} */
-
+}
 
 /* Custom default button */
 
 .btn {
   border-radius: 2px;
+  text-transform: uppercase;
 }
 
 .btn-default,
@@ -55,7 +54,6 @@ p {
   background-color: #fff;
   border: 1px solid #fff;
 }
-
 
 /* Base structure */
 
@@ -95,7 +93,6 @@ body {
 .cover-container {
   width: 100%;
 }
-
 
 /* Header */
 
@@ -149,7 +146,6 @@ body {
   float: right;
 }
 
-
 /* Cover */
 
 .cover {
@@ -165,14 +161,12 @@ body {
   font-weight: bold;
 }
 
-
 /* Footer */
 
 .layoutfoot {
   color: #999;
   width: 100%
 }
-
 
 /* Start the vertical centering */
 
@@ -306,6 +300,7 @@ body {
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+  border: 1px solid #E6E9ED;
 }
 
 .card:hover {
@@ -386,35 +381,66 @@ input[type=search] {
   margin-left: 10px;
 }
 
-
 .workspace-panel-content {
   padding: 30px;
   margin: 0 30px 0 30px;
 }
 
+table.dataTable.no-footer {
+  border-radius: 2px;
+}
+
 .workspace-panel-heading {
   text-align: left;
 }
+
 .text-left {
   text-align: left;
 }
+
 .text-center {
   text-align: center;
+}
+.p-0 {
+  padding: 0;
 }
 .m-10 {
   margin: 10px;
 }
+
 .m-l-10 {
-  margin-left: 10px;
+  margin-left: 10px!important;
 }
+.m-l-20 {
+  margin-left: 20px!important;
+}
+
 .m-r-10 {
-  margin-right: 10px;
+  margin-right: 10px!important;
+}
+.m-t-10 {
+  margin-top: 10px;
+}
+.m-b-10 {
+  margin-bottom: 10px;
+}
+
+.p-10-0 {
+  padding: 10px 0;
+}
+.w-180 {
+  width: 180px;
+}
+.w-250 {
+  width: 250px;
+}
+.m-l-45 {
+  margin-left: 45px;
 }
 
 .popup-panel-heading {
   text-align: left;
 }
-
 
 .btn-lg-arrow {
   margin-top: 50px;
@@ -424,6 +450,7 @@ input[type=search] {
   color: #269AF8;
   cursor: pointer;
 }
+
 .link:hover {
   color: #037AD8;
 }
@@ -437,8 +464,577 @@ i.link:focus,
 i.link:hover {
   text-decoration: none;
 }
+.hide {
+  display: none;
+}
+.vis-hide {
+  visibility: hidden;
+}
+.cur-p {
+  cursor: pointer;
+}
+.cur-def{
+  cursor: default !important;
+}
+
+.col-archon-blue {
+  color: #269AF8;
+}
+
+.disp-bl {
+  display: block
+}
+
+.archon-icondown {
+  cursor: pointer;
+  color: #269AF8;
+  font-size: 1.53333333em;
+  line-height: .75em;
+  vertical-align: -15%;
+}
+
+.archon-iconup {
+  cursor: pointer;
+  color: #269AF8;
+  font-size: 1.93333333em;
+  line-height: .75em;
+  vertical-align: -15%;
+}
+
+.card-reveal{
+  text-align: left;
+  padding: 20px 10px 20px 20px;
+  position: absolute;
+  background-color:#fff;
+  width: 100%;
+  overflow-y: auto;
+  left: 0;
+  top: 100%;
+  height: 100%;
+  z-index: 3;
+  -webkit-transition-property: top; /* Safari */
+  -webkit-transition-duration: 0.2s; /* Safari */
+  transition-property: top;
+  transition-duration: 0.2s;
+  opacity: 0.9;
+}
+
+.inline-loader {
+  position: absolute;
+  right: 25px;
+  margin: 3px;
+}
+
+.bg-disabled,
+.bg-disabled:hover {
+  background-color: #ccc !important;
+  cursor: default !important;
+}
+
+.cur-p {
+  cursor: pointer;
+}
+
+.col-archon-blue {
+  color: #269AF8;
+}
+.col-green {
+  color: #009E11;
+}
+.col-red {
+  color: #CF2A28;
+}
+.col-orange {
+  color: #FFA13B;
+}
+.col-yellow {
+  color: #FFCA28;
+}
+.disp-bl {
+  display: block
+}
+
+.archon-icon {
+  cursor: pointer;
+  color: #269AF8;
+  font-size: 1.33333333em;
+  line-height: .75em;
+  vertical-align: -15%;
+}
+
+.icon-disabled {
+  color: #ccc;
+  cursor: default;
+}
 
 /* Data tables */
 
+/* Data tabes end */
+
+/**
+ * Tooltip Styles
+ */
+
+/* Add this attribute to the element that needs a tooltip */
+
+[data-tooltip] {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Hide the tooltip content by default */
+
+[data-tooltip]:before,
+[data-tooltip]:after {
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Position tooltip above the element */
+
+[data-tooltip]:before {
+  position: absolute;
+  bottom: 150%;
+  left: 30%;
+  margin-bottom: 5px;
+  margin-left: -18px;
+  padding: 6px;
+  width: 55px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #000;
+  background-color: hsla(0, 0%, 20%, 0.9);
+  color: #fff;
+  content: attr(data-tooltip);
+  text-align: center;
+  font-size: 12px;
+  line-height: 0.8;
+}
+
+/* Triangle hack to make tooltip look like a speech bubble */
+
+[data-tooltip]:after {
+  position: absolute;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -5px;
+  width: 0;
+  border-top: 4px solid #000;
+  border-top: 5px solid hsla(0, 0%, 20%, 0.9);
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  content: " ";
+  font-size: 0;
+  line-height: 0;
+}
+
+/* Show tooltip content on hover */
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+.archon-names [data-tooltip]:before {
+  left: 20%;
+  line-height: 1.2;
+  width: 200px;
+}
+.archon-names-100 [data-tooltip]:before {
+  left: 38%;
+  width: 100px;
+}
+.archon-names-200 [data-tooltip]:before {
+  width: 200px;
+  line-height: 1.2;
+}
+.tooltip-left-20 [data-tooltip]:before {
+  left: 20%;
+}
+.tooltip-left-25 [data-tooltip]:before {
+  left: 25%;
+}
+.tooltip-left-37 [data-tooltip]:before {
+  left: 37%;
+}
+.tooltip-left-45 [data-tooltip]:before {
+  left: 45%;
+}
+.tooltip-left-47 [data-tooltip]:before {
+  left: 47%;
+}
+.tooltip-btm-105 [data-tooltip]:before {
+  bottom: 105%;
+}
+.tooltip-btm-105 [data-tooltip]:after {
+  bottom: 105%;
+}
+
+.tooltip-exp-coll [data-tooltip]:before {
+  left: 0;
+  width: 110px;
+}
+.dropdown-menu .scrollable {
+  max-height: 400px;
+  overflow-x:hidden;
+  overflow-y:scroll;
+}
+.dropdown-menu .scrollable::-webkit-scrollbar {
+  width: 10px;
+  display: none;
+}
+.dropdown-menu .scrollable:hover::-webkit-scrollbar {
+  display: block;
+  cursor: pointer;
+}
+.dropdown-menu .scrollable::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 5px;
+}
+.dropdown-menu .scrollable::-webkit-scrollbar-thumb:active {
+  background-color: grey;
+}
+
+
+/**
+ * Tooltip Styles End
+ */
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Data tables */
 
 /* Data tabes end */
+
+.archon-loading-icon:before {
+  content: "\F110";
+  font: normal normal normal 14px/1 FontAwesome;
+  box-sizing: border-box;
+  position: absolute;
+  display: inline;
+  /* margin-top: 5px; */
+  margin-left: 10px;
+  -webkit-animation: spinner .6s linear infinite;
+  animation: spinner 2s linear infinite
+}
+
+.service-title {
+  width: 525px;
+  font-size: 24px;
+}
+input[type="checkbox"].scaleBox {
+  -webkit-transform: scale(1.3);
+  -moz-transform: scale(1.3);
+  transform: scale(1.3);
+}
+ol.multi-step-indicators li {
+  background: #ececec;
+  border-color: black;
+  top: -10px;
+  height: 15px;
+  width: 15px;
+  left: 40%;
+  margin: 0 100px;
+  cursor: default;
+}
+ol.multi-step-indicators {
+  top: -10px;
+  height: 0;
+  bottom: auto;
+  width: 80%;
+  left: 40%;
+
+}
+ol.multi-step-indicators li.visited {
+  background: rgb(74, 222, 65);
+}
+ol.multi-step-indicators li.active {
+  background: #269AF8;
+  height: 15px;
+  margin: 0 100px;  
+  width: 15px;
+}
+/*
+.multi-step-bars {
+  background: #ececec;
+  top: -10px;
+  height: 15px;
+  width: 15px;
+  left: 40%;
+  margin: 0 100px;
+  cursor: default;
+  position: absolute;
+}
+.multi-step-bars li {
+  width: 100px;
+  padding: 11px 16px;
+  background: #ececec;
+  background: linear-gradient(to left, grey 50%, green 50%);
+  background-size: 200% 100%;
+  background-position: left bottom;
+  transition: all 1.5s ease;
+}
+
+.multi-step-bars li.visited {
+  background-position: left bottom;
+} 
+*/
+/* Multi-step progress bar css */
+.multi-step-bars {
+  background: #ececec;
+  top: -25px;
+  height: 20px;
+  list-style: none;
+  width: 100%;
+  padding: 0px 20px;
+  cursor: default;
+  position: absolute;
+}
+.multi-step-bars li span {
+  height: 20px;
+}
+.width-5-pc {
+  background: #1abc9c;
+  width: 5%;
+  -moz-animation: width-5-pc 2s ease;
+  -webkit-animation: width-5-pc 2s ease;
+}
+@-moz-keyframes width-5-pc {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 5%;
+  }
+}
+@-webkit-keyframes width-5-pc {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 5%;
+  }
+}
+
+.width-33-pc {
+  background: #1abc9c;
+  width: 33%;
+  -moz-animation: width-33-pc 2s ease;
+  -webkit-animation: width-33-pc 2s ease;
+}
+@-moz-keyframes width-33-pc {
+  0% {
+    width: 5%;
+  }
+  100% {
+    width: 33%;
+  }
+}
+@-webkit-keyframes width-33-pc {
+  0% {
+    width: 5%;
+  }
+  100% {
+    width: 33%;
+  }
+}
+
+.width-66-pc {
+  background: #1abc9c;
+  width: 66%;
+  -moz-animation: width-66-pc 2s ease;
+  -webkit-animation: width-66-pc 2s ease;
+}
+@-moz-keyframes width-66-pc {
+  0% {
+    width: 33%;
+  }
+  100% {
+    width: 66%;
+  }
+}
+@-webkit-keyframes width-66-pc {
+  0% {
+    width: 33%;
+  }
+  100% {
+    width: 66%;
+  }
+}
+.width-100-pc {
+  background: #1abc9c;
+  width: 100%;
+  -moz-animation: width-100-pc 1s ease;
+  -webkit-animation: width-100-pc 1s ease;
+}
+@-moz-keyframes width-100-pc {
+  0% {
+    width: 66%
+  }
+  100% {
+    width: 100%;
+  }
+}
+@-webkit-keyframes width-100-pc {
+  0% {
+    width: 66%
+  }
+  100% {
+    width: 100%;
+  }
+}
+.width-33-pc-rev {
+  background: #1abc9c;
+   width: 5%; /* starting point to reducted to */
+  -moz-animation: width-33-pc-rev 2s ease;
+  -webkit-animation: width-33-pc-rev 2s ease;
+}
+@-moz-keyframes width-33-pc-rev {
+  0% {
+    width: 33%;
+  }
+  100% {
+    width: 5%;
+  }
+}
+@-webkit-keyframes width-33-pc-rev {
+  0% {
+    width: 33%;
+  }
+  100% {
+    width: 5%;
+  }
+}
+.width-66-pc-rev {
+  background: #1abc9c;
+   width: 33%; /* starting point to reducted to */
+  -moz-animation: width-66-pc-rev 2s ease;
+  -webkit-animation: width-66-pc-rev 2s ease;
+}
+
+@-moz-keyframes width-66-pc-rev {
+  0% {
+    width: 66%;
+  }
+  100% {
+    width: 33%;
+  }
+}
+
+@-webkit-keyframes width-66-pc-rev {
+  0% {
+    width: 66%;
+  }
+  100% {
+    width: 33%;
+  }
+}
+.bar-expand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+}
+
+.multi-step-bars li span {
+  height: 20px;
+  float: left;
+}
+/* Multi-step progress bar css */
+
+
+/* Large buttons */
+.btn-box {
+  padding: 5px;
+  text-align: left;
+  width: 520px;
+  height: 130px;
+}
+
+.custom-button {
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 1px;
+}
+
+.panel-title {
+  font-weight: bold;  
+}
+.tabular-div .tabular-div-row {
+  border-top: 1px solid #dddddd;
+  border-bottom: none;
+}
+.tabular-div .tabular-div-row:last-child {
+  border-bottom: 1px solid #dddddd;
+}
+.tabular-div .tabular-div-row:nth-child(even) {
+  background-color: #fff;
+}
+.tabular-div .tabular-div-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+.tabular-div .tabular-div-row:hover {
+  background-color: whitesmoke;
+}
+
+.tabular-div .tabular-div-column {
+  border-left: 1px solid #dddddd;
+  border-right: none;
+}
+.tabular-div .tabular-div-column:last-child {
+  border-right: 1px solid #dddddd;
+}
+.tabular-div .tabular-div-column.column-header {
+  font-weight: bold;
+}
+.tabular-div-row.tabular-div-column {
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+}
+.accordion-link .accordion-coll-show {
+  display: none;
+}
+.accordion-link .accordion-coll-hide {
+  display: block;
+}
+.accordion-link .collapsed .accordion-coll-show {
+  display: block;
+}
+.accordion-link .collapsed .accordion-coll-hide {
+  display: none;
+}
+
+
+.shady-div a:hover,
+.shady:hover {
+  transition: 0.3s;
+  -moz-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.carousel-control-disabled .fa,
+.carousel-control-disabled .fa:hover
+.carousel-control-disabled,
+.carousel-control-disabled:hover {
+  opacity: 0.5;
+  color: #ccc;
+  cursor: default;
+}
+.carousel-indicators {
+  display: none !important;
+}

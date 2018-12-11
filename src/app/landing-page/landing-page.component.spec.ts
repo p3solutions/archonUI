@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { LandingPageComponent } from './landing-page.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 xdescribe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -9,6 +8,9 @@ xdescribe('LandingPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       declarations: [ LandingPageComponent ]
     })
     .compileComponents();
@@ -18,5 +20,8 @@ xdescribe('LandingPageComponent', () => {
     fixture = TestBed.createComponent(LandingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 });

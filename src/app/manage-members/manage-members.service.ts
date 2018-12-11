@@ -6,30 +6,93 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-import { ManageMembers } from '../managemembers';
-
+import { ManageMembers } from '../manage-members';
+import { UserinfoService } from '../userinfo.service';
+import { environment } from '../../environments/environment';
+import { AnyObject } from '../workspace-objects';
 
 @Injectable()
 export class ManageMembersService {
+  apiUrl = environment.apiUrl;
+  wSMembersUrl = 'workspaces/';
+  wSroleListUrl = 'roles/workspace';
+  serviceActionsUrl = 'public/roles/actions';
+  wsDelAccessUrl = 'workspaces/access/';
+  updateWSRoleUrl = 'workspaces/access/';
+  headers: HttpHeaders;
 
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  manageMembersUrl = 'api/managemembers';
-  constructor(private http: HttpClient) { }
-
-  getManageMembersDetails(): Observable<ManageMembers[]> {
-    return this.http.get<ManageMembers[]>(this.manageMembersUrl).pipe(
-      catchError(this.handleError('managemembers', []))
-    );
+  constructor(private http: HttpClient,
+    private userinfoService: UserinfoService) {
+    this.headers = userinfoService.getHeaders();
   }
-  deleteManageMembersData(indexObject): Observable<ManageMembers[]> {
-    // deleteHero (hero: Hero | number): Observable<Hero> {
-    // const id = typeof hero === 'number' ? hero : hero.id;
-    // const url = `${this.heroesUrl}/${id}`;
-    return this.http.delete<ManageMembers[]>(this.manageMembersUrl).pipe(
-      catchError(this.handleError('managemembers', []))
-      // tap(_ => this.log(`deleted hero id=${id}`)),
-      // catchError(this.handleError<Hero>('deleteHero'))
-    );
+
+  getWSMembers(workspaceId): Observable<ManageMembers[]> {
+    const url = this.apiUrl + this.wSMembersUrl + workspaceId;
+    return this.http.get<ManageMembers[]>(url, { headers: this.headers })
+      .map(this.extractWSMembers)
+      .pipe(catchError(this.handleError('managemembers', []))
+      );
+  }
+
+  getwsRoleList(): Observable<any> {
+    const url = this.apiUrl + this.wSroleListUrl;
+    return this.http.get<any[]>(url, { headers: this.headers })
+      .map(this.extractWSRoles)
+      .pipe(catchError(this.handleError('getwsRoleList', []))
+      );
+  }
+
+  getServiceActions(): Observable<any> {
+    const url = this.apiUrl + this.serviceActionsUrl;
+    return this.http.get<any>(url, { headers: this.headers })
+      .map(this.extractServiceActions)
+      .pipe(catchError(this.handleError('getServiceActions'))
+      );
+  }
+  updateRole(params: AnyObject) {
+    params.id = this.userinfoService.getUserId(); // loggedIn user id
+    const url = this.apiUrl + this.updateWSRoleUrl + params.id;
+    return this.http.get<any>(url, { headers: this.headers })
+      .map(this.extractData)
+      .pipe(catchError(this.handleError('updateRole'))
+      );
+  }
+  updateServiceActions(params: AnyObject) {
+    const url = this.apiUrl + `users/${params.userId}/roles/actions`;
+    console.log('updateServiceActions params:', params);
+    return this.http.post<any>(url, params, { headers: this.headers })
+      .map(this.extractServiceActions)
+      .pipe(catchError(this.handleError('updateServiceActions'))
+      );
+  }
+  deleteManageMembersData(param: AnyObject, wsId: string): Observable<any> {
+    const url = this.apiUrl + this.wsDelAccessUrl + wsId + '/member?userId=' + param.id;
+    console.log(url);
+    return this.http.delete<any>(url, { headers: this.headers })
+      .pipe(catchError(this.handleError('deleteManageMembersData', []))
+        // tap(_ => this.log(`deleted hero id=${id}`)),
+        // catchError(this.handleError<Hero>('deleteHero'))
+      );
+  }
+
+
+  private extractData(res: any) {
+    const data = res.data;
+    console.log('roles success data:', data);
+    return data || [];
+  }
+
+  private extractWSRoles(res: any) {
+    const data = res.data.workspaceRoles;
+    return data || [];
+  }
+  private extractWSMembers(res: any) {
+    const data = res.data.workspaces.members;
+    return data || [];
+  }
+  private extractServiceActions(res: any) {
+    const data = res.data.serviceActions;
+    return data || [];
   }
 
   // * Handle Http operation that failed.
@@ -56,8 +119,3 @@ export class ManageMembersService {
 
 
 }
-
-
-
-
-

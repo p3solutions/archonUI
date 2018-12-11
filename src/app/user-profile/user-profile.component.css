@@ -24,3 +24,45 @@
 .text-overflow-hid {
   overflow: hidden;
 }
+
+
+
+
+/**
+ * Demo styles
+ * Not needed for tooltips to work
+ */
+
+/* `border-box`... ALL THE THINGS! */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 64px auto;
+  text-align: center;
+  font-size: 100%;
+  max-width: 640px;
+  width: 94%;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+header,
+.demo,
+.demo p {
+  margin: 4em 0;
+  text-align: center;
+}
+
+.ws-info-data {
+  cursor: pointer;
+}

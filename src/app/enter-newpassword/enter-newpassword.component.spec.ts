@@ -14,17 +14,16 @@ import { FormsModule } from '@angular/forms';
 import { ErrorObject } from '../error-object';
 import { TestabilityRegistry } from '@angular/core/src/testability/testability';
 import { HttpClient } from 'selenium-webdriver/http';
-//fdescribe used to run single testcase only
-//whenever we using fdescribe u should create it as fit
-fdescribe('EnterNewpasswordComponent', () => {
+// fdescribe used to run single testcase only
+// whenever we using fdescribe u should create it as fit
+xdescribe('EnterNewpasswordComponent', () => {
   let component: EnterNewpasswordComponent;
   let fixture: ComponentFixture<EnterNewpasswordComponent>;
-  let passwordResetForm : PasswordReset;
-  let passwordResetService : EnterNewpasswordService;
-  const passwordResetData : any ={
+  let passwordResetService: EnterNewpasswordService;
+  const passwordResetData: any = {
     resetKey : '5a422b025912213155a768341140472627094608',
     password : 'archon'
-  }
+  };
   const simpleObservable = new Observable<PasswordReset>((observer) => {
     // observable execution
     observer.next(passwordResetData);
@@ -62,13 +61,13 @@ fdescribe('EnterNewpasswordComponent', () => {
     passwordResetService = TestBed.get(EnterNewpasswordService);
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
-  fit('Should work the onSignUp() functionality', () => {
+  it('Should work the onSignUp() functionality', () => {
     expect(component.onSubmit).toBeTruthy();
   });
-  fit('Should display the response for enter-new password component', () => {
+  it('Should display the response for enter-new password component', () => {
     spyOn(passwordResetService, 'passwordReset').and.returnValue(onSubmit());
     component.onSubmit();
     fixture.detectChanges();

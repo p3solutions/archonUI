@@ -1,92 +1,44 @@
 <div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
-        </a>
-      </div>
-      <div class="col-md-8">
-        <h3 class="workspace-panel-heading">
-          Management Panel
-        </h3>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="col-md-1 back-arrow">
+          <a (click)="gotoDashboard()" data-tooltip="Back">
+            <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-md-8">
+          <h3 class="workspace-panel-heading">
+            Management Panel
+          </h3>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div id="management-role-info" class="workspace-panel-content">
-      <button type="button" class="btn-primary">
-        <div class="btn-box">
-          <div class="col-md-10">
-            <div class="title">
-              <h3>Databases</h3>
-            </div>
-            <div class="body">
-              <p>Configure, view and edit databases.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-2 btn-lg-arrow">
-            <span>
-              <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
-            </span>
-          </div>
+  
+    <div class="flex-container" *ngFor="let panelRow of panelGroupList; let indRow = index" >
+                  
+      <div class="flex-cards card" *ngFor="let panel of panelRow; let indCol = index" id="{{'flex-cards-' + indRow + '-' + indCol}}">
+        <div class="flex-card-header" [title]="panel?.panelName" (click)=goTo(panel)>
+          <img class="icon-img"  [attr.src]="'assets/' + panel.panelImage" />
         </div>
-      </button>
-      <button (click)=gotoWorkspaceList() type="button" class="btn-primary">
-        <div class="btn-box">
-          <div class="col-md-10">
-            <div class="title">
-              <h3>Workspaces</h3>
-            </div>
-            <div class="body">
-              <p>Configure, view and edit workspaces.
-              </p>
-            </div>
+        <div class="flex-cards-bar">
+          <div class="trim-text flex-card-title">
+            {{panel.panelName}}
           </div>
-          <div class="col-md-2 btn-lg-arrow">
-            <span>
-              <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
-            </span>
-          </div>
+          <span *ngIf="panel && panel.panelDesc" class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), true, $event)" title="Click for more info">
+            <i class="fa fa-caret-up archon-icondown"></i>
+          </span>
         </div>
-      </button>
-      <button (click)=gotoManageUserRoles() type="button" class="btn-primary">
-        <div class="btn-box">
-          <div class="col-md-10">
-            <div class="title">
-              <h3>Users</h3>
-            </div>
-            <div class="body">
-              <p>Configure, view and edit users.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-2 btn-lg-arrow">
-            <span>
-              <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
+        <div class="card-reveal">
+          <p class="">
+            <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), false, $event)" title="Click to hide info">
+              <i class="fa fa-caret-down archon-iconup"></i>
             </span>
-          </div>
+          </p>
+          <p>Description: {{panel.panelDesc ? panel.panelDesc : defDesc}}</p>
         </div>
-      </button>
-      <button type="button" class="btn-primary">
-        <div class="btn-box">
-          <div class="col-md-10">
-            <div class="title">
-              <h3>Permissions</h3>
-            </div>
-            <div class="body">
-              <p>Configure, view and edit permissions.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-2 btn-lg-arrow">
-            <span>
-              <i class="fa fa-chevron-right fa-2x" aria-hidden="true" style="float:right;"></i>
-            </span>
-          </div>
-        </div>
-      </button>
+      </div>
+  
     </div>
+  
   </div>
-</div>
+  

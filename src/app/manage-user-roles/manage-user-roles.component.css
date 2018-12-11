@@ -148,3 +148,10 @@ p {
   overflow: hidden;
   background-color: #eceeef;
 }
+.alert-success {
+  margin-top: 10px;
+}
+
+.alert-danger {
+  margin-top: 10px;
+}

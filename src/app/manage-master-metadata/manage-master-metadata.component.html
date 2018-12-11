@@ -2,20 +2,21 @@
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        <a (click)="gotoDashboard()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
         </a>
       </div>
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
-          Manage Master Metadata
+          Manage Metadata Version
+          <span [ngClass]="{'archon-loading-icon' : !isProgress}"></span>
         </h3>
       </div>
     </div>
   </div>
   <div class="row">
     <div id="manager-master-metadata" class="workspace-panel-content">
-      <table datatable class="table table-bordered table-hover" *ngIf="this.isAvailable">
+      <table datatable class="table table-bordered table-hover" *ngIf="isProgress">
         <thead>
           <tr>
             <th>SL.No</th>
@@ -27,7 +28,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let rec of this.manage_Master_Metadata">
+          <tr *ngFor="let rec of this.manage_Master_Metadata" class="man-mast-rec">
             <td class="man-mast-data">{{rec.slNo}}</td>
             <td class="man-mast-data">{{rec.version}}</td>
             <td class="man-mast-data">{{rec.description}}</td>

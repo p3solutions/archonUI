@@ -6,7 +6,9 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
-import { MemberRequestData } from './member-request-data';
+import { MemberRequestData } from '../member-request-data';
+import { environment } from '../../environments/environment';
+
 @Injectable()
 export class MemberRequestService {
 
@@ -14,7 +16,6 @@ export class MemberRequestService {
   memberRequestUrl = 'api/memberrequest';
   constructor(private http: HttpClient) { }
   getMemberRequestDetails(): Observable<MemberRequestData[]> {
-    console.log('hai chandru welcome to service');
       return this.http.get<MemberRequestData[]>(this.memberRequestUrl).pipe(
       catchError(this.handleError('memberrequest', []))
     );

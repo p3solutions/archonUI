@@ -7,32 +7,46 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { JwtHelper } from 'angular2-jwt';
+import { UserinfoService } from '../userinfo.service';
+import { WorkspaceInfo } from '../workspace-info/workspace-info';
+import { WorkspaceObject } from '../workspace-objects';
+import { environment } from '../../environments/environment';
+
 @Injectable()
 export class WorkspaceListService {
+
   accessToken: string;
   jwtHelper: JwtHelper = new JwtHelper();
+
+  wSListByUidUrl = environment.apiUrl + 'workspaces?userId=';
   private headers;
-  URL: string;
-  constructor(private http: HttpClient) {
-    this.URL = 'http://13.58.89.64:9000/workspaces?ownerId=';
-    // this.URL = 'api/workspaceListInfo';
-    this.headers = new HttpHeaders(
-      {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.getAuthKey()
-      });
-
+  constructor(private http: HttpClient,
+    private userinfoService: UserinfoService) {
+  this.headers = new HttpHeaders(
+    {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
+    });
   }
-  getAuthKey() {
-    return localStorage.getItem('accessToken');
-  }
-
-  getList(id: string): Observable<any> {
-    const URL = this.URL + id;
-    console.log(URL);
-    return this.http.get<any>(URL, { headers: this.headers }).pipe(
-      catchError(this.handleError('workspace-getList()', []))
+  getList(id: string): Observable<WorkspaceObject[]> {
+    const url = this.wSListByUidUrl + id;
+    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractWorkspaces)
+    .pipe(catchError(this.handleError('workspace-getList()', []))
     );
+  }
+
+  getListOfWorkspaceByUserId(id: string): Observable<WorkspaceObject[]> {
+    const url = this.wSListByUidUrl + id;
+    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() })
+      .map(this.extractWorkspaces)
+      .pipe(catchError(this.handleError('workspace-getList()', []))
+    );
+  }
+
+  private extractWorkspaces(res: any) {
+    const data = res.data.workspaces;
+    return data || [];
   }
 
 

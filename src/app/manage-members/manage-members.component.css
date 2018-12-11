@@ -21,6 +21,40 @@ span,i {
   background: transparent;
 }
 
+.manage-members {
+    padding: 30px;
+    height: 400px;
+    overflow-y: auto;
+}
 
+.mem-priv-row {
+    display: table-row;
+}
+.tooltip-left-45 [data-tooltip]:before {
+  left: 45%;
+}
 
+tr.shown .fa-plus-circle {
+  content: "\f056";
+}
+
+th.disp-bl {
+    display: table-column;
+}
+.toggle .toggle-show {
+    display: none;
+}
+
+.toggle-hide {
+  display: none;
+}
+
+.toggle .toggle-hide {
+  display: block;
+}
+
+ .add-btn {
+    margin-right: 54px;
+    margin-top: 15px;
+} 
 

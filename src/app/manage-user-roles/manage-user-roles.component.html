@@ -1,21 +1,36 @@
 <div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <div class="col-md-1 back-arrow">
-        <a (click)="gotoManagementPanel()">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Back"></i>
+        <a (click)="gotoManagementPanel()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
         </a>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-3">
         <h3 class="workspace-panel-heading">
           Manage User Roles
+          <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
         </h3>
       </div>
-    </div>
+     <div class="col-md-7">
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>You don't have privileges to Change Role</strong>
+          </div>
+          <div *ngIf="successMessage" class="alert alert-success" role="alert" data-auto-dismiss="2000">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Successfully Changed Role</strong>
+          </div>
+       </div> 
+     </div>
   </div>
   <div class="row">
-    <div id="manager-user" class="workspace-panel-content">
-      <table datatable id="manage-user-role-info-table" class="table table-hover table-bordered" *ngIf="isAvailable">
+    <div id="manager-user" class="workspace-panel-content" *ngIf="isAvailable">
+      <table datatable [dtOptions]="dtOptions" id="manage-user-role-info-table" class="table table-hover table-bordered">
         <thead>
           <tr>
             <th>Sl No</th>
@@ -27,16 +42,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of this.manageUserRolesRequestData; let i = index">
+          <tr *ngFor="let user of this.manageUserRolesRequestData | globalRole ; let i = index">
             <td class="mm-info-data">{{i+1}}</td>
             <td class="mm-info-data">
-              <a href="">{{user.name}}</a>
+              <a (click)='getUserProfile(user)' [routerLink]="['/user-profile']" class="trim-text">{{user.name}}</a>
             </td>
             <td class="mm-info-data">{{user.emailAddress}}</td>
-            <td class="mm-info-data">{{user.createdAt}}</td>
+            <td class="mm-info-data">{{user.createdAt * 1000 | date:'MMM/dd/yyyy'}}</td>
             <td class="mm-info-data">{{user.globalRoles[0].roleName}}</td>
             <td>
-              <a href="" data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id)">
+              <a href="" id="preSelectedRoles" name={{preSelectedRole}} data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id, user.globalRoles[0].roleName, user.name)">
                 Change Role
               </a>
             </td>
@@ -51,6 +66,7 @@
     </div>
   </div>
 </div>
-<app-change-user-role [selectedUserId]="selectedUserId" (onConfirm)="onConfirm($event)" class="modal fade" id="myModal1" role="dialog">
+<app-change-user-role [selectedUserId]="selectedUserId" [preSelectedRole]="preSelectedRole" [userName]="userName" (messageSuccessEvent)="receiveSuccessMessage($event)" (onconfirm)="onconfirm($event)" class="modal fade" id="myModal1" role="dialog">
   some other content
 </app-change-user-role>
+<!-- <a id="preSelectedRoles" name={{preSelectedRole}}></a> -->

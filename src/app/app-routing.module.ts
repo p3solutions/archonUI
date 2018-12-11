@@ -15,7 +15,7 @@ import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
 import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
 import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component';
-import { NewPasswordSetter } from './enter-newpassword/newpasswordsetter';
+import { NewPasswordSetter } from './enter-newpassword/new-password-setter';
 import { ManagementPanelComponent } from './management-panel/management-panel.component';
 import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
@@ -24,6 +24,12 @@ import { WorkspaceListComponent } from './workspace-list/workspace-list.componen
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
+import { DatabaseListComponent } from './database-list/database-list.component';
+import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.component';
+import { MetalyzerComponent } from './metalyzer/metalyzer.component';
+import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
+import { TableListComponent } from './table-list/table-list.component';
+import { StatusScreenComponent } from './status-screen/status-screen.component';
 
 const routes: Routes = [
   {
@@ -33,24 +39,40 @@ const routes: Routes = [
       }, {
         path: 'workspace-list', component: WorkspaceListComponent
       }, {
+        path: 'database-list', component: DatabaseListComponent
+      }, {
         path: 'management-panel', component: ManagementPanelComponent
       }, {
         path: 'manage-user-roles', component: ManageUserRolesComponent
       }, {
+        path: 'status', component: StatusScreenComponent
+      }, {
+        path: 'workspace-info/:id', component: WorkspaceInfoComponent
+      }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
             path: '', redirectTo: 'workspace-services', pathMatch: 'full'
-          }, {
+          },
+          {
             path: 'workspace-services', component: WorkspaceServicesComponent
           }, {
-            path: 'workspace-info', component: WorkspaceInfoComponent
+            path: 'workspace-info/:id', component: WorkspaceInfoComponent
           }, {
-            path: 'member-request', component: MemberRequestComponent
+            path: 'member-request/:id', component: MemberRequestComponent
           }, {
-            path: 'manage-members', component: ManageMembersComponent
+            path: 'manage-members/:id', component: ManageMembersComponent
           }, {
-            path: 'manage-master-metadata', component: ManageMasterMetadataComponent
+            path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
           }]
+      },
+      {
+        path: 'metalyzer/:wsId_Mode', component: MetalyzerComponent, children: [
+          {
+            path: 'configuration', component: MetalyzerConfigurationComponent
+          }, {
+            path: 'analysis', component: TableListComponent
+          }
+        ]
       }]
   },
   {
@@ -77,28 +99,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
-// , data : {title : 'Manage Member Request for Approvals'}
-// const routes: Routes = [
-//   { path: 'workspace', component: WorkspaceLandingPageComponent, children : [
-//     {
-//       path : 'workspace-panel', component : WorkspacePanelComponent, children : [
-//         {
-//           path : 'member-request',component : MemberRequestComponent, data :{title : 'Manage Member Request'}
-//         },
-//         {
-//           path : 'manage-members',component : MemberRequestComponent, data :{title : 'Manage members of ABC'}
-//         },
-//         {
-//           path : 'manage-master-metadata',component : ManageMasterMetadataComponent, data : {title : 'Manage Master metadata for ABC'}
-//         },
-//         {
-//           path : 'workspace-info',component : MemberRequestComponent, data : {title : 'Workspace Information'}
-//         }
-//       ]
-//     }
-//   ] },

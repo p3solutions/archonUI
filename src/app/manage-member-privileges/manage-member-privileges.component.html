@@ -1,0 +1,59 @@
+<table cellpadding="5" cellspacing="0" border="0" class="table table-hover table-bordered mem-priv">
+  <tr>
+    <th class="col-md-4 archon-names archon-names-100">
+      <div data-tooltip="Role">
+        <span class="trim-text w-180">Role</span>
+      </div>
+    </th>
+    <td class="col-md-5">
+      <span *ngIf="!showRoleDropdown">{{wsAccess?.workspaceRole?.name}}</span>
+      <span *ngIf="showRoleDropdown">
+        <select disabled>
+          <option *ngFor="let wsR of wsRoleList" [attr.role-id]="wsR?.id" [attr.selected]="(wsAccess?.workspaceRole?.id === wsR?.id) ? '': null"
+          [attr.disabled]="(wsR.id === '5a587bd090689754178847c1') ? true : null">{{wsR?.roleName}}</option>
+        </select>
+      </span>
+    </td>
+    <td class="col-md-1">
+      <div *ngIf="(wsAccess.workspaceRole.id === '5a587bd090689754178847c1') && !showRoleDropdown">
+        <i class="fa fa-pencil archon-icon disp-bl icon-disabled"></i>
+      </div>
+      <div *ngIf="(wsAccess.workspaceRole.id !== '5a587bd090689754178847c1') && !showRoleDropdown" (click)="toggleRoleDropdown()" data-tooltip="Edit">
+        <i class="fa fa-pencil archon-icon disp-bl"></i>
+      </div>
+      <div *ngIf="showRoleDropdown && !roleUpdated" (click)="updateRole()" data-tooltip="Update">
+        <i class="fa fa-check-circle archon-icon disp-bl" aria-hidden="true"></i>
+      </div>
+      <div  *ngIf="roleUpdated" (click)="toggleRoleDropdown()" data-tooltip="Saved">
+        <i class="fa fa-check archon-icon disp-bl" aria-hidden="true"></i>
+      </div>
+  </td>
+  </tr>
+  <tr *ngFor="let serv of serviceList; let i = index; let firstIndex = first;">
+    <th class="col-md-4 archon-names" [ngClass]="{'archon-names-100': (serv?.name?.length < 12)}">
+      <div [attr.data-tooltip]="serv?.name">
+        <span class="trim-text w-180">{{serv?.name}}</span>
+      </div>
+    </th>
+    <td class="col-md-5">
+      <span *ngIf="!showServiceDropdown">{{serv.permission}}</span>
+      <span *ngIf="showServiceDropdown">
+        <select>
+          <option hidden selected="true">Select</option>
+          <option *ngFor="let permit of permissionList" [value]="permit" [attr.data-tooltip]="permit">{{permit}}</option>
+        </select>
+      </span>
+    </td>
+    <td [attr.rowspan]="serviceList.length" *ngIf="firstIndex" class="col-md-1 tooltip-left-45">
+      <div *ngIf="!showServiceDropdown" (click)="toggleServiceDropdown()" data-tooltip="Edit">
+        <i class="fa fa-pencil archon-icon disp-bl"></i>
+      </div>
+      <div *ngIf="showServiceDropdown && !permitUpdated" (click)="assignPermission()" data-tooltip="Update">
+        <i class="fa fa-check-circle archon-icon disp-bl" aria-hidden="true"></i>
+      </div>
+      <div *ngIf="permitUpdated" data-tooltip="Saved">
+        <i class="fa fa-check archon-icon disp-bl" aria-hidden="true"></i>
+      </div>
+    </td>    
+  </tr>
+</table>

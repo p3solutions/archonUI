@@ -4,19 +4,28 @@
       <app-workspace-header-info [selectedWorkspace]="currentWorkspace"></app-workspace-header-info>
     </div>
     <div class="col-md-3">
-      <div class="btn-group">
-        <button type="button" id="selectedWorkspace" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{selectedWorkspaceName? selectedWorkspaceName : 'SELECT WORKSPACE'}}
+      <div class="btn-group" id="selectedWorkspace">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{selectedWorkspaceName ? selectedWorkspaceName : 'SELECT WORKSPACE'}}
         </button>
-        <div class="dropdown-menu" id="workspace-list-dropdown">
-          <a class="dropdown-item dropdown-data" *ngFor="let ws of userWorkspaceArray" (click)="selectWorkspace(ws)" id="{{ws.id}}">{{ws.workspaceName}}</a>
+        <div class="dropdown-menu scrollable" id="workspace-list-dropdown">
+          <div class="" *ngIf="userWorkspaceArray">
+            <a class="dropdown-item dropdown-data" *ngFor="let ws of userWorkspaceArray" (click)="selectWorkspace(ws)" id="{{ws.id}}" title="{{ws.workspaceName}}">{{ws.workspaceName}}</a>
+          </div>
           <div class="dropdown-divider" *ngIf="userRole?.roleName == 'ROLE_MEMBER'"></div>
           <a class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_MEMBER'" (click)="contactAdmin()">Contact Your Admin</a>
-          <div class="dropdown-divider" *ngIf="userRole?.roleName == 'ROLE_ADMIN' && userWorkspaceArray?.length > 0"></div>
-          <a class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_ADMIN'" (click)="createNewWorkspace()">+ Create workspace</a>
+          <div class="dropdown-divider" *ngIf="enableWorkspace && userWorkspaceArray?.length > 0"></div>
+          <a class="dropdown-item" *ngIf="enableWorkspace" (click)="openCreateWSModal()">+ Create workspace</a>       
         </div>
+        <!-- <select  #selectedWorkspace (change)="onChange(selectedWorkspace.value)">
+          <option class="dropdown-item" *ngIf="userWorkspaceArray && userWorkspaceArray.length === 0" selected="selected" value="0">{{selectedWorkspaceName? selectedWorkspaceName : 'SELECT WORKSPACE'}}</option>
+          <option class="dropdown-item  dropdown-data" *ngFor="let ws of userWorkspaceArray" id="{{ws.id}}" value="{{ws}}">{{ws.workspaceName}}</option>
+          <option class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_ADMIN'" value="1">+ Create workspace</option>
+          <option class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_MEMBER'" value="2">Contact Your Admin</option>
+        </select> -->
       </div>
     </div>
   </div>
-  <app-workspace-mgmt-panel></app-workspace-mgmt-panel>
+  <app-workspace-mgmt-panel [workspaceId]="(currentWorkspace ? currentWorkspace.id : 'id')"></app-workspace-mgmt-panel>
 </div>
+<ng-template #createNewWorkspace></ng-template>  

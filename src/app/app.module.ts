@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtHelper } from 'angular2-jwt';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { MatTableModule } from '@angular/material';
@@ -57,6 +57,32 @@ import { WorkspaceInfoService } from './workspace-info/workspace-info.service';
 import { WorkspaceLandingPageService } from './workspace-landing-page/workspace-landing-page.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ChangePasswordService } from './change-password/change-password.service';
+import { ManageMemberPrivilegesComponent } from './manage-member-privileges/manage-member-privileges.component';
+import { WorkspaceDashboardService } from './workspace-dashboard/workspace-dashboard.service';
+import { WorkspaceServicesService } from './workspace-services/workspace-services.service';
+import { NewWorkspaceComponent } from './new-workspace/new-workspace.component';
+import { DynamicLoaderService } from './dynamic-loader.service';
+import { AddMembersComponent } from './add-members/add-members.component';
+import { AddMembersService } from './add-members/add-members.service';
+import { DatabaseListService } from './database-list/database-list.service';
+import { DatabaseListComponent } from './database-list/database-list.component';
+import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-wizard.component';
+import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.component';
+import { MetalyzerComponent } from './metalyzer/metalyzer.component';
+import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
+import { TableListComponent } from './table-list/table-list.component';
+import { WorkspaceHeaderService } from './workspace-header/workspace-header.service';
+import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
+import { TableListService } from './table-list/table-list.service';
+import { SearchPipe } from './search.pipe';
+import { CommonUtilityService } from './common-utility.service';
+import { RolePipe } from './role.pipe';
+import { StatusService } from './status-screen/status.service';
+import { StatusScreenComponent } from './status-screen/status-screen.component';
+import { KeysPipe } from './keys.pipe';
+import { ReverseArrayPipe } from './reverse.pipe';
+import { ArchonHttpInterceptor } from './archon-http-interceptor';
+import { UserProfileService } from './user-profile/user-profile.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -88,22 +114,37 @@ import { ChangePasswordService } from './change-password/change-password.service
                 UserProfileComponent,
                 EditProfileComponent,
                 WorkspaceListComponent,
-                ChangePasswordComponent
+                ChangePasswordComponent,
+                ManageMemberPrivilegesComponent,
+                NewWorkspaceComponent,
+                AddMembersComponent,
+                DatabaseListComponent,
+                AddDatabaseWizardComponent,
+                MetalyzerHeaderComponent,
+                MetalyzerComponent,
+                MetalyzerConfigurationComponent,
+                TableListComponent,
+                SearchPipe,
+                StatusScreenComponent,
+                KeysPipe,
+                ReverseArrayPipe,
+                SearchPipe,
+                RolePipe
         ],
         imports: [
                 BrowserModule,
                 FormsModule,
-                HttpClientModule,
                 // HttpClientInMemoryWebApiModule.forRoot(
                 //     InMemoryDataService,
                 //     { dataEncapsulation: false }
                 // ),
-                AppRoutingModule,
+                FormsModule,
                 AuthModule,
-                DataTablesModule,
                 ReactiveFormsModule,
+                DataTablesModule,
                 MatTableModule,
-                FormsModule
+                AppRoutingModule,
+                HttpClientModule
         ],
         providers: [
                 JwtHelper,
@@ -124,8 +165,26 @@ import { ChangePasswordService } from './change-password/change-password.service
                 WorkspaceListService,
                 WorkspaceInfoService,
                 WorkspaceLandingPageService,
-                ChangePasswordService
+                ChangePasswordService,
+                WorkspaceDashboardService,
+                WorkspaceServicesService,
+                DynamicLoaderService,
+                AddMembersService,
+                DatabaseListService,
+                WorkspaceHeaderService,
+                MetalyzerHeaderService,
+                TableListService,
+                StatusService,
+                CommonUtilityService,
+                {
+                        provide: HTTP_INTERCEPTORS,
+                        useClass: ArchonHttpInterceptor,
+                        multi: true
+                },
+                TableListService,
+                UserProfileService
         ],
-        bootstrap: [AppComponent]
+        bootstrap: [AppComponent],
+        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
 })
 export class AppModule { }
