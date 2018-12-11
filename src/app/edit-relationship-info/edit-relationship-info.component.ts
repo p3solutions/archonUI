@@ -114,7 +114,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   updateRelation() {
     for (const i of this.joinDetails) {
       for (const j of this.resultantValues) {
-      if (i.relationshipId === j.relationshipId) {
+      if (i.relationshipId === j.relationshipId || j.relationshipId === '') {
       } else {
       this.resultantValues.push(i);
       }
