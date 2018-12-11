@@ -22,7 +22,7 @@ export class EditRelationshipInfoService {
   }
 
   updateRealation(tableId, workspaceId, joinName , resultArray): Observable<any> {
-    const url = this.updateTableListUrl +  workspaceId + '&tableId=' + 345345;
+    const url = this.updateTableListUrl +  workspaceId + '&tableId=' + tableId;
     const param  = {'joinName': joinName, 'joinListInfo': resultArray};
     return this.http.put<any>(url, param, {headers: this.userinfoService.getHeaders()})
       .pipe(catchError(this.handleError<any>('updateRelation')));
@@ -33,7 +33,7 @@ export class EditRelationshipInfoService {
     return data || [];
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'updateRelation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
