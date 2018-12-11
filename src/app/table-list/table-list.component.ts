@@ -2,6 +2,7 @@ import { Component, OnInit, Pipe, Input } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { ErrorObject } from '../error-object';
 
 @Component({
   selector: 'app-table-list',
@@ -37,6 +38,14 @@ export class TableListComponent implements OnInit {
   selectedTblsColsObj: any = {};
   workspaceID: any;
   selectedPrimTblID: any;
+  index = '';
+  editrelationshipInfo: any;
+  primaryTableId: any;
+  joinListTemp: any;
+  relationShipIDs = [];
+  delProgress: boolean;
+  deleteNotif = new ErrorObject();
+  tableCopy: any;
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService
@@ -57,12 +66,13 @@ export class TableListComponent implements OnInit {
   }
 
   loadRelationTable(table: any) {
+    this.tableCopy = table;
     this.homeStage = true;
     this.dataAModal = false;
     this.selectedPrimTblID = table.tableId;
     this.selectedPrimTbl = table.tableName;
     this.resetDataAModal();
-    this.tablelistService.getListOfRelationTable(this.selectedPrimTblID).subscribe(result => {
+    this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.isRelationShipAvailable = true;
     });
@@ -370,4 +380,35 @@ export class TableListComponent implements OnInit {
     this.addClass(progressSelector, 'width-100-pc');
     this.addClass('prev-btn', 'hide');
   }
+  deleteRelationship(indexOfDelete) {
+    this.index = indexOfDelete;
+    this.editrelationshipInfo  = this.relationshipInfo[this.index];
+    this.primaryTableId = this.editrelationshipInfo.primaryTable.tableId;
+    this.joinListTemp = this.editrelationshipInfo.joinListInfo;
+    for (const x of this.joinListTemp) {
+      this.relationShipIDs.push(x.relationshipId);
+    }
+   }
+
+  confirmDelete(): void {
+    this.delProgress = true;
+    this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId, this.relationShipIDs).subscribe(res => {
+      this.delProgress = false;
+      if (res && res.success) {
+        // tr.remove(); // Removing the row.
+        this.postDelete();
+      } else {
+        this.deleteNotif.show = true;
+        this.deleteNotif.message = res.data;
+      }
+      });
+    }
+    closeErrorMsg() {
+      this.deleteNotif = new ErrorObject();
+    }
+     postDelete() {
+       const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
+       close.click();
+       this.loadRelationTable(this.tableCopy);
+    }
 }
