@@ -140,9 +140,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     }
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
     .subscribe(res => {
-      this.resultantValues = [];
       this.removeIndexValue = [];
       if (res && res.success) {
+        this.resultantValues = [];
         this.updateEvent.emit(true);
         const close: HTMLButtonElement = document.querySelector('.modal-header .close');
         close.click();
