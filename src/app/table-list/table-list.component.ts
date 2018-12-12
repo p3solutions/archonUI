@@ -196,7 +196,6 @@ console.log(isPrime, 'prime');
     }
   }
   highlightTable(_event, isPrime, table) {
-    console.log(_event, isPrime, table, 'high');
     this.toggleTblSelection(_event);
     if (isPrime) {
       this.tableName = table.tableName;

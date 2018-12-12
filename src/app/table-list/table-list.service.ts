@@ -55,7 +55,6 @@ export class TableListService {
   }
 
   private extractTablesMeta(res: any) {
-    console.log(res, 'test');
     const tableKeys = res.data.tables_meta.table_keys;
     const tableColumns = res.data.tables_meta.table_columns;
     tableKeys.forEach(key => {

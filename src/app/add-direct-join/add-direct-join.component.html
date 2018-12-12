@@ -8,33 +8,19 @@
     </div>
 
     <div class="modal-body row">
-    <!-- carousel -->
       <div id="createWSModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
-        <!-- Indicators -->
-        <ul class="multi-step-bars">
-          <li > 
-            <em class="col-md-12">Primary Table: <strong>{{primaryTable}}</strong></em>
-          </li>
-        </ul>
-
-        <ol class="only carousel-indicators hide">
-          <li data-target="#createWSModal-carousel" data-slide-to="0" class="active"></li>
-        </ol>
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">         
-
+            <h4 class="col-md-12">Primary Table: <strong>{{primaryTableName}}</strong></h4>
+        <div class="carousel-inner" role="listbox">        
           <div step="0" class="item active form-group second-last second">
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
                       <div class="row" id="title-name">
-                        <em>Secondary Table
-                          <!-- <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span> -->
-                        </em>
+                        <strong>Secondary Table</strong>
                       </div>
                       <div class="tablename-list da-table-parent">
-                        <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query" [hidden]="table.tableName === primaryTable">
-                          <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.tableName}}
+                        <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query" [hidden]="table.tableName === primaryTableName">
+                          <button type="button" class="btn btn-default list-group-item da-table" (click)="secTable(table)">{{table.tableName}}
                             <i class="fa fa-angle-right unselected"></i>
                           </button>
                           </div>
@@ -46,7 +32,7 @@
                     </div>
                   </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9" *ngIf="enableRelation">
                    <table class="display m-10" cellspacing="0" width="100%">
                       <thead>
                         <tr>
@@ -57,33 +43,22 @@
                         </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td>PT Column 1</td>
-                        <td>VARCHAR </td>
-                        <td> <select class="member-role" >
-                            <option hidden selected="true">Select</option>
-                            <option value="test">address1</option>
-                          </select></td>
-                          <td><input type="checkbox"></td>                         
+                      <tr *ngFor="let pri of primaryColumns; let ind=index">
+                        <td>{{pri.columnName}}</td>
+                        <td>{{pri.columnDataType}}</td>
+                        <td> <select #selected class="member-role" (change)="selectedValues(pri,ind,selected.value)">
+                            <option selected="true">Select</option>
+                            <option [ngValue]="i" *ngFor="let sec of secondaryColumns | secondaryColumn:pri.columnDataType">{{sec.columnName}}</option>
+                          </select>                       
                       </tr>
-                      <tr>
-                          <td>PT Column 1</td>
-                          <td>VARCHAR </td>
-                          <td> <select class="member-role" >
-                              <option hidden selected="true">Select</option>
-                              <option value="test">address1</option>
-                            </select></td>
-                            <td><input type="checkbox"></td>                         
-                        </tr>
                     </tbody>
                     </table>
             </div>
-            
             </div>
           </div>
      </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-dismiss="modal">Add Selected Joins</button>
+    <div class="modal-footer" *ngIf="enableRelation">
+      <button type="button" class="btn btn-primary" (click)="addJoins()">Add Selected Joins</button>
       <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Close</button>
     </div>
   </div>

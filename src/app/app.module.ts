@@ -81,11 +81,11 @@ import { StatusService } from './status-screen/status.service';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
-import { EditRelationshipInfoComponent } from './edit-relationship-info/edit-relationship-info.component';
 import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 import { UserProfileService } from './user-profile/user-profile.service';
 import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
+import { SecondaryColumnPipe } from './secondary-column.pipe';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -133,8 +133,8 @@ import { AddDirectJoinService } from './add-direct-join/add-direct-join.service'
                 ReverseArrayPipe,
                 SearchPipe,
                 RolePipe,
-                EditRelationshipInfoComponent,
-                AddDirectJoinComponent
+                AddDirectJoinComponent,
+                SecondaryColumnPipe
         ],
         imports: [
                 BrowserModule,
