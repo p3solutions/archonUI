@@ -1,6 +1,6 @@
 .modal-dialog {
-    margin: 150px auto auto;
-    width: 850px;
+    margin: 100px auto auto;
+    width: 1050px;
 }
 .fa-check-circle {
     color: #269af8;
@@ -78,7 +78,6 @@
   .tablename-list {
     margin-top: 10px;
     margin-left: -20px;
-    width: 110%;
     overflow-x: hidden;
     overflow-y: scroll;
     height: 260px;
@@ -186,8 +185,8 @@
   }
   .form-control-feedback {
     position: relative;
-    margin-top: -34px;
-    margin-left: 143px;
+    margin-top: -31px;
+    margin-left: 190px;
     height: 32px;
     color: #269af8;
     line-height: 30px;

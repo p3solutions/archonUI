@@ -85,6 +85,7 @@ import { EditRelationshipInfoComponent } from './edit-relationship-info/edit-rel
 import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 import { UserProfileService } from './user-profile/user-profile.service';
+import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -186,7 +187,8 @@ import { UserProfileService } from './user-profile/user-profile.service';
                         multi: true
                 },
                 TableListService,
-                UserProfileService
+                UserProfileService,
+                AddDirectJoinService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]

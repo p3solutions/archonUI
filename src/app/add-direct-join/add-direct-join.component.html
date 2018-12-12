@@ -13,7 +13,7 @@
         <!-- Indicators -->
         <ul class="multi-step-bars">
           <li > 
-            <em class="col-md-12">Primary Table:</em>
+            <em class="col-md-12">Primary Table: <strong>{{primaryTable}}</strong></em>
           </li>
         </ul>
 
@@ -29,30 +29,17 @@
                     <div class="card-body">
                       <div class="row" id="title-name">
                         <em>Secondary Table
-                          <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
+                          <!-- <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span> -->
                         </em>
                       </div>
                       <div class="tablename-list da-table-parent">
-                        <div class="list-group" id="list-tab" role="tablist">
-                          <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)"> table name1
+                        <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query" [hidden]="table.tableName === primaryTable">
+                          <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.tableName}}
                             <i class="fa fa-angle-right unselected"></i>
                           </button>
                           </div>
-                          <div class="list-group" id="list-tab" role="tablist">
-                              <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)"> table name1
-                                <i class="fa fa-angle-right unselected"></i>
-                              </button>
-                              </div>
-                              <div class="list-group" id="list-tab" role="tablist">
-                                  <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)"> table name1
-                                    <i class="fa fa-angle-right unselected"></i>
-                                  </button>
-                                  </div>
-                                  <div class="list-group" id="list-tab" role="tablist">
-                                      <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)"> table name1
-                                        <i class="fa fa-angle-right unselected"></i>
-                                      </button>
-                                      </div>                                      
+                         
+                                                                  
                       </div>
                       <input type="text" class="form-control search-input" placeholder="Search" [(ngModel)]="query" id="listSearch">
                       <span class="glyphicon glyphicon-search form-control-feedback"></span>

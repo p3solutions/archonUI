@@ -37,6 +37,7 @@ export class TableListComponent implements OnInit {
   selectedTblsColsObj: any = {};
   workspaceID: any;
   selectedPrimTblID: any;
+  joinValues: any;
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService
@@ -62,7 +63,7 @@ export class TableListComponent implements OnInit {
     this.selectedPrimTblID = table.tableId;
     this.selectedPrimTbl = table.tableName;
     this.resetDataAModal();
-    this.tablelistService.getListOfRelationTable(this.selectedPrimTblID).subscribe(result => {
+    this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.isRelationShipAvailable = true;
     });
@@ -79,6 +80,10 @@ export class TableListComponent implements OnInit {
     this.getColumnsByTableName(this.selectedPrimTblID, true);
     this.resetDataAModal();
   }
+
+  joinTable(table) {
+    this.joinValues = table;
+    }
 
   getColumnsByTableName(tableId, isPrime) {
 console.log(isPrime, 'prime');
@@ -191,6 +196,7 @@ console.log(isPrime, 'prime');
     }
   }
   highlightTable(_event, isPrime, table) {
+    console.log(_event, isPrime, table, 'high');
     this.toggleTblSelection(_event);
     if (isPrime) {
       this.tableName = table.tableName;

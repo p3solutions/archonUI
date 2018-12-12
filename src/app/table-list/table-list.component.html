@@ -12,7 +12,7 @@
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <div class="tablename-list da-table-parent">
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.tableName}}
+            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table); joinTable(table);">{{table.tableName}}
               <i class="fa fa-angle-right unselected"></i>
             </button>
           </div>
@@ -307,4 +307,4 @@
   </div>
 </div>
 
-<app-add-direct-join class="modal fade" id="openAddDirectJoinModal" role="dialog"></app-add-direct-join>
+<app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" role="dialog"></app-add-direct-join>
