@@ -1,15 +1,15 @@
 <div class="modal-dialog" role="worskspace">
   <div class="modal-content text-left">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+    <div class="modal-header">Add Direct Join 
+      <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
       </button>
-      <h4 class="modal-title">Add Direct Join</h4>        
+      <h4 class="modal-title"><strong> Primary Table: {{primaryTableName}}</strong></h4>       
     </div>
 
     <div class="modal-body row">
       <div id="createWSModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
-            <h4 class="col-md-12">Primary Table: <strong>{{primaryTableName}}</strong></h4>
+           
         <div class="carousel-inner" role="listbox">        
           <div step="0" class="item active form-group second-last second">
             <div class="col-md-3">
@@ -46,7 +46,7 @@
                       <tr *ngFor="let pri of primaryColumns; let ind=index">
                         <td>{{pri.columnName}}</td>
                         <td>{{pri.columnDataType}}</td>
-                        <td> <select #selected class="member-role" (change)="selectedValues(pri,ind,selected.value)">
+                        <td> <select #selected class="selwidth" (change)="selectedValues(pri,ind,selected.value)">
                             <option selected="true">Select</option>
                             <option [ngValue]="i" *ngFor="let sec of secondaryColumns | secondaryColumn:pri.columnDataType">{{sec.columnName}}</option>
                           </select>                       
@@ -58,9 +58,25 @@
           </div>
      </div>
     <div class="modal-footer" *ngIf="enableRelation">
+      <div class="col-md-7">         
+            <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+                <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>New Join Added Successfully</strong>
+              </div>
+              <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+                  <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <strong>{{errorMsg}}</strong>:
+                </div> 
+              </div>
+      <div class="col-md-5">
       <button type="button" class="btn btn-primary" (click)="addJoins()">Add Selected Joins</button>
-      <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Close</button>
+      <button type="button" id="cancel-btn" class="btn btn-secondary cancel" (click)="closeErrorMsg()" data-dismiss="modal">Close</button>
     </div>
+  </div>
   </div>
 </div>
 

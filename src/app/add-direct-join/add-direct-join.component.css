@@ -181,7 +181,8 @@
     height: 35px;
     border-radius: 15px;
     width: 96%;
-    margin-left: 2px;
+    margin-top: 3px;
+    margin-left: 4px;
   }
   .form-control-feedback {
     position: relative;
@@ -190,5 +191,15 @@
     height: 32px;
     color: #269af8;
     line-height: 30px;
+  }
+  .selwidth {
+   width: 85%;
+  }
+  .m-t-6 {
+    padding: 8px;
+    margin-bottom: 5px;
+   }
+  .alert-dismissible {
+    padding-right: 45px;
   }
   

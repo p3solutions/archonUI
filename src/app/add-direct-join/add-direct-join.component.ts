@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { takeLast } from 'rxjs/operators';
 import { AddDirectJoinService } from './add-direct-join.service';
+
 
 @Component({
   selector: 'app-add-direct-join',
@@ -11,6 +12,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   @Input() directJoin: any;
   @Input() tableList: any[];
   @Input() workspaceID: any;
+  @Output() updateEvent = new EventEmitter<boolean>();
   primaryTableName: any;
   primaryTableId: any;
   primaryColumns: any[];
@@ -20,6 +22,9 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   enableRelation: boolean;
   joinListTemp = [];
   resultArray = [];
+  updateNotif: boolean;
+  errorMsg: any;
+  updateSuccess: boolean;
 
   constructor(private addDirectJoinService: AddDirectJoinService) { }
 
@@ -111,11 +116,25 @@ const param = {
   },
   joinListInfo: this.resultArray
 };
+
 this.addDirectJoinService.addNewJoin(param).subscribe(res => {
   if (res && res.success) {
+    this.updateEvent.emit(true);
+    this.updateSuccess = true;
+    this.joinListTemp = [];
   } else {
+    this.errorMsg = res.errors;
+    this.updateNotif = true;
+    this.resultArray = [];
   }
 });
+
+}
+
+closeErrorMsg() {
+  this.errorMsg = '';
+  this.updateNotif = false;
+  this.updateSuccess = false;
 }
 
 }
