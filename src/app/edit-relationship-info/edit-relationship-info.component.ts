@@ -75,12 +75,18 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryValues, index , secondaryColumn) {
-    let example: any;
+    let example = {
+      columnId: '',
+      columnName: '',
+      columnDataType: ''
+    };
     let insert = 0;
     for (const i of this.secondaryColumns) {
       if (i.columnName === secondaryColumn) {
         example = i;
-      }
+      } else if (secondaryColumn  === 'Select') {
+        example.columnName = 'Select';
+       }
     }
     const test = {
       indexData: index,
@@ -98,7 +104,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
      };
     for (const i of this.resultantValues) {
       if (i.indexData === index) {
-        if (secondaryColumn === 'Select') {
+        if (secondaryColumn.columnName === 'Select') {
           const indexx = this.resultantValues.indexOf(i);
           this.resultantValues.splice(indexx, 1);
           insert = 1;
