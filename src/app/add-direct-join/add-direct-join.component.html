@@ -20,7 +20,7 @@
                       </div>
                       <div class="tablename-list da-table-parent">
                         <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query" [hidden]="table.tableName === primaryTableName">
-                          <button type="button" class="btn btn-default list-group-item da-table" (click)="secTable(table)">{{table.tableName}}
+                          <button type="button" class="btn btn-default list-group-item da-table" (click)="secTable($event, table)">{{table.tableName}}
                             <i class="fa fa-angle-right unselected"></i>
                           </button>
                           </div>
@@ -32,26 +32,22 @@
                     </div>
                   </div>
             </div>
-            <div class="col-md-9" *ngIf="enableRelation">
-                   <table class="display m-10" cellspacing="0" width="100%">
-                      <thead>
+            <div class="col-md-9 table-hight" *ngIf="enableRelation">
+                   <table id="customers">                     
                         <tr>
                           <th style="width: 145px;">Primary Table Column</th>
                           <th style="width: 125px;">Column Type</th>
-                          <th style="width: 165px;">Secondary Table Column</th> 
-                          <th style="width: 35px;"></th>                          
-                        </tr>
-                      </thead>
-                      <tbody>
+                          <th style="width: 165px;">Secondary Table Column</th>                                                    
+                        </tr>                    
                       <tr *ngFor="let pri of primaryColumns; let ind=index">
                         <td>{{pri.columnName}}</td>
                         <td>{{pri.columnDataType}}</td>
-                        <td> <select #selected class="selwidth" (change)="selectedValues(pri,ind,selected.value)">
+                        <td> <select id="testreset" #selected class="selwidth" (change)="selectedValues(pri,ind,selected.value)">
                             <option selected="true">Select</option>
                             <option [ngValue]="i" *ngFor="let sec of secondaryColumns | secondaryColumn:pri.columnDataType">{{sec.columnName}}</option>
                           </select>                       
                       </tr>
-                    </tbody>
+                    
                     </table>
             </div>
             </div>

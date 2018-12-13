@@ -28,7 +28,9 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   constructor(private addDirectJoinService: AddDirectJoinService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   ngOnChanges (change: SimpleChanges) {
     this.enableRelation = false;
@@ -45,7 +47,20 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
      );
   }
 
-  secTable(table) {
+  toggleTblSelection(_event) {
+    const parentDiv = $(_event.target).parents('.da-table-parent');
+    const children = $(parentDiv).find('.da-table');
+    children.each((i, el) => {
+      el.classList.remove('selected');
+    });
+    if (_event.target.classList.contains('da-table')) {
+      _event.target.classList.add('selected');
+    } else {
+      $(_event.target).parents('.da-table').addClass('selected');
+    }
+  }
+  secTable(_event, table) {
+  this.toggleTblSelection(_event);
   this.enableRelation = true;
   this.secondaryTableName = table.tableName;
   this.secondaryTableId = table.tableId;
@@ -122,6 +137,8 @@ this.addDirectJoinService.addNewJoin(param).subscribe(res => {
     this.updateEvent.emit(true);
     this.updateSuccess = true;
     this.joinListTemp = [];
+    this.resultArray = [];
+    this.resetselectedValues();
   } else {
     this.errorMsg = res.errors;
     this.updateNotif = true;
@@ -129,6 +146,11 @@ this.addDirectJoinService.addNewJoin(param).subscribe(res => {
   }
 });
 
+}
+resetselectedValues() {
+  $('#testreset option').prop('selected', function() {
+    return false;
+});
 }
 
 closeErrorMsg() {
