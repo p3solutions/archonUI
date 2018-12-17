@@ -224,16 +224,18 @@ input[type='checkbox'] {
   padding-bottom: 20px;
 }
 
-ul > li {
-  display:inline-block;     /* This is when the drop down box appears */
-}
 
-ul {
+#dropdown > li {
+  display:inline-block;     
+} 
+
+#dropdown {
   text-align:center;
   width: 202px;
   margin-left: 35px;
   position: relative;
-}
+} 
+
 
 #sec-tab {
 margin-left: 38px;
@@ -250,3 +252,11 @@ width: 22%;
 .conf-width{
   width: 24%;
 }
+
+.analyze-header {
+  margin-top: 17px;
+  margin-bottom: 10px;
+  float: left;
+  font-size: 20px;
+}
+

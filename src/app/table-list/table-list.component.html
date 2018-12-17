@@ -37,7 +37,7 @@
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
               <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" id="dropdown">
               <li>
                 <a href="#">Manual Join</a>
               </li>
@@ -136,12 +136,12 @@
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
           <div class="text-left">
             <div class="modal-header">
-              <div class="col-md-1 back-arrow">
+              <div class="back-arrow">
                 <a (click)="gotoBack()" data-tooltip="Back">
                   <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
                 </a>
               </div>
-              <h4 class="modal-title">Data Analyzer</h4>
+              <div class="col-md-5 analyze-header">Data Analyzer</div>
             </div>
       
             <div class="modal-body row">
@@ -181,22 +181,22 @@
                       </div>
                       <div class="tabular-div col-md-4 dataA-scrollable-div">
                         <div class="col-md-12 p-0 tabular-div-row">
-                          <div class="col-md-8 tabular-div-column column-header" title="Primary Column">
+                          <div class="col-md-12 tabular-div-column column-header" title="Primary Column">
                             Primary Column
                             <span class="col-loader" [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
                           </div>
-                          <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
+                          <!-- <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
                             Suggestion
-                          </div>
+                          </div> -->
                         </div>
                         <div class="col-md-12 p-0 tabular-div-row" *ngFor="let pColumn of primColArray">
-                          <div class="col-md-8 tabular-div-column trim-text" title="{{pColumn.column_name}}">
+                          <div class="col-md-12 tabular-div-column trim-text" title="{{pColumn.column_name}}">
                           <input id="{{pColumn}}" type="checkbox" (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
-                            {{pColumn.column_name}}
+                            {{pColumn.columnName}}
                           </div>
-                          <div class="col-md-4 tabular-div-column" title="">
+                          <!-- <div class="col-md-4 tabular-div-column" title="">
                             {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                       
@@ -225,9 +225,9 @@
                           </div>
                           <div class="da-table-parent">
                             <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;">
-                              <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.table_name}}" (click)="highlightTable($event, false, secTbl)">
-                                <input id="{{prefixSecTblId + (secTbl.table_name | lowercase)}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
-                                {{secTbl.table_name}}
+                              <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
+                                <input id="{{prefixSecTblId + (secTbl.tableName | lowercase)}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
+                                {{secTbl.tableName}}
                                 <i class="fa fa-angle-right unselected"></i>
                               </div>
                             </div>
@@ -241,23 +241,23 @@
                           </div>
                           <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
                             <div class="col-md-12 p-0 tabular-div-row">
-                              <div class="col-md-8 tabular-div-column column-header" title="Secondary Column">
+                              <div class="col-md-12 tabular-div-column column-header" title="Secondary Column">
                                 Secondary Columns
                                 <span class="col-loader" [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
                               </div>
-                              <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
+                              <!-- <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
                                 Suggestion
-                              </div>
+                              </div> -->
                             </div>
                             <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray">
-                              <div class="col-md-8 tabular-div-column trim-text" title="{{sColumn.column_name}}">
-                                <input id="{{sColumn.table_name + secTblColJoiner + sColumn.column_name}}" type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
+                              <div class="col-md-12 tabular-div-column trim-text" title="{{sColumn.columnName}}">
+                                <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
                                 checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10">
-                                {{sColumn.column_name}}
+                                {{sColumn.columnName}}
                               </div>
-                              <div class="col-md-4 tabular-div-column" title="">
+                              <!-- <div class="col-md-4 tabular-div-column" title="">
                                 {{sColumn.confidence_score ? sColumn.confidence_score : 0}} %
-                              </div>
+                              </div> -->
                             </div>
                           </div>
 
