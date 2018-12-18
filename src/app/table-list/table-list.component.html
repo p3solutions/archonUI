@@ -266,17 +266,61 @@
                     </div>
                   </div>
       
-                  <div step="2" class="item form-group final">
+                  <div step="2" class="item form-group third">
                     <div class="panel-body dataA-panel-body">
-
+                     <div class="col-md-4">
+                     <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Primary Table Columns</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let x of finalPrimColArray">
+                            <td>{{x.columnName}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </div>
+                      <div class="col-md-4">
+                          <table class="table table-bordered" id="finalSecTab">
+                              <thead>
+                                <tr>
+                                  <th>Secondary Tables</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="pointer" *ngFor="let x of finalSecondaryTableList" (click)="finalSecCol(x)">
+                                  <td>{{x.tableName}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                      </div>
+                      <div class="col-md-4">
+                          <table class="table table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>Secondary Column Names</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let x of finalSecColArray">
+                                  <td>{{x.columnName}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                      </div>
                     </div>
                   </div>
 
-                  <!-- <div step="3" class="item form-group final">
-                  </div>       -->
+                  <div step="3" class="item form-group final">
+                      <div class="panel-body dataA-panel-body">
+                          Progress
+                         </div>
+                  </div>      
   
-                  <div class="item form-group message">
-                  </div>
+                  <!-- <div class="item form-group message">
+                  </div> -->
               
                 <!-- Controls -->
                 <a hidden class="left carousel-control" id="prev-slide" href="#dataAModal-carousel" role="button" data-slide="prev">
@@ -293,7 +337,8 @@
               <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event)">Previous</button>
               <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)"
                disabled="{{enableNextBtn ? null : 'disabled'}}" >&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
-              <button type="button" id="analyse-btn" class="btn btn-primary hide" (click)="dataAnalyse()" disabled>Analyse</button>
+              <button type="button" id="analyse-btn" class="btn btn-primary hide" href="#dataAModal-carousel" data-slide="next" (click)="dataAnalyse()">Analyse</button>
+              <button type="button" id="close-btn" class="btn btn-primary hide" (click)="gotoBack()">Close</button>
               <!-- <button type="button" id="ok-btn" class="btn btn-primary hide" (click)="resetCarousel()">Done</button> -->
             </div>
       

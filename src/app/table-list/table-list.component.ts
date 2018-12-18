@@ -3,6 +3,7 @@ import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErrorObject } from '../error-object';
+import { UserinfoService } from '../userinfo.service';
 
 @Component({
   selector: 'app-table-list',
@@ -48,11 +49,18 @@ export class TableListComponent implements OnInit {
   tableCopy: any;
   SecondaryTableName: string;
   SecondaryTableId: any;
+  userId: any;
+  finalPrimColArray: any[];
+  finalSecondaryTableList: any[];
+  finalSecColArray: any[];
 
   constructor(
     private tablelistService: TableListService,
-    private workspaceHeaderService: WorkspaceHeaderService
-  ) { }
+    private workspaceHeaderService: WorkspaceHeaderService,
+    private userinfoService: UserinfoService
+  ) {
+    this.userId = this.userinfoService.getUserId();
+   }
   ngOnInit() {
     // this.homeStage = true;
     this.isAvailable = false;
@@ -252,9 +260,9 @@ export class TableListComponent implements OnInit {
       case '1':
         this.enableNextBtn = this.finalSecColMap.size > 0;
         break;
-      case '2':
-        // this.enableNextBtn = this.selectedSecCol.size > 0;
-        break;
+      // case '2':
+      //   this.enableNextBtn
+      //   break;
       // case '3':
       //   this.enableNextBtn = this.selectedPrimCol.size > 0;
       //   break;
@@ -281,20 +289,27 @@ export class TableListComponent implements OnInit {
   }
 
   getAllSelectedTblsCols() {
-    const primColArray = [];
+    this.finalPrimColArray = [];
     this.selectedPrimColMap.forEach((val, key) => {
-      primColArray.push(key);
+      const columnObject = {
+      'columnName' : key
+      };
+      this.finalPrimColArray.push(columnObject);
     });
-    this.selectedTblsColsObj.primary = {
-      'table' : this.selectedPrimTbl,
-      'columns': primColArray
+    this.selectedTblsColsObj.userId = this.userId;
+    this.selectedTblsColsObj.workspaceId = this.workspaceID;
+    this.selectedTblsColsObj.primaryTable = {
+      'tableName' : this.selectedPrimTbl,
+      'primaryColumnList': this.finalPrimColArray
     };
-    this.selectedTblsColsObj.secondary = [];
+    this.selectedTblsColsObj.secondaryTableList = [];
     const secMap = new Map();
     this.finalSecColMap.forEach((val, key) => {
       const arr = key.split(this.secTblColJoiner);
       const secTbl = arr[0];
-      const secCol = arr[1];
+      const secCol = {
+        'columnName' : arr[1]
+      };
       if (secMap.has(secTbl)) {
         const secCols = secMap.get(secTbl);
         secCols.push(secCol);
@@ -303,13 +318,15 @@ export class TableListComponent implements OnInit {
       }
     });
     secMap.forEach((valArray, key) => {
-      this.selectedTblsColsObj.secondary.push(
+      this.selectedTblsColsObj.secondaryTableList.push(
         {
-          'table' : key,
-          'columns': valArray
+          'tableName' : key,
+          'secondaryColumnList': valArray
         }
       );
     });
+    this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
+    this.finalSecColArray =  this.selectedTblsColsObj.secondaryTableList[0].secondaryColumnList;
     console.log('finally', this.selectedTblsColsObj);
   }
   handleStepIindicator(isNext) {
@@ -380,7 +397,7 @@ export class TableListComponent implements OnInit {
       //   } else {
       //     this.addClass(progressSelector, 'width-100-pc-rev');
       //   }
-      //   break;
+      //  break;
       default:
         break;
     }
@@ -389,6 +406,8 @@ export class TableListComponent implements OnInit {
     const progressSelector = 'progress-bar';
     this.addClass(progressSelector, 'width-100-pc');
     this.addClass('prev-btn', 'hide');
+    this.addClass('analyse-btn', 'hide');
+    this.removeClass('close-btn', 'hide');
   }
   deleteRelationship(indexOfDelete) {
     this.index = indexOfDelete;
@@ -421,4 +440,9 @@ export class TableListComponent implements OnInit {
        close.click();
        this.loadRelationTable(this.tableCopy);
     }
+    finalSecCol(x) {
+      (<HTMLElement>document.querySelector('#finalSecTab tbody tr:first-child')).style.border = '1px';
+      this.finalSecColArray = x.secondaryColumnList;
+    }
+
 }
