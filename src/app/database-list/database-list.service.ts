@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { ConfiguredDB, DatabaseObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
@@ -14,7 +14,7 @@ import { environment } from '../../environments/environment';
 export class DatabaseListService {
 
   accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
 
   configDBListUrl = environment.apiUrl + '/dbs/configured';
   constructor(private http: HttpClient,

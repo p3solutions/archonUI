@@ -1,14 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtHelper } from 'angular2-jwt';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { MatTableModule } from '@angular/material';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { InMemoryDataService } from './in-memory-data.service';
 import { InfoService } from './info.service';
 import { SigninFormService } from './signin-form/signin-form.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -17,7 +15,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { AuthModule } from './/auth.module';
 import { SignupFormService } from './signup-form/signup-form.service';
 import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
 import { AuthenticationService } from './authentication/authentication.service';
@@ -83,6 +80,11 @@ import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 import { UserProfileService } from './user-profile/user-profile.service';
+
+export function tokenGetter() {
+        return localStorage.getItem('accessToken');
+}
+
 @NgModule({
         declarations: [
                 AppComponent,
@@ -132,6 +134,11 @@ import { UserProfileService } from './user-profile/user-profile.service';
                 RolePipe
         ],
         imports: [
+                JwtModule.forRoot({
+                        config: {
+                                tokenGetter: tokenGetter
+                        }
+                }),
                 BrowserModule,
                 FormsModule,
                 // HttpClientInMemoryWebApiModule.forRoot(
@@ -139,7 +146,6 @@ import { UserProfileService } from './user-profile/user-profile.service';
                 //     { dataEncapsulation: false }
                 // ),
                 FormsModule,
-                AuthModule,
                 ReactiveFormsModule,
                 DataTablesModule,
                 MatTableModule,
@@ -147,8 +153,7 @@ import { UserProfileService } from './user-profile/user-profile.service';
                 HttpClientModule
         ],
         providers: [
-                JwtHelper,
-                InMemoryDataService,
+                JwtHelperService,
                 InfoService,
                 SigninFormService,
                 SignupFormService,

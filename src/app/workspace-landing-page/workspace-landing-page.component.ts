@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Info } from '../info';
 import { InfoService } from '../info.service';
 import { WorkspaceLandingPageService } from './workspace-landing-page.service';
@@ -14,7 +14,7 @@ import { WorkspaceLandingPageService } from './workspace-landing-page.service';
 export class WorkspaceLandingPageComponent implements OnInit {
   manageMembersFlagVal = false;
   accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
   token_data: any;
   info: Info;
   constructor(
@@ -42,11 +42,11 @@ export class WorkspaceLandingPageComponent implements OnInit {
       this.router.navigate(['workspace/workspace-dashboard']);
     }
 
-      // this.workspaceLandingPageService.getWorkspaces().subscribe(info => {
-      //   this.info = info;
-      //   if (this.info.roles.roleName === 'ROLE_ADMIN') {
-      //     this.info.show = true;
-      //   }
-      // });
-    }
+    // this.workspaceLandingPageService.getWorkspaces().subscribe(info => {
+    //   this.info = info;
+    //   if (this.info.roles.roleName === 'ROLE_ADMIN') {
+    //     this.info.show = true;
+    //   }
+    // });
   }
+}

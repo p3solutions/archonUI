@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Info } from '../info';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-navbar',
@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
     let info: Info;
     let accessToken: string;
     let token_data: any;
-    const jwtHelper: JwtHelper = new JwtHelper();
+    const jwtHelper: JwtHelperService = new JwtHelperService();
     accessToken = localStorage.getItem('accessToken');
     token_data = jwtHelper.decodeToken(accessToken);
     info = new Info();

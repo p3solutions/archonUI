@@ -33,7 +33,7 @@ export class EnterNewpasswordComponent implements OnInit {
   ngOnInit() {
     this.resetKey = this.route.snapshot.paramMap.get('resetKey');
     this.createForm();
-    setTimeout(this.enableResetPassword(), 3000);
+    setTimeout(() => this.enableResetPassword(), 3000);
   }
   createForm() {
     this.passwordResetForm = new FormGroup({

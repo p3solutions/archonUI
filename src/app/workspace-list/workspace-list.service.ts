@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 
 
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceInfo } from '../workspace-info/workspace-info';
 import { WorkspaceObject } from '../workspace-objects';
@@ -16,7 +16,7 @@ import { environment } from '../../environments/environment';
 export class WorkspaceListService {
 
   accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
 
   wSListByUidUrl = environment.apiUrl + 'workspaces?userId=';
   private headers;

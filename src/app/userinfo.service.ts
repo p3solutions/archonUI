@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Info } from './info';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Headers, Response } from '@angular/http';
 import { ErrorObject } from './error-object';
 import { environment } from '../environments/environment';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class UserinfoService {
   accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
   token_data: any;
   errorObject: ErrorObject;
   private loginUrl = 'sign-in';
@@ -62,18 +62,18 @@ export class UserinfoService {
   }
 
   getUserInfo(): Observable<any> {
-    return this.http.get<any>(this.getUserInfoUrl(), {headers: this.getHeaders()}).
+    return this.http.get<any>(this.getUserInfoUrl(), { headers: this.getHeaders() }).
       pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
   getAllUsers() {
-    return this.http.get<any>(this.getAllUserInfoUrl(), {headers: this.getHeaders()}).
-    pipe(catchError(this.handleError<any>('getUserInfo')));
+    return this.http.get<any>(this.getAllUserInfoUrl(), { headers: this.getHeaders() }).
+      pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
   updateUserProfile(params: any) {
-    return this.http.patch<any>(this.getUserInfoUrl(), params, {headers: this.getHeaders()}).
-    pipe(catchError(this.handleError<any>('getUserInfo')));
+    return this.http.patch<any>(this.getUserInfoUrl(), params, { headers: this.getHeaders() }).
+      pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
   getUpdatedName() {

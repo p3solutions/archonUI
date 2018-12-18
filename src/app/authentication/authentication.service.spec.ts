@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelper } from '../angular-jwt/angular-jwt';
 
 xdescribe('AuthenticationService', () => {
   beforeEach(() => {

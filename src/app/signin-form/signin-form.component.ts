@@ -29,7 +29,7 @@ export class SigninFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    setTimeout(this.enableSignIn(), 3000);
+    setTimeout(() => this.enableSignIn(), 3000);
   }
 
   createForm() {

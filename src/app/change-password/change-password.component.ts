@@ -25,7 +25,7 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    setTimeout(this.enablePassword(), 3000);
+    setTimeout(() => this.enablePassword(), 3000);
   }
   createForm() {
     this.changePasswordForm = new FormGroup({
