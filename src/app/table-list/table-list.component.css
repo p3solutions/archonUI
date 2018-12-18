@@ -55,7 +55,6 @@ a {
 .table-header,
 h4 {
   display: inline;
-  margin-left: 75px;
 }
 .table-header {
   float: left;
@@ -63,7 +62,6 @@ h4 {
 
 #item {
   margin-top: 10px;
-  text-align: center;
 }
 
 #trash,
@@ -235,4 +233,20 @@ ul {
   width: 202px;
   margin-left: 35px;
   position: relative;
+}
+
+#sec-tab {
+margin-left: 38px;
+}
+
+.sec-width {
+width: 22%;
+}
+
+.def-width {
+  width: 18%;
+}
+
+.conf-width{
+  width: 24%;
 }

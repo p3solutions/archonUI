@@ -99,7 +99,7 @@ export class RelationshipInfoObject {
         secondaryTable: string;
         definitionType: string;
         joinName: string;
-        tableJoinListInfo: [
+        joinListInfo: [
             {
                 primaryTable: string;
                 primaryColumn: string;
