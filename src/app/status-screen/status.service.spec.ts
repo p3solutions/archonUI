@@ -46,30 +46,30 @@ xdescribe('StatusService', () => {
     console.log('Executed this -> ', data);
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        HttpClientTestingModule
-      ],
-      providers: [
-        BaseRequestOptions,
-        MockBackend,
-        StatusService,
-        UserinfoService,
-        {
-          deps: [
-            MockBackend,
-            BaseRequestOptions
-          ],
-          provide: HttpClient,
-          useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new HttpClient(backendInstance, defaultOptions);
-          }
-        }
-      ]
-    });
-  }));
+  // beforeEach(async(() => {
+  //   TestBed.configureTestingModule({
+  //     imports: [
+  //       HttpClientModule,
+  //       HttpClientTestingModule
+  //     ],
+  //     providers: [
+  //       BaseRequestOptions,
+  //       MockBackend,
+  //       StatusService,
+  //       UserinfoService,
+  //       {
+  //         deps: [
+  //           MockBackend,
+  //           BaseRequestOptions
+  //         ],
+  //         provide: HttpClient,
+  //         useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
+  //           return new HttpClient(backendInstance, defaultOptions);
+  //         }
+  //       }
+  //     ]
+  //   });
+  // }));
 
   beforeEach(inject([StatusService, UserinfoService, MockBackend],
     (statusServiceInst: StatusService, userInfoServiceInst: UserinfoService, mockBackendInst: MockBackend) => {

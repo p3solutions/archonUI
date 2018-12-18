@@ -4,15 +4,15 @@ import { ChangePasswordComponent } from './change-password.component';
 import { ChangePasswordService } from './change-password.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { JwtHelper } from 'angular2-jwt';
-import { Observable } from 'rxjs/Observable';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
   const formBuilder: FormBuilder = new FormBuilder();
   let testBedService: any;
-  const getSimpleObservable = function(data) {
+  const getSimpleObservable = function (data) {
     return new Observable<any>((observer) => {
       observer.next(data); // observable execution
       observer.complete();
@@ -24,11 +24,11 @@ describe('ChangePasswordComponent', () => {
     disposeMe.set('changePassword', pvtObservable.subscribe());
     return pvtObservable;
   };
-  const response = {success: true, httpStatus: 200};
+  const response = { success: true, httpStatus: 200 };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangePasswordComponent ],
+      declarations: [ChangePasswordComponent],
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
@@ -37,11 +37,11 @@ describe('ChangePasswordComponent', () => {
       providers: [
         // reference the new instance of formBuilder from above
         ChangePasswordService,
-        JwtHelper,
+        JwtHelperService,
         { provide: FormBuilder, useValue: formBuilder }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -66,7 +66,7 @@ describe('ChangePasswordComponent', () => {
     })
   );
 
-  it('Should get change password success when changeUserPassword() is called', fakeAsync( () => {
+  it('Should get change password success when changeUserPassword() is called', fakeAsync(() => {
     expect(component.inProgress).toBeFalsy();
     spyOn(testBedService, 'changePassword').and.returnValue(changePassword(response));
     component.changeUserPassword();

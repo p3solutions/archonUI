@@ -1,11 +1,11 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
-import { JwtHelper } from '../angular-jwt/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 xdescribe('AuthenticationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthenticationService, JwtHelper]
+      providers: [AuthenticationService, JwtHelperService]
     });
   });
 

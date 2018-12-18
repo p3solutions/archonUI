@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NavbarComponent } from './navbar.component';
 import { InfoService } from '../info.service';
 import { Info } from '../info';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 xdescribe('NavbarComponent', () => {
   let component: NavbarComponent;

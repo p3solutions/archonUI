@@ -8,7 +8,6 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
 xdescribe('ForgotpasswordFormComponent', () => {
   let component: ForgotpasswordFormComponent;

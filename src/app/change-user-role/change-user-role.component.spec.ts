@@ -4,7 +4,7 @@ import { ChangeUserRoleComponent } from './change-user-role.component';
 import { ChangeUserRoleService } from './change-user-role.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 describe('ChangeUserRoleComponent', () => {
   let component: ChangeUserRoleComponent;
