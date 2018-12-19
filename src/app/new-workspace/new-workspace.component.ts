@@ -179,7 +179,10 @@ export class NewWorkspaceComponent implements OnInit {
       'order': [[1, 'asc']]
     });
     this.bindCHeckboxClick();
-    $('.dataTables_paginate,.paging_simple_numbers').off('click').on('click', function() {
+    $('.dataTables_paginate,.paging_simple_numbers,.dataTables_length').off('click').on('click', function() {
+      thisComponent.bindCHeckboxClick();
+    });
+    $('.dataTables_filter').off('keyup').on('keyup', function() {
       thisComponent.bindCHeckboxClick();
     });
   }
