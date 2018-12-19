@@ -21,7 +21,8 @@ export class DatabaseListService {
     private userinfoService: UserinfoService) {
   }
   getListOfConfigDatabases(): Observable<ConfiguredDB[]> {
-    return this.http.get<ConfiguredDB[]>(this.configDBListUrl, { headers: this.userinfoService.getHeaders() }).pipe(
+    return this.http.get<ConfiguredDB[]>(this.configDBListUrl, { headers: this.userinfoService.getHeaders() })
+    .pipe(
       map(this.extractConfigDB),
       catchError(this.handleError('database-getList()', []))
     );
