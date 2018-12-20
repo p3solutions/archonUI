@@ -52,7 +52,8 @@ export class TableListComponent implements OnInit {
   userId: any;
   finalPrimColArray: any[];
   finalSecondaryTableList: any[];
-  finalSecColArray: any[];
+  finalSecColArray = [];
+  selectedRow: any;
 
   constructor(
     private tablelistService: TableListService,
@@ -280,6 +281,7 @@ export class TableListComponent implements OnInit {
 
   prevStep(e) {
     document.getElementById('prev-slide').click();
+    this.finalSecColArray = [];
     this.handleStepIindicator(false);
   }
 
@@ -326,7 +328,6 @@ export class TableListComponent implements OnInit {
       );
     });
     this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
-    this.finalSecColArray =  this.selectedTblsColsObj.secondaryTableList[0].secondaryColumnList;
     console.log('finally', this.selectedTblsColsObj);
   }
   handleStepIindicator(isNext) {
@@ -440,8 +441,8 @@ export class TableListComponent implements OnInit {
        close.click();
        this.loadRelationTable(this.tableCopy);
     }
-    finalSecCol(x) {
-      (<HTMLElement>document.querySelector('#finalSecTab tbody tr:first-child')).style.border = '1px';
+    finalSecCol(x, i) {
+      this.selectedRow = i;
       this.finalSecColArray = x.secondaryColumnList;
     }
 

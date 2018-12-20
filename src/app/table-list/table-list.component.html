@@ -290,7 +290,7 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr class="pointer" *ngFor="let x of finalSecondaryTableList" (click)="finalSecCol(x)">
+                                <tr class="pointer" [class.active]="i == selectedRow" *ngFor="let x of finalSecondaryTableList; let i = index" (click)="finalSecCol(x,i)">
                                   <td>{{x.tableName}}</td>
                                 </tr>
                               </tbody>
@@ -315,9 +315,25 @@
 
                   <div step="3" class="item form-group final">
                       <div class="panel-body dataA-panel-body">
-                          Progress
-                         </div>
-                  </div>      
+                        <div class="col-md-12 center-dev">
+                          <div class="col-md-2"><strong>Analysis Status:</strong>
+                          </div>
+                          <div class="col-md-6 move-progress1">
+                            <div class="col-md-4">In Progress</div>
+                            <div class="col-md-2 move-progress2"><i class="fa fa-refresh"></i></div>
+                            <div class="col-md-2 move-progress3"><i class="fa fa-stop"></i></div>
+                          </div>
+                        </div>
+                        <div class="col-md-12 centered">
+                          <div class="progress">
+                              <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+                              aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                In Progress
+                              </div>
+                            </div>
+                          </div>
+                  </div>   
+                  </div>   
   
                   <!-- <div class="item form-group message">
                   </div> -->
