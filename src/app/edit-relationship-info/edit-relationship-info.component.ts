@@ -20,9 +20,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   primaryTableId: any;
   secondaryTabelId: any;
   joinDetailsArray: JoinValues[];
-  resultantValues: any[] = [];
+  resultantValues = [];
   joinName: any;
-  removeIndexValue: any[];
+  removeIndexValue = [];
   updateNotif: boolean;
   errorMsg: any;
 
@@ -75,18 +75,18 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryValues, index , secondaryColumn) {
-    let example = {
+    const example = {
       columnId: '',
       columnName: '',
-      columnDataType: ''
+      dataType: ''
     };
-    let insert = 0;
+    let insert: number;
     for (const i of this.secondaryColumns) {
       if (i.columnName === secondaryColumn) {
-        example = i;
-      } else if (secondaryColumn  === 'Select') {
-        example.columnName = 'Select';
-       }
+        example.columnId = i.columnId;
+        example.columnName = i.columnName;
+        example.dataType = i.columnDataType;
+      }
     }
     const test = {
       indexData: index,
@@ -96,19 +96,16 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           columnName: primaryValues.primaryColumn.columnName,
           dataType: primaryValues.primaryColumn.columnDataType
       },
-      secondaryColumn: {
-        columnId: example.columnId,
-        columnName: example.columnName,
-        dataType: example.columnDataType
-      }
+      secondaryColumn: example
      };
     for (const i of this.resultantValues) {
       if (i.indexData === index) {
-        if (secondaryColumn.columnName === 'Select') {
+        if (secondaryColumn === 'Select') {
           const indexx = this.resultantValues.indexOf(i);
           this.resultantValues.splice(indexx, 1);
           insert = 1;
         } else {
+          insert = 0;
           const indexx = this.resultantValues.indexOf(i);
           this.resultantValues.splice(indexx, 1);
         }
@@ -116,19 +113,23 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     }
     if ( insert === 0) {
       this.resultantValues.push(test);
+    } else if (insert === 1) {
+    } else {
+      this.resultantValues.push(test);
     }
   }
 
+
   updateRelation() {
-    this.removeIndexValue = this.resultantValues;
+    this.removeIndexValue = JSON.parse(JSON.stringify(this.resultantValues));
     for (const i of this.removeIndexValue) {
       delete i.indexData;
     }
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
     .subscribe(res => {
-      this.removeIndexValue = [];
-      this.resultantValues = [];
       if (res && res.success) {
+        this.removeIndexValue = [];
+        this.resultantValues = [];
         this.updateEvent.emit(true);
         const close: HTMLButtonElement = document.querySelector('.modal-header .close');
         close.click();
