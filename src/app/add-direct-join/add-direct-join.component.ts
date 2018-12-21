@@ -86,15 +86,14 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     }
   const temp = {
     indexData: index,
+    dataType: primaryTable.columnDataType,
     primaryColumn: {
       columnId: primaryTable.columnId,
-      columnName: primaryTable.columnName,
-      dataType: primaryTable.columnDataType
+      columnName: primaryTable.columnName
   },
     secondaryColumn: {
       columnId: secObject.columnId,
-      columnName: secObject.columnName,
-      dataType: secObject.columnDataType
+      columnName: secObject.columnName
     }
   };
   for (const i of this.joinListTemp) {
@@ -116,6 +115,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
 addJoins() {
 this.resultArray = this.joinListTemp;
+
 for (const i of this.resultArray) {
   delete i.indexData;
 }
@@ -125,11 +125,11 @@ const param = {
     tableId: this.primaryTableId,
     tableName: this.primaryTableName
   },
-  secondaryTable: {
+  secondaryTableList: [{
     tableId: this.secondaryTableId,
-    tableName: this.secondaryTableName
-  },
-  joinListInfo: this.resultArray
+    tableName: this.secondaryTableName,
+    joinListInfo: this.resultArray
+  }],
 };
 
 this.addDirectJoinService.addNewJoin(param).subscribe(res => {
@@ -140,7 +140,7 @@ this.addDirectJoinService.addNewJoin(param).subscribe(res => {
     this.resultArray = [];
     this.resetselectedValues();
   } else {
-    this.errorMsg = res.errors;
+    this.errorMsg = res.httpStatus;
     this.updateNotif = true;
     this.resultArray = [];
   }
