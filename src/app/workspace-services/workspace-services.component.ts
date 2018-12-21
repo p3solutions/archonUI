@@ -34,22 +34,23 @@ export class WorkspaceServicesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.workspaceService.serviceActionsUpdated.subscribe((serviceActions) => {
+    this.workspaceService.serviceActionsUpdated.subscribe((serviceActions: ServiceActionsObject[]) => {
       // hard-coded values for adhoc-query-builder,
       // NOTE: whenever this function is called it adds a duplicate of this hard-coded service object
-      serviceActions.push(
-        {
-          iconName: 'querybuilder.png',
-          serviceActionType: 'ALL',
-          serviceId: '5ac5c6d0a54d7503ad946537',
-          serviceName: 'Adhoc Query Builder'
-        }
-      );
+      // serviceActions.push(
+      //   {
+      //     iconName: 'querybuilder.png',
+      //     serviceActionType: 'ALL',
+      //     serviceId: '5ac5c6d0a54d7503ad946537',
+      //     serviceName: 'Adhoc Query Builder'
+      //   }
+      // );
       const serviceActionsList = this.updateServiceActions(serviceActions);
+      console.log(serviceActionsList);
       this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
-        const carousel: any = $('#serviceCarousel');
-        carousel.carousel({'interval': false});
-      });
+      const carousel: any = $('#serviceCarousel');
+      carousel.carousel({ 'interval': false });
+    });
   }
 
   gotoMetalyzer(service: any) {
