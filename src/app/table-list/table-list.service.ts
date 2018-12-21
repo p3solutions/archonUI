@@ -37,9 +37,9 @@ export class TableListService {
       .pipe(catchError(this.handleError('relationtable-getListOfRelationTable()', []))
       );
   }
-  deleteRelationInfoData(workspaceID, primaryTableId, relationShipIDs): Observable<any> {
+  deleteRelationInfoData(workspaceID, primaryTableId, joinName, relationShipIDs): Observable<any> {
     const url = this.deleteRelationsUrl + workspaceID + '&tableId=' + primaryTableId;
-    const params = {relationshipId: relationShipIDs};
+    const params = {joinName: joinName, relationshipId: relationShipIDs};
     return this.http.request<any>('DELETE', url, { body: params,  headers: this.userinfoService.getHeaders() })
       .pipe(catchError(this.handleError('deleteRelationInfoData', []))
       );
