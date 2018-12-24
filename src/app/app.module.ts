@@ -85,6 +85,8 @@ import { EditRelationshipInfoComponent } from './edit-relationship-info/edit-rel
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 import { UserProfileService } from './user-profile/user-profile.service';
 import { EditRelationshipInfoService } from './edit-relationship-info/edit-relationship-info.service';
+import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
+import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
 import { SecondaryColumnPipe } from './secondary-column.pipe';
 @NgModule({
         declarations: [
@@ -134,6 +136,7 @@ import { SecondaryColumnPipe } from './secondary-column.pipe';
                 SearchPipe,
                 RolePipe,
                 EditRelationshipInfoComponent,
+                AddDirectJoinComponent,
                 SecondaryColumnPipe
         ],
         imports: [
@@ -188,7 +191,8 @@ import { SecondaryColumnPipe } from './secondary-column.pipe';
                 },
                 TableListService,
                 UserProfileService,
-                EditRelationshipInfoService
+                EditRelationshipInfoService,
+                AddDirectJoinService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]

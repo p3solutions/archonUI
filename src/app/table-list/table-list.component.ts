@@ -48,6 +48,8 @@ export class TableListComponent implements OnInit {
   editValues: any;
   tableCopy: any;
   joinName: any;
+  joinValues: any;
+
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService
@@ -90,6 +92,10 @@ export class TableListComponent implements OnInit {
   openEditRelationship(relation) {
   this.editValues = relation;
   }
+
+  joinTable(table) {
+    this.joinValues = table;
+    }
 
   getColumnsByTableName(tableId, isPrime) {
     if (isPrime) {
