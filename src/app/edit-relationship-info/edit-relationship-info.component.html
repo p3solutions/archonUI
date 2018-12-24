@@ -1,0 +1,78 @@
+  <div class="modal-dialog {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
+    <div class="modal-content text-left">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit Relations</h4>        
+      </div>
+
+      <div class="modal-body row">
+      <!-- carousel -->
+        <div id="createWSModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+          <!-- Indicators -->
+          <ul class="multi-step-bars">
+            <li> 
+              <em class="col-md-6 text-center"><strong>Primary Table: {{primaryTable}}</strong></em>
+              <em class="col-md-6 text-center"><strong>Secondary Table: {{secondaryTable}}</strong></em>
+            </li>
+          </ul>
+          <ol class="only carousel-indicators hide">
+            <li data-target="#createWSModal-carousel" data-slide-to="0" class="active"></li>
+          </ol>
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">         
+
+            <div step="0" class="item active form-group second-last second">
+              <div class="col-md-12">
+                     <table class="display m-10" cellspacing="0" width="100%">
+                        <thead>
+                          <tr>
+                            <!-- <th style="width: 35px;"></th>
+                            <th style="width: 35px;">Key</th> -->
+                            <th style="width: 145px;">Primary Table Column</th>
+                            <th style="width: 145px;">Column Type</th>
+                            <th style="width: 145px;">Secondary Table Column</th>                           
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let x of joinDetailsArray; let ind=index">
+                          <!-- <td><input type="checkbox"></td> -->
+                          <!-- <td><i class="fa fa-check-circle" style="font-size:24px"></i></td> -->
+                          <td>{{x.primaryColumn.columnName}}</td>
+                          <td>{{x.primaryColumn.columnDataType}}</td>
+                          <td> <select id="sec_select" *ngIf="x.defaultSecondaryColumn === true" #selected class="member-role" (change)="selectedValues(x,ind, selected.value)" style="width:85%">
+                              <option selected>Select</option>
+                              <option [selected]="x.secondaryColumn.columnName == i.columnName" [ngValue]="i" *ngFor="let i of secondaryColumns | secondaryColumn:x.primaryColumn.columnDataType">{{i.columnName}}</option>
+                            </select>
+                            <select id="sec_select" *ngIf="x.defaultSecondaryColumn === false" #selected class="member-role" (change)="selectedValues(x,ind, selected.value)" style="width:85%">
+                              <option selected>Select</option>
+                              <option  [ngValue]="i" *ngFor="let i of secondaryColumns | secondaryColumn:x.primaryColumn.columnDataType">{{i.columnName}}</option>
+                            </select>
+                          </td>                         
+                        </tr>
+                      </tbody>
+                      </table>
+              </div>
+              
+              </div>
+            </div>
+       </div>
+      <div class="modal-footer">
+        <div class="col-md-6">
+          <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+              <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong>Error!</strong>:{{errorMsg}}
+            </div>
+          </div>
+            <div class="col-md-6"> 
+       <button type="button" class="btn btn-primary" (click)="resetSelection(); closeErrorMsg();">Reset</button>
+        <button type="button" class="btn btn-primary" (click)="updateRelation(); closeErrorMsg();">update</button>
+        <button type="button" id="cancel-btn" (click)="closeErrorMsg()" class="btn btn-secondary cancel" data-dismiss="modal">Close</button>
+      </div>
+      </div>
+    </div>
+  </div>
+

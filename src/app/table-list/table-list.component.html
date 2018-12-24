@@ -123,14 +123,15 @@
                   <hr id="hrtab">
                   </div>
                   <div class="col col-md-12">
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editColumnModal">Edit</button>
+                      <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)">Edit </button>
                       <button type="button" class="btn btn-primary Close" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
-                  </div>
-              </div> 
+                  </div>  
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <app-edit-relationship-info class="modal fade" (updateEvent)="refreshRelation($event)" id="openEditRelationshipModal" [relation]="editValues" [workspaceID]="workspaceID" role="dialog"></app-edit-relationship-info>
 <!-- Data Analyzer -->
       <div *ngIf="dataAModal" class="">
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
@@ -299,10 +300,7 @@
       
           </div>
         </div>
-      </div>
-      
-
-
+      </div> 
     </div>
   </div>
 </div>

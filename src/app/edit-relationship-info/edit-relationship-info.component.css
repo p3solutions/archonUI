@@ -1,0 +1,18 @@
+.modal-dialog {
+    margin: 150px auto auto;
+    width: 850px;
+}
+.fa-check-circle {
+    color: #269af8;
+}
+
+#sec_select {
+    width: max-content;
+}
+.m-t-6 {
+    padding: 8px;
+    margin-bottom: 5px;
+}
+.alert-dismissible {
+    padding-right: 45px;
+}

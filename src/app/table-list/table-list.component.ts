@@ -45,6 +45,7 @@ export class TableListComponent implements OnInit {
   relationShipIDs = [];
   delProgress: boolean;
   deleteNotif = new ErrorObject();
+  editValues: any;
   tableCopy: any;
   constructor(
     private tablelistService: TableListService,
@@ -82,10 +83,14 @@ export class TableListComponent implements OnInit {
   openDataAModal() {
     this.homeStage = false;
     this.dataAModal = true;
-    this.getColumnsByTableName(this.selectedPrimTbl, true);
+    this.getColumnsByTableName(this.selectedPrimTblID, true);
     this.resetDataAModal();
   }
-  getColumnsByTableName(tableName, isPrime) {
+  openEditRelationship(relation) {
+  this.editValues = relation;
+  }
+
+  getColumnsByTableName(tableId, isPrime) {
     if (isPrime) {
       this.primColArray = [];
       // this.primColLoader = true;
@@ -93,13 +98,13 @@ export class TableListComponent implements OnInit {
       this.secColArray = [];
       // this.secColLoader = true;
     }
-    this.tablelistService.getColumnsByTableName(tableName)
+    this.tablelistService.getColumnsByTableName(tableId)
     .subscribe((columns) => {
       if (isPrime) {
         this.primColArray = columns;
         // this.primColLoader = false;
       } else {
-        this.secTblColMap.set(tableName, columns);
+        this.secTblColMap.set(tableId, columns);
         this.secColArray = columns;
         // this.secColLoader = false;
         this.selectedSecColMap.clear();
@@ -411,4 +416,8 @@ export class TableListComponent implements OnInit {
        close.click();
        this.loadRelationTable(this.tableCopy);
     }
+
+  refreshRelation($event) {
+  this.loadRelationTable(this.tableCopy);
+  }
 }
