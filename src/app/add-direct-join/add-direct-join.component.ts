@@ -132,14 +132,14 @@ const param = {
 };
 if (this.resultArray.length > 0) {
 this.addDirectJoinService.addNewJoin(param).subscribe(res => {
-  if (res && res.success) {
+  if (res && res.data.errorDetails.length === 0) {
     this.updateEvent.emit(true);
     this.updateSuccess = true;
     this.joinListTemp = [];
     this.resultArray = [];
     this.resetselectedValues();
   } else {
-    this.errorMsg = res.data.errorDetails.errors.errorMessage;
+    this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
     this.updateNotif = true;
     this.resultArray = [];
   }
