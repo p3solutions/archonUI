@@ -80,8 +80,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     for (const i of this.secondaryColumns) {
     if (i.columnName === secondaryTableName) {
       secObject = i;
-    } else if (secondaryTableName  === 'Select') {
-     secObject.columnName = 'Select';
     }
     }
   const temp = {
@@ -98,7 +96,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   };
   for (const i of this.joinListTemp) {
   if (i.indexData === index) {
-    if (temp.secondaryColumn.columnName === 'Select') {
+    if (secondaryTableName === 'Select') {
       const indexx = this.joinListTemp.indexOf(i);
       this.joinListTemp.splice(indexx, 1);
       insert = 1;
@@ -114,8 +112,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 }
 
 addJoins() {
-this.resultArray = this.joinListTemp;
-
+this.resultArray = JSON.parse(JSON.stringify(this.joinListTemp));
 for (const i of this.resultArray) {
   delete i.indexData;
 }
