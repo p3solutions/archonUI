@@ -383,7 +383,7 @@ export class TableListComponent implements OnInit {
   }
   deleteRelationship(indexOfDelete) {
     this.index = indexOfDelete;
-    this.editrelationshipInfo  = this.relationshipInfo[this.index];
+    this.editrelationshipInfo  = JSON.parse(JSON.stringify(this.relationshipInfo[this.index]));
     this.joinName = this.editrelationshipInfo.joinName;
     this.primaryTableId = this.editrelationshipInfo.primaryTable.tableId;
     this.joinListTemp = this.editrelationshipInfo.joinListInfo;
@@ -394,20 +394,21 @@ export class TableListComponent implements OnInit {
 
   confirmDelete(): void {
     this.delProgress = true;
-    // tslint:disable-next-line:max-line-length
-    this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId, this.joinName, this.relationShipIDs).subscribe(res => {
+    this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId, this.joinName, this.relationShipIDs)
+    .subscribe(res => {
+      this.relationShipIDs = [];
       this.delProgress = false;
       if (res && res.success) {
-        // tr.remove(); // Removing the row.
         this.postDelete();
       } else {
         this.deleteNotif.show = true;
-        this.deleteNotif.message = res.data;
+        this.deleteNotif.message = res.errorMessage;
       }
       });
     }
     closeErrorMsg() {
       this.deleteNotif = new ErrorObject();
+      this.relationShipIDs = [];
     }
      postDelete() {
        const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
