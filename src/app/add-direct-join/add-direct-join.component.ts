@@ -60,6 +60,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     }
   }
   secTable(_event, table) {
+  this.joinListTemp = [];
   this.toggleTblSelection(_event);
   this.enableRelation = true;
   this.secondaryTableName = table.tableName;
