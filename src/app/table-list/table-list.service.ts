@@ -20,6 +20,7 @@ export class TableListService {
   relationTableListUrl = environment.apiUrl + '/meta/tablesRelationShip?tableId=';
   deleteRelationsUrl = environment.apiUrl + 'meta/relationship?workspaceId=';
   columnListUrl = environment.apiUrl + '/table/columnList?tableId=';
+  dataAnalysisUrl = environment.apiUrl + '/dataAnalyzer/tableToTablesDataCrawlAnalysis';
 
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
@@ -50,6 +51,11 @@ export class TableListService {
     return this.http.get<any[]>(this.columnListUrl + tableId, {headers: this.userinfoService.getHeaders()})
     .map(this.extractTable)
     .pipe(catchError(this.handleError('getColumnsByTableId()', [])));
+  }
+
+  sendValuesForTableToTableAnalysis(analysisObject): Observable<any> {
+    return this.http.post<any[]>( this.dataAnalysisUrl, analysisObject, {headers: this.userinfoService.getHeaders()})
+    .pipe(catchError(this.handleError('sendValuesForTabletoTableAnalysis', [])));
   }
 
   private extractTable(res: any) {

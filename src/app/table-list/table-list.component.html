@@ -171,8 +171,8 @@
                       <div class="tabular-div col-md-12">
                         <div class="col-md-9 tabular-div-row p-0">
                           <div class="tabular-div-column column-header">
-                              Number of Rows to consider for Analysis
-                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="{{primColArray.length}}">
+                              Percentage of Rows to consider for Analysis
+                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
                         </div>
                       </div>
@@ -208,8 +208,8 @@
                       <div class="tabular-div col-md-12">
                         <div class="col-md-9 tabular-div-row p-0">
                           <div class="tabular-div-column column-header">
-                              Number of Rows to consider for Analysis
-                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="{{secTblArray.length > 0 ? secTblArray.length : null}}">
+                              Percentage of Rows to consider for Analysis
+                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
                         </div>
                       </div>

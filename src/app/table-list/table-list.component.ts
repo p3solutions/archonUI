@@ -26,7 +26,7 @@ export class TableListComponent implements OnInit {
   selectedPrimColMap = new Map(); // map of primary column name, true
   selectedSecColMap = new Map(); // map of secondary column name, true
   dataAModal = false;
-  analysisRowCount = 3;
+  analysisRowCount = 5;
   // selectedPrimCol = new Map();
   selectedSecTbl = new Map(); // map of secondary table name, true
   secTblColMap = new Map();
@@ -54,6 +54,7 @@ export class TableListComponent implements OnInit {
   finalSecondaryTableList: any[];
   finalSecColArray = [];
   selectedRow: any;
+  dataAnalysisjobID: any;
 
   constructor(
     private tablelistService: TableListService,
@@ -327,6 +328,9 @@ export class TableListComponent implements OnInit {
         }
       );
     });
+    this.selectedTblsColsObj.configurationDetails = {
+      'samplingPercentage' : this.analysisRowCount
+    };
     this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
     console.log('finally', this.selectedTblsColsObj);
   }
@@ -409,6 +413,11 @@ export class TableListComponent implements OnInit {
     this.addClass('prev-btn', 'hide');
     this.addClass('analyse-btn', 'hide');
     this.removeClass('close-btn', 'hide');
+    this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
+    if (res && res.success) {
+      this.dataAnalysisjobID = res.data.status;
+    }
+    });
   }
   deleteRelationship(indexOfDelete) {
     this.index = indexOfDelete;
