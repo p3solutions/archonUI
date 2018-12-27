@@ -3,6 +3,7 @@ import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErrorObject } from '../error-object';
+import { UserinfoService } from '../userinfo.service';
 
 @Component({
   selector: 'app-table-list',
@@ -18,14 +19,14 @@ export class TableListComponent implements OnInit {
   private tableName: string;
   private relationshipInfo: any[];
   private serviceActionType: string;
-  private tableList: string[];
+  private tableList: any[];
   primColArray = [];
   secColArray = [];
   secTblArray = [];
   selectedPrimColMap = new Map(); // map of primary column name, true
   selectedSecColMap = new Map(); // map of secondary column name, true
   dataAModal = false;
-  analysisRowCount = 3;
+  analysisRowCount = 5;
   // selectedPrimCol = new Map();
   selectedSecTbl = new Map(); // map of secondary table name, true
   secTblColMap = new Map();
@@ -47,13 +48,24 @@ export class TableListComponent implements OnInit {
   deleteNotif = new ErrorObject();
   editValues: any;
   tableCopy: any;
+  SecondaryTableName: string;
+  SecondaryTableId: any;
+  userId: any;
+  finalPrimColArray: any[];
+  finalSecondaryTableList: any[];
+  finalSecColArray = [];
+  selectedRow: any;
+  dataAnalysisjobID: any;
   joinName: any;
   joinValues: any;
 
   constructor(
     private tablelistService: TableListService,
-    private workspaceHeaderService: WorkspaceHeaderService
-  ) { }
+    private workspaceHeaderService: WorkspaceHeaderService,
+    private userinfoService: UserinfoService
+  ) {
+    this.userId = this.userinfoService.getUserId();
+   }
   ngOnInit() {
     // this.homeStage = true;
     this.isAvailable = false;
@@ -105,8 +117,7 @@ export class TableListComponent implements OnInit {
       this.secColArray = [];
       // this.secColLoader = true;
     }
-    this.tablelistService.getColumnsByTableName(tableId)
-    .subscribe((columns) => {
+    this.tablelistService.getColumnsByTableId(tableId).subscribe((columns) => {
       if (isPrime) {
         this.primColArray = columns;
         // this.primColLoader = false;
@@ -118,6 +129,7 @@ export class TableListComponent implements OnInit {
       }
     });
   }
+
   gotoBack() {
     this.homeStage = true;
     this.dataAModal = false;
@@ -131,29 +143,30 @@ export class TableListComponent implements OnInit {
     this.selectedSecColMap.clear();
     this.finalSecColMap.clear();
   }
+  // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
     const isChecked = _event.target.checked ? true : false;
     if (isPrimary) {
       for (let i = 0; i < this.primColArray.length; i++) {
-        if (this.primColArray[i].column_name === column.column_name) {
+        if (this.primColArray[i].columnName === column.columnName) {
           this.primColArray[i].selected = isChecked;
           if (isChecked) {
-            this.selectedPrimColMap.set(column.column_name, true);
+            this.selectedPrimColMap.set(column.columnName, true);
           } else {
-            this.selectedPrimColMap.delete(column.column_name);
+            this.selectedPrimColMap.delete(column.columnName);
           }
           break;
         }
       }
     } else {
       for (let i = 0; i < this.secColArray.length; i++) {
-        if (this.secColArray[i].column_name === column.column_name) {
-          const secColName = column.table_name + this.secTblColJoiner + column.column_name;
+        if (this.secColArray[i].columnName === column.columnName) {
+          const secColName = this.SecondaryTableName + this.secTblColJoiner + column.columnName;
           this.secColArray[i].selected = isChecked;
           if (isChecked) {
             this.selectedSecColMap.set(secColName, true);
-            const secTbl = <HTMLInputElement> document.getElementById(this.prefixSecTblId + column.table_name);
-            if (!this.selectedSecTbl.has(column.table_name)) { // if sec table unselected and sec col is checked
+            const secTbl = <HTMLInputElement> document.getElementById(this.prefixSecTblId + this.SecondaryTableName);
+            if (!this.selectedSecTbl.has(this.SecondaryTableName)) { // if sec table unselected and sec col is checked
               secTbl.checked = true;
             }
             this.finalSecColMap.set(secColName, true);
@@ -168,21 +181,20 @@ export class TableListComponent implements OnInit {
     this.enableDisableNextBtn();
   }
   toggleSecTblSelection(_event, table) {
-    const tableName = table.table_name;
     const isChecked = _event.target.checked;
     for (let i = 0; i < this.secTblArray.length; i++) {
-      if (this.secTblArray[i].table_name === tableName) {
+      if (this.secTblArray[i].tableName === this.SecondaryTableName) {
         this.secTblArray[i].selected = isChecked;
         if (isChecked) {
-          this.selectedSecTbl.set(tableName, true);
+          this.selectedSecTbl.set(this.SecondaryTableName, true);
         } else {
-          this.selectedSecTbl.delete(tableName);
+          this.selectedSecTbl.delete(this.SecondaryTableName);
           // sec col reset selection
           this.secColArray.forEach(col => col.selected = false );
           this.selectedSecColMap.clear();
-          const currentSecColArr = this.secTblColMap.get(tableName);
+          const currentSecColArr = this.secTblColMap.get(this.SecondaryTableId);
           currentSecColArr.forEach(secCol => {
-          const secColName = secCol.table_name + this.secTblColJoiner + secCol.column_name;
+          const secColName = this.SecondaryTableName + this.secTblColJoiner + secCol.columnName;
             if (this.finalSecColMap.has(secColName)) {
               this.finalSecColMap.delete(secColName);
             }
@@ -193,6 +205,7 @@ export class TableListComponent implements OnInit {
     }
     this.enableDisableNextBtn();
   }
+  // for keeping the table selected
   toggleTblSelection(_event) {
     const parentDiv = $(_event.target).parents('.da-table-parent');
     const children = $(parentDiv).find('.da-table');
@@ -205,6 +218,7 @@ export class TableListComponent implements OnInit {
       $(_event.target).parents('.da-table').addClass('selected');
     }
   }
+  // loads selected the table
   highlightTable(_event, isPrime, table) {
     this.toggleTblSelection(_event);
     if (isPrime) {
@@ -212,33 +226,37 @@ export class TableListComponent implements OnInit {
       this.loadRelationTable(table);
       this.resetDataAModal();
     } else {
-      const secTbl = _event.target.children.namedItem(this.prefixSecTblId + table.toLowerCase());
-      if (secTbl) {
-        secTbl.checked = true;
-      }
-      this.showSecTblCols(table);
+      // const secTbl = _event.target.children.namedItem(this.prefixSecTblId + table.tableName.toLowerCase());
+      // if (secTbl) {
+      //   secTbl.checked = true;
+      // }
+      this.SecondaryTableName = table.tableName;
+      this.SecondaryTableId = table.tableId;
+      this.showSecTblCols(table.tableId);
     }
   }
-  showSecTblCols(table) {
-    if (this.secTblColMap.has(table)) {
-      this.secColArray = this.secTblColMap.get(table);
+  // secondary table Columns
+  showSecTblCols(tableId) {
+    if (this.secTblColMap.has(tableId)) {
+      this.secColArray = this.secTblColMap.get(tableId);
       this.selectedSecColMap.clear();
       this.secColArray.forEach(col => {
         if (col.selected) {
-          this.selectedSecColMap.set(col.column_name, true);
+          this.selectedSecColMap.set(col.columnName, true);
         }
       });
     } else {
-      this.getColumnsByTableName(table, false);
+      this.getColumnsByTableName(tableId , false);
     }
   }
+  // generating secondary table array
   generateSecTblArray() {
     if (this.secTblArray.length === 0) {
-      this.tableList.forEach((el) => {
-        if (el !== this.selectedPrimTbl) {
-          this.secTblArray.push(el);
+      for (const i of this.tableList) {
+        if (i.tableName !== this.selectedPrimTbl) {
+          this.secTblArray.push(i);
         }
-      });
+      }
     }
     // this.enableNextBtn = this.selectedSecTbl.size > 0;
   }
@@ -254,9 +272,9 @@ export class TableListComponent implements OnInit {
       case '1':
         this.enableNextBtn = this.finalSecColMap.size > 0;
         break;
-      case '2':
-        // this.enableNextBtn = this.selectedSecCol.size > 0;
-        break;
+      // case '2':
+      //   this.enableNextBtn
+      //   break;
       // case '3':
       //   this.enableNextBtn = this.selectedPrimCol.size > 0;
       //   break;
@@ -274,6 +292,7 @@ export class TableListComponent implements OnInit {
 
   prevStep(e) {
     document.getElementById('prev-slide').click();
+    this.finalSecColArray = [];
     this.handleStepIindicator(false);
   }
 
@@ -283,20 +302,27 @@ export class TableListComponent implements OnInit {
   }
 
   getAllSelectedTblsCols() {
-    const primColArray = [];
+    this.finalPrimColArray = [];
     this.selectedPrimColMap.forEach((val, key) => {
-      primColArray.push(key);
+      const columnObject = {
+      'columnName' : key
+      };
+      this.finalPrimColArray.push(columnObject);
     });
-    this.selectedTblsColsObj.primary = {
-      'table' : this.selectedPrimTbl,
-      'columns': primColArray
+    this.selectedTblsColsObj.userId = this.userId;
+    this.selectedTblsColsObj.workspaceId = this.workspaceID;
+    this.selectedTblsColsObj.primaryTable = {
+      'tableName' : this.selectedPrimTbl,
+      'primaryColumnList': this.finalPrimColArray
     };
-    this.selectedTblsColsObj.secondary = [];
+    this.selectedTblsColsObj.secondaryTableList = [];
     const secMap = new Map();
     this.finalSecColMap.forEach((val, key) => {
       const arr = key.split(this.secTblColJoiner);
       const secTbl = arr[0];
-      const secCol = arr[1];
+      const secCol = {
+        'columnName' : arr[1]
+      };
       if (secMap.has(secTbl)) {
         const secCols = secMap.get(secTbl);
         secCols.push(secCol);
@@ -305,13 +331,17 @@ export class TableListComponent implements OnInit {
       }
     });
     secMap.forEach((valArray, key) => {
-      this.selectedTblsColsObj.secondary.push(
+      this.selectedTblsColsObj.secondaryTableList.push(
         {
-          'table' : key,
-          'columns': valArray
+          'tableName' : key,
+          'secondaryColumnList': valArray
         }
       );
     });
+    this.selectedTblsColsObj.configurationDetails = {
+      'samplingPercentage' : this.analysisRowCount
+    };
+    this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
     console.log('finally', this.selectedTblsColsObj);
   }
   handleStepIindicator(isNext) {
@@ -382,7 +412,7 @@ export class TableListComponent implements OnInit {
       //   } else {
       //     this.addClass(progressSelector, 'width-100-pc-rev');
       //   }
-      //   break;
+      //  break;
       default:
         break;
     }
@@ -391,6 +421,13 @@ export class TableListComponent implements OnInit {
     const progressSelector = 'progress-bar';
     this.addClass(progressSelector, 'width-100-pc');
     this.addClass('prev-btn', 'hide');
+    this.addClass('analyse-btn', 'hide');
+    this.removeClass('close-btn', 'hide');
+    this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
+    if (res && res.success) {
+      this.dataAnalysisjobID = res.data.jobId;
+    }
+    });
   }
   deleteRelationship(indexOfDelete) {
     this.index = indexOfDelete;
@@ -426,7 +463,10 @@ export class TableListComponent implements OnInit {
        close.click();
        this.loadRelationTable(this.tableCopy);
     }
-
+    finalSecCol(x, i) {
+      this.selectedRow = i;
+      this.finalSecColArray = x.secondaryColumnList;
+    }
   refreshRelation($event) {
   this.loadRelationTable(this.tableCopy);
   }

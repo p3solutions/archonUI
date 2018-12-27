@@ -19,6 +19,8 @@ export class TableListService {
   tableListUrl = environment.apiUrl + 'meta/tablesList?workspaceId=';
   relationTableListUrl = environment.apiUrl + '/meta/tablesRelationShip?tableId=';
   deleteRelationsUrl = environment.apiUrl + 'meta/relationship?workspaceId=';
+  columnListUrl = environment.apiUrl + '/table/columnList?tableId=';
+  dataAnalysisUrl = environment.apiUrl + '/dataAnalyzer/tableToTablesDataCrawlAnalysis';
   // columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
    columnUrl = environment.apiUrl + '/table/columnList?tableId=';
   constructor(private http: HttpClient,
@@ -46,12 +48,20 @@ export class TableListService {
       );
   }
 
-  getColumnsByTableName(tableId) {
-    // console.log('Fetching columns for:', this.columnUrl + tableId);
-    const url = this.columnUrl + tableId;
-    return this.http.get<any[]>(url, {headers: this.userinfoService.getHeaders()})
-    .map(this.extractTablesMeta)
-    .pipe(catchError(this.handleError('getColumnsByTableName()', [])));
+  getColumnsByTableId(tableId) {
+    return this.http.get<any[]>(this.columnListUrl + tableId, {headers: this.userinfoService.getHeaders()})
+    .map(this.extractTable)
+    .pipe(catchError(this.handleError('getColumnsByTableId()', [])));
+  }
+
+  sendValuesForTableToTableAnalysis(analysisObject): Observable<any> {
+    return this.http.post<any[]>( this.dataAnalysisUrl, analysisObject, {headers: this.userinfoService.getHeaders()})
+    .pipe(catchError(this.handleError('sendValuesForTabletoTableAnalysis', [])));
+  }
+
+  private extractTable(res: any) {
+    const data = res.data.tableColumnList.columnDetails;
+    return data || [];
   }
 
   private extractTables(res: any) {
@@ -63,19 +73,6 @@ export class TableListService {
     return data || [];
   }
 
-  private extractTablesMeta(res: any) {
-    const tableKeys = res.data.tables_meta.table_keys;
-    const tableColumns = res.data.tables_meta.table_columns;
-    tableKeys.forEach(key => {
-      tableColumns.forEach(col => {
-        if (key.column_name === col.column_name) {
-          col.confidence_score = key.confidence_score * 100;
-        }
-      });
-    });
-    const data = res.data.tables_meta.table_columns;
-    return data || [];
-  }
   setServiceActionType(serviceActionType: string) {
     this.serviceActionType = serviceActionType;
   }
