@@ -11,6 +11,10 @@ export class MetalyzerHeaderComponent implements OnInit {
 
   private wsName: string;
   private phase: string;
+  workspaceID: any;
+  xml: any;
+  databaseID: any;
+  exportxmlview: any;
   constructor(
     private router: Router,
     private workspaceHeaderService: WorkspaceHeaderService,
@@ -27,4 +31,14 @@ export class MetalyzerHeaderComponent implements OnInit {
       this.wsName = result;
     });
   }
+  exportxml() {
+    this.xml = 'xml';
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.databaseID = this.workspaceHeaderService.getDatabaseID();
+    this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml)
+    .subscribe(result => {
+      this.exportxmlview = result;
+      console.log(this.exportxmlview);
+      });
+   }
 }

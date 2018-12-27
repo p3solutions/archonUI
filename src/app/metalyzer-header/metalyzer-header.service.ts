@@ -10,6 +10,7 @@ import { UserinfoService } from '../userinfo.service';
 @Injectable()
 export class MetalyzerHeaderService {
   workspaceinfoUrl = environment.apiUrl + 'workspaces/';
+  exportxmlUrl = environment.apiUrl + 'meta/export/';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
   cast = this.phase.asObservable();
@@ -33,6 +34,11 @@ export class MetalyzerHeaderService {
       .map(this.extractWorkspace)
       .pipe(catchError(this.handleError<string>('getworkspaceName'))
       );
+  }
+  getExportxml(workspaceId, databaseID, xml): Observable<any> {
+      const params = {workspaceId: workspaceId, databaseId: databaseID, exportType: xml};
+      return this.http.post<any>(this.exportxmlUrl, params, {headers: this.userinfoService.getHeaders()})
+      .pipe(catchError(this.handleError('getExportxml()', [])));
   }
   private extractWorkspace(res: any) {
     const data = res.data.workspaces.workspaceName;

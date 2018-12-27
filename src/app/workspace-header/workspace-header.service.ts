@@ -45,4 +45,7 @@ export class WorkspaceHeaderService {
     }
     return null;
   }
+  getDatabaseID() {
+   return this.workspace.databases[0].id;
+  }
 }
