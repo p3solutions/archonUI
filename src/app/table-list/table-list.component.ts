@@ -45,7 +45,11 @@ export class TableListComponent implements OnInit {
   relationShipIDs = [];
   delProgress: boolean;
   deleteNotif = new ErrorObject();
+  editValues: any;
   tableCopy: any;
+  joinName: any;
+  joinValues: any;
+
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService
@@ -82,10 +86,18 @@ export class TableListComponent implements OnInit {
   openDataAModal() {
     this.homeStage = false;
     this.dataAModal = true;
-    this.getColumnsByTableName(this.selectedPrimTbl, true);
+    this.getColumnsByTableName(this.selectedPrimTblID, true);
     this.resetDataAModal();
   }
-  getColumnsByTableName(tableName, isPrime) {
+  openEditRelationship(relation) {
+  this.editValues = relation;
+  }
+
+  joinTable(table) {
+    this.joinValues = table;
+    }
+
+  getColumnsByTableName(tableId, isPrime) {
     if (isPrime) {
       this.primColArray = [];
       // this.primColLoader = true;
@@ -93,13 +105,13 @@ export class TableListComponent implements OnInit {
       this.secColArray = [];
       // this.secColLoader = true;
     }
-    this.tablelistService.getColumnsByTableName(tableName)
+    this.tablelistService.getColumnsByTableName(tableId)
     .subscribe((columns) => {
       if (isPrime) {
         this.primColArray = columns;
         // this.primColLoader = false;
       } else {
-        this.secTblColMap.set(tableName, columns);
+        this.secTblColMap.set(tableId, columns);
         this.secColArray = columns;
         // this.secColLoader = false;
         this.selectedSecColMap.clear();
@@ -382,7 +394,8 @@ export class TableListComponent implements OnInit {
   }
   deleteRelationship(indexOfDelete) {
     this.index = indexOfDelete;
-    this.editrelationshipInfo  = this.relationshipInfo[this.index];
+    this.editrelationshipInfo  = JSON.parse(JSON.stringify(this.relationshipInfo[this.index]));
+    this.joinName = this.editrelationshipInfo.joinName;
     this.primaryTableId = this.editrelationshipInfo.primaryTable.tableId;
     this.joinListTemp = this.editrelationshipInfo.joinListInfo;
     for (const x of this.joinListTemp) {
@@ -392,23 +405,29 @@ export class TableListComponent implements OnInit {
 
   confirmDelete(): void {
     this.delProgress = true;
-    this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId, this.relationShipIDs).subscribe(res => {
+    this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId, this.joinName, this.relationShipIDs)
+    .subscribe(res => {
+      this.relationShipIDs = [];
       this.delProgress = false;
       if (res && res.success) {
-        // tr.remove(); // Removing the row.
         this.postDelete();
       } else {
         this.deleteNotif.show = true;
-        this.deleteNotif.message = res.data;
+        this.deleteNotif.message = res.errorMessage;
       }
       });
     }
     closeErrorMsg() {
       this.deleteNotif = new ErrorObject();
+      this.relationShipIDs = [];
     }
      postDelete() {
        const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
        close.click();
        this.loadRelationTable(this.tableCopy);
     }
+
+  refreshRelation($event) {
+  this.loadRelationTable(this.tableCopy);
+  }
 }

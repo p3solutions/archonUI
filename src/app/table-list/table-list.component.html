@@ -12,7 +12,7 @@
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <div class="tablename-list da-table-parent">
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.tableName}}
+            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table); joinTable(table);">{{table.tableName}}
               <i class="fa fa-angle-right unselected"></i>
             </button>
           </div>
@@ -39,7 +39,7 @@
             </button>
             <ul class="dropdown-menu">
               <li>
-                <a href="#">Manual Join</a>
+                <a href="#" data-toggle="modal" data-target="#openAddDirectJoinModal">Direct Join</a>
               </li>
               <li>
                 <a href="#">Column-Match Join</a>
@@ -123,14 +123,15 @@
                   <hr id="hrtab">
                   </div>
                   <div class="col col-md-12">
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editColumnModal">Edit</button>
+                      <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)">Edit </button>
                       <button type="button" class="btn btn-primary Close" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
-                  </div>
-              </div> 
+                  </div>  
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <app-edit-relationship-info class="modal fade" (updateEvent)="refreshRelation($event)" id="openEditRelationshipModal" [relation]="editValues" [workspaceID]="workspaceID" role="dialog"></app-edit-relationship-info>
 <!-- Data Analyzer -->
       <div *ngIf="dataAModal" class="">
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
@@ -299,10 +300,7 @@
       
           </div>
         </div>
-      </div>
-      
-
-
+      </div> 
     </div>
   </div>
 </div>
@@ -335,3 +333,4 @@
     </div>
   </div>
   
+  <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
