@@ -88,6 +88,7 @@ import { EditRelationshipInfoService } from './edit-relationship-info/edit-relat
 import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
 import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
 import { SecondaryColumnPipe } from './secondary-column.pipe';
+import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -137,7 +138,8 @@ import { SecondaryColumnPipe } from './secondary-column.pipe';
                 RolePipe,
                 EditRelationshipInfoComponent,
                 AddDirectJoinComponent,
-                SecondaryColumnPipe
+                SecondaryColumnPipe,
+                DataAnalyzerResultScreenComponent
         ],
         imports: [
                 BrowserModule,

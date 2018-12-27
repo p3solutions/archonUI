@@ -342,6 +342,7 @@ export class TableListComponent implements OnInit {
       'samplingPercentage' : this.analysisRowCount
     };
     this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
+    console.log(this.finalSecondaryTableList);
     console.log('finally', this.selectedTblsColsObj);
   }
   handleStepIindicator(isNext) {
