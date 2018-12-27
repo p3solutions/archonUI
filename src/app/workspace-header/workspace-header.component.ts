@@ -9,7 +9,7 @@ import { WorkspaceHeaderService } from './workspace-header.service';
 import {archonConfig} from '../config';
 import { Router, RouterModule } from '@angular/router';
 import { UserProfileService } from '../user-profile/user-profile.service';
-
+import { jsonpCallbackContext } from '@angular/common/http/src/module';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -17,7 +17,7 @@ import { UserProfileService } from '../user-profile/user-profile.service';
 })
 export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   userWorkspaceArray: WorkspaceObject[];
-  serviceActionsList: ServiceActionsObject;
+  serviceActionsList: ServiceActionsObject[];
   userId: string;
   userRole: any;
   enableWorkspace = false;
@@ -45,12 +45,17 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
-    this.userProfileService.userSelectedWorkspace.subscribe(data =>
-      this.userSelectedWorkspace = data);
+    this.userProfileService.userSelectedWorkspace.subscribe(data =>{
+      this.userSelectedWorkspace = data
+    }
+     );
     if (this.userSelectedWorkspace) {
+      
       this.loaduserSelectedWorkspace(this.userSelectedWorkspace);
     } else {
+     
       this.getUserWorkspaceList();
+      
     }
     this.userRole = this.userinfoService.getUserRoles();
     this.enableWorkspace = archonConfig.workSpaceAllowedAdmins.includes(this.userRole.roleName);
@@ -66,6 +71,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
       $(this).addClass('selected');
     });
   }
+
   getUserWorkspaceList() {
     const bindCallback = this.bindDropdownClick;
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
@@ -84,6 +90,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
         };
         const currentTime = new Date().getTime();
         const k = setInterval(fn, 500);
+        
       }
     });
   }
@@ -114,11 +121,15 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     this.currentWorkspace = selectedWorkspace;
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
-    this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
-    this.workspaceService.passServiceActions(this.serviceActionsList);
+    this.serviceActionsList=JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
+    let _temp= this.workspaceService.updateServiceActionsList(this.serviceActionsList);
+    this.workspaceService.updateServiceActions(_temp);
+    setTimeout(() => {
+      this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+    }, 3000);
     // this.serviceActionsListEvent.emit(this.serviceActionsList);
-    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
+  
   onChange(val) {
     // const ws = JSON.stringify(val);
     switch (val) {
