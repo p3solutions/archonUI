@@ -27,7 +27,7 @@ export class NewWorkspaceComponent implements OnInit {
   constructor(
     private userinfoService: UserinfoService,
     private userWorkspaceService: UserWorkspaceService,
-    private commonutilityService: CommonUtilityService
+    private commonUtilityService: CommonUtilityService
   ) { }
 
   ngOnInit() {
@@ -136,11 +136,13 @@ export class NewWorkspaceComponent implements OnInit {
   }
 
   getSupportedDBs() {
+    const thisComponent = this;
     this.userWorkspaceService.getSupportedDBList()
     .subscribe( res => {
       if (res && res.length > 0) {
         res.forEach(element => {
-          element.createdDate = this.commonutilityService.getDisplayTime(element.createdAt * 1000);
+          element.createdDate = thisComponent.commonUtilityService.getDisplayTime(element.createdAt * 1000);
+         // element.createdDate = new Date(element.createdAt * 1000).toDateString();
           this.supportedDBs.push(element);
         });
         this.isDBAvailable = true;
@@ -181,7 +183,10 @@ export class NewWorkspaceComponent implements OnInit {
       'order': [[1, 'asc']]
     });
     this.bindCHeckboxClick();
-    $('.dataTables_paginate,.paging_simple_numbers').off('click').on('click', function() {
+    $('.dataTables_paginate,.paging_simple_numbers,.dataTables_length').off('click').on('click', function() {
+      thisComponent.bindCHeckboxClick();
+    });
+    $('.dataTables_filter').off('keyup').on('keyup', function() {
       thisComponent.bindCHeckboxClick();
     });
   }
