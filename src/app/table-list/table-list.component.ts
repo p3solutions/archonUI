@@ -415,7 +415,7 @@ export class TableListComponent implements OnInit {
     this.removeClass('close-btn', 'hide');
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
     if (res && res.success) {
-      this.dataAnalysisjobID = res.data.status;
+      this.dataAnalysisjobID = res.data.jobId;
     }
     });
   }
