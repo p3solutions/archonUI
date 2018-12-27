@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Info } from '../info';
 import { JwtHelper } from 'angular2-jwt';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,6 +10,7 @@ import { JwtHelper } from 'angular2-jwt';
 })
 export class NavbarComponent implements OnInit {
   info: Info;
+  private router: Router;
   constructor() { }
   ngOnInit() {
     this.info = this.getInfo();
@@ -37,6 +39,10 @@ export class NavbarComponent implements OnInit {
     return info;
   }
   callUserProfile() {
-    localStorage.setItem('userId','');
+    localStorage.setItem('userId', '');
+  }
+  logout() {
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['sign-in']);
   }
 }

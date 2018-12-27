@@ -51,6 +51,7 @@ export class ChangePasswordComponent implements OnInit {
       this.errorObject.message = 'New Password and Confirm Password mismatched';
       this.errorObject.show = true;
     }
+    this.inProgress = false;
     return this.errorObject;
   }
   changeUserPassword() {
