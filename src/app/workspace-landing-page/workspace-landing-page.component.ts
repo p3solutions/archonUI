@@ -33,7 +33,7 @@ export class WorkspaceLandingPageComponent implements OnInit {
     this.info.id = this.token_data.user.id;
     this.info.roles = this.token_data.roles[0];
     this.info.username = this.token_data.username;
-    if (this.info.roles.roleName === 'ROLE_NOT_ASSIGNED') {
+    if (this.info.roles.roleName === 'ROLE_NOT_ASSIGNED' || this.info.roles.roleName === 'ROLE_SUPER_ADMIN') {
       this.router.navigate(['workspace/no-workspace']);
     } else {
       if (this.info.roles.roleName === 'ROLE_ADMIN') {
