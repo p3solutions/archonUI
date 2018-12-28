@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operator/map';
 
 @Component({
   selector: 'app-data-analyzer-result-screen',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataAnalyzerResultScreenComponent implements OnInit {
 
-  res: any = {
+   primaryColMap = new Map();
+   SecondaryTableList = [];
+   SecondaryColumnList = [];
+   finalSecondaryArray = [];
+   secTableNameMap = new Map();
+   res = {
     'tableName': 'actor',
     'relationDetails' : [
      {
@@ -75,10 +81,52 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
     ]
  };
 
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  getPrimaryColumns() {
+   for (const i of this.res.relationDetails) {
+      this.finalSecondaryArray = [];
+      for (const j of i.SecondaryTableList) {
+          const tablename = j.tableName;
+          for (const z of j.secondaryColumnList) {
+              const temp = {
+                  tableName: tablename,
+                  secondaryColumn: z.secondaryColumn,
+                  matchPercentage: z.matchPercentage
+              };
+              this.finalSecondaryArray.push(temp);
+          }
+      }
+      this.primaryColMap.set(i.primaryColumn, this.finalSecondaryArray);
+   }
+  }
+
+  getSecondaryColumns() {
+   for (const i of this.res.relationDetails) {
+      for (const j of i.SecondaryTableList) {
+          this.secTableNameMap.set(j.tableName, []);
+      }
+  }
+  for (const i of this.res.relationDetails) {
+      const primaryColumn = i.primaryColumn;
+      for (const j of i.SecondaryTableList) {
+          const tablename = j.tableName;
+          const existingPrimCol = this.secTableNameMap.get(tablename);
+          for (const k of j.secondaryColumnList) {
+              const temp = {
+               primaryColumn: primaryColumn,
+               secondaryColumn: k.secondaryColumn,
+               matchPercentage: k.matchPercentage
+              };
+              existingPrimCol.push(temp);
+          }
+          this.secTableNameMap.set(tablename, existingPrimCol);
+      }
+  }
+  }
 
 }

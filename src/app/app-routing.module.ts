@@ -30,6 +30,7 @@ import { MetalyzerComponent } from './metalyzer/metalyzer.component';
 import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
 import { TableListComponent } from './table-list/table-list.component';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
+import {DataAnalyzerResultScreenComponent} from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 
 const routes: Routes = [
   {
@@ -51,7 +52,7 @@ const routes: Routes = [
       }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
-            path: '', redirectTo: 'workspace-services', pathMatch: 'full'
+            path: '', redirectTo: 'resultant', pathMatch: 'full'
           },
           {
             path: 'workspace-services', component: WorkspaceServicesComponent
@@ -63,7 +64,11 @@ const routes: Routes = [
             path: 'manage-members/:id', component: ManageMembersComponent
           }, {
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
-          }]
+          },
+          {
+            path: 'resultant', component: DataAnalyzerResultScreenComponent
+          }
+        ]
       },
       {
         path: 'metalyzer/:wsId_Mode', component: MetalyzerComponent, children: [
