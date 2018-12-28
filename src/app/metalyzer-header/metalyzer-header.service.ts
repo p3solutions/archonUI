@@ -36,8 +36,9 @@ export class MetalyzerHeaderService {
       );
   }
   getExportxml(workspaceId, databaseID, xml): Observable<any> {
+      const downloadHeaders = new HttpHeaders().set('Authorization' , 'Bearer ' + this.userinfoService.getAuthKey());
       const params = {workspaceId: workspaceId, databaseId: databaseID, exportType: xml};
-      return this.http.post<any>(this.exportxmlUrl, params, {headers: this.userinfoService.getHeaders()})
+      return this.http.post(this.exportxmlUrl, params, {headers: downloadHeaders, observe: 'response', responseType: 'blob'})
       .pipe(catchError(this.handleError('getExportxml()', [])));
   }
   private extractWorkspace(res: any) {
