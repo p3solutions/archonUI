@@ -4,6 +4,7 @@ import { RelationshipInfoObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErrorObject } from '../error-object';
 import { UserinfoService } from '../userinfo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-list',
@@ -58,11 +59,16 @@ export class TableListComponent implements OnInit {
   dataAnalysisjobID: any;
   joinName: any;
   joinValues: any;
+  metalyzerServiceId: any;
+  dataSlide: string;
+  JobStatus: string;
+  defaultModel = true;
 
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private router: Router
   ) {
     this.userId = this.userinfoService.getUserId();
    }
@@ -74,14 +80,15 @@ export class TableListComponent implements OnInit {
   }
   getTableList() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
-      // console.log(this.tableList);
       this.isAvailable = true;
     });
   }
 
   loadRelationTable(table: any) {
+    this.defaultModel = false;
     this.tableCopy = table;
     this.homeStage = true;
     this.dataAModal = false;
@@ -97,9 +104,27 @@ export class TableListComponent implements OnInit {
 
   openDataAModal() {
     this.homeStage = false;
-    this.dataAModal = true;
-    this.getColumnsByTableName(this.selectedPrimTblID, true);
-    this.resetDataAModal();
+    this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+    this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId ).subscribe(res => {
+    console.log(res);
+    // if (res.data.jobIds.length > 0 ) {
+    //   this.homeStage = false;
+    //   this.dataAModal = true;
+    //   this.dataAnalysisjobID = res.data.jobIds[0];
+    //   this.getJobStatus();
+    //   console.log(this.dataAnalysisjobID);
+    //    setTimeout(() => {
+      //   (<any>$('#dataAModal-carousel')).carousel(3);
+      // }, 1000);
+      // const progressSelector = 'progress-bar';
+    // this.addClass(progressSelector, 'width-100-pc');
+    // } else {
+      // this.homeStage = false;
+      // this.dataAModal = true;
+      this.getColumnsByTableName(this.selectedPrimTblID, true);
+      this.resetDataAModal();
+    // }
+    });
   }
   openEditRelationship(relation) {
   this.editValues = relation;
@@ -342,8 +367,6 @@ export class TableListComponent implements OnInit {
       'samplingPercentage' : this.analysisRowCount
     };
     this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
-    console.log(this.finalSecondaryTableList);
-    console.log('finally', this.selectedTblsColsObj);
   }
   handleStepIindicator(isNext) {
     const slideNo = this.getCurrentStep();
@@ -427,6 +450,16 @@ export class TableListComponent implements OnInit {
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
     if (res && res.success) {
       this.dataAnalysisjobID = res.data.jobId;
+      this.getJobStatus();
+    }
+    });
+  }
+
+  getJobStatus() {
+    this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
+    this.JobStatus = res.data.jobStatus;
+    if (this.JobStatus === 'SUCCESS') {
+    // this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
     }
     });
   }

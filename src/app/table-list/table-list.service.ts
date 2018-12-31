@@ -22,7 +22,9 @@ export class TableListService {
   columnListUrl = environment.apiUrl + '/table/columnList?tableId=';
   dataAnalysisUrl = environment.apiUrl + '/dataAnalyzer/tableToTablesDataCrawlAnalysis';
   // columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
-   columnUrl = environment.apiUrl + '/table/columnList?tableId=';
+  columnUrl = environment.apiUrl + '/table/columnList?tableId=';
+  stateManagementUrl = environment.apiUrl + '/dataAnalyzer/stateManagement';
+  getJobStatusUrl = environment.apiUrl + '/dataAnalyzer/jobStatus?jobId=';
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
   }
@@ -57,6 +59,17 @@ export class TableListService {
   sendValuesForTableToTableAnalysis(analysisObject): Observable<any> {
     return this.http.post<any[]>( this.dataAnalysisUrl, analysisObject, {headers: this.userinfoService.getHeaders()})
     .pipe(catchError(this.handleError('sendValuesForTabletoTableAnalysis', [])));
+  }
+
+  stateManagement(userId, workspaceID, metalyzerServiceId) {
+    const stateManagementObject = {'userId': userId , 'workspaceId': workspaceID , 'serviceId': metalyzerServiceId };
+    return this.http.post<any>(this.stateManagementUrl, stateManagementObject, {headers: this.userinfoService.getHeaders()})
+    .pipe(catchError(this.handleError('stateManagement' , [])));
+  }
+
+  getJobStatus(JobID) {
+  return this.http.get<any>(this.getJobStatusUrl + JobID, {headers: this.userinfoService.getHeaders()})
+  .pipe(catchError(this.handleError('getJobStatusId', [])));
   }
 
   private extractTable(res: any) {

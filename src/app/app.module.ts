@@ -89,6 +89,7 @@ import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.compon
 import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
 import { SecondaryColumnPipe } from './secondary-column.pipe';
 import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
+import { KeyvaluePipe } from './keyvalue.pipe';
 @NgModule({
         declarations: [
                 AppComponent,
@@ -139,7 +140,8 @@ import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen
                 EditRelationshipInfoComponent,
                 AddDirectJoinComponent,
                 SecondaryColumnPipe,
-                DataAnalyzerResultScreenComponent
+                DataAnalyzerResultScreenComponent,
+                KeyvaluePipe
         ],
         imports: [
                 BrowserModule,

@@ -52,7 +52,7 @@ const routes: Routes = [
       }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
-            path: '', redirectTo: 'resultant', pathMatch: 'full'
+            path: '', redirectTo: 'workspace-services', pathMatch: 'full'
           },
           {
             path: 'workspace-services', component: WorkspaceServicesComponent
@@ -64,9 +64,6 @@ const routes: Routes = [
             path: 'manage-members/:id', component: ManageMembersComponent
           }, {
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
-          },
-          {
-            path: 'resultant', component: DataAnalyzerResultScreenComponent
           }
         ]
       },
@@ -75,7 +72,10 @@ const routes: Routes = [
           {
             path: 'configuration', component: MetalyzerConfigurationComponent
           }, {
-            path: 'analysis', component: TableListComponent
+            path: 'analysis', component: TableListComponent , children: [
+              {
+              path: 'resultant', component: DataAnalyzerResultScreenComponent
+            }]
           }
         ]
       }]

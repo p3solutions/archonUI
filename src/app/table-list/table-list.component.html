@@ -22,8 +22,11 @@
   </div>
   <div class="col-md-8 col-md-offset-2.5">
     <div class="card">
-      <div class="card-body default-load" *ngIf="!homeStage && !dataAModal">
+      <div class="card-body default-load" *ngIf="defaultModel">
         <h2 class="default-info">Choose one of the listed tables to view relationship information with other tables</h2>
+      </div>
+      <div class="card-body" *ngIf="!homeStage && !dataAModal">
+       <router-outlet></router-outlet>
       </div>
       <div class="card-body" *ngIf="homeStage">
         <div class="col col-md-12">
@@ -320,8 +323,8 @@
                           <div class="col-md-2"><strong>Analysis Status:</strong>
                           </div>
                           <div class="col-md-6 move-progress1">
-                            <div class="col-md-4">In Progress</div>
-                            <div class="col-md-2 move-progress2"><i class="fa fa-refresh"></i></div>
+                            <div class="col-md-4">{{JobStatus}}</div>
+                            <div class="col-md-2 move-progress2"><a (click)="getJobStatus()" data-tooltip="refresh"><i class="fa fa-refresh"></i></a></div>
                             <div class="col-md-2 move-progress3"><i class="fa fa-stop"></i></div>
                           </div>
                         </div>

@@ -13,6 +13,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
    SecondaryColumnList = [];
    finalSecondaryArray = [];
    secTableNameMap = new Map();
+   activateSecondary = true;
+   activatePrimary = false;
    res = {
     'tableName': 'actor',
     'relationDetails' : [
@@ -85,6 +87,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+     this.getPrimaryColumns();
+     this.getSecondaryColumns();
   }
 
   getPrimaryColumns() {
@@ -127,6 +131,16 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
           this.secTableNameMap.set(tablename, existingPrimCol);
       }
   }
+  }
+
+  activateSecondaryFn() {
+  this.activateSecondary = true;
+  this.activatePrimary = false;
+  }
+
+  activatePrimaryFn() {
+   this.activateSecondary = false;
+   this.activatePrimary = true;
   }
 
 }

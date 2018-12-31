@@ -1,64 +1,75 @@
-<div class="col-md-12">
-  <div class="col-md-7">&nbsp;</div>
-  <div class="col-md-5">
-    <button type="button" class="btn btn-primary">Secondary Columns</button>
-    <button type="button" class="btn btn-primary">Primary Columns</button>
+<div class="col-md-12 marginClass">
+  <div class="col-md-5">&nbsp;</div>
+  <div class="col-md-7">
+    <button type="button" class="btn btn-primary" (click)="activateSecondaryFn()" id="Select">Secondary Columns</button>
+    <button type="button" class="btn btn-primary" (click)="activatePrimaryFn()">Primary Columns</button>
   </div>
   </div>
+<div *ngIf="activateSecondary">
 <div class="col-md-12">
 <div class="col-md-3">
   <table id="customers">                     
        <tr>
          <th>Primary Column</th>                                                        
        </tr>                    
-     <tr>
-       <td>pri.columnName</td>      
-     </tr> 
-     <tr>
-      <td>pri.columnName</td>      
-    </tr> 
-    <tr>
-      <td>pri.columnName</td>      
-    </tr> 
-    <tr>
-      <td>pri.columnName</td>      
-    </tr>   
+     <tr *ngFor="let x of primaryColMap | keyvalue">
+       <td>{{x.key}}</td>      
+     </tr>  
    </table>
 </div>
 <div class="col-md-9">
   <table id="customers">                     
        <tr>
-         <th>Primary Column</th>
+         <th>Secondary Table</th>
          <th>Column Type</th>
          <th>Secondary Column</th>   
          <th>Accuracy  (in %)</th>
          <th><input type="checkbox"></th>                                                 
        </tr>                    
      <tr>
-       <td>pri.columnName</td>
-       <td>pri.columnDataType</td>
-       <td>sec.columnname</td>    
+       <td>Table 1</td>
+       <td>INT</td>
+       <td>SEC Column1</td>    
        <td>86</td>  
         <td><input type="checkbox"></td>                
-     </tr> 
-     <tr>
-      <td>pri.columnName</td>
-      <td>pri.columnDataType</td>
-      <td>sec.columnname</td>    
-      <td>86</td>  
-       <td><input type="checkbox"></td>                
-    </tr>   
-    <tr>
-      <td>pri.columnName</td>
-      <td>pri.columnDataType</td>
-      <td>sec.columnname</td>    
-      <td>86</td>  
-       <td><input type="checkbox"></td>                
-    </tr>     
+     </tr>    
    </table>
 </div>
 </div>
-<div class="col-md-12">
+</div>
+<div *ngIf="activatePrimary">
+  <div class="col-md-12">
+  <div class="col-md-3">
+    <table id="customers">                     
+         <tr>
+           <th>Secondary Table</th>                                                        
+         </tr>                    
+       <tr>
+         <td>Table 1</td>      
+       </tr>  
+     </table>
+  </div>
+  <div class="col-md-9">
+    <table id="customers">                     
+         <tr>
+           <th>Primary Column</th>
+           <th>Column Type</th>
+           <th>Secondary Column</th>   
+           <th>Accuracy  (in %)</th>
+           <th><input type="checkbox"></th>                                                 
+         </tr>                    
+       <tr>
+         <td>PT Column1</td>
+         <td>INT</td>
+         <td>ST Column 1</td>    
+         <td>86</td>  
+          <td><input type="checkbox"></td>                
+       </tr>    
+     </table>
+  </div>
+  </div>
+  </div>
+<div class="col-md-12 marginClass">
 <div class="col-md-7">&nbsp;</div>
 <div class="col-md-5">
   <button type="button" class="btn btn-primary">Add Selected Joins</button>

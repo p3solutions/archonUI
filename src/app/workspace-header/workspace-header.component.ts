@@ -117,7 +117,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     this.serviceActionsList = selectedWorkspace.members[0].serviceActions;
     this.workspaceService.passServiceActions(this.serviceActionsList);
     // this.serviceActionsListEvent.emit(this.serviceActionsList);
-    // this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
   onChange(val) {
     // const ws = JSON.stringify(val);
