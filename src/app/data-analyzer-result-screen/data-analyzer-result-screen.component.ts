@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, SimpleChange, OnChanges } from '@angular/core';
 import { map } from 'rxjs/operator/map';
+import { TableListService } from '../table-list/table-list.service';
 
 @Component({
   selector: 'app-data-analyzer-result-screen',
@@ -15,115 +16,58 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
    secTableNameMap = new Map();
    activateSecondary = true;
    activatePrimary = false;
-   res = {
-    'tableName': 'actor',
-    'relationDetails' : [
-     {
-           'primaryColumn' : 'ADD_ID',
-           'SecondaryTableList' : [
-              {
-                 'tableName' : 'Member',
-                 'secondaryColumnList': [
-                     {
-                        'secondaryColumn' : 'MEM_ID',
-                        'matchPercentage': '30'
-                     },
-                     {
-                        'secondaryColumn' : 'SEC_TYPE',
-                        'matchPercentage': '20'
-                     }
-                 ]
-              },
-              {
-                 'tableName' : 'Provider',
-                 'secondaryColumnList': [
-                     {
-                        'secondaryColumn' : 'PRO_ID',
-                        'matchPercentage': '30'
-                     },
-                     {
-                        'secondaryColumn' : 'PRO_TYPE',
-                        'matchPercentage': '20'
-                     }
-                 ]
-              }
-             ]
-      },
-      {
-        'primaryColumn' : 'ADD_ID1',
-           'SecondaryTableList' : [
-              {
-                 'tableName' : 'Member1',
-                 'secondaryColumnList': [
-                     {
-                        'secondaryColumn' : 'MEM_ID',
-                        'matchPercentage': '30'
-                     },
-                     {
-                        'secondaryColumn' : 'SEC_TYPE',
-                        'matchPercentage': '20'
-                     }
-                 ]
-              },
-              {
-                 'tableName' : 'Provider1',
-                 'secondaryColumnList': [
-                     {
-                        'secondaryColumn' : 'PRO_ID',
-                        'matchPercentage': '30'
-                     },
-                     {
-                        'secondaryColumn' : 'PRO_TYPE',
-                        'matchPercentage': '20'
-                     }
-                 ]
-              }
-             ]
-      }
-    ]
- };
+   resultant = [];
+   populatePrimaryValuesArray: any;
+   populateSecondaryValuesArray: any;
 
 
-  constructor() { }
+
+  constructor(private tablelistService: TableListService) { }
+
 
   ngOnInit() {
+     this.tablelistService.currentResultArray.subscribe(res => this.resultant = res);
      this.getPrimaryColumns();
      this.getSecondaryColumns();
   }
 
   getPrimaryColumns() {
-   for (const i of this.res.relationDetails) {
+   for (const i of this.resultant) {
       this.finalSecondaryArray = [];
-      for (const j of i.SecondaryTableList) {
+      for (const j of i.secondaryTableList) {
           const tablename = j.tableName;
           for (const z of j.secondaryColumnList) {
               const temp = {
                   tableName: tablename,
-                  secondaryColumn: z.secondaryColumn,
+                  secondaryColumnId: z.secondaryColumnId,
+                  secondaryColumnName: z.secondaryColumnName,
+                  dataType: z.dataType,
                   matchPercentage: z.matchPercentage
               };
               this.finalSecondaryArray.push(temp);
           }
       }
-      this.primaryColMap.set(i.primaryColumn, this.finalSecondaryArray);
+      this.primaryColMap.set(i.primaryColumnName, this.finalSecondaryArray);
    }
   }
 
   getSecondaryColumns() {
-   for (const i of this.res.relationDetails) {
-      for (const j of i.SecondaryTableList) {
+   for (const i of this.resultant) {
+      for (const j of i.secondaryTableList) {
           this.secTableNameMap.set(j.tableName, []);
       }
   }
-  for (const i of this.res.relationDetails) {
-      const primaryColumn = i.primaryColumn;
-      for (const j of i.SecondaryTableList) {
+  for (const i of this.resultant) {
+      const primaryColumn = i.primaryColumnName;
+      for (const j of i.secondaryTableList) {
           const tablename = j.tableName;
           const existingPrimCol = this.secTableNameMap.get(tablename);
           for (const k of j.secondaryColumnList) {
               const temp = {
                primaryColumn: primaryColumn,
-               secondaryColumn: k.secondaryColumn,
+               secondaryColumnId: k.secondaryColumnId,
+               secondaryColumnName: k.secondaryColumnName,
+               dataType: k.dataType,
                matchPercentage: k.matchPercentage
               };
               existingPrimCol.push(temp);
@@ -142,5 +86,14 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
    this.activateSecondary = false;
    this.activatePrimary = true;
   }
+
+  populatePrimaryValues(x) {
+  this.populatePrimaryValuesArray = this.primaryColMap.get(x.key);
+  }
+
+  populateSecondaryValues(x) {
+  this.populateSecondaryValuesArray = this.secTableNameMap.get(x.key);
+  }
+
 
 }

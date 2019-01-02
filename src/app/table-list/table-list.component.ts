@@ -1,10 +1,12 @@
-import { Component, OnInit, Pipe, Input } from '@angular/core';
+import { Component, OnInit, Pipe, Input, Output, EventEmitter } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErrorObject } from '../error-object';
 import { UserinfoService } from '../userinfo.service';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-table-list',
@@ -63,6 +65,7 @@ export class TableListComponent implements OnInit {
   dataSlide: string;
   JobStatus: string;
   defaultModel = true;
+  resultantArray: any[];
 
   constructor(
     private tablelistService: TableListService,
@@ -103,8 +106,10 @@ export class TableListComponent implements OnInit {
   }
 
   openDataAModal() {
-    this.homeStage = false;
-    this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+    // to work on resultant screen
+    // this.homeStage = false;
+    // this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+    //
     this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId ).subscribe(res => {
     console.log(res);
     // if (res.data.jobIds.length > 0 ) {
@@ -119,8 +124,8 @@ export class TableListComponent implements OnInit {
       // const progressSelector = 'progress-bar';
     // this.addClass(progressSelector, 'width-100-pc');
     // } else {
-      // this.homeStage = false;
-      // this.dataAModal = true;
+      this.homeStage = false;
+      this.dataAModal = true;
       this.getColumnsByTableName(this.selectedPrimTblID, true);
       this.resetDataAModal();
     // }
@@ -329,14 +334,21 @@ export class TableListComponent implements OnInit {
   getAllSelectedTblsCols() {
     this.finalPrimColArray = [];
     this.selectedPrimColMap.forEach((val, key) => {
-      const columnObject = {
-      'columnName' : key
-      };
-      this.finalPrimColArray.push(columnObject);
+      for (const i of this.primColArray) {
+       if (key === i.columnName) {
+          const columnObject = {
+          'columnId': i.columnId,
+          'columnName': i.columnName,
+          'dataType': i.columnDataType
+          };
+       this.finalPrimColArray.push(columnObject);
+       }
+      }
     });
     this.selectedTblsColsObj.userId = this.userId;
     this.selectedTblsColsObj.workspaceId = this.workspaceID;
     this.selectedTblsColsObj.primaryTable = {
+      'tableId' : this.selectedPrimTblID,
       'tableName' : this.selectedPrimTbl,
       'primaryColumnList': this.finalPrimColArray
     };
@@ -345,9 +357,24 @@ export class TableListComponent implements OnInit {
     this.finalSecColMap.forEach((val, key) => {
       const arr = key.split(this.secTblColJoiner);
       const secTbl = arr[0];
-      const secCol = {
-        'columnName' : arr[1]
+      let secColTempArray = [];
+      let secTblId;
+      for (const i of this.secTblArray) {
+        if (secTbl === i.tableName) {
+         secTblId = i.tableId;
+        }
+      }
+      secColTempArray = this.secTblColMap.get(secTblId);
+      let secCol;
+      for (const i of secColTempArray) {
+      if (arr[1] === i.columnName) {
+      secCol = {
+        'columnId': i.columnId,
+        'columnName': i.columnName,
+        'dataType': i.columnDataType
       };
+      }
+    }
       if (secMap.has(secTbl)) {
         const secCols = secMap.get(secTbl);
         secCols.push(secCol);
@@ -356,8 +383,15 @@ export class TableListComponent implements OnInit {
       }
     });
     secMap.forEach((valArray, key) => {
+      let secTblId;
+      for (const i of this.secTblArray) {
+        if (key === i.tableName) {
+         secTblId = i.tableId;
+        }
+      }
       this.selectedTblsColsObj.secondaryTableList.push(
         {
+          'tableId' : secTblId,
           'tableName' : key,
           'secondaryColumnList': valArray
         }
@@ -459,7 +493,11 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
     this.JobStatus = res.data.jobStatus;
     if (this.JobStatus === 'SUCCESS') {
-    // this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+    this.dataAModal = false;
+    this.homeStage = false;
+    this.resultantArray = res.data.relationDetails;
+    this.tablelistService.changeArray(this.resultantArray);
+    this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
     }
     });
   }

@@ -11,6 +11,7 @@ import { UserinfoService } from '../userinfo.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
 import { WorkspaceObject } from '../workspace-objects';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class TableListService {
   accessToken: string;
@@ -25,6 +26,9 @@ export class TableListService {
   columnUrl = environment.apiUrl + '/table/columnList?tableId=';
   stateManagementUrl = environment.apiUrl + '/dataAnalyzer/stateManagement';
   getJobStatusUrl = environment.apiUrl + '/dataAnalyzer/jobStatus?jobId=';
+  private resultantArray = new BehaviorSubject([]);
+  currentResultArray = this.resultantArray.asObservable();
+
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
   }
@@ -50,11 +54,12 @@ export class TableListService {
       );
   }
 
-  getColumnsByTableId(tableId) {
+  getColumnsByTableId(tableId): Observable<any[]> {
     return this.http.get<any[]>(this.columnListUrl + tableId, {headers: this.userinfoService.getHeaders()})
     .map(this.extractTable)
     .pipe(catchError(this.handleError('getColumnsByTableId()', [])));
   }
+
 
   sendValuesForTableToTableAnalysis(analysisObject): Observable<any> {
     return this.http.post<any[]>( this.dataAnalysisUrl, analysisObject, {headers: this.userinfoService.getHeaders()})
@@ -114,5 +119,7 @@ export class TableListService {
     console.log(message);
   }
 
-
+  changeArray(res) {
+    this.resultantArray.next(res);
+  }
 }
