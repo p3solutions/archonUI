@@ -1,5 +1,5 @@
-import { TestBed, inject, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
-
+import { TestBed, inject, fakeAsync, flushMicrotasks, tick,async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ChangePasswordService } from './change-password.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -7,6 +7,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { UserinfoService } from '../userinfo.service';
 
 describe('ChangePasswordService', () => {
   let backend: MockBackend;
@@ -15,14 +16,16 @@ describe('ChangePasswordService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       providers: [
         { provide: MockBackend, useClass: MockBackend },
         { provide: XHRBackend, useExisting: MockBackend },
         ChangePasswordService,
         JwtHelperService,
-        HttpClientModule
+        HttpClientModule,
+        UserinfoService
       ]
     });
     backend = TestBed.get(MockBackend);
