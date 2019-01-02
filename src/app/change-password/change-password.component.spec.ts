@@ -6,7 +6,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
-
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
@@ -32,16 +33,18 @@ describe('ChangePasswordComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       providers: [
         // reference the new instance of formBuilder from above
         ChangePasswordService,
+        UserinfoService,
         JwtHelperService,
         { provide: FormBuilder, useValue: formBuilder }
       ]
     })
-      .compileComponents();
+      .compileComponents()
   }));
 
   beforeEach(() => {

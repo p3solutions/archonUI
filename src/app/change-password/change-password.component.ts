@@ -4,6 +4,9 @@ import { ErrorObject } from '../error-object';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChangePassword } from '../change-password';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { Route } from '@angular/compiler/src/core';
 
 
 @Component({
@@ -21,7 +24,7 @@ export class ChangePasswordComponent implements OnInit {
   enableChangePassBtn = false;
   inProgress = false;
   @Input() userId: string;
-  constructor(private changePasswordService: ChangePasswordService) { }
+  constructor(private changePasswordService: ChangePasswordService,private router:Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -92,5 +95,7 @@ export class ChangePasswordComponent implements OnInit {
     }
   }
 
-
+  gotoDashboard(){
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
 }
