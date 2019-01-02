@@ -80,6 +80,8 @@ import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 import { UserProfileService } from './user-profile/user-profile.service';
+import { RelationshipInfoComponent } from './relationship-info/relationship-info.component';
+import { RelationshipListComponent } from './relationship-list/relationship-list.component';
 
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
@@ -131,7 +133,9 @@ export function tokenGetter() {
                 KeysPipe,
                 ReverseArrayPipe,
                 SearchPipe,
-                RolePipe
+                RolePipe,
+                RelationshipInfoComponent,
+                RelationshipListComponent
         ],
         imports: [
                 JwtModule.forRoot({
