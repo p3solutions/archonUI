@@ -45,7 +45,7 @@
           <tr *ngFor="let user of this.manageUserRolesRequestData | globalRole ; let i = index">
             <td class="mm-info-data">{{i+1}}</td>
             <td class="mm-info-data">
-              <a (click)='getUserProfile(user)' [routerLink]="['/user-profile']" class="trim-text">{{user.name}}</a>
+              <a (click)='getUserProfile(user)' [routerLink]="['/workspace/user-profile']" class="trim-text">{{user.name}}</a>
             </td>
             <td class="mm-info-data">{{user.emailAddress}}</td>
             <td class="mm-info-data">{{user.createdAt * 1000 | date:'MMM/dd/yyyy'}}</td>

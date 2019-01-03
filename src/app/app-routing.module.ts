@@ -41,6 +41,11 @@ const routes: Routes = [
       }, {
         path: 'database-list', component: DatabaseListComponent
       }, {
+        path: 'user-profile', component: UserProfileComponent, children: [
+          {
+            path: 'edit-profile', component: EditProfileComponent
+          }]
+      }, {
         path: 'management-panel', component: ManagementPanelComponent
       }, {
         path: 'manage-user-roles', component: ManageUserRolesComponent
@@ -90,11 +95,6 @@ const routes: Routes = [
       }]
   }, {
     path: 'manage-user-roles', component: ManageUserRolesComponent
-  }, {
-    path: 'user-profile', component: UserProfileComponent, children: [
-      {
-        path: 'edit-profile', component: EditProfileComponent
-      }]
   }
 ];
 
