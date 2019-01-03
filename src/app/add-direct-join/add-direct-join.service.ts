@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { catchError, map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable()
 export class AddDirectJoinService {
@@ -16,14 +16,14 @@ export class AddDirectJoinService {
     private userinfoService: UserinfoService) { }
 
   getColumnsByTableId(tableId) {
-    return this.http.get<any[]>(this.columnListUrl + tableId, {headers: this.userinfoService.getHeaders()})
-    .map(this.extractTables)
-    .pipe(catchError(this.handleError('getColumnsByTableId()', [])));
+    return this.http.get<any[]>(this.columnListUrl + tableId, { headers: this.userinfoService.getHeaders() })
+      .pipe(map(this.extractTables),
+        catchError(this.handleError('getColumnsByTableId()', [])));
   }
 
   addNewJoin(param): Observable<any> {
-    return this.http.post<any>(this.addNewJoinUrl, param, {headers: this.userinfoService.getHeaders()})
-    .pipe(catchError(this.handleError('addNewJoin()', [])));
+    return this.http.post<any>(this.addNewJoinUrl, param, { headers: this.userinfoService.getHeaders() })
+      .pipe(catchError(this.handleError('addNewJoin()', [])));
   }
 
   private extractTables(res: any) {
