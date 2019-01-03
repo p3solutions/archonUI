@@ -10,15 +10,15 @@ import { ErrorObject } from '../error-object';
   styleUrls: ['./table-list.component.css'],
 })
 export class TableListComponent implements OnInit {
-  public search: any = '';
-  private homeStage = false;
-  private isAvailable: boolean;
-  private isRelationShipAvailable: boolean;
-  private selectedPrimTbl: any;
-  private tableName: string;
-  private relationshipInfo: any[];
-  private serviceActionType: string;
-  private tableList: string[];
+  search: any = '';
+  homeStage = false;
+  isAvailable: boolean;
+  isRelationShipAvailable: boolean;
+  selectedPrimTbl: any;
+  tableName: string;
+  relationshipInfo: any[];
+  serviceActionType: string;
+  tableList: string[];
   primColArray = [];
   secColArray = [];
   secTblArray = [];

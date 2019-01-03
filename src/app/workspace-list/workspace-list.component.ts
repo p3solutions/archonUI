@@ -20,7 +20,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     rejectedWorkspaceListInfo: WorkspaceObject[] = [];
     isProgress: boolean;
     dynamicLoaderService: DynamicLoaderService;
-    private workspaceActions: any;
+    workspaceActions: any;
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     constructor(

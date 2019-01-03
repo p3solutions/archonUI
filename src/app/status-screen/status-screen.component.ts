@@ -55,7 +55,7 @@ export class StatusScreenComponent implements OnInit {
       });
       setTimeout(function () {
         _thisComponent.loadStatus = true;
-        _thisComponent.createStatusTable({'data': _thisComponent.jobList});
+        _thisComponent.createStatusTable({ 'data': _thisComponent.jobList });
       }, 100);
     });
   }
@@ -117,101 +117,108 @@ export class StatusScreenComponent implements OnInit {
   }
 
   createStatusTable(xData) {
-    console.log(xData);
     const thisComponent = this;
     if (this.statusTable) {
       this.statusTable.destroy();
     }
     this.statusTable = $(this.currentTableId).DataTable(
       {
-      'ajax': function (data, callback, settings) { callback(xData); },
-      'columns': [
-        { 'title': 'Job ID',
-          'data': 'id'
-        },
-        { 'title': 'Job Origin',
-        'data': 'jobOrigin'
-         },
-        { 'title': 'Scheduled Time',
-          'render': function (data, type, rowData) {
-                    return thisComponent.commonUtilityService.getDisplayTime(rowData.jobInfo.scheduledTime);
-                  }
-         },
-        { 'title': 'Start Time',
-          'render': function (data, type, rowData) {
-                    return thisComponent.commonUtilityService.getDisplayTime(rowData.jobInfo.startTime);
-                  }
-         },
-        { 'title': 'End Time',
-          'render': function (data, type, rowData) {
-                    return thisComponent.commonUtilityService.getDisplayTime(rowData.jobInfo.endTime);
-                  }
-         },
-        { 'title': 'Status',
-          'render': function (data, type, rowData) {
-                      let html = '';
-                      if (rowData.jobInfo.jobStatus === 'SUCCESS') {
-                        html = `<i class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
+        'ajax': function (data, callback, settings) { callback(xData); },
+        'columns': [
+          {
+            'title': 'Job ID',
+            'data': 'id'
+          },
+          {
+            'title': 'Job Origin',
+            'data': 'jobOrigin'
+          },
+          {
+            'title': 'Scheduled Time',
+            'render': function (data, type, rowData) {
+              return thisComponent.commonUtilityService.getDisplayTime(rowData.jobInfo.scheduledTime);
+            }
+          },
+          {
+            'title': 'Start Time',
+            'render': function (data, type, rowData) {
+              return thisComponent.commonUtilityService.getDisplayTime(rowData.jobInfo.startTime);
+            }
+          },
+          {
+            'title': 'End Time',
+            'render': function (data, type, rowData) {
+              return thisComponent.commonUtilityService.getDisplayTime(rowData.jobInfo.endTime);
+            }
+          },
+          {
+            'title': 'Status',
+            'render': function (data, type, rowData) {
+              let html = '';
+              if (rowData.jobInfo.jobStatus === 'SUCCESS') {
+                html = `<i class="fa fa-check-circle col-green fa-lg" aria-hidden="true"></i>
                                 <span class="hide">success</span>`;
-                      } else if (rowData.jobInfo.jobStatus === 'FAILED') {
-                        html = `<i class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
+              } else if (rowData.jobInfo.jobStatus === 'FAILED') {
+                html = `<i class="fa fa-times-circle col-red fa-lg" aria-hidden="true"></i>
                                 <span class="hide">FAILED failed</span>`;
-                      } else if (rowData.jobInfo.jobStatus === 'IN_PROGRESS') {
-                        html = `<i class="fa fa-circle-o-notch fa-spin col-yellow fa-lg" aria-hidden="true"></i>
+              } else if (rowData.jobInfo.jobStatus === 'IN_PROGRESS') {
+                html = `<i class="fa fa-circle-o-notch fa-spin col-yellow fa-lg" aria-hidden="true"></i>
                                 <span class="hide">in_progress in progress</span>`;
-                      } else if (rowData.jobInfo.jobStatus === 'SCHEDULED') {
-                        html = `<i class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
+              } else if (rowData.jobInfo.jobStatus === 'SCHEDULED') {
+                html = `<i class="fa fa-clock-o col-archon-blue fa-lg" aria-hidden="true"></i>
                                 <span class="hide">scheduled</span>`;
-                      }
-                      return html;
-                    },
-         },
-        { 'title': 'Details',
-          'orderable': false,
-          'render': function (data, type, rowData) {
-                      let html = '';
-                      if (rowData.jobDetails && rowData.jobDetails.length > 0) {
-                        html = `<i class="job-details fa fa-info-circle  fa-lg col-archon-blue cur-p"
+              }
+              return html;
+            },
+          },
+          {
+            'title': 'Details',
+            'orderable': false,
+            'render': function (data, type, rowData) {
+              let html = '';
+              if (rowData.jobDetails && rowData.jobDetails.length > 0) {
+                html = `<i class="job-details fa fa-info-circle  fa-lg col-archon-blue cur-p"
                                   aria-hidden="true" title="Click to see more"></i>`;
-                      } else {
-                        html = `<i class="fa fa-info-circle fa-lg icon-disabled cur-p"
+              } else {
+                html = `<i class="fa fa-info-circle fa-lg icon-disabled cur-p"
                                  aria-hidden="true" title="No job details tot see"></i>`;
-                      }
-                      return html;
-                    }
-         },
-         { 'title': 'Retry',
-            'render':  function (data, type, rowData) {
-                        let html = '';
-                        if (rowData.jobInfo.jobStatus === 'FAILED') {
-                          html = `<i class="job-repeat job-details fa fa-repeat col-orange fa-lg cur-p" aria-hidden="true"></i>
+              }
+              return html;
+            }
+          },
+          {
+            'title': 'Retry',
+            'render': function (data, type, rowData) {
+              let html = '';
+              if (rowData.jobInfo.jobStatus === 'FAILED') {
+                html = `<i class="job-repeat job-details fa fa-repeat col-orange fa-lg cur-p" aria-hidden="true"></i>
                                   <span class="hide">retry, repeat</span>`;
-                        }
-                        return html;
-                      }
-         }
-      ],
-      'order': [[0, 'asc']]
-    });
+              }
+              return html;
+            }
+          }
+        ],
+        'order': [[0, 'asc']]
+      });
     if (document.querySelector('#status-table_wrapper #status-table_filter')) {
       document.querySelector('#status-table_wrapper #status-table_filter').classList.add('vis-hide');
     }
     $(this.currentTableId)
-    .off('click', '.job-details')
-    .on('click', '.job-details', function () {
-      thisComponent.jobRetry = false;
-      const index = $(this).closest('tr').index();
-      const rowData = thisComponent.statusTable.row(index).data();
-      const jobId = rowData.id;
-      const status = rowData.jobInfo.jobStatus;
-      const jobDetails = rowData.jobDetails;
-      const inputs = rowData.inputs;
-      if ($(this).hasClass('job-repeat') ) {
-        thisComponent.jobRetry = true;
-      }
-      thisComponent.showStatusDetails(jobId, status, jobDetails, inputs);
-      $('#job-details-modal').click();
-    });
+      .off('click', '.job-details')
+      .on('click', '.job-details', function () {
+        thisComponent.jobRetry = false;
+        const index = $(this).closest('tr').index();
+        const rowData = thisComponent.statusTable.row(index).data();
+        const jobId = rowData.id;
+        const status = rowData.jobInfo.jobStatus;
+        const jobDetails = rowData.jobDetails;
+        const inputs = rowData.inputs;
+        if ($(this).hasClass('job-repeat')) {
+          thisComponent.jobRetry = true;
+        }
+        thisComponent.showStatusDetails(jobId, status, jobDetails, inputs);
+        $('#job-details-modal').click();
+      });
   }
   refreshStatusTable() {
     this.refreshClick = true;
@@ -227,7 +234,7 @@ export class StatusScreenComponent implements OnInit {
 
   retryJob() {
     this.retryLoader = true;
-    this.statusService.setRetryStatus(this.selectedJD.id).subscribe( res => {
+    this.statusService.setRetryStatus(this.selectedJD.id).subscribe(res => {
       this.retryLoader = false;
       if (res && res.success) {
         this.jobRetry = false;

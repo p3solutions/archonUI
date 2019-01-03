@@ -35,20 +35,6 @@ const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
-        path: 'no-workspace', component: NoWorkspaceComponent
-      }, {
-        path: 'workspace-list', component: WorkspaceListComponent
-      }, {
-        path: 'database-list', component: DatabaseListComponent
-      }, {
-        path: 'management-panel', component: ManagementPanelComponent
-      }, {
-        path: 'manage-user-roles', component: ManageUserRolesComponent
-      }, {
-        path: 'status', component: StatusScreenComponent
-      }, {
-        path: 'workspace-info/:id', component: WorkspaceInfoComponent
-      }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
             path: '', redirectTo: 'workspace-services', pathMatch: 'full'
@@ -64,8 +50,7 @@ const routes: Routes = [
           }, {
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
           }]
-      },
-      {
+      }, {
         path: 'metalyzer/:wsId_Mode', component: MetalyzerComponent, children: [
           {
             path: 'configuration', component: MetalyzerConfigurationComponent
@@ -89,13 +74,23 @@ const routes: Routes = [
         path: 'sign-up', component: SignupFormComponent
       }]
   }, {
-    path: 'manage-user-roles', component: ManageUserRolesComponent
-  }, {
     path: 'user-profile', component: UserProfileComponent, children: [
       {
         path: 'edit-profile', component: EditProfileComponent
       }]
-  }
+  }, {
+    path: 'management-panel', component: ManagementPanelComponent, children: [
+      {
+        path: 'database-list', component: DatabaseListComponent
+      }, {
+        path: 'workspace-list', component: WorkspaceListComponent
+      }, {
+        path: 'manage-user-roles', component: ManageUserRolesComponent
+      }
+    ]
+  }, {
+    path: 'status', component: StatusScreenComponent
+  },
 ];
 
 @NgModule({

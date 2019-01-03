@@ -44,36 +44,36 @@ export class ManagementPanelComponent implements OnInit {
 
   goTo(panel) {
     switch (panel.panelName) {
-      case 'Databases' : {
-          this.gotoConfigDatabaseList();
-          break;
+      case 'Databases': {
+        this.gotoConfigDatabaseList();
+        break;
       }
-      case 'Workspaces' : {
-          this.gotoWorkspaceList();
-          break;
+      case 'Workspaces': {
+        this.gotoWorkspaceList();
+        break;
       }
-      case 'Users' : {
-          this.gotoManageUserRoles();
-          break;
+      case 'Users': {
+        this.gotoManageUserRoles();
+        break;
       }
-      case 'Permissions' : {
-          break;
+      case 'Permissions': {
+        break;
       }
       default: console.log('Not configured for ', panel.panelName);
     }
   }
 
   gotoManageUserRoles() {
-    this.router.navigate(['workspace/manage-user-roles']);
+    this.router.navigate(['management-panel/manage-user-roles']);
   }
   gotoWorkspaceList() {
-    this.router.navigate(['workspace/workspace-list']);
+    this.router.navigate(['management-panel/workspace-list']);
   }
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
   gotoConfigDatabaseList() {
-    this.router.navigate(['workspace/database-list']);
+    this.router.navigate(['management-panel/database-list']);
   }
   toggleCard(cardId, toShow, _event) {
     this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
