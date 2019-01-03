@@ -26,6 +26,7 @@ export class RelationshipListComponent implements OnInit {
   selectedPrimTblID: any;
   selectedPrimTbl: any;
   workspaceID: any;
+  joinName: any;
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService
@@ -38,7 +39,7 @@ export class RelationshipListComponent implements OnInit {
   }
   confirmDelete(): void {
     this.delProgress = true;
-    this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId, this.relationShipIDs).subscribe(res => {
+    this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId,this.joinName ,this.relationShipIDs).subscribe(res => {
       this.delProgress = false;
       if (res && res.success) {
         // tr.remove(); // Removing the row.

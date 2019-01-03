@@ -120,9 +120,11 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     this.serviceActionsList = JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
     const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
     this.workspaceService.updateServiceActions(_temp);
-    setTimeout(() => {
-      this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-    }, 3000);
+    // setTimeout(() => {
+      
+    // }, 3000);
+
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
   onChange(val) {
