@@ -1,13 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { ServiceActionsObject } from '../workspace-objects';
-import { Observable ,  Observer ,  BehaviorSubject ,  Subject } from 'rxjs';
+import { Observable, Observer, BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable()
 export class WorkspaceServicesService {
 
   // serviceActionUpdated: EventEmitter<ServiceActionsObject> = new EventEmitter();
-  private serviceActionsUpdated:  BehaviorSubject<ServiceActionsObject[]>=new BehaviorSubject<ServiceActionsObject[]>([]);
-   userSelectedWorkspace = this.serviceActionsUpdated.asObservable();
+  private serviceActionsUpdated: BehaviorSubject<ServiceActionsObject[]> = new BehaviorSubject<ServiceActionsObject[]>([]);
+  userSelectedWorkspace = this.serviceActionsUpdated.asObservable();
 
   constructor() {
   }
@@ -15,7 +15,7 @@ export class WorkspaceServicesService {
   //   localStorage.setItem('serviceActions', JSON.stringify(serviceActions));
   //   this.updateServiceActions();
   // }
-  updateServiceActions(serviceActionList:ServiceActionsObject[]) {
+  updateServiceActions(serviceActionList: ServiceActionsObject[]) {
     // if (localStorage) {
     //   const data = localStorage.getItem('serviceActions');
     //   this.serviceActionsUpdated.next(JSON.parse(data));

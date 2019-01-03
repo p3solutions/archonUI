@@ -25,7 +25,7 @@ export class WorkspaceServicesComponent implements OnInit {
   workspaceID: any;
   constructor(
     private router: Router,
-    private activatedRouter:ActivatedRoute,
+    private activatedRouter: ActivatedRoute,
     private workspaceService: WorkspaceServicesService,
     private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService,
@@ -47,21 +47,20 @@ export class WorkspaceServicesComponent implements OnInit {
         //   //   }
         //   // );
 
-          const serviceActionsList = this.updateServiceActions(serviceActions);
-          this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
-          const carousel: any = $('#serviceCarousel');
-          carousel.carousel({ 'interval': false });
-         
-        });
-         setTimeout(() => {
-            const dropdownItem=<HTMLAnchorElement> document.querySelectorAll('#selectedWorkspace .dropdown-data')[0];
-            if(dropdownItem!=undefined)
-            {
-              let b=dropdownItem.click();
-              let b1= this.workspaceService.updateServiceActionsList(JSON.parse(JSON.stringify(b)));
-              this.workspaceService.updateServiceActions(b1);
-            }  
-          }, 3000);
+        const serviceActionsList = this.updateServiceActions(serviceActions);
+        this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
+        const carousel: any = $('#serviceCarousel');
+        carousel.carousel({ 'interval': false });
+
+      });
+      setTimeout(() => {
+        const dropdownItem = <HTMLAnchorElement>document.querySelectorAll('#selectedWorkspace .dropdown-data')[0];
+        if (dropdownItem !== undefined) {
+          const b = dropdownItem.click();
+          const b1 = this.workspaceService.updateServiceActionsList(JSON.parse(JSON.stringify(b)));
+          this.workspaceService.updateServiceActions(b1);
+        }
+      }, 3000);
     });
   }
 

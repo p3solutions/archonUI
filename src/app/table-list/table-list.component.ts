@@ -10,6 +10,7 @@ import { ErrorObject } from '../error-object';
   styleUrls: ['./table-list.component.css'],
 })
 export class TableListComponent implements OnInit {
+  query: string;
   search: any = '';
   homeStage = false;
   isAvailable: boolean;
@@ -94,17 +95,17 @@ export class TableListComponent implements OnInit {
       // this.secColLoader = true;
     }
     this.tablelistService.getColumnsByTableName(tableName)
-    .subscribe((columns) => {
-      if (isPrime) {
-        this.primColArray = columns;
-        // this.primColLoader = false;
-      } else {
-        this.secTblColMap.set(tableName, columns);
-        this.secColArray = columns;
-        // this.secColLoader = false;
-        this.selectedSecColMap.clear();
-      }
-    });
+      .subscribe((columns) => {
+        if (isPrime) {
+          this.primColArray = columns;
+          // this.primColLoader = false;
+        } else {
+          this.secTblColMap.set(tableName, columns);
+          this.secColArray = columns;
+          // this.secColLoader = false;
+          this.selectedSecColMap.clear();
+        }
+      });
   }
   gotoBack() {
     this.homeStage = true;
@@ -140,7 +141,7 @@ export class TableListComponent implements OnInit {
           this.secColArray[i].selected = isChecked;
           if (isChecked) {
             this.selectedSecColMap.set(secColName, true);
-            const secTbl = <HTMLInputElement> document.getElementById(this.prefixSecTblId + column.table_name);
+            const secTbl = <HTMLInputElement>document.getElementById(this.prefixSecTblId + column.table_name);
             if (!this.selectedSecTbl.has(column.table_name)) { // if sec table unselected and sec col is checked
               secTbl.checked = true;
             }
@@ -166,11 +167,11 @@ export class TableListComponent implements OnInit {
         } else {
           this.selectedSecTbl.delete(tableName);
           // sec col reset selection
-          this.secColArray.forEach(col => col.selected = false );
+          this.secColArray.forEach(col => col.selected = false);
           this.selectedSecColMap.clear();
           const currentSecColArr = this.secTblColMap.get(tableName);
           currentSecColArr.forEach(secCol => {
-          const secColName = secCol.table_name + this.secTblColJoiner + secCol.column_name;
+            const secColName = secCol.table_name + this.secTblColJoiner + secCol.column_name;
             if (this.finalSecColMap.has(secColName)) {
               this.finalSecColMap.delete(secColName);
             }
@@ -276,7 +277,7 @@ export class TableListComponent implements OnInit {
       primColArray.push(key);
     });
     this.selectedTblsColsObj.primary = {
-      'table' : this.selectedPrimTbl,
+      'table': this.selectedPrimTbl,
       'columns': primColArray
     };
     this.selectedTblsColsObj.secondary = [];
@@ -295,7 +296,7 @@ export class TableListComponent implements OnInit {
     secMap.forEach((valArray, key) => {
       this.selectedTblsColsObj.secondary.push(
         {
-          'table' : key,
+          'table': key,
           'columns': valArray
         }
       );
@@ -382,13 +383,13 @@ export class TableListComponent implements OnInit {
   }
   deleteRelationship(indexOfDelete) {
     this.index = indexOfDelete;
-    this.editrelationshipInfo  = this.relationshipInfo[this.index];
+    this.editrelationshipInfo = this.relationshipInfo[this.index];
     this.primaryTableId = this.editrelationshipInfo.primaryTable.tableId;
     this.joinListTemp = this.editrelationshipInfo.joinListInfo;
     for (const x of this.joinListTemp) {
       this.relationShipIDs.push(x.relationshipId);
     }
-   }
+  }
 
   confirmDelete(): void {
     this.delProgress = true;
@@ -401,14 +402,14 @@ export class TableListComponent implements OnInit {
         this.deleteNotif.show = true;
         this.deleteNotif.message = res.data;
       }
-      });
-    }
-    closeErrorMsg() {
-      this.deleteNotif = new ErrorObject();
-    }
-     postDelete() {
-       const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
-       close.click();
-       this.loadRelationTable(this.tableCopy);
-    }
+    });
+  }
+  closeErrorMsg() {
+    this.deleteNotif = new ErrorObject();
+  }
+  postDelete() {
+    const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
+    close.click();
+    this.loadRelationTable(this.tableCopy);
+  }
 }
