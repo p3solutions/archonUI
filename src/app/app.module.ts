@@ -87,6 +87,7 @@ import { EditRelationshipInfoService } from './edit-relationship-info/edit-relat
 import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
 import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
 import { SecondaryColumnPipe } from './secondary-column.pipe';
+import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -141,7 +142,8 @@ export function tokenGetter() {
                 RelationshipListComponent,
                 EditRelationshipInfoComponent,
                 AddDirectJoinComponent,
-                SecondaryColumnPipe
+                SecondaryColumnPipe,
+                ManagementLandingPageComponent
         ],
         imports: [
                 JwtModule.forRoot({

@@ -30,6 +30,7 @@ import { MetalyzerComponent } from './metalyzer/metalyzer.component';
 import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
 import { TableListComponent } from './table-list/table-list.component';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
+import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 
 const routes: Routes = [
   {
@@ -78,15 +79,21 @@ const routes: Routes = [
       {
         path: 'edit-profile', component: EditProfileComponent
       }]
-  }, {
-    path: 'management-panel', component: ManagementPanelComponent, children: [
-      {
-        path: 'database-list', component: DatabaseListComponent
-      }, {
-        path: 'workspace-list', component: WorkspaceListComponent
-      }, {
-        path: 'manage-user-roles', component: ManageUserRolesComponent
-      }
+  }, 
+  {
+    path: 'management-landing-page', component: ManagementLandingPageComponent, 
+
+    children:[
+
+      {path: 'management-panel', component: ManagementPanelComponent,pathMatch: 'full'}
+     ,
+          {
+            path: 'database-list', component: DatabaseListComponent
+          }, {
+            path: 'workspace-list', component: WorkspaceListComponent
+          }, {
+            path: 'manage-user-roles', component: ManageUserRolesComponent
+          }
     ]
   }, {
     path: 'status', component: StatusScreenComponent

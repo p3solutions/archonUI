@@ -64,16 +64,20 @@ export class ManagementPanelComponent implements OnInit {
   }
 
   gotoManageUserRoles() {
-    this.router.navigate(['management-panel/manage-user-roles']);
+    console.log(1);
+    this.router.navigate(['management-landing-page/manage-user-roles']);
   }
   gotoWorkspaceList() {
-    this.router.navigate(['management-panel/workspace-list']);
+    console.log(2);
+    this.router.navigate(['management-landing-page/workspace-list']);
   }
   gotoDashboard() {
+    console.log(3);
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
   gotoConfigDatabaseList() {
-    this.router.navigate(['management-panel/database-list']);
+    console.log(4);
+    this.router.navigate(['management-landing-page/database-list']);
   }
   toggleCard(cardId, toShow, _event) {
     this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
