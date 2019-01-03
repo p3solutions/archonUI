@@ -78,15 +78,18 @@ import { StatusService } from './status-screen/status.service';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
+import { EditRelationshipInfoComponent } from './edit-relationship-info/edit-relationship-info.component';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 import { UserProfileService } from './user-profile/user-profile.service';
 import { RelationshipInfoComponent } from './relationship-info/relationship-info.component';
 import { RelationshipListComponent } from './relationship-list/relationship-list.component';
-
+import { EditRelationshipInfoService } from './edit-relationship-info/edit-relationship-info.service';
+import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
+import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
+import { SecondaryColumnPipe } from './secondary-column.pipe';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
-
 @NgModule({
         declarations: [
                 AppComponent,
@@ -135,7 +138,10 @@ export function tokenGetter() {
                 SearchPipe,
                 RolePipe,
                 RelationshipInfoComponent,
-                RelationshipListComponent
+                RelationshipListComponent,
+                EditRelationshipInfoComponent,
+                AddDirectJoinComponent,
+                SecondaryColumnPipe
         ],
         imports: [
                 JwtModule.forRoot({
@@ -191,7 +197,9 @@ export function tokenGetter() {
                         multi: true
                 },
                 TableListService,
-                UserProfileService
+                UserProfileService,
+                EditRelationshipInfoService,
+                AddDirectJoinService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]

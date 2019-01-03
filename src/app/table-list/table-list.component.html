@@ -11,8 +11,8 @@
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <div class="tablename-list da-table-parent">
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table)">{{table.tableName}}
-              <i class="fa fa-angle-right unselected"></i>
+            <button type="button" class="btn btn-default list-group-item da-table" title="{{table.tableName}}" (click)="highlightTable($event, true, table); joinTable(table);"><div class="overflow-text">{{table.tableName}}
+            </div> <div class="overflow-text-arrow"><i class="fa fa-angle-right unselected"></i></div>
             </button>
           </div>
         </div>
@@ -28,12 +28,12 @@
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
           <div class="text-left">
             <div class="modal-header">
-              <div class="col-md-1 back-arrow">
+              <div class="back-arrow">
                 <a (click)="gotoBack()" data-tooltip="Back">
                   <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
                 </a>
               </div>
-              <h4 class="modal-title">Data Analyzer</h4>
+              <div class="col-md-5 analyze-header">Data Analyzer</div>
             </div>
 
             <div class="modal-body row">
@@ -63,8 +63,8 @@
                       <div class="tabular-div col-md-12">
                         <div class="col-md-9 tabular-div-row p-0">
                           <div class="tabular-div-column column-header">
-                            Number of Rows to consider for Analysis
-                            <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="{{primColArray.length}}">
+                              Percentage of Rows to consider for Analysis
+                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
                         </div>
                       </div>
@@ -73,13 +73,13 @@
                       </div>
                       <div class="tabular-div col-md-4 dataA-scrollable-div">
                         <div class="col-md-12 p-0 tabular-div-row">
-                          <div class="col-md-8 tabular-div-column column-header" title="Primary Column">
+                          <div class="col-md-12 tabular-div-column column-header" title="Primary Column">
                             Primary Column
                             <span class="col-loader" [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
                           </div>
-                          <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
+                          <!-- <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
                             Suggestion
-                          </div>
+                          </div> -->
                         </div>
                         <div class="col-md-12 p-0 tabular-div-row" *ngFor="let pColumn of primColArray">
                           <div class="col-md-8 tabular-div-column trim-text" title="{{pColumn.column_name}}">
@@ -87,9 +87,9 @@
                               class="m-r-10">
                             {{pColumn.column_name}}
                           </div>
-                          <div class="col-md-4 tabular-div-column" title="">
+                          <!-- <div class="col-md-4 tabular-div-column" title="">
                             {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
-                          </div>
+                          </div> -->
                         </div>
                       </div>
 
@@ -101,8 +101,8 @@
                       <div class="tabular-div col-md-12">
                         <div class="col-md-9 tabular-div-row p-0">
                           <div class="tabular-div-column column-header">
-                            Number of Rows to consider for Analysis
-                            <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="{{secTblArray.length > 0 ? secTblArray.length : null}}">
+                              Percentage of Rows to consider for Analysis
+                              <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
                         </div>
                       </div>
@@ -118,11 +118,9 @@
                           </div>
                           <div class="da-table-parent">
                             <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;">
-                              <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.table_name}}"
-                                (click)="highlightTable($event, false, secTbl)">
-                                <input id="{{prefixSecTblId + (secTbl.table_name | lowercase)}}" type="checkbox"
-                                  (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
-                                {{secTbl.table_name}}
+                              <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
+                                <input id="{{prefixSecTblId + (secTbl.tableName | lowercase)}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
+                                {{secTbl.tableName}}
                                 <i class="fa fa-angle-right unselected"></i>
                               </div>
                             </div>
@@ -144,15 +142,25 @@
                               Suggestion
                             </div>
                           </div>
-                          <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray">
-                            <div class="col-md-8 tabular-div-column trim-text" title="{{sColumn.column_name}}">
-                              <input id="{{sColumn.table_name + secTblColJoiner + sColumn.column_name}}" type="checkbox"
-                                (change)="toggleColSelection($event, false, sColumn)" checked="{{sColumn.selected ? 'checked' : null}}"
-                                class="m-r-10">
-                              {{sColumn.column_name}}
+                          <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
+                            <div class="col-md-12 p-0 tabular-div-row">
+                              <div class="col-md-12 tabular-div-column column-header" title="Secondary Column">
+                                Secondary Columns
+                                <span class="col-loader" [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
+                              </div>
+                              <!-- <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
+                                Suggestion
+                              </div> -->
                             </div>
-                            <div class="col-md-4 tabular-div-column" title="">
-                              {{sColumn.confidence_score ? sColumn.confidence_score : 0}} %
+                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray">
+                              <div class="col-md-12 tabular-div-column trim-text" title="{{sColumn.columnName}}">
+                                <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
+                                checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10">
+                                {{sColumn.columnName}}
+                              </div>
+                              <!-- <div class="col-md-4 tabular-div-column" title="">
+                                {{sColumn.confidence_score ? sColumn.confidence_score : 0}} %
+                              </div> -->
                             </div>
                           </div>
                         </div>
@@ -161,46 +169,101 @@
 
                     </div>
                   </div>
-
-                  <div step="2" class="item form-group final">
+      
+                  <div step="2" class="item form-group third">
                     <div class="panel-body dataA-panel-body">
-
+                     <div class="col-md-4">
+                     <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Primary Table Columns</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let x of finalPrimColArray">
+                            <td>{{x.columnName}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      </div>
+                      <div class="col-md-4">
+                          <table class="table table-bordered" id="finalSecTab">
+                              <thead>
+                                <tr>
+                                  <th>Secondary Tables</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr class="pointer" [class.active]="i == selectedRow" *ngFor="let x of finalSecondaryTableList; let i = index" (click)="finalSecCol(x,i)">
+                                  <td>{{x.tableName}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                      </div>
+                      <div class="col-md-4">
+                          <table class="table table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>Secondary Column Names</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let x of finalSecColArray">
+                                  <td>{{x.columnName}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                      </div>
                     </div>
                   </div>
 
-                  <!-- <div step="3" class="item form-group final">
-                  </div>       -->
-
-                  <div class="item form-group message">
-                  </div>
-
-                  <!-- Controls -->
-                  <a hidden class="left carousel-control" id="prev-slide" href="#dataAModal-carousel" role="button"
-                    data-slide="prev">
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a hidden class="right carousel-control" id="next-slide" href="#dataAModal-carousel" role="button"
-                    data-slide="next">
-                    <span class="sr-only">Next</span>
-                  </a>
-                </div>
-                <!-- / end of Carousel -->
+                  <div step="3" class="item form-group final">
+                      <div class="panel-body dataA-panel-body">
+                        <div class="col-md-12 center-dev">
+                          <div class="col-md-2"><strong>Analysis Status:</strong>
+                          </div>
+                          <div class="col-md-6 move-progress1">
+                            <div class="col-md-4">In Progress</div>
+                            <div class="col-md-2 move-progress2"><i class="fa fa-refresh"></i></div>
+                            <div class="col-md-2 move-progress3"><i class="fa fa-stop"></i></div>
+                          </div>
+                        </div>
+                        <div class="col-md-12 centered">
+                          <div class="progress">
+                              <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+                              aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                                In Progress
+                              </div>
+                            </div>
+                          </div>
+                  </div>   
+                  </div>   
+  
+                  <!-- <div class="item form-group message">
+                  </div> -->
+              
+                <!-- Controls -->
+                <a hidden class="left carousel-control" id="prev-slide" href="#dataAModal-carousel" role="button" data-slide="prev">
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a hidden class="right carousel-control" id="next-slide" href="#dataAModal-carousel" role="button" data-slide="next">
+                  <span class="sr-only">Next</span>
+                </a>
               </div>
-              <div class="modal-footer {{newWSinfo ? 'msg-footer' : ''}}">
-                <!-- <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button> -->
-                <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event)">Previous</button>
-                <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)" disabled="{{enableNextBtn ? null : 'disabled'}}">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
-                <button type="button" id="analyse-btn" class="btn btn-primary hide" (click)="dataAnalyse()" disabled>Analyse</button>
-                <!-- <button type="button" id="ok-btn" class="btn btn-primary hide" (click)="resetCarousel()">Done</button> -->
-              </div>
-
+            <!-- / end of Carousel -->
+            </div>
+            <div class="modal-footer {{newWSinfo ? 'msg-footer' : ''}}">
+              <!-- <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button> -->
+              <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event)">Previous</button>
+              <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)"
+               disabled="{{enableNextBtn ? null : 'disabled'}}" >&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
+              <button type="button" id="analyse-btn" class="btn btn-primary hide" href="#dataAModal-carousel" data-slide="next" (click)="dataAnalyse()">Analyse</button>
+              <button type="button" id="close-btn" class="btn btn-primary hide" (click)="gotoBack()">Close</button>
+              <!-- <button type="button" id="ok-btn" class="btn btn-primary hide" (click)="resetCarousel()">Done</button> -->
             </div>
           </div>
         </div>
-
-
-
-      </div>
+      </div> 
     </div>
   </div>
   <!-- relationship delete -->
@@ -231,4 +294,6 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
+  
+  <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
