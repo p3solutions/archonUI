@@ -12,8 +12,8 @@
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <div class="tablename-list da-table-parent">
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table); joinTable(table);">{{table.tableName}}
-              <i class="fa fa-angle-right unselected"></i>
+            <button type="button" class="btn btn-default list-group-item da-table" title="{{table.tableName}}" (click)="highlightTable($event, true, table); joinTable(table);"><div class="overflow-text">{{table.tableName}}
+            </div> <div class="overflow-text-arrow"><i class="fa fa-angle-right unselected"></i></div>
             </button>
           </div>
         </div>
