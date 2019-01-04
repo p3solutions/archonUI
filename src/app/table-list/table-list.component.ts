@@ -495,7 +495,12 @@ export class TableListComponent implements OnInit {
     if (this.JobStatus === 'SUCCESS') {
     this.dataAModal = false;
     this.homeStage = false;
-    this.resultantArray = res.data.relationDetails;
+    this.resultantArray = [{
+      'workspaceId': this.workspaceID,
+      'primaryTableId': res.data.tableId,
+      'primaryTableName': res.data.tableName,
+      'relationDetails': res.data.relationDetails
+    }];
     this.tablelistService.changeArray(this.resultantArray);
     this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
     }

@@ -8,7 +8,7 @@
 <div *ngIf="activatePrimary">
 <div class="col-md-12">
 <div class="col-md-3">
-  <table id="customers">                     
+  <table datatable id="customers">                     
        <tr>
          <th>Primary Column</th>                                                        
        </tr>                    
@@ -24,14 +24,14 @@
          <th>Column Type</th>
          <th>Secondary Column</th>   
          <th>Accuracy  (in %)</th>
-         <th><input type="checkbox"></th>                                                 
+         <!-- <th><input type="checkbox"></th>                                                  -->
        </tr>                    
-     <tr *ngFor="let x of populatePrimaryValuesArray">
+     <tr *ngFor="let x of populatePrimaryValuesArray;let i=index">
        <td>{{x.tableName}}</td>
        <td>{{x.dataType}}</td>
        <td>{{x.secondaryColumnName}}</td>    
        <td>{{x.matchPercentage}}</td>  
-        <td><input type="checkbox"></td>                
+       <td><input type="checkbox" (change)="checkedPriValues(x,$event,i)"></td>                
      </tr>    
    </table>
 </div>
@@ -56,14 +56,14 @@
            <th>Column Type</th>
            <th>Secondary Column</th>   
            <th>Accuracy  (in %)</th>
-           <th><input type="checkbox"></th>                                                 
+           <!-- <th><input type="checkbox"></th>                                                  -->
          </tr>                    
-       <tr *ngFor="let x of populateSecondaryValuesArray">
+       <tr *ngFor="let x of populateSecondaryValuesArray;let i=index">
          <td>{{x.primaryColumn}}</td>
          <td>{{x.dataType}}</td>
          <td>{{x.secondaryColumnName}}</td>    
          <td>{{x.matchPercentage}}</td>  
-          <td><input type="checkbox"></td>                
+         <td><input type="checkbox" (change)="checkedSecValues(x,$event,i)"></td>                
        </tr>    
      </table>
   </div>
