@@ -81,7 +81,7 @@ export class ManageUserRolesComponent implements OnInit {
   }
 
   gotoManagementPanel() {
-    this.router.navigate(['workspace/management-panel']);
+    this.router.navigate(['management-landing-page/management-panel']);
   }
 
   // ngOnDestroy() {
