@@ -1,0 +1,40 @@
+<div class="card-body default-load" *ngIf="!homeStage && !dataAModal">
+  <h2 class="default-info">Choose one of the listed tables to view relationship information with other tables</h2>
+</div>
+<div class="card-body" *ngIf="homeStage">
+  <div class="col col-md-12">
+    <div class="col col-md-4">
+      <h3 class="card-title header">Relationship Info
+      </h3>
+    </div>
+    <!-- <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span> -->
+   
+    <div class="dropdown" class="col col-md-4 data-analyzer">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="#">Manual Join</a>
+        </li>
+        <li>
+          <a href="#">Column-Match Join</a>
+        </li>
+        <li>
+          <a href="#">SP/View Join</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col col-md-4">
+    <button type="button" class="btn btn-primary data-analyzer" (click)="openDataAModal()">Data Analyzer</button>
+  </div>
+  </div>
+  <div class="row col col-md-12 primary-table">
+    <h4 class="card-title sub-header">Primary Table:
+      <strong>{{tableName}}</strong>
+    </h4>
+  </div>
+  <hr>
+  <app-relationship-list [serviceActionType]="serviceActionType" [isRelationShipAvailable]="isRelationShipAvailable"
+  [relationshipInfo]="relationshipInfo"></app-relationship-list> 
+</div>

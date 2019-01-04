@@ -225,6 +225,7 @@ export class NewWorkspaceComponent implements OnInit {
       return value !== elem;
     });
   }
+  
   removeObjByValue(array, key, value) {
     return array.filter(function (elem, _index) {
       return value !== elem[key];

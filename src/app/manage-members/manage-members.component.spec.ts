@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 

@@ -19,37 +19,75 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceId : string;
   // @Input() private serviceType : string;
   defDesc = 'Description: Here is some more information about this product that is only revealed once clicked on.';
-  private serviceActions: ServiceActionsObject[];
+  serviceActions: ServiceActionsObject[];
   private wsId_Mode: string;
   private tableList: any;
   workspaceID: any;
   constructor(
     private router: Router,
+    private activatedRouter: ActivatedRoute,
     private workspaceService: WorkspaceServicesService,
     private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService,
     private tableListService: TableListService,
     private commonUtilityService: CommonUtilityService
-  ) { }
+  ) {
+    activatedRouter.params.subscribe(val => {
+
+      this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
+        //   // hard-coded values for adhoc-query-builder,
+        //   // NOTE: whenever this function is called it adds a duplicate of this hard-coded service object
+        //   // serviceActions.push(
+        //   //   {
+        //   //     iconName: 'querybuilder.png',
+        //   //     serviceActionType: 'ALL',
+        //   //     serviceId: '5ac5c6d0a54d7503ad946537',
+        //   //     serviceName: 'Adhoc Query Builder'
+        //   //   }
+        //   // );
+
+        const serviceActionsList = this.updateServiceActions(serviceActions);
+        this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
+        const carousel: any = $('#serviceCarousel');
+        carousel.carousel({ 'interval': false });
+
+      });
+      setTimeout(() => {
+        const dropdownItem = <HTMLAnchorElement>document.querySelectorAll('#selectedWorkspace .dropdown-data')[1];
+        if (dropdownItem !== undefined) {
+          const b = dropdownItem.click();
+          if(b!=undefined){
+            const b1 = this.workspaceService.updateServiceActionsList(JSON.parse(JSON.stringify(b)));
+            this.workspaceService.updateServiceActions(b1);
+          }          
+        }
+      }, 3000);
+    });
+  }
 
   ngOnInit() {
-    this.workspaceService.serviceActionsUpdated.subscribe((serviceActions) => {
-      // hard-coded values for adhoc-query-builder,
-      // NOTE: whenever this function is called it adds a duplicate of this hard-coded service object
-      serviceActions.push(
-        {
-          iconName: 'querybuilder.png',
-          serviceActionType: 'ALL',
-          serviceId: '5ac5c6d0a54d7503ad946537',
-          serviceName: 'Adhoc Query Builder'
-        }
-      );
-      const serviceActionsList = this.updateServiceActions(serviceActions);
-      this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
-        const carousel: any = $('#serviceCarousel');
-        carousel.carousel({'interval': false});
-      });
+    //  this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
+    // //   // hard-coded values for adhoc-query-builder,
+    // //   // NOTE: whenever this function is called it adds a duplicate of this hard-coded service object
+    // //   // serviceActions.push(
+    // //   //   {
+    // //   //     iconName: 'querybuilder.png',
+    // //   //     serviceActionType: 'ALL',
+    // //   //     serviceId: '5ac5c6d0a54d7503ad946537',
+    // //   //     serviceName: 'Adhoc Query Builder'
+    // //   //   }
+    // //   // );
+
+    //   const serviceActionsList = this.updateServiceActions(serviceActions);
+    //   this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
+    //   const carousel: any = $('#serviceCarousel');
+    //   carousel.carousel({ 'interval': false });
+    //   // setTimeout(() => {
+
+    //   // }, 9000);
+
+    // });
   }
 
   gotoMetalyzer(service: any) {
@@ -73,6 +111,7 @@ export class WorkspaceServicesComponent implements OnInit {
       }
     }
   }
+
   updateServiceActions(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
     if (serviceActions) {
       for (const service of serviceActions) {

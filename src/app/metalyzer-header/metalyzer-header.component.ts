@@ -9,8 +9,8 @@ import { MetalyzerHeaderService } from './metalyzer-header.service';
 })
 export class MetalyzerHeaderComponent implements OnInit {
 
-  private wsName: string;
-  private phase: string;
+  wsName: string;
+  phase: string;
   constructor(
     private router: Router,
     private workspaceHeaderService: WorkspaceHeaderService,

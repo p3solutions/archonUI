@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthenticationService {
 
-  constructor(private jwtHelper: JwtHelper) { }
+  constructor(private jwtHelper: JwtHelperService) { }
 
   authenticateHelper(token: string) {
     console.log(this.jwtHelper.decodeToken(token));

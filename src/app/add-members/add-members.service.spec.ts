@@ -3,7 +3,7 @@ import { AddMembersService } from './add-members.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { Http, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 
 describe('AddMembersService', () => {
   let backend: MockBackend;
@@ -22,7 +22,7 @@ describe('AddMembersService', () => {
       ]
     });
     backend = TestBed.get(MockBackend);
-    spyOn(Http.prototype, 'request').and.callThrough();
+    spyOn(HttpClient.prototype, 'request').and.callThrough();
   });
 
   afterEach(() => backend.verifyNoPendingRequests());

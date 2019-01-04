@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { InfoService } from '../info.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Info } from '../info';
 
 xdescribe('WorkspaceLandingPageComponent', () => {

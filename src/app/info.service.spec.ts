@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClient} from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { InfoService } from './info.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Info } from './info';
 
 

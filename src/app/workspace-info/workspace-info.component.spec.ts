@@ -7,7 +7,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 import { HttpClientModule } from '@angular/common/http';
 

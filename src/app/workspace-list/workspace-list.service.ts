@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import { JwtHelper } from 'angular2-jwt';
+
+
+
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceInfo } from '../workspace-info/workspace-info';
 import { WorkspaceObject } from '../workspace-objects';
@@ -16,31 +16,31 @@ import { environment } from '../../environments/environment';
 export class WorkspaceListService {
 
   accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
 
   wSListByUidUrl = environment.apiUrl + 'workspaces?userId=';
   private headers;
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
-  this.headers = new HttpHeaders(
-    {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
-    });
+    this.headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
+      });
   }
   getList(id: string): Observable<WorkspaceObject[]> {
     const url = this.wSListByUidUrl + id;
-    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractWorkspaces)
-    .pipe(catchError(this.handleError('workspace-getList()', []))
-    );
+    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractWorkspaces),
+      catchError(this.handleError('workspace-getList()', []))
+      );
   }
 
   getListOfWorkspaceByUserId(id: string): Observable<WorkspaceObject[]> {
     const url = this.wSListByUidUrl + id;
-    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractWorkspaces)
-      .pipe(catchError(this.handleError('workspace-getList()', []))
+    return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractWorkspaces),
+      catchError(this.handleError('workspace-getList()', []))
     );
   }
 
@@ -50,7 +50,7 @@ export class WorkspaceListService {
   }
 
 
-  // * Handle Http operation that failed.
+  // * Handle HttpClient operation that failed.
   // * Let the app continue.
   // * @param operation - name of the operation that failed
   // * @param result - optional value to return as the observable result

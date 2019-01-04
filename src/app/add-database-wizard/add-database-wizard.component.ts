@@ -105,7 +105,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     document.getElementById('openCreateAddDBmodal').click();
     // this.getSupportedDBs();
   }
-  step0Validation(_event, profileName, host, port, databaseName, schemaName) {
+  step0Validation(_event) {
     if (!this.profileName.trim() || !this.host.trim() || !this.port || !this.databaseName.trim() || !this.schemaName.trim()) {
       this.step0Empty = false;
     } else if (this.selectedDBServerName === 'Select server') {
@@ -115,7 +115,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     }
     this.enableDisableNextBtn();
   }
-  step1Validation(_event, userName, password) {
+  step1Validation(_event) {
   // console.log(this.userName, !this.userName);
       if (!this.userName.trim() || !this.password.trim() ) {
       this.step1Empty = false;

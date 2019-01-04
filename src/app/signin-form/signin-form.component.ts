@@ -6,6 +6,7 @@ import { SignIn } from '../sign-in';
 import { SigninFormService } from './signin-form.service';
 import { ErrorObject } from '../error-object';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { jsonpCallbackContext } from '@angular/common/http/src/module';
 
 @Component({
   selector: 'app-signin-form',
@@ -29,7 +30,7 @@ export class SigninFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    setTimeout(this.enableSignIn(), 3000);
+    setTimeout(() => this.enableSignIn(), 3000);
   }
 
   createForm() {
@@ -54,15 +55,14 @@ export class SigninFormComponent implements OnInit {
         this.inProgress = false;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          console.log('An error occurred:', err.error.message);
+          
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
           this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = !err.error.success;
-          console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
-        }
+          }
       }
     );
   }
@@ -79,9 +79,7 @@ export class SigninFormComponent implements OnInit {
   handleRedirection() {
     const sessionTimedOutUrl = localStorage.getItem('sessionTimedOutUrl');
     const redirectUrl = sessionTimedOutUrl ? sessionTimedOutUrl : this.workspaceUrl;
-    console.log('sessionTimedOutUrl', sessionTimedOutUrl, 'redirectUrl', redirectUrl);
     if (redirectUrl === sessionTimedOutUrl) {
-      console.log('deleting sessionTimedOutUrl form localStorage');
       localStorage.removeItem('sessionStorage');
     }
     this.router.navigateByUrl(redirectUrl);

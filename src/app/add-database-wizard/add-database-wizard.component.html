@@ -11,11 +11,11 @@
       </div>
 
       <div class="modal-body row">
-      <!-- carousel -->
+        <!-- carousel -->
         <div id="createWSModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
           <!-- Indicators -->
           <ul *ngIf="!newWSinfo" class="multi-step-bars">
-            <li > 
+            <li>
               <span id="progress-bar" class="bar-expand width-5-pc"></span>
               <em class="col-md-4 text-center">Connection Details</em>
               <em class="col-md-4 text-center">Authentication</em>
@@ -32,53 +32,62 @@
           <div class="carousel-inner" role="listbox">
 
             <div step="0" class="item active form-group">
-                <div class="col-md-12 row m-10">
-                  <div class="col-md-2">Profile Name</div>
-                  <div class="col-md-4">
-                    <input [(ngModel)]="profileName" placeholder="Enter Profile name" name="profileName" id="profileName" class="{{!profileName && profileNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event, profileName)" required />
-                  </div>
-                  <div class="col-md-2">Database Server</div>
-                  <div class="col-md-3">
-                      <div class="container">
-                          <div class="row">
-                            <div class="col-lg-12">
-                              <div name="wsName" id="wsName" class="btn-group  {{!wsName && wsNameEmpty ? 'error-input' : ''}} " required>
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                  {{ selectedDBServerName }} <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu scrollable-menu" role="menu">
-                                  <li *ngFor="let servername of dbServerList"><a (click)="selectDBServer(servername); step0Validation($event, servername)" >{{ servername.name }}</a></li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
+              <div class="col-md-12 row m-10">
+                <div class="col-md-2">Profile Name</div>
+                <div class="col-md-4">
+                  <input [(ngModel)]="profileName" placeholder="Enter Profile name" name="profileName" id="profileName"
+                    class="{{!profileName && profileNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
+                    required />
+                </div>
+                <div class="col-md-2">Database Server</div>
+                <div class="col-md-3">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div name="wsName" id="wsName" class="btn-group  {{!wsName && wsNameEmpty ? 'error-input' : ''}} "
+                          required>
+                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            {{ selectedDBServerName }} <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu scrollable-menu" role="menu">
+                            <li *ngFor="let servername of dbServerList"><a (click)="selectDBServer(servername); step0Validation($event, servername)">{{
+                                servername.name }}</a></li>
+                          </ul>
                         </div>
+                      </div>
+                    </div>
                   </div>
+                </div>
 
 
-                  <!-- <div class="col-md-2">Database Name</div>
+                <!-- <div class="col-md-2">Database Name</div>
                   <div class="col-md-4">
                     <input [(ngModel)]="dbName" placeholder="Enter Database name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                   </div> -->
+              </div>
+
+              <div class="col-md-12 row m-10">
+                <div class="col-md-2">Host</div>
+                <div class="col-md-4">
+                  <input [(ngModel)]="host" placeholder="Enter Host name" name="host" id="host" class="{{!host ? 'error-input' : ''}}"
+                    (keyup)="step0Validation($event)" required />
                 </div>
-                
-                <div class="col-md-12 row m-10">
-                  <div class="col-md-2">Host</div>
-                  <div class="col-md-4">
-                    <input [(ngModel)]="host" placeholder="Enter Host name" name="host" id="host" class="{{!host && hostEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event, host)" required/>
-                  </div>
-                  <div class="col-md-2">Port</div>
-                  <div class="col-md-4">
-                    <input [(ngModel)]="port" placeholder="{{(selectedDBServerName == 'Select server') ? 'Enter Port number' :  port}}" name="port" id="port" class="{{!port && portEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event, port)" required/>
-                  </div>
+                <div class="col-md-2">Port</div>
+                <div class="col-md-4">
+                  <input [(ngModel)]="port" placeholder="{{(selectedDBServerName == 'Select server') ? 'Enter Port number' :  port}}"
+                    name="port" id="port" class="{{!port ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
+                    required />
                 </div>
-                
-                <div class="col-md-12 row m-10">
-                   <div class="col-md-2">Database Name</div>
-                  <div class="col-md-4">
-                    <input [(ngModel)]="databaseName" placeholder="Enter Database name" name="databaseName" id="databaseName" class="{{!databaseName && databaseNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event, databaseName)" required/>
-                  </div>
-                  <!-- <div class="col-md-2">Database Server</div>
+              </div>
+
+              <div class="col-md-12 row m-10">
+                <div class="col-md-2">Database Name</div>
+                <div class="col-md-4">
+                  <input [(ngModel)]="databaseName" placeholder="Enter Database name" name="databaseName" id="databaseName"
+                    class="{{!databaseName ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
+                    required />
+                </div>
+                <!-- <div class="col-md-2">Database Server</div>
                   <div class="col-md-4">
                       <div class="dropdown">
                           <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">Tutorials
@@ -92,49 +101,54 @@
                           </ul>
                       </div>
                     <!-- <input [(ngModel)]="dbServer" placeholder="Enter Database Server" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
-                  <!-- </div> -->
-                  <div class="col-md-2">Default Schema</div>
-                  <div class="col-md-4">
-                    <input [(ngModel)]="schemaName"  placeholder="Enter Default Schema" name="schemaName" id="schemaName" class="{{!schemaName && schemaNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event, schemaName)" required/>
-                  </div>
+                <!-- </div> -->
+                <div class="col-md-2">Default Schema</div>
+                <div class="col-md-4">
+                  <input [(ngModel)]="schemaName" placeholder="Enter Default Schema" name="schemaName" id="schemaName"
+                    class="{{!schemaName ? 'error-input' : ''}}" (keyup)="step0Validation($event)" required />
                 </div>
-                <div class="col-md-12 row m-10">
-                    <div class="col-md-2">Auth Type</div>
-                    <div class="col-md-3">
-                        <div class="container">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                <div class="btn-group">
-                                  <button id="blur" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" disabled>
-                                    JDBC <span class="caret"></span>
-                                  </button>
-                                  <ul class="dropdown-menu scrollable-menu" role="menu">
-                                    <li *ngFor="let servername of dbServerList"><a (click)="selectDBServer(servername)">{{ servername.name }}</a></li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+              </div>
+              <div class="col-md-12 row m-10">
+                <div class="col-md-2">Auth Type</div>
+                <div class="col-md-3">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="btn-group">
+                          <button id="blur" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            disabled>
+                            JDBC <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu scrollable-menu" role="menu">
+                            <li *ngFor="let servername of dbServerList"><a (click)="selectDBServer(servername)">{{
+                                servername.name }}</a></li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                </div>
+              </div>
 
             </div>
 
             <div step="1" class="item form-group second-last second">
               <!-- <div *ngIf="errorDBselect" class="alert-danger text-center"><strong>Select at least one database!</strong></div> -->
               <div class="col-md-12 row m-10">
-                  <div class="col-md-2">UserName</div>
-                  <div class="col-md-4">
-                    <input [(ngModel)]="userName" placeholder="Enter User Name" name="userName" id="userName" class="{{!userName && userNameEmpty ? 'error-input' : ''}}" (keyup)="step1Validation($event, userName)" required/>
-                  </div>
+                <div class="col-md-2">UserName</div>
+                <div class="col-md-4">
+                  <input [(ngModel)]="userName" placeholder="Enter User Name" name="userName" id="userName" class="{{!userName ? 'error-input' : ''}}"
+                    (keyup)="step1Validation($event)" required />
+                </div>
               </div>
               <div class="col-md-12 row m-10">
-                  <div class="col-md-2">Password</div>
-                  <div class="col-md-4">
-                    <input type="password" [(ngModel)]="password" placeholder="Enter Password" name="password" id="password" class="{{!password && passwordEmpty ? 'error-input' : ''}}" (keyup)="step1Validation($event, password)" required/>
-                  </div>
+                <div class="col-md-2">Password</div>
+                <div class="col-md-4">
+                  <input type="password" [(ngModel)]="password" placeholder="Enter Password" name="password" id="password"
+                    class="{{!password ? 'error-input' : ''}}" (keyup)="step1Validation($event)" required />
                 </div>
-                    <!-- <div class="row">
+              </div>
+              <!-- <div class="row">
                         <div class="col-md-2 col-md-offset-4">UserName</div>
                         <div class="col-md-2"><input [(ngModel)]="wsName" placeholder="Enter Workspace name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/>
                         </div>
@@ -147,51 +161,52 @@
             </div>
 
             <div step="2" class="item form-group final">
-                <div class="col-md-12 row m-10">
-                    <div class="col-md-2">Profile Name</div>
-                    <div class="col-md-4">
-                      <label>{{profileName}}</label>
-                      <!-- <input [(ngModel)]="wsName" placeholder="Enter Profile name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
-                    </div>
-                    <div class="col-md-2">Database Server</div>
-                    <div class="col-md-4">
-                        <label >{{selectedDBServerName}}</label>
-                      <!-- <input [(ngModel)]="wsName" placeholder="Enter Database Server" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
-                    </div>
-                  </div>
-                  <div class="col-md-12 row m-10">
-                      <div class="col-md-2">Host</div>
-                      <div class="col-md-4">
-                          <label>{{host}}</label>
-                        <!-- <input [(ngModel)]="wsName" placeholder="Enter Host name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
-                      </div>
-                      <div class="col-md-2">Port</div>
-                      <div class="col-md-4">
-                          <label>{{port}}</label>
-                        <!-- <input [(ngModel)]="wsName" placeholder="Enter Port name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
-                      </div>
-                    </div>
-                    <div class="col-md-12 row m-10">
-                        <div class="col-md-2">Database Name</div>
-                        <div class="col-md-4">
-                            <label>{{databaseName}}</label>
-                          <!-- <input [(ngModel)]="wsName" placeholder="Enter Database name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
-                        </div>
-                        <div class="col-md-2">Default Schema</div>
-                        <div class="col-md-4">
-                            <label>{{schemaName}}</label>
-                          <!-- <input [(ngModel)]="wsName" placeholder="Enter Default Schema" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
-                        </div>
-                      </div>
-                      <div class="col-md-12 row m-12">
-                          <div class="col-md-12"><button type="button" class="btn btn-primary center-block" (click)="testDbConnection()"> Test Connection</button></div>
-                          <div *ngIf="dbTestConnectionSuccessMsg" style="color:green;" class="col-md-12 row m-10 text-center">
-                            {{dbTestConnectionSuccessMsg}}
-                          </div> 
-                          <div *ngIf="dbTestConnectionErrorMsg" style="color:red;" class="col-md-12 row m-10 text-center">
-                            {{dbTestConnectionErrorMsg}}
-                          </div> 
-                        </div>
+              <div class="col-md-12 row m-10">
+                <div class="col-md-2">Profile Name</div>
+                <div class="col-md-4">
+                  <label>{{profileName}}</label>
+                  <!-- <input [(ngModel)]="wsName" placeholder="Enter Profile name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
+                </div>
+                <div class="col-md-2">Database Server</div>
+                <div class="col-md-4">
+                  <label>{{selectedDBServerName}}</label>
+                  <!-- <input [(ngModel)]="wsName" placeholder="Enter Database Server" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
+                </div>
+              </div>
+              <div class="col-md-12 row m-10">
+                <div class="col-md-2">Host</div>
+                <div class="col-md-4">
+                  <label>{{host}}</label>
+                  <!-- <input [(ngModel)]="wsName" placeholder="Enter Host name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
+                </div>
+                <div class="col-md-2">Port</div>
+                <div class="col-md-4">
+                  <label>{{port}}</label>
+                  <!-- <input [(ngModel)]="wsName" placeholder="Enter Port name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
+                </div>
+              </div>
+              <div class="col-md-12 row m-10">
+                <div class="col-md-2">Database Name</div>
+                <div class="col-md-4">
+                  <label>{{databaseName}}</label>
+                  <!-- <input [(ngModel)]="wsName" placeholder="Enter Database name" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
+                </div>
+                <div class="col-md-2">Default Schema</div>
+                <div class="col-md-4">
+                  <label>{{schemaName}}</label>
+                  <!-- <input [(ngModel)]="wsName" placeholder="Enter Default Schema" name="wsName" id="wsName" class="{{!wsName && wsNameEmpty ? 'error-input' : ''}}" required/> -->
+                </div>
+              </div>
+              <div class="col-md-12 row m-12">
+                <div class="col-md-12"><button type="button" class="btn btn-primary center-block" (click)="testDbConnection()">
+                    Test Connection</button></div>
+                <div *ngIf="dbTestConnectionSuccessMsg" style="color:green;" class="col-md-12 row m-10 text-center">
+                  {{dbTestConnectionSuccessMsg}}
+                </div>
+                <div *ngIf="dbTestConnectionErrorMsg" style="color:red;" class="col-md-12 row m-10 text-center">
+                  {{dbTestConnectionErrorMsg}}
+                </div>
+              </div>
             </div>
 
             <div class="item form-group message">
@@ -216,19 +231,21 @@
               </div> -->
               <div style="color:green;" class="col-md-12 row m-10 text-center">
                 Your create database configuration is successfully done.
-              </div>              
+              </div>
             </div>
           </div>
-        
+
           <!-- Controls -->
-          <a hidden class="left carousel-control" id="prev-slide" href="#createWSModal-carousel" role="button" data-slide="prev">
+          <a hidden class="left carousel-control" id="prev-slide" href="#createWSModal-carousel" role="button"
+            data-slide="prev">
             <span class="sr-only">Previous</span>
           </a>
-          <a hidden class="right carousel-control" id="next-slide" href="#createWSModal-carousel" role="button" data-slide="next">
+          <a hidden class="right carousel-control" id="next-slide" href="#createWSModal-carousel" role="button"
+            data-slide="next">
             <span class="sr-only">Next</span>
           </a>
         </div>
-      <!-- / end of Carousel -->
+        <!-- / end of Carousel -->
       </div>
       <div class="modal-footer {{newWSinfo ? 'msg-footer' : ''}}">
         <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
@@ -241,4 +258,3 @@
     </div>
   </div>
 </div>
-

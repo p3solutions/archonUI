@@ -11,15 +11,16 @@ import { UserinfoService } from '../userinfo.service';
   styleUrls: ['./table-list.component.css'],
 })
 export class TableListComponent implements OnInit {
-  public search: any = '';
-  private homeStage = false;
-  private isAvailable: boolean;
-  private isRelationShipAvailable: boolean;
-  private selectedPrimTbl: any;
-  private tableName: string;
-  private relationshipInfo: any[];
-  private serviceActionType: string;
-  private tableList: any[];
+  query: string;
+  search: any = '';
+  homeStage = false;
+  isAvailable: boolean;
+  isRelationShipAvailable: boolean;
+  selectedPrimTbl: any;
+  tableName: string;
+  relationshipInfo: any[];
+  serviceActionType: string;
+  tableList: string[];
   primColArray = [];
   secColArray = [];
   secTblArray = [];
@@ -65,7 +66,7 @@ export class TableListComponent implements OnInit {
     private userinfoService: UserinfoService
   ) {
     this.userId = this.userinfoService.getUserId();
-   }
+  }
   ngOnInit() {
     // this.homeStage = true;
     this.isAvailable = false;
@@ -74,6 +75,7 @@ export class TableListComponent implements OnInit {
   }
   getTableList() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    console.log(this.workspaceID);
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
       // console.log(this.tableList);
@@ -102,12 +104,12 @@ export class TableListComponent implements OnInit {
     this.resetDataAModal();
   }
   openEditRelationship(relation) {
-  this.editValues = relation;
+    this.editValues = relation;
   }
 
   joinTable(table) {
     this.joinValues = table;
-    }
+  }
 
   getColumnsByTableName(tableId, isPrime) {
     if (isPrime) {
@@ -165,7 +167,7 @@ export class TableListComponent implements OnInit {
           this.secColArray[i].selected = isChecked;
           if (isChecked) {
             this.selectedSecColMap.set(secColName, true);
-            const secTbl = <HTMLInputElement> document.getElementById(this.prefixSecTblId + this.SecondaryTableName);
+            const secTbl = <HTMLInputElement>document.getElementById(this.prefixSecTblId + this.SecondaryTableName);
             if (!this.selectedSecTbl.has(this.SecondaryTableName)) { // if sec table unselected and sec col is checked
               secTbl.checked = true;
             }
@@ -190,11 +192,11 @@ export class TableListComponent implements OnInit {
         } else {
           this.selectedSecTbl.delete(this.SecondaryTableName);
           // sec col reset selection
-          this.secColArray.forEach(col => col.selected = false );
+          this.secColArray.forEach(col => col.selected = false);
           this.selectedSecColMap.clear();
           const currentSecColArr = this.secTblColMap.get(this.SecondaryTableId);
           currentSecColArr.forEach(secCol => {
-          const secColName = this.SecondaryTableName + this.secTblColJoiner + secCol.columnName;
+            const secColName = this.SecondaryTableName + this.secTblColJoiner + secCol.columnName;
             if (this.finalSecColMap.has(secColName)) {
               this.finalSecColMap.delete(secColName);
             }
@@ -246,14 +248,14 @@ export class TableListComponent implements OnInit {
         }
       });
     } else {
-      this.getColumnsByTableName(tableId , false);
+      this.getColumnsByTableName(tableId, false);
     }
   }
   // generating secondary table array
   generateSecTblArray() {
     if (this.secTblArray.length === 0) {
       for (const i of this.tableList) {
-        if (i.tableName !== this.selectedPrimTbl) {
+        if (i !== this.selectedPrimTbl) {
           this.secTblArray.push(i);
         }
       }
@@ -305,14 +307,14 @@ export class TableListComponent implements OnInit {
     this.finalPrimColArray = [];
     this.selectedPrimColMap.forEach((val, key) => {
       const columnObject = {
-      'columnName' : key
+        'columnName': key
       };
       this.finalPrimColArray.push(columnObject);
     });
     this.selectedTblsColsObj.userId = this.userId;
     this.selectedTblsColsObj.workspaceId = this.workspaceID;
     this.selectedTblsColsObj.primaryTable = {
-      'tableName' : this.selectedPrimTbl,
+      'tableName': this.selectedPrimTbl,
       'primaryColumnList': this.finalPrimColArray
     };
     this.selectedTblsColsObj.secondaryTableList = [];
@@ -321,7 +323,7 @@ export class TableListComponent implements OnInit {
       const arr = key.split(this.secTblColJoiner);
       const secTbl = arr[0];
       const secCol = {
-        'columnName' : arr[1]
+        'columnName': arr[1]
       };
       if (secMap.has(secTbl)) {
         const secCols = secMap.get(secTbl);
@@ -333,13 +335,13 @@ export class TableListComponent implements OnInit {
     secMap.forEach((valArray, key) => {
       this.selectedTblsColsObj.secondaryTableList.push(
         {
-          'tableName' : key,
+          'tableName': key,
           'secondaryColumnList': valArray
         }
       );
     });
     this.selectedTblsColsObj.configurationDetails = {
-      'samplingPercentage' : this.analysisRowCount
+      'samplingPercentage': this.analysisRowCount
     };
     this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
     console.log('finally', this.selectedTblsColsObj);
@@ -424,50 +426,50 @@ export class TableListComponent implements OnInit {
     this.addClass('analyse-btn', 'hide');
     this.removeClass('close-btn', 'hide');
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
-    if (res && res.success) {
-      this.dataAnalysisjobID = res.data.jobId;
-    }
+      if (res && res.success) {
+        this.dataAnalysisjobID = res.data.jobId;
+      }
     });
   }
   deleteRelationship(indexOfDelete) {
     this.index = indexOfDelete;
-    this.editrelationshipInfo  = JSON.parse(JSON.stringify(this.relationshipInfo[this.index]));
+    this.editrelationshipInfo = JSON.parse(JSON.stringify(this.relationshipInfo[this.index]));
     this.joinName = this.editrelationshipInfo.joinName;
     this.primaryTableId = this.editrelationshipInfo.primaryTable.tableId;
     this.joinListTemp = this.editrelationshipInfo.joinListInfo;
     for (const x of this.joinListTemp) {
       this.relationShipIDs.push(x.relationshipId);
     }
-   }
+  }
 
   confirmDelete(): void {
     this.delProgress = true;
     this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId, this.joinName, this.relationShipIDs)
-    .subscribe(res => {
-      this.relationShipIDs = [];
-      this.delProgress = false;
-      if (res && res.success) {
-        this.postDelete();
-      } else {
-        this.deleteNotif.show = true;
-        this.deleteNotif.message = res.errorMessage;
-      }
+      .subscribe(res => {
+        this.relationShipIDs = [];
+        this.delProgress = false;
+        if (res && res.success) {
+          this.postDelete();
+        } else {
+          this.deleteNotif.show = true;
+          this.deleteNotif.message = res.errorMessage;
+        }
       });
-    }
-    closeErrorMsg() {
-      this.deleteNotif = new ErrorObject();
-      this.relationShipIDs = [];
-    }
-     postDelete() {
-       const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
-       close.click();
-       this.loadRelationTable(this.tableCopy);
-    }
-    finalSecCol(x, i) {
-      this.selectedRow = i;
-      this.finalSecColArray = x.secondaryColumnList;
-    }
+  }
+  closeErrorMsg() {
+    this.deleteNotif = new ErrorObject();
+    this.relationShipIDs = [];
+  }
+  postDelete() {
+    const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
+    close.click();
+    this.loadRelationTable(this.tableCopy);
+  }
+  finalSecCol(x, i) {
+    this.selectedRow = i;
+    this.finalSecColArray = x.secondaryColumnList;
+  }
   refreshRelation($event) {
-  this.loadRelationTable(this.tableCopy);
+    this.loadRelationTable(this.tableCopy);
   }
 }

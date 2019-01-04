@@ -9,12 +9,12 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { SigninFormService } from '../signin-form/signin-form.service';
 import { SignUp } from '../sign-up';
 import { ErrorObject } from '../error-object';
@@ -58,7 +58,7 @@ xdescribe('SignupFormComponent', () => {
         SignupFormService,
         HttpClientModule,
         AuthenticationService,
-        JwtHelper
+        JwtHelperService
       ],
       declarations: [SignupFormComponent]
     })

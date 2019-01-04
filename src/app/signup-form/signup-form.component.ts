@@ -32,7 +32,7 @@ export class SignupFormComponent implements OnInit {
 
   ngOnInit() {
     this.createSignUpForm();
-    setTimeout(this.enableSignUp(), 3000);
+    setTimeout(() => this.enableSignUp(), 3000);
   }
   createSignUpForm() {
     this.signUpForm = new FormGroup({
@@ -50,12 +50,12 @@ export class SignupFormComponent implements OnInit {
     this.signupService.signUp(this.signup).subscribe(
       data => {
         this.responseData = data;
-         if (this.responseData.httpStatus === 200) {
+        if (this.responseData.httpStatus === 200) {
           this.errorObject = new ErrorObject;
           this.errorObject.show = false;
           this.successMessage = true;
           setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 6000);
-         }
+        }
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
       },
       (err: HttpErrorResponse) => {

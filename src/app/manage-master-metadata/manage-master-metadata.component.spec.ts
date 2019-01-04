@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { ManageMasterMetadataComponent } from './manage-master-metadata.component';
 import { ManageMasterMetadataService } from './manage-master-metadata.service';
 import { ManageMasterMetadata } from '../master-metadata-data';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 

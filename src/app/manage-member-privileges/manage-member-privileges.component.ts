@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, keyframes, Directive, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Directive, ViewContainerRef } from '@angular/core';
 import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { WorkspaceRolesObject } from '../workspace-objects';
