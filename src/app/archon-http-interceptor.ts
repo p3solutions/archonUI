@@ -1,8 +1,7 @@
 import { HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  throwError as _throw } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { _throw } from 'rxjs/observable/throw';
 import { ArchonResponse } from './archon-response';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { UserinfoService } from './userinfo.service';
@@ -37,7 +36,7 @@ export class ArchonHttpInterceptor implements HttpInterceptor {
         // console.log('Processing http error', response);
         if (response) {
             if (response.error) {
-                console.log(`Http error message "${response.error.errorMessage}"`);
+                console.log(`HttpClient error message "${response.error.errorMessage}"`);
             }
             if (response.status === 401) {
                 this.userinfoService.redirectOnSessionTimedOut();

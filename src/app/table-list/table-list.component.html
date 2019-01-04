@@ -228,7 +228,7 @@
                             </div>
                           </div>
                           <div class="da-table-parent">
-                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;">
+                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;" [hidden]="secTbl.tableName === selectedPrimTbl">
                               <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
                                 <input id="{{prefixSecTblId + (secTbl.tableName | lowercase)}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
                                 {{secTbl.tableName}}

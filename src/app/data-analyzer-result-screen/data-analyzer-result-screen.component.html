@@ -8,7 +8,7 @@
 <div *ngIf="activatePrimary">
 <div class="col-md-12">
 <div class="col-md-3">
-  <table datatable id="customers">                     
+  <table id="customers">                     
        <tr>
          <th>Primary Column</th>                                                        
        </tr>                    
@@ -18,21 +18,25 @@
    </table>
 </div>
 <div class="col-md-9">
-  <table id="customers">                     
-       <tr>
+  <table id="customers" class="table table-hover table-bordered">                   
+      <thead> 
+      <tr>
          <th>Secondary Table</th>
          <th>Column Type</th>
          <th>Secondary Column</th>   
          <th>Accuracy  (in %)</th>
-         <!-- <th><input type="checkbox"></th>                                                  -->
-       </tr>                    
+         <th><input type="checkbox"></th>                                                 
+       </tr>
+      </thead>
+      <tbody>                    
      <tr *ngFor="let x of populatePrimaryValuesArray;let i=index">
        <td>{{x.tableName}}</td>
        <td>{{x.dataType}}</td>
        <td>{{x.secondaryColumnName}}</td>    
        <td>{{x.matchPercentage}}</td>  
        <td><input type="checkbox" (change)="checkedPriValues(x,$event,i)"></td>                
-     </tr>    
+     </tr>
+    </tbody>    
    </table>
 </div>
 </div>
@@ -50,13 +54,13 @@
      </table>
   </div>
   <div class="col-md-9">
-    <table id="customers">                     
+    <table  id="customers"  class="table table-hover table-bordered">                     
          <tr>
            <th>Primary Column</th>
            <th>Column Type</th>
            <th>Secondary Column</th>   
            <th>Accuracy  (in %)</th>
-           <!-- <th><input type="checkbox"></th>                                                  -->
+           <th><input type="checkbox"></th>                                                 
          </tr>                    
        <tr *ngFor="let x of populateSecondaryValuesArray;let i=index">
          <td>{{x.primaryColumn}}</td>
@@ -70,9 +74,22 @@
   </div>
   </div>
 <div class="col-md-12 marginClass">
-<div class="col-md-7">&nbsp;</div>
+    <div class="col-md-7">         
+        <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>New Join Added Successfully</strong>
+          </div>
+          <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+              <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong>{{errorMsg}}</strong>
+            </div> 
+          </div>
 <div class="col-md-5">
-  <button type="button" class="btn btn-primary">Add Selected Joins</button>
-  <button type="button" id="cancel-btn" class="btn btn-secondary cancel"  data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-primary" (click)="addJoins()">Add Selected Joins</button>
+  <button type="button" id="cancel-btn" class="btn btn-secondary cancel" (click)="closeScreen()">Close</button>
 </div>
 </div>

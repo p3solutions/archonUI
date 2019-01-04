@@ -31,25 +31,12 @@ import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metal
 import { TableListComponent } from './table-list/table-list.component';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
 import {DataAnalyzerResultScreenComponent} from './data-analyzer-result-screen/data-analyzer-result-screen.component';
+import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
       {
-        path: 'no-workspace', component: NoWorkspaceComponent
-      }, {
-        path: 'workspace-list', component: WorkspaceListComponent
-      }, {
-        path: 'database-list', component: DatabaseListComponent
-      }, {
-        path: 'management-panel', component: ManagementPanelComponent
-      }, {
-        path: 'manage-user-roles', component: ManageUserRolesComponent
-      }, {
-        path: 'status', component: StatusScreenComponent
-      }, {
-        path: 'workspace-info/:id', component: WorkspaceInfoComponent
-      }, {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
             path: '', redirectTo: 'workspace-services', pathMatch: 'full'
@@ -64,10 +51,8 @@ const routes: Routes = [
             path: 'manage-members/:id', component: ManageMembersComponent
           }, {
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
-          }
-        ]
-      },
-      {
+          }]
+      }, {
         path: 'metalyzer/:wsId_Mode', component: MetalyzerComponent, children: [
           {
             path: 'configuration', component: MetalyzerConfigurationComponent
@@ -94,13 +79,26 @@ const routes: Routes = [
         path: 'sign-up', component: SignupFormComponent
       }]
   }, {
-    path: 'manage-user-roles', component: ManageUserRolesComponent
-  }, {
     path: 'user-profile', component: UserProfileComponent, children: [
       {
         path: 'edit-profile', component: EditProfileComponent
       }]
-  }
+  }, {
+    path: 'management-landing-page', component: ManagementLandingPageComponent,
+    children: [
+      { path: 'management-panel', component: ManagementPanelComponent, pathMatch: 'full' }
+      ,
+      {
+        path: 'database-list', component: DatabaseListComponent
+      }, {
+        path: 'workspace-list', component: WorkspaceListComponent
+      }, {
+        path: 'manage-user-roles', component: ManageUserRolesComponent
+      }
+    ]
+  }, {
+    path: 'status', component: StatusScreenComponent
+  },
 ];
 
 @NgModule({

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
+
+
 import { ManageUserRoles } from '../manage-user-roles';
 import { headersToString } from 'selenium-webdriver/http';
 import { Data } from '@angular/router/src/config';
@@ -37,7 +36,8 @@ export class ManageUserRolesService {
   }
 
   getManageMembersDetails(): Observable<ManageUserRoles[]> {
-    return this.http.get<ManageUserRoles[]>(this.getAllUsersUrl, { headers: this.headers }).map(this.extractData).pipe(
+    return this.http.get<ManageUserRoles[]>(this.getAllUsersUrl, { headers: this.headers }).pipe(
+      map(this.extractData),
       catchError(this.handleError('manageuserroles', []))
     );
   }
@@ -48,17 +48,18 @@ export class ManageUserRolesService {
       globalRoleId: globalid
     };
     return this.http.patch(this.changeGlobalRoleUrl + userid + '/roles/global', body, { headers: this.headers })
-    .pipe(catchError(this.handleError('changeglobalrole', [])));
+      .pipe(catchError(this.handleError('changeglobalrole', [])));
   }
 
 
   getGlobalRoleDetails(): Observable<GlobalRoles[]> {
-    return this.http.get<GlobalRoles[]>(this.getGlobalRoleUrl, { headers: this.headers }).map(this.extractGlobalRolesData).pipe(
+    return this.http.get<GlobalRoles[]>(this.getGlobalRoleUrl, { headers: this.headers }).pipe(
+      map(this.extractGlobalRolesData),
       catchError(this.handleError('globalroles', []))
     );
   }
 
-  // * Handle Http operation that failed.
+  // * Handle HttpClient operation that failed.
   // * Let the app continue.
   // * @param operation - name of the operation that failed
   // * @param result - optional value to return as the observable result

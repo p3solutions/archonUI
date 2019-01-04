@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
+import { Headers, Response } from '@angular/http';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { SignUp } from '../sign-up';
 import { environment } from '../../environments/environment';
 

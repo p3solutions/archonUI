@@ -10,7 +10,7 @@ import { ReverseArrayPipe } from '../reverse.pipe';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { UserinfoService } from '../userinfo.service';
 import { CommonUtilityService } from '../common-utility.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { jobArray, jobOriginArray, jobStatusArray } from '../hardcoded-collection';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';

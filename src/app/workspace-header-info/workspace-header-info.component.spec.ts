@@ -5,7 +5,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 
 xdescribe('WorkspaceHeaderInfoComponent', () => {
   let component: WorkspaceHeaderInfoComponent;

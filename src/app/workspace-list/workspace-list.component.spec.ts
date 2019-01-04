@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WorkspaceListComponent } from './workspace-list.component';
 import { WorkspaceListService } from './workspace-list.service';
 xdescribe('WorkspaceListComponent', () => {

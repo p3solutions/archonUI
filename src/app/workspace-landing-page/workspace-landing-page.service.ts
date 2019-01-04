@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class WorkspaceLandingPageService {
   accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
   token_data: any;
   private workspacesForUserUrl;
   private headers;
@@ -32,7 +31,7 @@ export class WorkspaceLandingPageService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
-      return of(result as T);
+      return of(result);
     };
   }
 

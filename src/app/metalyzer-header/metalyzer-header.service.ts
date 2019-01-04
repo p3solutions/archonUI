@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
 @Injectable()
@@ -29,10 +26,10 @@ export class MetalyzerHeaderService {
   }
   getWorkspaceName(): Observable<string> {
     const URL = this.workspaceinfoUrl + this.workspaceId;
-    return this.http.get<string>(URL, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractWorkspace)
-      .pipe(catchError(this.handleError<string>('getworkspaceName'))
-      );
+    return this.http.get<string>(URL, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractWorkspace),
+      catchError(this.handleError<string>('getworkspaceName'))
+    );
   }
   private extractWorkspace(res: any) {
     const data = res.data.workspaces.workspaceName;

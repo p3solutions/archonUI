@@ -6,8 +6,8 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { EnterNewpasswordService } from './enter-newpassword.service';
 import { ErrorObject } from '../error-object';
 import { HttpErrorResponse } from '@angular/common/http';
-import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { SuccessObject } from '../success-object';
 
 @Component({
@@ -33,7 +33,7 @@ export class EnterNewpasswordComponent implements OnInit {
   ngOnInit() {
     this.resetKey = this.route.snapshot.paramMap.get('resetKey');
     this.createForm();
-    setTimeout(this.enableResetPassword(), 3000);
+    setTimeout(() => this.enableResetPassword(), 3000);
   }
   createForm() {
     this.passwordResetForm = new FormGroup({

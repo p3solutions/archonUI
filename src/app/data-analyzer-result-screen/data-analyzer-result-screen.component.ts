@@ -1,6 +1,8 @@
-import { Component, OnInit, Input, SimpleChanges, SimpleChange, OnChanges } from '@angular/core';
-import { map } from 'rxjs/operator/map';
+import { Component, OnInit, Input, SimpleChanges, SimpleChange, OnChanges, ViewChild } from '@angular/core';
 import { TableListService } from '../table-list/table-list.service';
+import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-data-analyzer-result-screen',
@@ -22,162 +24,176 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
    resultant = [];
    populatePrimaryValuesArray: any;
    populateSecondaryValuesArray: any;
-   res = [
-    {
-      'primaryColumnName': 'IS_PROV',
-      'primaryColumnId': '5c2995f9242f9a076a84f234',
-      'dataType': 'BIT',
-      'secondaryTableList': [
-        {
-          'tableName': 'dx_code',
-          'tableId': '5c2995f9242f9a076a84f23e',
-          'secondaryColumnList': [
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f240',
-              'secondaryColumnName': 'DX_CODE',
-              'dataType': 'INT',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f241',
-              'secondaryColumnName': 'DX_DESC',
-              'dataType': 'VARCHAR',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f245',
-              'secondaryColumnName': 'PROC_CODE',
-              'dataType': 'INT',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f246',
-              'secondaryColumnName': 'PROC_DESC',
-              'dataType': 'VARCHAR',
-              'matchPercentage': '0'
-            }
-          ]
-        },
-        {
-          'tableName': 'proc_code',
-          'tableId': '5c2995f9242f9a076a84f243',
-          'secondaryColumnList': [
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f240',
-              'secondaryColumnName': 'DX_CODE',
-              'dataType': 'INT',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f241',
-              'secondaryColumnName': 'DX_DESC',
-              'dataType': 'VARCHAR',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f245',
-              'secondaryColumnName': 'PROC_CODE',
-              'dataType': 'INT',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f246',
-              'secondaryColumnName': 'PROC_DESC',
-              'dataType': 'VARCHAR',
-              'matchPercentage': '0'
-            }
-          ]
-        },
-        {
-          'tableName': 'dx_code',
-          'tableId': '5c2995f9242f9a076a84f23e',
-          'secondaryColumnList': [
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f240',
-              'secondaryColumnName': 'DX_CODE',
-              'dataType': 'INT',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f241',
-              'secondaryColumnName': 'DX_DESC',
-              'dataType': 'VARCHAR',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f245',
-              'secondaryColumnName': 'PROC_CODE',
-              'dataType': 'INT',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f246',
-              'secondaryColumnName': 'PROC_DESC',
-              'dataType': 'VARCHAR',
-              'matchPercentage': '0'
-            }
-          ]
-        },
-        {
-          'tableName': 'proc_code',
-          'tableId': '5c2995f9242f9a076a84f243',
-          'secondaryColumnList': [
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f240',
-              'secondaryColumnName': 'DX_CODE',
-              'dataType': 'INT',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f241',
-              'secondaryColumnName': 'DX_DESC',
-              'dataType': 'VARCHAR',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f245',
-              'secondaryColumnName': 'PROC_CODE',
-              'dataType': 'INT',
-              'matchPercentage': '0'
-            },
-            {
-              'secondaryColumnId': '5c2995f9242f9a076a84f246',
-              'secondaryColumnName': 'PROC_DESC',
-              'dataType': 'VARCHAR',
-              'matchPercentage': '0'
-            }
-          ]
-        }
-      ]
-    }
-  ];
+  //  res = [
+  //   {
+  //     'primaryColumnName': 'IS_PROV',
+  //     'primaryColumnId': '5c2995f9242f9a076a84f234',
+  //     'dataType': 'BIT',
+  //     'secondaryTableList': [
+  //       {
+  //         'tableName': 'dx_code',
+  //         'tableId': '5c2995f9242f9a076a84f23e',
+  //         'secondaryColumnList': [
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f240',
+  //             'secondaryColumnName': 'DX_CODE',
+  //             'dataType': 'INT',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f241',
+  //             'secondaryColumnName': 'DX_DESC',
+  //             'dataType': 'VARCHAR',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f245',
+  //             'secondaryColumnName': 'PROC_CODE',
+  //             'dataType': 'INT',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f246',
+  //             'secondaryColumnName': 'PROC_DESC',
+  //             'dataType': 'VARCHAR',
+  //             'matchPercentage': '0'
+  //           }
+  //         ]
+  //       },
+  //       {
+  //         'tableName': 'proc_code',
+  //         'tableId': '5c2995f9242f9a076a84f243',
+  //         'secondaryColumnList': [
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f240',
+  //             'secondaryColumnName': 'DX_CODE',
+  //             'dataType': 'INT',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f241',
+  //             'secondaryColumnName': 'DX_DESC',
+  //             'dataType': 'VARCHAR',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f245',
+  //             'secondaryColumnName': 'PROC_CODE',
+  //             'dataType': 'INT',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f246',
+  //             'secondaryColumnName': 'PROC_DESC',
+  //             'dataType': 'VARCHAR',
+  //             'matchPercentage': '0'
+  //           }
+  //         ]
+  //       },
+  //       {
+  //         'tableName': 'dx_code',
+  //         'tableId': '5c2995f9242f9a076a84f23e',
+  //         'secondaryColumnList': [
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f240',
+  //             'secondaryColumnName': 'DX_CODE',
+  //             'dataType': 'INT',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f241',
+  //             'secondaryColumnName': 'DX_DESC',
+  //             'dataType': 'VARCHAR',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f245',
+  //             'secondaryColumnName': 'PROC_CODE',
+  //             'dataType': 'INT',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f246',
+  //             'secondaryColumnName': 'PROC_DESC',
+  //             'dataType': 'VARCHAR',
+  //             'matchPercentage': '0'
+  //           }
+  //         ]
+  //       },
+  //       {
+  //         'tableName': 'proc_code',
+  //         'tableId': '5c2995f9242f9a076a84f243',
+  //         'secondaryColumnList': [
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f240',
+  //             'secondaryColumnName': 'DX_CODE',
+  //             'dataType': 'INT',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f241',
+  //             'secondaryColumnName': 'DX_DESC',
+  //             'dataType': 'VARCHAR',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f245',
+  //             'secondaryColumnName': 'PROC_CODE',
+  //             'dataType': 'INT',
+  //             'matchPercentage': '0'
+  //           },
+  //           {
+  //             'secondaryColumnId': '5c2995f9242f9a076a84f246',
+  //             'secondaryColumnName': 'PROC_DESC',
+  //             'dataType': 'VARCHAR',
+  //             'matchPercentage': '0'
+  //           }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ];
     primaryTableId: any;
     primaryTableName: any;
     workspaceId: any;
-    joinListInfoArray: any;
     selectedPrimaryColumn: any;
     secondaryTableListArray: any;
+    dtOptions: DataTables.Settings = {};
+    selectedSecondaryTable: any;
+  updateSuccess = false;
+  errorMsg: any;
+  updateNotif = false;
 
 
 
 
-
-  constructor(private tablelistService: TableListService) { }
+  constructor(private tablelistService: TableListService,
+    private addDirectJoinService: AddDirectJoinService,
+    private router: Router) { }
 
 
   ngOnInit() {
-    //  this.tablelistService.currentResultArray.subscribe(res => {
-    //      this.workspaceId = res[0].workspaceId,
-    //      this.resultant = res[0].relationDetails;
-    //      this.primaryTableId = res[0].primaryTableId;
-    //      this.primaryTableName = res[0].primaryTableName;
-    //  });
+     this.tablelistService.currentResultArray.subscribe(res => {
+         this.workspaceId = res[0].workspaceId,
+         this.resultant = res[0].relationDetails;
+         this.primaryTableId = res[0].primaryTableId;
+         this.primaryTableName = res[0].primaryTableName;
+     });
+    // this.dtOptions = {
+    //     stateSave: false,
+    //     paging: true,
+    //     pageLength: 10,
+    //     pagingType: 'full_numbers',
+    //     ordering: false,
+    //     searching: false,
+    //     destroy: true
+    // };
      this.getPrimaryColumns();
      this.getSecondaryColumns();
   }
 
   getPrimaryColumns() {
-   for (const i of this.res) {
+   for (const i of this.resultant) {
       this.finalSecondaryArray = [];
       for (const j of i.secondaryTableList) {
           const tablename = j.tableName;
@@ -200,12 +216,12 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
   }
 
   getSecondaryColumns() {
-   for (const i of this.res) {
+   for (const i of this.resultant) {
       for (const j of i.secondaryTableList) {
           this.secTableNameMap.set(j.tableName, []);
       }
   }
-  for (const i of this.res) {
+  for (const i of this.resultant) {
       const primaryColumn = i.primaryColumnName;
       for (const j of i.secondaryTableList) {
           const tablename = j.tableName;
@@ -239,31 +255,27 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
   populatePrimaryValues(x) {
   this.populatePrimaryValuesArray = this.primaryColMap.get(x.key);
   this.selectedPrimaryColumn = x.key;
-  console.log('primaryColMap', this.primaryColMap);
-  console.log('primaryColDetailsMap', this.primaryColDetailsMap);
   }
 
   populateSecondaryValues(x) {
   this.populateSecondaryValuesArray = this.secTableNameMap.get(x.key);
-  console.log('secColMap', this.secTableNameMap);
-  console.log('secTableIdMap', this.secTableIdMap);
+  this.selectedSecondaryTable = x.key;
   }
 
   checkedPriValues(x, _event, index) {
   const isChecked = _event.target.checked;
+  let joinListInfoArray;
   if (isChecked) {
-  const secTableId = this.secTableIdMap.get(x.tableName);
-  const secTableName = x.tableName;
   const secColumn = {
     'columnId': x.secondaryColumnId,
     'columnName': x.secondaryColumnName,
     'dataType': x.dataType
   };
   if (this.resultantMap.has(x.tableName)) {
-   this.joinListInfoArray = this.resultantMap.get(x.tableName);
+    joinListInfoArray = this.resultantMap.get(x.tableName);
   } else {
     this.resultantMap.set(x.tableName, []);
-    this.joinListInfoArray = this.resultantMap.get(x.tableName);
+    joinListInfoArray = this.resultantMap.get(x.tableName);
   }
   const primaryColDetail = this.primaryColDetailsMap.get(this.selectedPrimaryColumn);
   let primaryColumn;
@@ -279,23 +291,111 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
       'primaryColumn': primaryColumn,
       'secondaryColumn': secColumn
   };
-  this.joinListInfoArray.push(Obj);
+  joinListInfoArray.push(Obj);
 } else {
-  this.joinListInfoArray = this.resultantMap.get(x.tableName);
-  for (const i of this.joinListInfoArray) {
+  joinListInfoArray = this.resultantMap.get(x.tableName);
+  for (const i of joinListInfoArray) {
   if (i.indexData === index) {
-    const indexx = this.joinListInfoArray.indexOf(i);
-    this.joinListInfoArray.splice(indexx, 1);
+    const indexx = joinListInfoArray.indexOf(i);
+    joinListInfoArray.splice(indexx, 1);
   }
   }
 }
-  this.resultantMap.set(x.tableName, this.joinListInfoArray);
-  console.log(this.resultantMap);
-  console.log(x, _event, index, this.joinListInfoArray);
   }
 
   checkedSecValues(x, _event, index) {
+  const isChecked = _event.target.checked;
+  let joinListInfoArray;
+  if (isChecked) {
+    const secColumn = {
+      'columnId': x.secondaryColumnId,
+      'columnName': x.secondaryColumnName,
+      'dataType': x.dataType
+    };
+    if (this.resultantMap.has(this.selectedSecondaryTable)) {
+      joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
+    } else {
+      this.resultantMap.set(this.selectedSecondaryTable, []);
+      joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
+    }
+  const primaryColDetail = this.primaryColDetailsMap.get(x.primaryColumn);
+  let primaryColumn;
+  for (const i of primaryColDetail) {
+  primaryColumn = {
+    'columnId': i.primaryColumnId,
+    'columnName': i.primaryColumnName,
+    'dataType': i.dataType
+  };
+  }
+  const Obj = {
+      'indexData': index,
+      'primaryColumn': primaryColumn,
+      'secondaryColumn': secColumn
+  };
+  joinListInfoArray.push(Obj);
+  } else {
+    joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
+    for (const i of joinListInfoArray) {
+    if (i.indexData === index) {
+      const indexx = joinListInfoArray.indexOf(i);
+      joinListInfoArray.splice(indexx, 1);
+    }
+    }
+  }
+  }
 
+  addJoins() {
+  const finalSecondaryTableListArray = [];
+  this.resultantMap.forEach((value, key) =>  {
+  let tempArray = [];
+  const secTableId = this.secTableIdMap.get(key);
+  const secTableName = key;
+  tempArray = JSON.parse(JSON.stringify(value));
+  for (const i of tempArray) {
+  delete i.indexData;
+  }
+  const Obj1 = {
+    'tableId' : secTableId,
+    'tableName' : secTableName,
+    'joinListInfo' : tempArray
+  };
+  finalSecondaryTableListArray.push(Obj1);
+  });
+  const param = {
+    workspaceId: this.workspaceId,
+    primaryTable: {
+      tableId: this.primaryTableId,
+      tableName: this.primaryTableName
+    },
+    secondaryTableList: finalSecondaryTableListArray
+  };
+  console.log(param);
+  if (this.finalSecondaryArray.length > 0) {
+  this.addDirectJoinService.addNewJoin(param).subscribe(res => {
+    if (res && res.data.errorDetails.length === 0) {
+      this.updateSuccess = true;
+      this.resultantMap.clear();
+      setTimeout(() =>
+        this.closeScreen(), 1000);
+    } else {
+      this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
+      this.updateNotif = true;
+    }
+  });
+} else {
+    this.errorMsg = 'Please select columns to add joins';
+    this.updateNotif = true;
+}
+  }
+
+  closeErrorMsg() {
+    this.errorMsg = '';
+    this.updateNotif = false;
+    this.updateSuccess = false;
+  }
+
+  closeScreen() {
+  this.router.navigate(['workspace/metalyzer/ALL/analysis']);
   }
 
 }

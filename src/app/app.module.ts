@@ -1,14 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtHelper } from 'angular2-jwt';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { MatTableModule } from '@angular/material';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { InMemoryDataService } from './in-memory-data.service';
 import { InfoService } from './info.service';
 import { SigninFormService } from './signin-form/signin-form.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -17,7 +15,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { AuthModule } from './/auth.module';
 import { SignupFormService } from './signup-form/signup-form.service';
 import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
 import { AuthenticationService } from './authentication/authentication.service';
@@ -84,12 +81,18 @@ import { ReverseArrayPipe } from './reverse.pipe';
 import { EditRelationshipInfoComponent } from './edit-relationship-info/edit-relationship-info.component';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 import { UserProfileService } from './user-profile/user-profile.service';
+import { RelationshipInfoComponent } from './relationship-info/relationship-info.component';
+import { RelationshipListComponent } from './relationship-list/relationship-list.component';
 import { EditRelationshipInfoService } from './edit-relationship-info/edit-relationship-info.service';
 import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
 import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
 import { SecondaryColumnPipe } from './secondary-column.pipe';
 import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { KeyvaluePipe } from './keyvalue.pipe';
+import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
+export function tokenGetter() {
+        return localStorage.getItem('accessToken');
+}
 @NgModule({
         declarations: [
                 AppComponent,
@@ -137,13 +140,21 @@ import { KeyvaluePipe } from './keyvalue.pipe';
                 ReverseArrayPipe,
                 SearchPipe,
                 RolePipe,
+                RelationshipInfoComponent,
+                RelationshipListComponent,
                 EditRelationshipInfoComponent,
                 AddDirectJoinComponent,
                 SecondaryColumnPipe,
                 DataAnalyzerResultScreenComponent,
-                KeyvaluePipe
+                KeyvaluePipe,
+                ManagementLandingPageComponent
         ],
         imports: [
+                JwtModule.forRoot({
+                        config: {
+                                tokenGetter: tokenGetter
+                        }
+                }),
                 BrowserModule,
                 FormsModule,
                 // HttpClientInMemoryWebApiModule.forRoot(
@@ -151,7 +162,6 @@ import { KeyvaluePipe } from './keyvalue.pipe';
                 //     { dataEncapsulation: false }
                 // ),
                 FormsModule,
-                AuthModule,
                 ReactiveFormsModule,
                 DataTablesModule,
                 MatTableModule,
@@ -159,8 +169,7 @@ import { KeyvaluePipe } from './keyvalue.pipe';
                 HttpClientModule
         ],
         providers: [
-                JwtHelper,
-                InMemoryDataService,
+                JwtHelperService,
                 InfoService,
                 SigninFormService,
                 SignupFormService,

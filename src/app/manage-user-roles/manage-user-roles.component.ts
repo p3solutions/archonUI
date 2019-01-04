@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { Data } from '@angular/router/src/config';
 import { GlobalRoles } from '../global-roles';
 import { ChangeGlobalRole } from '../change-global-role';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 
 

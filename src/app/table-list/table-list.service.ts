@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import { JwtHelper } from 'angular2-jwt';
+
+
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
 import { WorkspaceObject } from '../workspace-objects';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class TableListService {
   accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
   private serviceActionType: string;
   tableListUrl = environment.apiUrl + 'meta/tablesList?workspaceId=';
   relationTableListUrl = environment.apiUrl + '/meta/tablesRelationShip?tableId=';
@@ -34,36 +33,39 @@ export class TableListService {
   }
 
   getTableList(workspaceId): Observable<string[]> {
-    return this.http.get<string[]>(this.tableListUrl + workspaceId, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractTables)
-      .pipe(catchError(this.handleError('tables-getTableList()', []))
-      );
+    return this.http.get<string[]>(this.tableListUrl + workspaceId, { headers: this.userinfoService.getHeaders() }).
+    pipe(
+      map(this.extractTables),
+      catchError(this.handleError('tables-getTableList()', []))
+    );
   }
   getListOfRelationTable(id, workspaceId): Observable<any[]> {
     const url = this.relationTableListUrl + id + '&workspaceId=' + workspaceId;
     return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractRelationTableList)
-      .pipe(catchError(this.handleError('relationtable-getListOfRelationTable()', []))
+      .pipe(
+        map(this.extractRelationTableList),
+        catchError(this.handleError('relationtable-getListOfRelationTable()', []))
       );
   }
   deleteRelationInfoData(workspaceID, primaryTableId, joinName, relationShipIDs): Observable<any> {
     const url = this.deleteRelationsUrl + workspaceID + '&tableId=' + primaryTableId;
-    const params = {joinName: joinName, relationshipId: relationShipIDs};
-    return this.http.request<any>('DELETE', url, { body: params,  headers: this.userinfoService.getHeaders() })
+    const params = { joinName: joinName, relationshipId: relationShipIDs };
+    return this.http.request<any>('DELETE', url, { body: params, headers: this.userinfoService.getHeaders() })
       .pipe(catchError(this.handleError('deleteRelationInfoData', []))
       );
   }
 
   getColumnsByTableId(tableId): Observable<any[]> {
     return this.http.get<any[]>(this.columnListUrl + tableId, {headers: this.userinfoService.getHeaders()})
-    .map(this.extractTable)
-    .pipe(catchError(this.handleError('getColumnsByTableId()', [])));
+    .pipe(
+      map(this.extractTable),
+    catchError(this.handleError('getColumnsByTableId()', [])));
   }
 
 
   sendValuesForTableToTableAnalysis(analysisObject): Observable<any> {
-    return this.http.post<any[]>( this.dataAnalysisUrl, analysisObject, {headers: this.userinfoService.getHeaders()})
-    .pipe(catchError(this.handleError('sendValuesForTabletoTableAnalysis', [])));
+    return this.http.post<any[]>(this.dataAnalysisUrl, analysisObject, { headers: this.userinfoService.getHeaders() })
+      .pipe(catchError(this.handleError('sendValuesForTabletoTableAnalysis', [])));
   }
 
   stateManagement(userId, workspaceID, metalyzerServiceId) {
@@ -97,7 +99,7 @@ export class TableListService {
   getServiceActionType() {
     return this.serviceActionType;
   }
-  // * Handle Http operation that failed.
+  // * Handle HttpClient operation that failed.
   // * Let the app continue.
   // * @param operation - name of the operation that failed
   // * @param result - optional value to return as the observable result

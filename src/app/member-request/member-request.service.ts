@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable ,  of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
+
+
 import { MemberRequestData } from '../member-request-data';
 import { environment } from '../../environments/environment';
 
@@ -21,7 +20,7 @@ export class MemberRequestService {
     );
   }
 
-// * Handle Http operation that failed.
+// * Handle HttpClient operation that failed.
 // * Let the app continue.
 // * @param operation - name of the operation that failed
 // * @param result - optional value to return as the observable result

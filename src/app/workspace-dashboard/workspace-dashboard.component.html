@@ -1,2 +1,3 @@
-<app-workspace-header (serviceActionsListEvent) = "receiveServiceActionsListEvent($event)"></app-workspace-header>
-<router-outlet></router-outlet>
+<app-workspace-header [userWorkspaceArray]="userWorkspaceArray"></app-workspace-header>
+<router-outlet *ngIf="userWorkspaceArray?.length>0"></router-outlet>
+<app-no-workspace [noWorkspace]="noWorkspace" *ngIf="userWorkspaceArray?.length==0"></app-no-workspace>
