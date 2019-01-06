@@ -51,7 +51,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     });
   }
   gotoManagementPanel() {
-    this.router.navigate(['workspace/management-panel']);
+    this.router.navigate(['management-landing-page/management-panel']);
   }
 
   ngOnDestroy() {
