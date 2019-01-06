@@ -67,7 +67,7 @@ export class ManagementPanelComponent implements OnInit {
     this.router.navigate(['management-landing-page/manage-user-roles']);
   }
   gotoWorkspaceList() {
-    this.router.navigate(['management-landing-page/workspace-list']);
+        this.router.navigate(['management-landing-page/workspace-list']);
   }
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
