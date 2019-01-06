@@ -53,6 +53,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   step0Empty = false;
   step1Empty = false;
   createdb: boolean;
+  inProgress = false;
+  dbinProgress = false;
   constructor(
     private userWorkspaceService: UserWorkspaceService
   ) { }
@@ -63,6 +65,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   testDbConnection() {
+    this.inProgress = true;
     this.testDbParam.userName = this.userName;
     this.testDbParam.password = this.password;
     this.testDbParam.port = this.port;
@@ -74,10 +77,12 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.testDbParam.profileName = this.profileName;
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
       if (res) {
+        this.inProgress = false;
         this.dbTestConnectionErrorMsg = '';
         this.dbTestConnectionSuccessMsg = res.connection.message;
       //  console.log('clicked on test connection', res, res.connection.message);
       } else {
+         this.inProgress = false;
          this.dbTestConnectionSuccessMsg = '';
          this.dbTestConnectionErrorMsg = 'Failed! Try again with correct DB configuration.';
        }
@@ -278,6 +283,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   createDBConfig() {
+    this.dbinProgress = true;
     // this.dbParam.dbProfileName = this.dbProfileName;
     this.dbParam.userName = this.userName;
     this.dbParam.password = this.password;
@@ -291,23 +297,25 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
       if (res) {
+        this.dbinProgress = false;
+        this.createNewdb();
         this.createdb = true;
         } else {
+         this.dbinProgress = false;
          this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
        }
     });
-    if (this.createdb) {
-      this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
-        if (res) {
-          this.newWSinfo = res;
-          console.log('latest testing ', res);
-          document.getElementById('populate-db-list').click();
-          this.postCreation();
-        }
-      });
-      }
     // window.location.reload();
     // this.router.navigate(['/workspace/database-list']);
   }
+  createNewdb() {
+    this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
+      if (res) {
+        this.newWSinfo = res;
+        document.getElementById('populate-db-list').click();
+        this.postCreation();
+      }
+    });
+    }
 
 }

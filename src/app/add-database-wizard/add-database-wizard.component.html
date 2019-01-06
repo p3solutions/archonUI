@@ -69,14 +69,14 @@
               <div class="col-md-12 row m-10">
                 <div class="col-md-2">Host</div>
                 <div class="col-md-4">
-                  <input [(ngModel)]="host" placeholder="Enter Host name" name="host" id="host" class="{{!host ? 'error-input' : ''}}"
+                  <input [(ngModel)]="host" placeholder="Enter Host name" name="host" id="host" class="{{!host && hostEmpty ? 'error-input' : ''}}"
                     (keyup)="step0Validation($event)" required />
                 </div>
                 <div class="col-md-2">Port</div>
                 <div class="col-md-4">
-                  <input [(ngModel)]="port" placeholder="{{(selectedDBServerName == 'Select server') ? 'Enter Port number' :  port}}"
-                    name="port" id="port" class="{{!port ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
-                    required />
+                  <input [(ngModel)]="port" placeholder="{{(selectedDBServerName == 'Select server') ? 'Select Database server' :  port}}"
+                    name="port" id="port" class="{{!port && portEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
+                    required readonly />
                 </div>
               </div>
 
@@ -84,7 +84,7 @@
                 <div class="col-md-2">Database Name</div>
                 <div class="col-md-4">
                   <input [(ngModel)]="databaseName" placeholder="Enter Database name" name="databaseName" id="databaseName"
-                    class="{{!databaseName ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
+                    class="{{!databaseName && databaseNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
                     required />
                 </div>
                 <!-- <div class="col-md-2">Database Server</div>
@@ -105,7 +105,7 @@
                 <div class="col-md-2">Default Schema</div>
                 <div class="col-md-4">
                   <input [(ngModel)]="schemaName" placeholder="Enter Default Schema" name="schemaName" id="schemaName"
-                    class="{{!schemaName ? 'error-input' : ''}}" (keyup)="step0Validation($event)" required />
+                    class="{{!schemaName && schemaNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event)" required />
                 </div>
               </div>
               <div class="col-md-12 row m-10">
@@ -137,7 +137,7 @@
               <div class="col-md-12 row m-10">
                 <div class="col-md-2">UserName</div>
                 <div class="col-md-4">
-                  <input [(ngModel)]="userName" placeholder="Enter User Name" name="userName" id="userName" class="{{!userName ? 'error-input' : ''}}"
+                  <input [(ngModel)]="userName" placeholder="Enter User Name" name="userName" id="userName" class="{{!userName && userNameEmpty ? 'error-input' : ''}}"
                     (keyup)="step1Validation($event)" required />
                 </div>
               </div>
@@ -145,7 +145,7 @@
                 <div class="col-md-2">Password</div>
                 <div class="col-md-4">
                   <input type="password" [(ngModel)]="password" placeholder="Enter Password" name="password" id="password"
-                    class="{{!password ? 'error-input' : ''}}" (keyup)="step1Validation($event)" required />
+                    class="{{!password && passwordEmpty ? 'error-input' : ''}}" (keyup)="step1Validation($event)" required />
                 </div>
               </div>
               <!-- <div class="row">
@@ -199,7 +199,7 @@
               </div>
               <div class="col-md-12 row m-12">
                 <div class="col-md-12"><button type="button" class="btn btn-primary center-block" (click)="testDbConnection()">
-                    Test Connection</button></div>
+                    Test Connection <i *ngIf="inProgress" class="fa fa-spinner fa-spin inline-loader"></i></button></div>
                 <div *ngIf="dbTestConnectionSuccessMsg" style="color:green;" class="col-md-12 row m-10 text-center">
                   {{dbTestConnectionSuccessMsg}}
                 </div>
@@ -251,7 +251,7 @@
         <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
         <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event)">Previous</button>
         <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)" disabled="{{enableNextBtn ? null : 'disabled'}}">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
-        <button type="button" id="create-btn" class="btn btn-primary hide" (click)="createDBConfig()">Create&nbsp;</button>
+        <button type="button" id="create-btn" class="btn btn-primary hide" (click)="createDBConfig()">Create&nbsp;<i *ngIf="dbinProgress" class="fa fa-spinner fa-spin inline-loader"></i></button>
         <button type="button" id="ok-btn" class="btn btn-primary hide" data-dismiss="modal" (click)="resetCarousel()">Done</button>
       </div>
 
