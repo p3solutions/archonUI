@@ -79,21 +79,18 @@ const routes: Routes = [
       {
         path: 'edit-profile', component: EditProfileComponent
       }]
-  }, 
-  {
-    path: 'management-landing-page', component: ManagementLandingPageComponent, 
-
-    children:[
-
-      {path: 'management-panel', component: ManagementPanelComponent,pathMatch: 'full'}
-     ,
-          {
-            path: 'database-list', component: DatabaseListComponent
-          }, {
-            path: 'workspace-list', component: WorkspaceListComponent
-          }, {
-            path: 'manage-user-roles', component: ManageUserRolesComponent
-          }
+  }, {
+    path: 'management-landing-page', component: ManagementLandingPageComponent,
+    children: [
+      { path: 'management-panel', component: ManagementPanelComponent, pathMatch: 'full' }
+      ,
+      {
+        path: 'database-list', component: DatabaseListComponent
+      }, {
+        path: 'workspace-list', component: WorkspaceListComponent
+      }, {
+        path: 'manage-user-roles', component: ManageUserRolesComponent
+      }
     ]
   }, {
     path: 'status', component: StatusScreenComponent
