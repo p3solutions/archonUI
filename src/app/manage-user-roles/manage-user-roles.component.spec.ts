@@ -14,18 +14,18 @@ import { DataTablesModule } from 'angular-datatables';
 describe('ManageUserRolesComponent', () => {
   let component: ManageUserRolesComponent;
   let fixture: ComponentFixture<ManageUserRolesComponent>;
-  let testBedService:any;
+  let testBedService: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageUserRolesComponent , RolePipe , ChangeUserRoleComponent ],
-      imports: [ RouterTestingModule, HttpClientTestingModule,DataTablesModule],
+      declarations: [ManageUserRolesComponent, RolePipe, ChangeUserRoleComponent],
+      imports: [RouterTestingModule, HttpClientTestingModule, DataTablesModule],
       providers: [
         ChangeUserRoleService,
         ManageUserRolesService
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -33,24 +33,22 @@ describe('ManageUserRolesComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
     testBedService = TestBed.get(ManageUserRolesService);
-    });
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-   // ToDo: revisit again
+  // ToDo: revisit again
   it('Should navigate to dashboard', () => {
-      component.gotoDashboard();
-      fixture.detectChanges();
+    component.gotoDashboard();
+    fixture.detectChanges();
     // find DebugElements with an attached WorkspaceServicesComponentDirective
     const workspaceServiceTag = fixture.debugElement
       .queryAll(By.css('app-workspace-services'));
-    // console.log('workspaceServiceTag', workspaceServiceTag);
     // get the attached link directive instances using the DebugElement injectors
     const links = workspaceServiceTag
       .map(dE => dE.injector.get(WorkspaceServicesComponent) as WorkspaceServicesComponent);
-    // console.log('links', links);
     const dashboardUrl = 'workspace/workspace-dashboard/workspace-services';
     // expect(links[1].navigatedTo).toBe(dashboardUrl);
   });

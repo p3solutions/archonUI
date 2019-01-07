@@ -64,10 +64,10 @@ export class NewWorkspaceComponent implements OnInit {
       document.getElementById('wsName').focus();
       e.stopPropagation();
     } else {
-      if (document.querySelector('.second-last').classList.contains('active') ) {
+      if (document.querySelector('.second-last').classList.contains('active')) {
         if (this.databaseIds.length > 0) { // selected at least one DB
           // restricting to select one, temporarily as per Backend team
-           if (this.databaseIds.length > 1) {
+          if (this.databaseIds.length > 1) {
             alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
             return false;
           }
@@ -90,7 +90,6 @@ export class NewWorkspaceComponent implements OnInit {
 
   handleStepIindicator(isNext) {
     const slideNo = $('.carousel-inner .item.active').attr('step');
-    console.log('slideNo', slideNo, document.getElementById('progress-bar'));
     switch (slideNo) {
       case '0':
         if (isNext) {
@@ -125,7 +124,7 @@ export class NewWorkspaceComponent implements OnInit {
     this.wsParam.workspaceName = this.wsName;
     this.wsParam.databaseIds = this.databaseIds;
     this.addClass('progress-bar', 'width-100-pc');
-    this.userWorkspaceService.createNewWorkspace(this.wsParam).subscribe( res => {
+    this.userWorkspaceService.createNewWorkspace(this.wsParam).subscribe(res => {
       if (res) {
         this.newWSinfo = res;
         this.postCreation();
@@ -138,17 +137,17 @@ export class NewWorkspaceComponent implements OnInit {
   getSupportedDBs() {
     const thisComponent = this;
     this.userWorkspaceService.getSupportedDBList()
-    .subscribe( res => {
-      if (res && res.length > 0) {
-        res.forEach(element => {
-          element.createdDate = thisComponent.commonUtilityService.getDisplayTime(element.createdAt * 1000);
-         // element.createdDate = new Date(element.createdAt * 1000).toDateString();
-          this.supportedDBs.push(element);
-        });
-        this.isDBAvailable = true;
-        this.generateDBtable({ data: this.supportedDBs});
-      }
-    });
+      .subscribe(res => {
+        if (res && res.length > 0) {
+          res.forEach(element => {
+            element.createdDate = thisComponent.commonUtilityService.getDisplayTime(element.createdAt * 1000);
+            // element.createdDate = new Date(element.createdAt * 1000).toDateString();
+            this.supportedDBs.push(element);
+          });
+          this.isDBAvailable = true;
+          this.generateDBtable({ data: this.supportedDBs });
+        }
+      });
   }
   generateDBtable(xData) {
     const thisComponent = this;
@@ -183,10 +182,10 @@ export class NewWorkspaceComponent implements OnInit {
       'order': [[1, 'asc']]
     });
     this.bindCHeckboxClick();
-    $('.dataTables_paginate,.paging_simple_numbers,.dataTables_length').off('click').on('click', function() {
+    $('.dataTables_paginate,.paging_simple_numbers,.dataTables_length').off('click').on('click', function () {
       thisComponent.bindCHeckboxClick();
     });
-    $('.dataTables_filter').off('keyup').on('keyup', function() {
+    $('.dataTables_filter').off('keyup').on('keyup', function () {
       thisComponent.bindCHeckboxClick();
     });
   }
@@ -200,7 +199,6 @@ export class NewWorkspaceComponent implements OnInit {
     const _row = $(checkbox).closest('tr');
     // const _row = $(checkbox).prop('checked') ? $(checkbox).closest('tr') : null;
     const selDBdata = this.DBtable.row(_row).data();
-    // console.log(selDBdata);
     const id = selDBdata.id;
     if ($(checkbox).is(':checked')) {
       this.databaseIds.push(id);
@@ -213,19 +211,18 @@ export class NewWorkspaceComponent implements OnInit {
       this.databaseIds = this.removeElementByValue(this.databaseIds, id);
       this.selectedDBList = this.removeObjByValue(this.selectedDBList, 'id', id);
     }
-    if (this.databaseIds.length === 0 ) {
+    if (this.databaseIds.length === 0) {
       this.errorDBselect = true;
     } else {
       this.errorDBselect = false;
     }
-    // console.log('selected DB ids', this.databaseIds, this.selectedDBList);
   }
   removeElementByValue(array, value) {
     return array.filter(function (elem, _index) {
       return value !== elem;
     });
   }
-  
+
   removeObjByValue(array, key, value) {
     return array.filter(function (elem, _index) {
       return value !== elem[key];
@@ -244,7 +241,7 @@ export class NewWorkspaceComponent implements OnInit {
     this.selectedDBtable = $('#selected-db-list-table').DataTable({
       // 'searching': false,
       'lengthMenu': [[5, 10, 25, 50, -1], [5, 10, 25, 50, 'All']],
-      'ajax': function (data, callback, settings) { callback({data: thisComponent.selectedDBList}); },
+      'ajax': function (data, callback, settings) { callback({ data: thisComponent.selectedDBList }); },
       'columns': [
         { 'data': 'databaseName' },
         { 'data': 'owner.name' },

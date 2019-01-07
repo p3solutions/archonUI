@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
 
@@ -40,13 +40,12 @@ export class ChangePasswordService {
     // tslint:disable-next-line:no-shadowed-variable
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
-      return of(result as T);
+      return of(result);
     };
   }
 
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 
 }

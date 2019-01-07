@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ResponseContentType } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -32,11 +33,10 @@ export class MetalyzerHeaderService {
       catchError(this.handleError<string>('getworkspaceName'))
     );
   }
-  getExportxml(workspaceId, databaseID, xml): Observable<any> {
-      const downloadHeaders = new HttpHeaders().set('Authorization' , 'Bearer ' + this.userinfoService.getAuthKey());
-      const params = {workspaceId: workspaceId, databaseId: databaseID, exportType: xml};
-      return this.http.post(this.exportxmlUrl, params, {headers: downloadHeaders, observe: 'response', responseType: 'blob'})
-      .pipe(catchError(this.handleError('getExportxml()', [])));
+  getExportxml(workspaceId, databaseID, xml): Observable<Blob> {
+    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml };
+    return this.http.post(this.exportxmlUrl, params,
+      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
   }
   private extractWorkspace(res: any) {
     const data = res.data.workspaces.workspaceName;
@@ -48,7 +48,7 @@ export class MetalyzerHeaderService {
       // TODO: send the error to remote logging infrastructure
       console.error(error);
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(result);
     };
   }
 }

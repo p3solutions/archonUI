@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Info } from './info';
 
@@ -39,7 +39,6 @@ export class InfoService {
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 
 }

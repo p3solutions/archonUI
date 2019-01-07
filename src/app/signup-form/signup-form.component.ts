@@ -41,7 +41,6 @@ export class SignupFormComponent implements OnInit {
       password: new FormControl('', [Validators.required]),
       // confirmPassword: new FormControl('', [Validators.required])
     });
-    // console.log('aloksignup', this.signUpForm, this.signUpForm.value);
   }
 
   onSignUp() {
@@ -62,7 +61,6 @@ export class SignupFormComponent implements OnInit {
         this.inProgress = false;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          console.log('An error occurred:', err.error.message);
           // this.msg = err.error.message;
         } else {
           // The backend returned an unsuccessful response code.
@@ -71,7 +69,6 @@ export class SignupFormComponent implements OnInit {
           this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = !err.error.success;
           this.msg = err.status;
-          console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }
       }
     );

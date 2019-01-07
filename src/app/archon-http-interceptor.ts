@@ -24,7 +24,6 @@ export class ArchonHttpInterceptor implements HttpInterceptor {
         .handle(request)
         .pipe(
             tap((ev: any) => {
-                // console.log('ev', ev);
             }),
             catchError(response => {
                 this.redirectHandler(response);
@@ -33,7 +32,6 @@ export class ArchonHttpInterceptor implements HttpInterceptor {
         );
     }
     redirectHandler(response: ArchonResponse) {
-        // console.log('Processing http error', response);
         if (response) {
             if (response.error) {
                 console.log(`HttpClient error message "${response.error.errorMessage}"`);

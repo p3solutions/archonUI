@@ -49,12 +49,11 @@ export class ManageMasterMetadataService {
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(result);
     };
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 
 }

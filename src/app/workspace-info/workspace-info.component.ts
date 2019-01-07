@@ -28,7 +28,6 @@ export class WorkspaceInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('visited WorkspaceInfoComponent');
     this.isAvailable = false;
     if (!this.workspaceId) {
       this.route.params.subscribe(params => {
@@ -46,9 +45,7 @@ export class WorkspaceInfoComponent implements OnInit {
     this.showNavBar = window.location.pathname === this.wsIndiPageUrl;
   }
   getWorkspaceInfo(workspaceId) {
-    console.log('workspace id : ', workspaceId);
     this.workspaceinfoservice.getWorkSpaceInfo(workspaceId).subscribe(data => {
-      // console.log(data);
       this.isAvailable = true;
       this.workspaceInfoData = data;
       this.setLoggedInUserRole(this.workspaceInfoData.members);

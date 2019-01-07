@@ -24,7 +24,6 @@ export class ManageMemberPrivilegesComponent implements OnInit {
     public viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {
-    console.log(this.wsAccess);
     this.showRoleDropdown = false;
     this.showServiceDropdown = false;
     this.getServiceList();
@@ -36,16 +35,16 @@ export class ManageMemberPrivilegesComponent implements OnInit {
 
   getServiceList() {
     this.manageMembersService.getServiceActions()
-    .subscribe(res => {
-      this.serviceList = res;
-    });
+      .subscribe(res => {
+        this.serviceList = res;
+      });
   }
 
   getPermissionList() {
     this.manageMembersService.getServiceActions()
       .subscribe(res => {
         this.permissionList = res;
-    });
+      });
   }
 
   getWSRoleList(selectedRoleId) {
