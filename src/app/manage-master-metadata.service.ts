@@ -53,7 +53,6 @@ export class ManageMasterMetadataService {
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 
 }

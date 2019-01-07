@@ -62,7 +62,7 @@ xdescribe('ManageMembersComponent', () => {
     expect(member.textContent.trim()).toBe(workspaceAccess.user.name);
     expect(role.textContent.trim()).toBe(workspaceAccess.workspaceRole.roleName);
   });
-// this shouldn't be executed on production
+  // this shouldn't be executed on production
   xit('Should work the delete functionality, by deleting one member-info', () => {
     spyOn(manageMembersService, 'getManageMembersData').and.returnValue(simpleObservable);
     fixture.detectChanges();
@@ -84,11 +84,9 @@ xdescribe('ManageMembersComponent', () => {
     // find DebugElements with an attached WorkspaceServicesComponentDirective
     const workspaceServiceTag = fixture.debugElement
       .queryAll(By.css('app-workspace-services'));
-    console.log('workspaceServiceTag', workspaceServiceTag);
     // get the attached link directive instances using the DebugElement injectors
     const links = workspaceServiceTag
       .map(dE => dE.injector.get(WorkspaceServicesComponent) as WorkspaceServicesComponent);
-    console.log('links', links);
     const dashboardUrl = 'workspace/workspace-dashboard/workspace-services';
     // expect(links[1].navigatedTo).toBe(dashboardUrl);
   });

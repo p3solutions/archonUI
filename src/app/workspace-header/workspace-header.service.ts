@@ -36,7 +36,6 @@ export class WorkspaceHeaderService {
     return this.workspace.workspaceState;
   }
   getServiceActionType(userId: string) {
-    // console.log(this)
     const members = this.workspace.members;
     for (let i = 0; i < members.length; i++) {
       if (members[i].user.id === userId) {
@@ -44,5 +43,8 @@ export class WorkspaceHeaderService {
       }
     }
     return null;
+  }
+  getDatabaseID() {
+    return this.workspace.databases[0].id;
   }
 }

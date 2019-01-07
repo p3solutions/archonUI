@@ -24,7 +24,7 @@ export class ChangePasswordComponent implements OnInit {
   enableChangePassBtn = false;
   inProgress = false;
   @Input() userId: string;
-  constructor(private changePasswordService: ChangePasswordService,private router:Router) { }
+  constructor(private changePasswordService: ChangePasswordService, private router: Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -69,21 +69,17 @@ export class ChangePasswordComponent implements OnInit {
     };
     this.changePasswordService.changePassword(param).subscribe((res) => {
       (<HTMLButtonElement>document.querySelector('#changePasswordModal .cancel')).click();
-
-      console.log(res, 'changeUserPassword');
     },
       (err: HttpErrorResponse) => {
         this.inProgress = false;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          console.log('An error occurred:', err.error.message);
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
           this.errorObject.message = 'Invalid current password';
           this.errorObject.show = !err.error.success;
-          console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }
       });
   }
@@ -96,7 +92,7 @@ export class ChangePasswordComponent implements OnInit {
     }
   }
 
-  gotoDashboard(){
+  gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 }

@@ -75,10 +75,8 @@ export class TableListComponent implements OnInit {
   }
   getTableList() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-    console.log(this.workspaceID);
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
-      // console.log(this.tableList);
       this.isAvailable = true;
     });
   }
@@ -344,12 +342,10 @@ export class TableListComponent implements OnInit {
       'samplingPercentage': this.analysisRowCount
     };
     this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
-    console.log('finally', this.selectedTblsColsObj);
   }
   handleStepIindicator(isNext) {
     const slideNo = this.getCurrentStep();
     const progressSelector = 'progress-bar';
-    // console.log('slideNo', slideNo, document.getElementById(progressSelector));
     switch (slideNo) {
       case '0':
         // this.removeClass(progressSelector, 'width-5-pc');

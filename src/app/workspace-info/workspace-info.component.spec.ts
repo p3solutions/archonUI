@@ -92,11 +92,9 @@ xdescribe('WorkspaceInfoComponent', () => {
     // find DebugElements with an attached WorkspaceServicesComponentDirective
     workspaceServiceTag = fixture.debugElement
       .queryAll(By.directive(WorkspaceServicesComponent));
-    // console.log('workspaceServiceTag', workspaceServiceTag);
     // get the attached link directive instances using the DebugElement injectors
     const links = workspaceServiceTag
       .map(dE => dE.injector.get(WorkspaceServicesComponent) as WorkspaceServicesComponent);
-    // console.log('links', links);
     expect(links[1].navigatedTo).toBe(dashboardUrl);
   });
 });

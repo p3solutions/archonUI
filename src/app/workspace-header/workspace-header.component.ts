@@ -98,7 +98,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   contactAdmin() {
-    console.log('contact Admin function pending!');
+    // TODO: Contact admin function pending
   }
 
   openCreateWSModal() {
@@ -113,7 +113,6 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
-    console.log(selectedWorkspace);
     this.selectedWorkspaceName = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
@@ -122,10 +121,10 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
     this.workspaceService.updateServiceActions(_temp);
     //  setTimeout(() => {
-      
+
     //  }, 3000);
 
-     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
   onChange(val) {
