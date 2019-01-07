@@ -46,13 +46,14 @@ export class SignupFormComponent implements OnInit {
 
   onSignUp() {
     this.inProgress = true;
+    this.errorObject = new ErrorObject;
+    this.errorObject.show = false;
+    this.successMessage = false;
     this.signup = this.signUpForm.value;
     this.signupService.signUp(this.signup).subscribe(
       data => {
         this.responseData = data;
         if (this.responseData.httpStatus === 200) {
-          this.errorObject = new ErrorObject;
-          this.errorObject.show = false;
           this.successMessage = true;
           setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 6000);
         }
@@ -67,9 +68,10 @@ export class SignupFormComponent implements OnInit {
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
-          this.errorObject = new ErrorObject;
-          this.errorObject.message = err.error.errorMessage;
-          this.errorObject.show = !err.error.success;
+          const stringToSplit = err.error.errors[0].codes;
+          const errMsg = stringToSplit[1];
+          this.errorObject.message = errMsg;
+          this.errorObject.show = true;
           this.msg = err.status;
           console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }
