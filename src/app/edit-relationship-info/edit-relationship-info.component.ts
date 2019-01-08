@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { EditRelationshipInfoService } from './edit-relationship-info.service';
-import { JoinValues, SecondaryColumn, JoinValueColumn} from './edit-relationship-info-object';
+import { JoinValues, SecondaryColumn, JoinValueColumn } from './edit-relationship-info-object';
 
 @Component({
   selector: 'app-edit-relationship-info',
@@ -8,6 +8,7 @@ import { JoinValues, SecondaryColumn, JoinValueColumn} from './edit-relationship
   styleUrls: ['./edit-relationship-info.component.css']
 })
 export class EditRelationshipInfoComponent implements OnInit, OnChanges {
+  newWSinfo: any;
   @Input() relation: any;
   @Input() workspaceID: any;
   @Output() updateEvent = new EventEmitter<boolean>();
@@ -34,9 +35,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges) {
-   const value: SimpleChange = change.relation;
-   this.userValues = value.currentValue;
-   this.populateValues();
+    const value: SimpleChange = change.relation;
+    this.userValues = value.currentValue;
+    this.populateValues();
   }
 
   populateValues() {
@@ -56,25 +57,25 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         const joinValue = new JoinValues();
         joinValue.primaryColumn = i;
         for (const detail of this.joinDetails) {
-            if (detail.primaryColumn.columnId === i.columnId) {
-              joinValue.relationshipId = detail.relationshipId;
-              joinValue.secondaryColumn = detail.secondaryColumn;
-              joinValue.defaultSecondaryColumn = true;
-              break;
-            } else {
-              joinValue.relationshipId = '';
-              joinValue.secondaryColumn = new SecondaryColumn();
-              joinValue.secondaryColumn.columnId = '';
-              joinValue.secondaryColumn.columnName = '';
-              joinValue.secondaryColumn.dataType = '';
-            }
+          if (detail.primaryColumn.columnId === i.columnId) {
+            joinValue.relationshipId = detail.relationshipId;
+            joinValue.secondaryColumn = detail.secondaryColumn;
+            joinValue.defaultSecondaryColumn = true;
+            break;
+          } else {
+            joinValue.relationshipId = '';
+            joinValue.secondaryColumn = new SecondaryColumn();
+            joinValue.secondaryColumn.columnId = '';
+            joinValue.secondaryColumn.columnName = '';
+            joinValue.secondaryColumn.dataType = '';
+          }
         }
         this.joinDetailsArray.push(joinValue);
       }
     });
   }
 
-  selectedValues(primaryValues, index , secondaryColumn) {
+  selectedValues(primaryValues, index, secondaryColumn) {
     const example = {
       columnId: '',
       columnName: '',
@@ -92,12 +93,12 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       indexData: index,
       relationshipId: primaryValues.relationshipId,
       primaryColumn: {
-          columnId: primaryValues.primaryColumn.columnId,
-          columnName: primaryValues.primaryColumn.columnName,
-          dataType: primaryValues.primaryColumn.columnDataType
+        columnId: primaryValues.primaryColumn.columnId,
+        columnName: primaryValues.primaryColumn.columnName,
+        dataType: primaryValues.primaryColumn.columnDataType
       },
       secondaryColumn: example
-     };
+    };
     for (const i of this.resultantValues) {
       if (i.indexData === index) {
         if (secondaryColumn === 'Select') {
@@ -111,7 +112,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         }
       }
     }
-    if ( insert === 0) {
+    if (insert === 0) {
       this.resultantValues.push(test);
     } else if (insert === 1) {
     } else {
@@ -126,28 +127,28 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       delete i.indexData;
     }
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
-    .subscribe(res => {
-      if (res && res.success) {
-        this.removeIndexValue = [];
-        this.resultantValues = [];
-        this.updateEvent.emit(true);
-        const close: HTMLButtonElement = document.querySelector('.modal-header .close');
-        close.click();
-      } else {
-        this.errorMsg = res.errors;
-        this.updateNotif = true;
+      .subscribe(res => {
+        if (res && res.success) {
+          this.removeIndexValue = [];
+          this.resultantValues = [];
+          this.updateEvent.emit(true);
+          const close: HTMLButtonElement = document.querySelector('.modal-header .close');
+          close.click();
+        } else {
+          this.errorMsg = res.errors;
+          this.updateNotif = true;
         }
-    });
-   }
-   closeErrorMsg() {
+      });
+  }
+  closeErrorMsg() {
     this.errorMsg = '';
     this.updateNotif = false;
   }
 
-   resetSelection() {
-     this.populateValues();
-     this.resultantValues = [];
-     this.removeIndexValue = [];
-}
+  resetSelection() {
+    this.populateValues();
+    this.resultantValues = [];
+    this.removeIndexValue = [];
+  }
 
 }
