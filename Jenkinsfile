@@ -12,9 +12,9 @@ pipeline {
         sh 'npm install'
       }
     }
-    stage('Test') {
+    stage('Install angular CLI') {
       steps {
-        sh 'ng test'
+        sh 'npm install @angular/cli'
       }
     }
   }
