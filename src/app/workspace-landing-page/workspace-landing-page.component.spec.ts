@@ -44,29 +44,4 @@ xdescribe('WorkspaceLandingPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('Should get data from InfoService', () => {
-    spyOn(infoService, 'getinfo').and.returnValue(getInfo());
-    component.getInfo();
-    fixture.detectChanges();
-    expect(info.username).toBe(component.info.username);
-    disposeMe.unsubscribe();
-  });
-
-  it('Should have show == undefined for Member', () => {
-    spyOn(infoService, 'getinfo').and.returnValue(getInfo());
-    component.getInfo();
-    fixture.detectChanges();
-    expect(component.info.show).toBeUndefined(); // or may be toBeFalsy
-    disposeMe.unsubscribe();
-  });
-
-  it('Should have show == true for Admin', () => {
-    info.role = 'Admin';
-    spyOn(infoService, 'getinfo').and.returnValue(getInfo());
-    component.getInfo();
-    fixture.detectChanges();
-    expect(component.info.show).toBeTruthy();
-    disposeMe.unsubscribe();
-  });
 });
