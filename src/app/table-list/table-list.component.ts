@@ -1,10 +1,11 @@
-import { Component, OnInit, Pipe, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Pipe, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnChanges } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErrorObject } from '../error-object';
 import { UserinfoService } from '../userinfo.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { DataAnalyzerResultScreenComponent } from '../data-analyzer-result-screen/data-analyzer-result-screen.component';
 
 @Component({
   selector: 'app-table-list',
@@ -70,7 +71,8 @@ export class TableListComponent implements OnInit {
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.userId = this.userinfoService.getUserId();
   }
@@ -80,6 +82,7 @@ export class TableListComponent implements OnInit {
     this.isRelationShipAvailable = false;
     this.getTableList();
   }
+
   getTableList() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);

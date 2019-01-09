@@ -26,3 +26,7 @@
   .marginClass {
     margin-top: 3%;
   }
+
+  .pointer {
+    cursor:pointer;
+  }

@@ -259,9 +259,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
   }
 
   closeScreen() {
-  this.metalyzerHeaderService.setWorkspaceId(this.workspaceId);
-  this.metalyzerHeaderService.setPhase('Analysis');
-  this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+  this.router.navigate(['/workspace/metalyzer/ALL/analysis',  {enableRelation : true}]);
   }
 
   selectAll(_event) {

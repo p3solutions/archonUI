@@ -1,7 +1,7 @@
 <div class="col-md-12 marginClass">
   <div class="col-md-5">&nbsp;</div>
-  <div class="col-md-7">
-    <button type="button" class="btn btn-primary" (click)="activateSecondaryFn()" id="Select">Secondary Columns</button>
+  <div class="col-md-7 pointer">
+    <button type="button" class="btn btn-primary" (click)="activateSecondaryFn()" id="Select">Secondary Tables</button>
     <button type="button" class="btn btn-primary" (click)="activatePrimaryFn()">Primary Columns</button>
   </div>
   </div>
@@ -13,7 +13,7 @@
          <th>Primary Column</th>                                                        
        </tr>                    
      <tr *ngFor="let x of primaryColMap | keyvalue" (click)="populatePrimaryValues(x)">
-       <td>{{x.key}}</td>      
+       <td class="pointer">{{x.key}}</td>      
      </tr>  
    </table>
 </div>
@@ -34,7 +34,7 @@
        <td>{{x.dataType}}</td>
        <td>{{x.secondaryColumnName}}</td>    
        <td>{{x.matchPercentage}}</td>  
-       <td><input type="checkbox" (change)="checkedPriValues(x,$event,i)"></td>                
+       <td><input type="checkbox" [disabled]="x.matchPercentage == 0" (change)="checkedPriValues(x,$event,i)"></td>                
      </tr>
     </tbody>   
    </table>
@@ -50,7 +50,7 @@
            <th>Secondary Table</th>                                                        
          </tr>                    
        <tr *ngFor="let x of secTableNameMap | keyvalue" (click)="populateSecondaryValues(x)">
-         <td>{{x.key}}</td>      
+         <td class="pointer">{{x.key}}</td>      
        </tr>  
      </table>
   </div>
@@ -71,7 +71,7 @@
          <td>{{x.dataType}}</td>
          <td>{{x.secondaryColumnName}}</td>    
          <td>{{x.matchPercentage}}</td>  
-         <td><input type="checkbox" (change)="checkedSecValues(x,$event,i)"></td>                
+         <td><input type="checkbox" [disabled]="x.matchPercentage == 0" (change)="checkedSecValues(x,$event,i)"></td>                
        </tr> 
       </tbody>   
      </table>
@@ -114,7 +114,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="closeScreen()">Confirm
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeScreen()">Confirm
             <span [ngClass]="{'archon-loading-icon' : delProgress}"></span>
           </button>
       </div>
