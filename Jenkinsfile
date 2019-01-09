@@ -12,9 +12,9 @@ pipeline {
         sh 'npm install -g @angular/cli'
       }
     }
-    stage('Test') {
+    stage('Build') {
       steps {
-        sh 'npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI'
+        sh 'npm run build -- --prod'
       }
     }
   }
