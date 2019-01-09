@@ -14,7 +14,7 @@ RUN apk update && apk upgrade && \
 ENV CHROME_BIN=/usr/bin/chromium-browser
 ENV CHROME_PATH=/usr/lib/chromium/
 
-WORKDIR /archon-ui
-COPY ./ .
+# WORKDIR /archon-ui
+# COPY ./ .
 
-RUN npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+# RUN npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
