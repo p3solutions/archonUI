@@ -17,5 +17,10 @@ pipeline {
         sh 'npm run build -- --prod'
       }
     }
+    stage('Publish') {
+      steps {
+        sshPublisher(failOnError: true)
+      }
+    }
   }
 }
