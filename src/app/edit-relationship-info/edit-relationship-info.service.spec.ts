@@ -9,7 +9,7 @@ describe('EditRelationshipInfoService', () => {
     });
   });
 
-  it('should be created', inject([EditRelationshipInfoService], (service: EditRelationshipInfoService) => {
+  xit('should be created', inject([EditRelationshipInfoService], (service: EditRelationshipInfoService) => {
     expect(service).toBeTruthy();
   }));
 });

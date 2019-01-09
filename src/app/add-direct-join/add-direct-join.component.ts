@@ -9,7 +9,6 @@ import { AddDirectJoinService } from './add-direct-join.service';
   styleUrls: ['./add-direct-join.component.css']
 })
 export class AddDirectJoinComponent implements OnInit, OnChanges {
-  query: string;
   @Input() directJoin: any;
   @Input() tableList: any[];
   @Input() workspaceID: any;

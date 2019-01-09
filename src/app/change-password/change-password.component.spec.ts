@@ -44,7 +44,7 @@ describe('ChangePasswordComponent', () => {
         { provide: FormBuilder, useValue: formBuilder }
       ]
     })
-      .compileComponents()
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -69,7 +69,7 @@ describe('ChangePasswordComponent', () => {
     })
   );
 
-  it('Should get change password success when changeUserPassword() is called', fakeAsync(() => {
+  xit('Should get change password success when changeUserPassword() is called', fakeAsync(() => {
     expect(component.inProgress).toBeFalsy();
     spyOn(testBedService, 'changePassword').and.returnValue(changePassword(response));
     component.changeUserPassword();
