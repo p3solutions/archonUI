@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, SimpleChanges, SimpleChange, OnChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, SimpleChange, OnChanges, ViewChild, OnDestroy } from '@angular/core';
 import { TableListService } from '../table-list/table-list.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { Route, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 
 @Component({
   selector: 'app-data-analyzer-result-screen',
@@ -24,152 +26,24 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
    resultant = [];
    populatePrimaryValuesArray: any;
    populateSecondaryValuesArray: any;
-  //  res = [
-  //   {
-  //     'primaryColumnName': 'IS_PROV',
-  //     'primaryColumnId': '5c2995f9242f9a076a84f234',
-  //     'dataType': 'BIT',
-  //     'secondaryTableList': [
-  //       {
-  //         'tableName': 'dx_code',
-  //         'tableId': '5c2995f9242f9a076a84f23e',
-  //         'secondaryColumnList': [
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f240',
-  //             'secondaryColumnName': 'DX_CODE',
-  //             'dataType': 'INT',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f241',
-  //             'secondaryColumnName': 'DX_DESC',
-  //             'dataType': 'VARCHAR',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f245',
-  //             'secondaryColumnName': 'PROC_CODE',
-  //             'dataType': 'INT',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f246',
-  //             'secondaryColumnName': 'PROC_DESC',
-  //             'dataType': 'VARCHAR',
-  //             'matchPercentage': '0'
-  //           }
-  //         ]
-  //       },
-  //       {
-  //         'tableName': 'proc_code',
-  //         'tableId': '5c2995f9242f9a076a84f243',
-  //         'secondaryColumnList': [
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f240',
-  //             'secondaryColumnName': 'DX_CODE',
-  //             'dataType': 'INT',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f241',
-  //             'secondaryColumnName': 'DX_DESC',
-  //             'dataType': 'VARCHAR',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f245',
-  //             'secondaryColumnName': 'PROC_CODE',
-  //             'dataType': 'INT',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f246',
-  //             'secondaryColumnName': 'PROC_DESC',
-  //             'dataType': 'VARCHAR',
-  //             'matchPercentage': '0'
-  //           }
-  //         ]
-  //       },
-  //       {
-  //         'tableName': 'dx_code',
-  //         'tableId': '5c2995f9242f9a076a84f23e',
-  //         'secondaryColumnList': [
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f240',
-  //             'secondaryColumnName': 'DX_CODE',
-  //             'dataType': 'INT',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f241',
-  //             'secondaryColumnName': 'DX_DESC',
-  //             'dataType': 'VARCHAR',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f245',
-  //             'secondaryColumnName': 'PROC_CODE',
-  //             'dataType': 'INT',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f246',
-  //             'secondaryColumnName': 'PROC_DESC',
-  //             'dataType': 'VARCHAR',
-  //             'matchPercentage': '0'
-  //           }
-  //         ]
-  //       },
-  //       {
-  //         'tableName': 'proc_code',
-  //         'tableId': '5c2995f9242f9a076a84f243',
-  //         'secondaryColumnList': [
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f240',
-  //             'secondaryColumnName': 'DX_CODE',
-  //             'dataType': 'INT',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f241',
-  //             'secondaryColumnName': 'DX_DESC',
-  //             'dataType': 'VARCHAR',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f245',
-  //             'secondaryColumnName': 'PROC_CODE',
-  //             'dataType': 'INT',
-  //             'matchPercentage': '0'
-  //           },
-  //           {
-  //             'secondaryColumnId': '5c2995f9242f9a076a84f246',
-  //             'secondaryColumnName': 'PROC_DESC',
-  //             'dataType': 'VARCHAR',
-  //             'matchPercentage': '0'
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ];
-    primaryTableId: any;
-    primaryTableName: any;
-    workspaceId: any;
-    selectedPrimaryColumn: any;
-    secondaryTableListArray: any;
-    dtOptions: DataTables.Settings = {};
-    selectedSecondaryTable: any;
-  updateSuccess = false;
-  errorMsg: any;
-  updateNotif = false;
-
-
+   primaryTableId: any;
+   primaryTableName: any;
+   workspaceId: any;
+   selectedPrimaryColumn: any;
+   secondaryTableListArray: any;
+   dtOptions: DataTables.Settings = {};
+   selectedSecondaryTable: any;
+   updateSuccess = false;
+   errorMsg: any;
+   updateNotif = false;
+   p = 1;
 
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
-    private router: Router) { }
+    private router: Router,
+    private metalyzerHeaderService: MetalyzerHeaderService) {
+    }
 
 
   ngOnInit() {
@@ -179,17 +53,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
          this.primaryTableId = res[0].primaryTableId;
          this.primaryTableName = res[0].primaryTableName;
      });
-    // this.dtOptions = {
-    //     stateSave: false,
-    //     paging: true,
-    //     pageLength: 10,
-    //     pagingType: 'full_numbers',
-    //     ordering: false,
-    //     searching: false,
-    //     destroy: true
-    // };
-     this.getPrimaryColumns();
-     this.getSecondaryColumns();
+    this.getPrimaryColumns();
+    this.getSecondaryColumns();
   }
 
   getPrimaryColumns() {
@@ -369,7 +234,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
     },
     secondaryTableList: finalSecondaryTableListArray
   };
-  console.log(param);
   if (this.finalSecondaryArray.length > 0) {
   this.addDirectJoinService.addNewJoin(param).subscribe(res => {
     if (res && res.data.errorDetails.length === 0) {
@@ -395,7 +259,18 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
   }
 
   closeScreen() {
-  this.router.navigate(['workspace/metalyzer/ALL/analysis']);
+  this.metalyzerHeaderService.setWorkspaceId(this.workspaceId);
+  this.metalyzerHeaderService.setPhase('Analysis');
+  this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+  }
+
+  selectAll(_event) {
+    const bool = _event.target.checked;
+    if (bool) {
+      $('input:checkbox').prop('checked', true);
+    } else {
+      $('input:checkbox').prop('checked', false);
+    }
   }
 
 }

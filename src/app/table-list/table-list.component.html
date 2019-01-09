@@ -228,9 +228,9 @@
                             </div>
                           </div>
                           <div class="da-table-parent">
-                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;" [hidden]="secTbl.tableName === selectedPrimTbl">
+                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;let i=index" [hidden]="secTbl.tableName === selectedPrimTbl">
                               <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
-                                <input id="{{prefixSecTblId + (secTbl.tableName | lowercase)}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
+                                <input id="{{prefixSecTblId + (secTbl.tableName | lowercase)}}" class="cb-{{i}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
                                 {{secTbl.tableName}}
                                 <i class="fa fa-angle-right unselected"></i>
                               </div>
@@ -253,9 +253,9 @@
                                 Suggestion
                               </div> -->
                             </div>
-                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray">
+                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray; let i=index" id="secondaryColums">
                               <div class="col-md-12 tabular-div-column trim-text" title="{{sColumn.columnName}}">
-                                <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
+                                <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb" type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
                                 checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10">
                                 {{sColumn.columnName}}
                               </div>
@@ -264,9 +264,8 @@
                               </div> -->
                             </div>
                           </div>
-
-                      </div>
-                        
+                          <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> 
+                      </div> 
                     </div>
                   </div>
       

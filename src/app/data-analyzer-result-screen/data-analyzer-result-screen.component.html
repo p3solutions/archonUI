@@ -18,26 +18,27 @@
    </table>
 </div>
 <div class="col-md-9">
-  <table id="customers" class="table table-hover table-bordered">                   
+  <table id="customers" class="table table-hover table-bordered primaryPopulate">                   
       <thead> 
       <tr>
          <th>Secondary Table</th>
          <th>Column Type</th>
          <th>Secondary Column</th>   
          <th>Accuracy  (in %)</th>
-         <th><input type="checkbox"></th>                                                 
+         <th><input type="checkbox" (change)="selectAll($event)"></th>                                                 
        </tr>
       </thead>
       <tbody>                    
-     <tr *ngFor="let x of populatePrimaryValuesArray;let i=index">
+     <tr *ngFor="let x of populatePrimaryValuesArray | paginate: { itemsPerPage: 7, currentPage: p };let i=index">
        <td>{{x.tableName}}</td>
        <td>{{x.dataType}}</td>
        <td>{{x.secondaryColumnName}}</td>    
        <td>{{x.matchPercentage}}</td>  
        <td><input type="checkbox" (change)="checkedPriValues(x,$event,i)"></td>                
      </tr>
-    </tbody>    
+    </tbody>   
    </table>
+   <pagination-controls (pageChange)="p = $event"></pagination-controls> 
 </div>
 </div>
 </div>
@@ -54,22 +55,27 @@
      </table>
   </div>
   <div class="col-md-9">
-    <table  id="customers"  class="table table-hover table-bordered">                     
+    <table id="customers" class="table table-hover table-bordered secondaryPopulate"> 
+      <thead>                    
          <tr>
            <th>Primary Column</th>
            <th>Column Type</th>
            <th>Secondary Column</th>   
            <th>Accuracy  (in %)</th>
-           <th><input type="checkbox"></th>                                                 
-         </tr>                    
-       <tr *ngFor="let x of populateSecondaryValuesArray;let i=index">
+           <th><input type="checkbox" (change)="selectAll($event)"></th>                                                 
+         </tr>
+      </thead> 
+      <tbody>                      
+       <tr *ngFor="let x of populateSecondaryValuesArray | paginate: { itemsPerPage: 7, currentPage: p };let i=index">
          <td>{{x.primaryColumn}}</td>
          <td>{{x.dataType}}</td>
          <td>{{x.secondaryColumnName}}</td>    
          <td>{{x.matchPercentage}}</td>  
          <td><input type="checkbox" (change)="checkedSecValues(x,$event,i)"></td>                
-       </tr>    
+       </tr> 
+      </tbody>   
      </table>
+     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
   </div>
   </div>
@@ -90,6 +96,28 @@
           </div>
 <div class="col-md-5">
   <button type="button" class="btn btn-primary" (click)="addJoins()">Add Selected Joins</button>
-  <button type="button" id="cancel-btn" class="btn btn-secondary cancel" (click)="closeScreen()">Close</button>
+  <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-toggle="modal" href="#confirmClose">Close</button>
 </div>
+</div>
+<!-- Close -->
+<div class="modal fade" id="confirmClose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
+    <div class="modal-content text-left">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Close Results</h4>
+      </div>
+      <div class="modal-body text-center" style="height: 100px;">
+          Are you sure? You won't be able to add joins later.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="closeScreen()">Confirm
+            <span [ngClass]="{'archon-loading-icon' : delProgress}"></span>
+          </button>
+      </div>
+    </div>
+  </div>
 </div>

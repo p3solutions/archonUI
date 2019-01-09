@@ -21,9 +21,11 @@ export class MetalyzerHeaderComponent implements OnInit {
   ngOnInit() {
     this.metalyzerHeaderService.cast
       .subscribe(data => {
+        console.log('phase in header component', data);
         this.phase = data;
       });
     this.metalyzerHeaderService.getWorkspaceName().subscribe(result => {
+      console.log('wsname in header component', result);
       this.wsName = result;
     });
   }

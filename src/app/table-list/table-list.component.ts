@@ -299,7 +299,11 @@ export class TableListComponent implements OnInit {
         this.enableNextBtn = this.selectedPrimColMap.size > 0;
         break;
       case '1':
-        this.enableNextBtn = this.finalSecColMap.size > 0;
+        if (this.finalSecColMap.size === 0) {
+          this.enableNextBtn = this.selectedPrimColMap.size > 0;
+        } else {
+          this.enableNextBtn = this.finalSecColMap.size > 0;
+        }
         break;
       // case '2':
       //   this.enableNextBtn
