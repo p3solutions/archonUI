@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Publish') {
       steps {
-        sshPublisher(failOnError: true)
+        sh 'ls'
       }
     }
   }
