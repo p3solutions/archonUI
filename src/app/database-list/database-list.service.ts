@@ -22,10 +22,10 @@ export class DatabaseListService {
   }
   getListOfConfigDatabases(): Observable<ConfiguredDB[]> {
     return this.http.get<ConfiguredDB[]>(this.configDBListUrl, { headers: this.userinfoService.getHeaders() })
-    .pipe(
-      map(this.extractConfigDB),
-      catchError(this.handleError('database-getList()', []))
-    );
+      .pipe(
+        map(this.extractConfigDB),
+        catchError(this.handleError('database-getList()', []))
+      );
   }
   private extractConfigDB(res: any) {
     const data = res.data.configuredDatabases;
@@ -48,12 +48,11 @@ export class DatabaseListService {
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(result);
     };
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ResponseContentType } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -7,6 +8,7 @@ import { UserinfoService } from '../userinfo.service';
 @Injectable()
 export class MetalyzerHeaderService {
   workspaceinfoUrl = environment.apiUrl + 'workspaces/';
+  exportxmlUrl = environment.apiUrl + 'meta/export/';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
   cast = this.phase.asObservable();
@@ -34,6 +36,11 @@ export class MetalyzerHeaderService {
       catchError(this.handleError<string>('getworkspaceName'))
     );
   }
+  getExportxml(workspaceId, databaseID, xml): Observable<Blob> {
+    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml };
+    return this.http.post(this.exportxmlUrl, params,
+      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+  }
   private extractWorkspace(res: any) {
     const data = res.data.workspaces.workspaceName;
     return data || [];
@@ -44,7 +51,7 @@ export class MetalyzerHeaderService {
       // TODO: send the error to remote logging infrastructure
       console.error(error);
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(result);
     };
   }
 }

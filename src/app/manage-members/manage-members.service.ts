@@ -58,7 +58,6 @@ export class ManageMembersService {
   }
   updateServiceActions(params: AnyObject) {
     const url = this.apiUrl + `users/${params.userId}/roles/actions`;
-    console.log('updateServiceActions params:', params);
     return this.http.post<any>(url, params, { headers: this.headers }).pipe(
       map(this.extractServiceActions),
       catchError(this.handleError('updateServiceActions'))
@@ -66,7 +65,6 @@ export class ManageMembersService {
   }
   deleteManageMembersData(param: AnyObject, wsId: string): Observable<any> {
     const url = this.apiUrl + this.wsDelAccessUrl + wsId + '/member?userId=' + param.id;
-    console.log(url);
     return this.http.delete<any>(url, { headers: this.headers })
       .pipe(catchError(this.handleError('deleteManageMembersData', []))
         // tap(_ => this.log(`deleted hero id=${id}`)),
@@ -77,7 +75,6 @@ export class ManageMembersService {
 
   private extractData(res: any) {
     const data = res.data;
-    console.log('roles success data:', data);
     return data || [];
   }
 
@@ -113,7 +110,6 @@ export class ManageMembersService {
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 
 

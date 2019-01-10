@@ -7,6 +7,5 @@ export class AuthenticationService {
   constructor(private jwtHelper: JwtHelperService) { }
 
   authenticateHelper(token: string) {
-    console.log(this.jwtHelper.decodeToken(token));
   }
 }

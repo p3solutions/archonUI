@@ -3,7 +3,6 @@ import { PipeTransform, Pipe } from '@angular/core';
 @Pipe({ name: 'keys' })
 export class KeysPipe implements PipeTransform {
     transform(srcObj: Object): any {
-        // console.log(srcObj, 'srcObj');
         return srcObj ? Object.keys(srcObj) : [];
     }
 }

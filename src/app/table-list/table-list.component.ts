@@ -411,7 +411,6 @@ export class TableListComponent implements OnInit {
   handleStepIindicator(isNext) {
     const slideNo = this.getCurrentStep();
     const progressSelector = 'progress-bar';
-    // console.log('slideNo', slideNo, document.getElementById(progressSelector));
     switch (slideNo) {
       case '0':
         // this.removeClass(progressSelector, 'width-5-pc');

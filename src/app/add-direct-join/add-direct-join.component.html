@@ -19,7 +19,7 @@
                         <strong>Secondary Table</strong>
                       </div>
                       <div class="tablename-list da-table-parent">
-                        <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query" [hidden]="table.tableName === primaryTableName">
+                        <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList" [hidden]="table.tableName === primaryTableName">
                           <button type="button" class="btn btn-default list-group-item da-table" (click)="secTable($event, table)">{{table.tableName}}
                             <i class="fa fa-angle-right unselected"></i>
                           </button>
@@ -27,7 +27,7 @@
                          
                                                                   
                       </div>
-                      <input type="text" class="form-control search-input" placeholder="Search" [(ngModel)]="query" id="listSearch">
+                      <input type="text" class="form-control search-input" placeholder="Search" id="listSearch">
                       <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
                   </div>
@@ -44,7 +44,7 @@
                         <td>{{pri.columnDataType}}</td>
                         <td> <select id="testreset" #selected class="selwidth" (change)="selectedValues(pri,ind,selected.value)">
                             <option selected="true">Select</option>
-                            <option [ngValue]="i" *ngFor="let sec of secondaryColumns | secondaryColumn:pri.columnDataType">{{sec.columnName}}</option>
+                            <option *ngFor="let sec of secondaryColumns">{{sec.columnName}}</option>
                           </select>                       
                       </tr>
                     

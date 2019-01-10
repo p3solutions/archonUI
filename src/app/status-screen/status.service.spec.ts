@@ -20,7 +20,6 @@ xdescribe('StatusService', () => {
   const getRetryStatusUrl = environment.apiUrl + 'jobStatus/jobRetry';
   const setupConnections = function (mockBackend: MockBackend, options: any) {
     mockBackend.connections.subscribe((connection: MockConnection) => {
-      console.log('setupConnections', mockBackend, options, connection);
       const responseOptions = new ResponseOptions(options);
       if (connection.request.url === getStatusListUrl) {
         responseOptions.body = { data: jobArray, success: true };
@@ -43,7 +42,6 @@ xdescribe('StatusService', () => {
     '.822cmi5CYPIHFgMba7D-LwsdLvFpphMw6FdU8FAs6RYdGKXtr36EugH_EUCbqxccjCAx4EwUBW9swXDSTRjiWA';
   localStorage.setItem('accessToken', loggedInAccessToken); // inserting logged in user info
   const logger = function (data: any) {
-    console.log('Executed this -> ', data);
   };
 
   // beforeEach(async(() => {
@@ -104,7 +102,6 @@ xdescribe('StatusService', () => {
     const prom = statusService.getJobList();
     flushMicrotasks();
     prom.subscribe((res) => {
-      console.log(res, 'statusService.getJobList');
       expect(res.success).toBeTruthy();
       expect(res.data.jobArray.length).toBe(jobArray.length);
     });
@@ -167,7 +164,6 @@ xdescribe('StatusService', () => {
     const prom = statusService.getJobStatuses();
     flushMicrotasks();
     prom.subscribe((res) => {
-      console.log(res, 'statusService.getJobStatuses');
       expect(res.data.success).toBeTruthy();
       expect(res.data.jobStatusArray.length).toBe(jobStatusArray.length);
     });
@@ -200,7 +196,6 @@ xdescribe('StatusService', () => {
     const prom = statusService.setRetryStatus(selectedJobId);
     flushMicrotasks();
     prom.subscribe((res) => {
-      console.log(res, 'statusService.setRetryStatus');
       expect(res.data.success).toBeTruthy();
       expect(res.data.jobStatusArray.length).toBe(jobStatusArray.length);
     });
