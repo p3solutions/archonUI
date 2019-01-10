@@ -54,13 +54,13 @@ export class WorkspaceServicesComponent implements OnInit {
 
       });
       setTimeout(() => {
-        const dropdownItem = <HTMLAnchorElement>document.querySelectorAll('#selectedWorkspace .dropdown-data')[1];
+        const dropdownItem = <HTMLAnchorElement>document.querySelectorAll('#selectedWorkspace .dropdown-data')[0];
         if (dropdownItem !== undefined) {
           const b = dropdownItem.click();
-          if(b!=undefined){
+          if (b !== undefined) {
             const b1 = this.workspaceService.updateServiceActionsList(JSON.parse(JSON.stringify(b)));
             this.workspaceService.updateServiceActions(b1);
-          }          
+          }
         }
       }, 3000);
     });

@@ -87,6 +87,9 @@ import { EditRelationshipInfoService } from './edit-relationship-info/edit-relat
 import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
 import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
 import { SecondaryColumnPipe } from './secondary-column.pipe';
+import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
+import { KeyvaluePipe } from './keyvalue.pipe';
+import {NgxPaginationModule} from 'ngx-pagination';
 import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
@@ -143,6 +146,8 @@ export function tokenGetter() {
                 EditRelationshipInfoComponent,
                 AddDirectJoinComponent,
                 SecondaryColumnPipe,
+                DataAnalyzerResultScreenComponent,
+                KeyvaluePipe,
                 ManagementLandingPageComponent
         ],
         imports: [
@@ -162,7 +167,8 @@ export function tokenGetter() {
                 DataTablesModule,
                 MatTableModule,
                 AppRoutingModule,
-                HttpClientModule
+                HttpClientModule,
+                NgxPaginationModule
         ],
         providers: [
                 JwtHelperService,

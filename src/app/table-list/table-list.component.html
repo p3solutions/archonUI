@@ -11,8 +11,8 @@
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <div class="tablename-list da-table-parent">
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
-            <button type="button" class="btn btn-default list-group-item da-table" title="{{table.tableName}}" (click)="highlightTable($event, true, table); joinTable(table);"><div class="overflow-text">{{table.tableName}}
-            </div> <div class="overflow-text-arrow"><i class="fa fa-angle-right unselected"></i></div>
+            <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table); joinTable(table);">{{table.tableName}}
+              <i class="fa fa-angle-right unselected"></i>
             </button>
           </div>
         </div>
@@ -21,9 +21,120 @@
   </div>
   <div class="col-md-8 col-md-offset-2.5">
     <div class="card">
-      <app-relationship-info [serviceActionType]="serviceActionType" [tableName]="tableName" [homeStage]="homeStage"
-        [dataAModal]="dataAModal" [isRelationShipAvailable]="isRelationShipAvailable" [relationshipInfo]="relationshipInfo"></app-relationship-info>
-      <!-- Data Analyzer -->
+      <div class="card-body default-load" *ngIf="defaultModel">
+        <h2 class="default-info">Choose one of the listed tables to view relationship information with other tables</h2>
+      </div>
+      <div class="card-body" *ngIf="!homeStage && !dataAModal">
+       <router-outlet></router-outlet>
+      </div>
+      <div class="card-body" *ngIf="homeStage">
+        <div class="col col-md-12">
+          <div class="col col-md-4">
+            <h3 class="card-title header">Relationship Info
+            </h3>
+          </div>
+          <!-- <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span> -->
+         
+          <div class="dropdown" class="col col-md-4 data-analyzer">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" id="dropdown">
+              <li>
+                <a href="#" data-toggle="modal" data-target="#openAddDirectJoinModal">Direct Join</a>
+              </li>
+              <li>
+                <a href="#">Column-Match Join</a>
+              </li>
+              <li>
+                <a href="#">SP/View Join</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col col-md-4">
+          <button type="button" class="btn btn-primary data-analyzer" (click)="openDataAModal()">Data Analyzer</button>
+        </div>
+        </div>
+        <div class="row col col-md-12 primary-table">
+          <h4 class="card-title sub-header">Primary Table:
+            <strong>{{tableName}}</strong>
+          </h4>
+        </div>
+        <hr>
+        <div class="row table-headers" *ngIf="isRelationShipAvailable">
+          <div class="col col-md-3 sec-width">
+          <h4 id="sec-tab">
+            <strong>Secondary Table</strong>
+          </h4>
+        </div>
+        <div class="col col-md-3 def-width">
+          <h4>
+            <strong>Definition Type</strong>
+          </h4>
+        </div>
+        <div class="col col-md-3 conf-width">
+          <h4>
+            <strong>Configuration Mode</strong>
+          </h4>
+        </div>
+        <div class="col col-md-3 join-width">
+          <h4>
+            <strong>Join Name</strong>
+          </h4>
+        </div>
+        </div>
+        <h5 *ngIf="!isRelationShipAvailable">
+          Currently no relationship information available
+        </h5>
+        <div class="items-list">
+          <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo;let ind=index;">
+            <div class="row">
+              <div class="col-2 col-sm-2" id="item">
+                <p>{{relation.secondaryTable.tableName}}</p>
+              </div>
+              <div class="col-2 col-sm-2" id="item">
+                <p>{{relation.definitionType}}</p>
+              </div>
+              <div class="col-2 col-sm-3" id="item">
+                <p>{{relation.analysisMode}}</p>
+              </div>
+              <div class="col-2 col-sm-3" id="item">
+                <p>{{relation.joinName}}</p>
+              </div>
+              <div class="col-3 col-sm-2" id="item">
+                  <a data-toggle="modal" href="#confirmDelMemModal" (click)="deleteRelationship(ind)">
+                  <i class="fa fa-trash" id="trash" *ngIf="serviceActionType === 'WRITE' || serviceActionType === 'ALL'"></i>
+                </a>
+                <a data-toggle="collapse" href="#collapseExample-{{ind}}">
+                  <i class="fa fa-chevron-down" id="down-arrow"></i>
+                </a>
+              </div>
+            </div>
+            <div class="panel-collapse collapse" id="collapseExample-{{ind}}">
+              <div class="panel-footer"> 
+                <div class="col col-md-6"><strong>Primary Table Column</strong>
+                </div>
+                <div class="col col-md-6"><strong>Secondary Table Column</strong>
+                </div>
+                  <hr id="hrtab">
+                  <div *ngFor="let x of relation.joinListInfo">
+                  <div class="col col-md-6">{{x.primaryColumn.columnName}}
+                  </div>
+                  <div class="col col-md-6">{{x.secondaryColumn.columnName}}
+                  </div>
+                  <hr id="hrtab">
+                  </div>
+                  <div class="col col-md-12">
+                      <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)">Edit </button>
+                      <button type="button" class="btn btn-primary Close" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
+                  </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-edit-relationship-info class="modal fade" (updateEvent)="refreshRelation($event)" id="openEditRelationshipModal" [relation]="editValues" [workspaceID]="workspaceID" role="dialog"></app-edit-relationship-info>
+<!-- Data Analyzer -->
       <div *ngIf="dataAModal" class="">
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
           <div class="text-left">
@@ -35,20 +146,20 @@
               </div>
               <div class="col-md-5 analyze-header">Data Analyzer</div>
             </div>
-
+      
             <div class="modal-body row">
-              <!-- carousel -->
+            <!-- carousel -->
               <div id="dataAModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
                 <!-- Indicators -->
                 <ul *ngIf="!newWSinfo" class="multi-step-bars">
-                  <li>
+                  <li > 
                     <span id="progress-bar" class="bar-expand width-5-pc"></span>
                     <em class="col-md-4 text-center">Primary Column</em>
                     <em class="col-md-4 text-center">Secondary Table &#38; Column selection</em>
                     <em class="col-md-4 text-center">Data Analysis</em>
                   </li>
                 </ul>
-
+      
                 <ol class="only carousel-indicators hide">
                   <li data-target="#createWSModal-carousel" data-slide-to="0" class="active"></li>
                   <li data-target="#createWSModal-carousel" data-slide-to="1"></li>
@@ -57,7 +168,7 @@
                 </ol>
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
-
+      
                   <div step="0" class="item active form-group">
                     <div class="panel-body dataA-panel-body">
                       <div class="tabular-div col-md-12">
@@ -82,20 +193,19 @@
                           </div> -->
                         </div>
                         <div class="col-md-12 p-0 tabular-div-row" *ngFor="let pColumn of primColArray">
-                          <div class="col-md-8 tabular-div-column trim-text" title="{{pColumn.column_name}}">
-                            <input id="{{pColumn}}" type="checkbox" (change)="toggleColSelection($event, true, pColumn)"
-                              class="m-r-10">
-                            {{pColumn.column_name}}
+                          <div class="col-md-12 tabular-div-column trim-text" title="{{pColumn.column_name}}">
+                          <input id="{{pColumn}}" type="checkbox" (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
+                            {{pColumn.columnName}}
                           </div>
                           <!-- <div class="col-md-4 tabular-div-column" title="">
                             {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
                           </div> -->
                         </div>
                       </div>
-
+                      
                     </div>
                   </div>
-
+      
                   <div step="1" class="item form-group second second-last">
                     <div class="panel-body dataA-panel-body">
                       <div class="tabular-div col-md-12">
@@ -117,9 +227,9 @@
                             </div>
                           </div>
                           <div class="da-table-parent">
-                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;">
+                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;let i=index" [hidden]="secTbl.tableName === selectedPrimTbl">
                               <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
-                                <input id="{{prefixSecTblId + (secTbl.tableName | lowercase)}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
+                                <input id="{{prefixSecTblId + (secTbl.tableName | lowercase)}}" class="cb-{{i}}" type="checkbox" (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
                                 {{secTbl.tableName}}
                                 <i class="fa fa-angle-right unselected"></i>
                               </div>
@@ -129,18 +239,8 @@
                       </div>
 
                       <div *ngIf="secColArray.length > 0" class="col-md-6" style="height: 295px;">
-                        <div class="col-md-12">
-                          {{selectedSecColMap.size}} out of {{secColArray.length}} selected
-                        </div>
-                        <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
-                          <div class="col-md-12 p-0 tabular-div-row">
-                            <div class="col-md-8 tabular-div-column column-header" title="Secondary Column">
-                              Secondary Columns
-                              <span class="col-loader" [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
-                            </div>
-                            <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
-                              Suggestion
-                            </div>
+                          <div class="col-md-12">
+                            {{selectedSecColMap.size}} out of {{secColArray.length}} selected
                           </div>
                           <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
                             <div class="col-md-12 p-0 tabular-div-row">
@@ -152,9 +252,9 @@
                                 Suggestion
                               </div> -->
                             </div>
-                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray">
+                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray; let i=index" id="secondaryColums">
                               <div class="col-md-12 tabular-div-column trim-text" title="{{sColumn.columnName}}">
-                                <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
+                                <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb" type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
                                 checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10">
                                 {{sColumn.columnName}}
                               </div>
@@ -163,10 +263,8 @@
                               </div> -->
                             </div>
                           </div>
-                        </div>
-
-                      </div>
-
+                          <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> 
+                      </div> 
                     </div>
                   </div>
       
@@ -223,8 +321,8 @@
                           <div class="col-md-2"><strong>Analysis Status:</strong>
                           </div>
                           <div class="col-md-6 move-progress1">
-                            <div class="col-md-4">In Progress</div>
-                            <div class="col-md-2 move-progress2"><i class="fa fa-refresh"></i></div>
+                            <div class="col-md-4">{{JobStatus}}</div>
+                            <div class="col-md-2 move-progress2"><a (click)="getJobStatus()" data-tooltip="refresh"><i class="fa fa-refresh"></i></a></div>
                             <div class="col-md-2 move-progress3"><i class="fa fa-stop"></i></div>
                           </div>
                         </div>
@@ -261,22 +359,24 @@
               <button type="button" id="close-btn" class="btn btn-primary hide" (click)="gotoBack()">Close</button>
               <!-- <button type="button" id="ok-btn" class="btn btn-primary hide" (click)="resetCarousel()">Done</button> -->
             </div>
+      
           </div>
         </div>
       </div> 
     </div>
   </div>
-  <!-- relationship delete -->
-    <div class="modal fade" id="confirmDelMemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
-        <div class="modal-content text-left">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title">Delete</h4>
-          </div>
-          <div class="modal-body text-center" style="height: 100px;">
+</div>
+<!-- relationship delete -->
+<div class="modal fade" id="confirmDelMemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
+      <div class="modal-content text-left">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Delete</h4>
+        </div>
+        <div class="modal-body text-center" style="height: 100px;">
             Are you sure?
           </div>
           <div class="modal-footer">
@@ -290,10 +390,9 @@
               </button>
               <strong>Error!</strong> {{deleteNotif?.message}}
             </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
-  
   <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
+  

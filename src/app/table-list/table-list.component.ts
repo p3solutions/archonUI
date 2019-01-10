@@ -1,9 +1,11 @@
-import { Component, OnInit, Pipe, Input } from '@angular/core';
+import { Component, OnInit, Pipe, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnChanges } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErrorObject } from '../error-object';
 import { UserinfoService } from '../userinfo.service';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { DataAnalyzerResultScreenComponent } from '../data-analyzer-result-screen/data-analyzer-result-screen.component';
 
 @Component({
   selector: 'app-table-list',
@@ -59,22 +61,34 @@ export class TableListComponent implements OnInit {
   dataAnalysisjobID: any;
   joinName: any;
   joinValues: any;
+  metalyzerServiceId: any;
+  dataSlide: string;
+  JobStatus: string;
+  defaultModel = true;
+  resultantArray: any[];
 
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.userId = this.userinfoService.getUserId();
   }
   ngOnInit() {
-    // this.homeStage = true;
+    this.tablelistService.currentValue.subscribe(value => {
+      this.homeStage = value;
+      console.log(value);
+    });
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
     this.getTableList();
   }
+
   getTableList() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
       this.isAvailable = true;
@@ -82,6 +96,7 @@ export class TableListComponent implements OnInit {
   }
 
   loadRelationTable(table: any) {
+    this.defaultModel = false;
     this.tableCopy = table;
     this.homeStage = true;
     this.dataAModal = false;
@@ -96,10 +111,30 @@ export class TableListComponent implements OnInit {
   }
 
   openDataAModal() {
-    this.homeStage = false;
-    this.dataAModal = true;
-    this.getColumnsByTableName(this.selectedPrimTblID, true);
-    this.resetDataAModal();
+    // to work on resultant screen
+    // this.homeStage = false;
+    // this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+    //
+    this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId ).subscribe(res => {
+    console.log(res);
+    // if (res.data.jobIds.length > 0 ) {
+    //   this.homeStage = false;
+    //   this.dataAModal = true;
+    //   this.dataAnalysisjobID = res.data.jobIds[0];
+    //   this.getJobStatus();
+    //   console.log(this.dataAnalysisjobID);
+    //    setTimeout(() => {
+      //   (<any>$('#dataAModal-carousel')).carousel(3);
+      // }, 1000);
+      // const progressSelector = 'progress-bar';
+    // this.addClass(progressSelector, 'width-100-pc');
+    // } else {
+      this.homeStage = false;
+      this.dataAModal = true;
+      this.getColumnsByTableName(this.selectedPrimTblID, true);
+      this.resetDataAModal();
+    // }
+    });
   }
   openEditRelationship(relation) {
     this.editValues = relation;
@@ -270,7 +305,11 @@ export class TableListComponent implements OnInit {
         this.enableNextBtn = this.selectedPrimColMap.size > 0;
         break;
       case '1':
-        this.enableNextBtn = this.finalSecColMap.size > 0;
+        if (this.finalSecColMap.size === 0) {
+          this.enableNextBtn = this.selectedPrimColMap.size > 0;
+        } else {
+          this.enableNextBtn = this.finalSecColMap.size > 0;
+        }
         break;
       // case '2':
       //   this.enableNextBtn
@@ -304,15 +343,22 @@ export class TableListComponent implements OnInit {
   getAllSelectedTblsCols() {
     this.finalPrimColArray = [];
     this.selectedPrimColMap.forEach((val, key) => {
-      const columnObject = {
-        'columnName': key
-      };
-      this.finalPrimColArray.push(columnObject);
+      for (const i of this.primColArray) {
+       if (key === i.columnName) {
+          const columnObject = {
+          'columnId': i.columnId,
+          'columnName': i.columnName,
+          'dataType': i.columnDataType
+          };
+       this.finalPrimColArray.push(columnObject);
+       }
+      }
     });
     this.selectedTblsColsObj.userId = this.userId;
     this.selectedTblsColsObj.workspaceId = this.workspaceID;
     this.selectedTblsColsObj.primaryTable = {
-      'tableName': this.selectedPrimTbl,
+      'tableId' : this.selectedPrimTblID,
+      'tableName' : this.selectedPrimTbl,
       'primaryColumnList': this.finalPrimColArray
     };
     this.selectedTblsColsObj.secondaryTableList = [];
@@ -320,9 +366,24 @@ export class TableListComponent implements OnInit {
     this.finalSecColMap.forEach((val, key) => {
       const arr = key.split(this.secTblColJoiner);
       const secTbl = arr[0];
-      const secCol = {
-        'columnName': arr[1]
+      let secColTempArray = [];
+      let secTblId;
+      for (const i of this.secTblArray) {
+        if (secTbl === i.tableName) {
+         secTblId = i.tableId;
+        }
+      }
+      secColTempArray = this.secTblColMap.get(secTblId);
+      let secCol;
+      for (const i of secColTempArray) {
+      if (arr[1] === i.columnName) {
+      secCol = {
+        'columnId': i.columnId,
+        'columnName': i.columnName,
+        'dataType': i.columnDataType
       };
+      }
+    }
       if (secMap.has(secTbl)) {
         const secCols = secMap.get(secTbl);
         secCols.push(secCol);
@@ -331,9 +392,16 @@ export class TableListComponent implements OnInit {
       }
     });
     secMap.forEach((valArray, key) => {
+      let secTblId;
+      for (const i of this.secTblArray) {
+        if (key === i.tableName) {
+         secTblId = i.tableId;
+        }
+      }
       this.selectedTblsColsObj.secondaryTableList.push(
         {
-          'tableName': key,
+          'tableId' : secTblId,
+          'tableName' : key,
           'secondaryColumnList': valArray
         }
       );
@@ -422,9 +490,28 @@ export class TableListComponent implements OnInit {
     this.addClass('analyse-btn', 'hide');
     this.removeClass('close-btn', 'hide');
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
-      if (res && res.success) {
-        this.dataAnalysisjobID = res.data.jobId;
-      }
+    if (res && res.success) {
+      this.dataAnalysisjobID = res.data.jobId;
+      this.getJobStatus();
+    }
+    });
+  }
+
+  getJobStatus() {
+    this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
+    this.JobStatus = res.data.jobStatus;
+    if (this.JobStatus === 'SUCCESS') {
+    this.dataAModal = false;
+    this.homeStage = false;
+    this.resultantArray = [{
+      'workspaceId': this.workspaceID,
+      'primaryTableId': res.data.tableId,
+      'primaryTableName': res.data.tableName,
+      'relationDetails': res.data.relationDetails
+    }];
+    this.tablelistService.changeArray(this.resultantArray);
+    this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+    }
     });
   }
   deleteRelationship(indexOfDelete) {

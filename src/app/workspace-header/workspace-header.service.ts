@@ -44,6 +44,16 @@ export class WorkspaceHeaderService {
     }
     return null;
   }
+  getMetalyzerServiceId(userId: string) {
+    const members = this.workspace.members;
+    for (let i = 0; i < members.length; i++) {
+      if (members[i].user.id === userId) {
+        return members[i].serviceActions[0].serviceId;
+      }
+    }
+    return null;
+  }
+
   getDatabaseID() {
     return this.workspace.databases[0].id;
   }

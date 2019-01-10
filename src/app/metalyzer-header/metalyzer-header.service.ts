@@ -25,9 +25,12 @@ export class MetalyzerHeaderService {
   }
   setWorkspaceId(workspaceId: string) {
     this.workspaceId = workspaceId;
+    console.log('setworkspaceID', workspaceId);
   }
   getWorkspaceName(): Observable<string> {
+    console.log('getworkspaceName', this.workspaceId);
     const URL = this.workspaceinfoUrl + this.workspaceId;
+    console.log(URL);
     return this.http.get<string>(URL, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractWorkspace),
       catchError(this.handleError<string>('getworkspaceName'))
