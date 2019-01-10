@@ -27,6 +27,8 @@ export class TableListService {
   getJobStatusUrl = environment.apiUrl + '/dataAnalyzer/jobStatus?jobId=';
   private resultantArray = new BehaviorSubject([]);
   currentResultArray = this.resultantArray.asObservable();
+  private changeValue = new BehaviorSubject(false);
+  currentValue = this.changeValue.asObservable();
 
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
@@ -124,4 +126,9 @@ export class TableListService {
   changeArray(res) {
     this.resultantArray.next(res);
   }
+
+  changeBooleanValue(message) {
+    this.changeValue.next(message);
+  }
+
 }

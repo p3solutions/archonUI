@@ -77,7 +77,10 @@ export class TableListComponent implements OnInit {
     this.userId = this.userinfoService.getUserId();
   }
   ngOnInit() {
-    // this.homeStage = true;
+    this.tablelistService.currentValue.subscribe(value => {
+      this.homeStage = value;
+      console.log(value);
+    });
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
     this.getTableList();

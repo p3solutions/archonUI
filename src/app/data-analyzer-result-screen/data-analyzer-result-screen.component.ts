@@ -234,7 +234,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
     },
     secondaryTableList: finalSecondaryTableListArray
   };
-  if (this.finalSecondaryArray.length > 0) {
+  if (finalSecondaryTableListArray.length > 0) {
   this.addDirectJoinService.addNewJoin(param).subscribe(res => {
     if (res && res.data.errorDetails.length === 0) {
       this.updateSuccess = true;
@@ -259,15 +259,16 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
   }
 
   closeScreen() {
-  this.router.navigate(['/workspace/metalyzer/ALL/analysis',  {enableRelation : true}]);
+  this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+  this.tablelistService.changeBooleanValue(true);
   }
 
   selectAll(_event) {
     const bool = _event.target.checked;
     if (bool) {
-      $('input:checkbox').prop('checked', true);
+      $('input:checkbox:enabled').prop('checked', true);
     } else {
-      $('input:checkbox').prop('checked', false);
+      $('input:checkbox:enabled').prop('checked', false);
     }
   }
 
