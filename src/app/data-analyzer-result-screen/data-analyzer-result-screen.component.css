@@ -1,0 +1,32 @@
+#customers {  
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px; 
+    border: 1px solid #ddd;  
+  }
+  
+  #customers td, #customers th {
+   
+    padding: 6px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* #customers tr:nth-child(even){background-color: #F5F5F5;} */
+  
+  #customers tr:hover {background-color: #F5F5F5;}
+  
+  #customers th {
+    padding-top: 8px;
+    padding-bottom: 8px;   
+    text-align: center;
+    background-color: #269AF8;
+    color: white;
+  }
+
+  .marginClass {
+    margin-top: 3%;
+  }
+
+  .pointer {
+    cursor:pointer;
+  }

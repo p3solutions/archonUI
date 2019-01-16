@@ -6,8 +6,8 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { EnterNewpasswordService } from './enter-newpassword.service';
 import { ErrorObject } from '../error-object';
 import { HttpErrorResponse } from '@angular/common/http';
-import 'rxjs/add/operator/switchMap';
-import { Observable } from 'rxjs/Observable';
+
+import { Observable } from 'rxjs';
 import { SuccessObject } from '../success-object';
 
 @Component({
@@ -33,7 +33,7 @@ export class EnterNewpasswordComponent implements OnInit {
   ngOnInit() {
     this.resetKey = this.route.snapshot.paramMap.get('resetKey');
     this.createForm();
-    setTimeout(this.enableResetPassword(), 3000);
+    setTimeout(() => this.enableResetPassword(), 3000);
   }
   createForm() {
     this.passwordResetForm = new FormGroup({
@@ -42,32 +42,26 @@ export class EnterNewpasswordComponent implements OnInit {
     });
   }
   onSubmit() {
-    console.log('submit button');
     this.inProgress = true;
     this.newPasswordSetForm.resetKey = this.resetKey;
     this.newPasswordSetForm.password = this.passwordResetForm.value.password;
-    console.log(JSON.stringify(this.newPasswordSetForm));
     this.passwordResetService.passwordReset(this.newPasswordSetForm).subscribe(
       data => {
         this.responseData = data;
         this.successObject = new SuccessObject;
         this.successObject.message = data.data;
         this.successObject.show = true;
-        console.log(data);
       },
       (err: HttpErrorResponse) => {
         this.inProgress = false;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          console.log('An error occurred:', err.error.message);
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
           this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = !err.error.success;
-          console.log(this.errorObject);
-          console.log(`Backend returned code ${err.status}, body was: ${JSON.stringify(err.error)}`);
         }
       }
     );

@@ -57,6 +57,7 @@ export class WorkspaceObject {
     lastUpdatedTime: string; // for testing purpose, it is string format
     softDeleted: boolean;
     databaseList: any[];
+    workspaceRole: RoleObject;
 }
 export interface AnyObject {
     [key: string]: any;
@@ -92,23 +93,23 @@ export class CreateConfigDBObject {
 
 
 export class RelationshipInfoObject {
-        relationshipInfo: [
+    relationshipInfo: [
         {
-        tableId: string;
-        primaryTable: string;
-        secondaryTable: string;
-        definitionType: string;
-        joinName: string;
-        joinListInfo: [
-            {
-                primaryTable: string;
-                primaryColumn: string;
-                secondaryTable: string;
-                secondaryColumn: string;
-            }
-        ];
-createdAt: string;
-updatedAt: string;
-softDeleted: boolean;
-}];
+            tableId: string;
+            primaryTable: string;
+            secondaryTable: string;
+            definitionType: string;
+            joinName: string;
+            joinListInfo: [
+                {
+                    primaryTable: string;
+                    primaryColumn: string;
+                    secondaryTable: string;
+                    secondaryColumn: string;
+                }
+            ];
+            createdAt: string;
+            updatedAt: string;
+            softDeleted: boolean;
+        }];
 }

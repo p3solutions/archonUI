@@ -4,7 +4,7 @@ import { AddMembersComponent } from './add-members.component';
 import { AddMembersService } from './add-members.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 xdescribe('AddMembersComponent', () => {
   let component: AddMembersComponent;

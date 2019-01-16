@@ -7,7 +7,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -92,11 +92,9 @@ xdescribe('WorkspaceInfoComponent', () => {
     // find DebugElements with an attached WorkspaceServicesComponentDirective
     workspaceServiceTag = fixture.debugElement
       .queryAll(By.directive(WorkspaceServicesComponent));
-    // console.log('workspaceServiceTag', workspaceServiceTag);
     // get the attached link directive instances using the DebugElement injectors
     const links = workspaceServiceTag
       .map(dE => dE.injector.get(WorkspaceServicesComponent) as WorkspaceServicesComponent);
-    // console.log('links', links);
     expect(links[1].navigatedTo).toBe(dashboardUrl);
   });
 });

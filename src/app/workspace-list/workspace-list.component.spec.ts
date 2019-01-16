@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { WorkspaceListComponent } from './workspace-list.component';
 import { WorkspaceListService } from './workspace-list.service';
 xdescribe('WorkspaceListComponent', () => {
@@ -216,9 +216,6 @@ xdescribe('WorkspaceListComponent', () => {
     const databaseList = rowArray[1];
     const lastUpdatedTime = rowArray[2];
     const masterMetadataVersion = rowArray[3];
-    // console.log(version,'--',workspaceName.textContent,'--',
-    // databaseList.textContent.substring(15),'--',lastUpdatedTime.textContent.substring(19),
-    // '--',masterMetadataVersion.textContent.substring(18));
     expect(workspaceName.textContent.trim()).toBe(component.workspaceListInfo[0].workspaceName);
     expect(databaseList.textContent.substring(15)).toBe(component.workspaceListInfo[0].databaseList);
     const wsListInfo: any = component.workspaceListInfo[0];

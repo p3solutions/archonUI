@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-no-workspace',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./no-workspace.component.css']
 })
 export class NoWorkspaceComponent implements OnInit {
-
+  @Input() noWorkspace: boolean;
   constructor() { }
 
   ngOnInit() {

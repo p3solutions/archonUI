@@ -53,6 +53,8 @@ export class AddDatabaseWizardComponent implements OnInit {
   step0Empty = false;
   step1Empty = false;
   createdb: boolean;
+  inProgress = false;
+  dbinProgress = false;
   constructor(
     private userWorkspaceService: UserWorkspaceService
   ) { }
@@ -63,6 +65,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   testDbConnection() {
+    this.inProgress = true;
     this.testDbParam.userName = this.userName;
     this.testDbParam.password = this.password;
     this.testDbParam.port = this.port;
@@ -74,15 +77,15 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.testDbParam.profileName = this.profileName;
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
       if (res) {
+        this.inProgress = false;
         this.dbTestConnectionErrorMsg = '';
         this.dbTestConnectionSuccessMsg = res.connection.message;
-      //  console.log('clicked on test connection', res, res.connection.message);
       } else {
-         this.dbTestConnectionSuccessMsg = '';
-         this.dbTestConnectionErrorMsg = 'Failed! Try again with correct DB configuration.';
-       }
+        this.inProgress = false;
+        this.dbTestConnectionSuccessMsg = '';
+        this.dbTestConnectionErrorMsg = 'Failed! Try again with correct DB configuration.';
+      }
     });
-    // (err) => { console.log('error', err) };
   }
 
   selectDBServer(servername) {
@@ -96,7 +99,6 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.userWorkspaceService.getAllSupportedDBServer().subscribe(res => {
       if (res) {
         this.dbServerList = res.applications.allowedDBs;
-        console.log(res.applications.allowedDBs, 'port');
       }
     });
   }
@@ -105,7 +107,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     document.getElementById('openCreateAddDBmodal').click();
     // this.getSupportedDBs();
   }
-  step0Validation(_event, profileName, host, port, databaseName, schemaName) {
+  step0Validation(_event) {
     if (!this.profileName.trim() || !this.host.trim() || !this.port || !this.databaseName.trim() || !this.schemaName.trim()) {
       this.step0Empty = false;
     } else if (this.selectedDBServerName === 'Select server') {
@@ -115,9 +117,8 @@ export class AddDatabaseWizardComponent implements OnInit {
     }
     this.enableDisableNextBtn();
   }
-  step1Validation(_event, userName, password) {
-  // console.log(this.userName, !this.userName);
-      if (!this.userName.trim() || !this.password.trim() ) {
+  step1Validation(_event) {
+    if (!this.userName.trim() || !this.password.trim()) {
       this.step1Empty = false;
     } else {
       this.step1Empty = true;
@@ -125,7 +126,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.enableDisableNextBtn();
   }
   enableDisableNextBtn() {
-    const currentStep =  $('.carousel-inner .item.active').attr('step');
+    const currentStep = $('.carousel-inner .item.active').attr('step');
     switch (currentStep) {
       case '0':
         this.enableNextBtn = this.step0Empty === true;
@@ -166,30 +167,29 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   nextStep(e) {
-         if (document.querySelector('.second-last').classList.contains('active')) {
-        // restricting to select one, temporarily as per Backend team
-        //  if (this.databaseIds.length > 1) {
-        //   alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
-        //   return false;
-        // }
-        // end of restriction to 1 selection
-        this.removeClass('create-btn', 'hide');
-        this.addClass('next-btn', 'hide');
-        document.getElementById('next-slide').click();
-        this.handleStepIindicator(true);
-        // } else {
-        //   this.errorDBselect = true; // make it false on click of chkbx
-        // }
-      } else {
-        document.getElementById('next-slide').click();
-        this.handleStepIindicator(true);
-        this.removeClass('prev-btn', 'hide');
-        this.addClass('cancel-btn', 'hide');
-      }
+    if (document.querySelector('.second-last').classList.contains('active')) {
+      // restricting to select one, temporarily as per Backend team
+      //  if (this.databaseIds.length > 1) {
+      //   alert('Select only 1 DB. Multiple selection is prohibited temporarily!');
+      //   return false;
+      // }
+      // end of restriction to 1 selection
+      this.removeClass('create-btn', 'hide');
+      this.addClass('next-btn', 'hide');
+      document.getElementById('next-slide').click();
+      this.handleStepIindicator(true);
+      // } else {
+      //   this.errorDBselect = true; // make it false on click of chkbx
+      // }
+    } else {
+      document.getElementById('next-slide').click();
+      this.handleStepIindicator(true);
+      this.removeClass('prev-btn', 'hide');
+      this.addClass('cancel-btn', 'hide');
     }
+  }
   handleStepIindicator(isNext) {
     const slideNo = $('.carousel-inner .item.active').attr('step');
-   //  console.log('slideNo', slideNo, document.getElementById('progress-bar'));
     switch (slideNo) {
       case '0':
         if (isNext) {
@@ -203,10 +203,10 @@ export class AddDatabaseWizardComponent implements OnInit {
         if (isNext) {
           this.removeClass('progress-bar', 'width-33-pc');
           this.addClass('progress-bar', 'width-66-pc');
-          } else {
+        } else {
           this.removeClass('progress-bar', 'width-66-pc-rev');
           this.addClass('progress-bar', 'width-33-pc-rev');
-          }
+        }
         break;
       case '2':
         if (isNext) {
@@ -278,6 +278,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   createDBConfig() {
+    this.dbinProgress = true;
     // this.dbParam.dbProfileName = this.dbProfileName;
     this.dbParam.userName = this.userName;
     this.dbParam.password = this.password;
@@ -291,23 +292,25 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
       if (res) {
+        this.dbinProgress = false;
+        this.createNewdb();
         this.createdb = true;
-        } else {
-         this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
-       }
-    });
-    if (this.createdb) {
-      this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
-        if (res) {
-          this.newWSinfo = res;
-          console.log('latest testing ', res);
-          document.getElementById('populate-db-list').click();
-          this.postCreation();
-        }
-      });
+      } else {
+        this.dbinProgress = false;
+        this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
       }
+    });
     // window.location.reload();
     // this.router.navigate(['/workspace/database-list']);
+  }
+  createNewdb() {
+    this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
+      if (res) {
+        this.newWSinfo = res;
+        document.getElementById('populate-db-list').click();
+        this.postCreation();
+      }
+    });
   }
 
 }

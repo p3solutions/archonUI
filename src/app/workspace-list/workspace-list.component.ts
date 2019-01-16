@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject, ViewContainerRef, ViewChild } from '@angular/core';
 import { WorkspaceObject } from '../workspace-objects';
 import { WorkspaceListService } from './workspace-list.service';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { CommonUtilityService } from '../common-utility.service';
@@ -14,13 +14,13 @@ import { CommonUtilityService } from '../common-utility.service';
 })
 export class WorkspaceListComponent implements OnInit, OnDestroy {
     accessToken: string;
-    jwtHelper: JwtHelper = new JwtHelper();
+    jwtHelper: JwtHelperService = new JwtHelperService();
     token_data: any;
     workspaceListInfo: WorkspaceObject[];
     rejectedWorkspaceListInfo: WorkspaceObject[] = [];
     isProgress: boolean;
     dynamicLoaderService: DynamicLoaderService;
-    private workspaceActions: any;
+    workspaceActions: any;
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     constructor(
@@ -60,7 +60,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     gotoManagementPanel() {
-        this.router.navigate(['workspace/management-panel']);
+        this.router.navigate(['management-landing-page/management-panel']);
     }
     setRejectedWorkspaceListInfo(wsListInfo: WorkspaceObject[]) {
         let i;

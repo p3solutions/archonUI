@@ -62,17 +62,17 @@ export class ManageMembersComponent implements OnInit {
       });
   }
 
-confirmDelete(): void {
-  this.delProgress = true;
-  this.manageMembersService.deleteManageMembersData({ id: this.deleteMemberId }, this.workspaceId).subscribe(res => {
-    this.delProgress = false;
-    if (res && res.success) {
-      // tr.remove(); // Removing the row.
-      this.postDelete();
-    } else {
-      this.deleteNotif.show = true;
-      this.deleteNotif.message = res.data;
-    }
+  confirmDelete(): void {
+    this.delProgress = true;
+    this.manageMembersService.deleteManageMembersData({ id: this.deleteMemberId }, this.workspaceId).subscribe(res => {
+      this.delProgress = false;
+      if (res && res.success) {
+        // tr.remove(); // Removing the row.
+        this.postDelete();
+      } else {
+        this.deleteNotif.show = true;
+        this.deleteNotif.message = res.data;
+      }
     });
   }
   closeErrorMsg() {
@@ -203,7 +203,6 @@ confirmDelete(): void {
           params.permissions = permissions;
           this.manageMembersService.updateServiceActions(params).subscribe(res => { // API params are still not confirmed
             // TODO: update data using res
-            console.log('updateServiceActions returns', res);
             if (res && res.length > 0) {
               _serviceActions.removeClass('toggle');
             }
@@ -220,7 +219,6 @@ confirmDelete(): void {
           };
           this.manageMembersService.updateRole(params).subscribe(res => { // API params are still not confirmed
             // TODO: update row data / dataTable data  using res
-            console.log('updateRole returns', res);
             if (res && res.length > 0) {
               tr.removeClass('toggle');
             }
@@ -347,7 +345,6 @@ confirmDelete(): void {
   }
 
   onUpdateExistingUsers(e) {
-    console.log('onUpdateExistingUsers called');
     if (e) {
       this.getManageMembersData(this.workspaceId);
     }

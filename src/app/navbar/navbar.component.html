@@ -12,12 +12,13 @@
           </a>
         </li>
         <li class="dropdown user-menu">
-          <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Activities
+          <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false">My Activities
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li title="Status Monitor">
-              <a [routerLink]="['/workspace/status']" class="trim-text">Status</a>
+              <a [routerLink]="['/status']" class="trim-text">Status</a>
             </li>
           </ul>
         </li>
@@ -71,7 +72,8 @@
           </ul>
         </li>
         <li class="dropdown user-menu">
-          <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{info?.username}}
+          <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false">{{info?.username}}
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
@@ -80,11 +82,11 @@
             </li>
             <li *ngIf="info?.show" role="separator" class="divider"></li>
             <li *ngIf="info?.show" title="Manage">
-              <a routerLink="/workspace/management-panel" class="trim-text">Manage</a>
+              <a [routerLink]="['/management-landing-page/management-panel']" class="trim-text">Manage</a>
             </li>
             <li role="separator" class="divider"></li>
             <li title="Logout">
-              <a href="" class="info-number">
+              <a href="" (click)="logout()" class="info-number">
                 Logout
                 <!-- <i class="fa fa-sign-out fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Logout"></i> -->
               </a>
@@ -93,7 +95,8 @@
         </li>
         <li role="presentation">
           <a href="" class="info-number">
-            <i class="fa fa-question-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Help"></i>
+            <i class="fa fa-question-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
+              title="Help"></i>
           </a>
         </li>
       </ul>

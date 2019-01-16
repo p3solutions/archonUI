@@ -19,6 +19,7 @@ p {
 .dropdown {
   float: right;
   margin-right: 200px;
+  cursor: pointer;
 }
 
 #export {

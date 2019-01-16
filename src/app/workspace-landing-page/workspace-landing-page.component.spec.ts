@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { InfoService } from '../info.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Info } from '../info';
 
 xdescribe('WorkspaceLandingPageComponent', () => {
@@ -43,30 +43,5 @@ xdescribe('WorkspaceLandingPageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('Should get data from InfoService', () => {
-    spyOn(infoService, 'getinfo').and.returnValue(getInfo());
-    component.getInfo();
-    fixture.detectChanges();
-    expect(info.username).toBe(component.info.username);
-    disposeMe.unsubscribe();
-  });
-
-  it('Should have show == undefined for Member', () => {
-    spyOn(infoService, 'getinfo').and.returnValue(getInfo());
-    component.getInfo();
-    fixture.detectChanges();
-    expect(component.info.show).toBeUndefined(); // or may be toBeFalsy
-    disposeMe.unsubscribe();
-  });
-
-  it('Should have show == true for Admin', () => {
-    info.role = 'Admin';
-    spyOn(infoService, 'getinfo').and.returnValue(getInfo());
-    component.getInfo();
-    fixture.detectChanges();
-    expect(component.info.show).toBeTruthy();
-    disposeMe.unsubscribe();
   });
 });

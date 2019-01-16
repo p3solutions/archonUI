@@ -1,0 +1,122 @@
+<div class="col-md-12 marginClass">
+  <div class="col-md-5">&nbsp;</div>
+  <div class="col-md-7 pointer">
+    <button type="button" class="btn btn-primary" (click)="activateSecondaryFn()" id="Select">Secondary Tables</button>
+    <button type="button" class="btn btn-primary" (click)="activatePrimaryFn()">Primary Columns</button>
+  </div>
+</div>
+<div *ngIf="activatePrimary">
+  <div class="col-md-12">
+    <div class="col-md-3">
+      <table id="customers">
+        <tr>
+          <th>Primary Column</th>
+        </tr>
+        <tr *ngFor="let x of primaryColMap | keyvalue" (click)="populatePrimaryValues(x)">
+          <td class="pointer">{{x.key}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-md-9">
+      <table id="customers" class="table table-hover table-bordered primaryPopulate">
+        <thead>
+          <tr>
+            <th>Secondary Table</th>
+            <th>Column Type</th>
+            <th>Secondary Column</th>
+            <th>Accuracy (in %)</th>
+            <th><input type="checkbox" (change)="selectAll($event)"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of populatePrimaryValuesArray | paginate: { itemsPerPage: 7, currentPage: p };let i=index">
+            <td>{{x.tableName}}</td>
+            <td>{{x.dataType}}</td>
+            <td>{{x.secondaryColumnName}}</td>
+            <td>{{x.matchPercentage}}</td>
+            <td><input type="checkbox" [disabled]="x.matchPercentage == 0" (change)="checkedPriValues(x,$event,i)"></td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+<div *ngIf="activateSecondary">
+  <div class="col-md-12">
+    <div class="col-md-3">
+      <table id="customers">
+        <tr>
+          <th>Secondary Table</th>
+        </tr>
+        <tr *ngFor="let x of secTableNameMap | keyvalue" (click)="populateSecondaryValues(x)">
+          <td class="pointer">{{x.key}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-md-9">
+      <table id="customers" class="table table-hover table-bordered secondaryPopulate">
+        <thead>
+          <tr>
+            <th>Primary Column</th>
+            <th>Column Type</th>
+            <th>Secondary Column</th>
+            <th>Accuracy (in %)</th>
+            <th><input type="checkbox" (change)="selectAll($event)"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of populateSecondaryValuesArray | paginate: { itemsPerPage: 7, currentPage: p };let i=index">
+            <td>{{x.primaryColumn}}</td>
+            <td>{{x.dataType}}</td>
+            <td>{{x.secondaryColumnName}}</td>
+            <td>{{x.matchPercentage}}</td>
+            <td><input type="checkbox" [disabled]="x.matchPercentage == 0" (change)="checkedSecValues(x,$event,i)"></td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 marginClass">
+  <div class="col-md-7">
+    <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+      <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>New Join Added Successfully</strong>
+    </div>
+    <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+      <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>{{errorMsg}}</strong>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <button type="button" class="btn btn-primary" (click)="addJoins()">Add Selected Joins</button>
+    <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-toggle="modal" href="#confirmClose">Close</button>
+  </div>
+</div>
+<!-- Close -->
+<div class="modal fade" id="confirmClose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
+    <div class="modal-content text-left">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Close Results</h4>
+      </div>
+      <div class="modal-body text-center" style="height: 100px;">
+        Are you sure? You won't be able to add joins later.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeScreen()">Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

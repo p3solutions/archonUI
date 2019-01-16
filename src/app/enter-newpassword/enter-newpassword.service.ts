@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
+import { Headers, Response } from '@angular/http';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { NewPasswordSetter } from './new-password-setter';
 import { environment } from '../../environments/environment';
 @Injectable()
@@ -19,7 +18,7 @@ export class EnterNewpasswordService {
     return this.http.post<NewPasswordSetter>(this.forgotPasswordUrl, newPasswordSetForm, { headers: this.headers });
   }
   /**
-  * Handle Http operation that failed.
+  * Handle HttpClient operation that failed.
   * Let the app continue.
   * @param operation - name of the operation that failed
   * @param result - optional value to return as the observable result
@@ -33,12 +32,11 @@ export class EnterNewpasswordService {
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(result);
     };
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 }
 

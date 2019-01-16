@@ -1,11 +1,13 @@
-import { TestBed, inject, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
-
+import { TestBed, inject, fakeAsync, flushMicrotasks, tick,async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ChangePasswordService } from './change-password.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { JwtHelper } from 'angular2-jwt';
-import { Http, Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { HttpClient } from '@angular/common/http';
+import { Response, ResponseOptions, XHRBackend } from '@angular/http';
+import { UserinfoService } from '../userinfo.service';
 
 describe('ChangePasswordService', () => {
   let backend: MockBackend;
@@ -14,18 +16,20 @@ describe('ChangePasswordService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       providers: [
         { provide: MockBackend, useClass: MockBackend },
         { provide: XHRBackend, useExisting: MockBackend },
         ChangePasswordService,
-        JwtHelper,
-        HttpClientModule
+        JwtHelperService,
+        HttpClientModule,
+        UserinfoService
       ]
     });
     backend = TestBed.get(MockBackend);
-    spyOn(Http.prototype, 'request').and.callThrough();
+    spyOn(HttpClient.prototype, 'request').and.callThrough();
   });
   afterEach(() => backend.verifyNoPendingRequests());
 
@@ -33,7 +37,7 @@ describe('ChangePasswordService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it(`should passwordParam object should be same as passed in service`, fakeAsync(inject([ ChangePasswordService, MockBackend ],
+  it(`should passwordParam object should be same as passed in service`, fakeAsync(inject([ChangePasswordService, MockBackend],
     (service: ChangePasswordService, mockBackend: MockBackend) => {
       // prepare fake response from `MockBackend`
       mockBackend.connections.subscribe((c: MockConnection) => {
@@ -52,8 +56,8 @@ describe('ChangePasswordService', () => {
       tick();
       // dispatch the http request
       service.changePassword(passwordParam);
-        // ensure that `ChangePasswordService` respond data with success
+      // ensure that `ChangePasswordService` respond data with success
       expect(service.passwordParam).toEqual(passwordParam);
       flushMicrotasks();
-  })));
+    })));
 });

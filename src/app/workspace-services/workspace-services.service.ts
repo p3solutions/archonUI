@@ -1,26 +1,75 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { ServiceActionsObject } from '../workspace-objects';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Observer, BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable()
 export class WorkspaceServicesService {
+
   // serviceActionUpdated: EventEmitter<ServiceActionsObject> = new EventEmitter();
-  public serviceActionsUpdated: BehaviorSubject<ServiceActionsObject[]> = new BehaviorSubject(
-    JSON.parse(localStorage.getItem('serviceActions')));
+  private serviceActionsUpdated: BehaviorSubject<ServiceActionsObject[]> = new BehaviorSubject<ServiceActionsObject[]>([]);
+  userSelectedWorkspace = this.serviceActionsUpdated.asObservable();
+
   constructor() {
   }
-  passServiceActions(serviceActions: ServiceActionsObject) {
-    localStorage.setItem('serviceActions', JSON.stringify(serviceActions));
-    this.updateServiceActions();
+  // passServiceActions(serviceActions: ServiceActionsObject) {
+  //   localStorage.setItem('serviceActions', JSON.stringify(serviceActions));
+  //   this.updateServiceActions();
+  // }
+  updateServiceActions(serviceActionList: ServiceActionsObject[]) {
+    // if (localStorage) {
+    //   const data = localStorage.getItem('serviceActions');
+    //   this.serviceActionsUpdated.next(JSON.parse(data));
+    // }
+    this.serviceActionsUpdated.next(serviceActionList);
   }
-  updateServiceActions() {
-    if (localStorage) {
-      const data = localStorage.getItem('serviceActions');
-      this.serviceActionsUpdated.next(JSON.parse(data));
+
+  updateServiceActionsList(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
+    if (serviceActions) {
+      for (const service of serviceActions) {
+        switch (service.serviceName) {
+          case 'SERVICE_METALYZER': {
+            service.serviceName = 'Metalyzer';
+            service.iconName = 'metalyzer.png';
+            break;
+          }
+          case 'SERVICE_LIVE_ARCHIVAL': {
+            service.serviceName = 'Live Archival';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          case 'SERVICE_CUSTOM_SCREEN_BUILDING': {
+            service.serviceName = 'Custom Screen Building';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          case 'SERVICE_END_2_END_TOOLKIT': {
+            service.serviceName = 'End to End Toolkit';
+            service.iconName = 'endtoendtoolkit.png';
+            break;
+          }
+          case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
+            service.serviceName = 'Enterprise Data Retrieval Tool';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          case 'SERVICE_INFOARCHIVE_COMPLETE_APPLICATION_AUTOMATION': {
+            service.serviceName = 'InfoArchive Complete Application Automation';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          case 'SERVICE_UNSTRUCTURED_DATA_ EXTRACTOR': {
+            service.serviceName = 'Unstructured Data Extractor';
+            service.iconName = 'livearchival.png';
+            break;
+          }
+          // default: {
+          //   service.serviceName = 'No Service Available';
+          //   break;
+          // }
+        }
+      }
     }
+    return serviceActions;
   }
 }
 

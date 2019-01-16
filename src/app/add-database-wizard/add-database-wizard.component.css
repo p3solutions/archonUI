@@ -55,8 +55,11 @@ th.disp-bl {
     block-size: 26px;
     font-size: 13px;
     text-align: left;
-    width: 152px;
-   
-}
+    width: 152px;   
+ }
+ .inline-loader {
+     position: initial;
+     margin: 3px;
+ }
 
 

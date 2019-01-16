@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
+
+
 import { ManageMembers } from '../manage-members';
 import { UserinfoService } from '../userinfo.service';
 import { environment } from '../../environments/environment';
@@ -28,46 +27,44 @@ export class ManageMembersService {
 
   getWSMembers(workspaceId): Observable<ManageMembers[]> {
     const url = this.apiUrl + this.wSMembersUrl + workspaceId;
-    return this.http.get<ManageMembers[]>(url, { headers: this.headers })
-      .map(this.extractWSMembers)
-      .pipe(catchError(this.handleError('managemembers', []))
-      );
+    return this.http.get<ManageMembers[]>(url, { headers: this.headers }).pipe(
+      map(this.extractWSMembers),
+      catchError(this.handleError('managemembers', []))
+    );
   }
 
   getwsRoleList(): Observable<any> {
     const url = this.apiUrl + this.wSroleListUrl;
-    return this.http.get<any[]>(url, { headers: this.headers })
-      .map(this.extractWSRoles)
-      .pipe(catchError(this.handleError('getwsRoleList', []))
-      );
+    return this.http.get<any[]>(url, { headers: this.headers }).pipe(
+      map(this.extractWSRoles),
+      catchError(this.handleError('getwsRoleList', []))
+    );
   }
 
   getServiceActions(): Observable<any> {
     const url = this.apiUrl + this.serviceActionsUrl;
-    return this.http.get<any>(url, { headers: this.headers })
-      .map(this.extractServiceActions)
-      .pipe(catchError(this.handleError('getServiceActions'))
-      );
+    return this.http.get<any>(url, { headers: this.headers }).pipe(
+      map(this.extractServiceActions),
+      catchError(this.handleError('getServiceActions'))
+    );
   }
   updateRole(params: AnyObject) {
     params.id = this.userinfoService.getUserId(); // loggedIn user id
     const url = this.apiUrl + this.updateWSRoleUrl + params.id;
-    return this.http.get<any>(url, { headers: this.headers })
-      .map(this.extractData)
-      .pipe(catchError(this.handleError('updateRole'))
-      );
+    return this.http.get<any>(url, { headers: this.headers }).pipe(
+      map(this.extractData),
+      catchError(this.handleError('updateRole'))
+    );
   }
   updateServiceActions(params: AnyObject) {
     const url = this.apiUrl + `users/${params.userId}/roles/actions`;
-    console.log('updateServiceActions params:', params);
-    return this.http.post<any>(url, params, { headers: this.headers })
-      .map(this.extractServiceActions)
-      .pipe(catchError(this.handleError('updateServiceActions'))
-      );
+    return this.http.post<any>(url, params, { headers: this.headers }).pipe(
+      map(this.extractServiceActions),
+      catchError(this.handleError('updateServiceActions'))
+    );
   }
   deleteManageMembersData(param: AnyObject, wsId: string): Observable<any> {
     const url = this.apiUrl + this.wsDelAccessUrl + wsId + '/member?userId=' + param.id;
-    console.log(url);
     return this.http.delete<any>(url, { headers: this.headers })
       .pipe(catchError(this.handleError('deleteManageMembersData', []))
         // tap(_ => this.log(`deleted hero id=${id}`)),
@@ -78,7 +75,6 @@ export class ManageMembersService {
 
   private extractData(res: any) {
     const data = res.data;
-    console.log('roles success data:', data);
     return data || [];
   }
 
@@ -95,7 +91,7 @@ export class ManageMembersService {
     return data || [];
   }
 
-  // * Handle Http operation that failed.
+  // * Handle HttpClient operation that failed.
   // * Let the app continue.
   // * @param operation - name of the operation that failed
   // * @param result - optional value to return as the observable result
@@ -114,7 +110,6 @@ export class ManageMembersService {
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 
 

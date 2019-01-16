@@ -28,7 +28,7 @@
        </div> 
      </div>
   </div>
-  <div class="row">
+   <div class="row"> 
     <div id="manager-user" class="workspace-panel-content" *ngIf="isAvailable">
       <table datatable [dtOptions]="dtOptions" id="manage-user-role-info-table" class="table table-hover table-bordered">
         <thead>
@@ -62,7 +62,7 @@
   </div>
   <div class="row">
     <div class="workspace-panel-content">
-      <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
+      <button (click)="gotoManagementPanel()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
     </div>
   </div>
 </div>

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import { JwtHelper } from 'angular2-jwt';
+
+
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { ConfiguredDB, DatabaseObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
@@ -15,7 +14,7 @@ import { environment } from '../../environments/environment';
 export class DatabaseListService {
 
   accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
 
   configDBListUrl = environment.apiUrl + '/dbs/configured';
   constructor(private http: HttpClient,
@@ -23,8 +22,10 @@ export class DatabaseListService {
   }
   getListOfConfigDatabases(): Observable<ConfiguredDB[]> {
     return this.http.get<ConfiguredDB[]>(this.configDBListUrl, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractConfigDB)
-      .pipe(catchError(this.handleError('database-getList()', [])));
+      .pipe(
+        map(this.extractConfigDB),
+        catchError(this.handleError('database-getList()', []))
+      );
   }
   private extractConfigDB(res: any) {
     const data = res.data.configuredDatabases;
@@ -32,7 +33,7 @@ export class DatabaseListService {
   }
 
 
-  // * Handle Http operation that failed.
+  // * Handle HttpClient operation that failed.
   // * Let the app continue.
   // * @param operation - name of the operation that failed
   // * @param result - optional value to return as the observable result
@@ -47,12 +48,11 @@ export class DatabaseListService {
       this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
-      return of(result as T);
+      return of(result);
     };
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
   }
 
 

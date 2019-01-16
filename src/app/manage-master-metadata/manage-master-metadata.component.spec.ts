@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { ManageMasterMetadataComponent } from './manage-master-metadata.component';
 import { ManageMasterMetadataService } from './manage-master-metadata.service';
 import { ManageMasterMetadata } from '../master-metadata-data';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 
@@ -82,11 +82,9 @@ xdescribe('ManageMasterMetadataComponent', () => {
     // find DebugElements with an attached WorkspaceServicesComponentDirective
     const workspaceServiceTag = fixture.debugElement
       .queryAll(By.css('app-workspace-services'));
-    console.log('workspaceServiceTag', workspaceServiceTag);
     // get the attached link directive instances using the DebugElement injectors
     const links = workspaceServiceTag
       .map(dE => dE.injector.get(WorkspaceServicesComponent) as WorkspaceServicesComponent);
-    console.log('links', links);
     const dashboardUrl = 'workspace/workspace-dashboard/workspace-services';
     // expect(links[1].navigatedTo).toBe(dashboardUrl);
   });

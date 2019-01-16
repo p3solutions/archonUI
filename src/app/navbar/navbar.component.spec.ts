@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NavbarComponent } from './navbar.component';
 import { InfoService } from '../info.service';
 import { Info } from '../info';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 xdescribe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -78,7 +78,6 @@ xdescribe('NavbarComponent', () => {
     spyOn(infoService, 'getinfo').and.returnValue(getInfo());
     fixture.detectChanges();
     expect(userName.textContent.trim()).toBe(component.info.username);
-    // console.log('username->', component.info.username, 'info returned by infoservice->', component.info);
     disposeMe.unsubscribe();
   });
 
@@ -103,7 +102,6 @@ xdescribe('NavbarComponent', () => {
 
     const notifications: Element = navbarTag.querySelector('#see-all-notif');
     expect(notifications.textContent.trim()).toBe('See All Notifications');
-    // console.log('info returned by infoservice->', component.info, manageLink, notifications);
     disposeMe.unsubscribe();
   });
 });

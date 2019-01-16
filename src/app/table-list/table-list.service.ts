@@ -1,55 +1,89 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http, Headers, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Headers, Response } from '@angular/http';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import { JwtHelper } from 'angular2-jwt';
+
+
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
 import { WorkspaceObject } from '../workspace-objects';
+import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class TableListService {
   accessToken: string;
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
   private serviceActionType: string;
   tableListUrl = environment.apiUrl + 'meta/tablesList?workspaceId=';
   relationTableListUrl = environment.apiUrl + '/meta/tablesRelationShip?tableId=';
   deleteRelationsUrl = environment.apiUrl + 'meta/relationship?workspaceId=';
-  columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
+  columnListUrl = environment.apiUrl + '/table/columnList?tableId=';
+  dataAnalysisUrl = environment.apiUrl + '/dataAnalyzer/tableToTablesDataCrawlAnalysis';
+  // columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
+  columnUrl = environment.apiUrl + '/table/columnList?tableId=';
+  stateManagementUrl = environment.apiUrl + '/dataAnalyzer/stateManagement';
+  getJobStatusUrl = environment.apiUrl + '/dataAnalyzer/jobStatus?jobId=';
+  private resultantArray = new BehaviorSubject([]);
+  currentResultArray = this.resultantArray.asObservable();
+  private changeValue = new BehaviorSubject(false);
+  currentValue = this.changeValue.asObservable();
+
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
   }
 
   getTableList(workspaceId): Observable<string[]> {
-    return this.http.get<string[]>(this.tableListUrl + workspaceId, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractTables)
-      .pipe(catchError(this.handleError('tables-getTableList()', []))
-      );
+    return this.http.get<string[]>(this.tableListUrl + workspaceId, { headers: this.userinfoService.getHeaders() }).
+    pipe(
+      map(this.extractTables),
+      catchError(this.handleError('tables-getTableList()', []))
+    );
   }
-  getListOfRelationTable(id, workspaceID): Observable<any[]> {
-    const url = this.relationTableListUrl + id + '&workspaceId=' + workspaceID;
+  getListOfRelationTable(id, workspaceId): Observable<any[]> {
+    const url = this.relationTableListUrl + id + '&workspaceId=' + workspaceId;
     return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() })
-      .map(this.extractRelationTableList)
-      .pipe(catchError(this.handleError('relationtable-getListOfRelationTable()', []))
+      .pipe(
+        map(this.extractRelationTableList),
+        catchError(this.handleError('relationtable-getListOfRelationTable()', []))
       );
   }
-  deleteRelationInfoData(workspaceID, primaryTableId, relationShipIDs): Observable<any> {
+  deleteRelationInfoData(workspaceID, primaryTableId, joinName, relationShipIDs): Observable<any> {
     const url = this.deleteRelationsUrl + workspaceID + '&tableId=' + primaryTableId;
-    const params = {relationshipId: relationShipIDs};
-    return this.http.request<any>('DELETE', url, { body: params,  headers: this.userinfoService.getHeaders() })
+    const params = { joinName: joinName, relationshipId: relationShipIDs };
+    return this.http.request<any>('DELETE', url, { body: params, headers: this.userinfoService.getHeaders() })
       .pipe(catchError(this.handleError('deleteRelationInfoData', []))
       );
   }
-  getColumnsByTableName(tableName) {
-    console.log('Fetching columns for:', tableName);
-    const url = this.columnUrl + tableName;
-    return this.http.get<any[]>(url, {headers: this.userinfoService.getHeaders()})
-    .map(this.extractTablesMeta)
-    .pipe(catchError(this.handleError('getColumnsByTableName()', [])));
+
+  getColumnsByTableId(tableId): Observable<any[]> {
+    return this.http.get<any[]>(this.columnListUrl + tableId, {headers: this.userinfoService.getHeaders()})
+    .pipe(
+      map(this.extractTable),
+    catchError(this.handleError('getColumnsByTableId()', [])));
+  }
+
+
+  sendValuesForTableToTableAnalysis(analysisObject): Observable<any> {
+    return this.http.post<any[]>(this.dataAnalysisUrl, analysisObject, { headers: this.userinfoService.getHeaders() })
+      .pipe(catchError(this.handleError('sendValuesForTabletoTableAnalysis', [])));
+  }
+
+  stateManagement(userId, workspaceID, metalyzerServiceId) {
+    const stateManagementObject = {'userId': userId , 'workspaceId': workspaceID , 'serviceId': metalyzerServiceId };
+    return this.http.post<any>(this.stateManagementUrl, stateManagementObject, {headers: this.userinfoService.getHeaders()})
+    .pipe(catchError(this.handleError('stateManagement' , [])));
+  }
+
+  getJobStatus(JobID) {
+  return this.http.get<any>(this.getJobStatusUrl + JobID, {headers: this.userinfoService.getHeaders()})
+  .pipe(catchError(this.handleError('getJobStatusId', [])));
+  }
+
+  private extractTable(res: any) {
+    const data = res.data.tableColumnList.columnDetails;
+    return data || [];
   }
 
   private extractTables(res: any) {
@@ -61,26 +95,13 @@ export class TableListService {
     return data || [];
   }
 
-  private extractTablesMeta(res: any) {
-    const tableKeys = res.data.tables_meta.table_keys;
-    const tableColumns = res.data.tables_meta.table_columns;
-    tableKeys.forEach(key => {
-      tableColumns.forEach(col => {
-        if (key.column_name === col.column_name) {
-          col.confidence_score = key.confidence_score * 100;
-        }
-      });
-    });
-    const data = res.data.tables_meta.table_columns;
-    return data || [];
-  }
   setServiceActionType(serviceActionType: string) {
     this.serviceActionType = serviceActionType;
   }
   getServiceActionType() {
     return this.serviceActionType;
   }
-  // * Handle Http operation that failed.
+  // * Handle HttpClient operation that failed.
   // * Let the app continue.
   // * @param operation - name of the operation that failed
   // * @param result - optional value to return as the observable result
@@ -102,5 +123,12 @@ export class TableListService {
     console.log(message);
   }
 
+  changeArray(res) {
+    this.resultantArray.next(res);
+  }
+
+  changeBooleanValue(message) {
+    this.changeValue.next(message);
+  }
 
 }
