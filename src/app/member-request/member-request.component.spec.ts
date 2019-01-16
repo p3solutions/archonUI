@@ -9,7 +9,7 @@ import { MemberRequestData } from '../member-request-data';
 import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('MemberRequestComponent', () => {
+describe('MemberRequestComponent', () => {
   let component: MemberRequestComponent;
   let fixture: ComponentFixture<MemberRequestComponent>;
   let de: DebugElement;
