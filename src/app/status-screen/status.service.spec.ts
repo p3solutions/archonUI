@@ -9,11 +9,9 @@ import { Observable } from 'rxjs';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
 import { environment } from '../../environments/environment';
+import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('StatusService', () => {
-  let backend: MockBackend;
-  let statusService: StatusService;
-  let userInfoService: UserinfoService;
+describe('StatusService', () => {
   const getJobOriginsUrl = environment.apiUrl + 'jobStatus/jobOrigins';
   const getJobStatusesUrl = environment.apiUrl + 'jobStatus/jobStatuses';
   const getStatusListUrl = environment.apiUrl + 'jobStatus/jobList?userId=';
@@ -68,18 +66,19 @@ xdescribe('StatusService', () => {
   //     ]
   //   });
   // }));
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          HttpClientModule, RouterTestingModule
+        ],
+        providers: [StatusService, UserinfoService, MockBackend]
+      });
+    });
 
-  beforeEach(inject([StatusService, UserinfoService, MockBackend],
-    (statusServiceInst: StatusService, userInfoServiceInst: UserinfoService, mockBackendInst: MockBackend) => {
-      statusService = statusServiceInst;
-      userInfoService = userInfoServiceInst;
-      backend = mockBackendInst;
-    }));
-
-  afterEach(fakeAsync(() => {
-    backend.resolveAllConnections();
-    flush();
-  }));
+  // afterEach(fakeAsync(() => {
+  //   backend.resolveAllConnections();
+  //   flush();
+  // }));
 
 
   it('Service should be created', inject([StatusService], (service: StatusService) => {
@@ -93,125 +92,125 @@ xdescribe('StatusService', () => {
 
   // Run below test-cases one at a time by removing 'x' from xit()
 
-  it('should return the list of jobArray from the server on success', fakeAsync(() => {
-    setupConnections(backend, {
-      body: {},
-      status: 200
-    });
-    // logger('should return the list of jobArray from the server on success');
-    const prom = statusService.getJobList();
-    flushMicrotasks();
-    prom.subscribe((res) => {
-      expect(res.success).toBeTruthy();
-      expect(res.data.jobArray.length).toBe(jobArray.length);
-    });
-  }));
+  // xit('should return the list of jobArray from the server on success', fakeAsync(() => {
+  //   setupConnections(backend, {
+  //     body: {},
+  //     status: 200
+  //   });
+  //   // logger('should return the list of jobArray from the server on success');
+  //   const prom = statusService.getJobList();
+  //   flushMicrotasks();
+  //   prom.subscribe((res) => {
+  //     expect(res.success).toBeTruthy();
+  //     expect(res.data.jobArray.length).toBe(jobArray.length);
+  //   });
+  // }));
 
-  xit('should not return the list of jobArray from the server on error', fakeAsync(() => {
-    setupConnections(backend, {
-      body: {},
-      status: 500
-    });
-    logger('should not return the list of jobArray from the server on error');
-    const prom = statusService.getJobList();
-    flushMicrotasks();
-    prom.subscribe((res) => {
-      expect(res.success).toBeFalsy();
-    });
-  })
-  );
-
-
-
-  xit('should return the list of jobOrigins from the server on success', fakeAsync(() => {
-    setupConnections(backend, {
-      body: {},
-      status: 200
-    });
-    logger('should return the list of jobOrigins from the server on success');
-    const prom = statusService.getJobOrigins();
-    flushMicrotasks();
-    prom.subscribe((res) => {
-      expect(res.data.success).toBeTruthy();
-      expect(res.data.jobOriginArray.length).toBe(jobOriginArray.length);
-    });
-  }));
-
-  xit('should not return the list of jobOrigins from the server on error', fakeAsync(() => {
-    setupConnections(backend, {
-      body: {},
-      status: 500
-    });
-    logger('should not return the list of jobOrigins from the server on error');
-    const prom = statusService.getJobOrigins();
-    flushMicrotasks();
-    prom.subscribe((res) => {
-      expect(res.data.success).toBeFalsy();
-    });
-  })
-  );
+  // xit('should not return the list of jobArray from the server on error', fakeAsync(() => {
+  //   setupConnections(backend, {
+  //     body: {},
+  //     status: 500
+  //   });
+  //   logger('should not return the list of jobArray from the server on error');
+  //   const prom = statusService.getJobList();
+  //   flushMicrotasks();
+  //   prom.subscribe((res) => {
+  //     expect(res.success).toBeFalsy();
+  //   });
+  // })
+  // );
 
 
 
+  // xit('should return the list of jobOrigins from the server on success', fakeAsync(() => {
+  //   setupConnections(backend, {
+  //     body: {},
+  //     status: 200
+  //   });
+  //   logger('should return the list of jobOrigins from the server on success');
+  //   const prom = statusService.getJobOrigins();
+  //   flushMicrotasks();
+  //   prom.subscribe((res) => {
+  //     expect(res.data.success).toBeTruthy();
+  //     expect(res.data.jobOriginArray.length).toBe(jobOriginArray.length);
+  //   });
+  // }));
 
-  xit('should return the list of jobStatuses from the server on success', fakeAsync(() => {
-    setupConnections(backend, {
-      body: {},
-      // url: getJobStatusesUrl,
-      status: 200
-    });
-    logger('should return the list of jobStatuses from the server on success');
-    const prom = statusService.getJobStatuses();
-    flushMicrotasks();
-    prom.subscribe((res) => {
-      expect(res.data.success).toBeTruthy();
-      expect(res.data.jobStatusArray.length).toBe(jobStatusArray.length);
-    });
-  }));
-
-  xit('should not return the list of jobStatuses from the server on error', fakeAsync(() => {
-    setupConnections(backend, {
-      body: {},
-      url: getJobStatusesUrl,
-      status: 500
-    });
-    logger('should not return the list of jobStatuses from the server on error');
-    const prom = statusService.getJobStatuses();
-    flushMicrotasks();
-    prom.subscribe((res) => {
-      expect(res.data.success).toBeFalsy();
-    });
-  }));
+  // xit('should not return the list of jobOrigins from the server on error', fakeAsync(() => {
+  //   setupConnections(backend, {
+  //     body: {},
+  //     status: 500
+  //   });
+  //   logger('should not return the list of jobOrigins from the server on error');
+  //   const prom = statusService.getJobOrigins();
+  //   flushMicrotasks();
+  //   prom.subscribe((res) => {
+  //     expect(res.data.success).toBeFalsy();
+  //   });
+  // })
+  // );
 
 
 
 
-  xit('should return response on retry job from the server on success', fakeAsync(() => {
-    setupConnections(backend, {
-      body: {},
-      status: 200
-    });
-    logger('should return response on retry job from the server on success');
-    const selectedJobId = jobArray[0]._id;
-    const prom = statusService.setRetryStatus(selectedJobId);
-    flushMicrotasks();
-    prom.subscribe((res) => {
-      expect(res.data.success).toBeTruthy();
-      expect(res.data.jobStatusArray.length).toBe(jobStatusArray.length);
-    });
-  }));
+  // xit('should return the list of jobStatuses from the server on success', fakeAsync(() => {
+  //   setupConnections(backend, {
+  //     body: {},
+  //     // url: getJobStatusesUrl,
+  //     status: 200
+  //   });
+  //   logger('should return the list of jobStatuses from the server on success');
+  //   const prom = statusService.getJobStatuses();
+  //   flushMicrotasks();
+  //   prom.subscribe((res) => {
+  //     expect(res.data.success).toBeTruthy();
+  //     expect(res.data.jobStatusArray.length).toBe(jobStatusArray.length);
+  //   });
+  // }));
 
-  xit('should not return response on retry job from the server on error', fakeAsync(() => {
-    setupConnections(backend, {
-      body: {},
-      status: 500
-    });
-    logger('should not return response on retry job from the server on error');
-    const prom = statusService.setRetryStatus(null);
-    flushMicrotasks();
-    prom.subscribe((res) => {
-      expect(res.data.success).toBeFalsy();
-    });
-  }));
+  // xit('should not return the list of jobStatuses from the server on error', fakeAsync(() => {
+  //   setupConnections(backend, {
+  //     body: {},
+  //     url: getJobStatusesUrl,
+  //     status: 500
+  //   });
+  //   logger('should not return the list of jobStatuses from the server on error');
+  //   const prom = statusService.getJobStatuses();
+  //   flushMicrotasks();
+  //   prom.subscribe((res) => {
+  //     expect(res.data.success).toBeFalsy();
+  //   });
+  // }));
+
+
+
+
+  // xit('should return response on retry job from the server on success', fakeAsync(() => {
+  //   setupConnections(backend, {
+  //     body: {},
+  //     status: 200
+  //   });
+  //   logger('should return response on retry job from the server on success');
+  //   const selectedJobId = jobArray[0]._id;
+  //   const prom = statusService.setRetryStatus(selectedJobId);
+  //   flushMicrotasks();
+  //   prom.subscribe((res) => {
+  //     expect(res.data.success).toBeTruthy();
+  //     expect(res.data.jobStatusArray.length).toBe(jobStatusArray.length);
+  //   });
+  // }));
+
+  // xit('should not return response on retry job from the server on error', fakeAsync(() => {
+  //   setupConnections(backend, {
+  //     body: {},
+  //     status: 500
+  //   });
+  //   logger('should not return response on retry job from the server on error');
+  //   const prom = statusService.setRetryStatus(null);
+  //   flushMicrotasks();
+  //   prom.subscribe((res) => {
+  //     expect(res.data.success).toBeFalsy();
+  //   });
+  // }));
 
 });
