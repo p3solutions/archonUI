@@ -29,7 +29,6 @@ xdescribe('SigninFormComponent', () => {
   });
 
   it('should create', () => {
-    // is Sigin-Form Component available?
     expect(component).toBeTruthy();
   });
 
