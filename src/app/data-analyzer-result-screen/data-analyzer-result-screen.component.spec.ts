@@ -1,14 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { TableListService } from '../table-list/table-list.service';
+import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
+import { HttpClientModule } from '@angular/common/http';
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('DataAnalyzerResultScreenComponent', () => {
+xdescribe('DataAnalyzerResultScreenComponent', () => {
   let component: DataAnalyzerResultScreenComponent;
   let fixture: ComponentFixture<DataAnalyzerResultScreenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataAnalyzerResultScreenComponent ]
+      declarations: [ DataAnalyzerResultScreenComponent ],
+      imports: [NgxPaginationModule, HttpClientModule, RouterTestingModule],
+      providers: [TableListService, AddDirectJoinService, UserinfoService]
     })
     .compileComponents();
   }));
@@ -19,7 +27,7 @@ describe('DataAnalyzerResultScreenComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
