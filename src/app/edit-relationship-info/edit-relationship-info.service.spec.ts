@@ -1,15 +1,19 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { EditRelationshipInfoService } from './edit-relationship-info.service';
+import { HttpClientModule } from '@angular/common/http';
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditRelationshipInfoService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [EditRelationshipInfoService]
+      imports: [HttpClientModule, RouterTestingModule],
+      providers: [EditRelationshipInfoService, UserinfoService]
     });
   });
 
-  xit('should be created', inject([EditRelationshipInfoService], (service: EditRelationshipInfoService) => {
+  it('should be created', inject([EditRelationshipInfoService], (service: EditRelationshipInfoService) => {
     expect(service).toBeTruthy();
   }));
 });
