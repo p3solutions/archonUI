@@ -6,7 +6,11 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { WorkspaceListComponent } from './workspace-list.component';
 import { WorkspaceListService } from './workspace-list.service';
-xdescribe('WorkspaceListComponent', () => {
+import { DynamicLoaderService } from '../dynamic-loader.service';
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CommonUtilityService } from '../common-utility.service';
+describe('WorkspaceListComponent', () => {
   let component: WorkspaceListComponent;
   let fixture: ComponentFixture<WorkspaceListComponent>;
   let de: DebugElement;
@@ -193,8 +197,8 @@ xdescribe('WorkspaceListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, HttpClientModule],
-      providers: [WorkspaceListService],
+      imports: [HttpClientTestingModule, HttpClientModule, RouterTestingModule],
+      providers: [WorkspaceListService, DynamicLoaderService, UserinfoService, CommonUtilityService],
       declarations: [WorkspaceListComponent]
     })
       .compileComponents();
@@ -208,7 +212,7 @@ xdescribe('WorkspaceListComponent', () => {
     workspaceListService = TestBed.get(WorkspaceListService);
   });
 
-  it('Should display the observable data  for workspaceList component', () => {
+  xit('Should display the observable data  for workspaceList component', () => {
     spyOn(workspaceListService, 'getList').and.returnValue(getWorkspaceListInfo());
     fixture.detectChanges();
     const rowArray: NodeListOf<Element> = workspaceListHTMLTag.querySelectorAll('.wsList');
