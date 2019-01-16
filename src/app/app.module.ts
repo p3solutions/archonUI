@@ -149,7 +149,7 @@ export function tokenGetter() {
                 DataAnalyzerResultScreenComponent,
                 KeyvaluePipe,
                 ManagementLandingPageComponent,
-                PaginatePipe
+                PaginatePipe,
         ],
         imports: [
                 JwtModule.forRoot({
