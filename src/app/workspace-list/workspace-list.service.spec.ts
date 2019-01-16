@@ -1,11 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { WorkspaceListService } from './workspace-list.service';
+import { HttpClientModule } from '@angular/common/http';
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('WorkspaceListService', () => {
+describe('WorkspaceListService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WorkspaceListService]
+      imports: [HttpClientModule, RouterTestingModule],
+      providers: [WorkspaceListService, UserinfoService]
     });
   });
 
