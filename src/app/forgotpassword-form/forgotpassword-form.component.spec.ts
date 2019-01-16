@@ -9,7 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-xdescribe('ForgotpasswordFormComponent', () => {
+describe('ForgotpasswordFormComponent', () => {
   let component: ForgotpasswordFormComponent;
   let fixture: ComponentFixture<ForgotpasswordFormComponent>;
   let de: DebugElement;
