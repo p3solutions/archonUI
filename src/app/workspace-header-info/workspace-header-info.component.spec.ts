@@ -5,8 +5,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('WorkspaceHeaderInfoComponent', () => {
+describe('WorkspaceHeaderInfoComponent', () => {
   let component: WorkspaceHeaderInfoComponent;
   let fixture: ComponentFixture<WorkspaceHeaderInfoComponent>;
   let de: DebugElement;
@@ -34,12 +36,14 @@ xdescribe('WorkspaceHeaderInfoComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [ WorkspaceHeaderInfoComponent ],
       providers: [
         UserWorkspaceService,
-        HttpClientModule
+        HttpClientModule,
+        UserinfoService
       ],
     })
     .compileComponents();
@@ -58,7 +62,7 @@ xdescribe('WorkspaceHeaderInfoComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should have the drop-down button & its options', () => {
+  xit('Should have the drop-down button & its options', () => {
     // returning mock data from the spy stub
     // spyOn(userWorkspaceService, 'getCurrentWorkspace').and.returnValue(getCurrentWorkspace());
     // calling the function to render data in template
