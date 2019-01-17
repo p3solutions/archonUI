@@ -91,6 +91,7 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   gotoMetalyzer(service: any) {
+    console.log(service.serviceName);
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (service.serviceName === 'Metalyzer') {
       this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSelectedWorkspaceId());
@@ -109,6 +110,9 @@ export class WorkspaceServicesComponent implements OnInit {
           }
         });
       }
+    }
+    else if (service.serviceName === 'Live Archival') {
+      this.router.navigate(['/workspace/db-extractor']);
     }
   }
 

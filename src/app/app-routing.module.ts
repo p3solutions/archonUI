@@ -32,6 +32,10 @@ import { TableListComponent } from './table-list/table-list.component';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
 import {DataAnalyzerResultScreenComponent} from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
+import { DbExtractorComponent } from './db-extractor/db-extractor.component';
+import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extractor-step-one.component';
+import { DbExtractorStepTwoComponent } from './db-extractor-step-two/db-extractor-step-two.component';
+import {DbExtractorLastStepComponent} from './db-extractor-last-step/db-extractor-last-step.component'
 
 const routes: Routes = [
   {
@@ -63,7 +67,17 @@ const routes: Routes = [
             }]
           }
         ]
-      }]
+      },{ path: 'db-extractor', component: DbExtractorComponent, children: [
+        {
+        path: 'db-extractor-process', component: DbExtractorStepOneComponent
+      },{
+        path: 'db-extractor-parameter', component: DbExtractorStepTwoComponent
+      },{
+        path: 'db-extractor-summary', component: DbExtractorLastStepComponent
+      }
+    ]
+  }
+]
   },
   {
     path: '', component: LandingPageComponent, children: [

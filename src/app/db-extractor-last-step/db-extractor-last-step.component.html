@@ -1,0 +1,110 @@
+<div class="container">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <th class="text-center">Parameter</th>
+      <th class="text-center">value</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Database Profile</td>
+        <td><a data-toggle="modal" href="#db-profile-model">test-db</a></td>
+      </tr>
+      <tr>
+        <td>Process-configuration</td>
+        <td><a routerLink="/workspace/db-extractor/db-extractor-process">Edit</a></td>
+      </tr>
+      <tr>
+        <td>Process</td>
+        <td>Generate Schema</td>
+      </tr>
+      <tr>
+        <td>Output format</td>
+        <td>Xml</td>
+      </tr>
+      <tr>
+        <td>Include relationship</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Table Inclusion rule</td>
+        <td>None</td>
+      </tr>
+      <tr>
+        <td>Job Parameters</td>
+        <td><a routerLink="/workspace/db-extractor/db-extractor-parameter">Edit</a></td>
+      </tr>
+      <tr>
+        <td>Maximum Parallel Process</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>Xml File Split Size</td>
+        <td>100MB</td>
+      </tr>
+      <tr>
+        <td>Include Tables</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Include Views</td>
+        <td>No</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-primary next" (click)="Start()" style="float: right;">Start</button>
+  <button class="btn btn-primary Previous" (click)="prevStepTwo()" style="float: right;margin-right: 5px;">&laquo;
+    Previous</button>
+  <br>
+  <br>
+</div>
+
+<div id="db-profile-model" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Database Profile</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td>Database Profile Name</td>
+              <td>test-db</td>
+            </tr>
+            <tr>
+              <td>Database Type</td>
+              <td>MySQL</td>
+            </tr>
+            <tr>
+              <td>Database Host/Ip</td>
+              <td>localhost</td>
+            </tr>
+            <tr>
+              <td>Database Port</td>
+              <td>3306</td>
+            </tr>
+            <tr>
+              <td>Database Name</td>
+              <td>sakila</td>
+            </tr>
+            <tr>
+              <td>Database Schema</td>
+              <td>sakila</td>
+            </tr>
+            <tr>
+              <td>Database User Name</td>
+              <td>root</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
