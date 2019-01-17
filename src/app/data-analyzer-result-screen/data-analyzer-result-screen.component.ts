@@ -41,8 +41,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
-    private router: Router,
-    private metalyzerHeaderService: MetalyzerHeaderService) {
+    private router: Router) {
     }
 
 

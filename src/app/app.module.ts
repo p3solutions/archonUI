@@ -89,7 +89,7 @@ import { AddDirectJoinService } from './add-direct-join/add-direct-join.service'
 import { SecondaryColumnPipe } from './secondary-column.pipe';
 import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { KeyvaluePipe } from './keyvalue.pipe';
-import {NgxPaginationModule, PaginatePipe} from 'ngx-pagination';
+import {NgxPaginationModule} from 'ngx-pagination';
 import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
@@ -148,8 +148,7 @@ export function tokenGetter() {
                 SecondaryColumnPipe,
                 DataAnalyzerResultScreenComponent,
                 KeyvaluePipe,
-                ManagementLandingPageComponent,
-                PaginatePipe,
+                ManagementLandingPageComponent
         ],
         imports: [
                 JwtModule.forRoot({
