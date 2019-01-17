@@ -13,18 +13,22 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { EditRelationshipInfoService } from '../edit-relationship-info/edit-relationship-info.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 // Reason: Undefined Property
 xdescribe('TableListComponent', () => {
   let component: TableListComponent;
   let fixture: ComponentFixture<TableListComponent>;
+  // let component1: EditRelationshipInfoComponent;
+  // let fixture1: ComponentFixture<EditRelationshipInfoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TableListComponent, EditRelationshipInfoComponent, AddDirectJoinComponent, SearchPipe,
       SecondaryColumnPipe],
       imports: [RouterTestingModule, FormsModule, HttpClientModule],
-      providers: [TableListService, UserinfoService, WorkspaceHeaderService, EditRelationshipInfoService, AddDirectJoinService]
+      providers: [TableListService, UserinfoService, WorkspaceHeaderService, EditRelationshipInfoService, AddDirectJoinService],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
       .compileComponents();
   }));
@@ -32,6 +36,9 @@ xdescribe('TableListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TableListComponent);
     component = fixture.componentInstance;
+    const Workspace = TestBed.get(WorkspaceHeaderService);
+    spyOn(Workspace, 'getSelectedWorkspaceId').and.returnValue('');
+    spyOn(Workspace, 'getMetalyzerServiceId').and.returnValue('');
     fixture.detectChanges();
   });
 

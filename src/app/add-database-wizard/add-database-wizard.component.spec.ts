@@ -6,8 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
-// Reason for disabling: screen greys out on test case
-xdescribe ('AddDatabaseWizardComponent', () => {
+describe ('AddDatabaseWizardComponent', () => {
   let component: AddDatabaseWizardComponent;
   let fixture: ComponentFixture<AddDatabaseWizardComponent>;
 
@@ -28,6 +27,8 @@ xdescribe ('AddDatabaseWizardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    const button = fixture.debugElement.nativeElement.querySelector('#cancel-btn');
+    button.click();
   });
 
 });

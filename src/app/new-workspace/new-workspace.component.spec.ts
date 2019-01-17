@@ -8,8 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { CommonUtilityService } from '../common-utility.service';
 
-// Reason for disabling: screen greys out on test case
-xdescribe('NewWorkspaceComponent', () => {
+describe('NewWorkspaceComponent', () => {
   let component: NewWorkspaceComponent;
   let fixture: ComponentFixture<NewWorkspaceComponent>;
 
@@ -30,5 +29,7 @@ xdescribe('NewWorkspaceComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    const button = fixture.debugElement.nativeElement.querySelector('#cancel-btn');
+    button.click();
   });
 });

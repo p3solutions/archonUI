@@ -9,8 +9,7 @@ import { UserinfoService } from '../userinfo.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
-// Reason: Undefined Property Error
-xdescribe('MetalyzerComponent', () => {
+describe('MetalyzerComponent', () => {
   let component: MetalyzerComponent;
   let fixture: ComponentFixture<MetalyzerComponent>;
 
@@ -26,6 +25,8 @@ xdescribe('MetalyzerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MetalyzerComponent);
     component = fixture.componentInstance;
+    const Workspace = TestBed.get(WorkspaceHeaderService);
+    spyOn(Workspace, 'getSelectedWorkspaceId').and.returnValue('');
     fixture.detectChanges();
   });
 
