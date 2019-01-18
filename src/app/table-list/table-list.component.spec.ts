@@ -13,10 +13,10 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { EditRelationshipInfoService } from '../edit-relationship-info/edit-relationship-info.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 // Reason: Undefined Property
-xdescribe('TableListComponent', () => {
+describe('TableListComponent', () => {
   let component: TableListComponent;
   let fixture: ComponentFixture<TableListComponent>;
   // let component1: EditRelationshipInfoComponent;
@@ -24,11 +24,11 @@ xdescribe('TableListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TableListComponent, EditRelationshipInfoComponent, AddDirectJoinComponent, SearchPipe,
+      declarations: [TableListComponent, SearchPipe,
       SecondaryColumnPipe],
       imports: [RouterTestingModule, FormsModule, HttpClientModule],
       providers: [TableListService, UserinfoService, WorkspaceHeaderService, EditRelationshipInfoService, AddDirectJoinService],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
   }));
