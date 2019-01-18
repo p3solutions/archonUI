@@ -3,60 +3,72 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Response } from '@angular/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { ProgressBarObj, ProcessDetails, ProcessDetailsObj } from '../db-extractor';
+import { ProgressBarObj,ProcessDetails,ProcessDetailsObj} from '../db-extractor';
 import { environment } from '../../environments/environment';
+import { UserinfoService } from '../userinfo.service';
+import { ConfiguredDB } from '../workspace-objects';
 ProgressBarObj
 @Injectable({
   providedIn: 'root'
 })
 export class DbExtractorService {
-  private headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
-  });
+  constructor(private http: HttpClient,
+    private userInfoService: UserinfoService) { }
 
-  private processDetailsObj: any;
+  private processDetailsObj:ProcessDetailsObj;
 
   private apiUrl = environment.apiUrl;
-  private getProcessDetailsUrl = this.apiUrl + 'rdbmsExtraction/processDetails';
+ private getDBInfoUrl = this.apiUrl+'/dbs/configured/';
 
-  private _progressBarObj: BehaviorSubject<ProgressBarObj> = new BehaviorSubject<ProgressBarObj>({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
+  private getProcessDetailsUrl ='http://50.112.166.136:8092/rdbmsExtraction/processDetail'
+  private _progressBarObj: BehaviorSubject<ProgressBarObj> = new BehaviorSubject<ProgressBarObj>({stepTwoProgBarValue:0,stepThreeProgBarValue:0});
   updatedProgressBarObj = this._progressBarObj.asObservable();
+  private postProcessDetailsUrl ='http://50.112.166.136:8092/rdbmsExtraction/process'
 
 
-  setProgressBarObj(progressBar: ProgressBarObj) {
+  setProgressBarObj(progressBar:ProgressBarObj) {
     this._progressBarObj.next(progressBar);
   }
 
   getProcessDetails(): Observable<ProcessDetails[]> {
-    return this.http.get<ProcessDetails[]>(this.getProcessDetailsUrl, { headers: this.headers }).pipe(
+    return this.http.get<ProcessDetails[]>(this.getProcessDetailsUrl, { headers: this.userInfoService.getHeaders() }).pipe(
       map(this.extractData),
-      catchError(this.handleError('ProcessDetails[]', []))
+      catchError(this.handleError('getProcessDetails', []))
     );
   }
 
-  setProcessDetailsObj(processDetailObj: ProcessDetailsObj) {
-    this.processDetailsObj = processDetailObj;
+  dbExtractor(params: any): Observable<any> {
+    return this.http.post(this.postProcessDetailsUrl, params, { headers: this.userInfoService.getHeaders() }).pipe(
+      map(this.extractData),
+      catchError(this.handleError('dbExtractor', {}))
+    );
   }
 
-  getProcessDetailsObj(): ProcessDetailsObj {
-    return this.processDetailsObj
+  getDBInfoByID(databaseId:string):Observable<ConfiguredDB>{
+    return this.http.get<ConfiguredDB>(this.getDBInfoUrl+databaseId, { headers: this.userInfoService.getHeaders() }).pipe(
+      map(this.extractDataForDB),
+      catchError(this.handleError('getDBInfoByID', []))
+    );
   }
 
-  constructor(private http: HttpClient) { }
+setProcessDetailsObj(processDetails:ProcessDetailsObj){
+this.processDetailsObj=processDetails;
+}
+
+getProcessDetailsObj():ProcessDetailsObj{
+  return this.processDetailsObj
+}
 
   private extractData(res: any) {
-    const body = res.data.users;
+    const body = res.data;
+    return body || [];
+  }
+  private extractDataForDB(res: any) {
+    const body = res.data.configuredDatabases;
     return body || [];
   }
 
 
-
-  // * Handle HttpClient operation that failed.
-  // * Let the app continue.
-  // * @param operation - name of the operation that failed
-  // * @param result - optional value to return as the observable result
-  // */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

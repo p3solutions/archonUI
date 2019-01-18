@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container"><div class="scroll-div">
   <table class="table table-bordered table-striped">
     <thead>
       <th class="text-center">Parameter</th>
@@ -6,58 +6,74 @@
     </thead>
     <tbody>
       <tr>
-        <td>Database Profile</td>
-        <td><a data-toggle="modal" href="#db-profile-model">test-db</a></td>
+        <td class="bold-parameter">Database Profile</td>
+        <td><a data-toggle="modal" href="#db-profile-model">{{configuredDB.profileName}}</a></td>
       </tr>
       <tr>
-        <td>Process-configuration</td>
+        <td class="bold-parameter">Process-configuration</td>
         <td><a routerLink="/workspace/db-extractor/db-extractor-process">Edit</a></td>
       </tr>
       <tr>
         <td>Process</td>
-        <td>Generate Schema</td>
+        <td>{{processDetailsObj.process}}</td>
       </tr>
       <tr>
         <td>Output format</td>
-        <td>Xml</td>
+        <td>{{processDetailsObj.outputFormat}}</td>
       </tr>
       <tr>
         <td>Include relationship</td>
-        <td>No</td>
+        <td>{{processDetailsObj.includeTableRelationship}}</td>
       </tr>
       <tr>
         <td>Table Inclusion rule</td>
-        <td>None</td>
+        <td>{{processDetailsObj.tableIncRule}}</td>
       </tr>
       <tr>
-        <td>Job Parameters</td>
+        <td class="bold-parameter">Job Parameters</td>
         <td><a routerLink="/workspace/db-extractor/db-extractor-parameter">Edit</a></td>
       </tr>
       <tr>
         <td>Maximum Parallel Process</td>
-        <td>3</td>
+        <td>{{processDetailsObj.maxParallelProcess}}</td>
       </tr>
       <tr>
         <td>Xml File Split Size</td>
-        <td>100MB</td>
+        <td>{{processDetailsObj.xmlSplitFileSize}}</td>
       </tr>
       <tr>
         <td>Include Tables</td>
+        <td>{{processDetailsObj.incTable}}</td>
+      </tr>
+      <tr>
+          <td>Include View</td>
+          <td>{{processDetailsObj.incView}}</td>
+        </tr>
+      <!-- <tr>
+        <td>Query Details</td>
         <td>No</td>
       </tr>
       <tr>
-        <td>Include Views</td>
+        <td>Query Name</td>
         <td>No</td>
       </tr>
+      <tr>
+        <td>Query File</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>Query</td>
+        <td>No</td>
+      </tr> -->        
     </tbody>
   </table>
-  <button class="btn btn-primary next" (click)="Start()" style="float: right;">Start</button>
+</div>
+  <button class="btn btn-primary next" data-toggle="modal" href="#successModel" data-keyboard="false" data-backdrop="static" (click)="Start()" style="float: right;">Start</button>
   <button class="btn btn-primary Previous" (click)="prevStepTwo()" style="float: right;margin-right: 5px;">&laquo;
     Previous</button>
   <br>
   <br>
 </div>
-
 <div id="db-profile-model" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
@@ -72,37 +88,53 @@
           <tbody>
             <tr>
               <td>Database Profile Name</td>
-              <td>test-db</td>
+              <td>{{configuredDB.profileName}}</td>
             </tr>
             <tr>
               <td>Database Type</td>
-              <td>MySQL</td>
+              <td>{{configuredDB.type}}</td>
             </tr>
             <tr>
               <td>Database Host/Ip</td>
-              <td>localhost</td>
+              <td>{{configuredDB.host}}</td>
             </tr>
             <tr>
               <td>Database Port</td>
-              <td>3306</td>
+              <td>{{configuredDB.port}}</td>
             </tr>
             <tr>
               <td>Database Name</td>
-              <td>sakila</td>
+              <td>{{configuredDB.databaseName}}</td>
             </tr>
             <tr>
               <td>Database Schema</td>
-              <td>sakila</td>
+              <td>{{configuredDB.schemaName}}</td>
             </tr>
             <tr>
               <td>Database User Name</td>
-              <td>root</td>
+              <td>{{configuredDB.userName}}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="successModel" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h1>Your job has started</h1>
+        <p>check on Job Status page</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button"   class="btn btn-default" data-dismiss="modal" (click)="close()">Close</button>
       </div>
     </div>
 

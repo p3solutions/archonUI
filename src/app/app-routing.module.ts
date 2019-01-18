@@ -35,8 +35,8 @@ import { ManagementLandingPageComponent } from './management-landing-page/manage
 import { DbExtractorComponent } from './db-extractor/db-extractor.component';
 import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extractor-step-one.component';
 import { DbExtractorStepTwoComponent } from './db-extractor-step-two/db-extractor-step-two.component';
-import {DbExtractorLastStepComponent} from './db-extractor-last-step/db-extractor-last-step.component'
-
+import {DbExtractorLastStepComponent} from './db-extractor-last-step/db-extractor-last-step.component';
+import {DbExtractorExecQueryComponent} from './db-extractor-exec-query/db-extractor-exec-query.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
@@ -74,6 +74,9 @@ const routes: Routes = [
         path: 'db-extractor-parameter', component: DbExtractorStepTwoComponent
       },{
         path: 'db-extractor-summary', component: DbExtractorLastStepComponent
+      }
+      ,{
+        path: 'db-extractor-exec-query', component: DbExtractorExecQueryComponent
       }
     ]
   }

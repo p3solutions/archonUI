@@ -27,6 +27,7 @@ export class UserWorkspaceService {
       catchError(this.handleError<any>('test-db-connection'))
     );
   }
+  
   getUserWorkspaceUrl() {
     return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
   }
@@ -48,6 +49,7 @@ export class UserWorkspaceService {
       catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList'))
     );
   }
+
 
   // get all supported database server name in drop down
   getAllSupportedDBServer() {

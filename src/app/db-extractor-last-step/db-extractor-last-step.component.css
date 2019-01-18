@@ -12,4 +12,13 @@
     background-color: #4CAF50;
     color: white;
   }
-  
+
+
+.scroll-div {
+    height: 325px;       
+    overflow-y: auto; 
+}
+
+.bold-parameter{
+font-weight: bolder;
+}

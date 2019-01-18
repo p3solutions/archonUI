@@ -22,4 +22,11 @@ process:string="0"
 outputFormat:string="0"
 tableIncRule:string
 includeTableRelationship:boolean=false
+xmlSplitFileSize:number=100;
+maxParallelProcess:number=3
+incTable:boolean=false
+incView:boolean=false
+xmlXDBCompability:boolean=false
+extractLOBWithXML:boolean=false
+incRecordCount:boolean=false
 }

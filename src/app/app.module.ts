@@ -97,6 +97,7 @@ import { DbExtractorStepTwoComponent } from './db-extractor-step-two/db-extracto
 import { DbExtractorLastStepComponent } from './db-extractor-last-step/db-extractor-last-step.component';
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { DbExtractorService } from './db-extractor/db-extractor.service';
+import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -158,7 +159,8 @@ export function tokenGetter() {
                 DbExtractorComponent,
                 DbExtractorStepOneComponent,
                 DbExtractorStepTwoComponent,
-                DbExtractorLastStepComponent
+                DbExtractorLastStepComponent,
+                DbExtractorExecQueryComponent
         ],
         imports: [
                 JwtModule.forRoot({
