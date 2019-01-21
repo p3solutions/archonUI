@@ -5,8 +5,6 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { ChangePassword } from '../change-password';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
-import { Route } from '@angular/compiler/src/core';
 
 
 @Component({

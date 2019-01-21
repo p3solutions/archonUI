@@ -1,11 +1,19 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService, JwtModule} from '@auth0/angular-jwt';
+export function tokenGetter() {
+  return localStorage.getItem('accessToken');
+}
 
-xdescribe('AuthenticationService', () => {
+describe('AuthenticationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthenticationService, JwtHelperService]
+      providers: [AuthenticationService, JwtHelperService],
+      imports: [JwtModule.forRoot({
+        config: {
+                tokenGetter: tokenGetter
+        }
+})]
     });
   });
 
