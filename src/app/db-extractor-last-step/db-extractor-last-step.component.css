@@ -22,3 +22,8 @@
 .bold-parameter{
 font-weight: bolder;
 }
+
+table.table td { 
+text-align: left;
+width: 30%;
+}

@@ -11,7 +11,7 @@
       </tr>
       <tr>
         <td class="bold-parameter">Process-configuration</td>
-        <td><a routerLink="/workspace/db-extractor/db-extractor-process">Edit</a></td>
+        <td><a (click)="goToEdit('editProcess')">Edit</a></td>
       </tr>
       <tr>
         <td>Process</td>
@@ -31,7 +31,7 @@
       </tr>
       <tr>
         <td class="bold-parameter">Job Parameters</td>
-        <td><a routerLink="/workspace/db-extractor/db-extractor-parameter">Edit</a></td>
+        <td><a (click)="goToEdit('editParameter')" >Edit</a></td>
       </tr>
       <tr>
         <td>Maximum Parallel Process</td>
@@ -91,7 +91,7 @@
               <td>{{configuredDB.profileName}}</td>
             </tr>
             <tr>
-              <td>Database Type</td>
+              <td class="text-left">Database Type</td>
               <td>{{configuredDB.type}}</td>
             </tr>
             <tr>

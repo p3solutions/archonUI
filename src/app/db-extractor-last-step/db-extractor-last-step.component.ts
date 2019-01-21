@@ -16,7 +16,7 @@ import { ConfiguredDB } from '../workspace-objects';
 export class DbExtractorLastStepComponent implements OnInit {
   workspaceID: string;
   processDetailsObj = new ProcessDetailsObj();
-  configuredDB: ConfiguredDB;
+  configuredDB= new ConfiguredDB();
   constructor(private router: Router, private dbExtractorService: DbExtractorService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService) { }
@@ -66,5 +66,15 @@ export class DbExtractorLastStepComponent implements OnInit {
 
   close(){
     this.router.navigate(['/status']);
+  }
+
+  goToEdit(value:string){
+    if(value=="editParameter"){
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+      this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);}
+    else{
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 })
+      this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
+    }
   }
 }

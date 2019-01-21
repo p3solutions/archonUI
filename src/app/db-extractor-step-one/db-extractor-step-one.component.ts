@@ -38,9 +38,14 @@ export class DbExtractorStepOneComponent implements OnInit {
   }
 
   getOutputFormatListBySecProcess(process: string) {
-    this.processDetailsObj.process = process;
-    this.outputFormatList = this.processDetailsMap.get(process);
-    this.processDetailsObj.includeTableRelationship = this.processDetailsList.filter(a => a.process == process)[0].includeTableRelationship;
+    if(process!=null){
+      this.processDetailsObj.process = process;
+      this.outputFormatList = this.processDetailsMap.get(process);
+      this.processDetailsObj.includeTableRelationship = this.processDetailsList.filter(a => a.process == process)[0].includeTableRelationship;
+    }
+    else if(process==null){
+      this.outputFormatList = [];
+    }
   }
 
   setOutputFormat(outputFormat: string) {
@@ -50,6 +55,7 @@ export class DbExtractorStepOneComponent implements OnInit {
   gotoStepTwo() {
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
     this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);
-      this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);  
+       this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);  
+      //this.router.navigate(['/workspace/db-extractor/db-extractor-exec-query']);  
   }
 }

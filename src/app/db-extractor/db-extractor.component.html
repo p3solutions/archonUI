@@ -1,33 +1,41 @@
-<div class="container">
-  <div class="row" style="margin-top:2%">  
-      <div class="col-md-1 back-arrow-icon">
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-1 back-arrow">
         <a (click)="gotoDashboard()" data-tooltip="Back">
           <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
         </a>
       </div>
-    <div class="col-md-11 col-md-pull-5"><h3>DB Extractor</h3></div>
-  </div>
-  <div class="row">
-    <br>
-    <div class="card">
-      <div class="card-body">
-        <br>
-        <div class="progress" id="db-extractor-progress-bar">
-          <div class="progress-bar progress-bar-step progress-bar-primary" role="progressbar" style="width:33.33%">
-            Select Process
-          </div>
-          <div class="progress-bar progress-bar-step progress-bar-primary" role="progressbar" [style.width.%]="progressBarObj.stepTwoProgBarValue">
-            Select Parameters
-          </div>
-          <div class="progress-bar progress-bar-step progress-bar-primary" role="progressbar" [style.width.%]="progressBarObj.stepThreeProgBarValue">
-            Summary
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="card-body">
-          <router-outlet></router-outlet>
+      <div class="col-md-8">
+        <h3 class="extractor-panel-heading">
+          DB Extractor
+        </h3>
       </div>
     </div>
-  </div>        
+  </div>
+  <div class="container">
+    <div class="row">
+      <br>
+      <div class="card">
+        <div class="card-body">
+          <br>
+          <div class="progress" id="db-extractor-progress-bar">
+            <div class="progress-bar progress-bar-step progress-bar-primary" role="progressbar" style="width:33.33%">
+              Select Process
+            </div>
+            <div *ngIf="progressBarObj.stepTwoProgBarValue>0" class="progress-bar progress-bar-step progress-bar-primary" role="progressbar" [style.width.%]="progressBarObj.stepTwoProgBarValue">
+              Select Parameters
+            </div>
+            <div *ngIf="progressBarObj.stepThreeProgBarValue>0" class="progress-bar progress-bar-step progress-bar-primary" role="progressbar" [style.width.%]="progressBarObj.stepThreeProgBarValue">
+              Summary
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="card-body">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

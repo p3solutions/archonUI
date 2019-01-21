@@ -18,8 +18,8 @@ softDeleted:boolean
 }
 
 export class ProcessDetailsObj{
-process:string="0"
-outputFormat:string="0"
+process:string=null
+outputFormat:string=null
 tableIncRule:string
 includeTableRelationship:boolean=false
 xmlSplitFileSize:number=100;

@@ -3,6 +3,7 @@
     display: inline-block;
     width: 60px;
     height: 34px;
+    margin-left: -11%;
   }
   
   /* Hide default HTML checkbox */
@@ -72,4 +73,9 @@
   
   .round {
     border-radius: 50%;
+  }
+
+  .label-style{
+    font-size: 13px;
+    text-align: left;
   }
