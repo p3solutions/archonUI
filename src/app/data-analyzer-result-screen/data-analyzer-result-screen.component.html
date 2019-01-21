@@ -95,7 +95,7 @@
     </div>
   </div>
   <div class="col-md-5">
-    <button type="button" class="btn btn-primary" (click)="addJoins()">Add Selected Joins</button>
+    <button type="button" class="btn btn-primary" href="#addJoins" data-toggle="modal">Add Selected Joins</button>
     <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-toggle="modal" href="#confirmClose">Close</button>
   </div>
 </div>
@@ -115,6 +115,27 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeScreen()">Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add Join Confirmation -->
+<div class="modal fade" id="addJoins" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
+    <div class="modal-content text-left">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Add Join Results</h4>
+      </div>
+      <div class="modal-body text-center" style="height: 100px;">
+      The results will be cleared, You won't be able to add joins later.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addJoins()">Confirm
         </button>
       </div>
     </div>
