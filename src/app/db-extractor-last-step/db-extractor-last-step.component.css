@@ -1,0 +1,29 @@
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: rgb(231, 237, 240); 
+ }
+
+ .previous {
+    background-color: #f1f1f1;
+    color: black;
+  }
+  
+  .next {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+
+.scroll-div {
+    height: 325px;       
+    overflow-y: auto; 
+}
+
+.bold-parameter{
+font-weight: bolder;
+}
+
+table.table td { 
+text-align: left;
+width: 30%;
+}

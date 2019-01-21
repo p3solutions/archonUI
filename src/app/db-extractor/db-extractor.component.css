@@ -1,0 +1,22 @@
+#db-extractor-progress-bar{
+    height: 27px
+}
+
+.progress-bar-step{
+    line-height: 29px;
+    font-size: 19px;
+}
+.progress-bar{
+    background-color: #269af8;
+}
+
+.back-arrow-icon{
+    margin-top: 20px;
+    float: left;
+    padding-right: 81px;
+
+}
+.extractor-panel-heading{
+    float: left
+}
+

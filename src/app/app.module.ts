@@ -91,6 +91,13 @@ import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen
 import { KeyvaluePipe } from './keyvalue.pipe';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
+import { DbExtractorComponent } from './db-extractor/db-extractor.component';
+import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extractor-step-one.component';
+import { DbExtractorStepTwoComponent } from './db-extractor-step-two/db-extractor-step-two.component';
+import { DbExtractorLastStepComponent } from './db-extractor-last-step/db-extractor-last-step.component';
+import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
+import { DbExtractorService } from './db-extractor/db-extractor.service';
+import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -148,7 +155,12 @@ export function tokenGetter() {
                 SecondaryColumnPipe,
                 DataAnalyzerResultScreenComponent,
                 KeyvaluePipe,
-                ManagementLandingPageComponent
+                ManagementLandingPageComponent,
+                DbExtractorComponent,
+                DbExtractorStepOneComponent,
+                DbExtractorStepTwoComponent,
+                DbExtractorLastStepComponent,
+                DbExtractorExecQueryComponent
         ],
         imports: [
                 JwtModule.forRoot({
@@ -168,7 +180,8 @@ export function tokenGetter() {
                 MatTableModule,
                 AppRoutingModule,
                 HttpClientModule,
-                NgxPaginationModule
+                NgxPaginationModule,
+                NgxBootstrapSliderModule
         ],
         providers: [
                 JwtHelperService,
@@ -207,7 +220,8 @@ export function tokenGetter() {
                 TableListService,
                 UserProfileService,
                 EditRelationshipInfoService,
-                AddDirectJoinService
+                AddDirectJoinService,
+                DbExtractorService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
