@@ -4,7 +4,7 @@ import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { HttpClient, HttpClientModule, HttpHeaders, HttpHandler } from '@angular/common/http';
 import { MockBackend } from '@angular/http/testing';
 
-xdescribe('MemberRequestService', () => {
+describe('MemberRequestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
@@ -13,9 +13,9 @@ xdescribe('MemberRequestService', () => {
   });
 
 
-  // it('should be created', inject([MemberRequestService], (service: MemberRequestService) => {
-  //   expect(service).toBeTruthy();
-  // }));
+  it('should be created', inject([MemberRequestService], (service: MemberRequestService) => {
+    expect(service).toBeTruthy();
+  }));
   // describe('getMemberRequestDetails()', () => {
   //   it('should return an Observable<Array<MemberRequestDetail>>',
   //     inject([MemberRequestService, XHRBackend], (memberRequestService, mockBackend) => {

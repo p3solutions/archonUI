@@ -16,7 +16,7 @@ import { TestabilityRegistry } from '@angular/core/src/testability/testability';
 import { HttpClient } from 'selenium-webdriver/http';
 // fdescribe used to run single testcase only
 // whenever we using fdescribe u should create it as fit
-xdescribe('EnterNewpasswordComponent', () => {
+describe('EnterNewpasswordComponent', () => {
   let component: EnterNewpasswordComponent;
   let fixture: ComponentFixture<EnterNewpasswordComponent>;
   let passwordResetService: EnterNewpasswordService;

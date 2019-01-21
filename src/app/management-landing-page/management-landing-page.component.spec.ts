@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManagementLandingPageComponent } from './management-landing-page.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ManagementLandingPageComponent', () => {
   let component: ManagementLandingPageComponent;
@@ -8,7 +10,8 @@ describe('ManagementLandingPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManagementLandingPageComponent ]
+      declarations: [ ManagementLandingPageComponent, NavbarComponent],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   }));
@@ -19,7 +22,7 @@ describe('ManagementLandingPageComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -9,7 +9,7 @@ import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AddMembersService } from '../add-members/add-members.service';
 
-xdescribe('HeaderTabComponent', () => {
+describe('HeaderTabComponent', () => {
   let component: HeaderTabComponent;
   let fixture: ComponentFixture<HeaderTabComponent>;
 

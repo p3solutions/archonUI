@@ -1,6 +1,6 @@
 import { KeysPipe } from './keys.pipe';
 
-xdescribe('Pipe: Keys', () => {
+describe('Pipe: Keys', () => {
   let pipe: KeysPipe;
 
   beforeEach(() => {

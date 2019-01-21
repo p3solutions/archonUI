@@ -3,12 +3,14 @@ import { TestBed, inject } from '@angular/core/testing';
 import { ManageMembersService } from './manage-members.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('ManageMembersService', () => {
+describe('ManageMembersService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
+        RouterTestingModule
       ],
       providers: [
         ManageMembersService,

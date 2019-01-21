@@ -1,14 +1,34 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TableListComponent } from './table-list.component';
+import { EditRelationshipInfoComponent } from '../edit-relationship-info/edit-relationship-info.component';
+import { AddDirectJoinComponent } from '../add-direct-join/add-direct-join.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
+import { SearchPipe } from '../search.pipe';
+import { SecondaryColumnPipe } from '../secondary-column.pipe';
+import { TableListService } from './table-list.service';
+import { HttpClientModule } from '@angular/common/http';
+import { UserinfoService } from '../userinfo.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { EditRelationshipInfoService } from '../edit-relationship-info/edit-relationship-info.service';
+import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-xdescribe('TableListComponent', () => {
+// Reason: Undefined Property
+describe('TableListComponent', () => {
   let component: TableListComponent;
   let fixture: ComponentFixture<TableListComponent>;
+  // let component1: EditRelationshipInfoComponent;
+  // let fixture1: ComponentFixture<EditRelationshipInfoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TableListComponent]
+      declarations: [TableListComponent, SearchPipe,
+      SecondaryColumnPipe],
+      imports: [RouterTestingModule, FormsModule, HttpClientModule],
+      providers: [TableListService, UserinfoService, WorkspaceHeaderService, EditRelationshipInfoService, AddDirectJoinService],
+      schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
   }));
@@ -16,6 +36,9 @@ xdescribe('TableListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TableListComponent);
     component = fixture.componentInstance;
+    const Workspace = TestBed.get(WorkspaceHeaderService);
+    spyOn(Workspace, 'getSelectedWorkspaceId').and.returnValue('');
+    spyOn(Workspace, 'getMetalyzerServiceId').and.returnValue('');
     fixture.detectChanges();
   });
 
