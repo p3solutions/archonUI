@@ -1,9 +1,12 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { UserinfoService } from './userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
-xdescribe('UserinfoService', () => {
+describe('UserinfoService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule, HttpClientModule],
       providers: [UserinfoService]
     });
   });

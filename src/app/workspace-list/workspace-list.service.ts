@@ -15,18 +15,15 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class WorkspaceListService {
 
-  accessToken: string;
-  jwtHelper: JwtHelperService = new JwtHelperService();
-
   wSListByUidUrl = environment.apiUrl + 'workspaces?userId=';
-  private headers;
+  // private headers;
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
-    this.headers = new HttpHeaders(
-      {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
-      });
+    // this.headers = new HttpHeaders(
+    //   {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': 'Bearer ' + this.userinfoService.getAuthKey()
+    //   });
   }
   getList(id: string): Observable<WorkspaceObject[]> {
     const url = this.wSListByUidUrl + id;

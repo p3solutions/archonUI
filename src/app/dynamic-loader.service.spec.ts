@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { DynamicLoaderService } from './dynamic-loader.service';
 
-xdescribe('DynamicLoaderService', () => {
+describe('DynamicLoaderService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [DynamicLoaderService]

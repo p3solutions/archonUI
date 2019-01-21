@@ -5,7 +5,7 @@ import { WorkspaceHeaderInfoComponent } from '../workspace-header-info/workspace
 import { WorkspaceMgmtPanelComponent } from '../workspace-mgmt-panel/workspace-mgmt-panel.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('NoWorkspaceComponent', () => {
+describe('NoWorkspaceComponent', () => {
   let component: NoWorkspaceComponent;
   let fixture: ComponentFixture<NoWorkspaceComponent>;
 

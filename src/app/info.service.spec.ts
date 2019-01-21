@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Info } from './info';
 
 
-xdescribe('InfoService', () => {
+describe('InfoService', () => {
   let infoService: InfoService;
   let info_observable: Observable<Info>;
   beforeEach(() => {

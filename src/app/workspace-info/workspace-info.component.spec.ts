@@ -10,14 +10,16 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { UserinfoService } from '../userinfo.service';
 
-xdescribe('WorkspaceInfoComponent', () => {
+describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
   let fixture: ComponentFixture<WorkspaceInfoComponent>;
   let de: DebugElement;
-  let WorkspaceInfoTag: HTMLElement;
+  // let WorkspaceInfoTag: HTMLElement;
   let workspaceInfoService: any;
-  let workspaceServiceTag: any;
+  // let workspaceServiceTag: any;
   const dashboardUrl = 'workspace/workspace-dashboard/workspace-services';
   const managemembers1: any = {
     name: 'Frontend Developer', owner: 'Platform3Solutions', approver: 'User1, User2',
@@ -41,11 +43,12 @@ xdescribe('WorkspaceInfoComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule
       ],
-      declarations: [WorkspaceInfoComponent],
+      declarations: [WorkspaceInfoComponent, NavbarComponent],
       providers: [
         RouterTestingModule,
         WorkspaceInfoService,
-        HttpClientModule
+        HttpClientModule,
+        UserinfoService
       ],
     })
       .compileComponents();
@@ -55,7 +58,7 @@ xdescribe('WorkspaceInfoComponent', () => {
     fixture = TestBed.createComponent(WorkspaceInfoComponent);
     component = fixture.componentInstance;
     de = fixture.debugElement.query(By.css('#workspace-info-table'));
-    WorkspaceInfoTag = de.nativeElement;
+    // WorkspaceInfoTag = de.nativeElement;
     workspaceInfoService = TestBed.get(WorkspaceInfoService);
   });
 
@@ -63,38 +66,38 @@ xdescribe('WorkspaceInfoComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should display the observable data for workspace-info componenet', () => {
-    const row1Array: NodeListOf<Element> = WorkspaceInfoTag.querySelectorAll('.ws-info-data');
-    spyOn(workspaceInfoService, 'getworkinfo').and.returnValue(simpleObservable);
-    fixture.detectChanges();
-    const name = row1Array[0];
-    const owner = row1Array[1];
-    const approver = row1Array[2];
-    const member = row1Array[3];
-    const role = row1Array[4];
-    const metadata_version = row1Array[5];
-    expect(name.textContent.trim()).toBe(component.workspaceInfoData.workspaceName);
-    expect(owner.textContent.trim()).toBe(component.workspaceInfoData.owner.name);
-    expect(approver.textContent.trim()).toBe('NULL');
-    const memberNames = [];
-    component.workspaceInfoData.members.forEach((mem) => {
-      memberNames.push(mem.user.name);
-    });
-    expect(member.textContent.trim()).toBe(memberNames.join(','));
-    expect(role.textContent.trim()).toBe('NULL');
-    expect(metadata_version.textContent.trim()).toBe(component.workspaceInfoData.masterMetadataVersion.toString());
-    disposeMe.unsubscribe();
-  });
-  // ToDo: revisit again
-  xit('Should navigate to dashboard', () => {
-    component.gotoDashboard();
-    fixture.detectChanges();
-    // find DebugElements with an attached WorkspaceServicesComponentDirective
-    workspaceServiceTag = fixture.debugElement
-      .queryAll(By.directive(WorkspaceServicesComponent));
-    // get the attached link directive instances using the DebugElement injectors
-    const links = workspaceServiceTag
-      .map(dE => dE.injector.get(WorkspaceServicesComponent) as WorkspaceServicesComponent);
-    expect(links[1].navigatedTo).toBe(dashboardUrl);
-  });
+  // xit('Should display the observable data for workspace-info componenet', () => {
+  //   const row1Array: NodeListOf<Element> = WorkspaceInfoTag.querySelectorAll('.ws-info-data');
+  //   spyOn(workspaceInfoService, 'getworkinfo').and.returnValue(simpleObservable);
+  //   fixture.detectChanges();
+  //   const name = row1Array[0];
+  //   const owner = row1Array[1];
+  //   const approver = row1Array[2];
+  //   const member = row1Array[3];
+  //   const role = row1Array[4];
+  //   const metadata_version = row1Array[5];
+  //   expect(name.textContent.trim()).toBe(component.workspaceInfoData.workspaceName);
+  //   expect(owner.textContent.trim()).toBe(component.workspaceInfoData.owner.name);
+  //   expect(approver.textContent.trim()).toBe('NULL');
+  //   const memberNames = [];
+  //   component.workspaceInfoData.members.forEach((mem) => {
+  //     memberNames.push(mem.user.name);
+  //   });
+  //   expect(member.textContent.trim()).toBe(memberNames.join(','));
+  //   expect(role.textContent.trim()).toBe('NULL');
+  //   expect(metadata_version.textContent.trim()).toBe(component.workspaceInfoData.masterMetadataVersion.toString());
+  //   disposeMe.unsubscribe();
+  // });
+  // // ToDo: revisit again
+  // xit('Should navigate to dashboard', () => {
+  //   component.gotoDashboard();
+  //   fixture.detectChanges();
+  //   // find DebugElements with an attached WorkspaceServicesComponentDirective
+  //   workspaceServiceTag = fixture.debugElement
+  //     .queryAll(By.directive(WorkspaceServicesComponent));
+  //   // get the attached link directive instances using the DebugElement injectors
+  //   const links = workspaceServiceTag
+  //     .map(dE => dE.injector.get(WorkspaceServicesComponent) as WorkspaceServicesComponent);
+  //   expect(links[1].navigatedTo).toBe(dashboardUrl);
+  // });
 });

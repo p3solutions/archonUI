@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 
-xdescribe('ManageMasterMetadataComponent', () => {
+describe('ManageMasterMetadataComponent', () => {
   let component: ManageMasterMetadataComponent;
   let fixture: ComponentFixture<ManageMasterMetadataComponent>;
   let de: DebugElement;
@@ -76,7 +76,7 @@ xdescribe('ManageMasterMetadataComponent', () => {
     disposeMe.unsubscribe();
   });
   // ToDo: revisit again
-  xit('Should navigate to dashboard', () => {
+  it('Should navigate to dashboard', () => {
     component.gotoDashboard();
     fixture.detectChanges();
     // find DebugElements with an attached WorkspaceServicesComponentDirective
