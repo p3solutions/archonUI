@@ -6,15 +6,26 @@ import { SigninFormComponent } from './signin-form.component';
 import { SigninFormService } from './signin-form.service';
 import { HttpClient, HttpHeaders, HttpHandler } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { JwtHelperService, JwtModule} from '@auth0/angular-jwt';
+import { RouterTestingModule } from '@angular/router/testing';
+export function tokenGetter() {
+  return localStorage.getItem('accessToken');
+}
 
-xdescribe('SigninFormComponent', () => {
+describe('SigninFormComponent', () => {
   let component: SigninFormComponent;
   let fixture: ComponentFixture<SigninFormComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormsModule],
+      imports: [ReactiveFormsModule, FormsModule, RouterTestingModule,
+        JwtModule.forRoot({
+          config: {
+                  tokenGetter: tokenGetter
+          }
+  })],
       declarations: [SigninFormComponent],
-      providers: [SigninFormService, HttpClient, HttpHandler],
+      providers: [SigninFormService, HttpClient, HttpHandler, AuthenticationService, JwtHelperService],
     })
       .compileComponents();
   }));
