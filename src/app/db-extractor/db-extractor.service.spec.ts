@@ -6,12 +6,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DbExtractorService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    providers: [DbExtractorService,UserinfoService],
+    providers: [DbExtractorService, UserinfoService],
     imports: [HttpClientModule, RouterTestingModule]
   }));
 
   it('should be created', () => {
-    const service: DbExtractorService = TestBed.get(DbExtractorService,UserinfoService);
+    const service: DbExtractorService = TestBed.get(DbExtractorService, UserinfoService);
     expect(service).toBeTruthy();
   });
 });

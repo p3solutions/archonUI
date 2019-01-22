@@ -11,11 +11,11 @@ describe('DbExtractorExecQueryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DbExtractorExecQueryComponent],
-      imports: [ RouterTestingModule,HttpClientModule],
-      providers:[UserinfoService]
+      declarations: [DbExtractorExecQueryComponent],
+      imports: [RouterTestingModule, HttpClientModule],
+      providers: [UserinfoService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

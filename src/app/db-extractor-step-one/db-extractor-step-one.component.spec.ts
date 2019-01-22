@@ -12,11 +12,11 @@ describe('DbExtractorStepOneComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DbExtractorStepOneComponent ],
+      declarations: [DbExtractorStepOneComponent],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
       providers: [UserinfoService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

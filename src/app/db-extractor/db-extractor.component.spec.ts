@@ -3,7 +3,7 @@ import { DbExtractorComponent } from './db-extractor.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import {DbExtractorService} from './db-extractor.service'
+import { DbExtractorService } from './db-extractor.service';
 import { UserinfoService } from '../userinfo.service';
 describe('DbExtractorComponent', () => {
   let component: DbExtractorComponent;
@@ -11,11 +11,11 @@ describe('DbExtractorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DbExtractorComponent ],
-      imports: [ HttpClientModule, RouterTestingModule],
+      declarations: [DbExtractorComponent],
+      imports: [HttpClientModule, RouterTestingModule],
       providers: [DbExtractorService, UserinfoService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
