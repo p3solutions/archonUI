@@ -2,8 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddDirectJoinComponent } from './add-direct-join.component';
 import { AddDirectJoinService } from './add-direct-join.service';
-import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AddDirectJoinComponent', () => {
   let component: AddDirectJoinComponent;
@@ -12,7 +13,8 @@ describe('AddDirectJoinComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AddDirectJoinComponent],
-      providers: [AddDirectJoinService]
+      imports: [HttpClientModule, RouterTestingModule],
+      providers: [AddDirectJoinService, UserinfoService]
     })
       .compileComponents();
   }));
@@ -23,7 +25,7 @@ describe('AddDirectJoinComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

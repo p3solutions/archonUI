@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RelationshipListComponent } from './relationship-list.component';
+import { TableListService } from '../table-list/table-list.service';
+import { HttpClientModule } from '@angular/common/http';
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 describe('RelationshipListComponent', () => {
   let component: RelationshipListComponent;
@@ -8,7 +13,9 @@ describe('RelationshipListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RelationshipListComponent ]
+      declarations: [ RelationshipListComponent ],
+      imports: [HttpClientModule, RouterTestingModule],
+      providers: [TableListService, UserinfoService, WorkspaceHeaderService]
     })
     .compileComponents();
   }));
@@ -19,7 +26,7 @@ describe('RelationshipListComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

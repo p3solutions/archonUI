@@ -16,12 +16,12 @@ describe('DbExtractorStepTwoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DbExtractorStepTwoComponent ],
-      imports: [FormsModule,RouterTestingModule, HttpClientModule],
+      declarations: [DbExtractorStepTwoComponent],
+      imports: [FormsModule, RouterTestingModule, HttpClientModule],
       providers: [UserinfoService, DbExtractorService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

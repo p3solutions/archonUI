@@ -15,8 +15,9 @@ import { jobArray, jobOriginArray, jobStatusArray } from '../hardcoded-collectio
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
 
-xdescribe('StatusScreenComponent', () => {
+describe('StatusScreenComponent', () => {
   let component: StatusScreenComponent;
   let fixture: ComponentFixture<StatusScreenComponent>;
   let testBedService: any;
@@ -76,7 +77,7 @@ xdescribe('StatusScreenComponent', () => {
         UserinfoService,
         CommonUtilityService
       ],
-      declarations: [StatusScreenComponent, KeysPipe, ReverseArrayPipe]
+      declarations: [StatusScreenComponent, KeysPipe, ReverseArrayPipe, NavbarComponent]
     })
       .compileComponents();
   }));
@@ -98,14 +99,14 @@ xdescribe('StatusScreenComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('StatusService injected via inject(...) and TestBed.get(...) should be the same instance',
+  xit('StatusService injected via inject(...) and TestBed.get(...) should be the same instance',
     inject([StatusService], (injectService: StatusService) => {
       expect(injectService).toBe(testBedService);
     })
   );
 
 
-  it('DI, Should contain the jobOriginList as response when getJobOrigins() is called', fakeAsync(() => {
+  xit('DI, Should contain the jobOriginList as response when getJobOrigins() is called', fakeAsync(() => {
     expect(component.jobOriginList.length === 0).toBeTruthy();
     spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins(jobOriginArray));
     component.getJobOrigins();
@@ -115,7 +116,7 @@ xdescribe('StatusScreenComponent', () => {
     disposeMe.get('getJobOrigins').unsubscribe();
   }));
 
-  it('DI, Should contain the jobStatusList as response when getJobStatuses() is called', fakeAsync(() => {
+  xit('DI, Should contain the jobStatusList as response when getJobStatuses() is called', fakeAsync(() => {
     expect(component.jobStatusList.length === 0).toBeTruthy();
     spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses(jobStatusArray));
     component.getJobStatuses();
@@ -125,7 +126,7 @@ xdescribe('StatusScreenComponent', () => {
     disposeMe.get('getJobOrigins').unsubscribe();
   }));
 
-  it('DI, Should contain the job-list as response when getJobList() is called, then all the filters avilable',
+  xit('DI, Should contain the job-list as response when getJobList() is called, then all the filters avilable',
     // fakeAsync(
     () => {
       expect(component.jobList.length === 0).toBeTruthy();

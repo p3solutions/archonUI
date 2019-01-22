@@ -30,13 +30,13 @@ import { MetalyzerComponent } from './metalyzer/metalyzer.component';
 import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
 import { TableListComponent } from './table-list/table-list.component';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
-import {DataAnalyzerResultScreenComponent} from './data-analyzer-result-screen/data-analyzer-result-screen.component';
+import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 import { DbExtractorComponent } from './db-extractor/db-extractor.component';
 import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extractor-step-one.component';
 import { DbExtractorStepTwoComponent } from './db-extractor-step-two/db-extractor-step-two.component';
-import {DbExtractorLastStepComponent} from './db-extractor-last-step/db-extractor-last-step.component';
-import {DbExtractorExecQueryComponent} from './db-extractor-exec-query/db-extractor-exec-query.component';
+import { DbExtractorLastStepComponent } from './db-extractor-last-step/db-extractor-last-step.component';
+import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, children: [
@@ -61,26 +61,27 @@ const routes: Routes = [
           {
             path: 'configuration', component: MetalyzerConfigurationComponent
           }, {
-            path: 'analysis', component: TableListComponent , children: [
+            path: 'analysis', component: TableListComponent, children: [
               {
-              path: 'resultant', component: DataAnalyzerResultScreenComponent
-            }]
+                path: 'resultant', component: DataAnalyzerResultScreenComponent
+              }]
           }
         ]
-      },{ path: 'db-extractor', component: DbExtractorComponent, children: [
-        {
-        path: 'db-extractor-process', component: DbExtractorStepOneComponent
-      },{
-        path: 'db-extractor-parameter', component: DbExtractorStepTwoComponent
-      },{
-        path: 'db-extractor-summary', component: DbExtractorLastStepComponent
-      }
-      ,{
-        path: 'db-extractor-exec-query', component: DbExtractorExecQueryComponent
+      }, {
+        path: 'db-extractor', component: DbExtractorComponent, children: [
+          {
+            path: 'db-extractor-process', component: DbExtractorStepOneComponent
+          }, {
+            path: 'db-extractor-parameter', component: DbExtractorStepTwoComponent
+          }, {
+            path: 'db-extractor-summary', component: DbExtractorLastStepComponent
+          }
+          , {
+            path: 'db-extractor-exec-query', component: DbExtractorExecQueryComponent
+          }
+        ]
       }
     ]
-  }
-]
   },
   {
     path: '', component: LandingPageComponent, children: [

@@ -5,8 +5,11 @@ import { AddMembersService } from './add-members.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ManageMembersService } from '../manage-members/manage-members.service';
+import { UserinfoService } from '../userinfo.service';
 
-xdescribe('AddMembersComponent', () => {
+describe('AddMembersComponent', () => {
   let component: AddMembersComponent;
   let fixture: ComponentFixture<AddMembersComponent>;
   let testBedService: any;
@@ -47,11 +50,12 @@ xdescribe('AddMembersComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [ AddMembersComponent ],
       providers: [
-        AddMembersService, HttpClientModule
+        AddMembersService, ManageMembersService, UserinfoService
       ]
     })
     .compileComponents();
@@ -67,7 +71,7 @@ xdescribe('AddMembersComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should getUserList', () => {
+  xit('should getUserList', () => {
     expect(component.userList.length === 0).toBeTruthy();
     spyOn(testBedService, 'getAllUsers').and.returnValue(getAllUsers());
     component.getUserList();

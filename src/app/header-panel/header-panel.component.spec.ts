@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderPanelComponent } from './header-panel.component';
 
-xdescribe('HeaderPanelComponent', () => {
+describe('HeaderPanelComponent', () => {
   let component: HeaderPanelComponent;
   let fixture: ComponentFixture<HeaderPanelComponent>;
 

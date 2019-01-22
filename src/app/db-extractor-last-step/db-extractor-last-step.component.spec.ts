@@ -26,11 +26,11 @@ xdescribe('DbExtractorLastStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DbExtractorLastStepComponent ],
-      imports: [ RouterTestingModule,HttpClientModule],
-      providers:[UserinfoService,WorkspaceHeaderService]
+      declarations: [DbExtractorLastStepComponent],
+      imports: [RouterTestingModule, HttpClientModule],
+      providers: [UserinfoService, WorkspaceHeaderService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

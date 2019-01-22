@@ -1,19 +1,19 @@
 import { TestBed, inject } from '@angular/core/testing';
-
-import { WorkspaceListService } from './workspace-list.service';
+import { MetalyzerHeaderService } from './metalyzer-header.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('WorkspaceListService', () => {
+
+describe('MetalyzerHeaderService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, RouterTestingModule],
-      providers: [WorkspaceListService, UserinfoService],
+      providers: [MetalyzerHeaderService, UserinfoService],
+      imports: [HttpClientModule, RouterTestingModule]
     });
   });
 
-  it('should be created', inject([WorkspaceListService], (service: WorkspaceListService) => {
+  it('should be created', inject([MetalyzerHeaderService], (service: MetalyzerHeaderService) => {
     expect(service).toBeTruthy();
   }));
 });

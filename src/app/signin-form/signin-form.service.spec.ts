@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SigninFormService } from './signin-form.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-xdescribe('SigninFormService', () => {
+describe('SigninFormService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule, HttpClientTestingModule],

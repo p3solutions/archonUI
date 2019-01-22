@@ -8,12 +8,19 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { WorkspaceHeaderInfoComponent } from '../workspace-header-info/workspace-header-info.component';
 import { WorkspaceMgmtPanelComponent } from '../workspace-mgmt-panel/workspace-mgmt-panel.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { UserinfoService } from '../userinfo.service';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
+import { WorkspaceHeaderService } from './workspace-header.service';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { UserProfileService } from '../user-profile/user-profile.service';
+import { DynamicLoaderService } from '../dynamic-loader.service';
 
-xdescribe('WorkspaceHeaderComponent', () => {
+describe('WorkspaceHeaderComponent', () => {
   let component: WorkspaceHeaderComponent;
   let fixture: ComponentFixture<WorkspaceHeaderComponent>;
   let de: DebugElement;
-  let workspaceHeader: HTMLElement;
+  // let workspaceHeader: HTMLElement;
   let userWorkspaceService: any;
   // mock data
   const userId = '11';
@@ -57,7 +64,8 @@ xdescribe('WorkspaceHeaderComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       declarations: [
         WorkspaceHeaderComponent,
@@ -66,7 +74,12 @@ xdescribe('WorkspaceHeaderComponent', () => {
       ],
       providers: [
         UserWorkspaceService,
-        HttpClientModule
+        HttpClientModule,
+        UserinfoService,
+        WorkspaceServicesService,
+        WorkspaceHeaderService,
+        UserProfileService,
+        DynamicLoaderService
       ],
     })
       .compileComponents();
@@ -80,7 +93,7 @@ xdescribe('WorkspaceHeaderComponent', () => {
     // userWorkspaceService provided to the TestBed
     userWorkspaceService = TestBed.get(UserWorkspaceService);
     de = fixture.debugElement.query(By.css('#workspace-header'));
-    workspaceHeader = de.nativeElement;
+    // workspaceHeader = de.nativeElement;
     fixture.detectChanges();
   });
 
@@ -88,20 +101,20 @@ xdescribe('WorkspaceHeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should have the drop-down button & its options', () => {
-    // returning mock data from the spy stub
-    spyOn(userWorkspaceService, 'getUserWorkspaceList').and.returnValue(getUserWorkspaceList());
-    // calling the function to render data in template
-    component.getUserWorkspaceList();
-    // triggering changes & update view
-    fixture.detectChanges();
-    const dropDownOptions: NodeListOf<Element> = workspaceHeader.querySelectorAll('a.dropdown-item.dynamic-option');
-    // testing names of all the drop-down options rendered
-    for (let index = 0; index < dropDownOptions.length; index++) {
-      const dynamicOption = dropDownOptions.item(index);
-      expect(dynamicOption.textContent).toContain(component.userWorkspaceArray[index].workspaceName);
-    }
-    disposeMe.unsubscribe();
-  });
+  // xit('Should have the drop-down button & its options', () => {
+  //   // returning mock data from the spy stub
+  //   spyOn(userWorkspaceService, 'getUserWorkspaceList').and.returnValue(getUserWorkspaceList());
+  //   // calling the function to render data in template
+  //   component.getUserWorkspaceList();
+  //   // triggering changes & update view
+  //   fixture.detectChanges();
+  //   const dropDownOptions: NodeListOf<Element> = workspaceHeader.querySelectorAll('a.dropdown-item.dynamic-option');
+  //   // testing names of all the drop-down options rendered
+  //   for (let index = 0; index < dropDownOptions.length; index++) {
+  //     const dynamicOption = dropDownOptions.item(index);
+  //     expect(dynamicOption.textContent).toContain(component.userWorkspaceArray[index].workspaceName);
+  //   }
+  //   disposeMe.unsubscribe();
+  // });
 
 });
