@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, SimpleChange, OnChanges, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, SimpleChange, OnChanges, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { TableListService } from '../table-list/table-list.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
@@ -11,7 +11,7 @@ import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.ser
   templateUrl: './data-analyzer-result-screen.component.html',
   styleUrls: ['./data-analyzer-result-screen.component.css']
 })
-export class DataAnalyzerResultScreenComponent implements OnInit {
+export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit {
 
    primaryColMap = new Map();
    secTableIdMap = new Map();
@@ -37,6 +37,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
    errorMsg: any;
    updateNotif = false;
    p = 1;
+  jobId: any;
 
 
   constructor(private tablelistService: TableListService,
@@ -51,9 +52,14 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
          this.resultant = res[0].relationDetails;
          this.primaryTableId = res[0].primaryTableId;
          this.primaryTableName = res[0].primaryTableName;
+         this.jobId = res[0].jobId;
      });
     this.getPrimaryColumns();
     this.getSecondaryColumns();
+  }
+
+  ngAfterViewInit() {
+    this.selectRow();
   }
 
   getPrimaryColumns() {
@@ -258,6 +264,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
   }
 
   closeScreen() {
+  this.addDirectJoinService.clearSession(this.jobId).subscribe();
   this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
   this.tablelistService.changeBooleanValue(true);
   }
@@ -269,6 +276,12 @@ export class DataAnalyzerResultScreenComponent implements OnInit {
     } else {
       $('input:checkbox:enabled').prop('checked', false);
     }
+  }
+
+  selectRow() {
+    setTimeout(() => {
+      (<HTMLElement> document.querySelectorAll('.sec-table tr')[1]).click();
+    }, 1);
   }
 
 }

@@ -11,6 +11,7 @@ export class AddDirectJoinService {
 
   columnListUrl = environment.apiUrl + '/table/columnList?tableId=';
   addNewJoinUrl = environment.apiUrl + '/meta/relationship';
+  clearSessionUrl = environment.apiUrl + '/dataAnalyzer/stateManagement/closeSession?jobId=';
 
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) { }
@@ -24,6 +25,11 @@ export class AddDirectJoinService {
   addNewJoin(param): Observable<any> {
     return this.http.post<any>(this.addNewJoinUrl, param, { headers: this.userinfoService.getHeaders() })
       .pipe(catchError(this.handleError('addNewJoin()', [])));
+  }
+
+  clearSession(jobId): Observable<any> {
+    return this.http.put<any>(this.clearSessionUrl + jobId, '', { headers: this.userinfoService.getHeaders() })
+    .pipe(catchError(this.handleError<any>('ClearSession()')));
   }
 
   private extractTables(res: any) {
