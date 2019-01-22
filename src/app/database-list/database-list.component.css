@@ -165,3 +165,8 @@ h2 {
   padding: 0px 10px 0 0;
 }
 
+table.table td { 
+  text-align: left;
+  width: 30%;
+  }
+
