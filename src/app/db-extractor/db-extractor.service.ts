@@ -39,7 +39,7 @@ export class DbExtractorService {
 
   dbExtractor(params: any): Observable<any> {
     return this.http.post(this.postProcessDetailsUrl, params, { headers: this.userInfoService.getHeaders() }).pipe(
-      map(this.extractData),
+      map(this.extractDataForSuccess),
       catchError(this.handleError('dbExtractor', {}))
     );
   }
@@ -67,6 +67,11 @@ getProcessDetailsObj():ProcessDetailsObj{
     const body = res.data.configuredDatabases;
     return body || [];
   }
+  private extractDataForSuccess(res: any) {
+    const body = res;
+    return body || [];
+  }
+  
 
 
   private handleError<T>(operation = 'operation', result?: T) {
