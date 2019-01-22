@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DbExtractorStepOneComponent } from './db-extractor-step-one.component';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { UserinfoService } from '../userinfo.service';
 
 describe('DbExtractorStepOneComponent', () => {
   let component: DbExtractorStepOneComponent;
@@ -8,7 +12,9 @@ describe('DbExtractorStepOneComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DbExtractorStepOneComponent ]
+      declarations: [ DbExtractorStepOneComponent ],
+      imports: [FormsModule, RouterTestingModule, HttpClientModule],
+      providers: [UserinfoService]
     })
     .compileComponents();
   }));
