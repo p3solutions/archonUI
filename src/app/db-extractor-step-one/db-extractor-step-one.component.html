@@ -1,0 +1,67 @@
+<div id="landing-card">
+<div class="container">
+  <form class="stepOneProcDetailForm" #stepOneProcDetailForm="ngForm">
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-2 label-style">
+        <label for="process">Process:</label>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <div class="form-group">
+          <div>
+            <select #processSelector="ngModel" id="company" class="form-control" name="process" [(ngModel)]="processDetailsObj.process"
+              required (change)="getOutputFormatListBySecProcess(processSelector.value)">
+              <option [ngValue]="null">Select Process To Excecute</option>
+              <option *ngFor="let item of processList" [value]="item">{{item}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-2 label-style">
+        <label for="outputFormat">Output format:</label>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <div class="form-group">
+          <div>
+            <select required #outputFormatSelector="ngModel" id="outputFormat" name="outputFormatName" [(ngModel)]="processDetailsObj.outputFormat"
+              (change)="setOutputFormat(outputFormatSelector.value)" class="form-control">
+              <option [ngValue]="null">Select output format</option>
+              <option *ngFor="let item of outputFormatList" [value]="item">{{item}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-2 label-style">
+        <label for="tableIncRule">Table Inclusion Rule:</label>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <input type="text" name="tableIncRule" class="form-control" [(ngModel)]="processDetailsObj.tableIncRule" id="tableIncRule"
+          placeholder="Table Inclusion rule">
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-2 label-style">
+        <label for="includeTableRelationship">Include Table Relationship:</label>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-10 col-sm-pull-4">
+        <label class="switch">
+          <input type="checkbox" name="IncTableRelation" disabled="IncTableRelation" [(ngModel)]="processDetailsObj.includeTableRelationship">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>  
+    <div>
+      <button class="btn btn-primary next" id="nextStepBtnId" [disabled]="!stepOneProcDetailForm.form.valid" (click)="gotoStepTwo()" style="float: right;">Next
+        &raquo;</button>
+    </div>
+    <br>
+    <br>
+  </form>
+</div>
+</div>

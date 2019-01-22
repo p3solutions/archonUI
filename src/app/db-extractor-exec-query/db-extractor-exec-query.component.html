@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">Query Name</div>
+    <div class="col-md-9 col-md-pull-1">
+      <input type="text" style="margin-left: 36px" class="form-control">
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-3">Read Query from file</div>
+    <div class="col-md-2 col-md-pull-1">
+      <label class="switch">
+        <input type="checkbox" (change)="uploadQueryFile()">
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="col-md-7">
+      <label class="btn btn-primary" for="my-file-selector" style="width:82%" *ngIf="showFileUpload">
+          <input type="file" id="uploadReadQueryFile">
+        </label>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+      <div class="col-md-10">
+          <textarea class="textarea-size"></textarea>
+      </div>  
+  </div>
+  <br>
+  <!-- <div class="row">
+      <button class="btn btn-primary next" (click)="gotoNextStep()" style="float: right;margin-right: 12px">Next &raquo;</button>
+      <button class="btn btn-primary Previous" (click)="prevStepOne()" style="float:right;margin-right:5px;">&laquo;
+        Previous</button>
+    </div> -->
+  <br>
+</div>
