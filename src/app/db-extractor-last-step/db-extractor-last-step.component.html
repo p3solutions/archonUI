@@ -130,8 +130,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <h1>Your job has started</h1>
-        <p>check on Job Status page</p>
+        <h1>{{successMsg}}</h1>
+        <p *ngIf="isSuccessMsg">check on Job Status page</p>
       </div>
       <div class="modal-footer">
         <button type="button"   class="btn btn-default" data-dismiss="modal" (click)="close()">Close</button>

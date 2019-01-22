@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('DbExtractorService', () => {
+xdescribe('DbExtractorService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [DbExtractorService, UserinfoService],
     imports: [HttpClientModule, RouterTestingModule]

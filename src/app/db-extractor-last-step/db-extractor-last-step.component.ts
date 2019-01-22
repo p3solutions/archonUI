@@ -15,6 +15,8 @@ import { ConfiguredDB } from '../workspace-objects';
 
 export class DbExtractorLastStepComponent implements OnInit {
   workspaceID: string;
+  isSuccessMsg:boolean;
+  successMsg:string;
   processDetailsObj = new ProcessDetailsObj();
   configuredDB= new ConfiguredDB();
   constructor(private router: Router, private dbExtractorService: DbExtractorService,
@@ -56,16 +58,26 @@ export class DbExtractorLastStepComponent implements OnInit {
         "splitDateInXmlForxDBCompatiblity": this.processDetailsObj.xmlXDBCompability,
         "extractLOBwithinXml": this.processDetailsObj.extractLOBWithXML
       }
-
     };
 
     this.dbExtractorService.dbExtractor(param).subscribe((result) => {
-      console.log(result);
+      if(result.httpStatus==200){
+        this.isSuccessMsg=true;
+        this.successMsg="Your Job has Started"
+      }else{
+        this.isSuccessMsg=false;
+        this.successMsg="Unable to Process Your Job"
+      }
     });
   }
 
   close(){
-    this.router.navigate(['/status']);
+    if(this.isSuccessMsg){
+      this.router.navigate(['/status']);
+    }
+    else{
+      this.router.navigate(['workspace/workspace-dashboard/workspace-services'])
+    }
   }
 
   goToEdit(value:string){

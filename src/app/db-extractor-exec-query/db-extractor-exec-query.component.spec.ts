@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 
 
-describe('DbExtractorExecQueryComponent', () => {
+xdescribe('DbExtractorExecQueryComponent', () => {
   let component: DbExtractorExecQueryComponent;
   let fixture: ComponentFixture<DbExtractorExecQueryComponent>;
 
