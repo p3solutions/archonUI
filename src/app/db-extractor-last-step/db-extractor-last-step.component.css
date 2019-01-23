@@ -9,7 +9,7 @@
   }
   
   .next {
-    background-color: #4CAF50;
+    background-color: #269af8;
     color: white;
   }
 
@@ -26,4 +26,8 @@ font-weight: bolder;
 table.table td { 
 text-align: left;
 width: 30%;
+font-family: "Montserrat", sans-serif;
+font-weight: 300;
+font-size: 16px;
+letter-spacing: 0.2px;
 }
