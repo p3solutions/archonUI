@@ -4,7 +4,7 @@
         <div class="col-md-3 col-lg-3 font-left">
             <label>XML File Split Size(MB)</label>
         </div>
-        <div class="col-md-9 col-lg-9">
+        <div class="col-md-9 col-lg-9" style="height: 60px">
             <mv-slider [value]="processDetailsObj?.xmlSplitFileSize" [step]="100" [ticksLabels]="[100,200,300,400,500,600,700,800,900,1000]"
                 [ticks]="[100,200,300,400,500,600,700,800,900,1000]" (change)="setXMLFileSplitSize($event)"></mv-slider>
         </div>
@@ -13,7 +13,7 @@
         <div class="col-md-3 col-lg-3 font-left">
             <label>Maximum Parallel Process</label>
         </div>
-        <div class=" col-md-9 col-lg-9">
+        <div class=" col-md-9 col-lg-9" style="height: 60px">
             <mv-slider [value]="processDetailsObj?.maxParallelProcess" [step]="1" [ticksLabels]="[1,2,3,4,5,6,7,8,9,10]"
                 [ticks]="[1,2,3,4,5,6,7,8,9,10]" (change)="setMaxParallelProcess($event)"></mv-slider>
         </div>
@@ -69,8 +69,8 @@
 
         </div>
     </div>
-    <br><br><br>
-    <div class="row">
+    
+    <div class="row" id="start-btn">
         <button class="btn btn-primary next" (click)="gotoLastStep()" style="float: right;margin-right: 12px">Next
             &raquo;</button>
         <button class="btn btn-primary Previous" (click)="prevStepOne()" style="float:right;margin-right:5px;">&laquo;
