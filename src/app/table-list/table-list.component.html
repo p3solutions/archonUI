@@ -47,7 +47,7 @@
                 <a href="#">Column-Match Join</a>
               </li>
               <li>
-                <a href="#">SP/View Join</a>
+                <a href="#" data-toggle="modal" data-target="#modelStoredProcView">SP/View Join</a>
               </li>
             </ul>
           </div>
@@ -395,4 +395,4 @@
     </div>
   </div>
   <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
-  
+  <app-stored-proc-view class="modal fade" id="modelStoredProcView" data-backdrop="static" data-keyboard="false"></app-stored-proc-view>

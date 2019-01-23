@@ -85,7 +85,6 @@ input:checked+.slider:before {
 }
 
 #landing-card {
-  height: 420px;
   position: relative;
 }
 

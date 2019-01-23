@@ -1,0 +1,18 @@
+#primary-tbl-heading{
+    float: left;
+    text-align: right;
+    margin-left: -2px;
+    font-weight: bold;
+}
+
+#primary-table-value{
+    display: block;
+    float: left;
+    text-align: right;
+    margin-left: 3px;
+}
+
+.modal-title{
+    text-align: left;
+    margin-bottom: 5px;
+}
