@@ -1,7 +1,8 @@
+<div id="landing-card">
 <div class="container">
     <div class="row slider-bottom-margin">
-        <div class=" col-md-3 col-lg-3">
-            <label class="text-left">XML File Split Size(MB)</label>
+        <div class="col-md-3 col-lg-3 font-left">
+            <label>XML File Split Size(MB)</label>
         </div>
         <div class="col-md-9 col-lg-9">
             <mv-slider [value]="processDetailsObj?.xmlSplitFileSize" [step]="100" [ticksLabels]="[100,200,300,400,500,600,700,800,900,1000]"
@@ -9,55 +10,66 @@
         </div>
     </div>
     <div class="row slider-bottom-margin">
-        <div class=" col-md-3 col-lg-3">
-            <label class="text-left">Maximum Parallel Process</label>
+        <div class="col-md-3 col-lg-3 font-left">
+            <label>Maximum Parallel Process</label>
         </div>
         <div class=" col-md-9 col-lg-9">
             <mv-slider [value]="processDetailsObj?.maxParallelProcess" [step]="1" [ticksLabels]="[1,2,3,4,5,6,7,8,9,10]"
-                [ticks]="[1,2,3,4,5,6,7,8,9,10]"  (change)="setMaxParallelProcess($event)"></mv-slider>
+                [ticks]="[1,2,3,4,5,6,7,8,9,10]" (change)="setMaxParallelProcess($event)"></mv-slider>
         </div>
+    </div>
+    <div class="row">
+            <div class="col-md-12 col-lg-12 font-left" style="margin-bottom:26px">
+                    <label>Modify Default parameters(Optional)</label>
+            </div>  
     </div>
     <div>
         <div class="row">
-            <div class=" col-md-3 col-lg-3"><label class="text-left">Include Table</label></div>
-            <div class=" col-md-3 col-lg-3">
-                <label class="switch"> 
+            <div class="parameter-heading col-md-3 col-lg-3">
+                <label class="switch">
                     <input type="checkbox" (ngModelChange)="processDetailsObj.incTable=$event" [ngModel]="processDetailsObj?.incTable">
                     <span class="slider round"></span>
                 </label>
             </div>
-            <div class="col-md-3 col-lg-3"><label class="text-left">Date in XML for XDB compability</label></div>
-            <div class=" col-md-3 col-lg-3">
+            <div class=" col-md-3 col-lg-3 font-left"><label>Include Table</label></div>
+
+            <div class=" parameter-heading col-md-3 col-lg-3">
                 <label class="switch">
                     <input type="checkbox" (ngModelChange)="processDetailsObj.xmlXDBCompability=$event" [ngModel]="processDetailsObj?.xmlXDBCompability">
                     <span class="slider round"></span>
                 </label>
             </div>
+            <div class="col-md-3 col-lg-3 font-left"><label>Date in XML for XDB compability</label></div>
+
         </div>
         <div class="row">
-            <div class="col-md-3 col-lg-3"><label class="text-left"> Include Views</label></div>
-            <div class=" col-md-3 col-lg-3">
+            <div class="parameter-heading col-md-3 col-lg-3">
                 <label class="switch">
-                    <input type="checkbox" (ngModelChange)= "processDetailsObj.incView=$event" [ngModel]="processDetailsObj?.incView">
+                    <input type="checkbox" (ngModelChange)="processDetailsObj.incView=$event" [ngModel]="processDetailsObj?.incView">
                     <span class="slider round"></span>
                 </label></div>
-            <div class=" col-md-3 col-lg-3"><label>Extract LOB Within XML</label>
-            </div>
-            <div class=" col-md-3 col-lg-3">
+            <div class="col-md-3 col-lg-3 font-left"><label> Include Views</label></div>
+
+            <div class="parameter-heading col-md-3 col-lg-3">
                 <label class="switch">
-                    <input type="checkbox" (ngModelChange)= "processDetailsObj.extractLOBWithXML=$event" [ngModel]="processDetailsObj?.extractLOBWithXML">
+                    <input type="checkbox" (ngModelChange)="processDetailsObj.extractLOBWithXML=$event" [ngModel]="processDetailsObj?.extractLOBWithXML">
                     <span class="slider round"></span>
                 </label>
             </div>
+            <div class=" col-md-3 col-lg-3 font-left"><label>Extract LOB Within XML</label>
+            </div>
+
         </div>
         <div class="row">
-            <div class="col-md-3 col-lg-3"><label class="text-left">Include Record Count</label></div>
-            <div class="col-md-3 col-lg-3"><label class="switch">
+            <div class="parameter-heading col-md-3 col-lg-3"><label class="switch">
                     <input type="checkbox" (ngModelChange)="processDetailsObj.incRecordCount=$event" [ngModel]="processDetailsObj?.incRecordCount">
                     <span class="slider round"></span>
                 </label></div>
+            <div class="col-md-3 col-lg-3 font-left"><label>Include Record Count</label></div>
+
         </div>
     </div>
+    <br><br><br>
     <div class="row">
         <button class="btn btn-primary next" (click)="gotoLastStep()" style="float: right;margin-right: 12px">Next
             &raquo;</button>
@@ -65,4 +77,5 @@
             Previous</button>
     </div>
     <br>
+</div>
 </div>

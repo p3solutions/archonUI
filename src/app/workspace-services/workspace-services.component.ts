@@ -111,7 +111,7 @@ export class WorkspaceServicesComponent implements OnInit {
         });
       }
     }
-    else if (service.serviceName === 'Live Archival') {
+    else if (service.serviceName === 'RDBMS Extractor') {
       this.router.navigate(['/workspace/db-extractor']);
     }
   }

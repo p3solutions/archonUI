@@ -26,15 +26,22 @@ export class WorkspaceServicesService {
   updateServiceActionsList(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
     if (serviceActions) {
       for (const service of serviceActions) {
+        
         switch (service.serviceName) {
           case 'SERVICE_METALYZER': {
             service.serviceName = 'Metalyzer';
             service.iconName = 'metalyzer.png';
             break;
           }
-          case 'SERVICE_LIVE_ARCHIVAL': {
+          case 'SERVICE_LIVE_ARCHIVAL1': {
             service.serviceName = 'Live Archival';
             service.iconName = 'livearchival.png';
+            break;
+          }
+
+          case 'SERVICE_LIVE_ARCHIVAL': {
+            service.serviceName = 'RDBMS Extractor';
+            service.iconName = 'rdbmsextractor.png';
             break;
           }
           case 'SERVICE_CUSTOM_SCREEN_BUILDING': {

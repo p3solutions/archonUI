@@ -1,29 +1,42 @@
-.table-striped>tbody>tr:nth-child(odd)>td, 
-.table-striped>tbody>tr:nth-child(odd)>th {
-   background-color: rgb(231, 237, 240); 
- }
+.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+  background-color: rgb(231, 237, 240);
+}
 
- .previous {
-    background-color: #f1f1f1;
-    color: black;
-  }
-  
-  .next {
-    background-color: #4CAF50;
-    color: white;
-  }
+#landing-card {
+  height: 420px;
+  position: relative;
+}
 
+.previous {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+.next {
+  background-color: #269af8;
+  color: white;
+}
 
 .scroll-div {
-    height: 325px;       
-    overflow-y: auto; 
+  height: 355px;
+  overflow-y: auto;
 }
 
-.bold-parameter{
-font-weight: bolder;
+.bold-parameter {
+  font-weight: bolder;
 }
 
-table.table td { 
-text-align: left;
-width: 30%;
+table.table td {
+  text-align: left;
+  width: 30%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}
+
+.table-heading {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bolder;
+  font-size: 16px;
+  letter-spacing: 0.2px;
 }

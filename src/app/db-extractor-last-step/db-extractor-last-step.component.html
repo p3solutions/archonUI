@@ -1,8 +1,9 @@
+<div id="landing-card">
 <div class="container"><div class="scroll-div">
   <table class="table table-bordered table-striped">
     <thead>
-      <th class="text-center">Parameter</th>
-      <th class="text-center">value</th>
+      <th class="text-center table-heading">Parameter</th>
+      <th class="text-center table-heading">Value</th>
     </thead>
     <tbody>
       <tr>
@@ -68,11 +69,13 @@
     </tbody>
   </table>
 </div>
+<br>
   <button class="btn btn-primary next" data-toggle="modal" href="#successModel" data-keyboard="false" data-backdrop="static" (click)="Start()" style="float: right;">Start</button>
   <button class="btn btn-primary Previous" (click)="prevStepTwo()" style="float: right;margin-right: 5px;">&laquo;
     Previous</button>
   <br>
   <br>
+</div>
 </div>
 <div id="db-profile-model" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -118,7 +121,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary btn-popup cancel" data-dismiss="modal">Close</button>
       </div>
     </div>
 

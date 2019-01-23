@@ -45,6 +45,7 @@ export class DbExtractorStepOneComponent implements OnInit {
     }
     else if(process==null){
       this.outputFormatList = [];
+      this.processDetailsObj.includeTableRelationship=false;
     }
   }
 
