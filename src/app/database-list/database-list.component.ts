@@ -41,7 +41,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   }
 
   getDBInfoByID() {
-    console.log(this.workspaceHeaderService.getDatabaseID());
     this.configDBListService.getDBInfoByID(this.workspaceHeaderService.getDatabaseID()).subscribe(
       (result) => {
         this.configuredDB = result;

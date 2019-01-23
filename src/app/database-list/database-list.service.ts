@@ -16,8 +16,6 @@ export class DatabaseListService {
   jwtHelper: JwtHelperService = new JwtHelperService();
 
   configDBListUrl = environment.apiUrl + '/dbs/configured';
-  private apiUrl = environment.apiUrl;
-  private getDBInfoUrl = this.apiUrl + '/dbs/configured/';
   constructor(private http: HttpClient,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService) {
@@ -31,16 +29,11 @@ export class DatabaseListService {
   }
 
   getDBInfoByID(databaseId: string): Observable<ConfiguredDB> {
-    return this.http.get<ConfiguredDB>(this.getDBInfoUrl + databaseId, { headers: this.userinfoService.getHeaders() })
+    return this.http.get<ConfiguredDB>(this.configDBListUrl + '/' + databaseId, { headers: this.userinfoService.getHeaders() })
     .pipe(
-      map(this.extractDataForDB),
+      map(this.extractConfigDB),
       catchError(this.handleError('getDBInfoByID', []))
     );
-  }
-
-  private extractDataForDB(res: any) {
-    const body = res.data.configuredDatabases;
-    return body || [];
   }
 
   private extractConfigDB(res: any) {
