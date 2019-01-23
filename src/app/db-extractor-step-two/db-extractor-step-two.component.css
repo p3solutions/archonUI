@@ -92,3 +92,8 @@ text-align: left;
   margin-right: -33px;
 
 }
+
+#landing-card {
+  height: 420px;
+  position: relative;
+}
