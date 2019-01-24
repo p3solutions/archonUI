@@ -245,3 +245,13 @@ table.table td {
   }
   #table-modal tr:hover {background-color: #F5F5F5;}
   
+  .modal-header .close {
+    margin-right: 0px !important;
+}
+.modal-footer .cancel {
+  border-radius: 2px !important; 
+  margin-right: 0px !important;
+  margin-bottom: 0px !important;
+  margin-top: 0px !important;
+  text-transform: uppercase;
+}

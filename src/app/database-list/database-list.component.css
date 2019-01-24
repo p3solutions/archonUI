@@ -176,3 +176,14 @@ table.table td {
   }
   #table-modal tr:hover {background-color: #F5F5F5;}
 
+  .modal-header .close {
+    margin-right: 0px;
+}
+.modal-footer .cancel {
+  border-radius: 2px; 
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  text-transform: uppercase;
+}
+
