@@ -29,7 +29,12 @@ export class ProcessDetailsObj {
   xmlXDBCompability: boolean = false
   extractLOBWithXML: boolean = false
   incRecordCount: boolean = false
-  queryTitle: string = null;
-  query: string = null;
-  isQueryFile: boolean = false;
+  ExecuteQueryObj:ExecuteQueryObj;
+}
+
+export class ExecuteQueryObj {
+queryTitle: string = '';
+query: string = '';
+isQueryFile: boolean = false;
+queryFileToUpload:File=null;
 }

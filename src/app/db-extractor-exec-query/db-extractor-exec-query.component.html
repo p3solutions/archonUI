@@ -1,11 +1,12 @@
 <div id="extractor-landing-card">
 <div class="container">
+  <form  [formGroup]="executeQueryForm" (ngSubmit)="gotoStepTwo()">
   <div class="row">
     <div class="col-md-3 label-style">
       <label>Query Name</label>    
     </div>
     <div class="col-md-9 col-md-pull-1">
-      <input type="text" style="margin-left: 36px" placeholder="Query Name" class="form-control">
+      <input type="text" formControlName="queryTitle" style="margin-left: 36px" placeholder="Query Name" class="form-control">
     </div>
   </div>
   <br>
@@ -15,13 +16,13 @@
       </div>
     <div class="col-md-2 col-md-pull-1" id="exec-file-upload-btn">
       <label class="switch">
-        <input type="checkbox" (change)="uploadQueryFile()">
+        <input type="checkbox"  formControlName="isQueryFile"  (change)="setUploadQueryFile()">
         <span class="slider round"></span>
       </label>
     </div>
     <div class="col-md-7">
       <label class="btn btn-primary" for="my-file-selector" style="width:85%" *ngIf="showFileUpload">
-          <input type="file" id="uploadReadQueryFile">
+          <input type="file" id="uploadReadQueryFile" multiple (change)="uploadQueryFile($event.target.files)" formControlName="queryFileToUpload" >
         </label>
     </div>
   </div>
@@ -31,15 +32,16 @@
         <label>Query</label>
       </div>
       <div class="col-md-10">
-          <textarea class="textarea-size"></textarea>
+          <textarea class="textarea-size" formControlName="query"></textarea>
       </div>  
   </div>
   <br>
    <div class="row" id="start-btn"> 
-      <button class="btn btn-primary next" (click)="gotoStepTwo()" style="float: right;margin-right: 12px">Next &raquo;</button>
+      <button type="submit" class="btn btn-primary next" [disabled]="enableNextBtn" style="float: right;margin-right: 12px">Next &raquo;</button>
       <button class="btn btn-primary Previous" (click)="prevStepOne()" style="float:right;margin-right:5px;">&laquo;
         Previous</button>
     </div> 
   <br>
+</form>
 </div>
 </div>
