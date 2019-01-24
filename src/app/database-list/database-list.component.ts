@@ -6,6 +6,7 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonUtilityService } from '../common-utility.service';
 import { Info } from '../info';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 @Component({
   selector: 'app-database-list',
@@ -15,6 +16,8 @@ import { Info } from '../info';
 export class DatabaseListComponent implements OnInit, OnDestroy {
   isProgress: boolean;
   configDBListInfo: any;
+  databaseID: any;
+  configuredDB = new ConfiguredDB();
   info: Info;
   dynamicLoaderService: DynamicLoaderService;
   dbListActions: any;
@@ -24,6 +27,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
     private router: Router,
+    private workspaceHeaderService: WorkspaceHeaderService,
     private commonUtilityService: CommonUtilityService
     ) {
     this.dynamicLoaderService = dynamicLoaderService;
@@ -33,7 +37,21 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getConfigDBList();
     this.isProgress = true;
+    this.getDBInfoByID();
   }
+
+  getDBInfoByID() {
+    this.configDBListService.getDBInfoByID(this.workspaceHeaderService.getDatabaseID()).subscribe(
+      (result) => {
+        this.configuredDB = result;
+      }
+    );
+  }
+
+  viewDBmodal(database) {
+    this.configuredDB = database;
+  }
+
   getConfigDBList() {
     const navbarComponent = new NavbarComponent();
     this.info = navbarComponent.getInfo();

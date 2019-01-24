@@ -50,7 +50,7 @@
                         </span>
                       </td>
                       <td class="ws-rej-data">{{ws.masterMetadataVersion}}</td>
-                      <td class="ws-rej-data">{{ws.updatedAt}}</td>
+                      <td class="ws-rej-data">{{ws.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -62,7 +62,7 @@
       <div class="flex-container" *ngFor="let workspaceGroupObj of workspaceActions; let indRow = index">
         <div class="flex-cards card" *ngFor="let ws of workspaceGroupObj; let indCol = index" id="{{'flex-cards-' + indRow + '-' + indCol}}">
             <div class="flex-card-header cur-def" [title]="ws?.workspaceName">
-              <img class="icon-img"  [attr.src]="'assets/metalyzer.png'" />
+              <a data-toggle="modal" href="#db-profile-model"><img class="icon-img"  [attr.src]="'assets/metalyzer.png'" (click)="viewWSmodal(ws)"/></a>
             </div> 
             <div class="flex-cards-bar">
               <div class="trim-text flex-card-title">
@@ -80,7 +80,7 @@
               </p>
               <p > Databases(S): <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">{{db?.name}}{{isLast ? '' : ', '}}</span></p>
               <p > Metadata Version: {{ws?.masterMetadataVersion}}</p>
-              <p > Last Updated Time: {{ws?.updatedAt | date: "dd MMM, yyyy"}}</p>
+              <p > Last Updated Time: {{ws?.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</p>
               <p  *ngIf="ws.workspaceState == 'PENDING'">Request Pending
                 <span>
                   <i class="fa fa-trash-o fa-lg icon-disabled" aria-hidden="true" id="ws-pending-trash"></i>
@@ -97,3 +97,55 @@
   <button style="display: none" id="reload-ws-list" (click)="reloadWSlist()"></button>
   <ng-template #createNewWorkspace></ng-template>
   
+  <div id="db-profile-model" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Workspaces Profile</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table" id="table-modal">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>Workspace Name</td>
+                <td>{{WSListInfo.workspaceName}}</td>
+              </tr>
+              <tr>
+                <td class="text-left">MasterMetadata Version</td>
+                <td>{{WSListInfo.masterMetadataVersion}}</td>
+              </tr>
+              <tr>
+                <td>WorkspaceState</td>
+                <td>{{WSListInfo.workspaceState}}</td>
+              </tr>
+              <tr>
+                <td>Workspace Members</td>
+                <td>  <span *ngFor="let ws of this.WSListInfo.members; let isLast=last">
+                        {{ws?.user.name}}{{isLast ? '' : ', '}}
+                      </span></td>
+              </tr>
+              <tr>
+                <td>Workspace Databases Name</td>
+                <td>  <span *ngFor="let ws of this.WSListInfo.databases; let isLast=last">
+                        {{ws?.name}}{{isLast ? '' : ', '}}
+                      </span></td>
+              </tr>
+              <tr>
+                <td>Workspace Databases Type</td>
+                <td>  <span *ngFor="let ws of this.WSListInfo.databases; let isLast=last">
+                        {{ws?.type}}{{isLast ? '' : ', '}}
+                      </span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cancel-btn" class="btn btn-primary btn-popup cancel" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>

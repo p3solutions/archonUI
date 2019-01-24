@@ -27,7 +27,7 @@
   
       <div class="flex-cards card" *ngFor="let db of dbListGroupObj; let indCol = index" id="{{'flex-cards-' + indRow + '-' + indCol}}">
           <div class="flex-card-header cur-def" [title]="db?.profileName">
-            <img class="icon-img"  [attr.src]="'assets/livearchival.png'" />
+            <a data-toggle="modal" href="#db-profile-model"><img class="icon-img"  [attr.src]="'assets/livearchival.png'" (click)="viewDBmodal(db)"/></a>
           </div> 
           <div class="flex-cards-bar">
             <div class="trim-text flex-card-title">
@@ -51,6 +51,58 @@
   
   </div> 
   
+  
   <button style="display: none" id="populate-db-list" (click)="getConfigDBList()"></button>
   
   <ng-template #createNewDatabaseWizard></ng-template>
+
+  <div id="db-profile-model" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Database Profile</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table" id="table-modal">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>Database Profile Name</td>
+                <td>{{configuredDB.profileName}}</td>
+              </tr>
+              <tr>
+                <td class="text-left">Database Type</td>
+                <td>{{configuredDB.type}}</td>
+              </tr>
+              <tr>
+                <td>Database Host/Ip</td>
+                <td>{{configuredDB.host}}</td>
+              </tr>
+              <tr>
+                <td>Database Port</td>
+                <td>{{configuredDB.port}}</td>
+              </tr>
+              <tr>
+                <td>Database Name</td>
+                <td>{{configuredDB.databaseName}}</td>
+              </tr>
+              <tr>
+                <td>Database Schema</td>
+                <td>{{configuredDB.schemaName}}</td>
+              </tr>
+              <tr>
+                <td>Database User Name</td>
+                <td>{{configuredDB.userName}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cancel-btn" class="btn btn-primary btn-popup cancel" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
