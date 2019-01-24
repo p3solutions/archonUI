@@ -63,15 +63,15 @@ export class DbExtractorLastStepComponent implements OnInit {
     param = this.modifiedParamAccToProcess(param)
     console.log(param);
 
-    // this.dbExtractorService.dbExtractor(param).subscribe((result) => {
-    //   if (result.httpStatus == 200) {
-    //     this.isSuccessMsg = true;
-    //     this.successMsg = "Your Job has Started"
-    //   } else {
-    //     this.isSuccessMsg = false;
-    //     this.successMsg = "Unable to Process Your Job"
-    //   }
-    // });
+    this.dbExtractorService.dbExtractor(param).subscribe((result) => {
+      if (result.httpStatus == 200) {
+        this.isSuccessMsg = true;
+        this.successMsg = "Your Job has Started"
+      } else {
+        this.isSuccessMsg = false;
+        this.successMsg = "Unable to Process Your Job"
+      }
+    });
   }
 
   modifiedParamAccToProcess(param: any) {
