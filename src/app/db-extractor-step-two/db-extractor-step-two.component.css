@@ -1,14 +1,4 @@
 
-.previous {
-  background-color: #f1f1f1;
-  color: black;
-}
-
-.next {
-  background-color: #269af8;
-  color: white;
-}
-
 .slider-bottom-margin{
   margin-bottom: 42px;
 }
@@ -93,10 +83,6 @@ text-align: left;
 
 }
 
-#landing-card {
-  height: 420px;
-  position: relative;
-}
 
 #start-btn{
   right: 9px;

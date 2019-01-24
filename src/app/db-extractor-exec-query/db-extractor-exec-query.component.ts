@@ -23,5 +23,8 @@ export class DbExtractorExecQueryComponent implements OnInit {
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
       this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);  
   }
-  
+  prevStepOne(){
+    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue:0, stepThreeProgBarValue: 0 })
+      this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
+  }
 }

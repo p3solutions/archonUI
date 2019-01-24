@@ -2,20 +2,6 @@
   background-color: rgb(231, 237, 240);
 }
 
-#landing-card {
-  height: 420px;
-  position: relative;
-}
-
-.previous {
-  background-color: #f1f1f1;
-  color: black;
-}
-
-.next {
-  background-color: #269af8;
-  color: white;
-}
 
 .scroll-div {
   height: 355px;

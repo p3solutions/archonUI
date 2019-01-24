@@ -15,10 +15,10 @@ import { ConfiguredDB } from '../workspace-objects';
 
 export class DbExtractorLastStepComponent implements OnInit {
   workspaceID: string;
-  isSuccessMsg:boolean;
-  successMsg:string;
+  isSuccessMsg: boolean;
+  successMsg: string;
   processDetailsObj = new ProcessDetailsObj();
-  configuredDB= new ConfiguredDB();
+  configuredDB = new ConfiguredDB();
   constructor(private router: Router, private dbExtractorService: DbExtractorService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService) { }
@@ -60,31 +60,47 @@ export class DbExtractorLastStepComponent implements OnInit {
       }
     };
 
-    this.dbExtractorService.dbExtractor(param).subscribe((result) => {
-      if(result.httpStatus==200){
-        this.isSuccessMsg=true;
-        this.successMsg="Your Job has Started"
-      }else{
-        this.isSuccessMsg=false;
-        this.successMsg="Unable to Process Your Job"
-      }
-    });
+    param = this.modifiedParamAccToProcess(param)
+    console.log(param);
+
+    // this.dbExtractorService.dbExtractor(param).subscribe((result) => {
+    //   if (result.httpStatus == 200) {
+    //     this.isSuccessMsg = true;
+    //     this.successMsg = "Your Job has Started"
+    //   } else {
+    //     this.isSuccessMsg = false;
+    //     this.successMsg = "Unable to Process Your Job"
+    //   }
+    // });
   }
 
-  close(){
-    if(this.isSuccessMsg){
+  modifiedParamAccToProcess(param: any) {
+    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === "executequery") {
+      param.executionConfig.queryMode = {
+        "queryTitle": "state;city",
+        "query": "select DX_CODE from DX_CODE;select ADDR_ID from ADDRESS",
+        "isQueryFile": "false"
+      }
+    }
+    return param;
+  }
+
+
+  close() {
+    if (this.isSuccessMsg) {
       this.router.navigate(['/status']);
     }
-    else{
+    else {
       this.router.navigate(['workspace/workspace-dashboard/workspace-services'])
     }
   }
 
-  goToEdit(value:string){
-    if(value=="editParameter"){
+  goToEdit(value: string) {
+    if (value == "editParameter") {
       this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
-      this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);}
-    else{
+      this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
+    }
+    else {
       this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 })
       this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
     }

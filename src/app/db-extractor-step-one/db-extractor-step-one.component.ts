@@ -38,14 +38,14 @@ export class DbExtractorStepOneComponent implements OnInit {
   }
 
   getOutputFormatListBySecProcess(process: string) {
-    if(process!=null){
+    if (process != null) {
       this.processDetailsObj.process = process;
       this.outputFormatList = this.processDetailsMap.get(process);
       this.processDetailsObj.includeTableRelationship = this.processDetailsList.filter(a => a.process == process)[0].includeTableRelationship;
     }
-    else if(process==null){
+    else if (process == null) {
       this.outputFormatList = [];
-      this.processDetailsObj.includeTableRelationship=false;
+      this.processDetailsObj.includeTableRelationship = false;
     }
   }
 
@@ -55,8 +55,13 @@ export class DbExtractorStepOneComponent implements OnInit {
 
   gotoStepTwo() {
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
-    this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);
-       this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);  
-      //this.router.navigate(['/workspace/db-extractor/db-extractor-exec-query']);  
+    this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);  
+    console.log(this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() );
+    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === "executequery") {
+      this.router.navigate(['/workspace/db-extractor/db-extractor-exec-query']);
+    }
+    else{
+      this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
+    }
   }
 }
