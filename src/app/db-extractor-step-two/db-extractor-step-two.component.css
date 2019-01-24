@@ -10,7 +10,7 @@
 }
 
 .slider-bottom-margin{
-  margin-bottom: 60px;
+  margin-bottom: 42px;
 }
 
 .switch {
@@ -96,4 +96,10 @@ text-align: left;
 #landing-card {
   height: 420px;
   position: relative;
+}
+
+#start-btn{
+  right: 9px;
+  position: absolute;
+  bottom: 8px;
 }
