@@ -24,6 +24,7 @@ export class WorkspaceServicesService {
   }
 
   updateServiceActionsList(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
+    console.log(serviceActions);
     if (serviceActions) {
       for (const service of serviceActions) {
         
@@ -39,7 +40,7 @@ export class WorkspaceServicesService {
             break;
           }
 
-          case 'SERVICE_LIVE_ARCHIVAL': {
+          case 'SERVICE_DB_EXTRACTOR': {
             service.serviceName = 'RDBMS Extractor';
             service.iconName = 'rdbmsextractor.png';
             break;

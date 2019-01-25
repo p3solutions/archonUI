@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DbExtractorService } from '../db-extractor/db-extractor.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ExecuteQueryObj } from '../db-extractor';
+import { ProcessDetailsObj } from '../db-extractor';
 
 @Component({
   selector: 'app-db-extractor-exec-query',
@@ -14,19 +14,24 @@ export class DbExtractorExecQueryComponent implements OnInit {
   executeQueryForm: FormGroup;
   enableNextBtn: boolean = false;
   isQueryFileExist: boolean = false;
+  ProcessDetailsObj:ProcessDetailsObj=new ProcessDetailsObj();
+  queryFileToUpload:FileList=null;
+  
   constructor(private router: Router, private dbExtractorService: DbExtractorService) { }
 
 
   ngOnInit() {
+    this.ProcessDetailsObj=this.dbExtractorService.getProcessDetailsObj();
     this.createExecQueryForm();
+    console.log(this.ProcessDetailsObj);
   }
 
   createExecQueryForm() {
     this.executeQueryForm = new FormGroup({
-      query: new FormControl('', [Validators.required]),
-      queryTitle: new FormControl('', [Validators.required]),
-      isQueryFile: new FormControl(false),
-      queryFileToUpload: new FormControl('', [Validators.required])
+      query: new FormControl(this.ProcessDetailsObj.ExecuteQueryObj.query, [Validators.required]),
+      queryTitle: new FormControl(this.ProcessDetailsObj.ExecuteQueryObj.queryTitle, [Validators.required]),
+      isQueryFile: new FormControl(this.ProcessDetailsObj.ExecuteQueryObj.isQueryFile),
+      queryFileToUpload: new FormControl('')
     });
     this.isQueryFile.valueChanges.subscribe((checked) => {
       if (checked) {
@@ -46,11 +51,9 @@ export class DbExtractorExecQueryComponent implements OnInit {
   }
 
   uploadQueryFile(file: FileList) {
-    console.log(1);
     this.isQueryFileExist = file != null ? true : false;
-    console.log(this.isQueryFileExist);
     this.enableNextBtn = this.isQueryFileExist == true ? false : true;
-    console.log(this.enableNextBtn);
+    this.queryFileToUpload=file;
   }
 
   setUploadQueryFile() {
@@ -58,24 +61,35 @@ export class DbExtractorExecQueryComponent implements OnInit {
     this.enableNextBtn = this.showFileUpload == true ? true : false;
   }
 
-
+  setExecuteQueryObj(){
+    this.ProcessDetailsObj.ExecuteQueryObj.queryTitle=this.executeQueryForm.get('queryTitle').value;
+    console.log(this.ProcessDetailsObj.ExecuteQueryObj.queryTitle);
+    this.ProcessDetailsObj.ExecuteQueryObj.isQueryFile=this.executeQueryForm.get('isQueryFile').value;
+    console.log(this.ProcessDetailsObj.ExecuteQueryObj.isQueryFile);
+    if(this.executeQueryForm.get('isQueryFile').value)
+    this.ProcessDetailsObj.ExecuteQueryObj.queryFileToUpload=this.queryFileToUpload;
+    else 
+    this.ProcessDetailsObj.ExecuteQueryObj.query=this.executeQueryForm.get('query').value;
+  }
 
   gotoStepTwo() {
-    console.log(123);
-    console.log(this.showFileUpload,this.executeQueryForm.valid);
-    if (this.showFileUpload == false&&this.executeQueryForm.valid==true) {  
-      console.log(11);
-        this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
-        this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
-      
+    if (this.showFileUpload == false && this.executeQueryForm.valid == true) {
+      this.setExecuteQueryObj();
+      console.log(this.ProcessDetailsObj);
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+      this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);      
     }
-    else if (this.executeQueryForm.valid &&this.isQueryFileExist==true) {
-      console.log(1234);
-        this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
-        this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
+    else if (this.executeQueryForm.valid == true && this.isQueryFileExist == true) {
+      this.setExecuteQueryObj();
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+      this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
+      console.log(this.ProcessDetailsObj);
+      
     }
 
   }
+
+  
   prevStepOne() {
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 })
     this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
