@@ -20,7 +20,7 @@ export class ProcessDetails {
 export class ProcessDetailsObj {
   process: string = null
   outputFormat: string = null
-  tableIncRule: string = null;
+  tableIncRule: string = "";
   includeTableRelationship: boolean = false
   xmlSplitFileSize: number = 100;
   maxParallelProcess: number = 3
@@ -36,5 +36,6 @@ export class ExecuteQueryObj {
 queryTitle: string = '';
 query: string = '';
 isQueryFile: boolean = false;
-queryFileToUpload:FileList=null;
+queryFileToUpload:File=null;
+queryFileName='';
 }

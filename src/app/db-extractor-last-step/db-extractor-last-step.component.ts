@@ -31,6 +31,7 @@ export class DbExtractorLastStepComponent implements OnInit {
     )
   }
 
+  
   prevStepTwo() {
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
     this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
@@ -61,9 +62,7 @@ export class DbExtractorLastStepComponent implements OnInit {
     };
 
     param = this.modifiedParamAccToProcess(param)
-    console.log(param);
-
-    this.dbExtractorService.dbExtractor(param).subscribe((result) => {
+    this.dbExtractorService.dbExtractor(param,this.processDetailsObj.ExecuteQueryObj.queryFileToUpload).subscribe((result) => {
       if (result.httpStatus == 200) {
         this.isSuccessMsg = true;
         this.successMsg = "Your Job has Started"
@@ -72,14 +71,15 @@ export class DbExtractorLastStepComponent implements OnInit {
         this.successMsg = "Unable to Process Your Job"
       }
     });
+    console.log(param);
   }
 
-  modifiedParamAccToProcess(param: any) {
+  modifiedParamAccToProcess(param: any):any {
     if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === "executequery") {
       param.executionConfig.queryMode = {
-        "queryTitle": "state;city",
-        "query": "select DX_CODE from DX_CODE;select ADDR_ID from ADDRESS",
-        "isQueryFile": "false"
+        "queryTitle": this.processDetailsObj.ExecuteQueryObj.queryTitle,
+        "query": this.processDetailsObj.ExecuteQueryObj.query,
+        "isQueryFile": this.processDetailsObj.ExecuteQueryObj.isQueryFile
       }
     }
     return param;

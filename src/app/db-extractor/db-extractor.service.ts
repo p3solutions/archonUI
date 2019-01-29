@@ -14,6 +14,11 @@ export class DbExtractorService {
   constructor(private http: HttpClient,
     private userInfoService: UserinfoService) { }
 
+  private headers = new HttpHeaders({
+    // 'Content-Type': 'multipart/form-data',
+    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+  });
+
   private processDetailsObj: ProcessDetailsObj;
 
   private apiUrl = environment.apiUrl;
@@ -23,8 +28,7 @@ export class DbExtractorService {
   private _progressBarObj: BehaviorSubject<ProgressBarObj> = new BehaviorSubject<ProgressBarObj>(
     { stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
   updatedProgressBarObj = this._progressBarObj.asObservable();
-  private postProcessDetailsUrl = 'http://106.51.22.50:8092/rdbmsExtraction/process';
-
+  private postProcessDetailsUrl = 'http://50.112.166.136:8092/rdbmsExtraction/process';
 
   setProgressBarObj(progressBar: ProgressBarObj) {
     this._progressBarObj.next(progressBar);
@@ -37,8 +41,13 @@ export class DbExtractorService {
     );
   }
 
-  dbExtractor(params: any): Observable<any> {
-    return this.http.post(this.postProcessDetailsUrl, params, { headers: this.userInfoService.getHeaders() }).pipe(
+  dbExtractor(params: any, file: File): Observable<any> {
+    const formData: FormData = new FormData();
+    if (file != null) {
+      formData.append('file', file);
+    }
+    formData.append('RdbmsDto', JSON.stringify(params));
+    return this.http.post(this.postProcessDetailsUrl, formData, { headers: this.headers }).pipe(
       map(this.extractDataForSuccess),
       catchError(this.handleError('dbExtractor', {}))
     );
@@ -71,7 +80,7 @@ export class DbExtractorService {
     const body = res;
     return body || [];
   }
-  
+
 
 
   private handleError<T>(operation = 'operation', result?: T) {
