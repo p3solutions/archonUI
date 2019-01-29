@@ -31,7 +31,8 @@ export class DbExtractorLastStepComponent implements OnInit {
     )
   }
 
-  
+
+
   prevStepTwo() {
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
     this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
@@ -62,7 +63,7 @@ export class DbExtractorLastStepComponent implements OnInit {
     };
 
     param = this.modifiedParamAccToProcess(param)
-    this.dbExtractorService.dbExtractor(param,this.processDetailsObj.ExecuteQueryObj.queryFileToUpload).subscribe((result) => {
+    this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload).subscribe((result) => {
       if (result.httpStatus == 200) {
         this.isSuccessMsg = true;
         this.successMsg = "Your Job has Started"
@@ -71,10 +72,9 @@ export class DbExtractorLastStepComponent implements OnInit {
         this.successMsg = "Unable to Process Your Job"
       }
     });
-    console.log(param);
   }
 
-  modifiedParamAccToProcess(param: any):any {
+  modifiedParamAccToProcess(param: any): any {
     if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === "executequery") {
       param.executionConfig.queryMode = {
         "queryTitle": this.processDetailsObj.ExecuteQueryObj.queryTitle,
@@ -96,13 +96,31 @@ export class DbExtractorLastStepComponent implements OnInit {
   }
 
   goToEdit(value: string) {
-    if (value == "editParameter") {
+    if (value === "editParameter") {
       this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
       this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
+    }
+    else if (value === "editQueryDetails") {
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+      this.router.navigate(['/workspace/db-extractor/db-extractor-exec-query']);
     }
     else {
       this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 })
       this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
     }
+  }
+
+  getMultiConditionResultForFile() {
+    if (this.processDetailsObj.process == 'Execute Query' && this.processDetailsObj.ExecuteQueryObj.isQueryFile==true)
+      return true;   
+    else
+      return false;  
+  }
+  
+  getMultiConditionResultForQuery() {
+    if (this.processDetailsObj.process == 'Execute Query' && this.processDetailsObj.ExecuteQueryObj.isQueryFile==false)
+      return true;
+    else
+      return false; 
   }
 }

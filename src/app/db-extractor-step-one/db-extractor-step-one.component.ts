@@ -56,7 +56,6 @@ export class DbExtractorStepOneComponent implements OnInit {
   gotoStepTwo() {
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
     this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);  
-    console.log(this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() );
     if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === "executequery") {
       this.router.navigate(['/workspace/db-extractor/db-extractor-exec-query']);
     }

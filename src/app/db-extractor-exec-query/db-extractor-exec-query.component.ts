@@ -66,7 +66,6 @@ export class DbExtractorExecQueryComponent implements OnInit {
 
     }
     this.queryFileToUpload = files.item(0);
-    console.log( this.queryFileToUpload);
     this.queryFileName = files.item(0).name;
   }
 
