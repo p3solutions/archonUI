@@ -66,6 +66,7 @@ export class TableListComponent implements OnInit {
   JobStatus: string;
   defaultModel = true;
   resultantArray: any[];
+  addDirectjoin: boolean;
 
   constructor(
     private tablelistService: TableListService,
@@ -552,5 +553,8 @@ export class TableListComponent implements OnInit {
   }
   refreshRelation($event) {
     this.loadRelationTable(this.tableCopy);
+  }
+  adddirectjoin() {
+    this.addDirectjoin = true;
   }
 }
