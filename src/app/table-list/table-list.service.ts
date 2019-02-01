@@ -16,12 +16,12 @@ export class TableListService {
   accessToken: string;
   jwtHelper: JwtHelperService = new JwtHelperService();
   private serviceActionType: string;
-  tableListUrl = environment.apiUrl + 'meta/tablesList?workspaceId=';
-  relationTableListUrl = environment.apiUrl + '/meta/tablesRelationShip?tableId=';
-  deleteRelationsUrl = environment.apiUrl + 'meta/relationship?workspaceId=';
-  columnListUrl = environment.apiUrl + '/table/columnList?tableId=';
+  tableListUrl = environment.apiUrl + 'metalyzer/tablesList?workspaceId=';
+  relationTableListUrl = environment.apiUrl + 'metalyzer/tablesRelationShip?tableId=';
+  deleteRelationsUrl = environment.apiUrl + 'metalyzer/relationship?workspaceId=';
+  columnListUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
   dataAnalysisUrl = environment.apiUrl + '/dataAnalyzer/tableToTablesDataCrawlAnalysis';
-  // columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
+  // columnUrl = environment.apiUrl + '/tables/metalyzer/info?tableName=';
   columnUrl = environment.apiUrl + '/table/columnList?tableId=';
   stateManagementUrl = environment.apiUrl + '/dataAnalyzer/stateManagement';
   getJobStatusUrl = environment.apiUrl + '/dataAnalyzer/jobStatus?jobId=';
