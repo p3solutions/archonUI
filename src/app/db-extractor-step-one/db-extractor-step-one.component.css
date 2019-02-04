@@ -63,16 +63,6 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
-.previous {
-  background-color: #f1f1f1;
-  color: black;
-}
-
-.next {
-  background-color: #269af8;
-  color: white;
-}
-
 .round {
   border-radius: 50%;
 }
@@ -87,10 +77,6 @@ body{
   font-family:  "Montserrat", sans-serif
 }
 
-#landing-card {
-  height: 420px;
-  position: relative;
-}
 
 #nextStepBtnId{
   position: absolute;
