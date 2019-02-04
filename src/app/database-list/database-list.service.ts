@@ -3,12 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-
-
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { ConfiguredDB, DatabaseObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 @Injectable()
 export class DatabaseListService {
@@ -18,6 +17,7 @@ export class DatabaseListService {
 
   configDBListUrl = environment.apiUrl + 'dbs/configured';
   constructor(private http: HttpClient,
+    private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService) {
   }
   getListOfConfigDatabases(): Observable<ConfiguredDB[]> {
@@ -27,6 +27,15 @@ export class DatabaseListService {
         catchError(this.handleError('database-getList()', []))
       );
   }
+
+  getDBInfoByID(databaseId: string): Observable<ConfiguredDB> {
+    return this.http.get<ConfiguredDB>(this.configDBListUrl + '/' + databaseId, { headers: this.userinfoService.getHeaders() })
+    .pipe(
+      map(this.extractConfigDB),
+      catchError(this.handleError('getDBInfoByID', []))
+    );
+  }
+
   private extractConfigDB(res: any) {
     const data = res.data.configuredDatabases;
     return data || [];

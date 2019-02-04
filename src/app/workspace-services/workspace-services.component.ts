@@ -111,7 +111,7 @@ export class WorkspaceServicesComponent implements OnInit {
         });
       }
     }
-    else if (service.serviceName === 'Live Archival') {
+    else if (service.serviceName === 'RDBMS Extractor') {
       this.router.navigate(['/workspace/db-extractor']);
     }
   }
@@ -125,9 +125,9 @@ export class WorkspaceServicesComponent implements OnInit {
             service.iconName = 'metalyzer.png';
             break;
           }
-          case 'SERVICE_LIVE_ARCHIVAL': {
-            service.serviceName = 'Live Archival';
-            service.iconName = 'livearchival.png';
+          case 'SERVICE_DB_EXTRACTOR': {
+            service.serviceName = 'DB Extractor';
+            service.iconName = 'rdbmsextractor.png';
             break;
           }
           case 'SERVICE_CUSTOM_SCREEN_BUILDING': {

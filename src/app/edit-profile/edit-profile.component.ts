@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserinfoService } from '../userinfo.service';
 import { ErrorObject } from '../error-object';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -16,8 +17,9 @@ export class EditProfileComponent implements OnInit {
   emailLoader: boolean;
   oldUserInfo: object;
   errorObject: ErrorObject;
+  thisComponent = this;
 
-  constructor(private userinfoService: UserinfoService) { }
+  constructor(private userinfoService: UserinfoService, private router: Router) { }
 
   ngOnInit() {
     this.nameLoader = this.emailLoader = false;
@@ -53,6 +55,7 @@ export class EditProfileComponent implements OnInit {
         this.nameLoader = this.emailLoader = false;
         (<HTMLButtonElement>document.querySelector('#editProfileModal .cancel')).click();
         this.UpdateProfile.emit(true);
+        setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 1000);
       }
     });
   }

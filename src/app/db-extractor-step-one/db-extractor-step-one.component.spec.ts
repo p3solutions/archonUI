@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 
-xdescribe('DbExtractorStepOneComponent', () => {
+describe('DbExtractorStepOneComponent', () => {
   let component: DbExtractorStepOneComponent;
   let fixture: ComponentFixture<DbExtractorStepOneComponent>;
 

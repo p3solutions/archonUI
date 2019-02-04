@@ -7,6 +7,7 @@ import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { CommonUtilityService } from '../common-utility.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 describe('DatabaseListComponent', () => {
   let component: DatabaseListComponent;
@@ -14,16 +15,18 @@ describe('DatabaseListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DatabaseListComponent ],
+      declarations: [DatabaseListComponent],
       imports: [HttpClientModule, RouterTestingModule],
-      providers: [DatabaseListService, UserinfoService, DynamicLoaderService, CommonUtilityService]
+      providers: [DatabaseListService, UserinfoService, DynamicLoaderService, CommonUtilityService, WorkspaceHeaderService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DatabaseListComponent);
     component = fixture.componentInstance;
+    const WHS = TestBed.get(WorkspaceHeaderService);
+    spyOn(WHS, 'getDatabaseID').and.returnValue(WHS.getDatabaseID);
     fixture.detectChanges();
   });
 

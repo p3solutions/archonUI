@@ -49,13 +49,13 @@ export class SigninFormComponent implements OnInit {
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
         localStorage.setItem('accessToken', data.data.accessToken);
         localStorage.setItem('refreshToken', data.data.refreshToken);
-        this.handleRedirection();
+        this.router.navigateByUrl(this.workspaceUrl);
+        // this.handleRedirection();
       },
       (err: HttpErrorResponse) => {
         this.inProgress = false;
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
-          
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,

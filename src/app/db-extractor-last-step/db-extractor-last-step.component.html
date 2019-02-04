@@ -1,78 +1,83 @@
-<div class="container"><div class="scroll-div">
-  <table class="table table-bordered table-striped">
-    <thead>
-      <th class="text-center">Parameter</th>
-      <th class="text-center">value</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="bold-parameter">Database Profile</td>
-        <td><a data-toggle="modal" href="#db-profile-model">{{configuredDB.profileName}}</a></td>
-      </tr>
-      <tr>
-        <td class="bold-parameter">Process-configuration</td>
-        <td><a (click)="goToEdit('editProcess')">Edit</a></td>
-      </tr>
-      <tr>
-        <td>Process</td>
-        <td>{{processDetailsObj?.process}}</td>
-      </tr>
-      <tr>
-        <td>Output format</td>
-        <td>{{processDetailsObj?.outputFormat}}</td>
-      </tr>
-      <tr>
-        <td>Include relationship</td>
-        <td>{{processDetailsObj?.includeTableRelationship}}</td>
-      </tr>
-      <tr>
-        <td>Table Inclusion rule</td>
-        <td>{{processDetailsObj?.tableIncRule}}</td>
-      </tr>
-      <tr>
-        <td class="bold-parameter">Job Parameters</td>
-        <td><a (click)="goToEdit('editParameter')" >Edit</a></td>
-      </tr>
-      <tr>
-        <td>Maximum Parallel Process</td>
-        <td>{{processDetailsObj?.maxParallelProcess}}</td>
-      </tr>
-      <tr>
-        <td>Xml File Split Size</td>
-        <td>{{processDetailsObj?.xmlSplitFileSize}}</td>
-      </tr>
-      <tr>
-        <td>Include Tables</td>
-        <td>{{processDetailsObj?.incTable}}</td>
-      </tr>
-      <tr>
-          <td>Include View</td>
-          <td>{{processDetailsObj?.incView}}</td>
-        </tr>
-      <!-- <tr>
-        <td>Query Details</td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td>Query Name</td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td>Query File</td>
-        <td>No</td>
-      </tr>
-      <tr>
-        <td>Query</td>
-        <td>No</td>
-      </tr> -->        
-    </tbody>
-  </table>
-</div>
-  <button class="btn btn-primary next" data-toggle="modal" href="#successModel" data-keyboard="false" data-backdrop="static" (click)="Start()" style="float: right;">Start</button>
-  <button class="btn btn-primary Previous" (click)="prevStepTwo()" style="float: right;margin-right: 5px;">&laquo;
-    Previous</button>
-  <br>
-  <br>
+<div id="extractor-landing-card">
+  <div class="container">
+    <div class="scroll-div">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <th class="text-center table-heading">Parameter</th>
+          <th class="text-center table-heading">Value</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="bold-parameter">Database Profile</td>
+            <td><a data-toggle="modal" href="#db-profile-model">{{configuredDB.profileName}}</a></td>
+          </tr>
+          <tr>
+            <td class="bold-parameter">Process-configuration</td>
+            <td><a (click)="goToEdit('editProcess')">Edit</a></td>
+          </tr>
+          <tr>
+            <td>Process</td>
+            <td>{{processDetailsObj?.process}}</td>
+          </tr>
+          <tr>
+            <td>Output format</td>
+            <td>{{processDetailsObj?.outputFormat}}</td>
+          </tr>
+          <tr>
+            <td>Include relationship</td>
+            <td>{{processDetailsObj?.includeTableRelationship}}</td>
+          </tr>
+          <tr>
+            <td>Table Inclusion rule</td>
+            <td>{{processDetailsObj?.tableIncRule}}</td>
+          </tr>
+          <tr *ngIf="processDetailsObj?.process=='Execute Query'">
+            <td class="bold-parameter">Query Details</td>
+            <td><a (click)="goToEdit('editQueryDetails')">Edit</a></td>
+          </tr>
+          <tr *ngIf="processDetailsObj?.process=='Execute Query'">
+            <td>Query Name</td>
+            <td>{{processDetailsObj?.ExecuteQueryObj.queryTitle}}</td>
+          </tr>
+          <tr *ngIf="getMultiConditionResultForFile()">
+            <td>Query File</td>
+            <td>{{processDetailsObj?.ExecuteQueryObj.queryFileName}}</td>
+          </tr>
+          <tr *ngIf="getMultiConditionResultForQuery()">
+            <td>Query</td>
+            <td><textarea style="width:100%">{{processDetailsObj?.ExecuteQueryObj.query}}</textarea></td>
+          </tr>
+          <tr>
+            <td class="bold-parameter">Job Parameters</td>
+            <td><a (click)="goToEdit('editParameter')">Edit</a></td>
+          </tr>
+          <tr>
+            <td>Maximum Parallel Process</td>
+            <td>{{processDetailsObj?.maxParallelProcess}}</td>
+          </tr>
+          <tr>
+            <td>Xml File Split Size</td>
+            <td>{{processDetailsObj?.xmlSplitFileSize}}</td>
+          </tr>
+          <tr>
+            <td>Include Tables</td>
+            <td>{{processDetailsObj?.incTable}}</td>
+          </tr>
+          <tr>
+            <td>Include View</td>
+            <td>{{processDetailsObj?.incView}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <button class="btn btn-primary next" data-toggle="modal" href="#successModel" data-keyboard="false" data-backdrop="static"
+      (click)="Start()" style="float: right;">Start</button>
+    <button class="btn btn-primary Previous" (click)="prevStepTwo()" style="float: right;margin-right: 5px;">&laquo;
+      Previous</button>
+    <br>
+    <br>
+  </div>
 </div>
 <div id="db-profile-model" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -118,7 +123,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary btn-popup cancel" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -134,7 +139,7 @@
         <p *ngIf="isSuccessMsg">check on Job Status page</p>
       </div>
       <div class="modal-footer">
-        <button type="button"   class="btn btn-default" data-dismiss="modal" (click)="close()">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="close()">Close</button>
       </div>
     </div>
 

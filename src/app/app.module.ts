@@ -99,6 +99,7 @@ import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { DbExtractorService } from './db-extractor/db-extractor.service';
 import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
+import { AuthenticationGuard } from './authentication/authentication.guard';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -192,6 +193,7 @@ export function tokenGetter() {
                 SignupFormService,
                 ForgotpasswordFormService,
                 AuthenticationService,
+                AuthenticationGuard,
                 UserWorkspaceService,
                 ManageMembersService,
                 MemberRequestService,

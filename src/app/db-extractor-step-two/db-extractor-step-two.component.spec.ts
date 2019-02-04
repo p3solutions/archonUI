@@ -10,7 +10,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessDetailsObj } from '../db-extractor';
 import { DbExtractorService } from '../db-extractor/db-extractor.service';
 
-xdescribe('DbExtractorStepTwoComponent', () => {
+describe('DbExtractorStepTwoComponent', () => {
   let component: DbExtractorStepTwoComponent;
   let fixture: ComponentFixture<DbExtractorStepTwoComponent>;
 

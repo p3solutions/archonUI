@@ -3,16 +3,17 @@ import { DbExtractorExecQueryComponent } from './db-extractor-exec-query.compone
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
-xdescribe('DbExtractorExecQueryComponent', () => {
+describe('DbExtractorExecQueryComponent', () => {
   let component: DbExtractorExecQueryComponent;
   let fixture: ComponentFixture<DbExtractorExecQueryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorExecQueryComponent],
-      imports: [RouterTestingModule, HttpClientModule],
+      imports: [RouterTestingModule, HttpClientModule,FormsModule,ReactiveFormsModule],
       providers: [UserinfoService]
     })
       .compileComponents();

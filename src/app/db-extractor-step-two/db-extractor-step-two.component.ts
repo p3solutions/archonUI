@@ -14,18 +14,26 @@ export class DbExtractorStepTwoComponent implements OnInit {
   }
 
   processDetailsObj = new ProcessDetailsObj();
+
   ngOnInit() {
     this.processDetailsObj = this.dbExtractorService.getProcessDetailsObj();
   }
+
   gotoLastStep() {
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 33.33 })
     this.router.navigate(['/workspace/db-extractor/db-extractor-summary']);
     this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);
-    console.log(this.processDetailsObj);
   }
+
   prevStepOne() {
-    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 })
-    this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
+    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === "executequery") {
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+      this.router.navigate(['/workspace/db-extractor/db-extractor-exec-query']);
+    }
+    else{
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 })
+      this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
+    } 
   }
 
   setXMLFileSplitSize(xmlSliderObj: any) {
@@ -35,6 +43,5 @@ export class DbExtractorStepTwoComponent implements OnInit {
   setMaxParallelProcess(maxParallelSliderObj: any) {
     this.processDetailsObj.maxParallelProcess = maxParallelSliderObj.newValue;
   }
-
 
 }

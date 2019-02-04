@@ -1038,3 +1038,36 @@ ol.multi-step-indicators li.active {
 .carousel-indicators {
   display: none !important;
 }
+
+label{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}
+
+.previous {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+.next {
+  background-color: #269af8;
+  color: white;
+}
+
+#extractor-landing-card  {
+  height: 420px;
+  position: relative;
+}
+
+.label-style {
+  font-size: 13px;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.label-style.required .control-label:after {
+  content:"*";
+  color:red;
+}

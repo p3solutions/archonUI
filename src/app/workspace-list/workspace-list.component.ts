@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { CommonUtilityService } from '../common-utility.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { CommonUtilityService } from '../common-utility.service';
 })
 export class WorkspaceListComponent implements OnInit, OnDestroy {
     accessToken: string;
+    workspaceID: any;
     jwtHelper: JwtHelperService = new JwtHelperService();
     token_data: any;
     workspaceListInfo: WorkspaceObject[];
@@ -22,11 +24,13 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     dynamicLoaderService: DynamicLoaderService;
     workspaceActions: any;
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    WSListInfo: WorkspaceObject;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
         @Inject(ViewContainerRef) viewContainerRef,
         private workspaceListService: WorkspaceListService,
+        private workspaceHeaderService: WorkspaceHeaderService,
         private router: Router,
         private commonUtilityService: CommonUtilityService
 
@@ -44,6 +48,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.token_data = this.jwtHelper.decodeToken(this.accessToken);
         this.getWorkspaceListInfo(this.token_data.user.id);
         this.isProgress = true;
+        this.getWSInfoID();
     }
 
     getWorkspaceListInfo(id: string) {
@@ -55,9 +60,20 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         });
     }
 
+    getWSInfoID() {
+        this.workspaceListService.getWSInfoID(this.workspaceHeaderService.getSelectedWorkspaceId()).subscribe(
+          (result) => {
+            this.WSListInfo = result;
+          }
+        );
+      }
     reloadWSlist() {
         this.getWorkspaceListInfo(this.token_data.user.id);
     }
+
+    viewWSmodal(workspace) {
+        this.WSListInfo = workspace;
+      }
 
     gotoManagementPanel() {
         this.router.navigate(['management-landing-page/management-panel']);

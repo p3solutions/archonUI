@@ -67,8 +67,13 @@ export class TableListComponent implements OnInit {
   JobStatus: string;
   defaultModel = true;
   resultantArray: any[];
+
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('storedprocView', { read: ViewContainerRef })storedprocViewRef : ViewContainerRef;
+
+  addDirectjoin: boolean;
+  isTablelistAvailable: boolean;
+
 
   constructor(
     private tablelistService: TableListService,
@@ -99,6 +104,9 @@ export class TableListComponent implements OnInit {
     this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
+      if (this.tableList.length === 0) {
+        this.isTablelistAvailable = true;
+      }
       this.isAvailable = true;
     });
   }
@@ -114,6 +122,9 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.isRelationShipAvailable = true;
+      if (this.relationshipInfo.length === 0) {
+        this.isRelationShipAvailable = false;
+      }
     });
     this.serviceActionType = this.tablelistService.getServiceActionType();
   }
@@ -562,6 +573,7 @@ export class TableListComponent implements OnInit {
     this.loadRelationTable(this.tableCopy);
   }
 
+
   openStoredProcView(event) {
     if (this.storedprocViewRef.get(0)) {
       this.storedprocViewRef.remove(0);
@@ -579,5 +591,9 @@ export class TableListComponent implements OnInit {
     if (this.storedprocViewRef) {
       this.storedprocViewRef.remove(0);
     }
+
+  adddirectjoin() {
+    this.addDirectjoin = true;
+
   }
 }

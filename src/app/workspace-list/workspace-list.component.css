@@ -236,4 +236,22 @@ h2 {
   cursor: pointer;
   padding: 0px 10px 0 0;
 }
-
+table.table td { 
+  text-align: left;
+  width: 30%;
+  }
+  #table-modal td, #table-modal th {
+    border: 1px solid #ddd;
+  }
+  #table-modal tr:hover {background-color: #F5F5F5;}
+  
+  .modal-header .close {
+    margin-right: 0px !important;
+}
+.modal-footer .cancel {
+  border-radius: 2px !important; 
+  margin-right: 0px !important;
+  margin-bottom: 0px !important;
+  margin-top: 0px !important;
+  text-transform: uppercase;
+}
