@@ -66,6 +66,7 @@ export class TableListComponent implements OnInit {
   JobStatus: string;
   defaultModel = true;
   resultantArray: any[];
+  isTablelistAvailable: boolean;
 
   constructor(
     private tablelistService: TableListService,
@@ -91,6 +92,9 @@ export class TableListComponent implements OnInit {
     this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
+      if (this.tableList.length === 0) {
+        this.isTablelistAvailable = true;
+      }
       this.isAvailable = true;
     });
   }
