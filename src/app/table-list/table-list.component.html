@@ -13,8 +13,11 @@
           <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
             <button type="button" class="btn btn-default list-group-item da-table" (click)="highlightTable($event, true, table); joinTable(table);">{{table.tableName}}
               <i class="fa fa-angle-right unselected"></i>
-            </button>
+            </button>            
           </div>
+          <h5 *ngIf="isTablelistAvailable">
+            Tables Are Not Available
+          </h5>
         </div>
       </div>
     </div>
@@ -41,7 +44,7 @@
             </button>
             <ul class="dropdown-menu" id="dropdown">
               <li>
-                <a href="#" data-toggle="modal" data-target="#openAddDirectJoinModal">Direct Join</a>
+                <a href="#" data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct Join</a>
               </li>
               <li>
                 <a href="#">Column-Match Join</a>
@@ -394,5 +397,7 @@
       </div>
     </div>
   </div>
-  <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
+  <div *ngIf="addDirectjoin">
+    <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
+  </div>
   

@@ -6,7 +6,7 @@ import { UserinfoService } from '../userinfo.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
-describe('DbExtractorExecQueryComponent', () => {
+xdescribe('DbExtractorExecQueryComponent', () => {
   let component: DbExtractorExecQueryComponent;
   let fixture: ComponentFixture<DbExtractorExecQueryComponent>;
 

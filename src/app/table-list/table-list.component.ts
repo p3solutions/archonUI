@@ -66,6 +66,8 @@ export class TableListComponent implements OnInit {
   JobStatus: string;
   defaultModel = true;
   resultantArray: any[];
+  addDirectjoin: boolean;
+  isTablelistAvailable: boolean;
 
   constructor(
     private tablelistService: TableListService,
@@ -91,6 +93,9 @@ export class TableListComponent implements OnInit {
     this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
+      if (this.tableList.length === 0) {
+        this.isTablelistAvailable = true;
+      }
       this.isAvailable = true;
     });
   }
@@ -106,34 +111,28 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.isRelationShipAvailable = true;
+      if (this.relationshipInfo.length === 0) {
+        this.isRelationShipAvailable = false;
+      }
     });
     this.serviceActionType = this.tablelistService.getServiceActionType();
   }
 
   openDataAModal() {
-    // to work on resultant screen
-    // this.homeStage = false;
-    // this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
-    //
     this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId ).subscribe(res => {
     console.log(res);
-    // if (res.data.jobIds.length > 0 ) {
-    //   this.homeStage = false;
-    //   this.dataAModal = true;
-    //   this.dataAnalysisjobID = res.data.jobIds[0];
-    //   this.getJobStatus();
-    //   console.log(this.dataAnalysisjobID);
-    //    setTimeout(() => {
-      //   (<any>$('#dataAModal-carousel')).carousel(3);
-      // }, 1000);
-      // const progressSelector = 'progress-bar';
-    // this.addClass(progressSelector, 'width-100-pc');
-    // } else {
+    if (res.data.jobIds.length > 0 ) {
+      this.homeStage = false;
+      this.dataAModal = true;
+      this.dataAnalysisjobID = res.data.jobIds[0];
+      this.getJobStatus();
+      console.log(this.dataAnalysisjobID, 'job ID');
+    } else {
       this.homeStage = false;
       this.dataAModal = true;
       this.getColumnsByTableName(this.selectedPrimTblID, true);
       this.resetDataAModal();
-    // }
+     }
     });
   }
   openEditRelationship(relation) {
@@ -507,10 +506,17 @@ export class TableListComponent implements OnInit {
       'workspaceId': this.workspaceID,
       'primaryTableId': res.data.tableId,
       'primaryTableName': res.data.tableName,
-      'relationDetails': res.data.relationDetails
+      'relationDetails': res.data.relationDetails,
+      'jobId': this.dataAnalysisjobID
     }];
     this.tablelistService.changeArray(this.resultantArray);
     this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+    } else {
+      setTimeout(() => {
+        (<any>$('#dataAModal-carousel')).carousel(3);
+      }, 1000);
+    const progressSelector = 'progress-bar';
+    this.addClass(progressSelector, 'width-100-pc');
     }
     });
   }
@@ -554,5 +560,8 @@ export class TableListComponent implements OnInit {
   }
   refreshRelation($event) {
     this.loadRelationTable(this.tableCopy);
+  }
+  adddirectjoin() {
+    this.addDirectjoin = true;
   }
 }

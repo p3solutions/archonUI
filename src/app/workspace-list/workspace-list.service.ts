@@ -3,9 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-
-
-
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceInfo } from '../workspace-info/workspace-info';
@@ -16,6 +13,7 @@ import { environment } from '../../environments/environment';
 export class WorkspaceListService {
 
   wSListByUidUrl = environment.apiUrl + 'workspaces?userId=';
+  private getWSInfoUrl = environment.apiUrl + 'workspaces/';
   // private headers;
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
@@ -38,6 +36,14 @@ export class WorkspaceListService {
     return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractWorkspaces),
       catchError(this.handleError('workspace-getList()', []))
+    );
+  }
+
+  getWSInfoID(workspaceId: string): Observable<WorkspaceObject> {
+    return this.http.get<WorkspaceObject>(this.getWSInfoUrl + workspaceId, { headers: this.userinfoService.getHeaders() })
+    .pipe(
+      map(this.extractWorkspaces),
+      catchError(this.handleError('getDBInfoByID', []))
     );
   }
 
