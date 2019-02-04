@@ -2,6 +2,12 @@
 .slider-bottom-margin{
   margin-bottom: 42px;
 }
+.slider-tick-label{
+  width: 24px;
+}
+mv-slider::ng-deep .slider-horizontal {
+  width: 90%;
+}
 
 .switch {
   position: relative;

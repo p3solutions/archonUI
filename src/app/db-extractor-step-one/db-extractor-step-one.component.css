@@ -73,8 +73,9 @@ input:checked+.slider:before {
   margin-top: 10px;
 }
 
-body{
-  font-family:  "Montserrat", sans-serif
+
+#landing-card {
+  position: relative;
 }
 
 

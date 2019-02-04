@@ -4,7 +4,7 @@
         <div class="col-md-3 col-lg-3 font-left">
             <label>XML File Split Size(MB)</label>
         </div>
-        <div class="col-md-9 col-lg-9" style="height: 60px">
+        <div class="col-md-9 col-lg-9" style="height: 60px" id="xmlSplitId">
             <mv-slider [value]="processDetailsObj?.xmlSplitFileSize" [step]="100" [ticksLabels]="[100,200,300,400,500,600,700,800,900,1000]"
                 [ticks]="[100,200,300,400,500,600,700,800,900,1000]" (change)="setXMLFileSplitSize($event)"></mv-slider>
         </div>

@@ -21,10 +21,10 @@ export class TableListService {
   deleteRelationsUrl = environment.apiUrl + 'metalyzer/relationship?workspaceId=';
   columnListUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
   dataAnalysisUrl = environment.apiUrl + '/dataAnalyzer/tableToTablesDataCrawlAnalysis';
-  // columnUrl = environment.apiUrl + '/tables/metalyzer/info?tableName=';
-  columnUrl = environment.apiUrl + '/table/columnList?tableId=';
-  stateManagementUrl = environment.apiUrl + '/dataAnalyzer/stateManagement';
-  getJobStatusUrl = environment.apiUrl + '/dataAnalyzer/jobStatus?jobId=';
+  // columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
+  columnUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
+  stateManagementUrl = environment.apiUrl + 'dataAnalyzer/stateManagement';
+  getJobStatusUrl = environment.apiUrl + 'dataAnalyzer/jobStatus?jobId=';
   private resultantArray = new BehaviorSubject([]);
   currentResultArray = this.resultantArray.asObservable();
   private changeValue = new BehaviorSubject(false);

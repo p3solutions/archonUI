@@ -98,6 +98,7 @@ import { DbExtractorLastStepComponent } from './db-extractor-last-step/db-extrac
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
 import { DbExtractorService } from './db-extractor/db-extractor.service';
 import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
+import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
@@ -161,7 +162,8 @@ export function tokenGetter() {
                 DbExtractorStepOneComponent,
                 DbExtractorStepTwoComponent,
                 DbExtractorLastStepComponent,
-                DbExtractorExecQueryComponent
+                DbExtractorExecQueryComponent,
+                StoredProcViewComponent
         ],
         imports: [
                 JwtModule.forRoot({
@@ -226,6 +228,6 @@ export function tokenGetter() {
                 DbExtractorService
         ],
         bootstrap: [AppComponent],
-        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
+        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent,StoredProcViewComponent]
 })
 export class AppModule { }
