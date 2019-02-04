@@ -22,13 +22,13 @@ export class DbExtractorService {
   private processDetailsObj: ProcessDetailsObj;
 
   private apiUrl = environment.apiUrl;
-  private getDBInfoUrl = this.apiUrl + '/dbs/configured/';
+  private getDBInfoUrl = this.apiUrl + 'dbs/configured/';
 
-  private getProcessDetailsUrl = 'http://50.112.166.136:8092/rdbmsExtraction/processDetail';
+  private getProcessDetailsUrl = this.apiUrl+'rdbmsExtraction/processDetail';
   private _progressBarObj: BehaviorSubject<ProgressBarObj> = new BehaviorSubject<ProgressBarObj>(
     { stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
   updatedProgressBarObj = this._progressBarObj.asObservable();
-  private postProcessDetailsUrl = 'http://50.112.166.136:8092/rdbmsExtraction/process';
+  private postProcessDetailsUrl = this.apiUrl+'rdbmsExtraction/process';
 
   setProgressBarObj(progressBar: ProgressBarObj) {
     this._progressBarObj.next(progressBar);

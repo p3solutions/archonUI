@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ProcessDetailsObj } from '../db-extractor';
+import { DbExtractorService } from '../db-extractor/db-extractor.service';
 
 describe('DbExtractorLastStepComponent', () => {
   let component: DbExtractorLastStepComponent;
@@ -37,10 +38,11 @@ describe('DbExtractorLastStepComponent', () => {
     fixture = TestBed.createComponent(DbExtractorLastStepComponent);
     component = fixture.componentInstance;
     const WHS = TestBed.get(WorkspaceHeaderService);
-    spyOn(WHS, 'getDatabaseID').and.returnValue(WHS.getDatabaseID);
+    spyOn(WHS, 'getDatabaseID').and.returnValue('');
+    const dbs = TestBed.get(DbExtractorService);
+    spyOn(dbs, 'getProcessDetailsObj').and.returnValue('');
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
