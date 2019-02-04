@@ -44,7 +44,7 @@
             </button>
             <ul class="dropdown-menu" id="dropdown">
               <li>
-                <a href="#" data-toggle="modal" data-target="#openAddDirectJoinModal">Direct Join</a>
+                <a href="#" data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct Join</a>
               </li>
               <li>
                 <a href="#">Column-Match Join</a>
@@ -397,5 +397,7 @@
       </div>
     </div>
   </div>
-  <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
+  <div *ngIf="addDirectjoin">
+    <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
+  </div>
   
