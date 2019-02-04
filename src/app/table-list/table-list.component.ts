@@ -106,6 +106,9 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.isRelationShipAvailable = true;
+      if (this.relationshipInfo.length === 0) {
+        this.isRelationShipAvailable = false;
+      }
     });
     this.serviceActionType = this.tablelistService.getServiceActionType();
   }
