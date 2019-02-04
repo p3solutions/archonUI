@@ -67,6 +67,7 @@ export class TableListComponent implements OnInit {
   defaultModel = true;
   resultantArray: any[];
   addDirectjoin: boolean;
+  isTablelistAvailable: boolean;
 
   constructor(
     private tablelistService: TableListService,
@@ -92,6 +93,9 @@ export class TableListComponent implements OnInit {
     this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
+      if (this.tableList.length === 0) {
+        this.isTablelistAvailable = true;
+      }
       this.isAvailable = true;
     });
   }
@@ -107,6 +111,9 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.isRelationShipAvailable = true;
+      if (this.relationshipInfo.length === 0) {
+        this.isRelationShipAvailable = false;
+      }
     });
     this.serviceActionType = this.tablelistService.getServiceActionType();
   }

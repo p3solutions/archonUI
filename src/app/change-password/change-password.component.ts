@@ -22,6 +22,9 @@ export class ChangePasswordComponent implements OnInit {
   enableChangePassBtn = false;
   inProgress = false;
   @Input() userId: string;
+  responseData: any;
+  successMessage = false;
+  thisComponent = this;
   constructor(private changePasswordService: ChangePasswordService, private router: Router) { }
 
   ngOnInit() {
@@ -66,7 +69,12 @@ export class ChangePasswordComponent implements OnInit {
       oldPassword: this.changePasswordForm.value.oldPassword
     };
     this.changePasswordService.changePassword(param).subscribe((res) => {
-      (<HTMLButtonElement>document.querySelector('#changePasswordModal .cancel')).click();
+      this.responseData = res;
+        if (this.responseData.httpStatus === 200) {
+          this.successMessage = true;
+         setTimeout(() => (<HTMLButtonElement>document.querySelector('#changePasswordModal .cancel')).click(), 1500);
+         setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 1520);
+          }
     },
       (err: HttpErrorResponse) => {
         this.inProgress = false;

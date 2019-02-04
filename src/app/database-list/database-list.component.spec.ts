@@ -25,10 +25,12 @@ describe('DatabaseListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DatabaseListComponent);
     component = fixture.componentInstance;
+    const WHS = TestBed.get(WorkspaceHeaderService);
+    spyOn(WHS, 'getDatabaseID').and.returnValue(WHS.getDatabaseID);
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

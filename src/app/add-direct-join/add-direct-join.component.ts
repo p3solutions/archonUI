@@ -114,6 +114,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   addJoins() {
+    this.updateNotif = false;
+    this.updateSuccess = false;
     this.resultArray = JSON.parse(JSON.stringify(this.joinListTemp));
     for (const i of this.resultArray) {
       delete i.indexData;

@@ -7,7 +7,7 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ProcessDetailsObj } from '../db-extractor';
 
-xdescribe('DbExtractorLastStepComponent', () => {
+describe('DbExtractorLastStepComponent', () => {
   let component: DbExtractorLastStepComponent;
   let fixture: ComponentFixture<DbExtractorLastStepComponent>;
   const data = '';

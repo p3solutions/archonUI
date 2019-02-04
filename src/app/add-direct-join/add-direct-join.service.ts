@@ -9,8 +9,8 @@ import { of } from 'rxjs';
 @Injectable()
 export class AddDirectJoinService {
 
-  columnListUrl = environment.apiUrl + '/table/columnList?tableId=';
-  addNewJoinUrl = environment.apiUrl + '/meta/relationship';
+  columnListUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
+  addNewJoinUrl = environment.apiUrl + 'metalyzer/relationship';
   clearSessionUrl = environment.apiUrl + '/dataAnalyzer/stateManagement/closeSession?jobId=';
 
   constructor(private http: HttpClient,
