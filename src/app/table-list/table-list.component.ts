@@ -598,4 +598,3 @@ export class TableListComponent implements OnInit {
 
   }
 }
-/*Checking Jenkins*/
