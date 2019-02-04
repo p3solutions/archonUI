@@ -10,6 +10,12 @@ export class AuthenticationGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return true;
+    let accessToken: string;
+    accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      this.router.navigate(['sign-in']);
+    }
+   return true;
+
   }
 }

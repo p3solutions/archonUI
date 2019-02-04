@@ -37,9 +37,10 @@ import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extracto
 import { DbExtractorStepTwoComponent } from './db-extractor-step-two/db-extractor-step-two.component';
 import { DbExtractorLastStepComponent } from './db-extractor-last-step/db-extractor-last-step.component';
 import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
+import { AuthenticationGuard } from './authentication/authentication.guard';
 const routes: Routes = [
   {
-    path: 'workspace', component: WorkspaceLandingPageComponent, children: [
+    path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
       {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
@@ -57,7 +58,7 @@ const routes: Routes = [
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
           }]
       }, {
-        path: 'metalyzer/:wsId_Mode', component: MetalyzerComponent, children: [
+        path: 'metalyzer/:wsId_Mode', component: MetalyzerComponent, canActivate: [AuthenticationGuard], children: [
           {
             path: 'configuration', component: MetalyzerConfigurationComponent
           }, {
@@ -68,7 +69,7 @@ const routes: Routes = [
           }
         ]
       }, {
-        path: 'db-extractor', component: DbExtractorComponent, children: [
+        path: 'db-extractor', component: DbExtractorComponent, canActivate: [AuthenticationGuard], children: [
           {
             path: 'db-extractor-process', component: DbExtractorStepOneComponent
           }, {
@@ -97,12 +98,12 @@ const routes: Routes = [
         path: 'sign-up', component: SignupFormComponent
       }]
   }, {
-    path: 'user-profile', component: UserProfileComponent, children: [
+    path: 'user-profile', component: UserProfileComponent, canActivate: [AuthenticationGuard], children: [
       {
         path: 'edit-profile', component: EditProfileComponent
       }]
   }, {
-    path: 'management-landing-page', component: ManagementLandingPageComponent,
+    path: 'management-landing-page', component: ManagementLandingPageComponent, canActivate: [AuthenticationGuard],
     children: [
       { path: 'management-panel', component: ManagementPanelComponent, pathMatch: 'full' }
       ,
@@ -115,7 +116,7 @@ const routes: Routes = [
       }
     ]
   }, {
-    path: 'status', component: StatusScreenComponent
+    path: 'status', canActivate: [AuthenticationGuard], component: StatusScreenComponent
   },
 ];
 
