@@ -1,21 +1,69 @@
-
-  <div class="modal-dialog">
+<div hidden id="openCreateStoredViewmodal" data-toggle="modal" data-target="#modelStoredProcView"></div>
+<div class="modal fade " id="modelStoredProcView" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" style="width:1010px">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <div>
           <h4 class="modal-title">Add Stored Procedures and views</h4>
-        </div>        
+        </div>
         <div>
-          <div id="primary-tbl-heading">Primary table:</div>        
-          <div id="primary-table-value">Table1</div>
+          <div id="primary-tbl-heading">Primary table:</div>
+          <div id="primary-table-value">{{tableName}}</div>
         </div>
       </div>
       <div class="modal-body">
-           <p>text</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div class="row" style="display: -webkit-box;">
+          <div style="text-transform: uppercase;width:27%"><strong>Stored Procedure(SP)/Views</strong></div>
+          <div style="text-transform: uppercase;width:28%"><strong>Relating Tables from SP/View</strong></div>
+          <div style="text-transform: uppercase;width: 45%"><strong>Relation between primary and secondary Table</strong></div>
+        </div>
+        <div class="row">
+          <div class="column-one scroll-div border" style="background-color:#fff;">
+            <div class="sticky">
+              <div><input style="float:left" type="checkbox"></div>
+              <div class="first-div">SP/View Name</div>
+              <div class="second-div">Type</div>
+              <div></div>
+            </div>
+            <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvInfoListTwo"
+              (click)="getTableNameList(item.name)">
+              <div><input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox"></div>
+              <div class="first-div">{{item.name}}</div>
+              <div class="second-div">{{item.type}}</div>
+              <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div "></i></div>
+            </div>
+          </div>
+          <div class="column-two scroll-div" style="background-color:#fff;">
+            <div class="sticky">
+              <div><input style="float:left" type="checkbox"></div>
+              <div class="first-div">Table Name</div>
+              <div></div>
+            </div>
+            <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvTableNameList"
+              (click)="showSPVRelatedTableName(item)">
+              <div><input style="float:left" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)" type="checkbox"></div>
+              <div class="first-div-sec-col">{{item.tableName}}</div>
+              <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div"></i></div>
+            </div>
+          </div>
+          <div class="column-three scroll-div" style="background-color:#fff;">
+            <div class="sticky">
+              <div class="div-third-col">Primary column</div>
+              <div class="first-div-third-col">Secondary column</div>
+              <div class="sec-div-third-col">Data Type</div>
+            </div>
+            <div class="well well-sm" *ngFor="let item of getRelatingTableList()">
+              <div class="div-third-col">{{item.pColumn}}</div>
+              <div class="first-div-third-col">{{item.sColumn}}</div>
+              <div class="sec-div-third-col">{{item.dataType}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" [disabled]="disableSubmitBtn" (click)="addSPVJoin()" class="btn btn-primary" data-dismiss="modal">Add Join</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>

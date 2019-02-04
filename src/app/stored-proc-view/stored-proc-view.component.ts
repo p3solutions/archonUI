@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { StoredProcView, SelectedTableNameListObj, TableNameAndRelatingTable, SpvInfo, spvNameList } from './stored-proc-view';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { stringify } from '@angular/compiler/src/util';
+import { StoredProcViewService } from './stored-proc-view.service';
+import { ConstantPool, isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-stored-proc-view',
@@ -6,10 +11,163 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./stored-proc-view.component.css']
 })
 export class StoredProcViewComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  @Input() tableName: string;
+  spvRelatedTableList: { tableId: string, tableName: string, pColumn: string, sColumn: string, dataType: string }[] = [];
+  spvTableNameList: { isTableChecked: boolean, tableName: string, isBorderSet: boolean, tableId: string }[] = [];
+  spvInfoListTwo: { isSPVChecked: boolean, type: string, name: string, isBorderSet: boolean }[] = [];
+  spvInfoList: spvNameList = new spvNameList();
+  tableNameAndRelatingTableObj: TableNameAndRelatingTable = new TableNameAndRelatingTable();
+  spvTableId: string = '';
+  spvName: string = '';
+  spvType: string = '';
+  disableSubmitBtn: boolean = true;
+  primaryTableId: string = '';
+  selectedSPVJoinList: { type: string, name: string, relatingTableList: SelectedTableNameListObj[] }[] = [];
+  selectedRelatingTableNameList: { tableId: string, tableName: string, }[] = [];
+  selectedSPVName: { type: string, name: string };
+  tempSPVObj: { isSPVChecked: boolean, type: string, name: string, isBorderSet: boolean } = { isSPVChecked: false, type: '', name: '', isBorderSet: false }
+  workspaceid: string = '';
+  constructor(private workspaceHeaderService: WorkspaceHeaderService,
+    private storedProcViewService: StoredProcViewService) {
   }
 
+  ngOnInit() {
+    this.workspaceid = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.storedProcViewService.getSPVNameList(this.workspaceid, this.tableName).subscribe((result) => {
+      if (result.tableId !== null || result.spvInfoList !== null) {
+        this.primaryTableId = result.tableId;
+        this.spvInfoListTwo = result.spvInfoList.map(obj => ({ isSPVChecked: false, type: obj.type, name: obj.name, isBorderSet: false }));
+      }
+    });
+  }
+
+
+  getTableNameList(name: string) {
+    this.spvInfoListTwo.forEach(a => a.isBorderSet = false);
+    this.tempSPVObj = this.spvInfoListTwo.filter(a => a.name == name)[0];
+    this.tempSPVObj.isBorderSet = true
+    this.spvName = this.tempSPVObj.name;
+    this.spvType = this.tempSPVObj.type;
+    //Request for relatingTable
+    this.storedProcViewService.getRelatingTableNameList(this.workspaceid, this.tableName, name).subscribe((result) => {
+      this.tableNameAndRelatingTableObj = result;
+      let tableName: string;
+      this.spvTableNameList = [];
+      this.spvRelatedTableList = [];
+      this.spvTableId = '';
+      for (let item of this.tableNameAndRelatingTableObj.spvInfo.relatingTableList) {
+        tableName = item.tableName;
+        this.spvTableNameList.push({ isTableChecked: false, tableName: tableName, isBorderSet: false, tableId: item.tableId })
+        for (let joinItem of item.joinInfoList) {
+          this.spvRelatedTableList.push({
+            tableId: item.tableId,
+            tableName: tableName, pColumn: joinItem.primaryColumn.columnName,
+            sColumn: joinItem.secondaryColumn.columnName, dataType: joinItem.primaryColumn.dataType
+          })
+        }
+      }
+      this.checkSelectedTables(name);//make checkboxes true if they are already selected for add join
+      console.log(this.selectedSPVJoinList);
+    });
+  }
+
+  checkSelectedTables(name) {
+    let selectedTable: { tableId: string, tableName: string }[] = [];
+    if (this.selectedSPVJoinList.length > 0) {
+      let filterTemp = this.selectedSPVJoinList.filter(a => a.name == name)[0];
+      if (filterTemp !== undefined) {
+        let relatedTemp = filterTemp.relatingTableList
+        for (let item = 0; item < relatedTemp.length; item++) {
+          this.spvTableNameList.filter(i => i.tableId == relatedTemp[item].tableId)[0].isTableChecked = true;
+          selectedTable.push({ tableId: relatedTemp[item].tableId, tableName: relatedTemp[item].tableName })
+        }
+      }
+    }
+    this.selectedRelatingTableNameList = selectedTable;
+  }
+
+  selectSPVName(spvName: string, evt: MouseEvent) {
+    this.spvName = spvName;
+    this.spvType = this.spvInfoListTwo.filter(a => a.name == spvName)[0].type;
+    this.selectedRelatingTableNameList = [];
+    if (this.spvInfoListTwo.filter(a => a.name == spvName)[0].isSPVChecked) {
+      let index = this.selectedSPVJoinList.findIndex(a => a.name == this.spvName)
+      this.spvName = '';
+      this.spvType = '';
+      if (index != -1) {
+        this.selectedSPVJoinList.splice(index, 1);
+      }
+    }
+    this.enableSubmitBtn();
+   // evt.stopPropagation();
+  }
+
+  showSPVRelatedTableName(param) {
+    this.spvTableId = param.tableId;
+    this.spvTableNameList.forEach(a => a.isBorderSet = false);
+    this.spvTableNameList.filter(a => a.tableId == this.spvTableId)[0].isBorderSet = true;
+  }
+
+  selectTableNames(tableId) {
+    let tempSPVTableNameObj: { isTableChecked: boolean, tableName: string, isBorderSet: boolean, tableId: string };
+    tempSPVTableNameObj = this.spvTableNameList.filter(a => a.tableId == tableId)[0];
+    if (tempSPVTableNameObj.isTableChecked)
+      this.selectedRelatingTableNameList.push({ tableId: tempSPVTableNameObj.tableId, tableName: tempSPVTableNameObj.tableName });
+    else {
+      this.selectedRelatingTableNameList.splice(this.selectedRelatingTableNameList.findIndex(a => a.tableId === tableId), 1)
+    }
+    let index = this.selectedSPVJoinList.findIndex(a => a.name == this.spvName);
+    if (index != -1) {
+      this.selectedSPVJoinList.splice(this.selectedSPVJoinList.findIndex(a => a.name == this.spvName), 1);
+    }
+    if (this.spvName != "" && this.spvType != "" && this.spvInfoListTwo.filter(a => a.name == this.spvName)[0].isSPVChecked) {
+      this.selectedSPVJoinList.push({ type: this.spvType, name: this.spvName, relatingTableList: this.selectedRelatingTableNameList })
+    }
+    else {
+      this.spvTableNameList.forEach(a => a.isTableChecked = false);
+    }
+    this.enableSubmitBtn();
+  }
+
+  enableSubmitBtn() {
+    if (this.selectedSPVJoinList.length > 0) {
+      for(let item of this.selectedSPVJoinList){
+        if(item.relatingTableList.length==0){
+          let index=this.selectedSPVJoinList.findIndex(a=>a.name==item.name)
+          if(index!=-1){
+            this.selectedSPVJoinList.splice(index,1);
+          }       
+        }
+      }
+    if(this.selectedSPVJoinList.length>0)
+      this.disableSubmitBtn = false;   
+    else
+      this.disableSubmitBtn=true;
+    }
+    else {
+      this.disableSubmitBtn = true;
+    }
+  }
+
+  getRelatingTableList() {
+    if (this.spvTableId != '')
+      return this.spvRelatedTableList.filter(a => a.tableId == this.spvTableId)
+    else
+      return [];
+  }
+
+  addSPVJoin() {
+    let paramObj =
+    {
+      "workspaceId": this.workspaceHeaderService.getSelectedWorkspaceId(),
+      "primaryTable": {
+        "tableId": this.primaryTableId,
+        "tableName": this.tableName,
+      },
+      "spvInfoList": this.selectedSPVJoinList
+    }
+    this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((result) => {
+        alert(result.message);
+    });
+  }
 }

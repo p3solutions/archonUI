@@ -16,7 +16,7 @@ export class DatabaseListService {
   accessToken: string;
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  configDBListUrl = environment.apiUrl + '/dbs/configured';
+  configDBListUrl = environment.apiUrl + 'dbs/configured';
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
   }

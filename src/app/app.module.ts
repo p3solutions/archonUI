@@ -226,6 +226,6 @@ export function tokenGetter() {
                 DbExtractorService
         ],
         bootstrap: [AppComponent],
-        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent]
+        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent,StoredProcViewComponent]
 })
 export class AppModule { }
