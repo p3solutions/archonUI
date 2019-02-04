@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DbExtractorService } from './db-extractor.service';
 import { UserinfoService } from '../userinfo.service';
-xdescribe('DbExtractorComponent', () => {
+describe('DbExtractorComponent', () => {
   let component: DbExtractorComponent;
   let fixture: ComponentFixture<DbExtractorComponent>;
 
