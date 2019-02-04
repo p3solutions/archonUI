@@ -591,6 +591,7 @@ export class TableListComponent implements OnInit {
     if (this.storedprocViewRef) {
       this.storedprocViewRef.remove(0);
     }
+  }
 
   adddirectjoin() {
     this.addDirectjoin = true;
