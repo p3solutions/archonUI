@@ -82,19 +82,19 @@ describe('SignupFormComponent', () => {
   });
 
 
-  xit('Should display the response for signup-form component', () => {
-    spyOn(signUpService, 'signUp').and.returnValue(onSignUp());
-    spyOn(router, 'navigate');
-    component.onSignUp();
-    fixture.detectChanges();
-    const nameDummy = component.responseData['name'];
-    const emailAddressDummy = component.responseData['emailAddress'];
-    const passwordDummy = component.responseData['password'];
-    expect(nameDummy).toBe(component.responseData['name']);
-    expect(emailAddressDummy).toBe(component.responseData['emailAddress']);
-    expect(passwordDummy).toBe(component.responseData['password']);
-    disposeMe.unsubscribe();
-  });
+  // xit('Should display the response for signup-form component', () => {
+  //   spyOn(signUpService, 'signUp').and.returnValue(onSignUp());
+  //   spyOn(router, 'navigate');
+  //   component.onSignUp();
+  //   fixture.detectChanges();
+  //   const nameDummy = component.responseData['name'];
+  //   const emailAddressDummy = component.responseData['emailAddress'];
+  //   const passwordDummy = component.responseData['password'];
+  //   expect(nameDummy).toBe(component.responseData['name']);
+  //   expect(emailAddressDummy).toBe(component.responseData['emailAddress']);
+  //   expect(passwordDummy).toBe(component.responseData['password']);
+  //   disposeMe.unsubscribe();
+  // });
 
 
   it('Should work the createSignUpForm() functionality', () => {

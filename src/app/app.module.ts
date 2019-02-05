@@ -100,6 +100,7 @@ import { DbExtractorService } from './db-extractor/db-extractor.service';
 import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
+import { StoredProcViewService } from './stored-proc-view/stored-proc-view.service';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -225,9 +226,10 @@ export function tokenGetter() {
                 UserProfileService,
                 EditRelationshipInfoService,
                 AddDirectJoinService,
-                DbExtractorService
+                DbExtractorService,
+                StoredProcViewService
         ],
         bootstrap: [AppComponent],
-        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent,StoredProcViewComponent]
+        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent]
 })
 export class AppModule { }

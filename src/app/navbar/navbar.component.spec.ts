@@ -63,47 +63,47 @@ describe('NavbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('Should have the default selected Home menu in Navbar', () => {
-    const selectedMenu: Element = navbarTag.querySelector('li.active>a');
-    expect(selectedMenu.textContent).toContain('Home');
-  });
+  // xit('Should have the default selected Home menu in Navbar', () => {
+  //   const selectedMenu: Element = navbarTag.querySelector('li.active>a');
+  //   expect(selectedMenu.textContent).toContain('Home');
+  // });
 
-  xit('Should not display the username in Navbar before calling getInfo', () => {
-    const userName: Element = navbarTag.querySelector('li.user-menu>a');
-    // info.username not rendered
-    expect(userName.textContent.trim()).toBe('');
-  });
+  // xit('Should not display the username in Navbar before calling getInfo', () => {
+  //   const userName: Element = navbarTag.querySelector('li.user-menu>a');
+  //   // info.username not rendered
+  //   expect(userName.textContent.trim()).toBe('');
+  // });
 
-  xit('Should display the username in Navbar for any user', () => {
-    const userName: Element = navbarTag.querySelector('li.user-menu>a');
-    // while spying on real service, mocked info is returned
-    spyOn(infoService, 'getinfo').and.returnValue(getInfo());
-    fixture.detectChanges();
-    expect(userName.textContent.trim()).toBe(component.info.username);
-    disposeMe.unsubscribe();
-  });
+  // xit('Should display the username in Navbar for any user', () => {
+  //   const userName: Element = navbarTag.querySelector('li.user-menu>a');
+  //   // while spying on real service, mocked info is returned
+  //   spyOn(infoService, 'getinfo').and.returnValue(getInfo());
+  //   fixture.detectChanges();
+  //   expect(userName.textContent.trim()).toBe(component.info.username);
+  //   disposeMe.unsubscribe();
+  // });
 
-  xit('Should display username, Manage-link, notifications in Navbar for Admin role', () => {
-    // to test for Admin, set role = 'Admin'
-    info.role = 'Admin';
-    // while spying on real service, mocked info is returned
-    spyOn(infoService, 'getinfo').and.returnValue(getInfo());
-    fixture.detectChanges();
-    // call getInfo() to set info.show true for Admin
-    component.getInfo();
+  // xit('Should display username, Manage-link, notifications in Navbar for Admin role', () => {
+  //   // to test for Admin, set role = 'Admin'
+  //   info.role = 'Admin';
+  //   // while spying on real service, mocked info is returned
+  //   spyOn(infoService, 'getinfo').and.returnValue(getInfo());
+  //   fixture.detectChanges();
+  //   // call getInfo() to set info.show true for Admin
+  //   component.getInfo();
 
-    // detecting changes
-    fixture.detectChanges();
+  //   // detecting changes
+  //   fixture.detectChanges();
 
-    // expecting username
-    const userName: Element = navbarTag.querySelector('li.user-menu>a');
-    expect(userName.textContent.trim()).toBe(component.info.username);
-    // expecting Manage link
-    const manageLink: Element = navbarTag.querySelector('li[title="Manage"]>a');
-    expect(manageLink.textContent.trim()).toBe('Manage');
+  //   // expecting username
+  //   const userName: Element = navbarTag.querySelector('li.user-menu>a');
+  //   expect(userName.textContent.trim()).toBe(component.info.username);
+  //   // expecting Manage link
+  //   const manageLink: Element = navbarTag.querySelector('li[title="Manage"]>a');
+  //   expect(manageLink.textContent.trim()).toBe('Manage');
 
-    const notifications: Element = navbarTag.querySelector('#see-all-notif');
-    expect(notifications.textContent.trim()).toBe('See All Notifications');
-    disposeMe.unsubscribe();
-  });
+  //   const notifications: Element = navbarTag.querySelector('#see-all-notif');
+  //   expect(notifications.textContent.trim()).toBe('See All Notifications');
+  //   disposeMe.unsubscribe();
+  // });
 });

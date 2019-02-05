@@ -69,17 +69,17 @@ describe('ChangePasswordComponent', () => {
     })
   );
 
-  xit('Should get change password success when changeUserPassword() is called', fakeAsync(() => {
-    expect(component.inProgress).toBeFalsy();
-    spyOn(testBedService, 'changePassword').and.returnValue(changePassword(response));
-    component.changeUserPassword();
-    flushMicrotasks();
-    fixture.detectChanges();
-    expect(component.inProgress).toBeTruthy();
-    testBedService.changePassword().subscribe(res => {
-      expect(res).toEqual(response);
-    });
-    disposeMe.get('changePassword').unsubscribe();
-  }));
+  // xit('Should get change password success when changeUserPassword() is called', fakeAsync(() => {
+  //   expect(component.inProgress).toBeFalsy();
+  //   spyOn(testBedService, 'changePassword').and.returnValue(changePassword(response));
+  //   component.changeUserPassword();
+  //   flushMicrotasks();
+  //   fixture.detectChanges();
+  //   expect(component.inProgress).toBeTruthy();
+  //   testBedService.changePassword().subscribe(res => {
+  //     expect(res).toEqual(response);
+  //   });
+  //   disposeMe.get('changePassword').unsubscribe();
+  // }));
 
 });

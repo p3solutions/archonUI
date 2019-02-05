@@ -11,19 +11,19 @@ import { DbExtractorService } from '../db-extractor/db-extractor.service';
 describe('DbExtractorLastStepComponent', () => {
   let component: DbExtractorLastStepComponent;
   let fixture: ComponentFixture<DbExtractorLastStepComponent>;
-  const data = '';
-  const getSimpleObservable = function (data) {
-    return new Observable<any>((observer) => {
-      observer.next(data); // observable execution
-      observer.complete();
-    });
-  };
-  const disposeMe = new Map();
-  const getDBInfoByID = function (data): Observable<any> {
-    const pvtObservable = getSimpleObservable(data);
-    disposeMe.set('getDatabaseID', pvtObservable.subscribe());
-    return pvtObservable;
-  };
+  // const data = '';
+  // const getSimpleObservable = function (data) {
+  //   return new Observable<any>((observer) => {
+  //     observer.next(data); // observable execution
+  //     observer.complete();
+  //   });
+  // };
+  // const disposeMe = new Map();
+  // const getDBInfoByID = function (data): Observable<any> {
+  //   const pvtObservable = getSimpleObservable(data);
+  //   disposeMe.set('getDatabaseID', pvtObservable.subscribe());
+  //   return pvtObservable;
+  // };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -71,12 +71,12 @@ describe('AddMembersComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  xit('should getUserList', () => {
-    expect(component.userList.length === 0).toBeTruthy();
-    spyOn(testBedService, 'getAllUsers').and.returnValue(getAllUsers());
-    component.getUserList();
-    fixture.detectChanges();
-    expect(component.userList.length > 0).toBeTruthy();
-    disposeMe.get('getAllDBServer').unsubscribe();
-  });
+  // xit('should getUserList', () => {
+  //   expect(component.userList.length === 0).toBeTruthy();
+  //   spyOn(testBedService, 'getAllUsers').and.returnValue(getAllUsers());
+  //   component.getUserList();
+  //   fixture.detectChanges();
+  //   expect(component.userList.length > 0).toBeTruthy();
+  //   disposeMe.get('getAllDBServer').unsubscribe();
+  // });
 });
