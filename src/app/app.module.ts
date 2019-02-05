@@ -100,6 +100,7 @@ import { DbExtractorService } from './db-extractor/db-extractor.service';
 import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
+import { ERTComponent } from './ert/ert.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -163,7 +164,8 @@ export function tokenGetter() {
                 DbExtractorStepTwoComponent,
                 DbExtractorLastStepComponent,
                 DbExtractorExecQueryComponent,
-                StoredProcViewComponent
+                StoredProcViewComponent,
+                ERTComponent
         ],
         imports: [
                 JwtModule.forRoot({
@@ -228,6 +230,6 @@ export function tokenGetter() {
                 DbExtractorService
         ],
         bootstrap: [AppComponent],
-        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent,StoredProcViewComponent]
+        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent]
 })
 export class AppModule { }

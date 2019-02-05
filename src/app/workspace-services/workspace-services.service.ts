@@ -44,6 +44,11 @@ export class WorkspaceServicesService {
             service.iconName = 'querybuilder.png';
             break;
           }
+          case 'ERT': {
+            service.serviceName = 'ERT';
+            service.iconName = 'livearchival.png';
+            break;
+          }
           // default: {
           //   service.serviceName = 'No Service Available';
           //   break;
