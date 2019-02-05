@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DbExtractorService } from '../db-extractor/db-extractor.service'
+import { DbExtractorService } from '../db-extractor/db-extractor.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ProcessDetails, ProcessDetailsObj } from '../db-extractor';
 import { UserinfoService } from '../userinfo.service';
@@ -28,59 +28,59 @@ export class DbExtractorLastStepComponent implements OnInit {
       (result) => {
         this.configuredDB = result;
       }
-    )
+    );
   }
 
 
 
   prevStepTwo() {
-    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 });
     this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
   }
 
   Start() {
     let param: any = {
-      "ownerId": this.userinfoService.getUserId(),
-      "workspaceId": this.workspaceHeaderService.getSelectedWorkspaceId(),
-      "databaseConfig": {
-        "databaseId": this.workspaceHeaderService.getDatabaseID()
+      'ownerId': this.userinfoService.getUserId(),
+      'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
+      'databaseConfig': {
+        'databaseId': this.workspaceHeaderService.getDatabaseID()
       },
-      "executionConfig": {
-        "process": this.processDetailsObj.process,
-        "outputFormat": this.processDetailsObj.outputFormat,
-        "tableInclusionRule": this.processDetailsObj.tableIncRule,
-        "tableInclusionRelationship": this.processDetailsObj.includeTableRelationship
+      'executionConfig': {
+        'process': this.processDetailsObj.process,
+        'outputFormat': this.processDetailsObj.outputFormat,
+        'tableInclusionRule': this.processDetailsObj.tableIncRule,
+        'tableInclusionRelationship': this.processDetailsObj.includeTableRelationship
       },
-      "jobParams": {
-        "fileSize": this.processDetailsObj.xmlSplitFileSize,
-        "maxparallelProcess": this.processDetailsObj.maxParallelProcess,
-        "includeTables": this.processDetailsObj.incTable,
-        "includeViews": this.processDetailsObj.incView,
-        "includeRecordsCount": this.processDetailsObj.incRecordCount,
-        "splitDateInXmlForxDBCompatiblity": this.processDetailsObj.xmlXDBCompability,
-        "extractLOBwithinXml": this.processDetailsObj.extractLOBWithXML
+      'jobParams': {
+        'fileSize': this.processDetailsObj.xmlSplitFileSize,
+        'maxparallelProcess': this.processDetailsObj.maxParallelProcess,
+        'includeTables': this.processDetailsObj.incTable,
+        'includeViews': this.processDetailsObj.incView,
+        'includeRecordsCount': this.processDetailsObj.incRecordCount,
+        'splitDateInXmlForxDBCompatiblity': this.processDetailsObj.xmlXDBCompability,
+        'extractLOBwithinXml': this.processDetailsObj.extractLOBWithXML
       }
     };
 
-    param = this.modifiedParamAccToProcess(param)
+    param = this.modifiedParamAccToProcess(param);
     this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload).subscribe((result) => {
-      if (result.httpStatus == 200) {
+      if (result.httpStatus === 200) {
         this.isSuccessMsg = true;
-        this.successMsg = "Your Job has Started"
+        this.successMsg = 'Your Job has Started';
       } else {
         this.isSuccessMsg = false;
-        this.successMsg = "Unable to Process Your Job"
+        this.successMsg = 'Unable to Process Your Job';
       }
     });
   }
 
   modifiedParamAccToProcess(param: any): any {
-    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === "executequery") {
+    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === 'executequery') {
       param.executionConfig.queryMode = {
-        "queryTitle": this.processDetailsObj.ExecuteQueryObj.queryTitle,
-        "query": this.processDetailsObj.ExecuteQueryObj.query,
-        "isQueryFile": this.processDetailsObj.ExecuteQueryObj.isQueryFile
-      }
+        'queryTitle': this.processDetailsObj.ExecuteQueryObj.queryTitle,
+        'query': this.processDetailsObj.ExecuteQueryObj.query,
+        'isQueryFile': this.processDetailsObj.ExecuteQueryObj.isQueryFile
+      };
     }
     return param;
   }
@@ -89,38 +89,37 @@ export class DbExtractorLastStepComponent implements OnInit {
   close() {
     if (this.isSuccessMsg) {
       this.router.navigate(['/status']);
-    }
-    else {
-      this.router.navigate(['workspace/workspace-dashboard/workspace-services'])
+    } else {
+      this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
     }
   }
 
   goToEdit(value: string) {
-    if (value === "editParameter") {
-      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+    if (value === 'editParameter') {
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 });
       this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
-    }
-    else if (value === "editQueryDetails") {
-      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+    } else if (value === 'editQueryDetails') {
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 });
       this.router.navigate(['/workspace/db-extractor/db-extractor-exec-query']);
-    }
-    else {
-      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 })
+    } else {
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
       this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
     }
   }
 
   getMultiConditionResultForFile() {
-    if (this.processDetailsObj.process == 'Execute Query' && this.processDetailsObj.ExecuteQueryObj.isQueryFile==true)
-      return true;   
-    else
-      return false;  
-  }
-  
-  getMultiConditionResultForQuery() {
-    if (this.processDetailsObj.process == 'Execute Query' && this.processDetailsObj.ExecuteQueryObj.isQueryFile==false)
+    if (this.processDetailsObj.process === 'Execute Query' && this.processDetailsObj.ExecuteQueryObj.isQueryFile === true) {
       return true;
-    else
-      return false; 
+    } else {
+      return false;
+    }
+  }
+
+  getMultiConditionResultForQuery() {
+    if (this.processDetailsObj.process === 'Execute Query' && this.processDetailsObj.ExecuteQueryObj.isQueryFile === false) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

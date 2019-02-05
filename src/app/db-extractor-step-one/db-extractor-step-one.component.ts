@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DbExtractorService } from '../db-extractor/db-extractor.service'
+import { DbExtractorService } from '../db-extractor/db-extractor.service';
 import { ProcessDetails, ProcessDetailsObj } from '../db-extractor';
 
 @Component({
@@ -22,28 +22,27 @@ export class DbExtractorStepOneComponent implements OnInit {
 
   getProcessDetails() {
     this.dbExtractorService.getProcessDetails().subscribe((processDetailsList) => {
-      this.processDetailsList = processDetailsList
-      for (let item of this.processDetailsList) {
+      this.processDetailsList = processDetailsList;
+      for (const item of this.processDetailsList) {
         this.processDetailsMap.set(item['process'], item['supportedOutputFormats']);
       }
       this.processList = Array.from(this.processDetailsMap.keys());
       if (this.dbExtractorService.getProcessDetailsObj() != null) {
         this.processDetailsObj = this.dbExtractorService.getProcessDetailsObj();
-        this.outputFormatList = this.processDetailsMap.get(this.processDetailsObj.process)
-      }
-      else {
+        this.outputFormatList = this.processDetailsMap.get(this.processDetailsObj.process);
+      }  else {
         this.processDetailsObj = new ProcessDetailsObj();
       }
-    })
+    });
   }
 
   getOutputFormatListBySecProcess(process: string) {
     if (process != null) {
       this.processDetailsObj.process = process;
       this.outputFormatList = this.processDetailsMap.get(process);
-      this.processDetailsObj.includeTableRelationship = this.processDetailsList.filter(a => a.process == process)[0].includeTableRelationship;
-    }
-    else if (process == null) {
+      this.processDetailsObj.includeTableRelationship
+       = this.processDetailsList.filter(a => a.process === process)[0].includeTableRelationship;
+    } else if (process == null) {
       this.outputFormatList = [];
       this.processDetailsObj.includeTableRelationship = false;
     }
@@ -54,12 +53,11 @@ export class DbExtractorStepOneComponent implements OnInit {
   }
 
   gotoStepTwo() {
-    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
-    this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);  
-    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === "executequery") {
+    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 });
+    this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);
+    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === 'executequery') {
       this.router.navigate(['/workspace/db-extractor/db-extractor-exec-query']);
-    }
-    else{
+    } else {
       this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
     }
   }
