@@ -21,6 +21,7 @@ describe('DbExtractorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DbExtractorComponent);
     component = fixture.componentInstance;
+    spyOn(component.router, 'navigate');
     fixture.detectChanges();
   });
 

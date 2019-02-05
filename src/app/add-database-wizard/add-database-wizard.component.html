@@ -36,7 +36,7 @@
                 <div class="col-md-2">Profile Name</div>
                 <div class="col-md-4">
                   <input [(ngModel)]="profileName" placeholder="Enter Profile name" name="profileName" id="profileName"
-                    class="{{!profileName && profileNameEmpty ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
+                    class="{{!profileName  ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
                     required />
                 </div>
                 <div class="col-md-2">Database Server</div>
@@ -76,7 +76,7 @@
                 <div class="col-md-4">
                   <input [(ngModel)]="port" placeholder="{{(selectedDBServerName == 'Select server') ? 'Select Database server' :  port}}"
                     name="port" id="port" class="{{!port ? 'error-input' : ''}}" (keyup)="step0Validation($event)"
-                    required readonly />
+                    required />
                 </div>
               </div>
 

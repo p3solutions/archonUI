@@ -6,45 +6,45 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
-import { spvNameList,TableNameAndRelatingTable } from './stored-proc-view';
+import { SpvNameList, TableNameAndRelatingTable } from './stored-proc-view';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoredProcViewService {
   private apiUrl = environment.apiUrl;
-  getSPVNameListUrl:string=this.apiUrl + 'metalyzer/spvanalysis/spvlist?workspaceId=';
-  getRelatingTableNameListUrl=this.apiUrl+'metalyzer/spvanalysis/spvlist/relatingtablelist?workspaceId=';
-  createSPVAddJoinurl=this.apiUrl+'metalyzer/spvanalysis/relationship';
+  getSPVNameListUrl: string = this.apiUrl + 'metalyzer/spvanalysis/spvlist?workspaceId=';
+  getRelatingTableNameListUrl = this.apiUrl + 'metalyzer/spvanalysis/spvlist/relatingtablelist?workspaceId=';
+  createSPVAddJoinurl = this.apiUrl + 'metalyzer/spvanalysis/relationship';
 
-  constructor(private http: HttpClient, private userInfoService: UserinfoService){ }
+  constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
 
-  getSPVNameList(workspaceId:string,tableName:string): Observable<spvNameList> {
-    return this.http.get<spvNameList>(this.getSPVNameListUrl+workspaceId+'&tableName='+tableName, 
-    { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractData),
-      catchError(this.handleError('getSPVNameList', []))
-    );
+  getSPVNameList(workspaceId: string, tableName: string): Observable<SpvNameList> {
+    return this.http.get<SpvNameList>(this.getSPVNameListUrl + workspaceId + '&tableName=' + tableName,
+      { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractData),
+        catchError(this.handleError('getSPVNameList', []))
+      );
   }
 
-  getRelatingTableNameList(workspaceId:string,tableName:string,spvName:string): Observable<TableNameAndRelatingTable> {
-    return this.http.get<TableNameAndRelatingTable>(this.getRelatingTableNameListUrl+workspaceId+'&tableName='+tableName
-   +'&spvName='+spvName,{ headers: this.userInfoService.getHeaders()}).pipe(map(this.extractData),
-      catchError(this.handleError('getRelatingTableNameList', []))
-    );
+  getRelatingTableNameList(workspaceId: string, tableName: string, spvName: string): Observable<TableNameAndRelatingTable> {
+    return this.http.get<TableNameAndRelatingTable>(this.getRelatingTableNameListUrl + workspaceId + '&tableName=' + tableName
+      + '&spvName=' + spvName, { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractData),
+        catchError(this.handleError('getRelatingTableNameList', []))
+      );
   }
 
-  createSPVAddJoin(param:any): Observable<any> {
-    return this.http.post<any>(this.createSPVAddJoinurl,param,{ headers: this.userInfoService.getHeaders()}).
-    pipe(map(this.extractData),
-      catchError(this.handleError('createSPVAddJoin', []))
-    );
+  createSPVAddJoin(param: any): Observable<any> {
+    return this.http.post<any>(this.createSPVAddJoinurl, param, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('createSPVAddJoin', []))
+      );
   }
 
   private extractData(res: any) {
     const body = res.data;
     return body || [];
   }
-  
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

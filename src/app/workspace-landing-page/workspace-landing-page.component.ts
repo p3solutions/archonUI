@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
 })
 export class WorkspaceLandingPageComponent implements OnInit {
   constructor(
-    private router: Router
+    public router: Router
   ) { }
   ngOnInit() {
-    this.router.navigate(['workspace/workspace-dashboard']);
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 }

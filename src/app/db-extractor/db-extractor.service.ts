@@ -24,11 +24,11 @@ export class DbExtractorService {
   private apiUrl = environment.apiUrl;
   private getDBInfoUrl = this.apiUrl + 'dbs/configured/';
 
-  private getProcessDetailsUrl = this.apiUrl+'rdbmsExtraction/processDetail';
+  private getProcessDetailsUrl = this.apiUrl + 'rdbmsExtraction/processDetail';
   private _progressBarObj: BehaviorSubject<ProgressBarObj> = new BehaviorSubject<ProgressBarObj>(
     { stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
   updatedProgressBarObj = this._progressBarObj.asObservable();
-  private postProcessDetailsUrl = this.apiUrl+'rdbmsExtraction/process';
+  private postProcessDetailsUrl = this.apiUrl + 'rdbmsExtraction/process';
 
   setProgressBarObj(progressBar: ProgressBarObj) {
     this._progressBarObj.next(progressBar);
