@@ -20,7 +20,7 @@ export class TableListService {
   relationTableListUrl = environment.apiUrl + 'metalyzer/tablesRelationShip?tableId=';
   deleteRelationsUrl = environment.apiUrl + 'metalyzer/relationship?workspaceId=';
   columnListUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
-  dataAnalysisUrl = environment.apiUrl + '/dataAnalyzer/tableToTablesDataCrawlAnalysis';
+  dataAnalysisUrl = environment.apiUrl + 'dataAnalyzer/tableToTablesDataCrawlAnalysis';
   // columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
   columnUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
   stateManagementUrl = environment.apiUrl + 'dataAnalyzer/stateManagement';
