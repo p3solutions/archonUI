@@ -1,0 +1,28 @@
+.table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+  background-color: rgb(231, 237, 240);
+}
+
+
+.scroll-div {
+  height: 355px;
+  overflow-y: auto;
+}
+
+.bold-parameter {
+  font-weight: bolder;
+}
+
+table.table td {
+  text-align: left;
+  width: 30%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}
+
+.table-heading {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bolder;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+}

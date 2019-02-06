@@ -12,9 +12,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CommonUtilityService } from '../common-utility.service';
 import { ManagementLandingPageComponent } from '../management-landing-page/management-landing-page.component';
 import { ManagementPanelComponent } from '../management-panel/management-panel.component';
+import { WorkspaceHeaderInfoComponent } from '../workspace-header-info/workspace-header-info.component';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 // Reason: Object Event Error Thrown
-xdescribe('WorkspaceListComponent', () => {
+describe('WorkspaceListComponent', () => {
   let component: WorkspaceListComponent;
   let fixture: ComponentFixture<WorkspaceListComponent>;
 
@@ -22,7 +24,8 @@ xdescribe('WorkspaceListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [WorkspaceListComponent],
       imports: [HttpClientModule, RouterTestingModule],
-      providers: [WorkspaceListService, DynamicLoaderService, UserinfoService, CommonUtilityService],
+      providers: [WorkspaceListService, DynamicLoaderService, UserinfoService,
+         WorkspaceHeaderService, CommonUtilityService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
@@ -31,6 +34,8 @@ xdescribe('WorkspaceListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkspaceListComponent);
     component = fixture.componentInstance;
+    const WHS = TestBed.get(WorkspaceHeaderService);
+    spyOn(WHS, 'getSelectedWorkspaceId').and.returnValue('');
     fixture.detectChanges();
   });
 

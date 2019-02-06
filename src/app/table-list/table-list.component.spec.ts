@@ -14,6 +14,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { EditRelationshipInfoService } from '../edit-relationship-info/edit-relationship-info.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DynamicLoaderService } from '../dynamic-loader.service';
 
 // Reason: Undefined Property
 describe('TableListComponent', () => {
@@ -27,7 +28,8 @@ describe('TableListComponent', () => {
       declarations: [TableListComponent, SearchPipe,
       SecondaryColumnPipe],
       imports: [RouterTestingModule, FormsModule, HttpClientModule],
-      providers: [TableListService, UserinfoService, WorkspaceHeaderService, EditRelationshipInfoService, AddDirectJoinService],
+      providers: [TableListService, UserinfoService, WorkspaceHeaderService,
+        DynamicLoaderService, EditRelationshipInfoService, AddDirectJoinService],
       schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();

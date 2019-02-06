@@ -8,8 +8,8 @@ import { Headers } from '@angular/http';
 
 @Injectable()
 export class EditRelationshipInfoService {
-  columnListUrl = environment.apiUrl + '/table/columnList?tableId=';
-  updateTableListUrl = environment.apiUrl + '/meta/relationship?workspaceId=';
+  columnListUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
+  updateTableListUrl = environment.apiUrl + 'metalyzer/relationship?workspaceId=';
 
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) { }

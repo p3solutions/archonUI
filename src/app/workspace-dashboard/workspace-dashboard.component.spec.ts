@@ -7,6 +7,12 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NoWorkspaceComponent } from '../no-workspace/no-workspace.component';
+import { UserinfoService } from '../userinfo.service';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { UserProfileService } from '../user-profile/user-profile.service';
+import { DynamicLoaderService } from '../dynamic-loader.service';
 
 describe('WorkspaceDashboardComponent', () => {
   let component: WorkspaceDashboardComponent;
@@ -22,13 +28,19 @@ describe('WorkspaceDashboardComponent', () => {
       providers: [
         RouterTestingModule,
         UserWorkspaceService,
-        HttpClientModule
+        HttpClientModule,
+        UserinfoService,
+        WorkspaceServicesService,
+        WorkspaceHeaderService,
+        UserProfileService,
+        DynamicLoaderService
       ],
       declarations: [
         WorkspaceDashboardComponent,
         WorkspaceHeaderComponent,
         WorkspaceHeaderInfoComponent,
-        WorkspaceMgmtPanelComponent
+        WorkspaceMgmtPanelComponent,
+        NoWorkspaceComponent
       ]
     })
     .compileComponents();
@@ -40,7 +52,7 @@ describe('WorkspaceDashboardComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

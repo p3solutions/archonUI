@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, OnInit, Pipe, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnChanges, ViewContainerRef, Inject } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -6,6 +6,7 @@ import { ErrorObject } from '../error-object';
 import { UserinfoService } from '../userinfo.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DataAnalyzerResultScreenComponent } from '../data-analyzer-result-screen/data-analyzer-result-screen.component';
+import { DynamicLoaderService } from '../dynamic-loader.service';
 
 @Component({
   selector: 'app-table-list',
@@ -67,14 +68,26 @@ export class TableListComponent implements OnInit {
   defaultModel = true;
   resultantArray: any[];
 
+  dynamicLoaderService: DynamicLoaderService;
+  @ViewChild('storedprocView', { read: ViewContainerRef })storedprocViewRef : ViewContainerRef;
+
+  addDirectjoin: boolean;
+  isTablelistAvailable: boolean;
+
+
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Inject(DynamicLoaderService) dynamicLoaderService,
+    @Inject(ViewContainerRef) viewContainerRef,
   ) {
+    this.dynamicLoaderService = dynamicLoaderService;
+    this.storedprocViewRef = viewContainerRef;
     this.userId = this.userinfoService.getUserId();
+
   }
   ngOnInit() {
     this.tablelistService.currentValue.subscribe(value => {
@@ -91,6 +104,9 @@ export class TableListComponent implements OnInit {
     this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
+      if (this.tableList.length === 0) {
+        this.isTablelistAvailable = true;
+      }
       this.isAvailable = true;
     });
   }
@@ -106,34 +122,28 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.isRelationShipAvailable = true;
+      if (this.relationshipInfo.length === 0) {
+        this.isRelationShipAvailable = false;
+      }
     });
     this.serviceActionType = this.tablelistService.getServiceActionType();
   }
 
   openDataAModal() {
-    // to work on resultant screen
-    // this.homeStage = false;
-    // this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
-    //
-    this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId ).subscribe(res => {
-    console.log(res);
-    // if (res.data.jobIds.length > 0 ) {
-    //   this.homeStage = false;
-    //   this.dataAModal = true;
-    //   this.dataAnalysisjobID = res.data.jobIds[0];
-    //   this.getJobStatus();
-    //   console.log(this.dataAnalysisjobID);
-    //    setTimeout(() => {
-      //   (<any>$('#dataAModal-carousel')).carousel(3);
-      // }, 1000);
-      // const progressSelector = 'progress-bar';
-    // this.addClass(progressSelector, 'width-100-pc');
-    // } else {
-      this.homeStage = false;
-      this.dataAModal = true;
-      this.getColumnsByTableName(this.selectedPrimTblID, true);
-      this.resetDataAModal();
-    // }
+    this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId).subscribe(res => {
+      console.log(res);
+      if (res.data.jobIds.length > 0) {
+        this.homeStage = false;
+        this.dataAModal = true;
+        this.dataAnalysisjobID = res.data.jobIds[0];
+        this.getJobStatus();
+        console.log(this.dataAnalysisjobID, 'job ID');
+      } else {
+        this.homeStage = false;
+        this.dataAModal = true;
+        this.getColumnsByTableName(this.selectedPrimTblID, true);
+        this.resetDataAModal();
+      }
     });
   }
   openEditRelationship(relation) {
@@ -344,21 +354,21 @@ export class TableListComponent implements OnInit {
     this.finalPrimColArray = [];
     this.selectedPrimColMap.forEach((val, key) => {
       for (const i of this.primColArray) {
-       if (key === i.columnName) {
+        if (key === i.columnName) {
           const columnObject = {
-          'columnId': i.columnId,
-          'columnName': i.columnName,
-          'dataType': i.columnDataType
+            'columnId': i.columnId,
+            'columnName': i.columnName,
+            'dataType': i.columnDataType
           };
-       this.finalPrimColArray.push(columnObject);
-       }
+          this.finalPrimColArray.push(columnObject);
+        }
       }
     });
     this.selectedTblsColsObj.userId = this.userId;
     this.selectedTblsColsObj.workspaceId = this.workspaceID;
     this.selectedTblsColsObj.primaryTable = {
-      'tableId' : this.selectedPrimTblID,
-      'tableName' : this.selectedPrimTbl,
+      'tableId': this.selectedPrimTblID,
+      'tableName': this.selectedPrimTbl,
       'primaryColumnList': this.finalPrimColArray
     };
     this.selectedTblsColsObj.secondaryTableList = [];
@@ -370,20 +380,20 @@ export class TableListComponent implements OnInit {
       let secTblId;
       for (const i of this.secTblArray) {
         if (secTbl === i.tableName) {
-         secTblId = i.tableId;
+          secTblId = i.tableId;
         }
       }
       secColTempArray = this.secTblColMap.get(secTblId);
       let secCol;
       for (const i of secColTempArray) {
-      if (arr[1] === i.columnName) {
-      secCol = {
-        'columnId': i.columnId,
-        'columnName': i.columnName,
-        'dataType': i.columnDataType
-      };
+        if (arr[1] === i.columnName) {
+          secCol = {
+            'columnId': i.columnId,
+            'columnName': i.columnName,
+            'dataType': i.columnDataType
+          };
+        }
       }
-    }
       if (secMap.has(secTbl)) {
         const secCols = secMap.get(secTbl);
         secCols.push(secCol);
@@ -395,13 +405,13 @@ export class TableListComponent implements OnInit {
       let secTblId;
       for (const i of this.secTblArray) {
         if (key === i.tableName) {
-         secTblId = i.tableId;
+          secTblId = i.tableId;
         }
       }
       this.selectedTblsColsObj.secondaryTableList.push(
         {
-          'tableId' : secTblId,
-          'tableName' : key,
+          'tableId': secTblId,
+          'tableName': key,
           'secondaryColumnList': valArray
         }
       );
@@ -490,28 +500,35 @@ export class TableListComponent implements OnInit {
     this.addClass('analyse-btn', 'hide');
     this.removeClass('close-btn', 'hide');
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
-    if (res && res.success) {
-      this.dataAnalysisjobID = res.data.jobId;
-      this.getJobStatus();
-    }
+      if (res && res.success) {
+        this.dataAnalysisjobID = res.data.jobId;
+        this.getJobStatus();
+      }
     });
   }
 
   getJobStatus() {
     this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
-    this.JobStatus = res.data.jobStatus;
-    if (this.JobStatus === 'SUCCESS') {
-    this.dataAModal = false;
-    this.homeStage = false;
-    this.resultantArray = [{
-      'workspaceId': this.workspaceID,
-      'primaryTableId': res.data.tableId,
-      'primaryTableName': res.data.tableName,
-      'relationDetails': res.data.relationDetails
-    }];
-    this.tablelistService.changeArray(this.resultantArray);
-    this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
-    }
+      this.JobStatus = res.data.jobStatus;
+      if (this.JobStatus === 'SUCCESS') {
+        this.dataAModal = false;
+        this.homeStage = false;
+        this.resultantArray = [{
+          'workspaceId': this.workspaceID,
+          'primaryTableId': res.data.tableId,
+          'primaryTableName': res.data.tableName,
+          'relationDetails': res.data.relationDetails,
+          'jobId': this.dataAnalysisjobID
+        }];
+        this.tablelistService.changeArray(this.resultantArray);
+        this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+      } else {
+        setTimeout(() => {
+          (<any>$('#dataAModal-carousel')).carousel(3);
+        }, 1000);
+        const progressSelector = 'progress-bar';
+        this.addClass(progressSelector, 'width-100-pc');
+      }
     });
   }
   deleteRelationship(indexOfDelete) {
@@ -555,4 +572,30 @@ export class TableListComponent implements OnInit {
   refreshRelation($event) {
     this.loadRelationTable(this.tableCopy);
   }
+
+
+  openStoredProcView(event) {
+    if (this.storedprocViewRef.get(0)) {
+      this.storedprocViewRef.remove(0);
+      this.dynamicLoaderService.setRootViewContainerRef(this.storedprocViewRef);
+      this.dynamicLoaderService.addStoredProcViewDynamicComponent(this.tableName);
+      document.getElementById('openCreateStoredViewmodal').click();
+    } else {
+      this.dynamicLoaderService.setRootViewContainerRef(this.storedprocViewRef);
+      this.dynamicLoaderService.addStoredProcViewDynamicComponent(this.tableName);
+      document.getElementById('openCreateStoredViewmodal').click();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.storedprocViewRef) {
+      this.storedprocViewRef.remove(0);
+    }
+  }
+
+  adddirectjoin() {
+    this.addDirectjoin = true;
+
+  }
 }
+/*Checking Jenkins*/
