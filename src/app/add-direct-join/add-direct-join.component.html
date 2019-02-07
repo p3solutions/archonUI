@@ -39,12 +39,12 @@
                           <th style="width: 125px;">Column Type</th>
                           <th style="width: 165px;">Secondary Table Column</th>                                                    
                         </tr>                    
-                      <tr *ngFor="let pri of primaryColumns; let ind=index">
+                      <tr [hidden]="selected.length <= 1" *ngFor="let pri of primaryColumns; let ind=index">
                         <td>{{pri.columnName}}</td>
                         <td>{{pri.columnDataType}}</td>
                         <td> <select id="testreset" #selected class="selwidth" (change)="selectedValues(pri,ind,selected.value)">
                             <option selected="true">Select</option>
-                            <option *ngFor="let sec of secondaryColumns">{{sec.columnName}}</option>
+                            <option *ngFor="let sec of secondaryColumns | secondaryColumn:pri.columnDataType">{{sec.columnName}}</option>
                           </select>                       
                       </tr>
                     
