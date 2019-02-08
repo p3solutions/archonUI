@@ -8,7 +8,7 @@ import { UserinfoService } from '../userinfo.service';
 @Injectable()
 export class MetalyzerHeaderService {
   workspaceinfoUrl = environment.apiUrl + 'workspaces/';
-  exportxmlUrl = environment.apiUrl + 'metalyzer/export/';
+  exportxmlUrl = environment.apiUrl + 'metalyzer/exportMetadata/';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
   cast = this.phase.asObservable();
