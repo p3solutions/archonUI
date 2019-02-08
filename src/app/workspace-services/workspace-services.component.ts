@@ -53,16 +53,16 @@ export class WorkspaceServicesComponent implements OnInit {
         carousel.carousel({ 'interval': false });
 
       });
-      setTimeout(() => {
-        const dropdownItem = <HTMLAnchorElement>document.querySelectorAll('#selectedWorkspace .dropdown-data')[0];
-        if (dropdownItem !== undefined) {
-          const b = dropdownItem.click();
-          if (b !== undefined) {
-            const b1 = this.workspaceService.updateServiceActionsList(JSON.parse(JSON.stringify(b)));
-            this.workspaceService.updateServiceActions(b1);
-          }
-        }
-      }, 3000);
+      // setTimeout(() => {
+      //   const dropdownItem = <HTMLAnchorElement>document.querySelectorAll('#selectedWorkspace .dropdown-data')[0];
+      //   if (dropdownItem !== undefined) {
+      //     const b = dropdownItem.click();
+      //     if (b !== undefined) {
+      //       const b1 = this.workspaceService.updateServiceActionsList(JSON.parse(JSON.stringify(b)));
+      //       this.workspaceService.updateServiceActions(b1);
+      //     }
+      //   }
+      // }, 3000);
     });
   }
 
@@ -91,7 +91,6 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   gotoMetalyzer(service: any) {
-    console.log(service.serviceName);
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (service.serviceName === 'Metalyzer') {
       this.metalyzerHeaderService.setWorkspaceId(this.workspaceHeaderService.getSelectedWorkspaceId());
@@ -112,57 +111,10 @@ export class WorkspaceServicesComponent implements OnInit {
       }
     } else if (service.serviceName === 'RDBMS Extractor') {
       this.router.navigate(['/workspace/db-extractor']);
+    } else if (service.serviceName === 'ERT') {
+      this.router.navigate(['/workspace/ert']);
     }
   }
-
-  // updateServiceActions(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
-  //   if (serviceActions) {
-  //     for (const service of serviceActions) {
-  //       switch (service.serviceName) {
-  //         case 'SERVICE_METALYZER': {
-  //           service.serviceName = 'Metalyzer';
-  //           service.iconName = 'metalyzer.png';
-  //           break;
-  //         }
-  //         case 'SERVICE_DB_EXTRACTOR': {
-  //           service.serviceName = 'DB Extractor';
-  //           service.iconName = 'rdbmsextractor.png';
-  //           break;
-  //         }
-  //         case 'SERVICE_CUSTOM_SCREEN_BUILDING': {
-  //           service.serviceName = 'Custom Screen Building';
-  //           service.iconName = 'livearchival.png';
-  //           break;
-  //         }
-  //         case 'SERVICE_END_2_END_TOOLKIT': {
-  //           service.serviceName = 'End to End Toolkit';
-  //           service.iconName = 'endtoendtoolkit.png';
-  //           break;
-  //         }
-  //         case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
-  //           service.serviceName = 'Enterprise Data Retrieval Tool';
-  //           service.iconName = 'livearchival.png';
-  //           break;
-  //         }
-  //         case 'SERVICE_INFOARCHIVE_COMPLETE_APPLICATION_AUTOMATION': {
-  //           service.serviceName = 'InfoArchive Complete Application Automation';
-  //           service.iconName = 'livearchival.png';
-  //           break;
-  //         }
-  //         case 'SERVICE_UNSTRUCTURED_DATA_ EXTRACTOR': {
-  //           service.serviceName = 'Unstructured Data Extractor';
-  //           service.iconName = 'livearchival.png';
-  //           break;
-  //         }
-  //         // default: {
-  //         //   service.serviceName = 'No Service Available';
-  //         //   break;
-  //         // }
-  //       }
-  //     }
-  //   }
-  //   return serviceActions;
-  // }
 
   toggleCard(cardId, toShow, _event) {
     this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);

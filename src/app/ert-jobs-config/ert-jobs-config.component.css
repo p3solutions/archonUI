@@ -1,0 +1,65 @@
+input#jobname {
+  border: none;
+  border-bottom: 1px solid #2196F3;
+  margin-left: 13px;
+}
+
+#job-config {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.2px;
+  margin: 0px 46px 0px 11px;
+}
+
+#job-config-heading {
+  padding: 17px 0px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+#job-section {
+  margin-left: 15px;
+  margin-top: 45px;
+  width: 70%;
+  height: 80%;
+}
+
+#job-section-heading {
+  text-align: left;
+}
+
+#job-section-box {
+  height: 265px;
+  width: 100%;
+  border: 2px solid darkgrey;
+  margin: 16px 0px 7px 1px;
+  padding: 9px 5px 6px 3px;
+}
+
+.job-desc {
+  text-align: left;
+  margin: 0px 0px 0px 37px
+}
+
+
+.select-job-type {
+  text-align: left;
+  margin: 8px 6px 7px 17px;
+}
+
+.select-job {
+  margin: 13px 0px 14px 0px;
+}
+
+small {
+  float: left;
+  margin-left: 30px;
+  color: red;
+}
+
+#cancelBtn {
+  border: 1px solid black;
+  background-color: darkgray;
+}

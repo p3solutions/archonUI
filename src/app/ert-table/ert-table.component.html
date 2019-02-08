@@ -1,0 +1,234 @@
+<div id="ert-table-id">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card" style="height:455px">
+        <div class="card-body" id="ert-tbl-search">
+          <div class="row" style="margin-bottom: 12px;">
+            <div class="col-md-6">
+              <label id=table-heading>Table list</label>
+            </div>
+            <div class="col-md-6" id="get-tbl-list">
+              <a href="#"><i class="fa fa-plus"></i></a>
+            </div>
+            <div class="inner-addon right-addon">
+              <a href="" style="z-index:1" class="glyphicon glyphicon-search"></a>
+              <input type="text" class="form-control search-input" id="listSearch" placeholder="Search">
+            </div>
+          </div>
+          <div id="tbl-list">
+            <div class="scroll-div border">
+              <div class="sticky">
+                <div><input style="float:left" type="checkbox"></div>
+                <div class="first-div">Select</div>
+                <div></div>
+              </div>
+              <div class="well">
+                <div><input style="float:left" type="checkbox"></div>
+                <div class="first-div">app_config_1</div>
+                <div><i class="fa fa-chevron-right icon-div "></i></div>
+              </div>
+              <div class="well">
+                <div><input style="float:left" type="checkbox"></div>
+                <div class="first-div">app_config_1</div>
+                <div><i class="fa fa-chevron-right icon-div "></i></div>
+              </div>
+              <div class="well">
+                <div><input style="float:left" type="checkbox"></div>
+                <div class="first-div">app_config_1</div>
+                <div><i class="fa fa-chevron-right icon-div "></i></div>
+              </div>
+              <div class="well">
+                <div><input style="float:left" type="checkbox"></div>
+                <div class="first-div">app_config_1</div>
+                <div><i class="fa fa-chevron-right icon-div "></i></div>
+              </div>
+              <div class="well">
+                <div><input style="float:left" type="checkbox"></div>
+                <div class="first-div">app_config_1</div>
+                <div><i class="fa fa-chevron-right icon-div "></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card" style="height:455px">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3" id="sel-table-name">app_config_param</div>
+            <div class="col-md-9">
+              <ul class="nav nav-tabs mgmt-panel fl-r" style="margin-right: 12px;">
+                <li class="icon-list trim-text"><a href="#" data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i
+                      class="fa fa-plus"></i></a>
+                <li>
+                <li class="icon-list trim-text"><a href=""><i class="fa fa-filter"></i></a>
+                <li>
+                <li class="icon-list trim-text"><a href=""><i class="fa fa-refresh"></i></a>
+                <li>
+                <li class="icon-list trim-text"><a href=""><i class="fa fa-save"></i></a>
+                <li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <div id="table-name-heading" class="form-group">
+                <label id="lbl-alias">Table Alias Name</label>
+                <input type="text" class="form-control" name="tablename" id="tablename" placeholder="Enter Job Name">
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <div id="select-tbl-list">
+            <div class="scroll-div">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Key</th>
+                    <th>Include</th>
+                    <th>Column</th>
+                    <th>Column(as required in Output)
+                    <th>Type</th>
+                    <th>Config</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Key</td>
+                    <td><input type="checkbox"></td>
+                    <td>asdfg</td>
+                    <td><input type="text"></td>
+                    <td>varchar</td>
+                    <td><i class="fa fa-refresh"></i></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Key</td>
+                    <td><input type="checkbox"></td>
+                    <td>asdfg</td>
+                    <td><input type="text"></td>
+                    <td>varchar</td>
+                    <td><i class="fa fa-refresh"></i></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Key</td>
+                    <td><input type="checkbox"></td>
+                    <td>asdfg</td>
+                    <td><input type="text"></td>
+                    <td>varchar</td>
+                    <td><i class="fa fa-refresh"></i></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Key</td>
+                    <td><input type="checkbox"></td>
+                    <td>asdfg</td>
+                    <td><input type="text"></td>
+                    <td>varchar</td>
+                    <td><i class="fa fa-refresh"></i></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Key</td>
+                    <td><input type="checkbox"></td>
+                    <td>asdfg</td>
+                    <td><input type="text"></td>
+                    <td>varchar</td>
+                    <td><i class="fa fa-refresh"></i></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="nextbtn">
+    <button type="button" class="btn btn-primary next" style="float: right;margin-right: 12px">Next</button>
+    <button class="btn btn-primary Previous" style="float:right;margin-right:5px;">&laquo;
+      Back</button>
+  </div>
+
+  <div id="add-edit-user-defined-column-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:915px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add/Edit user defined columns
+            </h4>
+        </div>
+        <div class="modal-body">
+          <div id="table-name-heading" class="form-group">
+            <input type="text" class="form-control" name="ucolumnname" id="ucolumnname" placeholder="Enter unique column name">
+          </div>
+          <div>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 style="text-align:left" class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                      aria-controls="collapseOne">
+                      Combined Column Mode
+                    </a>
+                    <i style="float:right" class="fa fa-chevron-right"></i>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <div id="edit-column-div">     
+                            <div class="row" id="ccm-header">
+                              <div class="col-md-3">Prefix</div>
+                              <div class="col-md-3">Column</div>
+                              <div class="col-md-3">Suffix</div>
+                              <div class="col-md-3">Action</div>
+                            </div>
+                          <div class="row edit-column">
+                            <div class="col-md-3"><input type="text"></div>
+                            <div class="col-md-3">
+                              <select>
+                                <option>Param</option>
+                                <option>One</option>
+                                <option>Two</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3"><input type="text"></div>
+                            <div class="col-md-3"><a href="#"><i class="fa fa-plus"></i></a></div>
+                          </div>
+                    </div>
+                    <div id="query-mode-div">
+                     <label id="lbl-id">Query Mode</label> 
+                      <textarea class="form-control" style="width: 100%;height: 146px;"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 style="text-align:left" class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                      aria-expanded="false" aria-controls="collapseTwo">
+                      Query Mode
+                    </a>
+                    <i style="float:right" class="fa fa-chevron-right"></i>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                      <textarea class="form-control" style="width: 100%;height: 146px;"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

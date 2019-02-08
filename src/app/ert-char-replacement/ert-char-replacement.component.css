@@ -1,0 +1,33 @@
+#add-refresh-icon {
+  margin-top: 21px;
+  right: 95px;
+}
+
+#code-point-id {
+  padding-left: 42px;
+}
+
+#replacement-heading {
+  padding: 17px 24px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.2;
+  padding: 9px 16px;
+}
+
+.lbl-left {
+  float: left;
+}
+
+#char-replacement-table {
+  margin: 26px;
+  border-top: 2px solid #E6E9ED;
+  padding-top: 10px;
+}

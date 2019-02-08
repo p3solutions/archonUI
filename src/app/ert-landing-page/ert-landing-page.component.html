@@ -1,13 +1,22 @@
-<div class="row">
-  <div class="col-md-4">Available WorkSpace</div>
-  <div class="col-md-4"> Choose workspace</div>
-  <div class="col-md-4">
-      <div class="btn-group">
-          <div class="dropdown-menu scrollable">
-              <a class="dropdown-item dropdown-data">wee</a>
-              <a class="dropdown-item dropdown-data">wee</a>
-              <a class="dropdown-item dropdown-data">wee</a>
-          </div>
+<div id="ert-landing-id">
+  <div id="ert-header">
+    <div class="row">
+      <div class="col-md-10 text-left">
+        <div id="heading-jobs-avail">No Jobs Available</div>
       </div>
+      <div class="col-md-2">
+        <div class="row">
+          <div class="col-md-2" id="goto-char-replacement">
+            <a href="#" [routerLink]="['/workspace/ert/ert-char-replacement']">
+              <i style="font-size: 25px" class="fa fa-language"></i></a></div>
+          <div class="col-md-4" id="goto-jobs-config">
+            <a href="#" [routerLink]="['/workspace/ert/ert-jobs-config']">
+              <i style="font-size: 25px" class="fa fa-plus"></i></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <router-outlet></router-outlet>
   </div>
 </div>
