@@ -106,6 +106,7 @@ import {ErtWorkspacesComponent} from './ert-workspaces/ert-workspaces.component'
 import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
 import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
 import { ErtTableComponent } from './ert-table/ert-table.component';
+import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -174,7 +175,8 @@ export function tokenGetter() {
                 ErtWorkspacesComponent,
                 ErtCharReplacementComponent,
                 ErtJobsConfigComponent,
-                ErtTableComponent
+                ErtTableComponent,
+                ErtExtractDigestComponent
         ],
         imports: [
                 JwtModule.forRoot({

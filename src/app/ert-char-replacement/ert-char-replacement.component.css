@@ -26,8 +26,16 @@ body {
   float: left;
 }
 
+.fa-trash {
+  color: rgb(207, 19, 19);
+}
+
 #char-replacement-table {
   margin: 26px;
   border-top: 2px solid #E6E9ED;
   padding-top: 10px;
+}
+
+#char-replacement-table a {
+  cursor: pointer;
 }

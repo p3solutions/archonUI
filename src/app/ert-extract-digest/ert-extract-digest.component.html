@@ -1,0 +1,76 @@
+<div id="ert-table-id">
+<div>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="card" style="height:455px">
+          <div class="card-body" id="extract-data">
+            <div class="save-extract-heading">
+              <div>
+                <input type="checkbox"><label>Extract Data</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 font-left" id="extract-slider-heading">
+                <label>Xml/SIP file split size in MB(<small>Default 100</small>)</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class=" col-md-12 col-lg-12" style="height: 60px">
+                <mv-slider [value]=100 [step]="10" [ticksLabels]="[0,200,400,600,800,1000]" [ticks]="[0,200,400,600,800,1000]"></mv-slider>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="card" style="height:455px">
+          <div class="card-body" id="ingest-data">
+            <div class="save-extract-heading">
+              <div>
+                <input type="checkbox"><label>Ingest Data</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div>
+                <input type="text" class="form-control" placeholder="InfoArchieve Application Name">
+                <small>Note:Appliaction name is case sensitive</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <div>
+                <input type="text" class="form-control" placeholder="InfoArchieve Application Schema Name">
+                <small>Note:Schema name is case sensitive</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <div>
+                <input type="text" class="form-control" placeholder="InfoArchieve username">
+              </div>
+            </div>
+            <div class="form-group">
+              <div>
+                <input type="text" class="form-control" placeholder="InfoArchieve password">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="card" style="height:455px">
+          <div class="card-body" id="delete-data">
+            <div class="del-data">
+              <div>
+                <input type="checkbox"><label>Delete Data</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="saveBtnId">
+    <button type="button" class="btn btn-primary next" style="float: right;margin-right: 12px">Save</button>
+    <button class="btn btn-primary Previous" (click)="gotoTableExtraction()" style="float:right;margin-right:5px;">&laquo;
+      Back</button>
+  </div>
+</div>

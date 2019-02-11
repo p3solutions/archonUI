@@ -43,6 +43,7 @@ import { ErtWorkspacesComponent } from './ert-workspaces/ert-workspaces.componen
 import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
 import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
 import { ErtTableComponent } from './ert-table/ert-table.component';
+import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -104,6 +105,9 @@ const routes: Routes = [
           },
           {
             path: 'ert-table', component: ErtTableComponent
+          },
+          {
+            path: 'ert-extract-ingest', component: ErtExtractDigestComponent
           }
         ]
       }

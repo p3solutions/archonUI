@@ -1,0 +1,80 @@
+.save-extract-heading {
+  width: 100%;
+  border-bottom: 2px solid #E6E9ED
+}
+
+#ert-table-id {
+  position: relative;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 0.2
+}
+
+.save-extract-heading div {
+  margin: 24px 350px 10px 0px;
+}
+
+.save-extract-heading label {
+  padding: 15px;
+}
+
+#extract-slider-heading {
+  margin: 21px 28px 27px 21px;
+  text-align: left;
+}
+
+mv-slider::ng-deep .slider-selection.tick-slider-selection {
+  background-image: linear-gradient(to bottom, #1abc9c 0, #1abc9c 100%);
+}
+
+mv-slider::ng-deep .slider-handle {
+  background-color: #1abc9c;
+  background-image: linear-gradient(to bottom, #1abc9c 0, #086754 100%)
+}
+
+#ingest-data input[type=text] {
+  border: none;
+  border-bottom: 1px solid #2196F3;
+  margin-left: 13px;
+}
+
+#ingest-data .form-group div {
+  margin: 18px 26px 40px 0px;
+}
+
+#ingest-data small {
+  float: left;
+  padding: 3px 8px 5px 16px;
+}
+
+
+#saveBtnId {
+  position: absolute;
+  right: 16px;
+  margin-top: 20px;
+}
+
+#delete-data {
+  border-bottom: 2px solid #E6E9ED
+}
+
+#delete-data div {
+  margin: 27px 3px 5px 6px;
+}
+
+#delete-data label {
+  padding: 15px;
+}
+
+.slider-bottom-margin {
+  margin-bottom: 42px;
+}
+
+.slider-tick-label {
+  width: 24px;
+}
+
+mv-slider::ng-deep .slider-horizontal {
+  width: 90%;
+}
