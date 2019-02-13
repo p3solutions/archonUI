@@ -91,9 +91,8 @@ export class TableListComponent implements OnInit {
   }
   ngOnInit() {
     this.tablelistService.currentValue.subscribe(value => {
-      this.homeStage = value;
-      console.log(value);
-    });
+      // this.homeStage = value;
+      });
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
     this.getTableList();

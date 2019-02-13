@@ -304,4 +304,15 @@ width: 22%;
   font-size:20px;
   color:darkred;
 }
+.overflow-text {
+  float: left;
+  width: 96%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.overflow-text-arrow {
+  float: left;
+  width: 4%;
+  text-align: right;
+}
 
