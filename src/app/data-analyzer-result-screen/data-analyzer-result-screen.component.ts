@@ -215,6 +215,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   addJoins() {
+  this.updateNotif = false;
+  this.updateSuccess = false;
   const finalSecondaryTableListArray = [];
   this.resultantMap.forEach((value, key) =>  {
   let tempArray = [];
