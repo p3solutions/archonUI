@@ -21,7 +21,7 @@ export class AddMembersService {
   });
   private apiUrl = environment.apiUrl;
   private getAllUsersUrl = this.apiUrl + 'users';
-  private addMembersUrl = this.apiUrl + '/workspaces/access';
+  private addMembersUrl = this.apiUrl + 'workspaces/access';
 
   constructor(private http: HttpClient) { }
 

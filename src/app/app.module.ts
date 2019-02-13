@@ -101,6 +101,15 @@ import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extr
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { ERTComponent } from './ert/ert.component';
+import { StoredProcViewService } from './stored-proc-view/stored-proc-view.service';
+import {ErtLandingPageComponent} from './ert-landing-page/ert-landing-page.component';
+import {ErtWorkspacesComponent} from './ert-workspaces/ert-workspaces.component';
+import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
+import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
+import { ErtTableComponent } from './ert-table/ert-table.component';
+import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
+import { ErtTableColConfigComponent } from './ert-table-col-config/ert-table-col-config.component';
+import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -165,7 +174,15 @@ export function tokenGetter() {
                 DbExtractorLastStepComponent,
                 DbExtractorExecQueryComponent,
                 StoredProcViewComponent,
-                ERTComponent
+                ERTComponent,
+                ErtLandingPageComponent,
+                ErtWorkspacesComponent,
+                ErtCharReplacementComponent,
+                ErtJobsConfigComponent,
+                ErtTableComponent,
+                ErtExtractDigestComponent,
+                ErtTableColConfigComponent,
+                ErtDatarecordConfigComponent
         ],
         imports: [
                 JwtModule.forRoot({
@@ -227,7 +244,8 @@ export function tokenGetter() {
                 UserProfileService,
                 EditRelationshipInfoService,
                 AddDirectJoinService,
-                DbExtractorService
+                DbExtractorService,
+                StoredProcViewService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent]

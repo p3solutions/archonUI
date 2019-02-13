@@ -6,31 +6,13 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { StoredProcViewService } from './stored-proc-view.service';
 import { FormsModule } from '@angular/forms';
 import { UserinfoService } from '../userinfo.service';
-import { WorkspaceObject } from '../workspace-objects';
 
-xdescribe('StoredProcViewComponent', () => {
+describe('StoredProcViewComponent', () => {
   let component: StoredProcViewComponent;
   let fixture: ComponentFixture<StoredProcViewComponent>;
   let service: WorkspaceHeaderService;
-  let workspace:WorkspaceObject={
-    id: +"5c49503153a7a476719e84bd",
-     createdAt: 1548308529,
-     updatedAt:  1548308529,
-      workspaceName:  "New Workspace", 
-      masterMetadataVersion: 22,
-      databases:[{
-      id: "5c384606d9cb1c18411001c9",
-      name: "ARCHON_DEMO_DB",
-      type: "MYSQL"}],
-      members:[],
-      owner:null,
-      softDeleted:false,
-      workspaceRole:null,
-      workspaceState:"Pending",
-      loggedInUserRole:null,
-      lastUpdatedTime:null,
-      databaseList:[]
-  }
+
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StoredProcViewComponent],
@@ -43,12 +25,13 @@ xdescribe('StoredProcViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StoredProcViewComponent);
     component = fixture.componentInstance;
+    const WHS = TestBed.get(WorkspaceHeaderService);
+    spyOn(WHS, 'getSelectedWorkspaceId').and.returnValue('');
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
     service = TestBed.get(WorkspaceHeaderService);
-    
   });
 });

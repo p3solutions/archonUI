@@ -38,6 +38,14 @@ import { DbExtractorStepTwoComponent } from './db-extractor-step-two/db-extracto
 import { DbExtractorLastStepComponent } from './db-extractor-last-step/db-extractor-last-step.component';
 import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
+import { ErtLandingPageComponent } from './ert-landing-page/ert-landing-page.component';
+import { ErtWorkspacesComponent } from './ert-workspaces/ert-workspaces.component';
+import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
+import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
+import { ErtTableComponent } from './ert-table/ert-table.component';
+import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
+import { ErtTableColConfigComponent } from './ert-table-col-config/ert-table-col-config.component';
+import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -56,7 +64,8 @@ const routes: Routes = [
             path: 'manage-members/:id', component: ManageMembersComponent
           }, {
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
-          }]
+          }
+        ]
       }, {
         path: 'metalyzer/:wsId_Mode', component: MetalyzerComponent, canActivate: [AuthenticationGuard], children: [
           {
@@ -79,6 +88,34 @@ const routes: Routes = [
           }
           , {
             path: 'db-extractor-exec-query', component: DbExtractorExecQueryComponent
+          }
+        ]
+      },
+      {
+        path: 'ert', component: ErtLandingPageComponent, canActivate: [AuthenticationGuard], children: [
+          {
+            path: '', redirectTo: 'ert-workspace', pathMatch: 'full'
+          },
+          {
+            path: 'ert-workspace', component: ErtWorkspacesComponent
+          },
+          {
+            path: 'ert-char-replacement', component: ErtCharReplacementComponent
+          },
+          {
+            path: 'ert-jobs-config', component: ErtJobsConfigComponent
+          },
+          {
+            path: 'ert-table', component: ErtTableComponent
+          },
+          {
+            path: 'ert-extract-ingest', component: ErtExtractDigestComponent
+          },
+          {
+            path: 'ert-table-col-config', component: ErtTableColConfigComponent
+          },
+          {
+            path: 'ert-datarecord-config', component: ErtDatarecordConfigComponent
           }
         ]
       }

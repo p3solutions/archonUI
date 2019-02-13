@@ -10,19 +10,19 @@ import { ProcessDetailsObj } from '../db-extractor';
   styleUrls: ['./db-extractor-exec-query.component.css']
 })
 export class DbExtractorExecQueryComponent implements OnInit {
-  showFileUpload: boolean = false;
+  showFileUpload = false;
   executeQueryForm: FormGroup;
-  enableNextBtn: boolean = true;
-  isQueryFileExist: boolean = false;
+  enableNextBtn = true;
+  isQueryFileExist = false;
   ProcessDetailsObj: ProcessDetailsObj = new ProcessDetailsObj();
   queryFileToUpload: File = null;
-  queryFileName: string = '';
+  queryFileName = '';
   constructor(private router: Router, private dbExtractorService: DbExtractorService) { }
 
   ngOnInit() {
     this.ProcessDetailsObj = this.dbExtractorService.getProcessDetailsObj();
-    if(this.ProcessDetailsObj===undefined){
-      this.ProcessDetailsObj= new ProcessDetailsObj();
+    if (this.ProcessDetailsObj === undefined) {
+      this.ProcessDetailsObj = new ProcessDetailsObj();
     }
     this.createExecQueryForm();
   }
@@ -36,32 +36,30 @@ export class DbExtractorExecQueryComponent implements OnInit {
     });
 
     if (this.ProcessDetailsObj.ExecuteQueryObj.isQueryFile) {
-      this.showFileUpload = true
+      this.showFileUpload = true;
       this.isQueryFileExist = true;
       this.enableNextBtn = this.ProcessDetailsObj.ExecuteQueryObj.queryFileToUpload ? false : true;
-      this.queryFileName = this.ProcessDetailsObj.ExecuteQueryObj.queryFileName
-    }
-    else if (this.ProcessDetailsObj.ExecuteQueryObj.query && this.ProcessDetailsObj.ExecuteQueryObj.queryTitle) {
-      this.showFileUpload = false
+      this.queryFileName = this.ProcessDetailsObj.ExecuteQueryObj.queryFileName;
+    } else if (this.ProcessDetailsObj.ExecuteQueryObj.query && this.ProcessDetailsObj.ExecuteQueryObj.queryTitle) {
+      this.showFileUpload = false;
       this.isQueryFileExist = false;
       this.enableNextBtn = false;
     }
   }
 
   enableNextBtnFn() {
-    if (this.executeQueryForm.value.query && this.executeQueryForm.value.queryTitle && this.executeQueryForm.value.isQueryFile == false) {
+    if (this.executeQueryForm.value.query && this.executeQueryForm.value.queryTitle && this.executeQueryForm.value.isQueryFile === false) {
       this.enableNextBtn = false;
-    } else if (this.executeQueryForm.value.queryTitle && this.isQueryFileExist && this.executeQueryForm.value.isQueryFile == true) {
+    } else if (this.executeQueryForm.value.queryTitle && this.isQueryFileExist && this.executeQueryForm.value.isQueryFile === true) {
       this.enableNextBtn = false;
-    }
-    else {
+    } else {
       this.enableNextBtn = true;
     }
   }
 
   uploadQueryFile(files: FileList) {
     this.isQueryFileExist = files != null ? true : false;
-    if (this.executeQueryForm.value.queryTitle && this.isQueryFileExist && this.executeQueryForm.value.isQueryFile == true) {
+    if (this.executeQueryForm.value.queryTitle && this.isQueryFileExist && this.executeQueryForm.value.isQueryFile === true) {
       this.enableNextBtn = false;
 
     }
@@ -71,16 +69,15 @@ export class DbExtractorExecQueryComponent implements OnInit {
 
   setUploadQueryFile() {
     this.showFileUpload = !this.showFileUpload;
-    this.enableNextBtn = this.showFileUpload == true ? true : false;
+    this.enableNextBtn = this.showFileUpload === true ? true : false;
     if (this.showFileUpload) {
 
     } else {
       if (this.ProcessDetailsObj.ExecuteQueryObj.query && this.ProcessDetailsObj.ExecuteQueryObj.queryTitle) {
-        this.showFileUpload = false
+        this.showFileUpload = false;
         this.isQueryFileExist = false;
         this.enableNextBtn = false;
-      }
-      else {
+      } else {
         this.enableNextBtn = true;
       }
     }
@@ -90,11 +87,11 @@ export class DbExtractorExecQueryComponent implements OnInit {
     this.ProcessDetailsObj.ExecuteQueryObj.queryTitle = this.executeQueryForm.get('queryTitle').value;
     this.ProcessDetailsObj.ExecuteQueryObj.isQueryFile = this.executeQueryForm.get('isQueryFile').value;
     if (this.executeQueryForm.get('isQueryFile').value) {
-      this.ProcessDetailsObj.ExecuteQueryObj.queryFileToUpload = this.queryFileToUpload?this.queryFileToUpload: this.ProcessDetailsObj.ExecuteQueryObj.queryFileToUpload
+      this.ProcessDetailsObj.ExecuteQueryObj.queryFileToUpload = this.queryFileToUpload ?
+       this.queryFileToUpload : this.ProcessDetailsObj.ExecuteQueryObj.queryFileToUpload;
       this.ProcessDetailsObj.ExecuteQueryObj.query = '';
       this.ProcessDetailsObj.ExecuteQueryObj.queryFileName = this.queryFileName;
-    }
-    else {
+    } else {
       this.ProcessDetailsObj.ExecuteQueryObj.query = this.executeQueryForm.get('query').value;
       this.ProcessDetailsObj.ExecuteQueryObj.queryFileToUpload = null;
       this.ProcessDetailsObj.ExecuteQueryObj.queryFileName = '';
@@ -102,21 +99,20 @@ export class DbExtractorExecQueryComponent implements OnInit {
   }
 
   gotoStepTwo() {
-    if (this.showFileUpload == false && this.executeQueryForm.get('queryTitle').value != '' &&
-      this.executeQueryForm.get('query').value != '') {
+    if (this.showFileUpload === false && this.executeQueryForm.get('queryTitle').value !== '' &&
+      this.executeQueryForm.get('query').value !== '') {
       this.setExecuteQueryObj();
-      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 });
       this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
-    }
-    else if (this.executeQueryForm.get('queryTitle').value != '' && this.isQueryFileExist == true) {
+    } else if (this.executeQueryForm.get('queryTitle').value !== '' && this.isQueryFileExist === true) {
       this.setExecuteQueryObj();
-      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 });
       this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
     }
   }
 
   prevStepOne() {
-    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 })
+    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
     this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
   }
 }

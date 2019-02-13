@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
-xdescribe('DataAnalyzerResultScreenComponent', () => {
+describe('DataAnalyzerResultScreenComponent', () => {
   let component: DataAnalyzerResultScreenComponent;
   let fixture: ComponentFixture<DataAnalyzerResultScreenComponent>;
 

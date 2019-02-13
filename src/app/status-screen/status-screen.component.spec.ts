@@ -99,115 +99,115 @@ describe('StatusScreenComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('StatusService injected via inject(...) and TestBed.get(...) should be the same instance',
-    inject([StatusService], (injectService: StatusService) => {
-      expect(injectService).toBe(testBedService);
-    })
-  );
+  // xit('StatusService injected via inject(...) and TestBed.get(...) should be the same instance',
+  //   inject([StatusService], (injectService: StatusService) => {
+  //     expect(injectService).toBe(testBedService);
+  //   })
+  // );
 
 
-  xit('DI, Should contain the jobOriginList as response when getJobOrigins() is called', fakeAsync(() => {
-    expect(component.jobOriginList.length === 0).toBeTruthy();
-    spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins(jobOriginArray));
-    component.getJobOrigins();
-    flushMicrotasks();
-    fixture.detectChanges();
-    expect(component.jobOriginList.length > 0).toBeTruthy();
-    disposeMe.get('getJobOrigins').unsubscribe();
-  }));
+  // xit('DI, Should contain the jobOriginList as response when getJobOrigins() is called', fakeAsync(() => {
+  //   expect(component.jobOriginList.length === 0).toBeTruthy();
+  //   spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins(jobOriginArray));
+  //   component.getJobOrigins();
+  //   flushMicrotasks();
+  //   fixture.detectChanges();
+  //   expect(component.jobOriginList.length > 0).toBeTruthy();
+  //   disposeMe.get('getJobOrigins').unsubscribe();
+  // }));
 
-  xit('DI, Should contain the jobStatusList as response when getJobStatuses() is called', fakeAsync(() => {
-    expect(component.jobStatusList.length === 0).toBeTruthy();
-    spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses(jobStatusArray));
-    component.getJobStatuses();
-    flushMicrotasks();
-    fixture.detectChanges();
-    expect(component.jobStatusList.length > 0).toBeTruthy();
-    disposeMe.get('getJobOrigins').unsubscribe();
-  }));
+  // xit('DI, Should contain the jobStatusList as response when getJobStatuses() is called', fakeAsync(() => {
+  //   expect(component.jobStatusList.length === 0).toBeTruthy();
+  //   spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses(jobStatusArray));
+  //   component.getJobStatuses();
+  //   flushMicrotasks();
+  //   fixture.detectChanges();
+  //   expect(component.jobStatusList.length > 0).toBeTruthy();
+  //   disposeMe.get('getJobOrigins').unsubscribe();
+  // }));
 
-  xit('DI, Should contain the job-list as response when getJobList() is called, then all the filters avilable',
-    // fakeAsync(
-    () => {
-      expect(component.jobList.length === 0).toBeTruthy();
-      spyOn(testBedService, 'getJobList').and.returnValue(getJobList(jobArray));
-      component.loadStatus = true;
-      component.getJobList();
-      // flushMicrotasks();
-      fixture.detectChanges();
-      expect(component.jobList.length > 0).toBeTruthy();
+  // xit('DI, Should contain the job-list as response when getJobList() is called, then all the filters avilable',
+  //   // fakeAsync(
+  //   () => {
+  //     expect(component.jobList.length === 0).toBeTruthy();
+  //     spyOn(testBedService, 'getJobList').and.returnValue(getJobList(jobArray));
+  //     component.loadStatus = true;
+  //     component.getJobList();
+  //     // flushMicrotasks();
+  //     fixture.detectChanges();
+  //     expect(component.jobList.length > 0).toBeTruthy();
 
-      spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses(jobStatusArray));
-      component.getJobStatuses();
-      // flushMicrotasks();
-      fixture.detectChanges();
-      // testing first dropdown of filter JobStatus
-      const jStatusFilter = debugElement.query(By.css('.j-status'));
-      expect(jStatusFilter.nativeElement.innerText).toBe(component.jobStatusList[0]);
+  //     spyOn(testBedService, 'getJobStatuses').and.returnValue(getJobStatuses(jobStatusArray));
+  //     component.getJobStatuses();
+  //     // flushMicrotasks();
+  //     fixture.detectChanges();
+  //     // testing first dropdown of filter JobStatus
+  //     const jStatusFilter = debugElement.query(By.css('.j-status'));
+  //     expect(jStatusFilter.nativeElement.innerText).toBe(component.jobStatusList[0]);
 
-      spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins(jobOriginArray));
-      component.getJobOrigins();
-      // flushMicrotasks();
-      fixture.detectChanges();
-      // testing first dropdown of filter JobOrigin
-      const jOriginFilter = debugElement.query(By.css('.j-origin'));
-      expect(jOriginFilter.nativeElement.innerText).toBe(component.jobOriginList[0]);
+  //     spyOn(testBedService, 'getJobOrigins').and.returnValue(getJobOrigins(jobOriginArray));
+  //     component.getJobOrigins();
+  //     // flushMicrotasks();
+  //     fixture.detectChanges();
+  //     // testing first dropdown of filter JobOrigin
+  //     const jOriginFilter = debugElement.query(By.css('.j-origin'));
+  //     expect(jOriginFilter.nativeElement.innerText).toBe(component.jobOriginList[0]);
 
-      // testing for searchBox existence
-      const searchBox = debugElement.query(By.css('#job-search-box'));
-      expect(searchBox.nativeNode).toBeTruthy();
+  //     // testing for searchBox existence
+  //     const searchBox = debugElement.query(By.css('#job-search-box'));
+  //     expect(searchBox.nativeNode).toBeTruthy();
 
-      // testing for refresh-button existence
-      const refreshButton = debugElement.query(By.css('i.fa-refresh'));
-      expect(refreshButton.nativeNode).toBeTruthy();
+  //     // testing for refresh-button existence
+  //     const refreshButton = debugElement.query(By.css('i.fa-refresh'));
+  //     expect(refreshButton.nativeNode).toBeTruthy();
 
-      // testing for back-button existence
-      const backButton = debugElement.query(By.css('i.fa-arrow-left'));
-      expect(backButton.nativeNode).toBeTruthy();
+  //     // testing for back-button existence
+  //     const backButton = debugElement.query(By.css('i.fa-arrow-left'));
+  //     expect(backButton.nativeNode).toBeTruthy();
 
-      // testing for filter verifications
-      jOriginFilter.triggerEventHandler('click', null);
-      // flushMicrotasks();
-      fixture.detectChanges();
-      expect(component.selectedJobOrigin).toBe(jOriginFilter.nativeElement.innerText);
+  //     // testing for filter verifications
+  //     jOriginFilter.triggerEventHandler('click', null);
+  //     // flushMicrotasks();
+  //     fixture.detectChanges();
+  //     expect(component.selectedJobOrigin).toBe(jOriginFilter.nativeElement.innerText);
 
-      jStatusFilter.triggerEventHandler('click', null);
-      // flushMicrotasks();
-      fixture.detectChanges();
-      expect(component.selectedJobStatus).toBe(jStatusFilter.nativeElement.innerText);
+  //     jStatusFilter.triggerEventHandler('click', null);
+  //     // flushMicrotasks();
+  //     fixture.detectChanges();
+  //     expect(component.selectedJobStatus).toBe(jStatusFilter.nativeElement.innerText);
 
-      // datatable Fn executed but statusTable is not stored, hence throwing error in calling component.searchText()
-      // searchBox.nativeElement.value = 'success';
-      // component.searchText(searchBox.nativeElement.value);
-      // fixture.detectChanges();
-      // expect(component.searchBoxText).toContain(searchBox.nativeElement.value);
+  //     // datatable Fn executed but statusTable is not stored, hence throwing error in calling component.searchText()
+  //     // searchBox.nativeElement.value = 'success';
+  //     // component.searchText(searchBox.nativeElement.value);
+  //     // fixture.detectChanges();
+  //     // expect(component.searchBoxText).toContain(searchBox.nativeElement.value);
 
-      // refresh button refreshes filters
-      debugElement.query(By.css('i.fa-refresh')).triggerEventHandler('click', null);
-      expect(component.selectedJobOrigin).toBe('');
-      expect(component.selectedJobStatus).toBe('');
-      // const getJobListSpy = spyOn(component, 'getJobList');
-      // expect(getJobListSpy).toHaveBeenCalled();
+  //     // refresh button refreshes filters
+  //     debugElement.query(By.css('i.fa-refresh')).triggerEventHandler('click', null);
+  //     expect(component.selectedJobOrigin).toBe('');
+  //     expect(component.selectedJobStatus).toBe('');
+  //     // const getJobListSpy = spyOn(component, 'getJobList');
+  //     // expect(getJobListSpy).toHaveBeenCalled();
 
-      // job-details functionality verification
-      // const firstJob = component.jobList[0];
-      // const showStatusDetailsSpy = spyOn(component, 'showStatusDetails');
-      // component.showStatusDetails(firstJob._id, firstJob.jobInfo.jobStatus, firstJob.jobDetails, firstJob.input);
-      // fixture.detectChanges();
-      // expect(showStatusDetailsSpy).toHaveBeenCalled();
-      // expect(component.selectedJD.id).toBe(firstJob._id);
+  //     // job-details functionality verification
+  //     // const firstJob = component.jobList[0];
+  //     // const showStatusDetailsSpy = spyOn(component, 'showStatusDetails');
+  //     // component.showStatusDetails(firstJob._id, firstJob.jobInfo.jobStatus, firstJob.jobDetails, firstJob.input);
+  //     // fixture.detectChanges();
+  //     // expect(showStatusDetailsSpy).toHaveBeenCalled();
+  //     // expect(component.selectedJD.id).toBe(firstJob._id);
 
-      // Back button should go to Dashboard
-      const routerSpy = spyOn(routerService, 'navigate');
-      component.gotoDashboard();
-      fixture.detectChanges();
-      expect(routerSpy).toHaveBeenCalledWith(['workspace/workspace-dashboard/workspace-services']);
+  //     // Back button should go to Dashboard
+  //     const routerSpy = spyOn(routerService, 'navigate');
+  //     component.gotoDashboard();
+  //     fixture.detectChanges();
+  //     expect(routerSpy).toHaveBeenCalledWith(['workspace/workspace-dashboard/workspace-services']);
 
-      disposeMe.get('getJobOrigins').unsubscribe();
-      disposeMe.get('getJobOrigins').unsubscribe();
-      disposeMe.get('getJobList').unsubscribe();
-    })
-    // )
-    ;
+  //     disposeMe.get('getJobOrigins').unsubscribe();
+  //     disposeMe.get('getJobOrigins').unsubscribe();
+  //     disposeMe.get('getJobList').unsubscribe();
+  //   })
+  //   // )
+  //   ;
 
 });
