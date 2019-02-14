@@ -157,7 +157,11 @@ button {
 }
 .dataA-scrollable-div {
   overflow: auto;
-  max-height: 300px;
+  max-height: 277px;
+}
+.dataA-scrollable-div-A {
+  overflow: auto;
+  max-height: 318px;
 }
 .primary-col-chkbx {
   margin: 4px 5px;
