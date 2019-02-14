@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ErtWorkspacesComponent } from './ert-workspaces.component';
+import { ErtJobsComponent } from './ert-jobs.component';
 
-describe('ErtWorkspacesComponent', () => {
-  let component: ErtWorkspacesComponent;
-  let fixture: ComponentFixture<ErtWorkspacesComponent>;
+describe('ErtJobsComponent', () => {
+  let component: ErtJobsComponent;
+  let fixture: ComponentFixture<ErtJobsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErtWorkspacesComponent ]
+      declarations: [ ErtJobsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ErtWorkspacesComponent);
+    fixture = TestBed.createComponent(ErtJobsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

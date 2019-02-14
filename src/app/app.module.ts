@@ -102,11 +102,12 @@ import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.com
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { StoredProcViewService } from './stored-proc-view/stored-proc-view.service';
 import {ErtLandingPageComponent} from './ert-landing-page/ert-landing-page.component';
-import {ErtWorkspacesComponent} from './ert-workspaces/ert-workspaces.component';
 import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
 import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
 import { ErtTableComponent } from './ert-table/ert-table.component';
 import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
+import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-table-column-config.component';
+import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -172,11 +173,12 @@ export function tokenGetter() {
                 DbExtractorExecQueryComponent,
                 StoredProcViewComponent,
                 ErtLandingPageComponent,
-                ErtWorkspacesComponent,
                 ErtCharReplacementComponent,
                 ErtJobsConfigComponent,
                 ErtTableComponent,
-                ErtExtractDigestComponent
+                ErtExtractDigestComponent,
+                ErtTableColumnConfigComponent,
+                ErtJobsComponent
         ],
         imports: [
                 JwtModule.forRoot({

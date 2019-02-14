@@ -15,4 +15,7 @@ export class ErtExtractDigestComponent implements OnInit {
   gotoTableExtraction() {
     this.router.navigate(['workspace/ert/ert-table']);
   }
+  gotoTableColConfig() {
+    this.router.navigate(['workspace/ert/ert-table-col-config']);
+  }
 }

@@ -8,7 +8,7 @@
   position: relative;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 13px;
   letter-spacing: 0.2
 }
 
@@ -51,7 +51,8 @@
 }
 
 #sel-table-name {
-  padding: 13px 49px 5px 1px;
+  padding: 11px 28px 9px 37px;
+  text-align: left;
 }
 
 input#tablename {
@@ -174,7 +175,7 @@ input#ucolumnname {
 #add-edit-column {
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 13px;
   letter-spacing: 0.2;
   border: 2px solid #E6E9ED;
 }
@@ -222,7 +223,7 @@ input#ucolumnname {
   margin: 0px 0px 0px 28px;
   padding: 7px 27px 7px 26px;
   color: white;
-  font-size: 16px;
+  font-size: 13px;
 }
 
 #nav-tab .active-tab {
@@ -245,8 +246,16 @@ input#ucolumnname {
 }
 
 #select-tbl-list thead {
+  font-family: "Montserrat", sans-serif;
   background-color: #1abc9c;
   color: white;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+#select-tbl-list td {
+  text-align: left;
 }
 
 .save-extract-heading {
@@ -262,7 +271,6 @@ input#ucolumnname {
   padding: 15px;
 }
 
-
 .add-edit-form-item select {
   width: 215px
 }
@@ -270,6 +278,10 @@ input#ucolumnname {
 #config-table-header div {
   width: 20%;
 }
+#config-table div {
+  width: 20%;
+}
+
 
 .config-table {
   border: 2px solid #E6E9ED;
@@ -280,8 +292,6 @@ input#ucolumnname {
 table tr td:nth-child(6) {
   cursor: pointer;
 }
-
-
 
 #config-table-header {
   background-color: #1abc9c;
@@ -294,10 +304,17 @@ table tr td:nth-child(6) {
   overflow: auto;
 }
 
+#filter-conf div.form-group.filter-well {
+  float: left;
+  width: 17%;
+  padding: 8px 6px 7px 8px;
+  margin: 10px 8px 8px 12px;
+}
+
 #filter-conf div.form-group {
   float: left;
-  width: 20%;
-  padding: 8px 6px 7px 8px
+  padding: 8px 5px 7px 8px;
+  margin: 1px 9px 4px 6px;
 }
 
 #filter-option {
@@ -305,12 +322,12 @@ table tr td:nth-child(6) {
   height: 395px;
 }
 
-.filter-item-list{
+.filter-item-list {
   border: 2px solid #E6E9ED;
   overflow: auto;
 }
 
-.filter-well{
+.filter-well {
   min-height: 22px;
   margin-bottom: 9px;
   background-color: #fff;
@@ -325,8 +342,40 @@ table tr td:nth-child(6) {
   cursor: pointer;
 }
 
-
 .filter-well:hover {
   background-color: #f5f5f5;
   border: 1px solid white;
+}
+
+#add-edit-column {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.2;
+  border: 2px solid #E6E9ED;
+}
+
+#user-defined {
+  border-bottom: 2px solid #E6E9ED;
+  background-color: #1abc9c;
+  color: white;
+}
+
+#user-defined-table .add-edit-form-item {
+  float: left;
+  margin: 5px 0px 11px 0px;
+  width: 25%;
+}
+
+#user-defined-table {
+  margin: 8px 3px 1px 0px;
+  border: 2px solid #E6E9ED;
+  height: 166px;
+  overflow: auto
+}
+
+.user-defined-box {
+  padding: 8px 2px 3px 0px;
+  border-bottom: 2px solid #E6E9ED;
+  height: 50px;
 }

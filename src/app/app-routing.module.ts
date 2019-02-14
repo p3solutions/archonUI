@@ -39,11 +39,12 @@ import { DbExtractorLastStepComponent } from './db-extractor-last-step/db-extrac
 import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { ErtLandingPageComponent } from './ert-landing-page/ert-landing-page.component';
-import { ErtWorkspacesComponent } from './ert-workspaces/ert-workspaces.component';
 import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
 import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
 import { ErtTableComponent } from './ert-table/ert-table.component';
 import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
+import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-table-column-config.component';
+import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -92,10 +93,10 @@ const routes: Routes = [
       {
         path: 'ert', component: ErtLandingPageComponent, canActivate: [AuthenticationGuard], children: [
           {
-            path: '', redirectTo: 'ert-workspace', pathMatch: 'full'
+            path: '', redirectTo: 'ert-jobs', pathMatch: 'full'
           },
           {
-            path: 'ert-workspace', component: ErtWorkspacesComponent
+            path: 'ert-jobs', component: ErtJobsComponent
           },
           {
             path: 'ert-char-replacement', component: ErtCharReplacementComponent
@@ -107,8 +108,15 @@ const routes: Routes = [
             path: 'ert-table', component: ErtTableComponent
           },
           {
+            path: 'ert-table/:jobId', component: ErtTableComponent
+          },
+          {
             path: 'ert-extract-ingest', component: ErtExtractDigestComponent
-          }
+          },
+          {
+            path: 'ert-table-col-config', component: ErtTableColumnConfigComponent
+          },
+
         ]
       }
     ]

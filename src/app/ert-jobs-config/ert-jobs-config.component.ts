@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ErtJobParams } from '../ert-landing-page/ert';
+import { ErtService } from '../ert-landing-page/ert.service';
 
 @Component({
   selector: 'app-ert-jobs-config',
@@ -7,14 +9,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./ert-jobs-config.component.css']
 })
 export class ErtJobsConfigComponent implements OnInit {
-
-  constructor(public route: Router) { }
-
+  ertJobParams: ErtJobParams = new ErtJobParams();
+  constructor(public route: Router, private ertService: ErtService) { }
   ngOnInit() {
+    this.ertService.ertJobParams = new ErtJobParams();
   }
 
-  goToExtraction(event) {
-    console.log(event);
+  goToExtraction(event, ertJobMode) {
+    this.ertJobParams.ertJobMode = ertJobMode;
+    this.ertService.setErtJobParams(this.ertJobParams);
     this.route.navigate(['/workspace/ert/ert-table']);
+  }
+
+  enableJobSelection() {
+    if (this.ertJobParams.ertJobTitle !== '') {
+      const radios = document.getElementsByName('selectjob');
+      const array: any = Array.from(radios);
+      for (const item of array) {
+        item.disabled = false;
+      }
+    }
   }
 }

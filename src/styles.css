@@ -1076,3 +1076,7 @@ label{
 #ert-landing-id {
   height: 510px;
 }
+
+.cursor-poniter{
+  cursor: pointer;
+}
