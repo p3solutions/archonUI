@@ -29,6 +29,8 @@ export class TableListService {
   currentResultArray = this.resultantArray.asObservable();
   private changeValue = new BehaviorSubject(false);
   currentValue = this.changeValue.asObservable();
+  private selectTableslist = new BehaviorSubject('');
+  userselectTableslist = this.selectTableslist.asObservable();
 
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
@@ -129,6 +131,10 @@ export class TableListService {
 
   changeBooleanValue(message) {
     this.changeValue.next(message);
+  }
+
+  selectTables(message) {
+    this.selectTableslist.next(message);
   }
 
 }

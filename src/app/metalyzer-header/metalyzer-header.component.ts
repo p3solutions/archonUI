@@ -2,6 +2,8 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { MetalyzerHeaderService } from './metalyzer-header.service';
+import { TableListService } from '../table-list/table-list.service';
+
 @Component({
   selector: 'app-metalyzer-header',
   templateUrl: './metalyzer-header.component.html',
@@ -15,8 +17,10 @@ export class MetalyzerHeaderComponent implements OnInit {
   xml = 'xml';
   databaseID: any;
   exportxmlview: any;
+  userselectTableslist: any;
   constructor(
     private router: Router,
+    private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService
   ) {
@@ -31,6 +35,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.metalyzerHeaderService.getWorkspaceName().subscribe(result => {
       console.log('wsname in header component', result);
       this.wsName = result;
+    });
+    this.tablelistService.userselectTableslist.subscribe(data => {
+      this.userselectTableslist = data;
     });
   }
 
@@ -48,7 +55,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   exportxml() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
-    this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml)
+    this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml, this.userselectTableslist.tableId)
       .subscribe(result => {
         this.downloadFile(result, result.type);
       });
