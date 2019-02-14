@@ -38,7 +38,11 @@ export class MetalyzerHeaderService {
   }
   getExportxml(workspaceId, databaseID, xml, tableID): Observable<Blob> {
     const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml, tableId: [tableID] };
-    console.log(params, 'ts');
+    return this.http.post(this.exportxmlUrl, params,
+      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+  }
+  getExportjson(workspaceId, databaseID, json, tableID): Observable<Blob> {
+    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: json, tableId: [tableID] };
     return this.http.post(this.exportxmlUrl, params,
       { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
   }

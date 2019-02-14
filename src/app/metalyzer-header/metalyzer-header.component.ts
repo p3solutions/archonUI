@@ -15,6 +15,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   phase: string;
   workspaceID: any;
   xml = 'xml';
+  json = 'json';
   databaseID: any;
   exportxmlview: any;
   userselectTableslist: any;
@@ -52,12 +53,31 @@ export class MetalyzerHeaderComponent implements OnInit {
     e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
     a.dispatchEvent(e);
   }
+  downloadFilejson(content, fileType) {
+    const fileName = this.wsName + '-metadata.json';
+    const type = fileType || 'json';
+    const e = document.createEvent('MouseEvents');
+    const a = document.createElement('a');
+    a.download = fileName || 'output.json';
+    a.href = window.URL.createObjectURL(content);
+    a.dataset.downloadurl = [type, a.download, a.href].join(':');
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+  }
   exportxml() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml, this.userselectTableslist.tableId)
       .subscribe(result => {
         this.downloadFile(result, result.type);
+      });
+  }
+  exportjson() {
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.databaseID = this.workspaceHeaderService.getDatabaseID();
+    this.metalyzerHeaderService.getExportjson(this.workspaceID, this.databaseID, this.json, this.userselectTableslist.tableId)
+      .subscribe(result => {
+        this.downloadFilejson(result, result.type);
       });
   }
 }
