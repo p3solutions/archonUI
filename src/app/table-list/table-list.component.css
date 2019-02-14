@@ -72,7 +72,8 @@ h4 {
 }
 
 #item {
-  margin-top: 10px;
+  margin-top: 7px;
+  margin-bottom: 7px;
 }
 
 #trash,
@@ -233,7 +234,7 @@ input[type='checkbox'] {
 
 .primary-table {
   padding-left: 32px;
-  padding-bottom: 20px;
+  padding-bottom: 0px;
 }
 
 
@@ -250,20 +251,37 @@ input[type='checkbox'] {
 
 
 #sec-tab {
-margin-left: 38px;
+margin-left: 18px;
 }
 
 .sec-width {
-width: 22%;
+width: 26%;
+text-align: left;
+margin-left: 10px;
+font-size: 14px;
 }
 
 .def-width {
-  width: 18%;
+  width: 15%;
+  text-align: left;
+  font-size: 14px;
 }
 
 .conf-width{
-  width: 24%;
+  width: 15%;
+  text-align: left;
+  font-size: 14px;
 }
+.join-width {
+  width: 26%;
+  text-align: left;
+  font-size: 14px;
+  }
+  .action-width {
+    width: 15%;
+    text-align: left;
+    
+    }
 
 .analyze-header {
   margin-top: 17px;
@@ -314,5 +332,11 @@ width: 22%;
   float: left;
   width: 4%;
   text-align: right;
+}
+.overflow-textrelation {
+  float: left;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 

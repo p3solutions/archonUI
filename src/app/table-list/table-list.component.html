@@ -60,31 +60,31 @@
           </div>
         </div>
         <div class="row col col-md-12 primary-table">
-          <h4 class="card-title sub-header">Primary Table:
+          <h5 class="card-title sub-header">Primary Table:
             <strong>{{tableName}}</strong>
-          </h4>
+          </h5>
         </div>
         <hr>
         <div class="row table-headers" *ngIf="isRelationShipAvailable">
           <div class="col col-md-3 sec-width">
-            <h4 id="sec-tab">
+            <h5 id="sec-tab">
               <strong>Secondary Table</strong>
-            </h4>
+            </h5>
           </div>
           <div class="col col-md-3 def-width">
-            <h4>
+            <h5>
               <strong>Definition Type</strong>
-            </h4>
+            </h5>
           </div>
           <div class="col col-md-3 conf-width">
-            <h4>
-              <strong>Configuration Mode</strong>
-            </h4>
+            <h5>
+              <strong>Config Mode</strong>
+            </h5>
           </div>
           <div class="col col-md-3 join-width">
-            <h4>
+            <h5>
               <strong>Join Name</strong>
-            </h4>
+            </h5>
           </div>
         </div>
         <h5 *ngIf="!isRelationShipAvailable">
@@ -93,19 +93,19 @@
         <div class="items-list">
           <div class="panel panel-default" id="panel-header" *ngFor="let relation of relationshipInfo;let ind=index;">
             <div class="row">
-              <div class="col-2 col-sm-2" id="item">
-                <p>{{relation.secondaryTable.tableName}}</p>
+              <div class="col col-md-3 sec-width" id="item">
+                  <div  title="{{relation.secondaryTable.tableName}}" class="overflow-textrelation"> {{relation.secondaryTable.tableName}}</div>
               </div>
-              <div class="col-2 col-sm-2" id="item">
-                <p>{{relation.definitionType}}</p>
+              <div class="col col-md-3 def-width" id="item">
+                {{relation.definitionType}}
               </div>
-              <div class="col-2 col-sm-3" id="item">
-                <p>{{relation.analysisMode}}</p>
+              <div class="col col-md-3 conf-width" id="item">
+                {{relation.analysisMode}}
               </div>
-              <div class="col-2 col-sm-3" id="item">
-                <p>{{relation.joinName}}</p>
+              <div class="col col-md-3 join-width" id="item">
+               <div  title="{{relation.joinName}}" class="overflow-textrelation"> {{relation.joinName}}</div>
               </div>
-              <div class="col-3 col-sm-2" id="item">
+              <div class="col-md-3 action-width" id="item">
                 <a data-toggle="modal" href="#confirmDelMemModal" (click)="deleteRelationship(ind)">
                   <i class="fa fa-trash" id="trash" *ngIf="serviceActionType === 'WRITE' || serviceActionType === 'ALL'"></i>
                 </a>
