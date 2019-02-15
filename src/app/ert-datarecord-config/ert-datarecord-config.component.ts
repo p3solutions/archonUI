@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ert-datarecord-config',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ErtDatarecordConfigComponent implements OnInit {
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
   }
-
+  gotoDataRecFinal() {
+    this.router.navigate(['workspace/ert/ert-datarecord-final']);
+  }
 }

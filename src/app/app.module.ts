@@ -110,6 +110,7 @@ import { ErtTableComponent } from './ert-table/ert-table.component';
 import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
 import { ErtTableColConfigComponent } from './ert-table-col-config/ert-table-col-config.component';
 import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
+import { ErtDatarecordFinalComponent } from './ert-datarecord-final/ert-datarecord-final.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -182,7 +183,8 @@ export function tokenGetter() {
                 ErtTableComponent,
                 ErtExtractDigestComponent,
                 ErtTableColConfigComponent,
-                ErtDatarecordConfigComponent
+                ErtDatarecordConfigComponent,
+                ErtDatarecordFinalComponent
         ],
         imports: [
                 JwtModule.forRoot({

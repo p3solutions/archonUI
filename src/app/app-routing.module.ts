@@ -46,6 +46,7 @@ import { ErtTableComponent } from './ert-table/ert-table.component';
 import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
 import { ErtTableColConfigComponent } from './ert-table-col-config/ert-table-col-config.component';
 import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
+import { ErtDatarecordFinalComponent } from './ert-datarecord-final/ert-datarecord-final.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -116,7 +117,11 @@ const routes: Routes = [
           },
           {
             path: 'ert-datarecord-config', component: ErtDatarecordConfigComponent
+          },
+          {
+            path: 'ert-datarecord-final', component: ErtDatarecordFinalComponent
           }
+
         ]
       }
     ]

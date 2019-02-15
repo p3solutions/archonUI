@@ -1,0 +1,48 @@
+<div id="ert-table-id">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card" style="height:623px">
+        <div class="card-body" id="ert-tbl-search" style="background: #ccc;">
+          <div class="row">
+            <div class="col-md-6">
+              <label id=table-heading>CLAIM</label>
+              <span><i class="fa fa-database" aria-hidden="true" style="margin-top: 18px; margin-right: 32px;"></i></span>
+            </div>
+            
+            
+          </div>
+          <div id="tbl-list">
+            <div class="scroll-div border">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card" style="height:350px">
+        <div class="card-body">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card" style="height:270px">
+        <div class="card-body">
+          <div class="row" style="text-align: left; padding-left: 8px; margin: 14px 18px;">
+            <p style="border-bottom: 1px solid #ccc; font-weight: 700;">Selected Item Details</p>
+            <span>Table Name:</span><br>
+            <span>Table Alias Name:</span><br>
+            <span>Functions Involved:</span><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="nextbtn">
+    <button type="button" class="btn btn-primary next" (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Mark As Complete</button>
+    <button type="button" class="btn btn-primary next" (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Save As Draft</button>
+    <button type="button" class="btn btn-primary next" (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Download Pdi Schema</button>
+    <button class="btn btn-primary Previous" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
+      Back</button>
+  </div>
+</div>

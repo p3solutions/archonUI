@@ -5,7 +5,9 @@
 #workspace-info-link {
     padding-left: 30px;
 }
-
+.nav nav-tabs mgmt-panel {
+    float: left;
+}
 /* #workspace-info-link>ul>li>a:hover{
     background: rebeccapurple !important;
     color: #fff !important;
