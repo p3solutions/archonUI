@@ -6,7 +6,7 @@
           <div class="card-body" id="extract-data">
             <div class="save-extract-heading">
               <div>
-                <input type="checkbox"><label>Extract Data</label>
+                <input id="extract-checkbox" type="checkbox"><label>Extract Data</label>
               </div>
             </div>
             <div class="row">
@@ -16,7 +16,7 @@
             </div>
             <div class="row">
               <div class=" col-md-12 col-lg-12" style="height: 60px">
-                <mv-slider [value]=100 [step]="10" [ticksLabels]="[0,200,400,600,800,1000]" [ticks]="[0,200,400,600,800,1000]"></mv-slider>
+                <mv-slider [value]="xmlSplitFileSize" [step]="10" (change)="setXMLFileSplitSize($event)" [ticksLabels]="[0,200,400,600,800,1000]" [ticks]="[0,200,400,600,800,1000]"></mv-slider>
               </div>
             </div>
           </div>
@@ -27,29 +27,29 @@
           <div class="card-body" id="ingest-data">
             <div class="save-extract-heading">
               <div>
-                <input type="checkbox"><label>Ingest Data</label>
+                <input type="checkbox"  id="ingest-checkbox" (click)="saveIngestData($event)" ><label>Ingest Data</label>
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" class="form-control" placeholder="InfoArchieve Application Name">
+                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveName" name="app-name" class="form-control" [disabled]="enableIngestData" placeholder="InfoArchieve Application Name">
                 <small>Note:Appliaction name is case sensitive</small>
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" class="form-control" placeholder="InfoArchieve Application Schema Name">
+                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveSchemaName" name="schema-name"  [disabled]="enableIngestData" class="form-control" placeholder="InfoArchieve Application Schema Name">
                 <small>Note:Schema name is case sensitive</small>
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" class="form-control" placeholder="InfoArchieve username">
+                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveUserName" name="user-name" [disabled]="enableIngestData" class="form-control" placeholder="InfoArchieve username">
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" class="form-control" placeholder="InfoArchieve password">
+                <input type="text" name="info-password" [(ngModel)]="ingestionDataConfigObj.infoArchivePassword"  [disabled]="enableIngestData" class="form-control" placeholder="InfoArchieve password">
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
           <div class="card-body" id="delete-data">
             <div class="del-data">
               <div>
-                <input type="checkbox"><label>Delete Data</label>
+                <input [disabled]="true" type="checkbox"><label>Delete Data</label>
               </div>
             </div>
           </div>

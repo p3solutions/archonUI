@@ -24,6 +24,7 @@ export class ErtColumnListObj {
     viewQuery = null;
     isSelected = true;
     configQueryPreview = '';
+    userColumnQuery = '';
 }
 
 
@@ -35,6 +36,8 @@ export class ColumnListObj {
     isPrimaryKey = false;
     isSelected = false;
     configQueryPreview = '';
+    userColumnQuery = '';
+    viewQuery = '';
 }
 
 export class UsrDefinedColumnListObj {
@@ -42,8 +45,8 @@ export class UsrDefinedColumnListObj {
     modifiedColumnName = '';
     dataType = 'USERDEFINED';
     isSelected = true;
-    sequenceQuery = '';
     viewQuery = '';
+    userColumnQuery = '';
 }
 
 export class FilterAndOrderConfig {
@@ -70,6 +73,15 @@ export class ERTJobs {
     jobStatus = '';
     jobId = '';
     createdDate = '';
+    jobMode = '';
+    jobTitle = '';
+}
+
+export class IngestionDataConfig {
+    infoArchiveName = '';
+    infoArchiveSchemaName = '';
+    infoArchiveUserName = '';
+    infoArchivePassword = '';
 }
 
 

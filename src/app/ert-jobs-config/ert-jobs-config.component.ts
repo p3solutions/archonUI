@@ -13,6 +13,7 @@ export class ErtJobsConfigComponent implements OnInit {
   constructor(public route: Router, private ertService: ErtService) { }
   ngOnInit() {
     this.ertService.ertJobParams = new ErtJobParams();
+    this.ertService.selectedList = [];
   }
 
   goToExtraction(event, ertJobMode) {

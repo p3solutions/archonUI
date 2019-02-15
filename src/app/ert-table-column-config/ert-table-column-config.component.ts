@@ -19,32 +19,27 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.router.navigate(['workspace/ert/ert-extract-ingest']);
   }
 
-  saveERTJob() {
+  saveERTJob(ertJobStatus: string) {
     const param: any = {
       'userId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
-      'ertJobStatus': 'DRAFT',
+      'ertJobStatus': ertJobStatus,
       'schemaResultsTableCount': '100',
       'databaseConfig': {
         'databaseId': this.workspaceHeaderService.getDatabaseID()
       },
       'ertJobParams': this.ertService.ertJobParams,
-      'tableDetailsList': this.ertService.selectedList,
-      'ingestionDataConfig': {
-        'infoArchiveName': '',
-        'infoArchiveSchemaName': '',
-        'infoArchiveUserName': '',
-        'infoArchivePassword': ''
-      },
+      'tableDetailsList': this.ertService.selectedList.filter(a => a.isSelected === true),
+      'ingestionDataConfig': this.ertService.ingestionDataConfig,
       'extractDataConfigInfo': {
-        'xmlFileSplitSize': '34'
+        'xmlFileSplitSize': this.ertService.xmlSplitSize
       }
     };
 
     console.log(param);
-    // this.ertService.saveErtJob(param).subscribe(result => {
-    //   console.log(result);
-    //   // this.router.navigate([/])
-    // });
+    this.ertService.saveErtJob(param).subscribe(result => {
+      console.log(result);
+      this.router.navigate(['workspace/ert/ert-jobs']);
+    });
   }
 }

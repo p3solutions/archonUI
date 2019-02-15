@@ -24,11 +24,10 @@ export class ErtJobsComponent implements OnInit {
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
       this.ertJobs = result;
-      console.log(this.ertJobs);
     });
   }
 
-  gotoEditJob(jobId: string) {
-    this.router.navigate(['/workspace/ert/ert-table/', jobId]);
+  gotoEditJob(ertJobId: string) {
+    this.router.navigate(['/workspace/ert/ert-table/', ertJobId]);
   }
 }

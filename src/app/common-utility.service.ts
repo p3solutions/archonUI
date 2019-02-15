@@ -12,17 +12,17 @@ export class CommonUtilityService {
   ) { }
 
   getDisplayTime(timeInteger) {
-      const dateTimeString = new Date(timeInteger).toString();
-      const dateTimeArray = dateTimeString.split(' ');
-      const month = dateTimeArray[1];
-      const day = dateTimeArray[2];
-      const year =  dateTimeArray[3];
-      const mmhhss = dateTimeArray[4];
-      const hrs = (dateTimeArray[4]).split(':')[0];
-      const isNoon = (Number(hrs) < 12);
-      const ampm = isNoon ? ' AM' : ' PM';
-      const mediumFormat = month + ' ' + day + ', ' + year + ', ' + mmhhss + ampm;
-      return mediumFormat;
+    const dateTimeString = new Date(timeInteger).toString();
+    const dateTimeArray = dateTimeString.split(' ');
+    const month = dateTimeArray[1];
+    const day = dateTimeArray[2];
+    const year = dateTimeArray[3];
+    const mmhhss = dateTimeArray[4];
+    const hrs = (dateTimeArray[4]).split(':')[0];
+    const isNoon = (Number(hrs) < 12);
+    const ampm = isNoon ? ' AM' : ' PM';
+    const mediumFormat = month + ' ' + day + ', ' + year + ', ' + mmhhss + ampm;
+    return mediumFormat;
   }
   groupOutArray(list, groupNumber) {
     let index = 0;
@@ -52,5 +52,14 @@ export class CommonUtilityService {
     } else {
       card.classList.remove('reveal');
     }
+  }
+
+  checkPropertiesHasValue(obj) {
+    for (const key in obj) {
+      if (obj[key] !== null && obj[key] !== '') {
+        return false;
+      }
+    }
+    return true;
   }
 }

@@ -22,7 +22,7 @@
                 <div class="first-div">Select</div>
                 <div></div>
               </div>
-              <div *ngFor="let item of selectedTableList" (click)="getERTcolumnlist(item.tableId,$event)" class="well">
+              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 3, currentPage: page }" (click)="getERTcolumnlist(item.tableId,$event)" class="well">
                 <div><input style="float:left" (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
                     type="checkbox"></div>
                 <div class="first-div">{{item.tableName}}</div>
@@ -31,6 +31,7 @@
                 </div>
               </div>
             </div>
+            <pagination-controls (pageChange)="getTableList($event)"></pagination-controls>
           </div>
         </div>
       </div>

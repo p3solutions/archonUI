@@ -28,6 +28,7 @@ export class ErtTableComponent implements OnInit {
   configColumnList: { selectedColumnName: string, selectedConfigFunction: string }[] = [];
   selectedTableId = '';
   configColumnQuery = '';
+  page = 1;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService) { }
 
@@ -38,9 +39,13 @@ export class ErtTableComponent implements OnInit {
       ])
     });
     this.activatedRoute.params.subscribe((requestParam) => {
-      this.ertJobId = requestParam.jobId;
+      this.ertJobId = requestParam.ertJobId;
     });
-    if (this.ertJobId !== '') {
+    if (this.ertJobId !== '' && this.ertService.selectedList.length !== 0) {
+      this.selectedTableList = this.ertService.selectedList;
+      this.selectedTableId = this.selectedTableList[0].tableId;
+      this.getERTcolumnlist(this.selectedTableId, '');
+    } else if (this.ertJobId !== '') {
       this.getERTtableList();
     } else if (this.ertService.selectedList.length === 0) {
       this.getERTtableList();
@@ -66,11 +71,12 @@ export class ErtTableComponent implements OnInit {
         tempObj.tableId = item.tableId;
         tempObj.tableName = item.tableName;
         tempObj.modifiedTableName = item.modifiedTableName;
-        if (this.ertJobId !== '') {
+        if (this.ertJobId !== '' && this.ertJobId !== undefined) {
           tempObj.isSelected = true;
         }
         this.selectedTableList.push(tempObj);
       }
+      console.log(this.selectedTableList);
       this.selectedTableId = this.selectedTableList[0].tableId;
       this.getERTcolumnlist(this.selectedTableId, '');
     });
@@ -87,6 +93,7 @@ export class ErtTableComponent implements OnInit {
         this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
       });
     }
+    console.log(this.selectedTableList);
   }
 
   selectTable(tableId: string, tableName: string, event) {
@@ -98,6 +105,7 @@ export class ErtTableComponent implements OnInit {
       this.selectedTableList.filter(a => a.tableId === tableId)[0].isSelected = false;
     }
     event.stopPropagation();
+    console.log(this.selectedTableList);
   }
 
   toModifiedTableName() {
@@ -132,7 +140,7 @@ export class ErtTableComponent implements OnInit {
 
 
   saveColumnConfig() {
-    let tempString = '(';
+    let tempString = '';
     this.configColumnList.push(this.configColumnObject);
     const tempColumnName = this.configColumnObject.selectedColumnName;
     this.configColumnObject = { selectedColumnName: tempColumnName, selectedConfigFunction: null };
@@ -146,7 +154,7 @@ export class ErtTableComponent implements OnInit {
     this.configColumnQuery = tempString;
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
     const tempColumnList = temp.columnList.filter(a => a.originalColumnName === this.configColumnObject.selectedColumnName)[0];
-    tempColumnList.configQueryPreview = this.configColumnQuery;
+    tempColumnList.viewQuery = this.configColumnQuery;
   }
 
   selectColumns(columnName: string, isSelected: boolean) {
@@ -213,7 +221,17 @@ export class ErtTableComponent implements OnInit {
   gotoExtractDigestExtraction() {
     this.ertService.setSelectedList(this.selectedTableList);
     console.log(this.selectedTableList);
-    this.router.navigate(['workspace/ert/ert-extract-ingest']);
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      this.router.navigate(['workspace/ert/ert-extract-ingest/', this.ertJobId]);
+    } else {
+      this.router.navigate(['workspace/ert/ert-extract-ingest']);
+    }
+  }
+
+  getTableList(event) {
+    console.log(1);
+    this.page = 2;
+    console.log(event);
   }
 
   saveUsrDefinedColumn() {
@@ -222,7 +240,7 @@ export class ErtTableComponent implements OnInit {
       tempUsrDefinedObj.columnName = this.usrDefinedColumnName;
       tempUsrDefinedObj.modifiedColumnName = this.usrDefinedColumnName;
       tempUsrDefinedObj.viewQuery = this.usrDefinedQueryView;
-      tempUsrDefinedObj.sequenceQuery = JSON.stringify(this.userDefinedList).replace(/"/g, '\'');
+      tempUsrDefinedObj.userColumnQuery = JSON.stringify(this.userDefinedList).replace(/"/g, '\'');
       const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList;
       temp.push(tempUsrDefinedObj);
     }

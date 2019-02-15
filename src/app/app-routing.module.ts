@@ -108,15 +108,17 @@ const routes: Routes = [
             path: 'ert-table', component: ErtTableComponent
           },
           {
-            path: 'ert-table/:jobId', component: ErtTableComponent
+            path: 'ert-table/:ertJobId', component: ErtTableComponent
           },
           {
             path: 'ert-extract-ingest', component: ErtExtractDigestComponent
           },
           {
-            path: 'ert-table-col-config', component: ErtTableColumnConfigComponent
+            path: 'ert-extract-ingest/:ertJobId', component: ErtExtractDigestComponent
           },
-
+          {
+            path: 'ert-table-col-config', component: ErtTableColumnConfigComponent
+          }
         ]
       }
     ]

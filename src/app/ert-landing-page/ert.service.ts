@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ProgressBarObj, ProcessDetails, ProcessDetailsObj } from '../db-extractor';
 import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
-import { ErtTableListObj, ErtColumnListObj, TableDetailsListObj, ErtJobParams, ERTJobs } from './ert';
+import { ErtTableListObj, ErtColumnListObj, TableDetailsListObj, ErtJobParams, ERTJobs, IngestionDataConfig } from './ert';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,9 @@ import { ErtTableListObj, ErtColumnListObj, TableDetailsListObj, ErtJobParams, E
 export class ErtService {
   selectedList: TableDetailsListObj[] = [];
   ertJobParams: ErtJobParams = new ErtJobParams();
-  constructor(private http: HttpClient,
-    private userInfoService: UserinfoService) { }
+  ingestionDataConfig: IngestionDataConfig = new IngestionDataConfig();
+  xmlSplitSize: string;
+  constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
   private apiUrl = environment.apiUrl;
   getERTtableListUrl = this.apiUrl + 'ert/ertTableList?workspaceId=';
   getERTcolumnlistUrl = this.apiUrl + 'ert/ertColumnList?ertJobId=';
@@ -26,8 +27,16 @@ export class ErtService {
     this.ertJobParams = ertJobParams;
   }
 
+  setIngestionDataConfig(ingestionDataConfig: IngestionDataConfig) {
+    this.ingestionDataConfig = ingestionDataConfig;
+  }
+
   setSelectedList(selectedList: TableDetailsListObj[]) {
     this.selectedList = selectedList;
+  }
+
+  setXmlSplitSize(xmlSplitSize: string) {
+    this.xmlSplitSize = xmlSplitSize;
   }
 
   getERTtableList(workspaceId: string, ertJobId = ''): Observable<ErtTableListObj> {
