@@ -248,6 +248,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       this.resultantMap.clear();
       setTimeout(() =>
         this.closeScreen(), 1000);
+        setTimeout(() => this.tablelistService.changeBooleanValue(true), 1005);
     } else {
       this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
       this.updateNotif = true;

@@ -91,7 +91,10 @@ export class TableListComponent implements OnInit {
   }
   ngOnInit() {
     this.tablelistService.currentValue.subscribe(value => {
-      // this.homeStage = value;
+       this.homeStage = value;
+       if (this.homeStage === true) {
+        this.loadRelationTable(this.tableCopy);
+       }
       });
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
