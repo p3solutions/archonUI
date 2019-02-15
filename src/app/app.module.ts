@@ -111,6 +111,8 @@ import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-dige
 import { ErtTableColConfigComponent } from './ert-table-col-config/ert-table-col-config.component';
 import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
 import { ErtDatarecordFinalComponent } from './ert-datarecord-final/ert-datarecord-final.component';
+import { AdhocDragComponent } from './adhoc-drag/adhoc-drag.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -184,7 +186,8 @@ export function tokenGetter() {
                 ErtExtractDigestComponent,
                 ErtTableColConfigComponent,
                 ErtDatarecordConfigComponent,
-                ErtDatarecordFinalComponent
+                ErtDatarecordFinalComponent,
+                AdhocDragComponent
         ],
         imports: [
                 JwtModule.forRoot({
@@ -205,7 +208,8 @@ export function tokenGetter() {
                 AppRoutingModule,
                 HttpClientModule,
                 NgxPaginationModule,
-                NgxBootstrapSliderModule
+                NgxBootstrapSliderModule,
+                DragDropModule
         ],
         providers: [
                 JwtHelperService,

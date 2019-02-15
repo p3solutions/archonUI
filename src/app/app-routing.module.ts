@@ -47,6 +47,7 @@ import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-dige
 import { ErtTableColConfigComponent } from './ert-table-col-config/ert-table-col-config.component';
 import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
 import { ErtDatarecordFinalComponent } from './ert-datarecord-final/ert-datarecord-final.component';
+import { AdhocDragComponent } from './adhoc-drag/adhoc-drag.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -92,6 +93,13 @@ const routes: Routes = [
           }
         ]
       },
+      {
+      path: 'adhoc-drag', component: AdhocDragComponent, canActivate: [AuthenticationGuard], children: [
+        {
+          path: '', redirectTo: 'adhoc-drag', pathMatch: 'full'
+        }]
+      },
+
       {
         path: 'ert', component: ErtLandingPageComponent, canActivate: [AuthenticationGuard], children: [
           {
