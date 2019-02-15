@@ -91,9 +91,11 @@ export class TableListComponent implements OnInit {
   }
   ngOnInit() {
     this.tablelistService.currentValue.subscribe(value => {
-      this.homeStage = value;
-      console.log(value);
-    });
+       this.homeStage = value;
+       if (this.homeStage === true) {
+        this.loadRelationTable(this.tableCopy);
+       }
+      });
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
     this.getTableList();
@@ -152,6 +154,7 @@ export class TableListComponent implements OnInit {
 
   joinTable(table) {
     this.joinValues = table;
+    this.tablelistService.selectTables(table);
   }
 
   getColumnsByTableName(tableId, isPrime) {
@@ -598,4 +601,3 @@ export class TableListComponent implements OnInit {
 
   }
 }
-/*Checking Jenkins*/

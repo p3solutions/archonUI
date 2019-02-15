@@ -28,7 +28,8 @@ describe('TableListComponent', () => {
       declarations: [TableListComponent, SearchPipe,
       SecondaryColumnPipe],
       imports: [RouterTestingModule, FormsModule, HttpClientModule],
-      providers: [TableListService, UserinfoService, WorkspaceHeaderService,DynamicLoaderService, EditRelationshipInfoService, AddDirectJoinService],
+      providers: [TableListService, UserinfoService, WorkspaceHeaderService,
+        DynamicLoaderService, EditRelationshipInfoService, AddDirectJoinService],
       schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();

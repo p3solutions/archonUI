@@ -27,7 +27,7 @@ describe('WorkspaceLandingPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientModule],
       providers: [RouterTestingModule, InfoService, HttpClientTestingModule ],
       declarations: [WorkspaceLandingPageComponent, NavbarComponent]
     })
@@ -38,6 +38,7 @@ describe('WorkspaceLandingPageComponent', () => {
     fixture = TestBed.createComponent(WorkspaceLandingPageComponent);
     component = fixture.componentInstance;
     infoService = TestBed.get(InfoService);
+    spyOn(component.router, 'navigate');
     fixture.detectChanges();
   });
 

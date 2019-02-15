@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DbExtractorService } from '../db-extractor/db-extractor.service'
+import { DbExtractorService } from '../db-extractor/db-extractor.service';
 import { ProcessDetails, ProcessDetailsObj } from '../db-extractor';
 @Component({
   selector: 'app-db-extractor-step-two',
@@ -20,20 +20,19 @@ export class DbExtractorStepTwoComponent implements OnInit {
   }
 
   gotoLastStep() {
-    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 33.33 })
+    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 33.33 });
     this.router.navigate(['/workspace/db-extractor/db-extractor-summary']);
     this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);
   }
 
   prevStepOne() {
-    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === "executequery") {
-      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 })
+    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === 'executequery') {
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 });
       this.router.navigate(['/workspace/db-extractor/db-extractor-exec-query']);
-    }
-    else{
-      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 })
+    } else {
+      this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
       this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
-    } 
+    }
   }
 
   setXMLFileSplitSize(xmlSliderObj: any) {

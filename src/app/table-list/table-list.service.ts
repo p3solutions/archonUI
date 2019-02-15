@@ -20,7 +20,7 @@ export class TableListService {
   relationTableListUrl = environment.apiUrl + 'metalyzer/tablesRelationShip?tableId=';
   deleteRelationsUrl = environment.apiUrl + 'metalyzer/relationship?workspaceId=';
   columnListUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
-  dataAnalysisUrl = environment.apiUrl + '/dataAnalyzer/tableToTablesDataCrawlAnalysis';
+  dataAnalysisUrl = environment.apiUrl + 'dataAnalyzer/tableToTablesDataCrawlAnalysis';
   // columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
   columnUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
   stateManagementUrl = environment.apiUrl + 'dataAnalyzer/stateManagement';
@@ -29,6 +29,8 @@ export class TableListService {
   currentResultArray = this.resultantArray.asObservable();
   private changeValue = new BehaviorSubject(false);
   currentValue = this.changeValue.asObservable();
+  private selectTableslist = new BehaviorSubject('');
+  userselectTableslist = this.selectTableslist.asObservable();
 
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
@@ -129,6 +131,10 @@ export class TableListService {
 
   changeBooleanValue(message) {
     this.changeValue.next(message);
+  }
+
+  selectTables(message) {
+    this.selectTableslist.next(message);
   }
 
 }

@@ -111,31 +111,31 @@
             <tbody>
               <tr>
                 <td>Workspace Name</td>
-                <td>{{WSListInfo.workspaceName}}</td>
+                <td>{{WSListInfo?.workspaceName}}</td>
               </tr>
               <tr>
                 <td class="text-left">MasterMetadata Version</td>
-                <td>{{WSListInfo.masterMetadataVersion}}</td>
+                <td>{{WSListInfo?.masterMetadataVersion}}</td>
               </tr>
               <tr>
                 <td>WorkspaceState</td>
-                <td>{{WSListInfo.workspaceState}}</td>
+                <td>{{WSListInfo?.workspaceState}}</td>
               </tr>
               <tr>
                 <td>Workspace Members</td>
-                <td>  <span *ngFor="let ws of this.WSListInfo.members; let isLast=last">
+                <td>  <span *ngFor="let ws of this.WSListInfo?.members; let isLast=last">
                         {{ws?.user.name}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>
               <tr>
                 <td>Workspace Databases Name</td>
-                <td>  <span *ngFor="let ws of this.WSListInfo.databases; let isLast=last">
+                <td>  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
                         {{ws?.name}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>
               <tr>
                 <td>Workspace Databases Type</td>
-                <td>  <span *ngFor="let ws of this.WSListInfo.databases; let isLast=last">
+                <td>  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
                         {{ws?.type}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>
