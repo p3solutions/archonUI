@@ -20,29 +20,9 @@
                 <div class="first-div">Select</div>
                 <div></div>
               </div>
-              <div class="well">
-                <div><input style="float:left" type="checkbox"></div>
-                <div class="first-div">app_config_1</div>
-                <div><i class="fa fa-chevron-right icon-div "></i></div>
-              </div>
-              <div class="well">
-                <div><input style="float:left" type="checkbox"></div>
-                <div class="first-div">app_config_1</div>
-                <div><i class="fa fa-chevron-right icon-div "></i></div>
-              </div>
-              <div class="well">
-                <div><input style="float:left" type="checkbox"></div>
-                <div class="first-div">app_config_1</div>
-                <div><i class="fa fa-chevron-right icon-div "></i></div>
-              </div>
-              <div class="well">
-                <div><input style="float:left" type="checkbox"></div>
-                <div class="first-div">app_config_1</div>
-                <div><i class="fa fa-chevron-right icon-div "></i></div>
-              </div>
-              <div class="well">
-                <div><input style="float:left" type="checkbox"></div>
-                <div class="first-div">app_config_1</div>
+              <div class="well" *ngFor="let i of tableList">
+                <div><input style="float:left" type="checkbox" (click)="populategraph(i)"></div>
+                <div class="first-div">{{i.tableName}}</div>
                 <div><i class="fa fa-chevron-right icon-div "></i></div>
               </div>
             </div>
@@ -52,10 +32,10 @@
     </div>
     <div class="col-md-9">
       <div class="card" style="height:455px">
-        <div class="card-body">
-          <div class="row">
+        <div class="card-body"> 
+          <!-- <div class="row">
             <h3>Select a graph source table to generate a graph view</h3>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
