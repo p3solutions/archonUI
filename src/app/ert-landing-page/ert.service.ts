@@ -6,7 +6,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ProgressBarObj, ProcessDetails, ProcessDetailsObj } from '../db-extractor';
 import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
-import { ErtTableListObj, ErtColumnListObj, TableDetailsListObj, ErtJobParams, ERTJobs, IngestionDataConfig } from './ert';
+import {
+  ErtTableListObj, ErtColumnListObj, TableDetailsListObj,
+  ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo
+} from './ert';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +18,15 @@ export class ErtService {
   selectedList: TableDetailsListObj[] = [];
   ertJobParams: ErtJobParams = new ErtJobParams();
   ingestionDataConfig: IngestionDataConfig = new IngestionDataConfig();
-  xmlSplitSize: string;
+  extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
   constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
   private apiUrl = environment.apiUrl;
   getERTtableListUrl = this.apiUrl + 'ert/ertTableList?workspaceId=';
+  getErtAvailableTableUrl = this.apiUrl + 'ert/ertAvailableTables?ertJobId=';
   getERTcolumnlistUrl = this.apiUrl + 'ert/ertColumnList?ertJobId=';
   saveErtJobUrl = this.apiUrl + 'ert/ertJobSession';
   getErtJobUrl = this.apiUrl + 'ert/ertJobs?userId=';
-
+  runjobUrl = this.apiUrl + 'ert/runjob?ertJobId=';
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }
@@ -35,8 +39,8 @@ export class ErtService {
     this.selectedList = selectedList;
   }
 
-  setXmlSplitSize(xmlSplitSize: string) {
-    this.xmlSplitSize = xmlSplitSize;
+  setXmlSplitSize(extractDataConfigInfo: ExtractDataConfigInfo) {
+    this.extractDataConfigInfo = extractDataConfigInfo;
   }
 
   getERTtableList(workspaceId: string, ertJobId = ''): Observable<ErtTableListObj> {
@@ -55,7 +59,6 @@ export class ErtService {
       );
   }
 
-
   getERTcolumnlist(ertJobId = '', workspaceId: string, tableId: string): Observable<ErtColumnListObj[]> {
     return this.http.get<ErtColumnListObj[]>(this.getERTcolumnlistUrl + ertJobId + '&workspaceId=' + workspaceId + '&tableId=' + tableId,
       { headers: this.userInfoService.getHeaders() }).pipe(
@@ -64,18 +67,35 @@ export class ErtService {
       );
   }
 
-
+  getErtAvailableTable(ertJobId: string): Observable<ErtTableListObj> {
+    return this.http.get<ErtTableListObj>(this.getErtAvailableTableUrl + ertJobId,
+      { headers: this.userInfoService.getHeaders() }).pipe(
+        map(this.extractData),
+        catchError(this.handleError('getERTcolumnlist', []))
+      );
+  }
 
   saveErtJob(param: any): Observable<any> {
     return this.http.post<any>(this.saveErtJobUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractData),
+      pipe(map(this.extractDataForRunJob),
         catchError(this.handleError('saveErtJob', []))
       );
   }
 
+  runJob(ertJobId: any): Observable<any> {
+    return this.http.post<any>(this.runjobUrl + ertJobId, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractDataForRunJob),
+        catchError(this.handleError('runJob', []))
+      );
+  }
 
   private extractData(res: any) {
     const body = res.data.ERTTableList;
+    return body || [];
+  }
+
+  private extractDataForRunJob(res: any) {
+    const body = res;
     return body || [];
   }
 

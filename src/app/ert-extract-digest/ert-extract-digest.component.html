@@ -15,8 +15,13 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-md-12 col-lg-12">
+                <input type="text" [(ngModel)]="extractDataConfigInfo.titleName" id="extract-title-name" name="title-name" class="form-control" placeholder="title Name">
+              </div>
+            </div>
+            <div class="row">
               <div class=" col-md-12 col-lg-12" style="height: 60px">
-                <mv-slider [value]="xmlSplitFileSize" [step]="10" (change)="setXMLFileSplitSize($event)" [ticksLabels]="[0,200,400,600,800,1000]" [ticks]="[0,200,400,600,800,1000]"></mv-slider>
+                <mv-slider [value]="extractDataConfigInfo.xmlFileSplitSize" [step]="10" (change)="setXMLFileSplitSize($event)" [ticksLabels]="[0,200,400,600,800,1000]" [ticks]="[0,200,400,600,800,1000]"></mv-slider>
               </div>
             </div>
           </div>
@@ -32,24 +37,24 @@
             </div>
             <div class="form-group">
               <div>
-                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveName" name="app-name" class="form-control" [disabled]="enableIngestData" placeholder="InfoArchieve Application Name">
+                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveName" name="app-name" class="form-control" [disabled]="disableIngestData" placeholder="InfoArchieve Application Name">
                 <small>Note:Appliaction name is case sensitive</small>
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveSchemaName" name="schema-name"  [disabled]="enableIngestData" class="form-control" placeholder="InfoArchieve Application Schema Name">
+                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveSchemaName" name="schema-name"  [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve Application Schema Name">
                 <small>Note:Schema name is case sensitive</small>
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveUserName" name="user-name" [disabled]="enableIngestData" class="form-control" placeholder="InfoArchieve username">
+                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveUserName" name="user-name" [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve username">
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" name="info-password" [(ngModel)]="ingestionDataConfigObj.infoArchivePassword"  [disabled]="enableIngestData" class="form-control" placeholder="InfoArchieve password">
+                <input type="text"  name="info-password" [(ngModel)]="ingestionDataConfigObj.infoArchivePassword"  [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve password">
               </div>
             </div>
           </div>

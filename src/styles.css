@@ -1080,3 +1080,7 @@ label{
 .cursor-poniter{
   cursor: pointer;
 }
+
+.fa-trash {
+  color: rgb(207, 19, 19);
+}

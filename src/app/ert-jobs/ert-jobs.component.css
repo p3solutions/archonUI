@@ -12,9 +12,10 @@
 }
 
 .card {
-  margin: 0 10px;
+  text-align: left;
+  margin: 0 10px 20px;
   transition: 0.3s;
-  width: 26%;
+  width: 31%;
   border-radius: 5px;
   border: 1px solid #E6E9ED
 }
@@ -40,4 +41,12 @@
 
 .icon_category {
   float: right;
+}
+
+.card h4{
+  color:  #1abc9c;
+}
+
+.card span{
+  color:  #2196F3;
 }

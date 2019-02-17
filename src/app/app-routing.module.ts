@@ -118,6 +118,9 @@ const routes: Routes = [
           },
           {
             path: 'ert-table-col-config', component: ErtTableColumnConfigComponent
+          },
+          {
+            path: 'ert-table-col-config/:ertJobId', component: ErtTableColumnConfigComponent
           }
         ]
       }

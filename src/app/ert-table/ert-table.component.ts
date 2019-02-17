@@ -3,14 +3,20 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErtService } from '../ert-landing-page/ert.service';
-import { ErtTableListObj, ErtColumnListObj, TableDetailsListObj, ColumnListObj, UsrDefinedColumnListObj } from '../ert-landing-page/ert';
+import {
+  ErtTableListObj, FilterConfigTree, ErtColumnListObj, TableDetailsListObj,
+  ColumnListObj, UsrDefinedColumnListObj
+} from '../ert-landing-page/ert';
 import { TableNameAndRelatingTable } from '../stored-proc-view/stored-proc-view';
+import { addFilterNode, FilterConfigNode, Tree, searchTree } from './ert-filter';
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
   styleUrls: ['./ert-table.component.css']
 })
 export class ErtTableComponent implements OnInit {
+  filterdata: FilterConfigTree = new Tree();
+  public selectedfilterNode: FilterConfigNode | null;
   myForm: FormGroup;
   workspaceId = '';
   ErtTableList: ErtTableListObj = new ErtTableListObj();
@@ -21,6 +27,7 @@ export class ErtTableComponent implements OnInit {
   usrDefinedColumnName = '';
   modifiedTableName = '';
   tableName = '';
+  filterConfigColumnNameList: string[] = [];
   userDefinedList: { 'prefix': string, 'column': string, 'suffix': string }[] = [];
   ertJobId = '';
   configColumnObject: { selectedColumnName: string, selectedConfigFunction: string } =
@@ -28,9 +35,11 @@ export class ErtTableComponent implements OnInit {
   configColumnList: { selectedColumnName: string, selectedConfigFunction: string }[] = [];
   selectedTableId = '';
   configColumnQuery = '';
-  page = 1;
+  maxNode = 3;
+  ertAvillableTableList: ErtTableListObj = new ErtTableListObj();
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
-    private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService) { }
+    private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService) {
+  }
 
   ngOnInit() {
     this.myForm = this._fb.group({
@@ -62,6 +71,14 @@ export class ErtTableComponent implements OnInit {
     });
   }
 
+  getErtAvailableTable() {
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      this.ertService.getErtAvailableTable(this.ertJobId).subscribe(result => {
+        this.ertAvillableTableList = result;
+      });
+    }
+  }
+
   getERTtableList() {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getERTtableList(this.workspaceId, this.ertJobId).subscribe((result) => {
@@ -77,6 +94,11 @@ export class ErtTableComponent implements OnInit {
         this.selectedTableList.push(tempObj);
       }
       console.log(this.selectedTableList);
+      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+        for (const item of this.selectedTableList) {
+          this.getERTcolumnlist(item.tableId, '');
+        }
+      }
       this.selectedTableId = this.selectedTableList[0].tableId;
       this.getERTcolumnlist(this.selectedTableId, '');
     });
@@ -155,6 +177,7 @@ export class ErtTableComponent implements OnInit {
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
     const tempColumnList = temp.columnList.filter(a => a.originalColumnName === this.configColumnObject.selectedColumnName)[0];
     tempColumnList.viewQuery = this.configColumnQuery;
+    tempColumnList.userColumnQuery = JSON.stringify(this.configColumnList).replace(/"/g, '\'');
   }
 
   selectColumns(columnName: string, isSelected: boolean) {
@@ -205,7 +228,11 @@ export class ErtTableComponent implements OnInit {
   }
 
   gotoJobConfiguration() {
-    this.router.navigate(['workspace/ert/ert-jobs-config']);
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      alert('Not Allowed');
+    } else {
+      this.router.navigate(['workspace/ert/ert-jobs-config']);
+    }
   }
 
   deleteUsrDefinedCol(i: number) {
@@ -228,12 +255,6 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
-  getTableList(event) {
-    console.log(1);
-    this.page = 2;
-    console.log(event);
-  }
-
   saveUsrDefinedColumn() {
     if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].isSelected === true) {
       const tempUsrDefinedObj = new UsrDefinedColumnListObj();
@@ -253,5 +274,55 @@ export class ErtTableComponent implements OnInit {
     childrenArray.forEach(a => a.classList.remove('active-tab'));
     event.target.classList.add('active-tab');
   }
+
+  openFilteronfig() {
+    this.filterdata = new Tree();
+    this.filterConfigColumnNameList = [];
+    this.filterConfigColumnNameList = this.selectedTableList.filter
+      (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
+    console.log(this.filterConfigColumnNameList);
+  }
+
+  showFilterChild(event) {
+    console.log(event.target.querySelector('i'));
+    if (event.target.querySelector('i') !== null) {
+      if (event.target.querySelector('i').classList.contains('fa-chevron-down')) {
+        event.target.querySelector('i').classList.remove('fa-chevron-down');
+        event.target.querySelector('i').classList.add('fa-chevron-right');
+      } else if (event.target.querySelector('i').classList.contains('fa-chevron-right')) {
+        event.target.querySelector('i').classList.remove('fa-chevron-right');
+        event.target.querySelector('i').classList.add('fa-chevron-down');
+      }
+    }
+  }
+
+  insertFilterNode(id: number, operation: string, column: string, condition: string, value: string, event) {
+    if (operation === null || condition === null || value === '') {
+      alert('Please select all the value');
+    } else {
+      const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, []);
+      if (id === 1) {
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
+        const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, []);
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
+        const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, []);
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
+
+      } else {
+        const filterTreeNode = searchTree(this.filterdata.root, id);
+        filterTreeNode.operation = operation;
+        filterTreeNode.margin_left = 10;
+        this.maxNode = this.maxNode + 1;
+        const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false, column, condition, value, 18, []);
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
+        this.maxNode = this.maxNode + 1;
+        const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, []);
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
+      }
+    }
+    console.log(this.filterdata);
+    event.stopPropagation();
+  }
 }
+
 

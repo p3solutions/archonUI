@@ -78,3 +78,10 @@ mv-slider::ng-deep .slider-handle {
 mv-slider::ng-deep .slider-horizontal {
   width: 90%;
 }
+
+#extract-title-name {
+  border: none;
+  border-bottom: 1px solid #2196F3;
+  margin: 22px 20px 41px;
+  width: 92%;
+}

@@ -278,6 +278,7 @@ input#ucolumnname {
 #config-table-header div {
   width: 20%;
 }
+
 #config-table div {
   width: 20%;
 }
@@ -378,4 +379,58 @@ table tr td:nth-child(6) {
   padding: 8px 2px 3px 0px;
   border-bottom: 2px solid #E6E9ED;
   height: 50px;
+}
+
+
+
+:host {
+  display: block;
+  font-size: 18px;
+}
+
+.note {
+  color: #999999;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.filter-div {
+  display: inline-block;
+  border: 2px solid #E6E9ED;
+  margin: 2px 2px 2px 0px;
+  padding: 5px 8px 5px 15px;
+}
+
+.filter-div div {
+  margin: 0px 5px 0px 24px;
+  float: left;
+}
+
+.filter-toogle-div {
+  margin: 2px;
+  padding: 3px;
+  text-align: left;
+  background-color: #2196F3;
+}
+
+#avaliable-table-list {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.2;
+}
+
+#avaliable-table-list div {
+  padding: 9px 0px 0px 9px;
+  text-align: left;
+  display: inline-block;
+  margin: 0px 0px 4px 0px;
 }

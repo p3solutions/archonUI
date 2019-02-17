@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserinfoService } from '../userinfo.service';
-import { ERTJobs } from '../ert-landing-page/ert';
+import { ERTJobs, ErtJobParams } from '../ert-landing-page/ert';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,6 +17,8 @@ export class ErtJobsComponent implements OnInit {
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
 
   ngOnInit() {
+    this.ertService.ertJobParams = new ErtJobParams();
+    this.ertService.selectedList = [];
     this.getErtJobList();
   }
   getErtJobList() {
@@ -28,6 +30,17 @@ export class ErtJobsComponent implements OnInit {
   }
 
   gotoEditJob(ertJobId: string) {
+    const ertJobTitle = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobTitle;
+    const ertJobMode = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobMode;
+    this.ertService.setErtJobParams({ ertJobMode: ertJobMode, ertJobTitle: ertJobTitle });
     this.router.navigate(['/workspace/ert/ert-table/', ertJobId]);
+  }
+
+  runJob(ertJobId) {
+    this.ertService.runJob(ertJobId).subscribe(result => {
+      if (result.httpStatus === '200') {
+        alert('job Has Started');
+      }
+    });
   }
 }

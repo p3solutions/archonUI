@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -10,17 +10,28 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
   styleUrls: ['./ert-table-column-config.component.css']
 })
 export class ErtTableColumnConfigComponent implements OnInit {
+  ertJobId = '';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService,
-    private ertService: ErtService, private userinfoService: UserinfoService) { }
+    private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
   ngOnInit() {
   }
   gotoExtractData() {
-    this.router.navigate(['workspace/ert/ert-extract-ingest']);
+    this.activatedRoute.params.subscribe((requestParam) => {
+      this.ertJobId = requestParam.ertJobId;
+    });
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      this.router.navigate(['workspace/ert/ert-extract-ingest', this.ertJobId]);
+    } else {
+      this.router.navigate(['workspace/ert/ert-extract-ingest']);
+    }
   }
 
   saveERTJob(ertJobStatus: string) {
-    const param: any = {
+    this.activatedRoute.params.subscribe((requestParam) => {
+      this.ertJobId = requestParam.ertJobId;
+    });
+    let param: any = {
       'userId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
       'ertJobStatus': ertJobStatus,
@@ -31,15 +42,24 @@ export class ErtTableColumnConfigComponent implements OnInit {
       'ertJobParams': this.ertService.ertJobParams,
       'tableDetailsList': this.ertService.selectedList.filter(a => a.isSelected === true),
       'ingestionDataConfig': this.ertService.ingestionDataConfig,
-      'extractDataConfigInfo': {
-        'xmlFileSplitSize': this.ertService.xmlSplitSize
-      }
+      'extractDataConfigInfo': this.ertService.extractDataConfigInfo
     };
+
+    param = this.modifiedParamForEdit(param);
 
     console.log(param);
     this.ertService.saveErtJob(param).subscribe(result => {
-      console.log(result);
+      if (result.httpStatus !== '200') {
+        alert('Your Job has not Saved');
+      }
       this.router.navigate(['workspace/ert/ert-jobs']);
     });
+  }
+
+  modifiedParamForEdit(param: any): any {
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      param.ertJobId = this.ertJobId;
+    }
+    return param;
   }
 }

@@ -7,8 +7,9 @@
             <div class="col-md-6">
               <label id=table-heading>Table list</label>
             </div>
-            <div class="col-md-6" id="get-tbl-list">
-              <a href="#"><i class="fa fa-plus"></i></a>
+            <div class="col-md-6 cursor-poniter" id="get-tbl-list">
+              <a (click)="getErtAvailableTable()" class="cursor-poniter" data-toggle="modal" data-target="#ert_available_table_modal"><i
+                  class="fa fa-plus cursor-poniter"></i></a>
             </div>
             <div class="inner-addon right-addon">
               <a href="" style="z-index:1" class="glyphicon glyphicon-search"></a>
@@ -22,16 +23,16 @@
                 <div class="first-div">Select</div>
                 <div></div>
               </div>
-              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 3, currentPage: page }" (click)="getERTcolumnlist(item.tableId,$event)" class="well">
+              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 3, currentPage: page }" (click)="getERTcolumnlist(item.tableId,$event)"
+                class="well">
                 <div><input style="float:left" (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
                     type="checkbox"></div>
                 <div class="first-div">{{item.tableName}}</div>
                 <div>
-                  <!-- <i class="fa fa-chevron-right icon-div "></i>-->
                 </div>
               </div>
             </div>
-            <pagination-controls (pageChange)="getTableList($event)"></pagination-controls>
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
           </div>
         </div>
       </div>
@@ -46,7 +47,8 @@
                 <li class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel()" data-toggle="modal"
                     data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus"></i></a>
                 <li>
-                <li class="icon-list trim-text"><a href="#" data-toggle="modal" data-target="#filter-modal"><i class="fa fa-filter"></i></a>
+                <li class="icon-list trim-text"><a href="#" data-toggle="modal" (click)="openFilteronfig()" data-target="#filter-modal"><i
+                      class="fa fa-filter"></i></a>
                 <li>
                 <li class="icon-list trim-text"><a href=""><i class="fa fa-refresh"></i></a>
                 <li>
@@ -147,7 +149,6 @@
                       </div>
                       <div class=" add-edit-heading form-group">
                         Action
-                        <!--<a type="button" (click)="addColumns()"><i id="plusbtn" class="fa fa-plus"></i></a> -->
                       </div>
                     </div>
                     <form class="form-inline" id="add-edit-form" [formGroup]="myForm">
@@ -156,7 +157,6 @@
                           <div [formGroupName]="i">
                             <div class="add-edit-form-item form-group">
                               <input type="text" class="form-control form-control-sm" formControlName="prefix">
-                              <!--display error message if street is not valid-->
                               <small [hidden]="myForm.controls.addEditColumn.controls[i].controls.prefix.valid">
                                 Street is required
                               </small>
@@ -166,8 +166,6 @@
                                 <option [ngValue]="null">Select Column</option>
                                 <option [ngValue]="item" *ngFor="let item of ursDefinedColumnNameList">{{item}}</option>
                               </select>
-                              <!-- <input type="text" class="form-control form-control-sm" formControlName="column"> -->
-                              <!--display error message if street is not valid-->
                               <small [hidden]="myForm.controls.addEditColumn.controls[i].controls.column.valid">
                                 Street is required
                               </small>
@@ -181,16 +179,9 @@
                           </div>
                         </div>
                       </div>
-                      <!-- <button type="submit" [disabled]="!myForm.valid">Submit</button> -->
                     </form>
                   </div>
                   <div id="user-defined-table">
-                    <!-- <div class="sticky form-inline" id="user-defined">
-                      <div class="add-edit-heading form-group">Prefix</div>
-                      <div class="add-edit-heading form-group">Column</div>
-                      <div class="add-edit-heading form-group">Suffix</div>
-                      <div class="add-edit-heading form-group">Action</div>
-                    </div> -->
                     <div *ngFor="let item of userDefinedList;let i=index" class="user-defined-box form-inline">
                       <div class="clearflex add-edit-form-item form-group">{{item.prefix}}</div>
                       <div class="clearflex add-edit-form-item form-group">{{item.column}}</div>
@@ -254,111 +245,63 @@
                 </div>
               </nav>
               <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                <div class="tab-pane fade active in" id="nav-filter" role="tabpanel" aria-labelledby="nav-filter-tab">
-                  <div id="filter-option">
-                    <div class="filter-item-list">
-                      <div class="form-inline" id="filter-conf">
-                        <div class="form-group filter-well">AND</div>
-                        <div class="form-group filter-well">OR</div>
-                        <div class="form-group">
-                          <select class="form-control">
-                            <option selected>Select Column</option>
-                            <option>A</option>
-                            <option>B</option>
-                            <option>C</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <select class="form-control">
-                            <option selected>Select Column</option>
-                            <option>A</option>
-                            <option>B</option>
-                            <option>C</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <input style="width: 163px;" type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="filter-item-list">
-                      <div class="form-inline" id="filter-conf">
-                        <div class="form-group filter-well">AND</div>
-                        <div class="form-group filter-well">OR</div>
-                        <div class="form-group">
-                          <select class="form-control">
-                            <option selected>Select Column</option>
-                            <option>A</option>
-                            <option>B</option>
-                            <option>C</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <select class="form-control">
-                            <option selected>Select Column</option>
-                            <option>A</option>
-                            <option>B</option>
-                            <option>C</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <input style="width: 163px;" type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="filter-item-list">
-                      <div class="form-inline" id="filter-conf">
-                        <div class="form-group filter-well">AND</div>
-                        <div class="form-group filter-well">OR</div>
-                        <div class="form-group">
-                          <select class="form-control">
-                            <option selected>Select Column</option>
-                            <option>A</option>
-                            <option>B</option>
-                            <option>C</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <select class="form-control">
-                            <option selected>Select Column</option>
-                            <option>A</option>
-                            <option>B</option>
-                            <option>C</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <input style="width: 163px;" type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="filter-item-list">
-                        <div class="form-inline" id="filter-conf">
-                          <div class="form-group filter-well">AND</div>
-                          <div class="form-group filter-well">OR</div>
-                          <div class="form-group">
-                            <select class="form-control">
-                              <option selected>Select Column</option>
-                              <option>A</option>
-                              <option>B</option>
-                              <option>C</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <select class="form-control">
-                              <option selected>Select Column</option>
-                              <option>A</option>
-                              <option>B</option>
-                              <option>C</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <input style="width: 163px;" type="text" class="form-control">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="filter-tbl-list">
-                    </div>
+                <div *ngIf="filterdata.root==null" class="filter-div form-inline">
+                  <div class="form-group filter-well" (click)="insertFilterNode(1,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">AND</div>
+                  <div class="form-group filter-well" (click)="insertFilterNode(1,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">OR</div>
+                  <div class="form-group">
+                    <select class="form-control" #selectfiltercolumn>
+                      <option [ngValue]="null" selected>Select Column</option>
+                      <option [ngValue]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                    </select>
                   </div>
+                  <div class="form-group">
+                    <select #selectcondition class="form-control">
+                      <option selected>Select condition</option>
+                      <option>=</option>
+                      <option>!=</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" #input class="form-control">
+                  </div>
+                </div>
+                <div *ngIf="filterdata.root!==null" class="tab-pane fade active in" id="nav-filter" role="tabpanel"
+                  aria-labelledby="nav-filter-tab">
+                  <ng-template #nodeTemplateRef let-node>
+                    <div class="node" [class.node--selected]="( node === selectedTreeNode )">
+                      <div aria-expanded="false" data-toggle="collapse" [attr.href]="'#' + node.id">
+                        <div class="filter-toogle-div" (click)="showFilterChild($event)" [style.margin-left.px]="node.margin_left"
+                          *ngIf="node.children.length>0"><i class="fa fa-chevron-down"></i>{{node.operation}}</div>
+                        <div *ngIf="node.children.length==0" [style.margin-left.px]="node.margin_left" class="filter-div form-inline">
+                          <div class="form-group filter-well" (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">AND</div>
+                          <div class="form-group filter-well" (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">OR</div>
+                          <div class="form-group">
+                            <select class="form-control" [(ngModel)]="node.column" #selectfiltercolumn>
+                              <option [ngValue]="null" selected>Select Column</option>
+                              <option [ngValue]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <select #selectcondition [(ngModel)]="node.condition" class="form-control">
+                              <option value="null" selected>Select condition</option>
+                              <option value="=">=</option>
+                              <option value="!=">!=</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" [(ngModel)]="node.value" #input class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="node.children.length>0" [style.margin-left.px]="node.margin_left" [attr.id]="node.id"
+                        class="collapse" class="node__children">
+                        <ng-template ngFor [ngForOf]="node.children" [ngForTemplate]="nodeTemplateRef">
+                        </ng-template>
+                      </div>
+                    </div>
+                  </ng-template>
+                  <ng-template [ngTemplateOutlet]="nodeTemplateRef" [ngTemplateOutletContext]="{ $implicit: filterdata.root }">
+                  </ng-template>
                 </div>
                 <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
                   <div id="add-edit-tbl">
@@ -408,7 +351,6 @@
                         </div>
                       </div>
                     </div>
-                    <!-- <button type="submit" [disabled]="!myForm.valid">Submit</button> -->
                   </form>
                 </div>
               </div>
@@ -464,8 +406,30 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="ert_available_table_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Avaliable Ert Table List</h4>
+      </div>
+      <div class="modal-body">
+        <div id="avaliable-table-list">
+          <div class="form-control" *ngFor="let item of ertAvillableTableList.ertTableList">
+           <input type="checkbox" [(ngModel)]="item.isSelected">
+            {{item.tableName}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

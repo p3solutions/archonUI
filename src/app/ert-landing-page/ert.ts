@@ -12,7 +12,7 @@ export class ErtTableObj {
     tableId = '';
     tableName = '';
     modifiedTableName = '';
-    isTableChecked = false;
+    isSelected = false;
 }
 
 export class ErtColumnListObj {
@@ -84,5 +84,23 @@ export class IngestionDataConfig {
     infoArchivePassword = '';
 }
 
+export interface FilterConfigTree {
+    root: FilterConfigNode;
+}
 
+export interface FilterConfigNode {
+    id: number;
+    operation: string;
+    displayAND: boolean;
+    displayOR: boolean;
+    column: string;
+    condition: string;
+    value: string;
+    children: FilterConfigNode[];
+}
+
+export class ExtractDataConfigInfo {
+    titleName = '';
+    xmlFileSplitSize = '100';
+}
 

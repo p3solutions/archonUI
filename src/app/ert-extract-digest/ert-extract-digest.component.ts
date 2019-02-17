@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IngestionDataConfig } from '../ert-landing-page/ert';
+import { IngestionDataConfig, ExtractDataConfigInfo } from '../ert-landing-page/ert';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { CommonUtilityService } from '../common-utility.service';
 
@@ -14,20 +14,20 @@ export class ErtExtractDigestComponent implements OnInit {
   constructor(public router: Router, private commonUtilityService: CommonUtilityService,
     private ertService: ErtService, public activatedRoute: ActivatedRoute) { }
   ertJobId = '';
-  disableIngestData = false;
-  xmlSplitFileSize = '100';
-
+  disableIngestData = true;
+  extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
   ngOnInit() {
-    if (this.commonUtilityService.checkPropertiesHasValue(this.ertService.ingestionDataConfig)) {
+    if (this.ertService.ingestionDataConfig.infoArchiveName !== '') {
       this.ingestionDataConfigObj = this.ertService.ingestionDataConfig;
       this.disableIngestData = false;
       const a = document.getElementById('ingest-checkbox') as HTMLInputElement;
       a.checked = true;
     }
-    if (this.ertService.xmlSplitSize !== '100') {
+    if (this.ertService.extractDataConfigInfo.titleName !== '' ||
+    this.ertService.extractDataConfigInfo.xmlFileSplitSize !== '100') {
+      this.extractDataConfigInfo = this.ertService.extractDataConfigInfo;
       const a = document.getElementById('extract-checkbox') as HTMLInputElement;
       a.checked = true;
-      this.disableIngestData = false;
     }
   }
 
@@ -42,19 +42,27 @@ export class ErtExtractDigestComponent implements OnInit {
     }
   }
   gotoTableColConfig() {
+    this.activatedRoute.params.subscribe((requestParam) => {
+      this.ertJobId = requestParam.ertJobId;
+    });
+    this.ertService.setXmlSplitSize(this.extractDataConfigInfo);
     this.ertService.setIngestionDataConfig(this.ingestionDataConfigObj);
-    this.router.navigate(['workspace/ert/ert-table-col-config']);
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      this.router.navigate(['workspace/ert/ert-table-col-config', this.ertJobId]);
+    } else {
+      this.router.navigate(['workspace/ert/ert-table-col-config']);
+    }
   }
+
   saveIngestData(event) {
-    if (event.target.value) {
+    if (event.target.checked) {
       this.disableIngestData = false;
     } else {
       this.disableIngestData = true;
     }
   }
   setXMLFileSplitSize(xmlSliderObj: any) {
-    this.xmlSplitFileSize = xmlSliderObj.newValue;
-    this.ertService.setXmlSplitSize(this.xmlSplitFileSize.toString());
+    this.extractDataConfigInfo.xmlFileSplitSize = xmlSliderObj.newValue;
   }
 }
 
