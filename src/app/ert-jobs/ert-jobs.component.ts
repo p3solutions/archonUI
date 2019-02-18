@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserinfoService } from '../userinfo.service';
-import { ERTJobs, ErtJobParams } from '../ert-landing-page/ert';
+import { ERTJobs, ErtJobParams, ExtractDataConfigInfo } from '../ert-landing-page/ert';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,6 +19,7 @@ export class ErtJobsComponent implements OnInit {
   ngOnInit() {
     this.ertService.ertJobParams = new ErtJobParams();
     this.ertService.selectedList = [];
+    this.ertService.extractDataConfigInfo = new ExtractDataConfigInfo();
     this.getErtJobList();
   }
   getErtJobList() {

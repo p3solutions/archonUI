@@ -54,7 +54,6 @@ Tree.prototype.add = function (data, toNodeData) {
 };
 
 export function searchTree(element, id: number) {
-    console.log(element);
     if (element.id === id) {
         return element;
     } else if (element.children != null) {
@@ -131,6 +130,7 @@ Tree.prototype.traverseDFS = function (fn, method) {
         this._preOrder(current, fn);
     }
 };
+
 Tree.prototype.traverseBFS = function (fn) {
     const queue = [this.root];
     while (queue.length) {
@@ -193,4 +193,19 @@ export function addFilterNode(filterConfigTree: FilterConfigTree, parent: Filter
         filterTree.add(child, parent);
     }
     return JSON.stringify(filterTree);
+}
+
+
+export function getPreorderDFS(filterTree: FilterConfigTree): any {
+    const stack = [];
+    const tempfilterTree = new Tree();
+    tempfilterTree.root = filterTree.root;
+    tempfilterTree.traverseDFS(function (node) {
+        if (node.value === '') {
+            stack.push(node.operation);
+        } else if (node.value !== '') {
+            stack.push(node.column + ' ' + node.condition + ' ' + node.value);
+        }
+    }, 'preOrder');
+    return stack;
 }

@@ -23,7 +23,7 @@
                 <div class="first-div">Select</div>
                 <div></div>
               </div>
-              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 3, currentPage: page }" (click)="getERTcolumnlist(item.tableId,$event)"
+              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 50, currentPage: page }" (click)="getERTcolumnlist(item.tableId,$event)"
                 class="well">
                 <div><input style="float:left" (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
                     type="checkbox"></div>
@@ -44,7 +44,7 @@
             <div class="col-md-3" id="sel-table-name">{{tableName}}</div>
             <div class="col-md-9">
               <ul class="nav nav-tabs mgmt-panel fl-r" style="margin-right: 12px;">
-                <li class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel()" data-toggle="modal"
+                <li class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel('addNewColumn')" data-toggle="modal"
                     data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus"></i></a>
                 <li>
                 <li class="icon-list trim-text"><a href="#" data-toggle="modal" (click)="openFilteronfig()" data-target="#filter-modal"><i
@@ -90,8 +90,8 @@
                     <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
                         [ngModel]="item?.modifiedColumnName"></td>
                     <td>{{item?.dataType}}</td>
-                    <td><a href="" data-toggle="modal" (click)="openModelForColumnConfig(item?.originalColumnName)"
-                        data-target="#config-modal"><i class="fa fa-cogs"></i></a></td>
+                    <td><a href="" data-toggle="modal" (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
+                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#add-edit-user-defined-column-modal' : '#config-modal'"><i class="fa fa-cogs"></i></a></td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -278,7 +278,7 @@
                           <div class="form-group">
                             <select class="form-control" [(ngModel)]="node.column" #selectfiltercolumn>
                               <option [ngValue]="null" selected>Select Column</option>
-                              <option [ngValue]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                              <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
                             </select>
                           </div>
                           <div class="form-group">
@@ -359,6 +359,7 @@
         </section>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createFilterColumnConfig()" data-dismiss="modal">save</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -422,13 +423,13 @@
       <div class="modal-body">
         <div id="avaliable-table-list">
           <div class="form-control" *ngFor="let item of ertAvillableTableList.ertTableList">
-           <input type="checkbox" [(ngModel)]="item.isSelected">
+            <input type="checkbox" [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
         </div>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>

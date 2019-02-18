@@ -13,6 +13,7 @@ export class ErtTableObj {
     tableName = '';
     modifiedTableName = '';
     isSelected = false;
+    filterNconfig = new FilterAndOrderConfig();
 }
 
 export class ErtColumnListObj {
