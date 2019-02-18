@@ -101,6 +101,8 @@ import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extr
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { StoredProcViewService } from './stored-proc-view/stored-proc-view.service';
+import { MetalyzerLiveDirective } from './metalyzer-live/metalyzer-live.directive';
+import { MetalyzerLiveComponent } from './metalyzer-live/metalyzer-live.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -164,7 +166,9 @@ export function tokenGetter() {
                 DbExtractorStepTwoComponent,
                 DbExtractorLastStepComponent,
                 DbExtractorExecQueryComponent,
-                StoredProcViewComponent
+                StoredProcViewComponent,
+                MetalyzerLiveDirective,
+                MetalyzerLiveComponent
         ],
         imports: [
                 JwtModule.forRoot({

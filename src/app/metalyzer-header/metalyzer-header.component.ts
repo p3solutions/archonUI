@@ -25,6 +25,7 @@ export class MetalyzerHeaderComponent implements OnInit {
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService
   ) {
+    metalyzerHeaderService.initializeWebsocketConnection();
   }
 
   ngOnInit() {

@@ -5,8 +5,16 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
+import { Stomp } from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
+
 @Injectable()
 export class MetalyzerHeaderService {
+  // Web sockets
+  private serverUrl = 'http://localhost:8091/archon-notifications';
+  private title = 'WebSockets chat';
+  private stompClient;
+  // Web sockets
   workspaceinfoUrl = environment.apiUrl + 'workspaces/';
   exportxmlUrl = environment.apiUrl + 'metalyzer/exportMetadata/';
   private workspaceId: string;
@@ -46,10 +54,30 @@ export class MetalyzerHeaderService {
     return this.http.post(this.exportxmlUrl, params,
       { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
   }
+
+  // Web socket
+  initializeWebsocketConnection() {
+    const ws = new SockJS(this.serverUrl);
+    this.stompClient = Stomp.over(ws);
+    const that = this;
+    console.log('connecting to stomp client');
+    this.stompClient.connect({}, function (frame) {
+      console.log('connection established');
+      that.stompClient.subscribe('/topic/metalyzer', (message) => {
+        console.log('we are getting a message');
+        console.log(JSON.parse(message.body));
+      });
+    });
+  }
+  // Web socket
+
   private extractWorkspace(res: any) {
     const data = res.data.workspaces.workspaceName;
     return data || [];
   }
+
+
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
