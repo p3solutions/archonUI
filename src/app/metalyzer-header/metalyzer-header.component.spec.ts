@@ -6,6 +6,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { MetalyzerHeaderService } from './metalyzer-header.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
+import { TableListService } from '../table-list/table-list.service';
 
 describe('MetalyzerHeaderComponent', () => {
   let component: MetalyzerHeaderComponent;
@@ -15,7 +16,7 @@ describe('MetalyzerHeaderComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MetalyzerHeaderComponent ],
       imports: [RouterTestingModule, HttpClientModule],
-      providers: [WorkspaceHeaderService, MetalyzerHeaderService, UserinfoService]
+      providers: [WorkspaceHeaderService, MetalyzerHeaderService, UserinfoService, TableListService]
     })
     .compileComponents();
   }));

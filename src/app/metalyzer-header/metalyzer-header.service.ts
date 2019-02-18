@@ -8,7 +8,7 @@ import { UserinfoService } from '../userinfo.service';
 @Injectable()
 export class MetalyzerHeaderService {
   workspaceinfoUrl = environment.apiUrl + 'workspaces/';
-  exportxmlUrl = environment.apiUrl + 'metalyzer/export/';
+  exportxmlUrl = environment.apiUrl + 'metalyzer/exportMetadata/';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
   cast = this.phase.asObservable();
@@ -36,8 +36,13 @@ export class MetalyzerHeaderService {
       catchError(this.handleError<string>('getworkspaceName'))
     );
   }
-  getExportxml(workspaceId, databaseID, xml): Observable<Blob> {
-    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml };
+  getExportxml(workspaceId, databaseID, xml, tableID): Observable<Blob> {
+    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml, tableId: [tableID] };
+    return this.http.post(this.exportxmlUrl, params,
+      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+  }
+  getExportjson(workspaceId, databaseID, json, tableID): Observable<Blob> {
+    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: json, tableId: [tableID] };
     return this.http.post(this.exportxmlUrl, params,
       { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
   }

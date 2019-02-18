@@ -90,7 +90,9 @@ export class ErtTableComponent implements OnInit {
         tempObj.tableId = item.tableId;
         tempObj.tableName = item.tableName;
         tempObj.modifiedTableName = item.modifiedTableName;
-        tempObj.filterAndOrderConfig = item.filterNconfig;
+        if (item.filterNconfig !== null) {
+          tempObj.filterAndOrderConfig = item.filterNconfig;
+        }
         if (this.ertJobId !== '' && this.ertJobId !== undefined) {
           tempObj.isSelected = true;
         }
@@ -114,6 +116,7 @@ export class ErtTableComponent implements OnInit {
     if (this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList.length === 0) {
       this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
         this.ErtTableColumnList = result;
+        console.log(this.ErtTableColumnList);
         this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
       });
     }
@@ -298,7 +301,8 @@ export class ErtTableComponent implements OnInit {
     this.filterConfigColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-    if (temp.filterAndOrderConfig.filterConfig !== '' && temp.filterAndOrderConfig.filterQuery !== '') {
+    if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
+      temp.filterAndOrderConfig.filterQuery !== '') {
       this.filterdata = JSON.parse(temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"'));
     }
   }
@@ -320,6 +324,8 @@ export class ErtTableComponent implements OnInit {
     let Expression;
     treeStack = getPreorderDFS(this.filterdata);
     Expression = this.constructExpression(treeStack.reverse());
+    console.log(Expression);
+    console.log(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0]);
     this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
       filterConfig = JSON.stringify(this.filterdata).replace(/"/g, '\'');
     this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.filterQuery = Expression;
@@ -369,7 +375,7 @@ export class ErtTableComponent implements OnInit {
         this.expressionStack.push(temp);
       }
     }
-    return this.expressionStack[0];
+    return this.expressionStack[0].substring(1, this.expressionStack[0].length - 1);
   }
 }
 
