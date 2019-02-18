@@ -3,8 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-
-
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { RelationshipInfoObject } from '../workspace-objects';
