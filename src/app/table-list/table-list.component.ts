@@ -1,4 +1,7 @@
-import { Component, OnInit, Pipe, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnChanges, ViewContainerRef, Inject } from '@angular/core';
+import {
+  Component, OnInit, Pipe, Input, Output, EventEmitter, ViewChild,
+  AfterViewInit, OnChanges, ViewContainerRef, Inject
+} from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -69,7 +72,7 @@ export class TableListComponent implements OnInit {
   resultantArray: any[];
 
   dynamicLoaderService: DynamicLoaderService;
-  @ViewChild('storedprocView', { read: ViewContainerRef })storedprocViewRef : ViewContainerRef;
+  @ViewChild('storedprocView', { read: ViewContainerRef }) storedprocViewRef: ViewContainerRef;
 
   addDirectjoin: boolean;
   isTablelistAvailable: boolean;
@@ -590,6 +593,7 @@ export class TableListComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     if (this.storedprocViewRef) {
       this.storedprocViewRef.remove(0);

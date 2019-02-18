@@ -38,6 +38,13 @@ import { DbExtractorStepTwoComponent } from './db-extractor-step-two/db-extracto
 import { DbExtractorLastStepComponent } from './db-extractor-last-step/db-extractor-last-step.component';
 import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
+import { ErtLandingPageComponent } from './ert-landing-page/ert-landing-page.component';
+import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
+import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
+import { ErtTableComponent } from './ert-table/ert-table.component';
+import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
+import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-table-column-config.component';
+import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -56,7 +63,8 @@ const routes: Routes = [
             path: 'manage-members/:id', component: ManageMembersComponent
           }, {
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
-          }]
+          }
+        ]
       }, {
         path: 'metalyzer/:wsId_Mode', component: MetalyzerComponent, canActivate: [AuthenticationGuard], children: [
           {
@@ -79,6 +87,40 @@ const routes: Routes = [
           }
           , {
             path: 'db-extractor-exec-query', component: DbExtractorExecQueryComponent
+          }
+        ]
+      },
+      {
+        path: 'ert', component: ErtLandingPageComponent, canActivate: [AuthenticationGuard], children: [
+          {
+            path: '', redirectTo: 'ert-jobs', pathMatch: 'full'
+          },
+          {
+            path: 'ert-jobs', component: ErtJobsComponent
+          },
+          {
+            path: 'ert-char-replacement', component: ErtCharReplacementComponent
+          },
+          {
+            path: 'ert-jobs-config', component: ErtJobsConfigComponent
+          },
+          {
+            path: 'ert-table', component: ErtTableComponent
+          },
+          {
+            path: 'ert-table/:ertJobId', component: ErtTableComponent
+          },
+          {
+            path: 'ert-extract-ingest', component: ErtExtractDigestComponent
+          },
+          {
+            path: 'ert-extract-ingest/:ertJobId', component: ErtExtractDigestComponent
+          },
+          {
+            path: 'ert-table-col-config', component: ErtTableColumnConfigComponent
+          },
+          {
+            path: 'ert-table-col-config/:ertJobId', component: ErtTableColumnConfigComponent
           }
         ]
       }

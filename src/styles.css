@@ -1071,3 +1071,16 @@ label{
   content:"*";
   color:red;
 }
+
+
+#ert-landing-id {
+  height: 510px;
+}
+
+.cursor-poniter{
+  cursor: pointer;
+}
+
+.fa-trash {
+  color: rgb(207, 19, 19);
+}
