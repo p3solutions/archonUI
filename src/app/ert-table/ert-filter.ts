@@ -209,3 +209,10 @@ export function getPreorderDFS(filterTree: FilterConfigTree): any {
     }, 'preOrder');
     return stack;
 }
+
+export function deleteNode(filterTree: FilterConfigTree, NodeToDelete: FilterConfigNode): FilterConfigTree {
+    const tempfilterTree = new Tree();
+    tempfilterTree.root = filterTree.root;
+    tempfilterTree.remove(NodeToDelete);
+    return tempfilterTree;
+}

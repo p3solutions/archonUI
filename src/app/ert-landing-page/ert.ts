@@ -42,7 +42,7 @@ export class ColumnListObj {
 }
 
 export class UsrDefinedColumnListObj {
-    columnName = '';
+    originalColumnName = '';
     modifiedColumnName = '';
     dataType = 'USERDEFINED';
     isSelected = true;
@@ -105,3 +105,7 @@ export class ExtractDataConfigInfo {
     xmlFileSplitSize = '100';
 }
 
+export class DataOrderConfig {
+    column: string = null;
+    order: string = null;
+}

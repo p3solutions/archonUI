@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { SearchPipe } from '../search.pipe';
 
 describe('ErtTableComponent', () => {
   let component: ErtTableComponent;
@@ -16,7 +17,7 @@ describe('ErtTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ErtTableComponent],
+      declarations: [ErtTableComponent, SearchPipe],
       imports: [FormsModule, ReactiveFormsModule, NgxPaginationModule, HttpClientModule, RouterTestingModule],
       providers: [UserinfoService, WorkspaceHeaderService, ErtService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
