@@ -17,13 +17,15 @@ export class ErtExtractDigestComponent implements OnInit {
   disableIngestData = true;
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
   ngOnInit() {
+    const markCheck = document.getElementById('extract-checkbox') as HTMLInputElement;
+    markCheck.checked = true;
     if (this.ertService.ingestionDataConfig.infoArchiveName !== '') {
       this.ingestionDataConfigObj = this.ertService.ingestionDataConfig;
       this.disableIngestData = false;
       const a = document.getElementById('ingest-checkbox') as HTMLInputElement;
       a.checked = true;
     }
-    if (this.ertService.extractDataConfigInfo.titleName !== '' ||
+    if (this.ertService.extractDataConfigInfo.titleName === '' ||
     this.ertService.extractDataConfigInfo.xmlFileSplitSize !== '100') {
       this.extractDataConfigInfo = this.ertService.extractDataConfigInfo;
       const a = document.getElementById('extract-checkbox') as HTMLInputElement;

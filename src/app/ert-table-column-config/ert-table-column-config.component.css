@@ -103,7 +103,7 @@
     position: sticky;
     top: 0;
     padding: 8px 10px;
-    background-color: #1abc9c;
+    background-color: #2196F3;
     font-size: 13px;
     letter-spacing: 0.2px;
     text-transform: uppercase;
@@ -190,7 +190,7 @@
   
   #add-edit {
     border-bottom: 2px solid #E6E9ED;
-    background-color: #1abc9c;
+    background-color: #2196F3;
     color: white;
   }
   
@@ -245,7 +245,7 @@
   }
   
   #select-tbl-list thead {
-    background-color: #1abc9c;
+    background-color: #2196F3;
     color: white;
   }
   
@@ -296,7 +296,7 @@
   
   
   #config-table-header {
-    background-color: #1abc9c;
+    background-color: #2196F3;
     color: white
   }
   

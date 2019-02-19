@@ -104,7 +104,7 @@ div.sticky {
   position: sticky;
   top: 0;
   padding: 8px 10px;
-  background-color: #1abc9c;
+  background-color: #2196F3;
   font-size: 13px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
@@ -191,7 +191,7 @@ input#ucolumnname {
 
 #add-edit {
   border-bottom: 2px solid #E6E9ED;
-  background-color: #1abc9c;
+  background-color: #2196F3;
   color: white;
 }
 
@@ -215,7 +215,7 @@ input#ucolumnname {
 
 #nav-tab {
   margin: 0px 0px 11px 0px;
-  background-color: #0a6f5b;
+  background-color: #2196F3;
 }
 
 #nav-tab a {
@@ -247,7 +247,7 @@ input#ucolumnname {
 
 #select-tbl-list thead {
   font-family: "Montserrat", sans-serif;
-  background-color: #1abc9c;
+  background-color: #2196F3;
   color: white;
   font-size: 13px;
   letter-spacing: 0.2px;
@@ -283,7 +283,6 @@ input#ucolumnname {
   width: 20%;
 }
 
-
 .config-table {
   border: 2px solid #E6E9ED;
   height: 200px;
@@ -295,7 +294,7 @@ table tr td:nth-child(6) {
 }
 
 #config-table-header {
-  background-color: #1abc9c;
+  background-color: #2196F3;
   color: white
 }
 
@@ -358,7 +357,7 @@ table tr td:nth-child(6) {
 
 #user-defined {
   border-bottom: 2px solid #E6E9ED;
-  background-color: #1abc9c;
+  background-color: #2196F3;
   color: white;
 }
 
@@ -380,8 +379,6 @@ table tr td:nth-child(6) {
   border-bottom: 2px solid #E6E9ED;
   height: 50px;
 }
-
-
 
 :host {
   display: block;
@@ -415,6 +412,7 @@ table tr td:nth-child(6) {
 }
 
 .filter-toogle-div {
+  color: white;
   margin: 2px;
   padding: 3px;
   text-align: left;
@@ -425,7 +423,7 @@ table tr td:nth-child(6) {
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
   font-size: 13px;
-  letter-spacing: 0.2;
+  overflow: scroll
 }
 
 #avaliable-table-list div {
@@ -433,4 +431,9 @@ table tr td:nth-child(6) {
   text-align: left;
   display: inline-block;
   margin: 0px 0px 4px 0px;
+}
+
+.filter-div span {
+  float: left;
+  margin: 6px 2px 2px 4px;
 }

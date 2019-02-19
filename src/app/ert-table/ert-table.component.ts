@@ -5,11 +5,9 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { ErtService } from '../ert-landing-page/ert.service';
 import {
   ErtTableListObj, FilterConfigTree, ErtColumnListObj, TableDetailsListObj,
-  ColumnListObj, UsrDefinedColumnListObj
+  ColumnListObj, UsrDefinedColumnListObj, DataOrderConfig
 } from '../ert-landing-page/ert';
-import { TableNameAndRelatingTable } from '../stored-proc-view/stored-proc-view';
-import { addFilterNode, FilterConfigNode, Tree, searchTree, getPreorderDFS } from './ert-filter';
-import { isEmpty, find } from 'rxjs/operators';
+import { addFilterNode, FilterConfigNode, Tree, searchTree, getPreorderDFS, deleteNode } from './ert-filter';
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
@@ -39,6 +37,10 @@ export class ErtTableComponent implements OnInit {
   maxNode = 3;
   ertAvillableTableList: ErtTableListObj = new ErtTableListObj();
   expressionStack: string[] = [];
+  searchTableName: string;
+  parentChildMap: { child: number, parent: number }[] = [];
+  dataOrderList: DataOrderConfig[] = [];
+  dataOrderObj: DataOrderConfig = new DataOrderConfig();
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService) {
   }
@@ -52,6 +54,9 @@ export class ErtTableComponent implements OnInit {
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      document.getElementById('back-to-job-config').classList.add('hide');
+    }
     if (this.ertJobId !== '' && this.ertService.selectedList.length !== 0) {
       this.selectedTableList = this.ertService.selectedList;
       this.selectedTableId = this.selectedTableList[0].tableId;
@@ -74,11 +79,11 @@ export class ErtTableComponent implements OnInit {
   }
 
   getErtAvailableTable() {
-    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-      this.ertService.getErtAvailableTable(this.ertJobId).subscribe(result => {
-        this.ertAvillableTableList = result;
-      });
-    }
+      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+        this.ertService.getErtAvailableTable(this.ertJobId).subscribe(result => {
+          this.ertAvillableTableList = result;
+        });
+      }
   }
 
   getERTtableList() {
@@ -116,7 +121,6 @@ export class ErtTableComponent implements OnInit {
     if (this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList.length === 0) {
       this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
         this.ErtTableColumnList = result;
-        console.log(this.ErtTableColumnList);
         this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
       });
     }
@@ -279,12 +283,19 @@ export class ErtTableComponent implements OnInit {
   saveUsrDefinedColumn() {
     if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].isSelected === true) {
       const tempUsrDefinedObj = new UsrDefinedColumnListObj();
-      tempUsrDefinedObj.columnName = this.usrDefinedColumnName;
+      tempUsrDefinedObj.originalColumnName = this.usrDefinedColumnName;
       tempUsrDefinedObj.modifiedColumnName = this.usrDefinedColumnName;
       tempUsrDefinedObj.viewQuery = this.usrDefinedQueryView;
       tempUsrDefinedObj.userColumnQuery = JSON.stringify(this.userDefinedList).replace(/"/g, '\'');
-      const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList;
-      temp.push(tempUsrDefinedObj);
+      const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
+        columnList.filter(b => b.originalColumnName === this.usrDefinedColumnName)[0];
+      if (tempObj !== undefined) {
+        tempObj.userColumnQuery = tempUsrDefinedObj.userColumnQuery;
+        tempObj.viewQuery = tempUsrDefinedObj.viewQuery;
+      } else {
+        const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList;
+        temp.push(tempUsrDefinedObj);
+      }
     }
   }
 
@@ -296,11 +307,15 @@ export class ErtTableComponent implements OnInit {
   }
 
   openFilteronfig() {
+    this.parentChildMap = [];
     this.filterdata = new Tree();
     this.filterConfigColumnNameList = [];
+    this.dataOrderList = [];
     this.filterConfigColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+    const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, []);
+    this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
     if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
       temp.filterAndOrderConfig.filterQuery !== '') {
       this.filterdata = JSON.parse(temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"'));
@@ -322,13 +337,25 @@ export class ErtTableComponent implements OnInit {
   createFilterColumnConfig() {
     let treeStack = [];
     let Expression;
+    let tempString = 'order by';
     treeStack = getPreorderDFS(this.filterdata);
     Expression = this.constructExpression(treeStack.reverse());
-    console.log(Expression);
-    console.log(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0]);
     this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
       filterConfig = JSON.stringify(this.filterdata).replace(/"/g, '\'');
-    this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.filterQuery = Expression;
+    if (this.dataOrderList.length !== 0) {
+      for (const item of this.dataOrderList) {
+        tempString = tempString + item.column + ' ';
+        if (item.order !== null) {
+          tempString = tempString + ' ' + item.order;
+        }
+        tempString = tempString + ', ';
+      }
+    } else {
+      tempString = '';
+    }
+    this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.filterQuery
+      = Expression + tempString.substring(0, tempString.length - 1);
+    console.log(Expression + tempString.substring(0, tempString.length - 1));
   }
 
   insertFilterNode(id: number, operation: string, column: string, condition: string, value: string, event) {
@@ -337,7 +364,6 @@ export class ErtTableComponent implements OnInit {
     } else {
       const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, []);
       if (id === 1) {
-        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
         const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
         const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, []);
@@ -346,6 +372,9 @@ export class ErtTableComponent implements OnInit {
         filterTreeNode.value = '';
         filterTreeNode.condition = null;
         filterTreeNode.column = null;
+        filterTreeNode.operation = operation;
+        this.parentChildMap.push({ child: 2, parent: 1 });
+        this.parentChildMap.push({ child: 3, parent: 1 });
       } else {
         const filterTreeNode = searchTree(this.filterdata.root, id);
         filterTreeNode.operation = operation;
@@ -356,12 +385,16 @@ export class ErtTableComponent implements OnInit {
         this.maxNode = this.maxNode + 1;
         const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false, column, condition, value, 18, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
+        this.parentChildMap.push({ child: this.maxNode, parent: id });
         this.maxNode = this.maxNode + 1;
         const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
+        this.parentChildMap.push({ child: this.maxNode, parent: id });
       }
     }
+    console.log(this.parentChildMap);
     event.stopPropagation();
+
   }
 
   constructExpression(postfix: string[]): string {
@@ -376,6 +409,38 @@ export class ErtTableComponent implements OnInit {
       }
     }
     return this.expressionStack[0].substring(1, this.expressionStack[0].length - 1);
+  }
+
+  addAvailableTable() {
+    for (const item of this.ertAvillableTableList.ertTableList) {
+      const tempObj: TableDetailsListObj = new TableDetailsListObj();
+      if (item.isSelected) {
+        tempObj.tableId = item.tableId;
+        tempObj.tableName = item.tableName;
+        tempObj.modifiedTableName = item.modifiedTableName;
+        this.selectedTableList.push(tempObj);
+      }
+    }
+  }
+
+  deleteFilterConfigTreeNode(id: number) {
+    const parent = this.parentChildMap.filter(a => a.child === id)[0].parent;
+    for (const item of this.parentChildMap.filter(a => a.parent === parent)) {
+      const filterTreeNode2 = searchTree(this.filterdata.root, item.child);
+      this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
+      const index = this.parentChildMap.findIndex(a => a.child === item.child)[0];
+      if (index !== -1) {
+        this.parentChildMap.splice(index, 1);
+      }
+    }
+    // const filterTreeNode = searchTree(this.filterdata.root, id);
+    // this.filterdata = deleteNode(this.filterdata, filterTreeNode);
+  }
+  addOrder() {
+    if (this.dataOrderObj.column !== null) {
+      this.dataOrderList.push(this.dataOrderObj);
+      this.dataOrderObj = new DataOrderConfig();
+    }
   }
 }
 
