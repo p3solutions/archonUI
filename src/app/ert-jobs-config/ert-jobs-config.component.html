@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-body">
+    <div id="ert-landing-id">
+      <div id="job-config">
+        <div id="job-config-heading">
+          Job Configurations
+        </div>
+        <div id="job-name-heading" class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="ertJobParams.ertJobTitle" (keyup)="enableJobSelection()"
+            name="jobname" id="jobname" placeholder="Enter Job Name">
+          <small>* Job name is mandatory fill field to enable job selection</small>
+        </div>
+        <div id="job-section">
+          <div id="job-section-heading">Choose Job Type</div>
+          <div id="job-section-box">
+            <div class="select-job">
+              <div class="select-job-type">
+                <input type="radio" disabled="true" (click)="goToExtraction($event,'TABLE')" name="selectjob"> Table</div>
+              <div class="job-desc">
+                <i class="fa fa-table"></i> Choose option for table Extraction
+              </div>
+            </div>
+            <div class="select-job">
+              <div class="select-job-type">
+                <input type="radio" disabled="true" (click)="goToExtraction($event,'DATA RECORD')" name="selectjob">
+                Data Record
+              </div>
+              <div class="job-desc">
+                <i class="fa fa-sitemap"></i> Choose option for Data Record Extraction</div>
+            </div>
+            <div class="select-job">
+              <div class="select-job-type">
+                <input type="radio" disabled="true" (click)="goToExtraction($event,'SIP')" name="selectjob"> SIP</div>
+              <div class="job-desc">
+                <i class="fa fa-server"></i> Choose option for SIP Extraction</div>
+            </div>
+          </div>
+          <div style="float:right">
+            <button type="button" id="cancelBtn" class="btn btn-default">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

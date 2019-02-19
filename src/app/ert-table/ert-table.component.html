@@ -1,0 +1,447 @@
+<div id="ert-table-id">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card" style="height:455px">
+        <div class="card-body" id="ert-tbl-search">
+          <div class="row" style="margin-bottom: 12px;">
+            <div class="col-md-6">
+              <label id=table-heading>Table list</label>
+            </div>
+            <div class="col-md-6 cursor-poniter" id="get-tbl-list">
+              <a (click)="getErtAvailableTable()" class="cursor-poniter" data-toggle="modal" data-target="#ert_available_table_modal"><i
+                  class="fa fa-plus cursor-poniter"></i></a>
+            </div>
+            <div class="inner-addon right-addon">
+              <a href="" style="z-index:1" class="glyphicon glyphicon-search"></a>
+              <input type="text" class="form-control search-input" id="listSearch" placeholder="Search">
+            </div>
+          </div>
+          <div id="tbl-list">
+            <div class="scroll-div border">
+              <div class="sticky">
+                <div><input style="float:left" type="checkbox"></div>
+                <div class="first-div">Select</div>
+                <div></div>
+              </div>
+              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 50, currentPage: page }" (click)="getERTcolumnlist(item.tableId,$event)"
+                class="well">
+                <div><input style="float:left" (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
+                    type="checkbox"></div>
+                <div class="first-div">{{item.tableName}}</div>
+                <div>
+                </div>
+              </div>
+            </div>
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card" style="height:455px">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3" id="sel-table-name">{{tableName}}</div>
+            <div class="col-md-9">
+              <ul class="nav nav-tabs mgmt-panel fl-r" style="margin-right: 12px;">
+                <li class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel('addNewColumn')" data-toggle="modal"
+                    data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus"></i></a>
+                <li>
+                <li class="icon-list trim-text"><a href="#" data-toggle="modal" (click)="openFilteronfig()" data-target="#filter-modal"><i
+                      class="fa fa-filter"></i></a>
+                <li>
+                <li class="icon-list trim-text"><a href=""><i class="fa fa-refresh"></i></a>
+                <li>
+                <li class="icon-list trim-text"><a href=""><i class="fa fa-save"></i></a>
+                <li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <div id="table-name-heading" class="form-group">
+                <label id="lbl-alias">Table Alias Name</label>
+                <input type="text" class="form-control" [(ngModel)]="modifiedTableName" (keyup)="toModifiedTableName()"
+                  name="tablename" id="tablename" placeholder="Enter table Name">
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <div id="select-tbl-list">
+            <div class="scroll-div">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Key</th>
+                    <th>Include</th>
+                    <th>Column</th>
+                    <th>Column(as required in Output)
+                    <th>Type</th>
+                    <th>Config</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of showColumns()">
+                    <td><i [ngClass]="{'fa fa-key':item?.isPrimaryKey}"></i></td>
+                    <td><input (change)="selectColumns(item?.originalColumnName,item?.isSelected)" [(ngModel)]="item.isSelected"
+                        type="checkbox"></td>
+                    <td>{{item?.originalColumnName}}</td>
+                    <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
+                        [ngModel]="item?.modifiedColumnName"></td>
+                    <td>{{item?.dataType}}</td>
+                    <td><a href="" data-toggle="modal" (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
+                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#add-edit-user-defined-column-modal' : '#config-modal'"><i class="fa fa-cogs"></i></a></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="nextbtn">
+    <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()" style="float: right;margin-right: 12px">Next</button>
+    <button class="btn btn-primary Previous" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
+      Back</button>
+  </div>
+</div>
+
+<div id="add-edit-user-defined-column-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:915px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add/Edit user defined columns
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div id="table-name-heading" class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="usrDefinedColumnName" name="ucolumnname" id="ucolumnname"
+            placeholder="Enter unique column name">
+        </div>
+        <div>
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 style="text-align:left" class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne">
+                    Combined Column Mode
+                  </a>
+                  <i style="float:right" class="fa fa-chevron-right"></i>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <div id="add-edit-column">
+                    <div class="form-inline" id="add-edit">
+                      <div class="add-edit-heading form-group">
+                        Prefix
+                      </div>
+                      <div class=" add-edit-heading form-group">
+                        Column
+                      </div>
+                      <div class=" add-edit-heading form-group">
+                        Suffix
+                      </div>
+                      <div class=" add-edit-heading form-group">
+                        Action
+                      </div>
+                    </div>
+                    <form class="form-inline" id="add-edit-form" [formGroup]="myForm">
+                      <div formArrayName="addEditColumn">
+                        <div *ngFor="let addEditItem of myForm.controls.addEditColumn.controls; let i=index">
+                          <div [formGroupName]="i">
+                            <div class="add-edit-form-item form-group">
+                              <input type="text" class="form-control form-control-sm" formControlName="prefix">
+                              <small [hidden]="myForm.controls.addEditColumn.controls[i].controls.prefix.valid">
+                                Street is required
+                              </small>
+                            </div>
+                            <div class="add-edit-form-item form-group">
+                              <select class="form-control" formControlName="column">
+                                <option [ngValue]="null">Select Column</option>
+                                <option [ngValue]="item" *ngFor="let item of ursDefinedColumnNameList">{{item}}</option>
+                              </select>
+                              <small [hidden]="myForm.controls.addEditColumn.controls[i].controls.column.valid">
+                                Street is required
+                              </small>
+                            </div>
+                            <div class="add-edit-form-item form-group">
+                              <input type="text" class="form-control form-control-sm" formControlName="suffix">
+                            </div>
+                            <div class="add-edit-form-item action form-group">
+                              <a (click)="addColumns(i)"><i class="fa fa-plus"></i></a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div id="user-defined-table">
+                    <div *ngFor="let item of userDefinedList;let i=index" class="user-defined-box form-inline">
+                      <div class="clearflex add-edit-form-item form-group">{{item.prefix}}</div>
+                      <div class="clearflex add-edit-form-item form-group">{{item.column}}</div>
+                      <div class="clearflex add-edit-form-item form-group">{{item.suffix}}</div>
+                      <div class="clearflex add-edit-form-item form-group"><a (click)="deleteUsrDefinedCol(i)"><i class="fa fa-trash"></i></a></div>
+                    </div>
+                  </div>
+                  <div id="query-mode-div">
+                    <label id="lbl-id">Query Mode</label>
+                    <textarea class="form-control" [disabled]="true" [(ngModel)]="usrDefinedQueryView" style="width: 100%;height: 146px;"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 style="text-align:left" class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Query Mode
+                  </a>
+                  <i style="float:right" class="fa fa-chevron-right"></i>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  <textarea class="form-control" style="width: 100%;height: 146px;"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" [disabled]="userDefinedList.length===0 || usrDefinedColumnName===''"
+          (click)="saveUsrDefinedColumn()" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="filter-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:915px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Filter/Order Conditions</h4>
+      </div>
+      <div class="modal-body">
+        <section id="tabs">
+          <div class="row">
+            <div class="col-md-12 ">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active-tab" (click)="filterOrderConfig($event)" id="nav-filter-tab"
+                    data-toggle="tab" href="#nav-filter" role="tab" aria-controls="nav-filter" aria-selected="true">Filter
+                    Config</a>
+                  <a class="nav-item nav-link" (click)="filterOrderConfig($event)" id="nav-data-tab" data-toggle="tab"
+                    href="#nav-data" role="tab" aria-controls="nav-data" aria-selected="false">Data Order Config</a>
+                </div>
+              </nav>
+              <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                <div *ngIf="filterdata.root==null" class="filter-div form-inline">
+                  <div class="form-group filter-well" (click)="insertFilterNode(1,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">AND</div>
+                  <div class="form-group filter-well" (click)="insertFilterNode(1,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">OR</div>
+                  <div class="form-group">
+                    <select class="form-control" #selectfiltercolumn>
+                      <option [ngValue]="null" selected>Select Column</option>
+                      <option [ngValue]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <select #selectcondition class="form-control">
+                      <option selected>Select condition</option>
+                      <option value="=">=</option>
+                      <option value="!=">!=</option>
+                      <option value="between">between</option>
+                      <option value="in">in</option>
+                      <option value="is null">is null</option>
+                      <option value="is not null">is not null</option>
+                      <option value="like">like</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" #input class="form-control">
+                  </div>
+                </div>
+                <div *ngIf="filterdata.root!==null" class="tab-pane fade active in" id="nav-filter" role="tabpanel"
+                  aria-labelledby="nav-filter-tab">
+                  <ng-template #nodeTemplateRef let-node>
+                    <div class="node" [class.node--selected]="( node === selectedTreeNode )">
+                      <div aria-expanded="false" data-toggle="collapse" [attr.href]="'#' + node.id">
+                        <div class="filter-toogle-div" (click)="showFilterChild($event)" [style.margin-left.px]="node.margin_left"
+                          *ngIf="node.children.length>0"><i class="fa fa-chevron-down"></i>{{node.operation}}</div>
+                        <div *ngIf="node.children.length==0" [style.margin-left.px]="node.margin_left" class="filter-div form-inline">
+                          <div class="form-group filter-well" (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">AND</div>
+                          <div class="form-group filter-well" (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">OR</div>
+                          <div class="form-group">
+                            <select class="form-control" [(ngModel)]="node.column" #selectfiltercolumn>
+                              <option [ngValue]="null" selected>Select Column</option>
+                              <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <select #selectcondition [(ngModel)]="node.condition" class="form-control">
+                              <option value="null" selected>Select condition</option>
+                              <option value="=">=</option>
+                              <option value="!=">!=</option>
+                              <option value="between">between</option>
+                              <option value="in">in</option>
+                              <option value="is null">is null</option>
+                              <option value="is not null">is not null</option>
+                              <option value="like">like</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" [(ngModel)]="node.value" #input class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="node.children.length>0" [style.margin-left.px]="node.margin_left" [attr.id]="node.id"
+                        class="collapse" class="node__children">
+                        <ng-template ngFor [ngForOf]="node.children" [ngForTemplate]="nodeTemplateRef">
+                        </ng-template>
+                      </div>
+                    </div>
+                  </ng-template>
+                  <ng-template [ngTemplateOutlet]="nodeTemplateRef" [ngTemplateOutletContext]="{ $implicit: filterdata.root }">
+                  </ng-template>
+                </div>
+                <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
+                  <div id="add-edit-tbl">
+                    <div class="form-inline" id="add-edit">
+                      <div class=" add-edit-heading form-group">
+                        Column
+                      </div>
+                      <div class=" add-edit-heading form-group">
+                        Order By
+                      </div>
+                      <div class=" add-edit-heading form-group">
+                        Action
+                      </div>
+                    </div>
+                    <div id="add-sel-table"></div>
+                  </div>
+
+                  <form class="form-inline" id="add-edit-form" [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
+                    <div formArrayName="addEditColumn">
+                      <div *ngFor="let addEditItem of myForm.controls.addEditColumn.controls; let i=index">
+                        <div [formGroupName]="i">
+                          <div class="add-edit-form-item form-group">
+                            <select class="form-control" formControlName="column">
+                              <option selected>Select Column</option>
+                              <option>A</option>
+                              <option>B</option>
+                              <option>C</option>
+                            </select>
+                            <small [hidden]="myForm.controls.addEditColumn.controls[i].controls.prefix.valid">
+                              prefix is required
+                            </small>
+                          </div>
+                          <div class="add-edit-form-item form-group">
+                            <select class="form-control" formControlName="column">
+                              <option selected>Select Order</option>
+                              <option>Ascending</option>
+                              <option>Descending</option>
+                            </select>
+                            <small [hidden]="myForm.controls.addEditColumn.controls[i].controls.column.valid">
+                              suffix is required
+                            </small>
+                          </div>
+
+                          <div class="add-edit-form-item action form-group">
+                            <a (click)="addColumns(i)"><i class="fa fa-plus"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createFilterColumnConfig()" data-dismiss="modal">save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="config-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:915px">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Column Configuration</h4>
+      </div>
+      <div class="modal-body">
+        <div id="table-name-heading" class="form-group">
+          <input type="text" class="form-control" disabled="true" [ngModel]="configColumnObject.selectedColumnName"
+            name="ucolumnname" id="ucolumnname">
+        </div>
+        <div class="form-group">
+          <select class="form-control" #selectValue="ngModel" [ngModel]="configColumnObject.selectedConfigFunction"
+            name="configName" (ngModelChange)="setColumnConfigObj(selectValue.value)">
+            <option value="null">Select Column</option>
+            <option value="FLOOR">FLOOR</option>
+            <option value="CEIL">CEIL</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="button" [disabled]="selectValue.value===null" (click)="saveColumnConfig()" class="btn btn-primary">save</button>
+        </div>
+        <div class="config-table">
+          <div class="form-inline" id="config-table-header">
+            <div class="form-group">#</div>
+            <div class="form-group">Function</div>
+            <div class="form-group">Param</div>
+            <div class="form-group">Output Type</div>
+          </div>
+          <div class="form-inline" *ngFor="let item of configColumnList;let i=index" id="config-table">
+            <div class="form-group">#</div>
+            <div class="form-group">{{item.selectedConfigFunction}}</div>
+            <div class="form-group">{{item.selectedColumnName}}</div>
+            <div class="form-group cursor-pointer"><i class="fa fa-trash" (click)="deleteColumnCOnfig(i)"></i></div>
+          </div>
+        </div>
+        <div>
+          Query preview:{{configColumnQuery}}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="ert_available_table_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Avaliable Ert Table List</h4>
+      </div>
+      <div class="modal-body">
+        <div id="avaliable-table-list">
+          <div class="form-control" *ngFor="let item of ertAvillableTableList.ertTableList">
+            <input type="checkbox" [(ngModel)]="item.isSelected">
+            {{item.tableName}}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
