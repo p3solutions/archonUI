@@ -46,12 +46,14 @@
   /* margin-bottom: -15px; */
   text-align: left;
 }
+
 .overflow-text {
   float: left;
   width: 96%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .overflow-text-arrow {
   float: left;
   width: 4%;
@@ -67,6 +69,7 @@ a {
 h4 {
   display: inline;
 }
+
 .table-header {
   float: left;
 }
@@ -152,49 +155,62 @@ button {
   display: inline-block;
   margin-left: -50px;
 }
+
 .dataA-panel-body {
   height: 325px;
 }
+
 .dataA-scrollable-div {
   overflow: auto;
   max-height: 277px;
 }
+
 .dataA-scrollable-div-A {
   overflow: auto;
   max-height: 318px;
 }
+
 .primary-col-chkbx {
   margin: 4px 5px;
 }
+
 #analysis-view .card {
   height: 500px;
 }
+
 #analysis-view .tablename-list {
   height: 370px;
 }
+
 #analysis-view .search-input {
   margin-left: 20px;
   width: 85%;
 }
+
 #analysis-view .form-control-feedback {
   margin-left: 240px;
 }
+
 .col-loader {
   padding: 2px 15px;
   float: right;
 }
+
 .da-table.selected {
   border: 1px solid #269AF8;
 }
+
 input[type='checkbox'] {
   cursor: pointer;
 }
+
 .unselected {
   display: none;
   float: right;
   padding: 3px 0;
   color: #269AF8;
 }
+
 .selected .unselected {
   display: block;
 }
@@ -206,6 +222,7 @@ input[type='checkbox'] {
   width: 85%;
   margin-left: 20px;
 }
+
 .form-control-feedback {
   position: relative;
   margin-top: -34px;
@@ -215,22 +232,22 @@ input[type='checkbox'] {
   line-height: 30px;
 }
 
-.table-headers{
+.table-headers {
   text-align: left;
 }
 
-.panel-header{
+.panel-header {
   margin-left: 40px;
   width: 90%;
   margin-top: 5px;
 }
 
-.panel-footer{
+.panel-footer {
   height: auto;
   overflow: auto;
 }
 
-#hrtab{
+#hrtab {
   margin-top: 20px;
   margin-bottom: 10px;
   border: 1px solid #e8e2e2;
@@ -242,26 +259,26 @@ input[type='checkbox'] {
 }
 
 
-#dropdown > li {
-  display:inline-block;     
-} 
+#dropdown>li {
+  display: inline-block;
+}
 
 #dropdown {
-  text-align:center;
+  text-align: center;
   width: 202px;
-  margin-left: 39px;  
-} 
+  margin-left: 39px;
+}
 
 
 #sec-tab {
-margin-left: 18px;
+  margin-left: 18px;
 }
 
 .sec-width {
-width: 26%;
-text-align: left;
-margin-left: 10px;
-font-size: 14px;
+  width: 26%;
+  text-align: left;
+  margin-left: 10px;
+  font-size: 14px;
 }
 
 .def-width {
@@ -270,21 +287,23 @@ font-size: 14px;
   font-size: 14px;
 }
 
-.conf-width{
+.conf-width {
   width: 15%;
   text-align: left;
   font-size: 14px;
 }
+
 .join-width {
   width: 26%;
   text-align: left;
   font-size: 14px;
-  }
-  .action-width {
-    width: 15%;
-    text-align: left;
-    
-    }
+}
+
+.action-width {
+  width: 15%;
+  text-align: left;
+
+}
 
 .analyze-header {
   margin-top: 17px;
@@ -297,8 +316,8 @@ font-size: 14px;
   cursor: pointer;
 }
 
-#finalSecTab > tbody > tr.active > td {
-  background-color:#f1efef;
+#finalSecTab>tbody>tr.active>td {
+  background-color: #f1efef;
 }
 
 .centered {
@@ -317,29 +336,55 @@ font-size: 14px;
 
 .move-progress2 {
   margin-left: -27px;
-  font-size:20px;
+  font-size: 20px;
 }
 
 .move-progress3 {
   margin-left: -37px;
-  font-size:20px;
-  color:darkred;
+  font-size: 20px;
+  color: darkred;
 }
+
 .overflow-text {
   float: left;
   width: 96%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .overflow-text-arrow {
   float: left;
   width: 4%;
   text-align: right;
 }
+
 .overflow-textrelation {
   float: left;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.row {
+  min-height: 100%;
+  /* display: table-row */
+}
+
+.row .no-float {
+  display: table-cell;
+  float: none;
+}
+.container {
+  display: table;
+  width: 100%;
+}
+
+.col-container {
+  display: table;
+  width: 100%;
+}
+.col-behaviour {
+  display: table-cell;
+}
+
 

@@ -1,20 +1,22 @@
 <div id="metalyzer" class="row">
-  <div class="metalyzer-header col-md-6">
-    <div class="row">
-      <div class="title-headers">
-        <a [routerLink]="['/workspace/workspace-dashboard']"> Home </a>
-        <i class="fa fa-chevron-right"></i>
-        <a [routerLink]="['/workspace/metalyzer/ALL/configuration']"> Configuration </a>
-        <i class="fa fa-chevron-right"></i>
-        <p> Metalyzer </p>
-      </div>
-    </div>
+  <div class="col-md-3">
     <div class="row">
       <div class="ws-name">
         <p>WorkspaceName: {{wsName}}</p>
       </div>
-      <div class="dropdown col-md-1 .col-md-offset-3" *ngIf="phase == 'Analysis'">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="export">Export As
+    </div>
+    <div class="row">
+      <div class="phase-config">
+        <p>Phase: {{phase}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <div class="btn-group">
+        <button class="btn btn-default export" type="button">Export As</button>
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="export" aria-haspopup="true"
+          aria-expanded="false">
           <span>
             <i class="fa fa-angle-down"></i>
           </span>
@@ -28,8 +30,10 @@
           </li>
         </ul>
       </div>
-      <div class="dropdown" *ngIf="phase == 'Analysis'">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="btn">View Relationship
+      <div class="btn-group">
+        <button class="btn btn-default export" type="button">View Relationship</button>
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="export" aria-haspopup="true"
+          aria-expanded="false">
           <span>
             <i class="fa fa-angle-down"></i>
           </span>
@@ -44,15 +48,6 @@
         </ul>
       </div>
     </div>
-    <div classs="row">
-      <div class="phase-config">
-        <p>Phase: {{phase}}</p>
-        <br>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <span>Something</span>
   </div>
 </div>
 <hr>

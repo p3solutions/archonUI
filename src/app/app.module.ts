@@ -89,7 +89,7 @@ import { AddDirectJoinService } from './add-direct-join/add-direct-join.service'
 import { SecondaryColumnPipe } from './secondary-column.pipe';
 import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { KeyvaluePipe } from './keyvalue.pipe';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 import { DbExtractorComponent } from './db-extractor/db-extractor.component';
 import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extractor-step-one.component';
@@ -101,9 +101,7 @@ import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extr
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { StoredProcViewService } from './stored-proc-view/stored-proc-view.service';
-import { MetalyzerLiveDirective } from './metalyzer-live/metalyzer-live.directive';
-import { MetalyzerLiveComponent } from './metalyzer-live/metalyzer-live.component';
-import {ErtLandingPageComponent} from './ert-landing-page/ert-landing-page.component';
+import { ErtLandingPageComponent } from './ert-landing-page/ert-landing-page.component';
 import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
 import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
 import { ErtTableComponent } from './ert-table/ert-table.component';
@@ -174,8 +172,6 @@ export function tokenGetter() {
                 DbExtractorLastStepComponent,
                 DbExtractorExecQueryComponent,
                 StoredProcViewComponent,
-                MetalyzerLiveDirective,
-                MetalyzerLiveComponent,
                 ErtLandingPageComponent,
                 ErtCharReplacementComponent,
                 ErtJobsConfigComponent,
