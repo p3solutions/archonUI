@@ -35,7 +35,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
     this.router.navigate(['/workspace/ert/ert-table']);
   }
   gotoJobConfiguration() {
-    this.router.navigate(['workspace/ert/ert-jobs']);
+    this.router.navigate(['workspace/ert/ert-jobs-config']);
   }
 
   populategraph(value) {
