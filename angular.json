@@ -120,6 +120,7 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+              "src/assets/archon-theme.scss",
               "src/assets/font-awesome-4.7.0/css/font-awesome.min.css",
               "src/styles.css"
             ],

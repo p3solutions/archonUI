@@ -44,9 +44,15 @@
 }
 
 .card h4{
-  color:  #1abc9c;
+  color:  #2196F3;
 }
 
 .card span{
   color:  #2196F3;
+}
+
+a.disabled {
+  color: gray;
+  cursor: not-allowed;
+  text-decoration: underline;
 }

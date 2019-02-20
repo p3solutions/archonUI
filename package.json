@@ -29,7 +29,7 @@
     "angular-core": "0.0.5",
     "angular-datatables": "^7.0.0",
     "angular-scrollable-table": "^1.1.2",
-    "bootstrap": "^3.4.0",
+    "bootstrap": "^3.4.1",
     "core-js": "^2.6.1",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",

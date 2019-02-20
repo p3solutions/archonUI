@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { MatTableModule } from '@angular/material';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
+import { NgMaterialModuleModule } from './ng-material-module/ng-material-module.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InfoService } from './info.service';
@@ -195,9 +195,9 @@ export function tokenGetter() {
                 FormsModule,
                 ReactiveFormsModule,
                 DataTablesModule,
-                MatTableModule,
                 AppRoutingModule,
                 HttpClientModule,
+                NgMaterialModuleModule,
                 NgxPaginationModule,
                 NgxBootstrapSliderModule
         ],

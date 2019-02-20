@@ -98,10 +98,10 @@ mv-slider::ng-deep .slider-horizontal {
 }
 
 mv-slider::ng-deep .slider-selection.tick-slider-selection {
-  background-image: linear-gradient(to bottom, #1abc9c 0, #1abc9c 100%);
+  background-image: linear-gradient(to bottom, #2196F3 0, #086754 100%);
 }
 
 mv-slider::ng-deep .slider-handle {
-  background-color: #1abc9c;
-  background-image: linear-gradient(to bottom, #1abc9c 0, #086754 100%)
+  background-color: #2196F3;
+  background-image: linear-gradient(to bottom, #2196F3 0, #086754 100%)
 }
