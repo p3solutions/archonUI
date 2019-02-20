@@ -262,3 +262,58 @@ function tableNode(data) {
         }
       return JSON.stringify(tree.root);
      }
+
+     // ------- SIP Code -------//
+
+     function getChildTableListForSIP(inputTableList ,tableName: string, map): Prop[] {
+      const  tableList = [];
+      let entireArray = [];
+      entireArray = map.get(tableName);
+
+      for (const i of entireArray[0].childTable) {
+        tableList.push(new Prop(i.secondaryTableid, i.secondaryTableName, 'white', false));
+      }
+
+      return tableList;
+    }
+
+    function isPathForSIP(inputTableList: string[], tableName: string, parent: string): boolean {
+      for (let i = 0; i < inputTableList.length; i++) {
+        if ((tableName === inputTableList[i])) {
+            return true;
+        }
+      }
+    return false;
+    }
+
+     export function getSIPGraphData(inputTableList: string [], map) {
+      const tree = new Tree();
+
+      for (let i = 0; i < inputTableList.length; i++) {
+          const parent = getTableProperty(inputTableList[i], map);
+
+          if (i === 0) {
+             // parent.isSelected = isSelectedPath(inputTableList,parent.tableName);
+              parent.color = '#F94B4C';
+              parent.enableClick = true;
+              tree.add(parent);
+          }
+
+          const childTableList: Prop [] = getChildTableListForSIP(inputTableList, parent.name, map);
+          for ( let j = 0; j < childTableList.length; j++) {
+           if (isPathForSIP(inputTableList, childTableList[j].name, parent.name)) {
+              childTableList[j].color = 'black';
+              childTableList[j].enableClick = true;
+            }
+
+            if (childTableList[j].color === 'black') {
+              if (tree.contains(childTableList[j]) === true) {
+                childTableList[j].color = 'blue';
+              }
+            }
+            tree.add(childTableList[j], parent);
+          }
+
+        }
+      return JSON.stringify(tree.root);
+     }

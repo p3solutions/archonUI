@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import * as d3 from 'd3';
-import {toJson} from '../ert-datarecord-config/tree';
+import {toJson, getSIPGraphData} from '../ert-datarecord-config/tree';
 import {CompleteArray, getPrimaryArray, getSecondaryArray} from '../ert-datarecord-config/class';
 
 @Component({
@@ -49,7 +49,7 @@ export class ErtSipConfigComponent implements OnInit {
       this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
       }
       this.selectedValues.push(value.tableName);
-      this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+      this.data = JSON.parse(getSIPGraphData(this.selectedValues, this.joinListMap));
       this.createchart();
     });
   }
@@ -240,7 +240,7 @@ export class ErtSipConfigComponent implements OnInit {
         self.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, self.secondaryTable));
         }
         self.selectedValues.push(value.name);
-        self.data = JSON.parse(toJson(self.selectedValues, self.joinListMap));
+        self.data = JSON.parse(getSIPGraphData(self.selectedValues, self.joinListMap));
         update(self.data);
       });
     }
