@@ -36,6 +36,12 @@
             ]
           },
           "configurations": {
+            "local": {
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.local.ts"
+              }]
+            },
             "dev": {
               "fileReplacements": [
                 {
@@ -77,6 +83,9 @@
             "browserTarget": "archon-ui:build"
           },
           "configurations": {
+            "local": {
+              "browserTarget": "archon-ui:build:local"
+            },
             "dev": {
               "browserTarget": "archon-ui:build:dev"
             },

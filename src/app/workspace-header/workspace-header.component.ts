@@ -10,6 +10,7 @@ import { archonConfig } from '../config';
 import { Router, RouterModule } from '@angular/router';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { jsonpCallbackContext } from '@angular/common/http/src/module';
+import { MetalyzerComponent } from '../metalyzer/metalyzer.component';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -29,6 +30,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   fetchTimeout = 3000;
   userSelectedWorkspace: string;
   @Output() noWorkspace = new EventEmitter<boolean>();
+  newWorkspace: boolean;
 
   constructor(
     private userWorkspaceService: UserWorkspaceService,
@@ -45,6 +47,12 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.workspaceHeaderService.currentWSValue.subscribe(value => {
+      this.newWorkspace = value;
+      if (this.newWorkspace === true) {
+        this.getUserWorkspaceList();
+      }
+     });
     this.userProfileService.userSelectedWorkspace.subscribe(data => {
       this.userSelectedWorkspace = data;
     }
@@ -118,10 +126,11 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
+    this.serviceActionsList.push({ serviceName: 'ERT', iconName: 'metalyzer.png',
+     serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r' });
     const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
     this.workspaceService.updateServiceActions(_temp);
     //  setTimeout(() => {
-
     //  }, 3000);
 
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);

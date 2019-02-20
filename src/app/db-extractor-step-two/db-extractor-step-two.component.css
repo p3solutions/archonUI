@@ -1,10 +1,11 @@
-
-.slider-bottom-margin{
+.slider-bottom-margin {
   margin-bottom: 42px;
 }
-.slider-tick-label{
+
+.slider-tick-label {
   width: 24px;
 }
+
 mv-slider::ng-deep .slider-horizontal {
   width: 90%;
 }
@@ -41,13 +42,13 @@ mv-slider::ng-deep .slider-horizontal {
 
 .slider:before {
   position: absolute;
-    content: "";
-    height: 15px;
-    width: 17px;
-    left: -1px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
+  content: "";
+  height: 15px;
+  width: 17px;
+  left: -1px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
 }
 
 input:checked+.slider {
@@ -78,11 +79,11 @@ mv-slider::ng-deep .slider-horizontal {
   width: 95%;
 }
 
-.font-left{
-text-align: left;
+.font-left {
+  text-align: left;
 }
 
-.parameter-heading{
+.parameter-heading {
   margin-left: 88px;
   width: 8%;
   margin-right: -33px;
@@ -90,8 +91,27 @@ text-align: left;
 }
 
 
-#start-btn{
+#start-btn {
   right: 9px;
   position: absolute;
   bottom: 8px;
+}
+
+mv-slider::ng-deep .slider-selection.tick-slider-selection {
+  background-image: linear-gradient(to bottom, #2196F3 0, #2e6da4 100%);
+}
+
+mv-slider::ng-deep .slider-handle {
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #337ab7;
+  background-image: linear-gradient(to bottom,#337ab7 0,#2e6da4 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7',endColorstr='#ff2e6da4',GradientType=0);
+  -webkit-filter: none;
+  filter: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  border: 0 solid transparent;
 }
