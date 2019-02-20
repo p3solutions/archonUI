@@ -3,6 +3,8 @@ import { UserObject, AnyObject, ConfiguredDB, WorkspaceObject } from '../workspa
 import { UserinfoService } from '../userinfo.service';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { CommonUtilityService } from '../common-utility.service';
+import { Router } from '@angular/router';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 @Component({
   selector: 'app-new-workspace',
   templateUrl: './new-workspace.component.html',
@@ -27,7 +29,9 @@ export class NewWorkspaceComponent implements OnInit {
   constructor(
     private userinfoService: UserinfoService,
     private userWorkspaceService: UserWorkspaceService,
-    private commonUtilityService: CommonUtilityService
+    private commonUtilityService: CommonUtilityService,
+    private workspaceHeaderService: WorkspaceHeaderService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -255,6 +259,7 @@ export class NewWorkspaceComponent implements OnInit {
       ],
       'order': [[0, 'asc']]
     });
+    this.workspaceHeaderService.changeWSBooleanValue(true);
   }
   resetCarousel() {
     this.addClass('ok-btn', 'hide');

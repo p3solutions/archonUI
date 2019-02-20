@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { CommonUtilityService } from '../common-utility.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 describe('NewWorkspaceComponent', () => {
   let component: NewWorkspaceComponent;
@@ -16,7 +17,7 @@ describe('NewWorkspaceComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ NewWorkspaceComponent ],
       imports: [FormsModule, HttpClientModule, RouterTestingModule],
-      providers: [UserinfoService, UserWorkspaceService, CommonUtilityService]
+      providers: [UserinfoService, UserWorkspaceService, CommonUtilityService, WorkspaceHeaderService]
     })
     .compileComponents();
   }));
