@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserinfoService } from '../userinfo.service';
 import { ErrorObject } from '../error-object';
 import { Router } from '@angular/router';
+import { UserProfileService } from '../user-profile/user-profile.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -19,7 +20,7 @@ export class EditProfileComponent implements OnInit {
   errorObject: ErrorObject;
   thisComponent = this;
 
-  constructor(private userinfoService: UserinfoService, private router: Router) { }
+  constructor(private userinfoService: UserinfoService, private router: Router, private userProfileService: UserProfileService) { }
 
   ngOnInit() {
     this.nameLoader = this.emailLoader = false;
@@ -55,7 +56,8 @@ export class EditProfileComponent implements OnInit {
         this.nameLoader = this.emailLoader = false;
         (<HTMLButtonElement>document.querySelector('#editProfileModal .cancel')).click();
         this.UpdateProfile.emit(true);
-        setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 1000);
+        this.userProfileService.changeUserName(this.username);
+        // setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 1000);
       }
     });
   }
