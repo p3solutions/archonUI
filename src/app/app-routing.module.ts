@@ -48,6 +48,7 @@ import { ErtTableColConfigComponent } from './ert-table-col-config/ert-table-col
 import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
 import { ErtDatarecordFinalComponent } from './ert-datarecord-final/ert-datarecord-final.component';
 import { AdhocDragComponent } from './adhoc-drag/adhoc-drag.component';
+import { ErtSipConfigComponent } from './ert-sip-config/ert-sip-config.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -128,8 +129,10 @@ const routes: Routes = [
           },
           {
             path: 'ert-datarecord-final', component: ErtDatarecordFinalComponent
+          },
+          {
+            path: 'ert-sip-config', component: ErtSipConfigComponent
           }
-
         ]
       }
     ]

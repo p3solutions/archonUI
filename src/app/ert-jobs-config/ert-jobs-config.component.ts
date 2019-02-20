@@ -14,11 +14,12 @@ export class ErtJobsConfigComponent implements OnInit {
   }
 
   goToExtraction(event) {
-    console.log(event);
     this.route.navigate(['/workspace/ert/ert-table']);
   }
   goToDataRecordExtraction(event) {
-    console.log(event);
     this.route.navigate(['/workspace/ert/ert-datarecord-config']);
+  }
+  goToSIP() {
+    this.route.navigate(['/workspace/ert/ert-sip-config']);
   }
 }

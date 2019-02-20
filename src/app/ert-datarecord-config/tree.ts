@@ -149,8 +149,29 @@ function tableNode(data) {
       }
 
     }
+  function isToAdd(inputTableList, primarytableName, secondaryTableName): boolean {
+     const childArray = [];
+     let retVal = true;
 
-  function getChildTableList(tableName: string, map): Prop[] {
+     for ( const i of inputTableList) {
+       if (i !== primarytableName ) {
+         childArray.push(i);
+       } else if (i === primarytableName) {
+         break;
+       }
+     }
+     if ( childArray != null) {
+        for ( const j of childArray) {
+          if (j === secondaryTableName) {
+            retVal = false;
+          }
+        }
+
+     }
+    return retVal;
+  }
+
+  function getChildTableList(inputTableList ,tableName: string, map): Prop[] {
     const  tableList = [];
     let entireArray = [];
     let childArray = [];
@@ -159,10 +180,11 @@ function tableNode(data) {
       childArray = i.childTable;
     }
     for (const i of childArray) {
+      if (isToAdd(inputTableList, tableName, i.secondaryTableName)) {
       tableList.push(new Prop(i.secondaryTableid, i.secondaryTableName, 'white', false));
+      }
     }
       return tableList;
-
   }
 
   function getTableProperty(tableName: string, map): Prop {
@@ -188,18 +210,18 @@ function tableNode(data) {
       return table;
   }
 
-  function isSelectedPath(inputTableList: string[], tableName: string): boolean {
+  function isSelectedPath(inputTableList: string[], tableName: string, parent: string): boolean {
       for (let i = 0; i < inputTableList.length; i++) {
-          if (tableName === inputTableList[i]) {
+          if ((tableName === inputTableList[i]) && (parent === inputTableList[i-1]) ) {
               return true;
           }
       }
       return false;
   }
 
-  function isPath(inputTableList: string[], tableName: string): boolean {
+  function isPath(inputTableList: string[], tableName: string, parent: string): boolean {
     for (let i = 0; i < inputTableList.length; i++) {
-      if (tableName === inputTableList[i]) {
+      if ((tableName === inputTableList[i]) && (parent === inputTableList[i-1])) {
           return true;
       }
     }
@@ -218,20 +240,20 @@ function tableNode(data) {
               parent.color = '#F94B4C';
                // Set the selected flag for last table in the input table list
               if (toggleTable === parent.name) {
-                parent.enableClick = isSelectedPath(inputTableList, parent.name);
+                parent.enableClick = true; // isSelectedPath(inputTableList, parent.name);
               }
               tree.add(parent);
           }
 
-          const childTableList: Prop [] = getChildTableList(parent.name, map);
+          const childTableList: Prop [] = getChildTableList(inputTableList, parent.name, map);
           for ( let j = 0; j < childTableList.length; j++) {
 
             // Set the selected flag for last table in the input table list
             if (toggleTable === childTableList[j].name) {
-              childTableList[j].enableClick = isSelectedPath(inputTableList, childTableList[j].name);
+              childTableList[j].enableClick = isSelectedPath(inputTableList, childTableList[j].name, parent.name);
             }
 
-            if (isPath(inputTableList, childTableList[j].name)) {
+            if (isPath(inputTableList, childTableList[j].name, parent.name)) {
               childTableList[j].color = 'black';
             }
             tree.add(childTableList[j], parent);

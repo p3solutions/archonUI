@@ -1046,15 +1046,15 @@ label{
   letter-spacing: 0.2px;
 }
 
-.previous {
+/* .previous {
   background-color: #f1f1f1;
   color: black;
 }
 
 .next {
-  background-color: #269af8;
+  background-color: #f1f1f1;
   color: white;
-}
+} */
 
 #extractor-landing-card  {
   height: 420px;

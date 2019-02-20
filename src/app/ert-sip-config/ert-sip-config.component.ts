@@ -3,16 +3,15 @@ import { Router } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import * as d3 from 'd3';
-import {toJson} from './tree';
-import {CompleteArray, getPrimaryArray, getSecondaryArray} from './class';
-
+import {toJson} from '../ert-datarecord-config/tree';
+import {CompleteArray, getPrimaryArray, getSecondaryArray} from '../ert-datarecord-config/class';
 
 @Component({
-  selector: 'app-ert-datarecord-config',
-  templateUrl: './ert-datarecord-config.component.html',
-  styleUrls: ['./ert-datarecord-config.component.css']
+  selector: 'app-ert-sip-config',
+  templateUrl: './ert-sip-config.component.html',
+  styleUrls: ['./ert-sip-config.component.css']
 })
-export class ErtDatarecordConfigComponent implements OnInit {
+export class ErtSipConfigComponent implements OnInit {
   workspaceID: any;
   tableList: any;
   relationshipInfo: any[];
@@ -21,6 +20,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
   secondaryTable = [];
   joinListMap = new Map();
   data;
+
 
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService) { }
@@ -31,6 +31,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
       this.tableList = res;
     });
   }
+ 
   gotoDataRecFinal() {
     this.router.navigate(['workspace/ert/ert-datarecord-final']);
   }
@@ -47,9 +48,9 @@ export class ErtDatarecordConfigComponent implements OnInit {
       for (const i of this.primaryTable) {
       this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
       }
-    this.selectedValues.push(value.tableName);
-    this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
-    this.createchart();
+      this.selectedValues.push(value.tableName);
+      this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+      this.createchart();
     });
   }
 
@@ -65,14 +66,14 @@ export class ErtDatarecordConfigComponent implements OnInit {
     let node, link;
 
     // tslint:disable-next-line: max-line-length
-    const svg = d3.select('body app-root app-workspace-landing-page app-ert-landing-page #ert-landing-id .container-fluid app-ert-datarecord-config #ert-table-id .row .col-md-9 .card')
+    const svg = d3.select('body app-root app-workspace-landing-page app-ert-landing-page #ert-landing-id .container-fluid app-ert-sip-config #ert-table-id .row .col-md-9 .card')
     .append('svg')
     .call(d3.zoom().scaleExtent([1 / 2, 8]).on('zoom', zoomed))
     .append('g')
     .attr('transform', 'translate(40,0)');
 
 // tslint:disable-next-line: max-line-length
-    const div = d3.select('body app-root app-workspace-landing-page app-ert-landing-page #ert-landing-id .container-fluid app-ert-datarecord-config #ert-table-id .row .col-md-9 .card').append('div')
+    const div = d3.select('body app-root app-workspace-landing-page app-ert-landing-page #ert-landing-id .container-fluid app-ert-sip-config #ert-table-id .row .col-md-9 .card').append('div')
         .attr('class', 'tooltipd3')
         .style('opacity', 0);
 
@@ -87,7 +88,6 @@ export class ErtDatarecordConfigComponent implements OnInit {
     const root = d3.hierarchy(data);
     const nodes = flatten(root);
     const links = root.links();
-    console.log(links);
     link = svg
     .selectAll('.link')
     .data(links, function(d: any) { return d.target.id; });
@@ -216,7 +216,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
     // update();
     let currentColor = d3.select(this).style('fill');
     if (currentColor !== 'rgb(249, 75, 76)') {
-    if (d.parent.data.enableClick || d.data.enableClick) {
+    // if (d.parent.data.enableClick || d.data.enableClick) {
     if (currentColor === 'white') {
     onClickChangeGraph(d.data);
     } else {
@@ -226,7 +226,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
       self.selectedValues.pop();
     }
     d3.select(this).style('fill', currentColor);
-    }
+    // }
     }
     }
     }
