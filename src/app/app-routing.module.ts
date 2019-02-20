@@ -45,6 +45,8 @@ import { ErtTableComponent } from './ert-table/ert-table.component';
 import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
 import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-table-column-config.component';
 import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
+import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
+import { ErtSipConfigComponent } from './ert-sip-config/ert-sip-config.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -121,6 +123,12 @@ const routes: Routes = [
           },
           {
             path: 'ert-table-col-config/:ertJobId', component: ErtTableColumnConfigComponent
+          },
+          {
+            path: 'ert-datarecord-config' , component: ErtDatarecordConfigComponent
+          },
+          {
+            path: 'ert-sip-config' , component: ErtSipConfigComponent
           }
         ]
       }
