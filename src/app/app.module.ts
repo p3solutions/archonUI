@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { MatTableModule } from '@angular/material';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
+import { NgMaterialModuleModule } from './ng-material-module/ng-material-module.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InfoService } from './info.service';
@@ -89,7 +89,7 @@ import { AddDirectJoinService } from './add-direct-join/add-direct-join.service'
 import { SecondaryColumnPipe } from './secondary-column.pipe';
 import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { KeyvaluePipe } from './keyvalue.pipe';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 import { DbExtractorComponent } from './db-extractor/db-extractor.component';
 import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extractor-step-one.component';
@@ -101,7 +101,7 @@ import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extr
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { StoredProcViewService } from './stored-proc-view/stored-proc-view.service';
-import {ErtLandingPageComponent} from './ert-landing-page/ert-landing-page.component';
+import { ErtLandingPageComponent } from './ert-landing-page/ert-landing-page.component';
 import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
 import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
 import { ErtTableComponent } from './ert-table/ert-table.component';
@@ -195,9 +195,9 @@ export function tokenGetter() {
                 FormsModule,
                 ReactiveFormsModule,
                 DataTablesModule,
-                MatTableModule,
                 AppRoutingModule,
                 HttpClientModule,
+                NgMaterialModuleModule,
                 NgxPaginationModule,
                 NgxBootstrapSliderModule
         ],
