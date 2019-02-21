@@ -41,6 +41,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
   }
 
   populategraph(value) {
+    d3.select('svg').remove();
     this.selectedValues = [];
     this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
@@ -84,94 +85,94 @@ export class ErtDatarecordConfigComponent implements OnInit {
       .force('center', d3.forceCenter(width / 2, height / 4))
       .on('tick', ticked);
 
+
     // update starts
     function update(data) {
-      const root = d3.hierarchy(data);
-      const nodes = flatten(root);
-      const links = root.links();
-      console.log(links);
-      link = svg
-        .selectAll('.link')
-        .data(links, function (d: any) { return d.target.id; });
-      link.exit().remove();
-      const linkEnter = link
-        .enter()
-        .append('line')
-        .attr('class', 'link')
-        .style('stroke', '#000')
-        .style('opacity', '0.2')
-        .style('stroke-width', 2).attr('marker-end', 'url(#end)');
-      svg.append('svg:defs').selectAll('marker')
-        .data(['end'])      // Different link/path types can be defined here
-        .enter().append('svg:marker')    // This section adds in the arrows
-        .attr('id', String)
-        .attr('viewBox', '0 -5 10 10')
-        .attr('refX', 18)
-        .attr('markerWidth', 6)
-        .attr('markerHeight', 6)
-        .attr('orient', 'auto')
-        .append('svg:path')
-        .attr('d', 'M0,-5L10,0L0,5').style('fill', '#000000');
-      link = linkEnter.merge(link);
-      node = svg
-        .selectAll('.node')
-        .data(nodes, function (d: any) { return d.id; });
-      node.exit().remove();
-      const nodeEnter = node
-        .enter()
-        .append('g')
-        .attr('class', 'node')
-        .attr('stroke', '#666')
-        .attr('stroke-width', 2)
-        .style('fill', color)
-        .style('opacity', 1)
-        .on('click', clicked)
-        .call(d3.drag()
-          .on('start', dragstarted)
-          .on('drag', dragged)
-          .on('end', dragended));
-      nodeEnter.append('circle')
-        .attr('r', 10)
-        .style('text-anchor', function (d) { return d.children ? 'end' : 'start'; });
-      // Cardinality
-      // nodeEnter.append('text')
-      // .attr('dx', '-.25em')
-      // .attr('dy', '.35em')
-      //         .text(function(d) { if (d.children) { return '0'; } else {return '1'; } });
-      // Join Name
-      // nodeEnter.append('text').attr('letter-spacing', '1px').attr('font-size', 15)
-      // .attr('dx', -93)
-      // .attr('dy', -4)
-      // .text(function(d) { if (d.children) { return 'Join_Name'; } } );
-      nodeEnter.append('text')
-        .attr('font-size', 10).attr('font-weight', 100).attr('letter-spacing', '2px')
-        .attr('dx', 15)
-        .attr('dy', 4)
-        .text(function (d: any) { return d.data.name; });
-      nodeEnter.on('mouseover', function (d) {
-        let ifSelected;
-        if (!d.parent.data.enableClick) {
-          ifSelected = 'Value Already Selected in this Level';
-        } else {
-          ifSelected = 'Select Value';
-        }
-        div.transition().duration(200).style('opacity', .9);
-        div.html(ifSelected)
-          .style('left', (d3.event.pageX - 350) + 'px')
-          .style('top', (d3.event.pageY - 100) + 'px');
-        link.style('stroke-dasharray', function (l) {
-          if (d === l.source || d === l.target) {
-            return '5,5';
-          }
-        });
-      });
-      nodeEnter.on('mouseout', function () {
-        div.transition().duration(500).style('opacity', 0);
-        link.style('stroke-dasharray', 0);
-      });
-      node = nodeEnter.merge(node);
-      simulation.nodes(nodes);
-      simulation.force<any>('link').links(links);
+    const root = d3.hierarchy(data);
+    const nodes = flatten(root);
+    const links = root.links();
+    link = svg
+    .selectAll('.link')
+    .data(links, function(d: any) { return d.target.id; });
+    link.exit().remove();
+    const linkEnter = link
+    .enter()
+    .append('line')
+    .attr('class', 'link')
+    .style('stroke', '#000' )
+    .style('opacity', '0.2')
+    .style('stroke-width', 2).attr('marker-end', 'url(#end)');
+    svg.append('svg:defs').selectAll('marker')
+    .data(['end'])      // Different link/path types can be defined here
+    .enter().append('svg:marker')    // This section adds in the arrows
+    .attr('id', String)
+    .attr('viewBox', '0 -5 10 10')
+    .attr('refX', 18)
+    .attr('markerWidth', 6)
+    .attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('svg:path')
+    .attr('d', 'M0,-5L10,0L0,5').style('fill', '#000000');
+    link = linkEnter.merge(link);
+    node = svg
+    .selectAll('.node')
+    .data(nodes, function(d: any) { return d.id; });
+    node.exit().remove();
+    const nodeEnter = node
+    .enter()
+    .append('g')
+    .attr('class', 'node')
+    .attr('stroke', '#666')
+    .attr('stroke-width', 2)
+    .style('fill', color)
+    .style('opacity', 1)
+    .on('click', clicked)
+    .call(d3.drag()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+      .on('end', dragended));
+    nodeEnter.append('circle')
+    .attr('r', 10)
+    .style('text-anchor', function(d) { return d.children ? 'end' : 'start'; });
+    // Cardinality
+    // nodeEnter.append('text')
+    // .attr('dx', '-.25em')
+    // .attr('dy', '.35em')
+    //         .text(function(d) { if (d.children) { return '0'; } else {return '1'; } });
+    // Join Name
+    // nodeEnter.append('text').attr('letter-spacing', '1px').attr('font-size', 15)
+    // .attr('dx', -93)
+    // .attr('dy', -4)
+    // .text(function(d) { if (d.children) { return 'Join_Name'; } } );
+    nodeEnter.append('text')
+    .attr('font-size', 10).attr('font-weight', 100).attr('letter-spacing', '2px')
+            .attr('dx', 15)
+            .attr('dy', 4)
+            .text(function(d: any) { return d.data.name; });
+    nodeEnter.on('mouseover', function(d) {
+      let ifSelected;
+      if (!d.parent.data.enableClick) {
+        ifSelected = 'Value Already Selected in this Level';
+      } else {
+        ifSelected = 'Select Value';
+      }
+      div.transition().duration(200).style('opacity', .9);
+      div.html(ifSelected)
+      .style('left', (d3.event.pageX - 350) + 'px')
+      .style('top', (d3.event.pageY - 100) + 'px');
+              link.style('stroke-dasharray', function(l) {
+                if (d === l.source || d === l.target) {
+                   return '5,5';
+                }
+                });
+            });
+    nodeEnter.on('mouseout', function() {
+      div.transition().duration(500).style('opacity', 0);
+              link.style('stroke-dasharray', 0);
+            });
+    node = nodeEnter.merge(node);
+    simulation.nodes(nodes);
+    simulation.force<any>('link').links(links);
     }
     // end of update
 
