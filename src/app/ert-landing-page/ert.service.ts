@@ -19,6 +19,8 @@ export class ErtService {
   ertJobParams: ErtJobParams = new ErtJobParams();
   ingestionDataConfig: IngestionDataConfig = new IngestionDataConfig();
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
+  selectedValues: string[] = [];
+  data: any;
   constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
   private apiUrl = environment.apiUrl;
   getERTtableListUrl = this.apiUrl + 'ert/ertTableList?workspaceId=';
@@ -28,6 +30,7 @@ export class ErtService {
   getErtJobUrl = this.apiUrl + 'ert/ertJobs?userId=';
   runjobUrl = this.apiUrl + 'ert/runjob?ertJobId=';
   deleteErtJobUrl = this.apiUrl + 'ert/ertJobSession?jobId=';
+  schemaResultsTableCount = 0;
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }
@@ -36,12 +39,26 @@ export class ErtService {
     this.ingestionDataConfig = ingestionDataConfig;
   }
 
-  setSelectedList(selectedList: TableDetailsListObj[]) {
+  setSelectedList(selectedList: TableDetailsListObj[], schemaResultsTableCount: number) {
     this.selectedList = selectedList;
+    this.schemaResultsTableCount = schemaResultsTableCount;
   }
 
   setXmlSplitSize(extractDataConfigInfo: ExtractDataConfigInfo) {
     this.extractDataConfigInfo = extractDataConfigInfo;
+  }
+
+  // getMMRVersion(workspaceId: string): string {
+  //   return this.http.get<string>(this.getERTtableListUrl + workspaceId + '&ertJobId=' + ertJobId,
+  //   { headers: this.userInfoService.getHeaders() }).pipe(
+  //     map(this.extractData),
+  //     catchError(this.handleError('getMMRVersion', []))
+  //   );
+  // }
+
+  setSelectValueAndDataOfGraph(selectedValues: string[], data: any) {
+    this.selectedValues = selectedValues;
+    this.data = data;
   }
 
   getERTtableList(workspaceId: string, ertJobId = ''): Observable<ErtTableListObj> {

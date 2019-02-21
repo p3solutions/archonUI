@@ -35,7 +35,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
       'userId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
       'ertJobStatus': ertJobStatus,
-      'schemaResultsTableCount': '100',
+      'schemaResultsTableCount': this.ertService.schemaResultsTableCount.toString(),
       'databaseConfig': {
         'databaseId': this.workspaceHeaderService.getDatabaseID()
       },
@@ -46,12 +46,13 @@ export class ErtTableColumnConfigComponent implements OnInit {
     };
 
     param = this.modifiedParamForEdit(param);
-    this.ertService.saveErtJob(param).subscribe(result => {
-      if (result.httpStatus !== 200) {
-        alert('Job has not saved successfully');
-      }
-      this.router.navigate(['workspace/ert/ert-jobs']);
-    });
+    console.log(param);
+    // this.ertService.saveErtJob(param).subscribe(result => {
+    //   if (result.httpStatus !== 200) {
+    //     alert('Job has not saved successfully');
+    //   }
+    //   this.router.navigate(['workspace/ert/ert-jobs']);
+    // });
   }
 
   modifiedParamForEdit(param: any): any {

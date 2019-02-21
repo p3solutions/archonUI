@@ -14,6 +14,7 @@ export class ErtJobsConfigComponent implements OnInit {
   ngOnInit() {
     this.ertService.ertJobParams = new ErtJobParams();
     this.ertService.selectedList = [];
+    this.ertService.schemaResultsTableCount = 0;
   }
 
   goToExtraction(event, ertJobMode) {
@@ -36,5 +37,9 @@ export class ErtJobsConfigComponent implements OnInit {
         item.disabled = false;
       }
     }
+  }
+
+  goToJobs() {
+    this.route.navigate(['/workspace/ert/ert-jobs']);
   }
 }

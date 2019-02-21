@@ -20,6 +20,7 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.ertJobParams = new ErtJobParams();
     this.ertService.selectedList = [];
     this.ertService.extractDataConfigInfo = new ExtractDataConfigInfo();
+    this.ertService.schemaResultsTableCount = 0;
     this.getErtJobList();
   }
   getErtJobList() {
@@ -39,7 +40,7 @@ export class ErtJobsComponent implements OnInit {
 
   deleteErtJob(ertJobId: string) {
     this.ertService.deleteErtJob(ertJobId).subscribe(result => {
-        this.getErtJobList();
+      this.getErtJobList();
     });
   }
 
