@@ -40,6 +40,7 @@ export class ErtSipConfigComponent implements OnInit {
   }
 
   populategraph(value) {
+    d3.select('svg').remove();
     this.selectedValues = [];
     this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;

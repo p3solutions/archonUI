@@ -39,6 +39,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
   }
 
   populategraph(value) {
+    d3.select('svg').remove();
     this.selectedValues = [];
     this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
@@ -82,12 +83,12 @@ export class ErtDatarecordConfigComponent implements OnInit {
     .force('center', d3.forceCenter( width / 2, height / 4 ))
     .on('tick', ticked);
 
+
     // update starts
     function update(data) {
     const root = d3.hierarchy(data);
     const nodes = flatten(root);
     const links = root.links();
-    console.log(links);
     link = svg
     .selectAll('.link')
     .data(links, function(d: any) { return d.target.id; });
