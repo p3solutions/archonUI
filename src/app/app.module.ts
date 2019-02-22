@@ -108,6 +108,9 @@ import { ErtTableComponent } from './ert-table/ert-table.component';
 import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
 import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-table-column-config.component';
 import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule, MatCheckboxModule} from '@angular/material';
+import {MaterialModule} from './material-module';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -199,7 +202,11 @@ export function tokenGetter() {
                 AppRoutingModule,
                 HttpClientModule,
                 NgxPaginationModule,
-                NgxBootstrapSliderModule
+                NgxBootstrapSliderModule,
+                BrowserAnimationsModule,
+                MatButtonModule,
+                MatCheckboxModule,
+                MaterialModule
         ],
         providers: [
                 JwtHelperService,

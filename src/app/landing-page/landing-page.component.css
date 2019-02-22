@@ -1,7 +1,11 @@
 #help-icon {
   margin: 25px;
 }
-
+ .container-fluid {
+  background:url(../../assets/loginBg.jpg);
+  background-size: 100% 100%;
+  height: 100%;
+} 
 #brand-img {
   width: 600px;
   margin: 50px;
