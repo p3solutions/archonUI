@@ -21,6 +21,7 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.selectedList = [];
     this.ertService.extractDataConfigInfo = new ExtractDataConfigInfo();
     this.ertService.schemaResultsTableCount = 0;
+    this.ertService.mmrVersion = '';
     this.getErtJobList();
   }
   getErtJobList() {
@@ -52,5 +53,9 @@ export class ErtJobsComponent implements OnInit {
         }
       });
     }
+  }
+
+   gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 }

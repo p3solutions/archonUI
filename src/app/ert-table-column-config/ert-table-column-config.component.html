@@ -5,48 +5,20 @@
         <div class="card-body" id="ert-tbl-search">
           <div class="row" style="margin-bottom: 12px;">
             <div class="inner-addon right-addon">
-              
               <input type="text" class="form-control search-input" id="listSearch" placeholder="Search">
             </div>
             <div class="col-md-6">
               <label id=table-heading>Tables list</label>
             </div>
-            <!-- <div class="col-md-6" id="get-tbl-list">
-              <a href="#"><i class="fa fa-plus"></i></a>
-            </div> -->
-            
           </div>
           <div id="tbl-list">
             <div class="scroll-div border">
               <div class="sticky">
-                
-                <div class="first-div">Address Table</div>
+                <div class="first-div">Table</div>
                 <div></div>
               </div>
-              <div class="well">
-                
-                <div class="first-div">Claim</div>
-               
-              </div>
-              <div class="well">
-                
-                <div class="first-div">Claim Lines</div>
-                
-              </div>
-              <div class="well">
-                
-                <div class="first-div">DX_Code</div>
-                
-              </div>
-              <div class="well">
-                
-                <div class="first-div">Member</div>
-                
-              </div>
-              <div class="well">
-                
-                <div class="first-div">Provider</div>
-                
+              <div class="well" *ngFor="let item of selectedTableList">
+                <div class="first-div">{{item.tableName}}</div>
               </div>
             </div>
           </div>
@@ -56,12 +28,11 @@
     <div class="col-md-9">
       <div class="card" style="height:455px">
         <div class="card-body">
-          
+
           <div class="row">
             <div class="col-md-10">
               <div id="table-name-heading" class="form-group" style="padding: 10px;">
                 <label id="lbl-alias">Address</label>
-                
               </div>
             </div>
             <div class="col-md-2"></div>
@@ -75,40 +46,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <div>
-                    <small>Address</small>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="table-col-exptd">    
-                    <small>1: Addr Id</small>
-                  </div>
-                  <div class="table-col-exptd">   
-                    <small>2: Is_Prov</small>
-                  </div>
-                  <div class="table-col-exptd">   
-                    <small>3: Addr_Type</small>
-                  </div>
-                  <div class="table-col-exptd">   
-                    <small>4: Address</small>
-                  </div>
-                  <div class="table-col-exptd">   
-                    <small>5: City</small>
-                  </div>
-                  <div class="table-col-exptd">   
-                    <small>6: State</small>
-                  </div>
-                  <div class="table-col-exptd">   
-                    <small>7: Zip</small>
-                  </div>
-                  <div class="table-col-exptd">   
-                    <small>8: Phone</small>
-                  </div>
-                  <div class="table-col-exptd">   
-                    <small>9: Fax</small>
-                  </div>
-                  <div class="table-col-exptd">   
-                    <small>10: Email</small>
+                  <div *ngFor="let item of showColumns()" class="table-col-exptd">
+                    <small>{{item.originalColumnName}}</small>
                   </div>
                 </div>
               </div>
@@ -122,46 +61,11 @@
                     <label style="font-weight: bold;">[Expected Table]</label>
                   </div>
                 </div>
-
-                  <div class="form-group">
-                    <div>
-                      <small>Address</small>
-                    </div>
+                <div class="form-group">
+                  <div *ngFor="let item of showColumns()" class="table-col-exptd">
+                    <small>{{item.modifiedColumnName}}</small>
                   </div>
-
-                  <div class="form-group">
-                    <div class="table-col-exptd">    
-                      <small>1: Addr Id</small>
-                    </div>
-                    <div class="table-col-exptd">   
-                      <small>2: Is_Prov</small>
-                    </div>
-                    <div class="table-col-exptd">   
-                      <small>3: Addr_Type</small>
-                    </div>
-                    <div class="table-col-exptd">   
-                      <small>4: Address</small>
-                    </div>
-                    <div class="table-col-exptd">   
-                      <small>5: City</small>
-                    </div>
-                    <div class="table-col-exptd">   
-                      <small>6: State</small>
-                    </div>
-                    <div class="table-col-exptd">   
-                      <small>7: Zip</small>
-                    </div>
-                    <div class="table-col-exptd">   
-                      <small>8: Phone</small>
-                    </div>
-                    <div class="table-col-exptd">   
-                      <small>9: Fax</small>
-                    </div>
-                    <div class="table-col-exptd">   
-                      <small>10: Email</small>
-                    </div>
-                  </div>
-                
+                </div>
               </div>
             </div>
           </div>
@@ -170,8 +74,10 @@
     </div>
   </div>
   <div class="row" id="nextbtn" style="margin-top: 15px;">
-    <button type="button" class="btn btn-primary next" (click)="saveERTJob('READY')" style="float: right;margin-right: 12px">Mark As Complete</button>
-    <button type="button" class="btn btn-primary next" (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 12px">Save As Draft</button>
+    <button type="button" class="btn btn-primary next" (click)="saveERTJob('READY')" style="float: right;margin-right: 12px">Mark
+      As Complete</button>
+    <button type="button" class="btn btn-primary next" (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 12px">Save
+      As Draft</button>
     <button class="btn btn-primary Previous" (click)="gotoExtractData()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
   </div>

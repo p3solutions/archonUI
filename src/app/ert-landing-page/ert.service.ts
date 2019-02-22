@@ -31,6 +31,8 @@ export class ErtService {
   runjobUrl = this.apiUrl + 'ert/runjob?ertJobId=';
   deleteErtJobUrl = this.apiUrl + 'ert/ertJobSession?jobId=';
   schemaResultsTableCount = 0;
+  joinListMap = new Map();
+  mmrVersion = '';
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }
@@ -44,8 +46,16 @@ export class ErtService {
     this.schemaResultsTableCount = schemaResultsTableCount;
   }
 
+  setschemaResultsTableCount(schemaResultsTableCount: number) {
+    this.schemaResultsTableCount = schemaResultsTableCount;
+  }
+
   setXmlSplitSize(extractDataConfigInfo: ExtractDataConfigInfo) {
     this.extractDataConfigInfo = extractDataConfigInfo;
+  }
+
+  setMMRVersion(mmrVersion: string) {
+    this.mmrVersion = mmrVersion;
   }
 
   // getMMRVersion(workspaceId: string): string {
@@ -56,9 +66,10 @@ export class ErtService {
   //   );
   // }
 
-  setSelectValueAndDataOfGraph(selectedValues: string[], data: any) {
+  setSelectValueAndDataOfGraph(selectedValues: string[], data: any, joinListMap) {
     this.selectedValues = selectedValues;
     this.data = data;
+    this.joinListMap = joinListMap;
   }
 
   getERTtableList(workspaceId: string, ertJobId = ''): Observable<ErtTableListObj> {

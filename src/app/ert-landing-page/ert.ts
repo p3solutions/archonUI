@@ -64,10 +64,17 @@ export class TableDetailsListObj {
     tableId = '';
     tableName = '';
     modifiedTableName = '';
+    isMainTable = true;
     columnList: ColumnListObj[] = [];
     usrDefinedColumnList: UsrDefinedColumnListObj[] = [];
     filterAndOrderConfig = new FilterAndOrderConfig();
     isSelected = false;
+    relatedTableDetails: RelatedTableDetails[] = [];
+}
+
+export class RelatedTableDetails {
+    tableId = '';
+    tableName = '';
 }
 
 export class ERTJobs {

@@ -27,3 +27,24 @@ th {
   font-size: 15px;
 }
 
+#mmr-version {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.2;
+}
+
+#mmr-version .form-inline {
+  padding: 11px 7px 10px 9px;
+  margin: 6px 8px 13px 8px;
+  text-align: left;
+}
+
+.inc-width {
+  margin: 10px 2px 2px 2px;
+  width: 550px;
+}
+
+textarea {
+  width: 531px;
+}

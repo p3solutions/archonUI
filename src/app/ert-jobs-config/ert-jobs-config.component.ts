@@ -20,7 +20,7 @@ export class ErtJobsConfigComponent implements OnInit {
   goToExtraction(event, ertJobMode) {
     this.ertJobParams.ertJobMode = ertJobMode;
     this.ertService.setErtJobParams(this.ertJobParams);
-    if (ertJobMode === 'DATA RECORD') {
+    if (ertJobMode === 'DATA_RECORD') {
       this.route.navigate(['/workspace/ert/ert-datarecord-config']);
     } else if (ertJobMode === 'SIP') {
       this.route.navigate(['/workspace/ert/ert-sip-config']);

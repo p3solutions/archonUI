@@ -34,7 +34,7 @@ export class ErtSipConfigComponent implements OnInit {
   }
 
   gotoDataRecFinal() {
-    this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data);
+   // this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data);
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'SIP' } });
   }
   gotoJobConfiguration() {

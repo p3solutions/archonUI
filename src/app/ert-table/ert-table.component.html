@@ -8,12 +8,13 @@
               <label id=table-heading>Table list</label>
             </div>
             <div class="col-md-6 cursor-poniter" id="get-tbl-list">
-              <a (click)="getErtAvailableTable()" class="cursor-poniter" data-toggle="modal" data-target="#ert_available_table_modal"><i
-                  class="fa fa-plus cursor-poniter"></i></a>
+              <a (click)="getErtAvailableTable()" title="Add More Table" *ngIf="from !=='data-record'" class="cursor-poniter"
+                data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus cursor-poniter"></i></a>
             </div>
             <div class="inner-addon right-addon">
               <a href="" style="z-index:1" class="glyphicon glyphicon-search"></a>
-              <input type="text" class="form-control search-input"  [(ngModel)]="searchTableName" id="listSearch" placeholder="Search">
+              <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+                placeholder="Search">
             </div>
           </div>
           <div id="tbl-list">
@@ -23,10 +24,10 @@
                 <div class="first-div">Select</div>
                 <div></div>
               </div>
-              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 50, currentPage: page } | searchTable:searchTableName" (click)="getERTcolumnlist(item.tableId,$event)"
-                class="well">
-                <div><input style="float:left" (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
-                    type="checkbox"></div>
+              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 50, currentPage: page } | searchTable:searchTableName"
+                (click)="getERTcolumnlist(item.tableId,$event)" class="well">
+                <div><input [disabled]="item.isSelected && from=='data-record'" style="float:left" (click)="selectTable(item.tableId,item.tableName,$event)"
+                    [(ngModel)]="item.isSelected" type="checkbox"></div>
                 <div class="first-div">{{item.tableName}}</div>
                 <div>
                 </div>
@@ -44,13 +45,13 @@
             <div class="col-md-3" id="sel-table-name">{{tableName}}</div>
             <div class="col-md-9">
               <ul class="nav nav-tabs mgmt-panel fl-r" style="margin-right: 12px;">
-                <li class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel('addNewColumn')" data-toggle="modal"
-                    data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus"></i></a>
+                <li title="Add User Defined Column" class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel('addNewColumn')"
+                    data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus"></i></a>
                 <li>
-                <li class="icon-list trim-text"><a href="#" data-toggle="modal" (click)="openFilteronfig()" data-target="#filter-modal"><i
-                      class="fa fa-filter"></i></a>
+                <li title="Add Filter" class="icon-list trim-text"><a href="#" data-toggle="modal" (click)="openFilteronfig()"
+                    data-target="#filter-modal"><i class="fa fa-filter"></i></a>
                 <li>
-                <li class="icon-list trim-text"><a href=""><i class="fa fa-refresh"></i></a>
+                <li title="Refresh Table" class="icon-list trim-text"><a (click)="refreshColumn()"><i class="fa fa-refresh"></i></a>
                 <li>
                 <li class="icon-list trim-text"><a href=""><i class="fa fa-save"></i></a>
                 <li>
@@ -91,7 +92,8 @@
                         [ngModel]="item?.modifiedColumnName"></td>
                     <td>{{item?.dataType}}</td>
                     <td><a href="" data-toggle="modal" (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
-                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#add-edit-user-defined-column-modal' : '#config-modal'"><i class="fa fa-cogs"></i></a></td>
+                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#add-edit-user-defined-column-modal' : '#config-modal'"><i
+                          class="fa fa-cogs"></i></a></td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -310,26 +312,26 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-inline" id="add-edit-form">          
-                        <div>
-                          <div class="add-edit-form-item form-group">
-                            <select  [(ngModel)]="dataOrderObj.column" class="form-control">
-                                <option [value]="null" selected>Select Column</option>
-                                <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
-                            </select>
-                          </div>
-                          <div class="add-edit-form-item form-group">
-                            <select  [(ngModel)]="dataOrderObj.order"class="form-control">
-                              <option value="null" selected>Select Order</option>
-                              <option value='Asc'>Ascending</option>
-                              <option value='desc'>Descending</option>
-                            </select>
-                          </div>
-                          <div class="add-edit-form-item action form-group">
-                            <a (click)="addOrder()"><i class="fa fa-plus"></i></a>
-                          </div>
-                        </div>     
+                  <div class="form-inline" id="add-edit-form">
+                    <div>
+                      <div class="add-edit-form-item form-group">
+                        <select [(ngModel)]="dataOrderObj.column" class="form-control">
+                          <option [value]="null" selected>Select Column</option>
+                          <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                        </select>
+                      </div>
+                      <div class="add-edit-form-item form-group">
+                        <select [(ngModel)]="dataOrderObj.order" class="form-control">
+                          <option value="null" selected>Select Order</option>
+                          <option value='Asc'>Ascending</option>
+                          <option value='desc'>Descending</option>
+                        </select>
+                      </div>
+                      <div class="add-edit-form-item action form-group">
+                        <a (click)="addOrder()"><i class="fa fa-plus"></i></a>
+                      </div>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,7 +1,7 @@
 <div id="ert-table-id">
-<div>
+  <div>
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-6">
         <div class="card" style="height:455px">
           <div class="card-body" id="extract-data">
             <div class="save-extract-heading">
@@ -14,53 +14,59 @@
                 <label>Xml/SIP file split size in MB(<small>Default 100</small>)</label>
               </div>
             </div>
-            <div style="display:none" class="row">
+            <div *ngIf="from =='data-record'" class="row">
               <div class="col-md-12 col-lg-12">
-                <input type="text" disabled="true" [(ngModel)]="extractDataConfigInfo.titleName" id="extract-title-name" name="title-name" class="form-control" placeholder="title Name">
+                <input type="text" [(ngModel)]="extractDataConfigInfo.titleName" (keyup)="toEnableBtn()" id="extract-title-name" name="title-name"
+                  class="form-control" placeholder="title Name">
               </div>
             </div>
             <div class="row">
               <div class=" col-md-12 col-lg-12" style="height: 60px">
-                <mv-slider [value]="extractDataConfigInfo.xmlFileSplitSize" [step]="10" (change)="setXMLFileSplitSize($event)" [ticksLabels]="[0,200,400,600,800,1000]" [ticks]="[0,200,400,600,800,1000]"></mv-slider>
+                <mv-slider [value]="extractDataConfigInfo.xmlFileSplitSize" [step]="10" (change)="setXMLFileSplitSize($event)"
+                  [ticksLabels]="[0,200,400,600,800,1000]" [ticks]="[0,200,400,600,800,1000]"></mv-slider>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-6">
         <div class="card" style="height:455px">
           <div class="card-body" id="ingest-data">
             <div class="save-extract-heading">
               <div>
-                <input type="checkbox"  id="ingest-checkbox" (click)="saveIngestData($event)" ><label>Ingest Data</label>
+                <input type="checkbox" id="ingest-checkbox" (click)="saveIngestData($event)"><label>Ingest Data</label>
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveName" name="app-name" class="form-control" [disabled]="disableIngestData" placeholder="InfoArchieve Application Name">
+                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveName" name="app-name" class="form-control"
+                  [disabled]="disableIngestData" placeholder="InfoArchieve Application Name">
                 <small>Note:Appliaction name is case sensitive</small>
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveSchemaName" name="schema-name"  [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve Application Schema Name">
+                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveSchemaName" name="schema-name"
+                  [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve Application Schema Name">
                 <small>Note:Schema name is case sensitive</small>
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveUserName" name="user-name" [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve username">
+                <input type="text" [(ngModel)]="ingestionDataConfigObj.infoArchiveUserName" name="user-name" [disabled]="disableIngestData"
+                  class="form-control" placeholder="InfoArchieve username">
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text"  name="info-password" [(ngModel)]="ingestionDataConfigObj.infoArchivePassword"  [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve password">
+                <input type="text" name="info-password" [(ngModel)]="ingestionDataConfigObj.infoArchivePassword"
+                  [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve password">
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2" style="display:none">
         <div class="card" style="height:455px">
           <div class="card-body" id="delete-data">
             <div class="del-data">
@@ -74,7 +80,8 @@
     </div>
   </div>
   <div class="row" id="saveBtnId">
-    <button type="button" class="btn btn-primary next" (click)="gotoTableColConfig()" style="float: right;margin-right: 12px">Save</button>
+    <button type="button" [disabled]="isDisabledSaveBtn" class="btn btn-primary next"
+      (click)="gotoTableColConfig()" style="float: right;margin-right: 12px">Save</button>
     <button class="btn btn-primary Previous" (click)="gotoTableExtraction()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
   </div>
