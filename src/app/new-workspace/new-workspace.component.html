@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 *ngIf="!newWSinfo" class="modal-title">Create New Workspace</h4>
-        <h4 *ngIf="newWSinfo" class="modal-title text-center">Message</h4>
+        <h4 *ngIf="newWSinfo" class="modal-title text-center">Workspace Creation</h4>
       </div>
 
       <div class="modal-body row">
@@ -110,9 +110,6 @@
               <div class="col-md-12 row m-10">
                 <div class="col-md-4">Workspace Name</div>
                 <div class="col-md-8">{{wsName}}</div>
-              </div>
-              <div class="col-md-12 row m-10">
-                <div class="col-md-4">DataSources</div>
               </div>
               <div class="col-md-12 table-div">
                 <table id="selected-db-list-table" class="display m-10" cellspacing="0" width="100%">

@@ -249,8 +249,14 @@ input[type='checkbox'] {
 #dropdown {
   text-align:center;
   width: 202px;
-  margin-left: 39px;  
-} 
+  margin-left: 13px;  
+}
+#dropdown1 {
+  text-align:center;
+  width: 180px;
+  margin-left: 16px;
+  cursor: pointer;  
+}  
 
 
 #sec-tab {
