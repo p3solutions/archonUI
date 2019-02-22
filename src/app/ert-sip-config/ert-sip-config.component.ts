@@ -21,12 +21,15 @@ export class ErtSipConfigComponent implements OnInit {
   secondaryTable = [];
   joinListMap = new Map();
   data;
+  exclude_click = ['rgb(249, 75, 76)', 'rgb(224, 224, 224)'];
 
 
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
 
   ngOnInit() {
+    let $radios = $('input:radio[name=x]');
+    console.log($radios);
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
@@ -100,6 +103,7 @@ export class ErtSipConfigComponent implements OnInit {
         .append('line')
         .attr('class', 'link')
         .style('stroke', '#000')
+        .style('stroke-dasharray', function(d) { if (d.target.data.color === '#e0e0e0') {return '4,2'; }})
         .style('opacity', '0.2')
         .style('stroke-width', 2).attr('marker-end', 'url(#end)');
       svg.append('svg:defs').selectAll('marker')
@@ -151,10 +155,14 @@ export class ErtSipConfigComponent implements OnInit {
         .text(function (d: any) { return d.data.name; });
       nodeEnter.on('mouseover', function (d) {
         let ifSelected;
-        if (!d.parent.data.enableClick) {
-          ifSelected = 'Value Already Selected in this Level';
-        } else {
+        if (d.data.color === '#F94B4C') {
+          ifSelected = 'Primary Table';
+        } else if (d.data.color === 'white') {
           ifSelected = 'Select Value';
+        } else if (d.data.color === 'black') {
+          ifSelected = 'Value Already Selected';
+        } else {
+          ifSelected = 'Already a Selected Parent';
         }
         div.transition().duration(200).style('opacity', .9);
         div.html(ifSelected)
@@ -168,7 +176,7 @@ export class ErtSipConfigComponent implements OnInit {
       });
       nodeEnter.on('mouseout', function () {
         div.transition().duration(500).style('opacity', 0);
-        link.style('stroke-dasharray', 0);
+        link.style('stroke-dasharray', function(d) { if (d.target.data.color === '#e0e0e0') {return '4,2'; }});
       });
       node = nodeEnter.merge(node);
       simulation.nodes(nodes);
@@ -218,7 +226,7 @@ export class ErtSipConfigComponent implements OnInit {
         // }
         // update();
         let currentColor = d3.select(this).style('fill');
-        if (currentColor !== 'rgb(249, 75, 76)') {
+        if (!self.exclude_click.includes(currentColor)) {
           // if (d.parent.data.enableClick || d.data.enableClick) {
           if (currentColor === 'white') {
             onClickChangeGraph(d.data);

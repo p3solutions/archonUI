@@ -101,6 +101,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
     .attr('class', 'link')
     .style('stroke', '#000' )
     .style('opacity', '0.2')
+    .style('visibility', function(d) {if (d.target.data.visible === false) {return 'hidden'; }})
     .style('stroke-width', 2).attr('marker-end', 'url(#end)');
     svg.append('svg:defs').selectAll('marker')
     .data(['end'])      // Different link/path types can be defined here
@@ -126,6 +127,10 @@ export class ErtDatarecordConfigComponent implements OnInit {
     .attr('stroke-width', 2)
     .style('fill', color)
     .style('opacity', 1)
+    .style('visibility' , function (d) {
+      // return d ? 'hidden' : 'visible';
+      if (d.data.visible === false) { return 'hidden'; }
+    })
     .on('click', clicked)
     .call(d3.drag()
       .on('start', dragstarted)
@@ -150,11 +155,15 @@ export class ErtDatarecordConfigComponent implements OnInit {
             .attr('dy', 4)
             .text(function(d: any) { return d.data.name; });
     nodeEnter.on('mouseover', function(d) {
-      let ifSelected;
+      link.style('visibility', function(d) {if (d.target.data.visible === false) {return 'visible'; }});
+      node.style('visibility', function(d) {if (d.data.visible === false) {return 'visible'; }});
+      let ifSelected = 'Primary Table';
+      if (d.parent !== null) {
       if (!d.parent.data.enableClick) {
         ifSelected = 'Value Already Selected in this Level';
       } else {
         ifSelected = 'Select Value';
+      }
       }
       div.transition().duration(200).style('opacity', .9);
       div.html(ifSelected)
@@ -167,6 +176,8 @@ export class ErtDatarecordConfigComponent implements OnInit {
                 });
             });
     nodeEnter.on('mouseout', function() {
+      link.style('visibility', function(d) {if (d.target.data.visible === false) {return 'hidden'; }});
+      node.style('visibility', function(d) {if (d.data.visible === false) {return 'hidden'; }});
       div.transition().duration(500).style('opacity', 0);
               link.style('stroke-dasharray', 0);
             });
@@ -217,18 +228,21 @@ export class ErtDatarecordConfigComponent implements OnInit {
         //   d._children = null;
         // }
         // update();
-        let currentColor = d3.select(this).style('fill');
+        const currentColor = d3.select(this).style('fill');
         if (currentColor !== 'rgb(249, 75, 76)') {
           if (d.parent.data.enableClick || d.data.enableClick) {
             if (currentColor === 'white') {
               onClickChangeGraph(d.data);
             } else {
-              currentColor = 'white';
-              d.data.enableClick = false;
-              d.parent.data.enableClick = true;
+              // currentColor = 'white';
+              // d.data.enableClick = false;
+              // d.parent.data.enableClick = true;
               self.selectedValues.pop();
+              self.joinListMap.delete(d.data.name);
+              self.data = JSON.parse(toJson(self.selectedValues, self.joinListMap));
+              update(self.data);
             }
-            d3.select(this).style('fill', currentColor);
+            // d3.select(this).style('fill', currentColor);
           }
         }
       }

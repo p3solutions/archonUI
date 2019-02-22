@@ -16,7 +16,7 @@
           <div id="tbl-list">
             <div class="scroll-div border">
               <div class="well" *ngFor="let i of tableList">
-                <div><input style="float:left" type="radio" name="x" (click)="populategraph(i)"></div>
+                <div><input style="float:left" type="radio" name="x" [value]="i.tableName" (click)="populategraph(i)"></div>
                 <div class="first-div">{{i.tableName}}</div>
                 <div><i class="fa fa-chevron-right icon-div "></i></div>
               </div>
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary next" (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Next</button>
+    <button type="button" class="btn btn-primary next" [disabled]="data == null" (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Next</button>
     <button class="btn btn-primary Previous" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
   </div>
