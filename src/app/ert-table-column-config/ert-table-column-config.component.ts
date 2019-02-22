@@ -20,7 +20,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTableList = this.ertService.selectedList.filter(a => a.isSelected === true);
-    this.selectedTableId = this.selectedTableList[0].tableId;
+    // this.selectedTableId = this.selectedTableList[0].tableId;
   }
 
   showColumns() {

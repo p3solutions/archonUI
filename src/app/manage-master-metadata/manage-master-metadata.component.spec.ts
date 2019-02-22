@@ -9,6 +9,9 @@ import { ManageMasterMetadata } from '../master-metadata-data';
 import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
+import { FormsModule } from '@angular/forms';
+import { UserinfoService } from '../userinfo.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 describe('ManageMasterMetadataComponent', () => {
   let component: ManageMasterMetadataComponent;
@@ -32,8 +35,8 @@ describe('ManageMasterMetadataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, HttpClientModule, RouterTestingModule],
-      providers: [ManageMasterMetadataService,
+      imports: [HttpClientTestingModule, FormsModule, HttpClientModule, RouterTestingModule],
+      providers: [ManageMasterMetadataService, UserinfoService, WorkspaceHeaderService,
         HttpClientModule,
         RouterTestingModule
       ],
@@ -47,6 +50,8 @@ describe('ManageMasterMetadataComponent', () => {
     de = fixture.debugElement.query(By.css('#manager-master-metadata'));
     memberRequestHTMLTag = de.nativeElement;
     masterMetaDataService = TestBed.get(ManageMasterMetadataService);
+    const WHS = TestBed.get(WorkspaceHeaderService);
+    spyOn(WHS, 'getSelectedWorkspaceId').and.returnValue('');
   });
 
   it('Should display the observable data for Manage-master Metadata component', () => {
