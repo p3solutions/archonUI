@@ -13,7 +13,7 @@
             </div>
             <div class="inner-addon right-addon">
               <a href="" style="z-index:1" class="glyphicon glyphicon-search"></a>
-              <input type="text" class="form-control search-input" id="listSearch" placeholder="Search">
+              <input type="text" class="form-control search-input"  [(ngModel)]="searchTableName" id="listSearch" placeholder="Search">
             </div>
           </div>
           <div id="tbl-list">
@@ -23,7 +23,7 @@
                 <div class="first-div">Select</div>
                 <div></div>
               </div>
-              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 50, currentPage: page }" (click)="getERTcolumnlist(item.tableId,$event)"
+              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 50, currentPage: page } | searchTable:searchTableName" (click)="getERTcolumnlist(item.tableId,$event)"
                 class="well">
                 <div><input style="float:left" (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
                     type="checkbox"></div>
@@ -104,7 +104,7 @@
   </div>
   <div class="row" id="nextbtn">
     <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()" style="float: right;margin-right: 12px">Next</button>
-    <button class="btn btn-primary Previous" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
+    <button class="btn btn-primary Previous" id="back-to-job-config" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
   </div>
 </div>
@@ -245,31 +245,6 @@
                 </div>
               </nav>
               <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                <div *ngIf="filterdata.root==null" class="filter-div form-inline">
-                  <div class="form-group filter-well" (click)="insertFilterNode(1,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">AND</div>
-                  <div class="form-group filter-well" (click)="insertFilterNode(1,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">OR</div>
-                  <div class="form-group">
-                    <select class="form-control" #selectfiltercolumn>
-                      <option [ngValue]="null" selected>Select Column</option>
-                      <option [ngValue]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <select #selectcondition class="form-control">
-                      <option selected>Select condition</option>
-                      <option value="=">=</option>
-                      <option value="!=">!=</option>
-                      <option value="between">between</option>
-                      <option value="in">in</option>
-                      <option value="is null">is null</option>
-                      <option value="is not null">is not null</option>
-                      <option value="like">like</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <input type="text" #input class="form-control">
-                  </div>
-                </div>
                 <div *ngIf="filterdata.root!==null" class="tab-pane fade active in" id="nav-filter" role="tabpanel"
                   aria-labelledby="nav-filter-tab">
                   <ng-template #nodeTemplateRef let-node>
@@ -278,6 +253,7 @@
                         <div class="filter-toogle-div" (click)="showFilterChild($event)" [style.margin-left.px]="node.margin_left"
                           *ngIf="node.children.length>0"><i class="fa fa-chevron-down"></i>{{node.operation}}</div>
                         <div *ngIf="node.children.length==0" [style.margin-left.px]="node.margin_left" class="filter-div form-inline">
+                          <span (click)="deleteFilterConfigTreeNode(node.id)" class="cursor-poniter"><i class="fa fa-trash"></i></span>
                           <div class="form-group filter-well" (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">AND</div>
                           <div class="form-group filter-well" (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">OR</div>
                           <div class="form-group">
@@ -326,42 +302,34 @@
                         Action
                       </div>
                     </div>
-                    <div id="add-sel-table"></div>
-                  </div>
-
-                  <form class="form-inline" id="add-edit-form" [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
-                    <div formArrayName="addEditColumn">
-                      <div *ngFor="let addEditItem of myForm.controls.addEditColumn.controls; let i=index">
-                        <div [formGroupName]="i">
-                          <div class="add-edit-form-item form-group">
-                            <select class="form-control" formControlName="column">
-                              <option selected>Select Column</option>
-                              <option>A</option>
-                              <option>B</option>
-                              <option>C</option>
-                            </select>
-                            <small [hidden]="myForm.controls.addEditColumn.controls[i].controls.prefix.valid">
-                              prefix is required
-                            </small>
-                          </div>
-                          <div class="add-edit-form-item form-group">
-                            <select class="form-control" formControlName="column">
-                              <option selected>Select Order</option>
-                              <option>Ascending</option>
-                              <option>Descending</option>
-                            </select>
-                            <small [hidden]="myForm.controls.addEditColumn.controls[i].controls.column.valid">
-                              suffix is required
-                            </small>
-                          </div>
-
-                          <div class="add-edit-form-item action form-group">
-                            <a (click)="addColumns(i)"><i class="fa fa-plus"></i></a>
-                          </div>
-                        </div>
+                    <div id="add-sel-table">
+                      <div class="form-inline" *ngFor="let item of dataOrderList">
+                        <div class="add-edit-heading form-group">{{item.column}}</div>
+                        <div class="add-edit-heading form-group">{{item.order}}</div>
+                        <div class="add-edit-heading form-group"><i click="deleteOrderConfig()" class="fa fa-trash"></i></div>
                       </div>
                     </div>
-                  </form>
+                  </div>
+                  <div class="form-inline" id="add-edit-form">          
+                        <div>
+                          <div class="add-edit-form-item form-group">
+                            <select  [(ngModel)]="dataOrderObj.column" class="form-control">
+                                <option [value]="null" selected>Select Column</option>
+                                <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                            </select>
+                          </div>
+                          <div class="add-edit-form-item form-group">
+                            <select  [(ngModel)]="dataOrderObj.order"class="form-control">
+                              <option value="null" selected>Select Order</option>
+                              <option value='Asc'>Ascending</option>
+                              <option value='desc'>Descending</option>
+                            </select>
+                          </div>
+                          <div class="add-edit-form-item action form-group">
+                            <a (click)="addOrder()"><i class="fa fa-plus"></i></a>
+                          </div>
+                        </div>     
+                    </div>
                 </div>
               </div>
             </div>
@@ -439,7 +407,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-primary" (click)="addAvailableTable()" data-dismiss="modal">Save</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>

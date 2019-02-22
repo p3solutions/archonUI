@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class WorkspaceHeaderService {
+
+  private addWSValue = new BehaviorSubject(false);
+  currentWSValue = this.addWSValue.asObservable();
 
   constructor() { }
   private workspace: any;
@@ -56,5 +60,9 @@ export class WorkspaceHeaderService {
 
   getDatabaseID() {
     return this.workspace.databases[0].id;
+  }
+
+  changeWSBooleanValue(message) {
+    this.addWSValue.next(message);
   }
 }

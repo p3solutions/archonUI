@@ -30,6 +30,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   fetchTimeout = 3000;
   userSelectedWorkspace: string;
   @Output() noWorkspace = new EventEmitter<boolean>();
+  newWorkspace: boolean;
 
   constructor(
     private userWorkspaceService: UserWorkspaceService,
@@ -46,6 +47,12 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.workspaceHeaderService.currentWSValue.subscribe(value => {
+      this.newWorkspace = value;
+      if (this.newWorkspace === true) {
+        this.getUserWorkspaceList();
+      }
+     });
     this.userProfileService.userSelectedWorkspace.subscribe(data => {
       this.userSelectedWorkspace = data;
     }

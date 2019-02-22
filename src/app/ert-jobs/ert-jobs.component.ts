@@ -37,11 +37,19 @@ export class ErtJobsComponent implements OnInit {
     this.router.navigate(['/workspace/ert/ert-table/', ertJobId]);
   }
 
-  runJob(ertJobId) {
-    this.ertService.runJob(ertJobId).subscribe(result => {
-      if (result.httpStatus === '200') {
-        alert('job Has Started');
-      }
+  deleteErtJob(ertJobId: string) {
+    this.ertService.deleteErtJob(ertJobId).subscribe(result => {
+        this.getErtJobList();
     });
+  }
+
+  runJob(ertJobId, jobStatus) {
+    if (jobStatus === 'READY') {
+      this.ertService.runJob(ertJobId).subscribe(result => {
+        if (result.httpStatus === 200) {
+          alert('job Has Started');
+        }
+      });
+    }
   }
 }

@@ -46,9 +46,10 @@ export class ErtTableColumnConfigComponent implements OnInit {
     };
 
     param = this.modifiedParamForEdit(param);
-    console.log(param);
     this.ertService.saveErtJob(param).subscribe(result => {
-      console.log(result);
+      if (result.httpStatus !== 200) {
+        alert('Job has not saved successfully');
+      }
       this.router.navigate(['workspace/ert/ert-jobs']);
     });
   }
