@@ -22,7 +22,8 @@ export class ChangeUserRoleService {
   private apiUrl = environment.apiUrl;
   private getAllUsersUrl = this.apiUrl + 'users';
   private getGlobalRoleUrl = this.apiUrl + 'admin/roles/global';
-  private changeGlobalRoleUrl = this.apiUrl + 'users/';
+  private changeGlobalRoleUrl = this.apiUrl;
+  changeRoleName: any;
 
   constructor(private http: HttpClient) { }
 
@@ -42,13 +43,20 @@ export class ChangeUserRoleService {
     );
   }
 
-  changeGlobalRoleDetails(userid, globalid) {
+  changeGlobalRoleDetails(userid, globalid, rolename) {
     const body = {
       userId: userid,
-      globalRoleId: globalid
+      globalRoleId: globalid,
+      rolename: rolename
     };
+    if (rolename === 'ROLE_SUPER_ADMIN') {
+      this.changeRoleName = 'superadmin/';
+    } else {
+      this.changeRoleName = 'users/';
+    }
     this.passedUserId = userid;
-    return this.http.patch(this.changeGlobalRoleUrl + this.passedUserId + '/roles/global', body, { headers: this.headers }).pipe(
+    return this.http.patch(this.changeGlobalRoleUrl + this.changeRoleName + this.passedUserId + '/roles/global',
+     body, { headers: this.headers }).pipe(
       catchError(this.handleError('changeGlobalRoles', []))
     );
   }
