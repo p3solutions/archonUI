@@ -9,13 +9,17 @@ import { UserProfileService } from '../user-profile/user-profile.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, OnChanges {
+export class NavbarComponent implements OnInit {
   info: Info;
   private router: Router;
-  private userProfileService: UserProfileService;
-  @Input() userChangeName: any;
-  constructor(  ) { }
+  userChangeName: string;
+
+  constructor( private userProfileService: UserProfileService ) { }
   ngOnInit() {
+    this.userProfileService.UserNamechange.subscribe(data => {
+      this.userChangeName = data;
+      console.log(this.userChangeName, 'useraname1');
+    });
     this.info = this.getInfo();
     if (this.info.roles.roleName === 'ROLE_ADMIN') {
       this.info.show = true;
@@ -26,13 +30,6 @@ export class NavbarComponent implements OnInit, OnChanges {
     } else if (this.info.roles.roleName === 'ROLE_DB_MEMBER') {
       this.info.show = true;
     }
-  }
-
-  ngOnChanges(change: SimpleChanges) {
-    this.userProfileService.UserNamechange.subscribe(data => {
-      this.userChangeName = data;
-      console.log(this.userChangeName, 'useraname');
-    });
   }
 
   // Get information from the info service
@@ -46,8 +43,11 @@ export class NavbarComponent implements OnInit, OnChanges {
     info = new Info();
     info.id = token_data.user.id;
     info.roles = token_data.roles[0];
+    if (this.userChangeName) {
+      info.username = this.userChangeName;
+    } else {
     info.username = token_data.user.name;
-    console.log(this.userChangeName, 'useraname');
+    }
     return info;
   }
   callUserProfile() {

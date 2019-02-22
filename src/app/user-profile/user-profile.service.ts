@@ -17,6 +17,7 @@ export class UserProfileService {
   }
 
   changeUserName(message) {
+    console.log(message, 'testmm');
     this.UserName.next(message);
   }
 
