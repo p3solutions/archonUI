@@ -1,8 +1,11 @@
+import { FLAGS } from '@angular/core/src/render3/interfaces/view';
+
 function tableNode(data) {
     this.id = data.id;
     this.name = data.name;
     this.color = data.color;
     this.enableClick = data.enableClick;
+    this.visible = data.visible;
     this.children = [];
   }
 
@@ -140,12 +143,14 @@ function tableNode(data) {
     name: string;
     color: string;
     enableClick: boolean;
+    visible: boolean;
 
-    constructor(id: string, name: string, color: string, selected: boolean) {
+    constructor(id: string, name: string, color: string, selected: boolean, visible?: boolean) {
         this.id = id;
         this.name = name;
         this.color = color;
         this.enableClick = selected;
+        this.visible = true;
     }
 
   }
@@ -248,13 +253,19 @@ export function toJson(inputTableList: string [], map) {
         const childTableList: Prop [] = getChildTableList(inputTableList, parent.name, map);
         for ( let j = 0; j < childTableList.length; j++) {
 
-          // Set the selected flag for last table in the input table list
+          // Last selected node children should be visible as it is getting inserted for first time. 
           if (toggleTable === childTableList[j].name) {
             childTableList[j].enableClick = isSelectedPath(inputTableList, childTableList[j].name, parent.name);
           }
 
+          // Hide the siblings visibility other than selected one (black ones)
+          if ( parent.name !== toggleTable) {
+            childTableList[j].visible = false; // This node is sibling to selected node
+          }
+
           if (isPath(inputTableList, childTableList[j].name, parent.name)) {
             childTableList[j].color = 'black';
+            childTableList[j].visible = true; // Enable this node while only it's sibilings should be hidden.
           }
           tree.add(childTableList[j], parent);
         }
@@ -308,7 +319,7 @@ export function toJson(inputTableList: string [], map) {
 
           if (childTableList[j].color === 'black') {
             if (tree.contains(childTableList[j]) === true) {
-              childTableList[j].color = 'blue';
+              childTableList[j].color = '#e0e0e0';
             }
           }
           tree.add(childTableList[j], parent);

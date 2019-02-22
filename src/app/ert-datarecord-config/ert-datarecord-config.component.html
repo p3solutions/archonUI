@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary next" (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Next</button>
+    <button type="button" class="btn btn-primary next" [disabled]="data == null" (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Next</button>
     <button class="btn btn-primary Previous" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
   </div>
