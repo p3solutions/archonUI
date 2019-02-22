@@ -22,7 +22,12 @@
   max-height: 300px;
   overflow: auto;
 }
-
+.align-center {
+  text-align: center;
+}
+.archon-logo {
+  margin-top:20%;
+}
 #archon-head {
   margin-left: 50px;
 }
