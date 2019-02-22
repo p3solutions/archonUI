@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
-import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { WorkspaceHeaderService } from '../../workspace-header/workspace-header.service';
 @Component({
   selector: 'app-metalyzer',
-  templateUrl: './metalyzer.component.html',
-  styleUrls: ['./metalyzer.component.css']
+  templateUrl: './metalyzer-landing-page.component.html',
+  styleUrls: ['./metalyzer-landing-page.component.css']
 })
-export class MetalyzerComponent implements OnInit {
+export class MetalyzerLandingPageComponent implements OnInit {
 
   private serviceActionType: string;
   private tableList: any;

@@ -10,7 +10,7 @@ import { archonConfig } from '../config';
 import { Router, RouterModule } from '@angular/router';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { jsonpCallbackContext } from '@angular/common/http/src/module';
-import { MetalyzerComponent } from '../metalyzer/metalyzer.component';
+import { MetalyzerLandingPageComponent } from '../metalyzer/metalyzer-landing-page/metalyzer-landing-page.component';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',

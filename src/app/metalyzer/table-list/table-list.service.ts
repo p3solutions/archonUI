@@ -4,10 +4,10 @@ import { Headers, Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { UserinfoService } from '../userinfo.service';
-import { RelationshipInfoObject } from '../workspace-objects';
-import { environment } from '../../environments/environment';
-import { WorkspaceObject } from '../workspace-objects';
+import { UserinfoService } from '../../userinfo.service';
+import { RelationshipInfoObject } from '../../workspace-objects';
+import { environment } from '../../../environments/environment';
+import { WorkspaceObject } from '../../workspace-objects';
 import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class TableListService {

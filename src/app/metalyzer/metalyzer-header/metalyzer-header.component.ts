@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { WorkspaceHeaderService } from '../../workspace-header/workspace-header.service';
 import { MetalyzerHeaderService } from './metalyzer-header.service';
 import { TableListService } from '../table-list/table-list.service';
 

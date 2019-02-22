@@ -5,8 +5,8 @@ import { WorkspaceServicesService } from './workspace-services.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UserinfoService } from '../userinfo.service';
-import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
-import { TableListService } from '../table-list/table-list.service';
+import { MetalyzerHeaderService } from '../metalyzer/metalyzer-header/metalyzer-header.service';
+import { TableListService } from '../metalyzer/table-list/table-list.service';
 import { CommonUtilityService } from '../common-utility.service';
 @Component({
   selector: 'app-workspace-services',
@@ -102,7 +102,7 @@ export class WorkspaceServicesComponent implements OnInit {
           this.tableList = result;
           if (this.tableList !== undefined) {
             this.metalyzerHeaderService.setPhase('Analysis');
-            this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+            this.router.navigate(['/workspace/metalyzer/analysis']);
           } else {
             this.metalyzerHeaderService.setPhase('Configuration');
             this.router.navigate(['/workspace/metalyzer/ALL/configuration']);

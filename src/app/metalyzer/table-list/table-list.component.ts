@@ -3,13 +3,13 @@ import {
   AfterViewInit, OnChanges, ViewContainerRef, Inject
 } from '@angular/core';
 import { TableListService } from './table-list.service';
-import { RelationshipInfoObject } from '../workspace-objects';
-import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
-import { ErrorObject } from '../error-object';
-import { UserinfoService } from '../userinfo.service';
+import { RelationshipInfoObject } from '../../workspace-objects';
+import { WorkspaceHeaderService } from '../../workspace-header/workspace-header.service';
+import { ErrorObject } from '../../error-object';
+import { UserinfoService } from '../../userinfo.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DataAnalyzerResultScreenComponent } from '../data-analyzer-result-screen/data-analyzer-result-screen.component';
-import { DynamicLoaderService } from '../dynamic-loader.service';
+import { DynamicLoaderService } from '../../dynamic-loader.service';
 
 @Component({
   selector: 'app-table-list',

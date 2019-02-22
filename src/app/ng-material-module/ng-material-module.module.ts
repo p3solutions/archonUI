@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatCardModule,
+  MatSidenavModule
 } from '@angular/material';
 
 @NgModule({
@@ -11,11 +12,13 @@ import {
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
+    MatSidenavModule,
   ],
   exports: [
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
+    MatSidenavModule
   ]
 })
 export class NgMaterialModuleModule { }

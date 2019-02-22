@@ -2,10 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MetalyzerHeaderComponent } from './metalyzer-header.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { WorkspaceHeaderService } from '../../workspace-header/workspace-header.service';
 import { MetalyzerHeaderService } from './metalyzer-header.service';
 import { HttpClientModule } from '@angular/common/http';
-import { UserinfoService } from '../userinfo.service';
+import { UserinfoService } from '../../userinfo.service';
 import { TableListService } from '../table-list/table-list.service';
 
 describe('MetalyzerHeaderComponent', () => {

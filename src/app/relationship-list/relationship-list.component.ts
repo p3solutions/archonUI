@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ErrorObject } from '../error-object';
-import { TableListService } from '../table-list/table-list.service';
+import { TableListService } from '../metalyzer/table-list/table-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { RelationshipInfoObject } from '../workspace-objects';
 @Component({

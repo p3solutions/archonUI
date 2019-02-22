@@ -3,8 +3,8 @@ import { ResponseContentType } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { UserinfoService } from '../userinfo.service';
+import { environment } from '../../../environments/environment';
+import { UserinfoService } from '../../userinfo.service';
 import { Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 

@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
-import { SearchPipe } from '../search.pipe';
+import { SearchPipe } from '../utility/search/search.pipe';
 
 describe('ErtTableComponent', () => {
   let component: ErtTableComponent;

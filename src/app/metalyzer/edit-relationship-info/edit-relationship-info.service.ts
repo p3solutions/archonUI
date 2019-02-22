@@ -1,35 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { UserinfoService } from '../userinfo.service';
+import { UserinfoService } from '../../userinfo.service';
 import { catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { Headers } from '@angular/http';
 
 @Injectable()
-export class AddDirectJoinService {
-
+export class EditRelationshipInfoService {
   columnListUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
-  addNewJoinUrl = environment.apiUrl + 'metalyzer/relationship';
-  clearSessionUrl = environment.apiUrl + 'dataAnalyzer/stateManagement/closeSession?jobId=';
+  updateTableListUrl = environment.apiUrl + 'metalyzer/relationship?workspaceId=';
 
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) { }
 
   getColumnsByTableId(tableId) {
     return this.http.get<any[]>(this.columnListUrl + tableId, { headers: this.userinfoService.getHeaders() })
-      .pipe(map(this.extractTables),
+      .pipe(
+        map(this.extractTables),
         catchError(this.handleError('getColumnsByTableId()', [])));
   }
 
-  addNewJoin(param): Observable<any> {
-    return this.http.post<any>(this.addNewJoinUrl, param, { headers: this.userinfoService.getHeaders() })
-      .pipe(catchError(this.handleError('addNewJoin()', [])));
-  }
-
-  clearSession(jobId): Observable<any> {
-    return this.http.put<any>(this.clearSessionUrl + jobId, '', { headers: this.userinfoService.getHeaders() })
-    .pipe(catchError(this.handleError<any>('ClearSession()')));
+  updateRealation(tableId, workspaceId, joinName, resultArray): Observable<any> {
+    const url = this.updateTableListUrl + workspaceId + '&tableId=' + tableId;
+    const param = { 'joinName': joinName, 'joinListInfo': resultArray };
+    return this.http.put<any>(url, param, { headers: this.userinfoService.getHeaders() })
+      .pipe(catchError(this.handleError<any>('updateRelation')));
   }
 
   private extractTables(res: any) {
@@ -37,7 +33,7 @@ export class AddDirectJoinService {
     return data || [];
   }
 
-  private handleError<T>(operation = 'getColumnsByTableId()', result?: T) {
+  private handleError<T>(operation = 'updateRelation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -52,4 +48,5 @@ export class AddDirectJoinService {
 
   private log(message: string) {
   }
+
 }

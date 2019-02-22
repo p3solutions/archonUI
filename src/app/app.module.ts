@@ -1,20 +1,27 @@
+// Libraries
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
+import { DataTablesModule } from 'angular-datatables';
+
+// Custom Modules
 import { NgMaterialModuleModule } from './ng-material-module/ng-material-module.module';
+import { UtilityModule } from './utility/utility.module';
+
+// Routings
+import { AppRoutingModule } from './app-routing.module';
+
+// Componenets and Services
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InfoService } from './info.service';
 import { SigninFormService } from './signin-form/signin-form.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninFormComponent } from './signin-form/signin-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
 import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
-import { AppRoutingModule } from './/app-routing.module';
 import { SignupFormService } from './signup-form/signup-form.service';
 import { ForgotpasswordFormService } from './forgotpassword-form/forgotpassword-form.service';
 import { AuthenticationService } from './authentication/authentication.service';
@@ -28,7 +35,6 @@ import { WorkspaceInfoComponent } from './workspace-info/workspace-info.componen
 import { HeaderTabComponent } from './header-tab/header-tab.component';
 import { ManageMembersComponent } from './manage-members/manage-members.component';
 import { ManageMembersService } from './manage-members/manage-members.service';
-import { DataTablesModule } from 'angular-datatables';
 import { MemberRequestComponent } from './member-request/member-request.component';
 import { MemberRequestService } from './member-request/member-request.service';
 import { ManageMasterMetadataService } from './manage-master-metadata/manage-master-metadata.service';
@@ -64,32 +70,20 @@ import { AddMembersService } from './add-members/add-members.service';
 import { DatabaseListService } from './database-list/database-list.service';
 import { DatabaseListComponent } from './database-list/database-list.component';
 import { AddDatabaseWizardComponent } from './add-database-wizard/add-database-wizard.component';
-import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.component';
-import { MetalyzerComponent } from './metalyzer/metalyzer.component';
-import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
-import { TableListComponent } from './table-list/table-list.component';
 import { WorkspaceHeaderService } from './workspace-header/workspace-header.service';
-import { MetalyzerHeaderService } from './metalyzer-header/metalyzer-header.service';
-import { TableListService } from './table-list/table-list.service';
-import { SearchPipe } from './search.pipe';
 import { CommonUtilityService } from './common-utility.service';
+import { MetalyzerHeaderService } from './metalyzer/metalyzer-header/metalyzer-header.service';
+import { TableListService } from './metalyzer/table-list/table-list.service';
 import { RolePipe } from './role.pipe';
 import { StatusService } from './status-screen/status.service';
 import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { KeysPipe } from './keys.pipe';
 import { ReverseArrayPipe } from './reverse.pipe';
-import { EditRelationshipInfoComponent } from './edit-relationship-info/edit-relationship-info.component';
 import { ArchonHttpInterceptor } from './archon-http-interceptor';
 import { UserProfileService } from './user-profile/user-profile.service';
 import { RelationshipInfoComponent } from './relationship-info/relationship-info.component';
 import { RelationshipListComponent } from './relationship-list/relationship-list.component';
-import { EditRelationshipInfoService } from './edit-relationship-info/edit-relationship-info.service';
-import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
-import { AddDirectJoinService } from './add-direct-join/add-direct-join.service';
-import { SecondaryColumnPipe } from './secondary-column.pipe';
-import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { KeyvaluePipe } from './keyvalue.pipe';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 import { DbExtractorComponent } from './db-extractor/db-extractor.component';
 import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extractor-step-one.component';
@@ -148,22 +142,12 @@ export function tokenGetter() {
                 AddMembersComponent,
                 DatabaseListComponent,
                 AddDatabaseWizardComponent,
-                MetalyzerHeaderComponent,
-                MetalyzerComponent,
-                MetalyzerConfigurationComponent,
-                TableListComponent,
-                SearchPipe,
                 StatusScreenComponent,
                 KeysPipe,
                 ReverseArrayPipe,
-                SearchPipe,
                 RolePipe,
                 RelationshipInfoComponent,
                 RelationshipListComponent,
-                EditRelationshipInfoComponent,
-                AddDirectJoinComponent,
-                SecondaryColumnPipe,
-                DataAnalyzerResultScreenComponent,
                 KeyvaluePipe,
                 ManagementLandingPageComponent,
                 DbExtractorComponent,
@@ -195,11 +179,11 @@ export function tokenGetter() {
                 FormsModule,
                 ReactiveFormsModule,
                 DataTablesModule,
+                UtilityModule,
                 AppRoutingModule,
                 HttpClientModule,
                 NgMaterialModuleModule,
-                NgxPaginationModule,
-                NgxBootstrapSliderModule
+                NgxBootstrapSliderModule,
         ],
         providers: [
                 JwtHelperService,
@@ -220,6 +204,8 @@ export function tokenGetter() {
                 WorkspaceListService,
                 WorkspaceInfoService,
                 WorkspaceLandingPageService,
+                MetalyzerHeaderService,
+                TableListService,
                 ChangePasswordService,
                 WorkspaceDashboardService,
                 WorkspaceServicesService,
@@ -227,8 +213,6 @@ export function tokenGetter() {
                 AddMembersService,
                 DatabaseListService,
                 WorkspaceHeaderService,
-                MetalyzerHeaderService,
-                TableListService,
                 StatusService,
                 CommonUtilityService,
                 {
@@ -236,10 +220,7 @@ export function tokenGetter() {
                         useClass: ArchonHttpInterceptor,
                         multi: true
                 },
-                TableListService,
                 UserProfileService,
-                EditRelationshipInfoService,
-                AddDirectJoinService,
                 DbExtractorService,
                 StoredProcViewService
         ],

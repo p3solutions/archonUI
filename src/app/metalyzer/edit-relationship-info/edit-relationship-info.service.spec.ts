@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { EditRelationshipInfoService } from './edit-relationship-info.service';
 import { HttpClientModule } from '@angular/common/http';
-import { UserinfoService } from '../userinfo.service';
+import { UserinfoService } from '../../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditRelationshipInfoService', () => {
