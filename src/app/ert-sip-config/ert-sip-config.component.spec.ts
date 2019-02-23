@@ -25,6 +25,8 @@ describe('ErtSipConfigComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ErtSipConfigComponent);
     component = fixture.componentInstance;
+    const WHS = TestBed.get(WorkspaceHeaderService);
+    spyOn(WHS, 'getSelectedWorkspaceId').and.returnValue('');
     fixture.detectChanges();
   });
 

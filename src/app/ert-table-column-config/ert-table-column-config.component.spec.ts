@@ -24,6 +24,9 @@ describe('ErtTableColumnConfigComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ErtTableColumnConfigComponent);
     component = fixture.componentInstance;
+    const WHS = TestBed.get(WorkspaceHeaderService);
+    spyOn(WHS, 'getSelectedWorkspaceName').and.returnValue('');
+    spyOn(WHS, 'getSelectedWorkspaceId').and.returnValue('');
     fixture.detectChanges();
   });
 
