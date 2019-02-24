@@ -331,7 +331,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   gotoExtractDigestExtraction() {
-    if (this.selectedTableList.length === 0) {
+    if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
       alert('Please select atleast a table');
     } else {
       this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount);
