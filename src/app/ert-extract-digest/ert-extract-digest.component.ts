@@ -44,6 +44,13 @@ export class ErtExtractDigestComponent implements OnInit {
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
+    if (this.from === 'data-record') {
+      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+        this.router.navigate(['/workspace/ert/ert-table/', this.ertJobId], { queryParams: { from: 'data-record' } });
+      } else {
+        this.router.navigate(['/workspace/ert/ert-table/'], { queryParams: { from: 'data-record' } });
+      }
+    } else
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.router.navigate(['/workspace/ert/ert-table/', this.ertJobId]);
     } else {
@@ -57,7 +64,11 @@ export class ErtExtractDigestComponent implements OnInit {
     this.ertService.setXmlSplitSize(this.extractDataConfigInfo);
     this.ertService.setIngestionDataConfig(this.ingestionDataConfigObj);
     if (this.from === 'data-record') {
-      this.router.navigate(['workspace/ert/ert-table-col-config/'], { queryParams: { from: 'data-record' } });
+      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+        this.router.navigate(['workspace/ert/ert-table-col-config/', this.ertJobId], { queryParams: { from: 'data-record' } });
+      } else {
+        this.router.navigate(['workspace/ert/ert-table-col-config/'], { queryParams: { from: 'data-record' } });
+      }
     } else
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.router.navigate(['workspace/ert/ert-table-col-config', this.ertJobId]);

@@ -21,7 +21,6 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.selectedList = [];
     this.ertService.extractDataConfigInfo = new ExtractDataConfigInfo();
     this.ertService.schemaResultsTableCount = 0;
-    this.ertService.mmrVersion = '';
     this.getErtJobList();
   }
   getErtJobList() {
@@ -36,7 +35,11 @@ export class ErtJobsComponent implements OnInit {
     const ertJobTitle = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobTitle;
     const ertJobMode = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobMode;
     this.ertService.setErtJobParams({ ertJobMode: ertJobMode, ertJobTitle: ertJobTitle });
-    this.router.navigate(['/workspace/ert/ert-table/', ertJobId]);
+    if (ertJobMode === 'DATA_RECORD') {
+      this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'data-record' } });
+    } else {
+      this.router.navigate(['/workspace/ert/ert-table/', ertJobId]);
+    }
   }
 
   deleteErtJob(ertJobId: string) {
@@ -55,7 +58,7 @@ export class ErtJobsComponent implements OnInit {
     }
   }
 
-   gotoDashboard() {
+  gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 }
