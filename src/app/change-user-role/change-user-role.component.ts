@@ -28,13 +28,13 @@ export class ChangeUserRoleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getGlobalRoleData();
     const navbarComponent = new NavbarComponent();
     this.info = navbarComponent.getInfo();
+    this.getGlobalRoleData();
   }
 
   getGlobalRoleData() {
-    this.changeUserRoleService.getGlobalRoleDetails()
+    this.changeUserRoleService.getGlobalRoleDetails(this.info.roles.roleName)
       .subscribe(res => {
         this.globalRolesRequestData = res;
       });
@@ -45,7 +45,7 @@ export class ChangeUserRoleComponent implements OnInit {
   }
 
   changeOnConfirm() {
-    this.changeUserRoleService.changeGlobalRoleDetails(this.selectedUserId, this.globalRoleId, this.info.roles.roleName)
+    this.changeUserRoleService.changeGlobalRoleDetails(this.selectedUserId, this.globalRoleId, this.info.roles.roleName, this.info.id)
     .subscribe(data => {
       this.onconfirm.emit(true);
       this.responseData = data;
