@@ -1,6 +1,8 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { ChangeUserRoleService } from './change-user-role.service';
 import { GlobalRoles } from '../global-roles';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { Info } from '../info';
 
 @Component({
   selector: 'app-change-user-role',
@@ -19,17 +21,20 @@ export class ChangeUserRoleComponent implements OnInit {
   successMessage: any;
   errorMessage: any;
   responseData: any;
+  info: Info;
   globalRolesRequestData: GlobalRoles[];
   constructor(
     private changeUserRoleService: ChangeUserRoleService
   ) { }
 
   ngOnInit() {
+    const navbarComponent = new NavbarComponent();
+    this.info = navbarComponent.getInfo();
     this.getGlobalRoleData();
   }
 
   getGlobalRoleData() {
-    this.changeUserRoleService.getGlobalRoleDetails()
+    this.changeUserRoleService.getGlobalRoleDetails(this.info.roles.roleName)
       .subscribe(res => {
         this.globalRolesRequestData = res;
       });
@@ -40,7 +45,7 @@ export class ChangeUserRoleComponent implements OnInit {
   }
 
   changeOnConfirm() {
-    this.changeUserRoleService.changeGlobalRoleDetails(this.selectedUserId, this.globalRoleId)
+    this.changeUserRoleService.changeGlobalRoleDetails(this.selectedUserId, this.globalRoleId, this.info.roles.roleName, this.info.id)
     .subscribe(data => {
       this.onconfirm.emit(true);
       this.responseData = data;
