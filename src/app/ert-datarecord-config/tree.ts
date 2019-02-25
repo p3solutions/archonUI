@@ -1,4 +1,4 @@
-import { FLAGS } from '@angular/core/src/render3/interfaces/view';
+
 
 function tableNode(data) {
     this.id = data.id;
@@ -320,6 +320,8 @@ export function toJson(inputTableList: string [], map) {
           if (childTableList[j].color === 'black') {
             if (tree.contains(childTableList[j]) === true) {
               childTableList[j].color = '#e0e0e0';
+              // added by Satheesh
+              childTableList[j].enableClick = false;
             }
           }
           tree.add(childTableList[j], parent);
@@ -328,3 +330,4 @@ export function toJson(inputTableList: string [], map) {
       }
     return JSON.stringify(tree.root);
    }
+

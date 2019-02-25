@@ -34,7 +34,6 @@ export class ErtDatarecordConfigComponent implements OnInit {
       this.tableList = res;
       this.schemaResultsTableCount = this.tableList.length;
     });
-    console.log(this.ertService.data, this.ertService.joinListMap);
     if (this.ertService.data !== undefined) {
     this.data = this.ertService.data;
     this.selectedValues = this.ertService.selectedValues;
