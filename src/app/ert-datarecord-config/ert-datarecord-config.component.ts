@@ -23,6 +23,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
   joinListMap = new Map();
   data;
   schemaResultsTableCount = 0;
+  selectedPrimaryTable;
 
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
@@ -33,17 +34,26 @@ export class ErtDatarecordConfigComponent implements OnInit {
       this.tableList = res;
       this.schemaResultsTableCount = this.tableList.length;
     });
+    console.log(this.ertService.data, this.ertService.joinListMap);
+    if (this.ertService.data !== undefined) {
+    this.data = this.ertService.data;
+    this.selectedValues = this.ertService.selectedValues;
+    this.joinListMap = this.ertService.joinListMap;
+    this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
+    this.createchart();
+    }
   }
   gotoDataRecFinal() {
     this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
-    this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap);
+    this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable);
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'data-record' } });
   }
   gotoJobConfiguration() {
     this.router.navigate(['workspace/ert/ert-jobs-config']);
   }
 
-  populategraph(value) {
+  populategraph(value, event) {
+    this.selectedPrimaryTable = event.target.value;
     d3.select('svg').remove();
     this.selectedValues = [];
     this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {

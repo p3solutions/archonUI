@@ -22,18 +22,24 @@ export class ErtSipConfigComponent implements OnInit {
   joinListMap = new Map();
   data;
   exclude_click = ['rgb(249, 75, 76)', 'rgb(224, 224, 224)'];
+  selectedPrimaryTable: any;
 
 
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
 
   ngOnInit() {
-    let $radios = $('input:radio[name=x]');
-    console.log($radios);
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
     });
+    if (this.ertService.data !== undefined) {
+      this.data = this.ertService.data;
+      this.selectedValues = this.ertService.selectedValues;
+      this.joinListMap = this.ertService.joinListMap;
+      this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
+      this.createchart();
+      }
   }
 
   gotoDataRecFinal() {
@@ -44,7 +50,8 @@ export class ErtSipConfigComponent implements OnInit {
     this.router.navigate(['workspace/ert/ert-jobs-config']);
   }
 
-  populategraph(value) {
+  populategraph(value, event) {
+    this.selectedPrimaryTable = event.target.value;
     d3.select('svg').remove();
     this.selectedValues = [];
     this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {

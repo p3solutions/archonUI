@@ -16,7 +16,7 @@
           <div id="tbl-list">
             <div class="scroll-div border">
               <div class="well" *ngFor="let i of tableList">
-                <div><input style="float:left" type="radio" name="x" (click)="populategraph(i)"></div>
+                <div><input style="float:left" type="radio" [value]="i.tableName" [checked]="i.tableName == selectedPrimaryTable"  name="x" (click)="populategraph(i, $event)"></div>
                 <div class="first-div">{{i.tableName}}</div>
                 <div><i class="fa fa-chevron-right icon-div "></i></div>
               </div>
