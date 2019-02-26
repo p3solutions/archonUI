@@ -1199,3 +1199,7 @@ svg {
 .show-div {
   display: block;
 }
+
+#cancelBtn:hover{
+  background-color: #F94B4C;
+}

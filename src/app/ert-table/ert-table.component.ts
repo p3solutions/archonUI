@@ -44,6 +44,7 @@ export class ErtTableComponent implements OnInit {
   dataOrderObj: DataOrderConfig = new DataOrderConfig();
   schemaResultsTableCount = 0;
   from: string;
+  disabledUserDefinedColName = false;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService) {
   }
@@ -210,13 +211,21 @@ export class ErtTableComponent implements OnInit {
     this.userDefinedList = [];
     this.usrDefinedColumnName = '';
     this.usrDefinedQueryView = '';
+    this.disabledUserDefinedColName = false;
     this.ursDefinedColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
     if (columnName !== 'addNewColumn') {
       this.usrDefinedColumnName = columnName;
+      this.disabledUserDefinedColName = true;
       const temp = this.selectedTableList.filter
-        (a => a.tableId === this.selectedTableId)[0].columnList.filter(b => b.originalColumnName === columnName)[0];
-      if (temp.userColumnQuery !== null) {
+        (a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList.filter(b => b.originalColumnName === columnName)[0];
+      if (temp === undefined) {
+        const temp1 = this.selectedTableList.filter
+          (a => a.tableId === this.selectedTableId)[0].columnList.filter(b => b.originalColumnName === columnName)[0];
+          console.log(temp1);
+        this.userDefinedList = JSON.parse(temp1.userColumnQuery.replace(/'/g, '"'));
+        this.usrDefinedQueryView = temp1.viewQuery;
+      } else if (temp.userColumnQuery !== null) {
         this.userDefinedList = JSON.parse(temp.userColumnQuery.replace(/'/g, '"'));
         this.usrDefinedQueryView = temp.viewQuery;
       }
@@ -238,9 +247,10 @@ export class ErtTableComponent implements OnInit {
         this.configColumnList = JSON.parse(temp.userColumnQuery.replace(/'/g, '"'));
         this.configColumnQuery = temp.viewQuery;
       }
-    } else if (dataType === 'USERDEFINED') {
-      this.openUsrDefinedColumnModel(columnName);
     }
+    // else if (dataType === 'USERDEFINED') {
+    //   this.openUsrDefinedColumnModel(columnName);
+    // }
   }
 
   saveColumnConfig() {
@@ -273,6 +283,16 @@ export class ErtTableComponent implements OnInit {
       const temp = columnsList.filter(a => a.columnName === columnName)[0].isSelected = true;
     } else if (!isSelected && index !== -1) {
       const temp = columnsList.filter(a => a.columnName === columnName)[0].isSelected = false;
+    }
+  }
+
+  selectUserDefinedColumns(columnName: string, isSelected: boolean) {
+    const columnsList = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList;
+    const index = columnsList.findIndex(a => a.originalColumnName === columnName);
+    if (isSelected && index !== -1) {
+      columnsList.filter(a => a.originalColumnName === columnName)[0].isSelected = true;
+    } else if (!isSelected && index !== -1) {
+      columnsList.filter(a => a.originalColumnName === columnName)[0].isSelected = false;
     }
   }
 
@@ -357,13 +377,25 @@ export class ErtTableComponent implements OnInit {
       tempUsrDefinedObj.userColumnQuery = JSON.stringify(this.userDefinedList).replace(/"/g, '\'');
       const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
         columnList.filter(b => b.originalColumnName === this.usrDefinedColumnName)[0];
+      const tempUserDefinedObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
+        usrDefinedColumnList.filter(b => b.originalColumnName === this.usrDefinedColumnName)[0];
       if (tempObj !== undefined) {
         tempObj.userColumnQuery = tempUsrDefinedObj.userColumnQuery;
         tempObj.viewQuery = tempUsrDefinedObj.viewQuery;
-      } else {
+      } else if (tempUserDefinedObj === undefined) {
         const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList;
         temp.push(tempUsrDefinedObj);
+      } else {
+        tempUserDefinedObj.userColumnQuery = tempUsrDefinedObj.userColumnQuery;
+        tempUserDefinedObj.viewQuery = tempUsrDefinedObj.viewQuery;
       }
+    }
+  }
+  showUserDefinedColumn() {
+    if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
+      return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList || [];
+    } else {
+      return [];
     }
   }
 
@@ -505,6 +537,10 @@ export class ErtTableComponent implements OnInit {
       this.dataOrderList.push(this.dataOrderObj);
       this.dataOrderObj = new DataOrderConfig();
     }
+  }
+
+  cancel() {
+    this.router.navigate(['/workspace/ert/ert-jobs']);
   }
 }
 

@@ -20,7 +20,7 @@
           <div id="tbl-list">
             <div class="scroll-div border">
               <div class="sticky">
-                <div><input style="float:left" type="checkbox"></div>
+                <div><input style="display:none;float:left" type="checkbox"></div>
                 <div class="first-div">Select</div>
                 <div></div>
               </div>
@@ -78,6 +78,7 @@
                     <th>Type</th>
                     <th>Config</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -89,10 +90,24 @@
                     <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
                         [ngModel]="item?.modifiedColumnName"></td>
                     <td>{{item?.dataType}}</td>
-                    <td><a href="" data-toggle="modal" (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
-                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#add-edit-user-defined-column-modal' : '#config-modal'"><i
-                          class="fa fa-cogs"></i></a></td>
+                    <td><a *ngIf="item.dataType!=='USERDEFINED'" href="" data-toggle="modal" (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
+                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#config-modal' : '#config-modal'"><i class="fa fa-cogs"></i></a></td>
+                    <td><a *ngIf="item.dataType==='USERDEFINED'" (click)="openUsrDefinedColumnModel(item?.originalColumnName)"
+                        data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
+                    <td><a *ngIf="item.dataType==='USERDEFINED'"><i class="fa fa-trash"></i></a></td>
+                  </tr>
+                  <tr *ngFor="let item of showUserDefinedColumn()">
                     <td></td>
+                    <td><input (change)="selectUserDefinedColumns(item?.originalColumnName,item?.isSelected)"
+                        [(ngModel)]="item.isSelected" type="checkbox"></td>
+                    <td>{{item?.originalColumnName}}</td>
+                    <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
+                        [ngModel]="item?.modifiedColumnName"></td>
+                    <td>{{item?.dataType}}</td>
+                    <td></td>
+                    <td><a (click)="openUsrDefinedColumnModel(item?.originalColumnName)" data-toggle="modal"
+                        data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
+                    <td><a><i class="fa fa-trash"></i></a></td>
                   </tr>
                 </tbody>
               </table>
@@ -106,6 +121,8 @@
     <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()" style="float: right;margin-right: 12px">Next</button>
     <button class="btn btn-primary Previous" id="back-to-job-config" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
+    <button class="btn btn-primary Previous" id="cancelBtn" (click)="cancel()" style="float:right;margin-right:5px;">
+      Cancel</button>
   </div>
 </div>
 
@@ -119,8 +136,8 @@
       </div>
       <div class="modal-body">
         <div id="table-name-heading" class="form-group">
-          <input type="text" class="form-control" [(ngModel)]="usrDefinedColumnName" name="ucolumnname" id="ucolumnname"
-            placeholder="Enter unique column name">
+          <input type="text" class="form-control" [disabled]="disabledUserDefinedColName" [(ngModel)]="usrDefinedColumnName"
+            name="ucolumnname" id="ucolumnname" placeholder="Enter unique column name">
         </div>
         <div>
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -372,11 +389,13 @@
             <div class="form-group">Function</div>
             <div class="form-group">Param</div>
             <div class="form-group">Output Type</div>
+            <div class="form-group">Delete</div>
           </div>
           <div class="form-inline" *ngFor="let item of configColumnList;let i=index" id="config-table">
             <div class="form-group">#</div>
             <div class="form-group">{{item.selectedConfigFunction}}</div>
             <div class="form-group">{{item.selectedColumnName}}</div>
+            <div class="form-group">Number</div>
             <div class="form-group cursor-pointer"><i class="fa fa-trash" (click)="deleteColumnCOnfig(i)"></i></div>
           </div>
         </div>

@@ -7,6 +7,10 @@ export class ErtTableListObj {
     selectedTableCount = 0;
     isSelectedTableLeft = false;
 }
+export class FilterAndOrderConfig {
+    filterConfig = '';
+    filterQuery = '';
+}
 
 export class ErtTableObj {
     tableId = '';
@@ -50,10 +54,7 @@ export class UsrDefinedColumnListObj {
     userColumnQuery = '';
 }
 
-export class FilterAndOrderConfig {
-    filterConfig = '';
-    filterQuery = '';
-}
+
 
 export class ErtJobParams {
     ertJobTitle = '';
@@ -110,9 +111,18 @@ export interface FilterConfigNode {
 export class ExtractDataConfigInfo {
     titleName = '';
     xmlFileSplitSize = '100';
+    applicationName = '';
+    holdingName = '';
 }
 
 export class DataOrderConfig {
     column: string = null;
     order: string = null;
+}
+
+export class ExtractConfig {
+    ertJobId = '';
+    isIngest = false;
+    extractDataConfig = new ExtractDataConfigInfo();
+    ingestionDataConfig = new IngestionDataConfig();
 }

@@ -5,19 +5,19 @@
         <div class="card-body" id="ert-tbl-search">
           <div class="row" style="margin-bottom: 12px;">
             <div class="inner-addon right-addon">
-              <input type="text" class="form-control search-input" id="listSearch" placeholder="Search">
+              <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch" placeholder="Search">
             </div>
             <div class="col-md-6">
-              <label id=table-heading>Tables list</label>
+              <label id=table-heading></label>
             </div>
           </div>
           <div id="tbl-list">
             <div class="scroll-div border">
               <div class="sticky">
-                <div class="first-div">Table</div>
+                <div class="first-div">Tables list</div>
                 <div></div>
               </div>
-              <div class="well" *ngFor="let item of selectedTableList">
+              <div class="well" (click)="selectTable(item.tableId)" *ngFor="let item of selectedTableList | searchTable:searchTableName">
                 <div class="first-div">{{item.tableName}}</div>
               </div>
             </div>
@@ -32,13 +32,13 @@
           <div class="row">
             <div class="col-md-10">
               <div id="table-name-heading" class="form-group" style="padding: 10px;">
-                <label id="lbl-alias">Address</label>
+                <label id="lbl-alias">{{selectedTableName}}</label>
               </div>
             </div>
             <div class="col-md-2"></div>
           </div>
           <div class="col-md-4">
-            <div class="card" style="height:304px">
+            <div class="card" style="height:350px;overflow-y:auto">
               <div class="card-body" id="ingest-data">
                 <div class="save-extract-heading">
                   <div>
@@ -46,7 +46,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <div *ngFor="let item of showColumns()" class="table-col-exptd">
+                  <div *ngFor="let item of showColumns('original')" class="table-col-exptd">
                     <small>{{item.originalColumnName}}</small>
                   </div>
                 </div>
@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="col-md-4">
-            <div class="card" style="height:304px">
+            <div class="card" style="height:350px;overflow-y:auto">
               <div class="card-body" id="delete-data">
                 <div class="del-data">
                   <div>
@@ -62,7 +62,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <div *ngFor="let item of showColumns()" class="table-col-exptd">
+                  <div *ngFor="let item of showColumns('expected')" class="table-col-exptd">
                     <small>{{item.modifiedColumnName}}</small>
                   </div>
                 </div>
@@ -80,5 +80,7 @@
       As Draft</button>
     <button class="btn btn-primary Previous" (click)="gotoExtractData()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
+    <button class="btn btn-primary Previous" id="cancelBtn" (click)="cancel()" style="float:right;margin-right:5px;">
+      Cancel</button>
   </div>
 </div>

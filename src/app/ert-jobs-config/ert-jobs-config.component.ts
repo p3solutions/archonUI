@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ErtJobParams } from '../ert-landing-page/ert';
+import { ErtJobParams, IngestionDataConfig } from '../ert-landing-page/ert';
 import { ErtService } from '../ert-landing-page/ert.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class ErtJobsConfigComponent implements OnInit {
     this.ertService.ertJobParams = new ErtJobParams();
     this.ertService.selectedList = [];
     this.ertService.schemaResultsTableCount = 0;
+    this.ertService.ingestionDataConfig = new IngestionDataConfig();
   }
 
   goToExtraction(event, ertJobMode) {

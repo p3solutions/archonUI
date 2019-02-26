@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
 import {
   ErtTableListObj, ErtColumnListObj, TableDetailsListObj,
-  ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo
+  ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo, ExtractConfig
 } from './ert';
 
 @Injectable({
@@ -30,6 +30,7 @@ export class ErtService {
   getErtJobUrl = this.apiUrl + 'ert/ertJobs?userId=';
   runjobUrl = this.apiUrl + 'ert/runjob?ertJobId=';
   deleteErtJobUrl = this.apiUrl + 'ert/ertJobSession?jobId=';
+  extractConfigUrl = this.apiUrl + 'ert/extractconfig?ertJobId=';
   schemaResultsTableCount = 0;
   joinListMap = new Map();
   mmrVersion = '';
@@ -58,13 +59,12 @@ export class ErtService {
     this.mmrVersion = mmrVersion;
   }
 
-  // getMMRVersion(workspaceId: string): string {
-  //   return this.http.get<string>(this.getERTtableListUrl + workspaceId + '&ertJobId=' + ertJobId,
-  //   { headers: this.userInfoService.getHeaders() }).pipe(
-  //     map(this.extractData),
-  //     catchError(this.handleError('getMMRVersion', []))
-  //   );
-  // }
+  getExtractConfig(ertJobId: string): Observable<ExtractConfig> {
+    return this.http.get<ExtractConfig>(this.extractConfigUrl + ertJobId,
+      { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractDataForColumn),
+        catchError(this.handleError('getExtractConfig', []))
+      );
+  }
 
   setSelectValueAndDataOfGraph(selectedValues: string[], data: any, joinListMap) {
     this.selectedValues = selectedValues;

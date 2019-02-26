@@ -11,10 +11,12 @@ import { TableDetailsListObj, IngestionDataConfig } from '../ert-landing-page/er
   styleUrls: ['./ert-table-column-config.component.css']
 })
 export class ErtTableColumnConfigComponent implements OnInit {
+  searchTableName: string;
   ertJobId = '';
   from = '';
   selectedTableList: TableDetailsListObj[] = [];
   selectedTableId = '';
+  selectedTableName = '';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
@@ -22,14 +24,24 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.selectedTableList = this.ertService.selectedList.filter(a => a.isSelected === true);
     if (this.selectedTableList[0] !== undefined) {
       this.selectedTableId = this.selectedTableList[0].tableId;
+      this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     }
   }
 
-  showColumns() {
-    if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
-      return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
-    } else {
-      return [];
+  showColumns(value) {
+    if (value === 'original') {
+      if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
+        return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
+          columnList.filter(a => a.dataType !== 'USERDEFINED');
+      } else {
+        return [];
+      }
+    } else if (value === 'expected') {
+      if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
+        return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
+      } else {
+        return [];
+      }
     }
   }
 
@@ -117,5 +129,12 @@ export class ErtTableColumnConfigComponent implements OnInit {
       param.mmrVersion = this.ertService.mmrVersion;
     }
     return param;
+  }
+  cancel() {
+    this.router.navigate(['/workspace/ert/ert-jobs']);
+  }
+  selectTable(tableId) {
+    this.selectedTableId = tableId;
+    this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
   }
 }
