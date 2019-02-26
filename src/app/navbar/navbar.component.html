@@ -11,7 +11,21 @@
           <a [routerLink]="['/workspace/workspace-dashboard']"><i class="fa fa-home"></i>
           </a>
         </li>
-
+        <li class="dropdown user-menu1">
+          <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false"> <i class="fa fa-list-alt"></i> </a>
+          <ul class="dropdown-menu">
+            <li title="Status Monitor">
+              <a [routerLink]="['/status']" class="trim-text">Status Monitoring</a>
+            </li>
+            <li title="Status Monitor">
+              <a class="trim-text">Schedule Monitoring</a>
+            </li>
+            <li title="Status Monitor">
+              <a  class="trim-text">Auditing</a>
+            </li>
+          </ul>
+        </li>
         <li role="presentation" class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-bell" data-toggle="tooltip" data-placement="bottom" title="Notifications"></i>
@@ -93,5 +107,3 @@
   </div>
 
 </nav>
-
- 

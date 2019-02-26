@@ -27,10 +27,17 @@
 .user-menu .dropdown-menu {
   max-width: 108px;
 }
+.user-menu1,
+.user-menu1 .dropdown-menu {
+  max-width: 200px;
+}
 
 /* default .dropdown-menu css has min-width:160px, hence overriding for max 10 letters width*/
 .user-menu .dropdown-menu {
   min-width: 108px !important;
+}
+.user-menu1 .dropdown-menu {
+  min-width: 170px !important;
 }
 
 .user-menu li>a {
@@ -62,6 +69,7 @@
 
 .fa-bell {
   font-size: 22px !important;
+   
 }
 
 .nav>li>a {
@@ -70,13 +78,15 @@
 
 .navbar {
   border-radius: 0px !important;
-  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5); */
 }
 
 .dropdown {
   margin-top: 5px;
 }
-
+.fa-list-alt {
+margin-top: -3px;
+}
 .bg-red {
   background: #E74C3C !important;
   border: 1px solid #E74C3C !important;
