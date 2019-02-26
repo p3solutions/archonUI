@@ -23,6 +23,7 @@ export class ErtSipConfigComponent implements OnInit {
   data;
   exclude_click = ['rgb(249, 75, 76)', 'rgb(224, 224, 224)'];
   selectedPrimaryTable: any;
+  schemaResultsTableCount: any;
 
 
   constructor(public router: Router, private tablelistService: TableListService,
@@ -32,6 +33,7 @@ export class ErtSipConfigComponent implements OnInit {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
+      this.schemaResultsTableCount = this.tableList.length;
     });
     if (this.ertService.data !== undefined) {
       this.data = this.ertService.data;
@@ -44,6 +46,8 @@ export class ErtSipConfigComponent implements OnInit {
 
   gotoDataRecFinal() {
     const RelationSIP = getRelationshipListForSip(this.data);
+    this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
+    this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable);
    // this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data);
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'SIP' } });
   }

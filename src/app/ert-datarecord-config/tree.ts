@@ -351,6 +351,15 @@ export function toJson(inputTableList: string [], map) {
     return true;
   }
 
+  function getTable(tableName, tablelist) {
+    for(let i = 0; i< tablelist.length; i++){
+      if (tableName === tablelist[i].name){
+        return tablelist[i];
+      }
+    }
+    return null;
+  }
+
 
   function tableDtls(id, name, children) {
     this.id = id;
@@ -371,17 +380,21 @@ export function toJson(inputTableList: string [], map) {
       return null;
     }
 
+    let tableNodes;
     if (notInList(node.name, tablelist)) {
-      const tableNodes = new tableDtls(node.id, node.name, []);
+      tableNodes = new tableDtls(node.id, node.name, []);
       tablelist.push(tableNodes);
-      // Add first level childrens
-      for (let i = 0; i < node.children.length; i++) {
-        if ((node.children[i].color === black) || (node.children[i].color === grey)) {
-          const child = new childDtls(node.children[i].id, node.children[i].name);
-          tableNodes.children.push(child);
-          findSelectedNodes(node.children[i], tablelist);
-        }
+    } else {
+      tableNodes = getTable(node.name, tablelist)
+    }
+    // Add first level childrens
+    for (let i = 0; i < node.children.length; i++) {
+      if ((node.children[i].color === black) || (node.children[i].color === grey)) {
+        const child = new childDtls(node.children[i].id, node.children[i].name);
+        tableNodes.children.push(child);
+        findSelectedNodes(node.children[i], tablelist);
       }
     }
+  
 
   }
