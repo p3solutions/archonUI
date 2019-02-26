@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class UserProfileService {
@@ -7,7 +8,11 @@ export class UserProfileService {
   private messageSource = new BehaviorSubject('');
   userSelectedWorkspace = this.messageSource.asObservable();
 
-  private UserName = new BehaviorSubject('');
+  jwtHelper: JwtHelperService = new JwtHelperService();
+  accessToken = localStorage.getItem('accessToken');
+  token_data = this.jwtHelper.decodeToken(this.accessToken);
+
+  private UserName = new BehaviorSubject(this.token_data.user.name);
   UserNamechange = this.UserName.asObservable();
 
   constructor() { }
@@ -17,7 +22,6 @@ export class UserProfileService {
   }
 
   changeUserName(message) {
-    console.log(message, 'testmm');
     this.UserName.next(message);
   }
 

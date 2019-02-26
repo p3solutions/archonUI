@@ -57,7 +57,6 @@ export class EditProfileComponent implements OnInit {
         (<HTMLButtonElement>document.querySelector('#editProfileModal .cancel')).click();
         this.UpdateProfile.emit(true);
         this.userProfileService.changeUserName(this.username);
-        // setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 1000);
       }
     });
   }

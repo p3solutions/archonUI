@@ -16,6 +16,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { UserProfileService } from '../user-profile/user-profile.service';
 
 describe('StatusScreenComponent', () => {
   let component: StatusScreenComponent;
@@ -75,7 +76,8 @@ describe('StatusScreenComponent', () => {
         StatusService,
         WorkspaceServicesService,
         UserinfoService,
-        CommonUtilityService
+        CommonUtilityService,
+        UserProfileService
       ],
       declarations: [StatusScreenComponent, KeysPipe, ReverseArrayPipe, NavbarComponent]
     })

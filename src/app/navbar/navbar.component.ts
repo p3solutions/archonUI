@@ -14,11 +14,11 @@ export class NavbarComponent implements OnInit {
   private router: Router;
   userChangeName: string;
 
-  constructor( private userProfileService: UserProfileService ) { }
+  constructor( private userProfileService: UserProfileService) { }
   ngOnInit() {
     this.userProfileService.UserNamechange.subscribe(data => {
       this.userChangeName = data;
-      console.log(this.userChangeName, 'useraname1');
+      this.getInfo();
     });
     this.info = this.getInfo();
     if (this.info.roles.roleName === 'ROLE_ADMIN') {
@@ -43,11 +43,7 @@ export class NavbarComponent implements OnInit {
     info = new Info();
     info.id = token_data.user.id;
     info.roles = token_data.roles[0];
-    if (this.userChangeName) {
-      info.username = this.userChangeName;
-    } else {
-    info.username = token_data.user.name;
-    }
+    info.username = this.userChangeName;
     return info;
   }
   callUserProfile() {
