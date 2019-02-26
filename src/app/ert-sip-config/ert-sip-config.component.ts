@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import * as d3 from 'd3';
-import { getSIPGraphData} from '../ert-datarecord-config/tree';
+import { getSIPGraphData, getRelationshipListForSip} from '../ert-datarecord-config/tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datarecord-config/class';
 import { ErtService } from '../ert-landing-page/ert.service';
 
@@ -43,6 +43,7 @@ export class ErtSipConfigComponent implements OnInit {
   }
 
   gotoDataRecFinal() {
+    const RelationSIP = getRelationshipListForSip(this.data);
    // this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data);
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'SIP' } });
   }
@@ -99,7 +100,6 @@ export class ErtSipConfigComponent implements OnInit {
 
     // update starts
     function update(data) {
-      console.log(data);
       const root = d3.hierarchy(data);
       const nodes = flatten(root);
       const links = root.links();

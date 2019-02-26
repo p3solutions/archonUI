@@ -176,7 +176,7 @@ function isToAdd(inputTableList, primarytableName, secondaryTableName): boolean 
   return retVal;
 }
 
-function getChildTableList(inputTableList ,tableName: string, map): Prop[] {
+function getChildTableList(inputTableList , tableName: string, map): Prop[] {
   const  tableList = [];
   let entireArray = [];
   let childArray = [];
@@ -217,7 +217,7 @@ function getTableProperty(tableName: string, map): Prop {
 
 function isSelectedPath(inputTableList: string[], tableName: string, parent: string): boolean {
     for (let i = 0; i < inputTableList.length; i++) {
-        if ((tableName === inputTableList[i]) && (parent === inputTableList[i-1]) ) {
+        if ((tableName === inputTableList[i]) && (parent === inputTableList[i - 1]) ) {
             return true;
         }
     }
@@ -226,7 +226,7 @@ function isSelectedPath(inputTableList: string[], tableName: string, parent: str
 
 function isPath(inputTableList: string[], tableName: string, parent: string): boolean {
   for (let i = 0; i < inputTableList.length; i++) {
-    if ((tableName === inputTableList[i]) && (parent === inputTableList[i-1])) {
+    if ((tableName === inputTableList[i]) && (parent === inputTableList[i - 1])) {
         return true;
     }
   }
@@ -253,7 +253,7 @@ export function toJson(inputTableList: string [], map) {
         const childTableList: Prop [] = getChildTableList(inputTableList, parent.name, map);
         for ( let j = 0; j < childTableList.length; j++) {
 
-          // Last selected node children should be visible as it is getting inserted for first time. 
+          // Last selected node children should be visible as it is getting inserted for first time.
           if (toggleTable === childTableList[j].name) {
             childTableList[j].enableClick = isSelectedPath(inputTableList, childTableList[j].name, parent.name);
           }
@@ -276,7 +276,7 @@ export function toJson(inputTableList: string [], map) {
 
    // ------- SIP Code -------//
 
-   function getChildTableListForSIP(inputTableList ,tableName: string, map): Prop[] {
+   function getChildTableListForSIP(inputTableList , tableName: string, map): Prop[] {
     const  tableList = [];
     let entireArray = [];
     entireArray = map.get(tableName);
@@ -331,3 +331,57 @@ export function toJson(inputTableList: string [], map) {
     return JSON.stringify(tree.root);
    }
 
+
+  // Following set of functions is used to construct the selected nodes - Parent/Children for sip.
+  export function getRelationshipListForSip(root) {
+    const tablelist = [];
+    findSelectedNodes(root, tablelist);
+   return tablelist;
+  }
+
+  function notInList(tableName, tablelist): boolean {
+    if (tablelist === null) {
+      return true;
+    }
+    for (let i = 0; i < tablelist.length; i++) {
+      if (tableName === tablelist[i].name) {
+        return false; // Exists in list so we are saying false.
+      }
+    }
+    return true;
+  }
+
+
+  function tableDtls(id, name, children) {
+    this.id = id;
+    this.name = name;
+    this.children = [];
+  }
+
+  function childDtls(id, name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  function findSelectedNodes(node, tablelist) {
+    const black = 'black';
+    const grey = '#e0e0e0';
+
+    if (node === null) {
+      return null;
+    }
+
+    if (notInList(node.name, tablelist)) {
+      const tableNodes = new tableDtls(node.id, node.name, []);
+      tablelist.push(tableNodes);
+      // Add first level childrens
+      for (let i = 0; i < node.children.length; i++) {
+        if ((node.children[i].color === black) || (node.children[i].color === grey)) {
+          const child = new childDtls(node.children[i].id, node.children[i].name);
+          tableNodes.children.push(child);
+          findSelectedNodes(node.children[i], tablelist);
+        }
+      }
+    }
+
+  }
