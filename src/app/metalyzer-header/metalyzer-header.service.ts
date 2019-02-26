@@ -36,13 +36,13 @@ export class MetalyzerHeaderService {
       catchError(this.handleError<string>('getworkspaceName'))
     );
   }
-  getExportxml(workspaceId, databaseID, xml, tableID): Observable<Blob> {
-    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml, tableId: [tableID] };
+  getExportxml(workspaceId, databaseID, xml): Observable<Blob> {
+    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml };
     return this.http.post(this.exportxmlUrl, params,
       { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
   }
-  getExportjson(workspaceId, databaseID, json, tableID): Observable<Blob> {
-    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: json, tableId: [tableID] };
+  getExportjson(workspaceId, databaseID, json): Observable<Blob> {
+    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: json };
     return this.http.post(this.exportxmlUrl, params,
       { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
   }

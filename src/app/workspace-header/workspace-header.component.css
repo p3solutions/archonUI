@@ -2,6 +2,11 @@
   /* height: 125px; */
   padding: 20px 0 0;
   border-bottom: 2px solid #E6E9ED;
+  width:97%;
+  margin:0 auto;
+  background:white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin-top:40px;
 }
 .workspace-dropdown {
   padding: 10px;

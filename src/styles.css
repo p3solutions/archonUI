@@ -27,7 +27,7 @@ a:focus,
 a:hover {
   text-decoration: underline;
 }
-
+ 
 p {
   font-family: "Avenir Next", sans-serif;
   font-weight: 300;
@@ -311,7 +311,9 @@ body {
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
-
+.border-bottom-none {
+  border-bottom: none;
+}
 footer {
   padding: 15px 20px;
   display: block;
