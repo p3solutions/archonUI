@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import * as d3 from 'd3';
-import { toJson, getSIPGraphData } from '../ert-datarecord-config/tree';
+import { getSIPGraphData, getRelationshipListForSip} from '../ert-datarecord-config/tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datarecord-config/class';
 import { ErtService } from '../ert-landing-page/ert.service';
 
@@ -22,31 +22,43 @@ export class ErtSipConfigComponent implements OnInit {
   joinListMap = new Map();
   data;
   exclude_click = ['rgb(249, 75, 76)', 'rgb(224, 224, 224)'];
+  selectedPrimaryTable: any;
+  schemaResultsTableCount: any;
 
 
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
 
   ngOnInit() {
-    let $radios = $('input:radio[name=x]');
-    console.log($radios);
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
+      this.schemaResultsTableCount = this.tableList.length;
     });
+    if (this.ertService.data !== undefined) {
+      this.data = this.ertService.data;
+      this.selectedValues = this.ertService.selectedValues;
+      this.joinListMap = this.ertService.joinListMap;
+      this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
+      this.createchart();
+      }
   }
 
   gotoDataRecFinal() {
-   // this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data);
+    const RelationSIP = getRelationshipListForSip(this.data);
+    this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
+    this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable);
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'SIP' } });
   }
   gotoJobConfiguration() {
     this.router.navigate(['workspace/ert/ert-jobs-config']);
   }
 
-  populategraph(value) {
+  populategraph(value, event) {
+    this.selectedPrimaryTable = event.target.value;
     d3.select('svg').remove();
     this.selectedValues = [];
+    this.joinListMap.clear();
     this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.primaryTable = getPrimaryArray(this.relationshipInfo);
@@ -225,18 +237,31 @@ export class ErtSipConfigComponent implements OnInit {
         //   d._children = null;
         // }
         // update();
-        let currentColor = d3.select(this).style('fill');
+        const currentColor = d3.select(this).style('fill');
         if (!self.exclude_click.includes(currentColor)) {
           // if (d.parent.data.enableClick || d.data.enableClick) {
           if (currentColor === 'white') {
             onClickChangeGraph(d.data);
           } else {
-            currentColor = 'white';
-            d.data.enableClick = false;
-            d.parent.data.enableClick = true;
-            self.selectedValues.pop();
+            const children = d.data.children;
+            let eligibleForDeselect = true;
+            for (let i of children) {
+            if (i.enableClick) {
+            eligibleForDeselect = false;
+            }
+            }
+            // currentColor = 'white';
+            // d.data.enableClick = false;
+            // d.parent.data.enableClick = true;
+            if (eligibleForDeselect) {
+              const index = self.selectedValues.indexOf(d.data.name);
+              self.selectedValues.splice(index, 1);
+              self.joinListMap.delete(d.data.name);
+              self.data = JSON.parse(getSIPGraphData(self.selectedValues, self.joinListMap));
+              update(self.data);
+            }
           }
-          d3.select(this).style('fill', currentColor);
+          // d3.select(this).style('fill', currentColor);
           // }
         }
       }

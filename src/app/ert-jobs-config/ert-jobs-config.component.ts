@@ -16,6 +16,10 @@ export class ErtJobsConfigComponent implements OnInit {
     this.ertService.selectedList = [];
     this.ertService.schemaResultsTableCount = 0;
     this.ertService.ingestionDataConfig = new IngestionDataConfig();
+    this.ertService.joinListMap.clear();
+    this.ertService.data = undefined;
+    this.ertService.selectedPrimaryTable = '';
+    this.ertService.selectedValues = [];
   }
 
   goToExtraction(event, ertJobMode) {

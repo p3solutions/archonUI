@@ -335,8 +335,8 @@ export class ErtTableComponent implements OnInit {
       this.router.navigate(['workspace/ert/ert-datarecord-config']);
     } else if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       alert('Not Allowed');
-    } else {
-      this.router.navigate(['workspace/ert/ert-jobs-config']);
+    } else if (this.from === 'SIP') {
+      this.router.navigate(['workspace/ert/ert-sip-config']);
     }
   }
 

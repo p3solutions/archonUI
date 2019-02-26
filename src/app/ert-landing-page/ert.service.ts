@@ -21,6 +21,7 @@ export class ErtService {
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
   selectedValues: string[] = [];
   data: any;
+  selectedPrimaryTable: any;
   constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
   private apiUrl = environment.apiUrl;
   getERTtableListUrl = this.apiUrl + 'ert/ertTableList?workspaceId=';
@@ -66,10 +67,11 @@ export class ErtService {
       );
   }
 
-  setSelectValueAndDataOfGraph(selectedValues: string[], data: any, joinListMap) {
+  setSelectValueAndDataOfGraph(selectedValues: string[], data: any, joinListMap, selectedPrimaryTable) {
     this.selectedValues = selectedValues;
     this.data = data;
     this.joinListMap = joinListMap;
+    this.selectedPrimaryTable = selectedPrimaryTable;
   }
 
   getERTtableList(workspaceId: string, ertJobId = ''): Observable<ErtTableListObj> {
