@@ -17,6 +17,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
   selectedTableList: TableDetailsListObj[] = [];
   selectedTableId = '';
   selectedTableName = '';
+  ExpectedTableName = '';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
@@ -26,6 +27,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
     if (this.selectedTableList[0] !== undefined) {
       this.selectedTableId = this.selectedTableList[0].tableId;
       this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+      this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
     }
   }
 
@@ -46,7 +48,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
     }
   }
 
-  showColumnsForUserDefined(){
+  showColumnsForUserDefined() {
     if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
       return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
         usrDefinedColumnList.filter(a => a.dataType === 'USERDEFINED');
@@ -156,5 +158,6 @@ export class ErtTableColumnConfigComponent implements OnInit {
   selectTable(tableId) {
     this.selectedTableId = tableId;
     this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+    this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
   }
 }
