@@ -31,6 +31,13 @@ export class ErtJobsComponent implements OnInit {
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
       this.ertJobs = result;
+      for (const item of this.ertJobs) {
+        if (item.jobStatus === 'READY' || item.jobStatus === 'COMPLETED' || item.jobStatus === 'FAILED') {
+          item.madeDisable = false;
+        } else {
+          item.madeDisable = true;
+        }
+      }
     });
   }
 
@@ -59,10 +66,13 @@ export class ErtJobsComponent implements OnInit {
         if (result.httpStatus === 200) {
           alert('Job has Started');
           this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobStatus = 'In PROGRESS';
+          this.ertJobs.filter(a => a.jobId === ertJobId)[0].madeDisable = true;
         }
       });
     }
   }
+
+
   setJobId(ertJobId: string) {
     this.ertJobId = ertJobId;
   }

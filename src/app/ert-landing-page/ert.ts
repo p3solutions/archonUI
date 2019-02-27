@@ -87,6 +87,7 @@ export class ERTJobs {
     lastAccessedDate = '';
     createdBy = '';
     lastAccessedBy = '';
+    madeDisable = false;
 }
 
 
