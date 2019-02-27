@@ -8,4 +8,40 @@
     width: 100%;
   }
 
- 
+  .modal-dialog {
+    margin: 100px auto auto;
+    width: 1050px;
+}
+
+.modal-body {
+  height: auto;
+}
+
+select {
+  -webkit-appearance: none;
+}
+
+.date {
+  padding-left: 0px;
+  padding-top: 22px;
+}
+
+.time{
+  padding-left: 0px;
+}
+
+.time-header {
+  padding-left: 0px;
+  padding-top: 33px;
+}
+
+.end-date {
+  padding-top: 15px;
+}
+
+.input-group-addon {
+  background-color: #87c2ef;
+}
+
+
+

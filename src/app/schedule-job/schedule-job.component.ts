@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-schedule-job',
@@ -6,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schedule-job.component.css']
 })
 export class ScheduleJobComponent implements OnInit {
+
+  colorTheme = 'theme-dark-blue';
+  bsConfig: Partial<BsDatepickerConfig>  = Object.assign({}, { containerClass: this.colorTheme });
+  mytime: Date = new Date();
+  enddate: Date = new Date();
+  startdate: Date = new Date();
 
   constructor() { }
 

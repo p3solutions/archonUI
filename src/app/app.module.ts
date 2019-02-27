@@ -112,6 +112,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MaterialModule} from './material-module';
 import { ScheduleJobComponent } from './schedule-job/schedule-job.component';
+import {BsDatepickerModule, TimepickerModule} from 'ngx-bootstrap';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -193,11 +194,11 @@ export function tokenGetter() {
                 }),
                 BrowserModule,
                 FormsModule,
+                BsDatepickerModule.forRoot(),TimepickerModule.forRoot(),
                 // HttpClientInMemoryWebApiModule.forRoot(
                 //     InMemoryDataService,
                 //     { dataEncapsulation: false }
                 // ),
-                FormsModule,
                 ReactiveFormsModule,
                 DataTablesModule,
                 MatTableModule,
