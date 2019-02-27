@@ -22,6 +22,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
   ngOnInit() {
     this.selectedTableList = this.ertService.selectedList.filter(a => a.isSelected === true);
+    this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
     if (this.selectedTableList[0] !== undefined) {
       this.selectedTableId = this.selectedTableList[0].tableId;
       this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
@@ -45,16 +46,25 @@ export class ErtTableColumnConfigComponent implements OnInit {
     }
   }
 
+  showColumnsForUserDefined(){
+    if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
+      return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
+        usrDefinedColumnList.filter(a => a.dataType === 'USERDEFINED');
+    } else {
+      return [];
+    }
+  }
+
   gotoExtractData() {
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
-    if (this.from === 'data-record') {
+    if (this.from === 'data-record' || this.from === 'SIP') {
       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-        this.router.navigate(['workspace/ert/ert-extract-ingest/', this.ertJobId], { queryParams: { from: 'data-record' } });
+        this.router.navigate(['workspace/ert/ert-extract-ingest/', this.ertJobId], { queryParams: { from: this.from } });
       } else {
-        this.router.navigate(['workspace/ert/ert-extract-ingest/'], { queryParams: { from: 'data-record' } });
+        this.router.navigate(['workspace/ert/ert-extract-ingest/'], { queryParams: { from: this.from } });
       }
     } else
       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
@@ -63,6 +73,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
         this.router.navigate(['workspace/ert/ert-extract-ingest']);
       }
   }
+
 
   saveERTJob(ertJobStatus: string) {
     for (const item of this.ertService.selectedList.filter(a => a.isSelected === true)) {
@@ -88,7 +99,6 @@ export class ErtTableColumnConfigComponent implements OnInit {
       }
       delete item['isSelected'];
     }
-
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
@@ -101,11 +111,20 @@ export class ErtTableColumnConfigComponent implements OnInit {
         'databaseId': this.workspaceHeaderService.getDatabaseID()
       },
       'ertJobParams': this.ertService.ertJobParams,
-      'tableDetailsList': this.ertService.selectedList,
+      'tableDetailsList': this.ertService.selectedList.filter(a => a.isSelected !== false),
       'ingestionDataConfig': this.ertService.ingestionDataConfig,
       'extractDataConfigInfo': this.ertService.extractDataConfigInfo
     };
-
+    if (this.from === 'data-record') {
+      delete param.extractDataConfigInfo['applicationName'];
+      delete param.extractDataConfigInfo['holdingName'];
+    } else if (this.from === 'SIP') {
+      delete param.extractDataConfigInfo['titleName'];
+    } else {
+      delete param.extractDataConfigInfo['titleName'];
+      delete param.extractDataConfigInfo['applicationName'];
+      delete param.extractDataConfigInfo['holdingName'];
+    }
     param = this.modifiedParamForEdit(param);
     if (param.ingestionDataConfig.infoArchiveName === '' || param.ingestionDataConfig.infoArchiveSchemaName === ''
       || param.ingestionDataConfig.infoArchiveUserName === '' || param.ingestionDataConfig.infoArchivePassword === '') {
@@ -120,12 +139,13 @@ export class ErtTableColumnConfigComponent implements OnInit {
     });
   }
 
+
   modifiedParamForEdit(param: any): any {
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       param.ertJobId = this.ertJobId;
     }
-    if (this.from === 'data-record') {
+    if (this.from === 'data-record' || this.from === 'SIP') {
       param.mmrVersion = this.ertService.mmrVersion;
     }
     return param;

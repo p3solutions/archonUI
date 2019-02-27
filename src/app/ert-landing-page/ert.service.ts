@@ -35,6 +35,7 @@ export class ErtService {
   schemaResultsTableCount = 0;
   joinListMap = new Map();
   mmrVersion = '';
+  RelationSIP: any[];
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }
@@ -67,11 +68,12 @@ export class ErtService {
       );
   }
 
-  setSelectValueAndDataOfGraph(selectedValues: string[], data: any, joinListMap, selectedPrimaryTable) {
+  setSelectValueAndDataOfGraph(selectedValues: string[], data: any, joinListMap, selectedPrimaryTable, RelationSIP) {
     this.selectedValues = selectedValues;
     this.data = data;
     this.joinListMap = joinListMap;
     this.selectedPrimaryTable = selectedPrimaryTable;
+    this.RelationSIP = RelationSIP;
   }
 
   getERTtableList(workspaceId: string, ertJobId = ''): Observable<ErtTableListObj> {

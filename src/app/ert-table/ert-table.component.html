@@ -8,8 +8,8 @@
               <label id=table-heading>Table list</label>
             </div>
             <div class="col-md-6 cursor-poniter" id="get-tbl-list">
-              <a (click)="getErtAvailableTable()" title="Add More Table" *ngIf="from !=='data-record'" class="cursor-poniter"
-                data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus cursor-poniter"></i></a>
+              <a (click)="getErtAvailableTable()" title="Add More Table" *ngIf="from !=='data-record' && from !=='SIP'"
+                class="cursor-poniter" data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus cursor-poniter"></i></a>
             </div>
             <div class="inner-addon right-addon">
               <a href="" style="z-index:1" class="glyphicon glyphicon-search"></a>
@@ -26,8 +26,8 @@
               </div>
               <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 50, currentPage: page } | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)" class="well">
-                <div><input [disabled]="item.isSelected && from=='data-record'" style="float:left" (click)="selectTable(item.tableId,item.tableName,$event)"
-                    [(ngModel)]="item.isSelected" type="checkbox"></div>
+                <div><input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
+                    (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected" type="checkbox"></div>
                 <div class="first-div">{{item.tableName}}</div>
                 <div>
                 </div>
@@ -43,7 +43,14 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-3" id="sel-table-name">{{tableName}}</div>
-            <div class="col-md-9">
+            <div id="" class="col-md-3">
+              <div *ngIf="errorMsg!==''" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button> {{errorMsg}}
+              </div>
+            </div>
+            <div class="col-md-6">
               <ul class="nav nav-tabs mgmt-panel fl-r" style="margin-right: 12px;">
                 <li title="Add User Defined Column" class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel('addNewColumn')"
                     data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus"></i></a>
@@ -51,7 +58,7 @@
                 <li title="Add Filter" class="icon-list trim-text"><a href="#" data-toggle="modal" (click)="openFilteronfig()"
                     data-target="#filter-modal"><i class="fa fa-filter"></i></a>
                 <li>
-                <li title="Refresh Table" class="icon-list trim-text"><a (click)="refreshColumn()"><i class="fa fa-refresh"></i></a>
+                <li title="Reset all modification" data-toggle="modal" data-target="#reset_confirm_model" class="icon-list trim-text"><a ><i class="fa fa-undo"></i></a>
                 <li>
               </ul>
             </div>
@@ -94,7 +101,7 @@
                         [attr.data-target]="item.dataType==='USERDEFINED' ? '#config-modal' : '#config-modal'"><i class="fa fa-cogs"></i></a></td>
                     <td><a *ngIf="item.dataType==='USERDEFINED'" (click)="openUsrDefinedColumnModel(item?.originalColumnName)"
                         data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
-                    <td><a *ngIf="item.dataType==='USERDEFINED'"><i class="fa fa-trash"></i></a></td>
+                    <td><a (click)="deleteUsrDefinedColumnForEdit(item?.originalColumnName)" *ngIf="item.dataType==='USERDEFINED'"><i class="fa fa-trash"></i></a></td>
                   </tr>
                   <tr *ngFor="let item of showUserDefinedColumn()">
                     <td></td>
@@ -107,7 +114,7 @@
                     <td></td>
                     <td><a (click)="openUsrDefinedColumnModel(item?.originalColumnName)" data-toggle="modal"
                         data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
-                    <td><a><i class="fa fa-trash"></i></a></td>
+                    <td><a (click)="deleteUsrDefinedColumn(item?.originalColumnName)"><i class="fa fa-trash"></i></a></td>
                   </tr>
                 </tbody>
               </table>
@@ -121,7 +128,7 @@
     <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()" style="float: right;margin-right: 12px">Next</button>
     <button class="btn btn-primary Previous" id="back-to-job-config" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
-    <button class="btn btn-primary Previous" id="cancelBtn" (click)="cancel()" style="float:right;margin-right:5px;">
+    <button class="btn btn-primary Previous" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>
@@ -428,6 +435,23 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="addAvailableTable()" data-dismiss="modal">Save</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="reset_confirm_model" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 430px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm reset</h4>
+      </div>
+      <div class="modal-body">
+        <p style="text-align:left">Are you sure ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="refreshColumn()" data-dismiss="modal">YES</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
       </div>
     </div>
   </div>

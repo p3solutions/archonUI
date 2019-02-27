@@ -84,7 +84,11 @@ export class ERTJobs {
     createdDate = '';
     jobMode = '';
     jobTitle = '';
+    lastAccessedDate = '';
+    createdBy = '';
+    lastAccessedBy = '';
 }
+
 
 export class IngestionDataConfig {
     infoArchiveName = '';
@@ -126,3 +130,5 @@ export class ExtractConfig {
     extractDataConfig = new ExtractDataConfigInfo();
     ingestionDataConfig = new IngestionDataConfig();
 }
+
+

@@ -43,16 +43,26 @@
   float: right;
 }
 
-.card h4{
-  color:  #2196F3;
+.card h4 {
+  color: #2196F3;
 }
 
-.card span{
-  color:  #2196F3;
+.card span {
+  color: #2196F3;
 }
 
 a.disabled {
   color: gray;
   cursor: not-allowed;
   text-decoration: underline;
+}
+
+label {
+  margin: 2px 7px 2px 7px
+}
+
+.modal-body div {
+  border-bottom: 2px solid #E6E9ED;
+  padding: 4px 2px 0px 3px;
+  text-align: left;
 }

@@ -21,24 +21,52 @@ export class ErtExtractDigestComponent implements OnInit {
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
   ngOnInit() {
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
-    if (this.from === 'data-record') {
+    if (this.from === 'data-record' || this.from === 'SIP') {
       this.isDisabledSaveBtn = true;
     }
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
-    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-      this.ertService.getExtractConfig(this.ertJobId).subscribe(result => {
-        this.extractDataConfigInfo = result.extractDataConfig;
-        if (result.ingestionDataConfig !== null) {
-          this.ingestionDataConfigObj = result.ingestionDataConfig;
-        }
-        this.isDisabledSaveBtn = false;
-      });
+    if (this.ertService.extractDataConfigInfo.titleName !== '' || this.ertService.extractDataConfigInfo.holdingName !== ''
+      || this.ertService.extractDataConfigInfo.applicationName !== '' || this.ertService.ingestionDataConfig.infoArchiveName !== '') {
+      this.getExtractAndIngestInfoFromService();
+    } else if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      this.getExtractAndIngestInfo();
     } else {
       this.initFunction();
     }
   }
+
+  getExtractAndIngestInfoFromService() {
+    this.extractDataConfigInfo = this.ertService.extractDataConfigInfo;
+    const a = document.getElementById('extract-checkbox') as HTMLInputElement;
+    a.checked = true;
+    if (this.ertService.ingestionDataConfig.infoArchiveName !== '') {
+      this.ingestionDataConfigObj = new IngestionDataConfig();
+      this.ingestionDataConfigObj = this.ertService.ingestionDataConfig;
+      this.disableIngestData = false;
+      const b = document.getElementById('ingest-checkbox') as HTMLInputElement;
+      b.checked = true;
+    }
+    this.isDisabledSaveBtn = false;
+  }
+
+  getExtractAndIngestInfo() {
+    this.ertService.getExtractConfig(this.ertJobId).subscribe(result => {
+      this.extractDataConfigInfo = result.extractDataConfig;
+      const b = document.getElementById('extract-checkbox') as HTMLInputElement;
+      b.checked = true;
+      if (result.ingestionDataConfig !== null) {
+        const a = document.getElementById('ingest-checkbox') as HTMLInputElement;
+        a.checked = true;
+        this.ingestionDataConfigObj = result.ingestionDataConfig;
+        this.disableIngestData = false;
+      }
+      this.isDisabledSaveBtn = false;
+    });
+  }
+
+
 
   initFunction() {
     const markCheck = document.getElementById('extract-checkbox') as HTMLInputElement;
@@ -55,12 +83,16 @@ export class ErtExtractDigestComponent implements OnInit {
       const a = document.getElementById('extract-checkbox') as HTMLInputElement;
       a.checked = true;
     }
-    if (this.extractDataConfigInfo.titleName === '' && this.from !== 'data-record') {
-      this.isDisabledSaveBtn = false;
-    } else if (this.extractDataConfigInfo.titleName !== '' && this.from === 'data-record') {
-      this.isDisabledSaveBtn = false;
-    } else {
-      this.isDisabledSaveBtn = true;
+    if (this.ertService.extractDataConfigInfo.titleName !== '' || this.ertService.extractDataConfigInfo.applicationName !== '' ||
+      this.ertService.extractDataConfigInfo.xmlFileSplitSize !== '100') {
+      this.extractDataConfigInfo = this.ertService.extractDataConfigInfo;
+      const a = document.getElementById('extract-checkbox') as HTMLInputElement;
+      a.checked = true;
+    }
+    if (this.from === 'data-record' || this.from === 'SIP') {
+      if (this.toEnableBtn()) {
+        this.toEnableIngestBtn();
+      }
     }
   }
 
@@ -74,7 +106,7 @@ export class ErtExtractDigestComponent implements OnInit {
   }
 
   navigateToUrl(url: string) {
-    if (this.from === 'data-record') {
+    if (this.from === 'data-record' || this.from === 'SIP') {
       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
         this.router.navigate([url + '/', this.ertJobId], { queryParams: { from: this.from } });
       } else {
@@ -82,7 +114,7 @@ export class ErtExtractDigestComponent implements OnInit {
       }
     } else
       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-        this.router.navigate([url, this.ertJobId]);
+        this.router.navigate([url + '/', this.ertJobId]);
       } else {
         this.router.navigate([url]);
       }
@@ -92,26 +124,54 @@ export class ErtExtractDigestComponent implements OnInit {
     if (event.target.checked) {
       this.disableIngestData = false;
       this.isDisabledSaveBtn = true;
-      this.toEnableBtn();
     } else {
       this.disableIngestData = true;
       this.isDisabledSaveBtn = false;
+      this.ingestionDataConfigObj = new IngestionDataConfig();
+    }
+    if (!this.toEnableBtn()) {
+      this.toEnableIngestBtn();
+    }
+  }
+
+  checkToEnableBtn() {
+    if (!this.toEnableBtn()) {
+      this.toEnableIngestBtn();
     }
   }
   toEnableBtn() {
-    if (this.extractDataConfigInfo.titleName !== '') {
+    if (this.from === 'data-record') {
+      if (this.extractDataConfigInfo.titleName !== '') {
+        this.isDisabledSaveBtn = false;
+      } else {
+        this.isDisabledSaveBtn = true;
+      }
+    }
+    if (this.from === 'SIP') {
+      if (this.extractDataConfigInfo.applicationName !== '' &&
+        this.extractDataConfigInfo.holdingName !== '' && this.from === 'SIP') {
+        this.isDisabledSaveBtn = false;
+      } else {
+        this.isDisabledSaveBtn = true;
+      }
+    }
+    if (this.from !== 'SIP' && this.from !== 'data-record') {
       this.isDisabledSaveBtn = false;
-    } else if (!this.disableIngestData) {
+    }
+    return this.isDisabledSaveBtn;
+  }
+
+  toEnableIngestBtn() {
+    if (!this.disableIngestData) {
       if (this.ingestionDataConfigObj.infoArchiveName !== '' && this.ingestionDataConfigObj.infoArchivePassword !== ''
         && this.ingestionDataConfigObj.infoArchiveSchemaName !== '' && this.ingestionDataConfigObj.infoArchiveUserName !== '') {
         this.isDisabledSaveBtn = false;
       } else {
         this.isDisabledSaveBtn = true;
       }
-    } else {
-      this.isDisabledSaveBtn = true;
     }
   }
+
 
   setXMLFileSplitSize(xmlSliderObj: any) {
     this.extractDataConfigInfo.xmlFileSplitSize = xmlSliderObj.newValue;

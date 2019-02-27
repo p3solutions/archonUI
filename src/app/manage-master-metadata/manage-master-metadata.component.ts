@@ -46,7 +46,7 @@ export class ManageMasterMetadataComponent implements OnInit {
   }
   saveMMRVersion() {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.manage_Master_MetadataService.saveMMRVersion(this.workspaceId, this.versionNo, this.desc).subscribe(result => {
+    this.manage_Master_MetadataService.saveMMRVersion(this.workspaceId, this.versionNo, btoa(this.desc)).subscribe(result => {
       alert(result.data);
       this.getMMRVersionList();
     });
@@ -56,6 +56,11 @@ export class ManageMasterMetadataComponent implements OnInit {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.manage_Master_MetadataService.getMMRVersionList(this.workspaceId).subscribe(result => {
       this.manageMasterMetaList = result;
+      for (let x = 0; x < this.manageMasterMetaList.length; x++) {
+        if (this.manageMasterMetaList[x].hasOwnProperty('description')) {
+          this.manageMasterMetaList[x].description = decodeURIComponent(escape(window.atob(this.manageMasterMetaList[x].description)));
+        }
+      }
     });
   }
 

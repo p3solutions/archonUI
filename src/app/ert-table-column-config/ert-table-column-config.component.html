@@ -5,7 +5,8 @@
         <div class="card-body" id="ert-tbl-search">
           <div class="row" style="margin-bottom: 12px;">
             <div class="inner-addon right-addon">
-              <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch" placeholder="Search">
+              <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+                placeholder="Search">
             </div>
             <div class="col-md-6">
               <label id=table-heading></label>
@@ -65,6 +66,9 @@
                   <div *ngFor="let item of showColumns('expected')" class="table-col-exptd">
                     <small>{{item.modifiedColumnName}}</small>
                   </div>
+                  <div *ngFor="let item of showColumnsForUserDefined()" class="table-col-exptd">
+                    <small>{{item.modifiedColumnName}}</small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -80,7 +84,24 @@
       As Draft</button>
     <button class="btn btn-primary Previous" (click)="gotoExtractData()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
-    <button class="btn btn-primary Previous" id="cancelBtn" (click)="cancel()" style="float:right;margin-right:5px;">
+    <button class="btn btn-primary Previous" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
       Cancel</button>
+  </div>
+</div>
+<div id="confirm_model" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 430px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Cancel</h4>
+      </div>
+      <div class="modal-body">
+        <p style="text-align:left">Are you sure ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="cancel()" data-dismiss="modal">YES</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+      </div>
+    </div>
   </div>
 </div>
