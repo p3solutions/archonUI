@@ -38,42 +38,6 @@ export class DbExtractorLastStepComponent implements OnInit {
     this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
   }
 
-  Start() {
-    let param: any = {
-      'ownerId': this.userinfoService.getUserId(),
-      'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
-      'databaseConfig': {
-        'databaseId': this.workspaceHeaderService.getDatabaseID()
-      },
-      'executionConfig': {
-        'process': this.processDetailsObj.process,
-        'outputFormat': this.processDetailsObj.outputFormat,
-        'tableInclusionRule': this.processDetailsObj.tableIncRule,
-        'tableInclusionRelationship': this.processDetailsObj.includeTableRelationship
-      },
-      'jobParams': {
-        'fileSize': this.processDetailsObj.xmlSplitFileSize,
-        'maxparallelProcess': this.processDetailsObj.maxParallelProcess,
-        'includeTables': this.processDetailsObj.incTable,
-        'includeViews': this.processDetailsObj.incView,
-        'includeRecordsCount': this.processDetailsObj.incRecordCount,
-        'splitDateInXmlForxDBCompatiblity': this.processDetailsObj.xmlXDBCompability,
-        'extractLOBwithinXml': this.processDetailsObj.extractLOBWithXML
-      }
-    };
-
-    param = this.modifiedParamAccToProcess(param);
-    this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload).subscribe((result) => {
-      if (result.httpStatus === 200) {
-        this.isSuccessMsg = true;
-        this.successMsg = 'Your Job has Started';
-      } else {
-        this.isSuccessMsg = false;
-        this.successMsg = 'Unable to Process Your Job';
-      }
-    });
-  }
-
   modifiedParamAccToProcess(param: any): any {
     if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === 'executequery') {
       param.executionConfig.queryMode = {

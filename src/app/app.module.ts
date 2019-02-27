@@ -111,6 +111,7 @@ import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MaterialModule} from './material-module';
+import { ScheduleJobComponent } from './schedule-job/schedule-job.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -181,7 +182,8 @@ export function tokenGetter() {
                 ErtTableComponent,
                 ErtExtractDigestComponent,
                 ErtTableColumnConfigComponent,
-                ErtJobsComponent
+                ErtJobsComponent,
+                ScheduleJobComponent
         ],
         imports: [
                 JwtModule.forRoot({

@@ -71,8 +71,8 @@
       </table>
     </div>
     <br>
-    <button class="btn btn-primary next" data-toggle="modal" href="#successModel" data-keyboard="false" data-backdrop="static"
-      (click)="Start()" style="float: right;">Start</button>
+    <button class="btn btn-primary next" data-toggle="modal" href="#openScheduleJob" data-keyboard="false" data-backdrop="static"
+     style="float: right;">Schedule</button>
     <button class="btn btn-primary Previous" (click)="prevStepTwo()" style="float: right;margin-right: 5px;">&laquo;
       Previous</button>
     <br>
@@ -145,3 +145,4 @@
 
   </div>
 </div>
+<app-schedule-job class="modal fade" id="openScheduleJob" role="dialog"></app-schedule-job>
