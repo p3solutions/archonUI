@@ -1,8 +1,12 @@
 .mgmt-panel {
-    font-size: 20px;
-    border-bottom: none;
-}
-#workspace-info-link {
-    padding-left: 30px;
+  font-size: 20px;
+  border-bottom: none;
 }
 
+/* #workspace-info-link {
+    padding-left: 30px;
+} */
+.fa-cog {
+  font-size: 28px;
+  color: #1385f8;
+}
