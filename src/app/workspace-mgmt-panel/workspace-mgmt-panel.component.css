@@ -7,6 +7,20 @@
     padding-left: 30px;
 } */
 .fa-cog {
-  font-size: 28px;
+  font-size: 26px;
   color: #1385f8;
+  cursor: pointer;
+}
+.nav-tabs>li>a:hover {
+    background:#dbe6fa !important;
+    border-bottom:3px solid #1385f8;
+}
+.nav-tabs>li>a.active {
+    background:#dbe6fa !important;
+    border-bottom:2px solid #1385f8;
+}
+.nav>li>a {
+    padding: 10px 12px !important;
+    font-weight: normal !important;
+    font-size: 19px !important;
 }

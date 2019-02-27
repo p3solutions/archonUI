@@ -61,7 +61,7 @@
   #selectedWorkspace .dropdown-toggle {
   background-color: #fff;
   border: 1px solid #ccc;
-  text-align: right;
+  text-align: left;
   width: 195px;
   overflow: hidden;
   text-overflow: ellipsis;
