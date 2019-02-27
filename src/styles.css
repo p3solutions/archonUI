@@ -1,7 +1,8 @@
 /* Global styles*/
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto", "Montserrat", sans-serif;
   background: #FAFAFA;
   overflow-x: hidden;
 }
@@ -11,7 +12,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto", "Montserrat", sans-serif;
 }
 
 /* Links */
@@ -26,7 +27,7 @@ a:focus,
 a:hover {
   text-decoration: underline;
 }
-
+ 
 p {
   font-family: "Avenir Next", sans-serif;
   font-weight: 300;
@@ -185,19 +186,23 @@ body {
   margin-bottom: 10px;
   padding: 10px 17px;
   display: inline-block;
+  margin-right:10%;
   background: #fff;
   border: 1px solid #E6E9ED;
   -webkit-column-break-inside: avoid;
   -moz-column-break-inside: avoid;
   opacity: 1;
   transition: all .2s ease;
-  margin-top: 70px;
+  background: url(assets/loginboxBg.jpg);
+  background-size: 100% 100%;
+  margin-top: 18%;
 }
 
 .x_title {
-  border-bottom: 2px solid #E6E9ED;
-  padding: 1px 5px 6px;
+  /* border-bottom: 2px solid #E6E9ED; */
+  padding: 5px 5px 6px;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .x_title .filter {
@@ -207,7 +212,7 @@ body {
 
 .x_title h2 {
   margin: 5px 0 6px;
-  float: left;
+  /* float: left; */
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -306,7 +311,9 @@ body {
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
-
+.border-bottom-none {
+  border-bottom: none;
+}
 footer {
   padding: 15px 20px;
   display: block;
@@ -338,8 +345,8 @@ footer {
 
 .form-redirect>div>a {
   float: left;
-  margin-left: 15px;
-  padding: 6%;
+  font-size: 16px;
+  color: #010101;
 }
 
 #error-block {

@@ -1,30 +1,34 @@
 <nav id="custom-nav" class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">
-        <img alt="Brand" src="assets/archonWhite.png" class="nav-brand-img">
+      <a href="#">
+        <img alt="Brand" src="assets/archonWhite.png" class="org-logo">
       </a>
     </div>
     <div>
       <ul class="nav navbar-nav navbar-right">
         <li class="active">
-          <a [routerLink]="['/workspace/workspace-dashboard']">Home
+          <a [routerLink]="['/workspace/workspace-dashboard']"><i class="fa fa-home"></i>
           </a>
         </li>
-        <li class="dropdown user-menu">
+        <li class="dropdown user-menu1">
           <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false">My Activities
-            <span class="caret"></span>
-          </a>
+            aria-expanded="false"> <i class="fa fa-list-alt"></i> </a>
           <ul class="dropdown-menu">
             <li title="Status Monitor">
-              <a [routerLink]="['/status']" class="trim-text">Status</a>
+              <a [routerLink]="['/status']" class="trim-text">Status Monitoring</a>
+            </li>
+            <li title="Status Monitor">
+              <a class="trim-text">Schedule Monitoring</a>
+            </li>
+            <li title="Status Monitor">
+              <a  class="trim-text">Auditing</a>
             </li>
           </ul>
         </li>
         <li role="presentation" class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-bell-o fa-lg" data-toggle="tooltip" data-placement="bottom" title="Notifications"></i>
+            <i class="fa fa-bell" data-toggle="tooltip" data-placement="bottom" title="Notifications"></i>
             <span class="badge bg-red">6</span>
           </a>
           <ul id="notifications" class="dropdown-menu msg_list" role="menu">
@@ -61,11 +65,11 @@
                 </span>
               </a>
             </li>
-            <li>
+            <li class="all-notification">
               <div class="text-center">
                 <a href="#">
-                  <strong id="see-all-notif">See All Notifications</strong>
-                  <i class="fa fa-angle-right"></i>
+                  <div id="see-all-notif">See All Notifications</div>
+
                 </a>
               </div>
             </li>
@@ -73,8 +77,8 @@
         </li>
         <li class="dropdown user-menu">
           <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false">{{info?.username}}
-            <span class="caret"></span>
+            aria-expanded="false"><img class="userImg" src="../../assets/userImg.png" />
+
           </a>
           <ul class="dropdown-menu">
             <li title="Profile">
@@ -94,12 +98,12 @@
           </ul>
         </li>
         <li role="presentation">
-          <a href="" class="info-number">
-            <i class="fa fa-question-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom"
-              title="Help"></i>
-          </a>
+
         </li>
       </ul>
+
+
     </div>
   </div>
+
 </nav>

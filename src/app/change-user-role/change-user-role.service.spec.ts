@@ -42,11 +42,13 @@ describe('ChangeUserRoleService', () => {
           status: 200
         }));
       });
-      const userId = '5ac5d7af2e6c990861830974';
+      const userId = '';
       const globalId = '';
+      const rolename = '';
+      const roleid = '';
       expect(service.passedUserId).toBeUndefined();
       // dispatch the http request
-      service.changeGlobalRoleDetails(userId, globalId);
+      service.changeGlobalRoleDetails(userId, globalId, rolename, roleid);
       expect(service.passedUserId).toEqual(userId);
       flushMicrotasks();
   })));

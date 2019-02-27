@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { JwtHelperService, JwtModule} from '@auth0/angular-jwt';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatInputModule, MatFormFieldModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
@@ -18,7 +20,8 @@ describe('SigninFormComponent', () => {
   let fixture: ComponentFixture<SigninFormComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormsModule, RouterTestingModule,
+      imports: [ReactiveFormsModule, FormsModule, RouterTestingModule, MatFormFieldModule,
+        MatInputModule, BrowserAnimationsModule,
         JwtModule.forRoot({
           config: {
                   tokenGetter: tokenGetter

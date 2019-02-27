@@ -8,6 +8,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ForgotpasswordFormComponent', () => {
   let component: ForgotpasswordFormComponent;
@@ -24,7 +26,10 @@ describe('ForgotpasswordFormComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule
       ],
       declarations: [ForgotpasswordFormComponent],
       providers: [

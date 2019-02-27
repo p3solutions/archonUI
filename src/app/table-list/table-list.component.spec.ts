@@ -15,6 +15,7 @@ import { EditRelationshipInfoService } from '../edit-relationship-info/edit-rela
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DynamicLoaderService } from '../dynamic-loader.service';
+import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 
 // Reason: Undefined Property
 describe('TableListComponent', () => {
@@ -29,7 +30,7 @@ describe('TableListComponent', () => {
       SecondaryColumnPipe],
       imports: [RouterTestingModule, FormsModule, HttpClientModule],
       providers: [TableListService, UserinfoService, WorkspaceHeaderService,
-        DynamicLoaderService, EditRelationshipInfoService, AddDirectJoinService],
+        DynamicLoaderService, EditRelationshipInfoService, AddDirectJoinService, MetalyzerHeaderService],
       schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();

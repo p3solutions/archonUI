@@ -23,6 +23,7 @@ export class TableListService {
   columnUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
   stateManagementUrl = environment.apiUrl + 'dataAnalyzer/stateManagement';
   getJobStatusUrl = environment.apiUrl + 'dataAnalyzer/jobStatus?jobId=';
+  exportxmlUrl = environment.apiUrl + 'metalyzer/exportMetadata/';
   private resultantArray = new BehaviorSubject([]);
   currentResultArray = this.resultantArray.asObservable();
   private changeValue = new BehaviorSubject(false);
@@ -133,6 +134,16 @@ export class TableListService {
 
   selectTables(message) {
     this.selectTableslist.next(message);
+  }
+  getExportxml(workspaceId, databaseID, xml, tableID): Observable<Blob> {
+    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml, tableId: [tableID] };
+    return this.http.post(this.exportxmlUrl, params,
+      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+  }
+  getExportjson(workspaceId, databaseID, json, tableID): Observable<Blob> {
+    const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: json, tableId: [tableID] };
+    return this.http.post(this.exportxmlUrl, params,
+      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
   }
 
 }
