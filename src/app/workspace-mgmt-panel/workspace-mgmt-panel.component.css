@@ -6,14 +6,16 @@
 /* #workspace-info-link {
     padding-left: 30px;
 } */
+.fa-cog:hover {color: #000}
 .fa-cog {
   font-size: 26px;
-  color: #1385f8;
+  color: #fff;
   cursor: pointer;
 }
 .nav-tabs>li>a:hover {
     background:#dbe6fa !important;
-    border-bottom:3px solid #1385f8;
+    border-bottom:2px solid #1385f8;
+    color: #000 !important;
 }
 .nav-tabs>li>a.active {
     background:#dbe6fa !important;
@@ -23,4 +25,5 @@
     padding: 10px 12px !important;
     font-weight: normal !important;
     font-size: 19px !important;
+    color:white !important;
 }

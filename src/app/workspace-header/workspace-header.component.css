@@ -2,7 +2,7 @@
   /* height: 125px; */
   padding: 20px 0 0;
   /* border-bottom: 2px solid #E6E9ED; */
-  background: #e3edff;
+  background: #115498;
 }
 .workspace-dropdown {
   padding: 10px;
@@ -74,6 +74,6 @@
 }
 .fa-plus-circle {
   font-size: 36px;
-  color: #1385f8;
+  color: #fff;
   cursor: pointer;
 }

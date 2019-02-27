@@ -357,7 +357,9 @@ footer {
 .alert {
   border-radius: 2px;
 }
-
+.color-white {
+  color:white !important;
+}
 .trim-text {
   display: inline-block;
   white-space: nowrap;

@@ -1,14 +1,28 @@
 <div class="workspace-header">
   <div class="row">
     <div class="col-md-12">
-      <h3 class="pull-left margin-0 pl-20">Workspace</h3>
+      <h3 class="pull-left margin-0 pl-20 color-white">Workspace</h3>
     </div>
     <div class="col-md-3 pl-40">
+     
+     
+        <!-- <mat-form-field>
+            <mat-select placeholder="Favorite food">
+              <mat-option *ngFor="let ws of userWorkspaceArray" (click)="selectWorkspace(ws)"
+              id="{{ws.id}}" >
+              {{ws.workspaceName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+
+
       <div class="btn-group mt-20 pull-left" id="selectedWorkspace">
+        
         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           {{selectedWorkspaceName ? selectedWorkspaceName : 'SELECT WORKSPACE'}}
         </button>
+
         <div class="dropdown-menu scrollable" id="workspace-list-dropdown">
           <div class="" *ngIf="userWorkspaceArray">
             <a class="dropdown-item dropdown-data" *ngFor="let ws of userWorkspaceArray" (click)="selectWorkspace(ws)"
@@ -27,6 +41,10 @@
             <option class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_MEMBER'" value="2">Contact Your Admin</option>
           </select> -->
       </div>
+
+
+
+
       <div class="col-md-1 mt-20 pull-left">
           <i class="fa fa-plus-circle" matTooltip="Create New Workspace" (click)="openCreateWSModal()"></i>
       </div>
