@@ -58,6 +58,7 @@ export class ErtJobsComponent implements OnInit {
       this.ertService.runJob(ertJobId).subscribe(result => {
         if (result.httpStatus === 200) {
           alert('Job has Started');
+          this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobStatus = 'In PROGRESS';
         }
       });
     }

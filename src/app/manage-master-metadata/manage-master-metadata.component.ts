@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ManageMasterMetadataService } from './manage-master-metadata.service';
 import { ManageMasterMetadata } from '../master-metadata-data';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { DataTableDirective } from 'angular-datatables';
 @Component({
   selector: 'app-manage-master-metadata',
   templateUrl: './manage-master-metadata.component.html',
@@ -17,16 +18,26 @@ export class ManageMasterMetadataComponent implements OnInit {
   disabledSaveBtn = true;
   slNo: number;
   workspaceId = '';
+  isAvailable = true;
   manageMasterMetaList: ManageMasterMetadata[] = [];
-
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
   constructor(
     private manage_Master_MetadataService: ManageMasterMetadataService,
     private router: Router,
     private workspaceHeaderService: WorkspaceHeaderService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.isProgress = false;
+    this.dtOptions = {
+      stateSave: true,
+      paging: true,
+      pageLength: 10,
+      pagingType: 'full_numbers',
+      destroy: true
+    };
     this.getMMRVersionList();
   }
   getManage_Master_MetaData() {
@@ -56,11 +67,7 @@ export class ManageMasterMetadataComponent implements OnInit {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.manage_Master_MetadataService.getMMRVersionList(this.workspaceId).subscribe(result => {
       this.manageMasterMetaList = result;
-      for (let x = 0; x < this.manageMasterMetaList.length; x++) {
-        if (this.manageMasterMetaList[x].hasOwnProperty('description')) {
-          this.manageMasterMetaList[x].description = decodeURIComponent(escape(window.atob(this.manageMasterMetaList[x].description)));
-        }
-      }
+      this.isAvailable = true;
     });
   }
 

@@ -12,6 +12,8 @@ import { WorkspaceServicesComponent } from '../workspace-services/workspace-serv
 import { FormsModule } from '@angular/forms';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { DataTablesModule } from 'angular-datatables';
 
 describe('ManageMasterMetadataComponent', () => {
   let component: ManageMasterMetadataComponent;
@@ -35,7 +37,7 @@ describe('ManageMasterMetadataComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, FormsModule, HttpClientModule, RouterTestingModule],
+      imports: [HttpClientTestingModule, FormsModule, HttpClientModule, RouterTestingModule, NgxPaginationModule],
       providers: [ManageMasterMetadataService, UserinfoService, WorkspaceHeaderService,
         HttpClientModule,
         RouterTestingModule

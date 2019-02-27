@@ -31,11 +31,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let rec of manageMasterMetaList;let item=index" class="man-mast-rec">
+          <tr *ngFor="let rec of manageMasterMetaList | paginate: { itemsPerPage: 10, currentPage: page };let item=index" class="man-mast-rec">
             <td class="man-mast-data">{{item+1}}</td>
             <td class="man-mast-data">{{rec.versionNo}}</td>
             <td class="man-mast-data">{{rec.description}}</td>
-            <td class="man-mast-data">{{rec.createdAt * 1000| date}}</td>
+            <td class="man-mast-data">{{rec.createdAt * 1000|  date: 'medium'}}</td>
             <td class="man-mast-data">{{rec.status}}</td>
             <!-- <td>
               <a href="#"></a>
@@ -48,11 +48,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="workspace-panel-content">
-      <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
+      <pagination-controls style="text-align: right" (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
 </div>
