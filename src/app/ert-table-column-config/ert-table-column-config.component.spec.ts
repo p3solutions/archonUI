@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErtService } from '../ert-landing-page/ert.service';
+import { SearchPipe } from '../search.pipe';
 
 describe('ErtTableColumnConfigComponent', () => {
   let component: ErtTableColumnConfigComponent;
@@ -14,7 +15,7 @@ describe('ErtTableColumnConfigComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErtTableColumnConfigComponent ],
+      declarations: [ ErtTableColumnConfigComponent, SearchPipe ],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
       providers: [UserinfoService, WorkspaceHeaderService, ErtService]
     })
@@ -24,6 +25,9 @@ describe('ErtTableColumnConfigComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ErtTableColumnConfigComponent);
     component = fixture.componentInstance;
+    const WHS = TestBed.get(WorkspaceHeaderService);
+    spyOn(WHS, 'getSelectedWorkspaceName').and.returnValue('');
+    spyOn(WHS, 'getSelectedWorkspaceId').and.returnValue('');
     fixture.detectChanges();
   });
 
