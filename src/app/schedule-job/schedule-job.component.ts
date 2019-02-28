@@ -13,6 +13,7 @@ export class ScheduleJobComponent implements OnInit {
   mytime: Date = new Date();
   enddate: Date = new Date();
   startdate: Date = new Date();
+  jobType;
 
   constructor() { }
 

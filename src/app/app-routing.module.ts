@@ -45,6 +45,8 @@ import { ErtTableComponent } from './ert-table/ert-table.component';
 import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
 import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-table-column-config.component';
 import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
+import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
+import { AuditingComponent } from './auditing/auditing.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -160,6 +162,12 @@ const routes: Routes = [
   }, {
     path: 'status', canActivate: [AuthenticationGuard], component: StatusScreenComponent
   },
+  {
+    path: 'schedule-monitoring', canActivate: [AuthenticationGuard], component: SchedulemonitoringComponent
+  },
+  {
+    path: 'audit', canActivate: [AuthenticationGuard], component: AuditingComponent
+  }
 ];
 
 @NgModule({

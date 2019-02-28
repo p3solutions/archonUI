@@ -113,6 +113,8 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MaterialModule} from './material-module';
 import { ScheduleJobComponent } from './schedule-job/schedule-job.component';
 import {BsDatepickerModule, TimepickerModule} from 'ngx-bootstrap';
+import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
+import { AuditingComponent } from './auditing/auditing.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -184,7 +186,9 @@ export function tokenGetter() {
                 ErtExtractDigestComponent,
                 ErtTableColumnConfigComponent,
                 ErtJobsComponent,
-                ScheduleJobComponent
+                ScheduleJobComponent,
+                SchedulemonitoringComponent,
+                AuditingComponent
         ],
         imports: [
                 JwtModule.forRoot({
