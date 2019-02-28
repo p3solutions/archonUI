@@ -16,7 +16,9 @@
   font-size: 15px;
   padding: 5px 2px;
 }
-
+.ws-title {
+  font-size: 22px;
+}
 .dropdown-toggle::after {
   display: inline-block;
   width: 0;

@@ -74,7 +74,7 @@
   font-size: 22px !important;
    
 }
- 
+  
 .nav>li>a {
   padding: 15px 10px !important;
 }
@@ -86,7 +86,14 @@
   border-radius: 0px !important;
   /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5); */
 }
-
+.user-role {
+  color:white;
+  margin:20px 0px 0px 0px;
+}
+.user-role:hover {
+  color:white;
+  margin:20px 0px 0px 0px;
+}
 .dropdown {
   margin-top: 5px;
 }

@@ -17,6 +17,11 @@
     border-bottom:2px solid #1385f8;
     color: #000 !important;
 }
+.nav-tabs>li>a:focus {
+    background:#dbe6fa !important;
+    border-bottom:2px solid #1385f8;
+    color: #000 !important;
+}
 .nav-tabs>li>a.active {
     background:#dbe6fa !important;
     border-bottom:2px solid #1385f8;
