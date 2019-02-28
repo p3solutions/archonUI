@@ -11,6 +11,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DataAnalyzerResultScreenComponent } from '../data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
+import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.service';
 
 @Component({
   selector: 'app-table-list',
@@ -88,6 +89,7 @@ export class TableListComponent implements OnInit {
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService,
     private userinfoService: UserinfoService,
+    private storedProcViewService: StoredProcViewService,
     private router: Router,
     private route: ActivatedRoute,
     @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -105,6 +107,12 @@ export class TableListComponent implements OnInit {
         this.loadRelationTable(this.tableCopy);
        }
       });
+      this.storedProcViewService.currentSPVValue.subscribe(value => {
+        this.homeStage = value;
+        if (this.homeStage === true) {
+         this.loadRelationTable(this.tableCopy);
+        }
+       });
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
     this.getTableList();
