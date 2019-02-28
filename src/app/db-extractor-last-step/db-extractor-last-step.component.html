@@ -79,7 +79,6 @@
     <br>
   </div>
 </div>
-<app-schedule-job class="modal fade" id="openScheduleJob" role="dialog"></app-schedule-job>
 <div id="db-profile-model" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
@@ -146,3 +145,4 @@
 
   </div>
 </div>
+<app-schedule-job class="modal fade" id="openScheduleJob" role="dialog" (ObjectEmit)="Start($event)"></app-schedule-job>
