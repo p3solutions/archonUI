@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { DbExtractorService } from '../db-extractor/db-extractor.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -19,6 +19,8 @@ export class DbExtractorLastStepComponent implements OnInit {
   successMsg: string;
   processDetailsObj = new ProcessDetailsObj();
   configuredDB = new ConfiguredDB();
+  @ViewChild('click') button: ElementRef;
+
   constructor(private router: Router, private dbExtractorService: DbExtractorService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService) { }
@@ -32,6 +34,7 @@ export class DbExtractorLastStepComponent implements OnInit {
   }
 
   Start($event) {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
     let param: any = {
       'ownerId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
@@ -57,6 +60,7 @@ export class DbExtractorLastStepComponent implements OnInit {
     };
     param = this.modifiedParamAccToProcess(param);
     this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload).subscribe((result) => {
+      el.click();
       if (result.httpStatus === 200) {
         this.isSuccessMsg = true;
         this.successMsg = 'Your Job has Started';
