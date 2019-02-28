@@ -11,7 +11,7 @@
         </div>
         <br>
         <div class="input-group">
-            <span class="input-group-addon" id="basic-addon2">Job Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="input-group-addon" id="basic-addon2">Job Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <select #jobtype aria-describedby="basic-addon2" class="form-control round" name="process"
                   required (change)="jobType = jobtype.value" >
                   <option>Schedule Now</option>
@@ -30,7 +30,7 @@
         <br>
         <div class="date input-group" >
             <span class="input-group-addon" id="basic-addon4">Start Date
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <input type="text" [(ngModel)]="startdate" [disabled]="jobType !== 'Schedule Later'"
                    placeholder="Start Date"
                    class="form-control"
@@ -55,7 +55,7 @@
           <br>
           <div class="end-date input-group">
               <span class="input-group-addon" id="basic-addon4">End Date
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <input type="text" [(ngModel)]="enddate" [disabled]="jobType !== 'Schedule Later'"
                      placeholder="End Date"
                      class="form-control"
