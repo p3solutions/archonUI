@@ -12,6 +12,10 @@ import { SpvNameList, TableNameAndRelatingTable } from './stored-proc-view';
   providedIn: 'root'
 })
 export class StoredProcViewService {
+
+  private addSPVValue = new BehaviorSubject(false);
+  currentSPVValue = this.addSPVValue.asObservable();
+
   private apiUrl = environment.apiUrl;
   getSPVNameListUrl: string = this.apiUrl + 'metalyzer/spvanalysis/spvlist?workspaceId=';
   getRelatingTableNameListUrl = this.apiUrl + 'metalyzer/spvanalysis/spvlist/relatingtablelist?workspaceId=';
@@ -60,6 +64,10 @@ export class StoredProcViewService {
   }
   /** Log a message with the MessageService */
   private log(message: string) {
+  }
+
+  changeSPVBooleanValue(message) {
+    this.addSPVValue.next(message);
   }
 
 }

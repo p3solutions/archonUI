@@ -1142,7 +1142,7 @@ label {
   letter-spacing: 0.2px;
 }
 
-.previous {
+/* .previous {
   background-color: #f1f1f1;
   color: black;
 }
@@ -1150,7 +1150,7 @@ label {
 .next {
   background-color: #269af8;
   color: white;
-}
+} */
 
 #extractor-landing-card {
   height: 420px;
@@ -1197,4 +1197,40 @@ label {
 }
 .pl-40 {
   padding-left:40px !important;
+}
+
+.node {
+  pointer-events: all;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+div.tooltipd3 {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  height: auto;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+svg {
+  width: 100vw;
+  height: 100vh;
+}
+
+.hide-div {
+  display: none;
+}
+
+.show-div {
+  display: block;
+}
+
+#cancelBtn:hover{
+  background-color: #F94B4C;
 }
