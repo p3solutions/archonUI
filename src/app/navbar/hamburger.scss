@@ -1,0 +1,199 @@
+%line{
+    background: white;
+    width:30px;
+    height:3px;
+  }
+  
+  // Animate the top bar on hover
+  @keyframes menu-hover-top-over {
+    0% {
+      transform: translateY(0);
+    }
+    50%{
+      transform: translateY(8px);
+    }
+    100%{
+      transform: translateY(0);
+    }
+  }
+  
+  // Animate the bottom bar on hover
+  @keyframes menu-hover-bottom-over {
+    0% {
+      transform: translateY(0);
+    }
+    50%{
+      transform: translateY(-8px);
+    }
+    100%{
+      transform: translateY(0);
+    }
+  }
+  
+  // Animate the top bar on hover-OUT
+  @keyframes menu-load-state-top{
+    0% {
+      transform: translateY(0);
+    }
+    50%{
+      transform: translateY(8px);
+    }
+    100%{
+      transform: translateY(0);
+    }
+  }
+  
+  // Animate the bottom bar on hover-OUT
+  @keyframes menu-load-state-bottom{
+    0% {
+      transform: translateY(0);
+    }
+    50%{
+      transform: translateY(-8px);
+    }
+    100%{
+      transform: translateY(0);
+    }
+  }
+  
+  
+  //Slide that sub-menu in
+  @keyframes menu-active-slide {
+    0% {
+      transform: translateX(10px);
+    }
+    100%{
+      transform: translateX(0);
+    }
+  }
+  
+  //Rotate that top bar on active
+  @keyframes top-rot-in {
+    0% {
+      transform: rotate(0deg);
+      transform-origin: left;
+    }
+    100% {
+      transform: rotate(45deg);
+      transform-origin: left;
+   
+    }
+  }
+  //Rotate that bottom bar on active
+  @keyframes bot-rot-in {
+    0% {
+      transform: rotate(0deg);
+      transform-origin: left;
+    }
+    100% {
+      transform: rotate(-45deg);
+      transform-origin: left;
+   
+    }
+  }
+  
+  .button{
+    padding:10px;
+    height:30px;
+    width:30px;
+    display:block;
+    position: relative;
+    background: #ed2fd3; /* Old browsers */
+    background: linear-gradient(135deg,  #ed2fd3 0%,#001e8e 100%); /* W3C */
+  }
+  
+  .menu{
+    @extend %line;
+    position: absolute;
+    top: 24px;
+    &:before{
+      @extend %line;
+      content: '';
+      position: absolute;
+      top: -8px;
+      animation:  menu-load-state-top .5s;
+    }
+    &:after{
+      @extend %line;
+      content: '';
+      position: absolute;
+      top: 8px;
+      left:0px;
+      animation:  menu-load-state-bottom .5s;
+    }
+    b{
+      opacity:0;
+      top:-13px;
+      left:2px;
+      font-size:.55em;
+      line-height:1em;
+      position:relative;
+      transition: all 0.15s 0.15s ease-in;
+      transition-delay: .5s;
+    }
+  }
+  
+  .menu:hover{
+    background: transparent;
+    transition: all 0.15s 0 ease-out;
+    &:before{
+      animation: menu-hover-top-over .5s .5s forwards;
+    }
+    &:after{
+      animation: menu-hover-bottom-over .5s .5s forwards;
+    }
+    b{
+      opacity:1;
+    }
+  }
+  
+  ///Lets make a sub-menu
+  .sub-menu{
+    font-weight:300;
+    font-size:1.5em;
+    list-style-type:none;
+    height:100%;
+    padding:10px 20px;
+    width:200px;
+    background: #001e8e; /* Old browsers */
+    background: linear-gradient(to bottom,  #001e8e 0%,#ed2fd3 100%); /* W3C */
+    margin:0;
+    position:fixed;
+    top:0px;
+    right:0px;
+    z-index: 99999999999999999999;
+    transition: opacity 0.25s ease;
+    opacity:0;
+    li{
+      line-height:60px;
+      border-bottom:1px solid white;
+    }
+    li:last-child{
+      border-bottom:none;
+    }
+  }
+  
+  .active{
+    .menu{
+      background:transparent;
+      &:before{
+        top: -10px;
+        left:5px;
+        animation: top-rot-in .5s forwards;
+      }
+      &:after{
+        top: 10px;
+        left:5px;
+        animation: bot-rot-in .5s forwards;
+      }
+      b{
+        opacity:0;
+        transition: all 0.10s 0 ease-out;
+      }    
+    }
+    .sub-menu{
+      opacity:1;
+      transition: opacity 0.25s ease;
+      animation: menu-active-slide .25s;
+    }
+  }

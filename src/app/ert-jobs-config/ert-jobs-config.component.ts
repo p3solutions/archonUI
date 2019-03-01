@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ErtJobParams } from '../ert-landing-page/ert';
+import { ErtJobParams, IngestionDataConfig } from '../ert-landing-page/ert';
 import { ErtService } from '../ert-landing-page/ert.service';
 
 @Component({
@@ -14,12 +14,24 @@ export class ErtJobsConfigComponent implements OnInit {
   ngOnInit() {
     this.ertService.ertJobParams = new ErtJobParams();
     this.ertService.selectedList = [];
+    this.ertService.schemaResultsTableCount = 0;
+    this.ertService.ingestionDataConfig = new IngestionDataConfig();
+    this.ertService.joinListMap.clear();
+    this.ertService.data = undefined;
+    this.ertService.selectedPrimaryTable = '';
+    this.ertService.selectedValues = [];
   }
 
   goToExtraction(event, ertJobMode) {
     this.ertJobParams.ertJobMode = ertJobMode;
     this.ertService.setErtJobParams(this.ertJobParams);
-    this.route.navigate(['/workspace/ert/ert-table']);
+    if (ertJobMode === 'DATA_RECORD') {
+      this.route.navigate(['/workspace/ert/ert-datarecord-config']);
+    } else if (ertJobMode === 'SIP') {
+      this.route.navigate(['/workspace/ert/ert-sip-config']);
+    } else {
+      this.route.navigate(['/workspace/ert/ert-table']);
+    }
   }
 
   enableJobSelection() {
@@ -30,5 +42,9 @@ export class ErtJobsConfigComponent implements OnInit {
         item.disabled = false;
       }
     }
+  }
+
+  goToJobs() {
+    this.route.navigate(['/workspace/ert/ert-jobs']);
   }
 }

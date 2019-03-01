@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { TableDetailsListObj, IngestionDataConfig } from '../ert-landing-page/ert';
 
 @Component({
   selector: 'app-ert-table-column-config',
@@ -10,24 +11,96 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
   styleUrls: ['./ert-table-column-config.component.css']
 })
 export class ErtTableColumnConfigComponent implements OnInit {
+  searchTableName: string;
   ertJobId = '';
+  from = '';
+  selectedTableList: TableDetailsListObj[] = [];
+  selectedTableId = '';
+  selectedTableName = '';
+  ExpectedTableName = '';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
   ngOnInit() {
-  }
-  gotoExtractData() {
-    this.activatedRoute.params.subscribe((requestParam) => {
-      this.ertJobId = requestParam.ertJobId;
-    });
-    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-      this.router.navigate(['workspace/ert/ert-extract-ingest', this.ertJobId]);
-    } else {
-      this.router.navigate(['workspace/ert/ert-extract-ingest']);
+    this.selectedTableList = this.ertService.selectedList.filter(a => a.isSelected === true);
+    this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
+    if (this.selectedTableList[0] !== undefined) {
+      this.selectedTableId = this.selectedTableList[0].tableId;
+      this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+      this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
     }
   }
 
+  showColumns(value) {
+    if (value === 'original') {
+      if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
+        return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
+          columnList.filter(a => a.dataType !== 'USERDEFINED');
+      } else {
+        return [];
+      }
+    } else if (value === 'expected') {
+      if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
+        return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
+      } else {
+        return [];
+      }
+    }
+  }
+
+  showColumnsForUserDefined() {
+    if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
+      return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
+        usrDefinedColumnList.filter(a => a.dataType === 'USERDEFINED');
+    } else {
+      return [];
+    }
+  }
+
+  gotoExtractData() {
+    this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
+    this.activatedRoute.params.subscribe((requestParam) => {
+      this.ertJobId = requestParam.ertJobId;
+    });
+    if (this.from === 'data-record' || this.from === 'SIP') {
+      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+        this.router.navigate(['workspace/ert/ert-extract-ingest/', this.ertJobId], { queryParams: { from: this.from } });
+      } else {
+        this.router.navigate(['workspace/ert/ert-extract-ingest/'], { queryParams: { from: this.from } });
+      }
+    } else
+      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+        this.router.navigate(['workspace/ert/ert-extract-ingest/', this.ertJobId]);
+      } else {
+        this.router.navigate(['workspace/ert/ert-extract-ingest']);
+      }
+  }
+
+
   saveERTJob(ertJobStatus: string) {
+    for (const item of this.ertService.selectedList.filter(a => a.isSelected === true)) {
+      if (item.filterAndOrderConfig.filterConfig === '' && item.filterAndOrderConfig.filterQuery === '') {
+        delete item['filterAndOrderConfig'];
+      } else if (item.filterAndOrderConfig.filterConfig === null && item.filterAndOrderConfig.filterQuery === null) {
+        delete item['filterAndOrderConfig'];
+
+      }
+      if (item.usrDefinedColumnList.length === 0) {
+        delete item['usrDefinedColumnList'];
+      }
+      if (item.relatedTableDetails.length === 0) {
+        delete item['relatedTableDetails'];
+      }
+      for (const item1 of item.columnList) {
+        if (item1.userColumnQuery === null) {
+          delete item1['userColumnQuery'];
+        }
+        if (item1.viewQuery === null) {
+          delete item1['viewQuery'];
+        }
+      }
+      delete item['isSelected'];
+    }
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
@@ -35,17 +108,31 @@ export class ErtTableColumnConfigComponent implements OnInit {
       'userId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
       'ertJobStatus': ertJobStatus,
-      'schemaResultsTableCount': '100',
+      'schemaResultsTableCount': this.ertService.schemaResultsTableCount.toString(),
       'databaseConfig': {
         'databaseId': this.workspaceHeaderService.getDatabaseID()
       },
       'ertJobParams': this.ertService.ertJobParams,
-      'tableDetailsList': this.ertService.selectedList.filter(a => a.isSelected === true),
+      'tableDetailsList': this.ertService.selectedList.filter(a => a.isSelected !== false),
       'ingestionDataConfig': this.ertService.ingestionDataConfig,
       'extractDataConfigInfo': this.ertService.extractDataConfigInfo
     };
-
+    if (this.from === 'data-record') {
+      delete param.extractDataConfigInfo['applicationName'];
+      delete param.extractDataConfigInfo['holdingName'];
+    } else if (this.from === 'SIP') {
+      delete param.extractDataConfigInfo['titleName'];
+    } else {
+      delete param.extractDataConfigInfo['titleName'];
+      delete param.extractDataConfigInfo['applicationName'];
+      delete param.extractDataConfigInfo['holdingName'];
+    }
     param = this.modifiedParamForEdit(param);
+    if (param.ingestionDataConfig.infoArchiveName === '' || param.ingestionDataConfig.infoArchiveSchemaName === ''
+      || param.ingestionDataConfig.infoArchiveUserName === '' || param.ingestionDataConfig.infoArchivePassword === '') {
+      delete param['ingestionDataConfig'];
+    }
+    console.log(param);
     this.ertService.saveErtJob(param).subscribe(result => {
       if (result.httpStatus !== 200) {
         alert('Job has not saved successfully');
@@ -54,10 +141,23 @@ export class ErtTableColumnConfigComponent implements OnInit {
     });
   }
 
+
   modifiedParamForEdit(param: any): any {
+    this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       param.ertJobId = this.ertJobId;
     }
+    if (this.from === 'data-record' || this.from === 'SIP') {
+      param.mmrVersion = this.ertService.mmrVersion;
+    }
     return param;
+  }
+  cancel() {
+    this.router.navigate(['/workspace/ert/ert-jobs']);
+  }
+  selectTable(tableId) {
+    this.selectedTableId = tableId;
+    this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+    this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
   }
 }

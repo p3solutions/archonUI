@@ -8,6 +8,7 @@ import { InfoService } from '../info.service';
 import { Info } from '../info';
 import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { UserProfileService } from '../user-profile/user-profile.service';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -39,7 +40,7 @@ describe('NavbarComponent', () => {
       declarations: [NavbarComponent],
       providers: [
         InfoService,
-        HttpClientModule
+        HttpClientModule, UserProfileService
       ],
     })
       .compileComponents();

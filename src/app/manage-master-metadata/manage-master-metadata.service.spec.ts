@@ -1,12 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ManageMasterMetadataService } from './manage-master-metadata.service';
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ManageMasterMetadataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports : [HttpClientTestingModule],
-      providers: [ManageMasterMetadataService]
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      providers: [ManageMasterMetadataService, UserinfoService]
     });
   });
 

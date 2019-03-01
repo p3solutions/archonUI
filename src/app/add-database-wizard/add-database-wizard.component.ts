@@ -50,6 +50,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   dbTestConnectionSuccessMsg: string;
   dbTestConnectionErrorMsg: string;
   enableNextBtn = false;
+  enableCreateBtn = false;
   step0Empty = false;
   step1Empty = false;
   createdb: boolean;
@@ -78,8 +79,11 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
       if (res) {
         this.inProgress = false;
-        this.dbTestConnectionErrorMsg = '';
+        this.dbTestConnectionErrorMsg = res.connection.errorMessage;
         this.dbTestConnectionSuccessMsg = res.connection.message;
+        if (res.connection.isConnected) {
+           this.enableCreateBtn = true;
+        }
       } else {
         this.inProgress = false;
         this.dbTestConnectionSuccessMsg = '';
@@ -152,6 +156,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   }
 
   prevStep(e) {
+    this.enableCreateBtn = false;
     this.dbTestConnectionSuccessMsg = undefined;
     this.dbTestConnectionErrorMsg = undefined;
     this.enableNextBtn = this.step0Empty === true;
@@ -292,9 +297,14 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.addClass('progress-bar', 'width-100-pc');
     this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
       if (res) {
-        this.dbinProgress = false;
-        this.createNewdb();
-        this.createdb = true;
+        if (res.connection.isConnected) {
+          this.dbinProgress = false;
+           this.createNewdb();
+           this.createdb = true;
+        } else {
+          this.dbinProgress = false;
+          this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
+        }
       } else {
         this.dbinProgress = false;
         this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';

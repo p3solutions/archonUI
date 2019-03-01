@@ -10,6 +10,8 @@ import { UserinfoService } from '../userinfo.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DataAnalyzerResultScreenComponent } from '../data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { DynamicLoaderService } from '../dynamic-loader.service';
+import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
+import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.service';
 
 @Component({
   selector: 'app-table-list',
@@ -70,18 +72,24 @@ export class TableListComponent implements OnInit {
   JobStatus: string;
   defaultModel = true;
   resultantArray: any[];
+  xml = 'xml';
+  json = 'json';
+  databaseID: any;
 
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('storedprocView', { read: ViewContainerRef }) storedprocViewRef: ViewContainerRef;
 
   addDirectjoin: boolean;
   isTablelistAvailable: boolean;
+  wsName: string;
 
 
   constructor(
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
+    private metalyzerHeaderService: MetalyzerHeaderService,
     private userinfoService: UserinfoService,
+    private storedProcViewService: StoredProcViewService,
     private router: Router,
     private route: ActivatedRoute,
     @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -99,9 +107,19 @@ export class TableListComponent implements OnInit {
         this.loadRelationTable(this.tableCopy);
        }
       });
+      this.storedProcViewService.currentSPVValue.subscribe(value => {
+        this.homeStage = value;
+        if (this.homeStage === true) {
+         this.loadRelationTable(this.tableCopy);
+        }
+       });
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
     this.getTableList();
+
+    this.metalyzerHeaderService.getWorkspaceName().subscribe(result => {
+      this.wsName = result;
+    });
   }
 
   getTableList() {
@@ -603,5 +621,44 @@ export class TableListComponent implements OnInit {
   adddirectjoin() {
     this.addDirectjoin = true;
 
+  }
+
+  downloadFile(content, fileType) {
+    const fileName = this.wsName + '-metadata.xml';
+    const type = fileType || 'xml';
+    const e = document.createEvent('MouseEvents');
+    const a = document.createElement('a');
+    a.download = fileName || 'output.xml';
+    a.href = window.URL.createObjectURL(content);
+    a.dataset.downloadurl = [type, a.download, a.href].join(':');
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+  }
+  downloadFilejson(content, fileType) {
+    const fileName = this.wsName + '-metadata.json';
+    const type = fileType || 'json';
+    const e = document.createEvent('MouseEvents');
+    const a = document.createElement('a');
+    a.download = fileName || 'output.json';
+    a.href = window.URL.createObjectURL(content);
+    a.dataset.downloadurl = [type, a.download, a.href].join(':');
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+  }
+  exportxml() {
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.databaseID = this.workspaceHeaderService.getDatabaseID();
+    this.tablelistService.getExportxml(this.workspaceID, this.databaseID, this.xml, this.selectedPrimTblID)
+      .subscribe(result => {
+        this.downloadFile(result, result.type);
+      });
+  }
+  exportjson() {
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.databaseID = this.workspaceHeaderService.getDatabaseID();
+    this.tablelistService.getExportjson(this.workspaceID, this.databaseID, this.json, this.selectedPrimTblID)
+      .subscribe(result => {
+        this.downloadFilejson(result, result.type);
+      });
   }
 }

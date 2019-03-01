@@ -19,6 +19,8 @@ import { SigninFormService } from '../signin-form/signin-form.service';
 import { SignUp } from '../sign-up';
 import { ErrorObject } from '../error-object';
 import { Router } from '@angular/router';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
@@ -56,6 +58,8 @@ describe('SignupFormComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule, BrowserAnimationsModule,
         JwtModule.forRoot({
           config: {
                   tokenGetter: tokenGetter

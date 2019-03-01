@@ -4,25 +4,28 @@ body {
     font-size: 16px;
     letter-spacing: 0.2
 }
-#ert-header{
+
+#ert-header {
     border-bottom: 2px solid #E6E9ED;
 }
 
-#heading-jobs-avail{
+#heading-jobs-avail {
     font-family: "Montserrat", sans-serif;
     font-weight: 300;
     font-size: 16px;
     letter-spacing: 0.2;
     padding: 9px 16px;
 }
-#ert-landing-id{
+
+#ert-landing-id {
     margin-top: 10px;
 }
-#ert-header{
-    margin-bottom: 21px;
+
+#ert-header {
+    margin-bottom: 10px;
 }
 
-body{
+body {
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 16px;
@@ -30,3 +33,15 @@ body{
     padding: 9px 16px;
 }
 
+.form-inline {
+    padding: 2px 2px 2px 0px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.2;
+    margin: 0px 2px 2px 7px;
+}
+
+.form-group {
+    padding: 5px 19px 7px 10px;
+}

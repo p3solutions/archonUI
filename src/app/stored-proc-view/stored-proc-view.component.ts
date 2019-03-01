@@ -167,6 +167,7 @@ export class StoredProcViewComponent implements OnInit {
       'spvInfoList': this.selectedSPVJoinList};
     this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((result) => {
       alert(result.message);
+      this.storedProcViewService.changeSPVBooleanValue(true);
     });
   }
 }

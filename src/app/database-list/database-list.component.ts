@@ -53,7 +53,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   }
 
   getConfigDBList() {
-    const navbarComponent = new NavbarComponent();
+    const navbarComponent = new NavbarComponent(null);
     this.info = navbarComponent.getInfo();
     if (this.info.roles.roleName === 'ROLE_DB_ADMIN') {
       this.info.show = true;

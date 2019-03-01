@@ -32,13 +32,13 @@
       </div>
       <div class="card-body" *ngIf="homeStage">
         <div class="col col-md-12">
-          <div class="col col-md-4">
-            <h3 class="card-title header">Relationship Info
-            </h3>
+          <div class="col col-md-3">
+            <h4 class="card-title header">Relationship Info
+            </h4>
           </div>
           <!-- <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span> -->
 
-          <div class="dropdown" class="col col-md-4 data-analyzer">
+          <div class="dropdown" class="col col-md-3 data-analyzer">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
               <span class="caret"></span>
             </button>
@@ -55,8 +55,21 @@
               </li>
             </ul>
           </div>
-          <div class="col col-md-4">
+          <div class="col col-md-3">
             <button type="button" class="btn btn-primary data-analyzer" (click)="openDataAModal()">Data Analyzer</button>
+          </div>
+          <div class="dropdown" class="col col-md-3 data-analyzer">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Export As
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" id="dropdown1">
+              <li>
+                <a (click)="exportxml()">XML</a>
+              </li>
+              <li>
+                <a (click)="exportjson()">JSON</a>
+              </li>             
+            </ul>
           </div>
         </div>
         <div class="row col col-md-12 primary-table">

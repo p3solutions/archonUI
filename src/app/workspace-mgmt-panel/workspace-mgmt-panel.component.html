@@ -1,21 +1,27 @@
 <div class="row" id="workspace-mgmt-panel">
   <div class="col-md-3">
-    <ul class="nav nav-tabs mgmt-panel">
+    <!-- <ul class="nav nav-tabs mgmt-panel">
       <li id="workspace-info-link" class="trim-text">
         <a [routerLink]="['workspace-info',workspaceId]">Workspace Info.</a>
       </li>
-    </ul>
+    </ul> -->
   </div>
   <div class="col-md-9">
-    <ul class="nav nav-tabs mgmt-panel fl-r">
-      <li class="trim-text">
+    <ul class="nav nav-tabs mgmt-panel mt-20 fl-r">
+      <!-- <li class="trim-text">
         <a [routerLink]="['member-request',workspaceId]">Member Requests</a>
-      </li>
+      </li> -->
       <li class="trim-text">
         <a [routerLink]="['manage-members',workspaceId]">Manage Members</a>
       </li>
       <li class="trim-text">
         <a [routerLink]="['manage-master-metadata',workspaceId]">Manage Metadata Version</a>
+      </li>
+      <li id="workspace-info-link" class="trim-text">
+        <a [routerLink]="['workspace-info',workspaceId]">Workspace Info.</a>
+      </li>
+      <li>
+        <a><i class="fa fa-cog" matTooltip="Settings"></i></a>
       </li>
     </ul>
   </div>

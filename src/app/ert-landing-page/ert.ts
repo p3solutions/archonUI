@@ -7,6 +7,10 @@ export class ErtTableListObj {
     selectedTableCount = 0;
     isSelectedTableLeft = false;
 }
+export class FilterAndOrderConfig {
+    filterConfig = '';
+    filterQuery = '';
+}
 
 export class ErtTableObj {
     tableId = '';
@@ -50,10 +54,7 @@ export class UsrDefinedColumnListObj {
     userColumnQuery = '';
 }
 
-export class FilterAndOrderConfig {
-    filterConfig = '';
-    filterQuery = '';
-}
+
 
 export class ErtJobParams {
     ertJobTitle = '';
@@ -64,10 +65,17 @@ export class TableDetailsListObj {
     tableId = '';
     tableName = '';
     modifiedTableName = '';
+    isMainTable = true;
     columnList: ColumnListObj[] = [];
     usrDefinedColumnList: UsrDefinedColumnListObj[] = [];
     filterAndOrderConfig = new FilterAndOrderConfig();
     isSelected = false;
+    relatedTableDetails: RelatedTableDetails[] = [];
+}
+
+export class RelatedTableDetails {
+    tableId = '';
+    tableName = '';
 }
 
 export class ERTJobs {
@@ -76,7 +84,12 @@ export class ERTJobs {
     createdDate = '';
     jobMode = '';
     jobTitle = '';
+    lastAccessedDate = '';
+    createdBy = '';
+    lastAccessedBy = '';
+    madeDisable = false;
 }
+
 
 export class IngestionDataConfig {
     infoArchiveName = '';
@@ -103,9 +116,20 @@ export interface FilterConfigNode {
 export class ExtractDataConfigInfo {
     titleName = '';
     xmlFileSplitSize = '100';
+    applicationName = '';
+    holdingName = '';
 }
 
 export class DataOrderConfig {
     column: string = null;
     order: string = null;
 }
+
+export class ExtractConfig {
+    ertJobId = '';
+    isIngest = false;
+    extractDataConfig = new ExtractDataConfigInfo();
+    ingestionDataConfig = new IngestionDataConfig();
+}
+
+

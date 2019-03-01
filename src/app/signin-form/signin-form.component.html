@@ -1,19 +1,23 @@
 <div id="landing-card">
   <div class="x_title">
-    <h2>Sign In</h2>
+    <div><img src="../../assets/loginAvatar.png" width="60" height="auto" /></div>
+    <h4>Sign in to your account</h4>
     <div class="clearfix"></div>
   </div>
   <div class="x_content">
     <br />
     <form class="form-horizontal form-label-left input_mask" (ngSubmit)="onSignIn()" [formGroup]="signInForm">
+      
       <div class="row form-fields">
         <div class="col-md-12 form-group has-feedback">
-          <input type="email" class="form-control input-form" name="signin-email" formControlName="emailAddress" placeholder="Email" (keyup)="enableSignIn()">
-          <span class="fa fa-envelope fa-lg form-control-feedback right" aria-hidden="true"></span>
+          <mat-form-field>
+          <input type="email" matInput name="signin-email" formControlName="emailAddress" placeholder="Email" (keyup)="enableSignIn()">
+        </mat-form-field>
         </div>
         <div class="col-md-12 form-group has-feedback">
-          <input type="password" class="form-control input-form" name="signin-password" formControlName="password" placeholder="Password" (keyup)="enableSignIn()">
-          <span class="fa fa-key fa-lg form-control-feedback right" aria-hidden="true"></span>
+            <mat-form-field>
+          <input type="password" matInput name="signin-password" formControlName="password" placeholder="Password" (keyup)="enableSignIn()">
+        </mat-form-field>
         </div>
         <div id="error-block" class="col-md-12 form-group">
           <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible" role="alert">
@@ -25,12 +29,12 @@
         </div>
       </div>
       <div class="row form-redirect">
-        <div class="col-md-6 form-group">
+        <div class="col-md-6 form-group1">
           <a routerLink="/forgot-password">Forgot Password</a>
         </div>
         <div class="col-md-6 form-group">
-          <button type="submit" class="btn pull-right btn-form btn-primary {{ enableSignInBtn ? '' : 'bg-disabled'}}" [disabled]="!enableSignInBtn">
-             SIGN IN
+          <button type="submit" class="btn pull-right btn-primary {{ enableSignInBtn ? '' : 'bg-disabled'}}" [disabled]="!enableSignInBtn">
+            Login
              <i *ngIf="inProgress" class="fa fa-spinner fa-spin inline-loader"></i>
             </button>
         </div>

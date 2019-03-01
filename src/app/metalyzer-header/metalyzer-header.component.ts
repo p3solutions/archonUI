@@ -67,7 +67,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   exportxml() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
-    this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml, this.userselectTableslist.tableId)
+    this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml)
       .subscribe(result => {
         this.downloadFile(result, result.type);
       });
@@ -75,7 +75,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   exportjson() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
-    this.metalyzerHeaderService.getExportjson(this.workspaceID, this.databaseID, this.json, this.userselectTableslist.tableId)
+    this.metalyzerHeaderService.getExportjson(this.workspaceID, this.databaseID, this.json)
       .subscribe(result => {
         this.downloadFilejson(result, result.type);
       });
