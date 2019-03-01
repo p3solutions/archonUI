@@ -51,7 +51,7 @@
 </div>
 
 <div class="row" style="padding-top: 95px;">
-<div id="schedule-job" class="workspace-panel-content">
+<div id="schedule-job" class="workspace-panel-content" *ngIf="isAvailable">
 <table datatable [dtOptions]="dtOptions"  class="row-border hover schedule" style="width: 100%"></table>
   </div>
 </div>

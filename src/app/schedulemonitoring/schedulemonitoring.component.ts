@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, Renderer } from '@angular/core';
 import { Router } from '@angular/router';
+import { ScheduleMonitoringService } from './schedule-monitoring.service';
 
 @Component({
   selector: 'app-schedulemonitoring',
@@ -9,52 +10,37 @@ import { Router } from '@angular/router';
 export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
 
   loadStatus = true;
+  isAvailable = false;
   dtOptions: DataTables.Settings = {};
-  date = new Date();
-  persons = [{
-  'Job Type': 'Scheduled Once',
-  'Tool': 'RDBMS',
-  'User': 'Satheesh',
-  'jobName' : 'RDBMS',
-  'jobRuns': 0,
-  'Schedule Time': new Date(),
-  'Start Time' : new Date(),
-  'End Time': '',
-  'Last Run Time': '',
-  'Next Start Time': new Date()
-  }];
+  output;
 
-  output = [
-    {
-      'jobType': 'Scheduled Once',
-      'tool': 'RDBMS_EXTRACTION',
-      'user': '5ac5dc652e6c990861830977',
-      'jobName': 'RDBMS_TEST',
-      'scheduledDate': '2019-03-01T10:50:56',
-      'endDate': '2019-03-01T10:50:56',
-      'lastRuntime': '2019-03-01T10:50:56',
-      'nextStartTime': '2019-03-02T10:50:56',
-      'jobRun': '1',
-      'status': 'COMPLETED'
-  },
-  {
-    'jobType': 'Scheduled Once',
-    'tool': 'RDBMS_EXTRACTION',
-    'user': '5ac5dc652e6c990861830977',
-    'jobName': 'RDBMS_TEST',
-    'scheduledDate': '2019-03-01T10:32:54',
-    'endDate': '2019-03-01T10:32:54',
-    'lastRuntime': '2019-03-01T10:32:54',
-    'nextStartTime': '2019-03-02T10:32:54',
-    'jobRun': '1',
-    'status': 'COMPLETED'
-}
-  ];
-
-  constructor(private router: Router, private renderer: Renderer) { }
+  constructor(private router: Router, private renderer: Renderer, private service: ScheduleMonitoringService) {
+  }
 
 
   ngOnInit(): void {
+    this.getStatus();
+  }
+
+  ngAfterViewInit(): void {
+    this.renderer.listenGlobal('document', 'click', (event) => {
+      console.log(event);
+    });
+  }
+
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
+
+  getStatus() {
+    this.service.getJobStatuses().subscribe(x => {
+      this.output = x;
+      this.isAvailable = true;
+      this.renderTable();
+    });
+  }
+
+  renderTable() {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 2,
@@ -123,16 +109,6 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
       }
     ]
     };
-  }
-
-  ngAfterViewInit(): void {
-    this.renderer.listenGlobal('document', 'click', (event) => {
-      console.log(event);
-    });
-  }
-
-  gotoDashboard() {
-    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
 }
