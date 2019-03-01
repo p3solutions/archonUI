@@ -20,7 +20,7 @@ h5 {
 a,
 a:focus,
 a:hover {
-  color: #269af8;
+  color: #1385f8;
 }
 
 a:focus,
@@ -195,13 +195,13 @@ body {
   transition: all .2s ease;
   background: url(assets/loginboxBg.jpg);
   background-size: 100% 100%;
-  margin-top: 18%;
+  margin-top: 14%;
 }
 
 .x_title {
   /* border-bottom: 2px solid #E6E9ED; */
   padding: 5px 5px 6px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   text-align: center;
 }
 
@@ -350,14 +350,16 @@ footer {
 }
 
 #error-block {
-  min-height: 80px;
-  max-height: 80px;
+  min-height: 50px;
+  max-height: 50px;
 }
 
 .alert {
   border-radius: 2px;
 }
-
+.color-white {
+  color:white !important;
+}
 .trim-text {
   display: inline-block;
   white-space: nowrap;
@@ -399,6 +401,10 @@ table.dataTable.no-footer {
 
 .workspace-panel-heading {
   text-align: left;
+  padding-left: 10px;
+  margin-top:30px;
+  margin-bottom:30px;
+  font-size: 22px;
 }
 
 .text-left {
@@ -1173,6 +1179,24 @@ label {
 
 .fa-trash {
   color: rgb(207, 19, 19);
+}
+.margin-0 {
+  margin:0px !important;
+}
+.mt-20 {
+  margin-top:20px !important;
+}
+.margin-10 {
+  margin:10px !important;
+}
+.padding-0 {
+  padding:0px !important;
+}
+.pl-20 {
+  padding-left:20px !important;
+}
+.pl-40 {
+  padding-left:40px !important;
 }
 
 .node {

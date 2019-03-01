@@ -57,7 +57,7 @@ h2 {
 
 .flex-container {
   display: flex;
-  padding: 90px 30px 30px 30px;
+  padding: 0px 30px 30px 30px;
   justify-content: center;
   height: 400px;
 }

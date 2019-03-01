@@ -31,7 +31,10 @@
 .user-menu1 .dropdown-menu {
   max-width: 200px;
 }
-
+.nav>li>a:focus, .nav>li>a:hover  {
+  text-decoration: none !important;
+    /* background: #dbe6fa !important; */
+}
 /* default .dropdown-menu css has min-width:160px, hence overriding for max 10 letters width*/
 .user-menu .dropdown-menu {
   min-width: 108px !important;
@@ -71,16 +74,26 @@
   font-size: 22px !important;
    
 }
-
+  
 .nav>li>a {
-  padding: 15px 10px;
+  padding: 15px 10px !important;
 }
-
+.nav-tabs > li > a:hover {
+  color: #fff;
+  background-color: #ff0000 !important;
+}
 .navbar {
   border-radius: 0px !important;
   /* box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5); */
 }
-
+.user-role {
+  color:white;
+  margin:20px 0px 0px 0px;
+}
+.user-role:hover {
+  color:white;
+  margin:20px 0px 0px 0px;
+}
 .dropdown {
   margin-top: 5px;
 }

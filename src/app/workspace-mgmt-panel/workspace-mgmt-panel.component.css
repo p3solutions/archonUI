@@ -1,8 +1,34 @@
 .mgmt-panel {
-    font-size: 20px;
-    border-bottom: none;
-}
-#workspace-info-link {
-    padding-left: 30px;
+  font-size: 20px;
+  border-bottom: none;
 }
 
+/* #workspace-info-link {
+    padding-left: 30px;
+} */
+.fa-cog:hover {color: #000}
+.fa-cog {
+  font-size: 26px;
+  color: #fff;
+  cursor: pointer;
+}
+.nav-tabs>li>a:hover {
+    background:#dbe6fa !important;
+    border-bottom:2px solid #1385f8;
+    color: #000 !important;
+}
+.nav-tabs>li>a:focus {
+    background:#dbe6fa !important;
+    border-bottom:2px solid #1385f8;
+    color: #000 !important;
+}
+.nav-tabs>li>a.active {
+    background:#dbe6fa !important;
+    border-bottom:2px solid #1385f8;
+}
+.nav>li>a {
+    padding: 10px 12px !important;
+    font-weight: normal !important;
+    font-size: 19px !important;
+    color:white !important;
+}

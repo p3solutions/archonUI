@@ -1,7 +1,8 @@
 .workspace-header {
   /* height: 125px; */
   padding: 20px 0 0;
-  border-bottom: 2px solid #E6E9ED;
+  /* border-bottom: 2px solid #E6E9ED; */
+  background: #115498;
 }
 .workspace-dropdown {
   padding: 10px;
@@ -15,7 +16,9 @@
   font-size: 15px;
   padding: 5px 2px;
 }
-
+.ws-title {
+  font-size: 22px;
+}
 .dropdown-toggle::after {
   display: inline-block;
   width: 0;
@@ -60,7 +63,7 @@
   #selectedWorkspace .dropdown-toggle {
   background-color: #fff;
   border: 1px solid #ccc;
-  text-align: right;
+  text-align: left;
   width: 195px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -70,4 +73,9 @@
   max-height: 200px;
   width: 195px;
   overflow-x: hidden;
+}
+.fa-plus-circle {
+  font-size: 36px;
+  color: #fff;
+  cursor: pointer;
 }
