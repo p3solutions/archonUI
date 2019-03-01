@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { Info } from '../info';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
+import { UserProfileService } from '../user-profile/user-profile.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,8 +15,14 @@ import * as $ from 'jquery';
 export class NavbarComponent implements OnInit {
   info: Info;
   private router: Router;
-  constructor() { }
+  userChangeName: string;
+
+  constructor( private userProfileService: UserProfileService) { }
   ngOnInit() {
+    this.userProfileService.UserNamechange.subscribe(data => {
+      this.userChangeName = data;
+      this.getInfo();
+    });
     this.info = this.getInfo();
     if (this.info.roles.roleName === 'ROLE_ADMIN') {
       this.info.show = true;
@@ -33,6 +40,7 @@ export class NavbarComponent implements OnInit {
       });
     });
   }
+
   // Get information from the info service
   getInfo(): Info {
     let info: Info;
@@ -44,7 +52,7 @@ export class NavbarComponent implements OnInit {
     info = new Info();
     info.id = token_data.user.id;
     info.roles = token_data.roles[0];
-    info.username = token_data.user.name;
+    info.username = this.userChangeName;
     return info;
   }
   callUserProfile() {
