@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ManagementLandingPageComponent } from './management-landing-page.component';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { UserProfileService } from '../user-profile/user-profile.service';
 
 describe('ManagementLandingPageComponent', () => {
   let component: ManagementLandingPageComponent;
@@ -11,7 +12,9 @@ describe('ManagementLandingPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ManagementLandingPageComponent, NavbarComponent],
-      imports: [RouterTestingModule]
+      imports: [RouterTestingModule],
+      providers: [ UserProfileService
+      ],
     })
     .compileComponents();
   }));
