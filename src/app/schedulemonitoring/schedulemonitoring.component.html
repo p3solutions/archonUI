@@ -1,4 +1,6 @@
 <app-navbar></app-navbar>
+<div class="workspacelist-container">
+
   <div class="col-md-4">
     <div class="col-md-1 back-arrow">
       <a (click)="gotoDashboard()" data-tooltip="Back">
@@ -12,3 +14,45 @@
       </h3>
     </div>
   </div>
+
+  <div class="col-md-12 m-l-45" style="padding-top: 10px;" *ngIf="loadStatus">
+    <div class="btn-group col-md-2 p-0">
+      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        {{selectedTool? ('Tool: selectedTool') : ('Tool: All')}}
+      </button>
+      <div class="dropdown-menu">
+        <div class="scrollable">
+          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobOrigin('')">JOB
+            RDBMS</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item dropdown-data trim-text j-origin" *ngFor="let jOrigin of jobOriginList" title="{{jOrigin}}"
+            (click)="selectJobOrigin(jOrigin)">{{jOrigin}}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group col-md-2 p-0">
+      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false" title="{{selectedJobStatus? selectedJobStatus : 'JOB STATUS: ALL'}}">
+        {{selectedJobStatus? selectedJobStatus : 'JOB STATUS: All'}}
+      </button>
+      <div class="dropdown-menu">
+        <div class="scrollable">
+          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobStatus('')">JOB
+            STATUS: All</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item dropdown-data trim-text j-status" *ngFor="let jStatus of jobStatusList" title="{{jStatus}}"
+            (click)="selectJobStatus(jStatus)">{{jStatus}}</a>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+<div class="row" style="padding-top: 95px;">
+<div id="schedule-job" class="workspace-panel-content">
+<table datatable [dtOptions]="dtOptions"  class="row-border hover schedule" style="width: 100%"></table>
+  </div>
+</div>
+
