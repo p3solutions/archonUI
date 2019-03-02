@@ -25,7 +25,7 @@ export class WorkspaceServicesService {
           }
           case 'SERVICE_DB_EXTRACTOR': {
             service.serviceName = 'RDBMS Extractor';
-            service.iconName = 'rdbmsextractor.png';
+            service.iconName = 'RDBMS-icon.png';
             break;
           }
           case 'SERVICE_IA_ADHOC_QUERY_BUILDER': {
