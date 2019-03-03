@@ -8,9 +8,9 @@ import { map, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class ScheduleMonitoringService {
+export class AuditService {
 
-  getStatusUrl = environment.apiUrl + 'jobStatus/fetchScheduleJob?tool=';
+  getAuditUrl = environment.apiUrl + 'audits/auditing';
 
   constructor(private http: HttpClient, private userinfoService: UserinfoService) { }
 
@@ -18,19 +18,14 @@ export class ScheduleMonitoringService {
     return this.userinfoService.getHeaders();
   }
 
-  getJobStatuses(_tool?, _jobStatus?, _index?): Observable<any> {
-    let tool, jobStatus, Index;
-    Index = 1 ;
-    tool = 'RDBMS_EXTRACTION';
-    jobStatus = 'COMPLETED';
-    return this.http.get<any>(this.getStatusUrl + tool + '&jobStatus=' + jobStatus  + '&startIndex=' + Index,
-    { headers: this.getHeaders() }).pipe(
+  getJobStatuses(): Observable<any> {
+    return this.http.post<any>(this.getAuditUrl, { headers: this.getHeaders() }).pipe(
       map(this.extractJobOrigins),
       catchError(this.handleError<any>('getJobStatus')));
   }
 
   private extractJobOrigins(res: any) {
-    const data = res.data.ScheduledJobs;
+    const data = res.data.Audits;
     return data || [];
   }
 

@@ -13,6 +13,7 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   isAvailable = false;
   dtOptions: DataTables.Settings = {};
   output;
+  Status = ['SCHEDULED', 'IN_PROGRESS', 'COMPLETED', 'FAILED,USER_OR_ADMIN_STOPPED']
 
   constructor(private router: Router, private renderer: Renderer, private service: ScheduleMonitoringService) {
   }

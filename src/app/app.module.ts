@@ -116,6 +116,7 @@ import {BsDatepickerModule, TimepickerModule} from 'ngx-bootstrap';
 import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
 import { AuditingComponent } from './auditing/auditing.component';
 import { ScheduleMonitoringService } from './schedulemonitoring/schedule-monitoring.service';
+import { AuditService } from './auditing/audit.service';
 
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
@@ -258,7 +259,8 @@ export function tokenGetter() {
                 AddDirectJoinService,
                 DbExtractorService,
                 StoredProcViewService,
-                ScheduleMonitoringService
+                ScheduleMonitoringService,
+                AuditService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent]
