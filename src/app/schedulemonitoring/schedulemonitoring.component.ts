@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, Renderer } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, Renderer, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScheduleMonitoringService } from './schedule-monitoring.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-schedulemonitoring',
@@ -9,13 +10,15 @@ import { ScheduleMonitoringService } from './schedule-monitoring.service';
 })
 export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
 
+  modalRef: BsModalRef;
   loadStatus = true;
   isAvailable = false;
   dtOptions: DataTables.Settings = {};
   output;
-  Status = ['SCHEDULED', 'IN_PROGRESS', 'COMPLETED', 'FAILED,USER_OR_ADMIN_STOPPED']
+  Status = ['SCHEDULED', 'IN_PROGRESS', 'COMPLETED', 'FAILED,USER_OR_ADMIN_STOPPED'];
 
-  constructor(private router: Router, private renderer: Renderer, private service: ScheduleMonitoringService) {
+  constructor(private router: Router, private renderer: Renderer, private service: ScheduleMonitoringService,
+    private modalService: BsModalService) {
   }
 
 
@@ -99,17 +102,21 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
         {
         title: 'Details',
         render: function (data: any, type: any, full: any) {
-          return '<button class="btn btn-primary" view-person-id="' + full.jobName + '">Details</button>';
+          return '<button class="btn btn-primary" view-person-id="' + full.jobName + '" click()="viewJob(template)>Details</button>';
         }
       },
       {
         title: 'Stop',
         render: function (data: any, type: any, full: any) {
-          return '<button class="btn btn-danger" view-person-id="' + full.jobName + '">Stop</button>';
+          return '<button class="btn btn-danger" view-person-id="' + full.jobName + '" click()="stopJob()">Stop</button>';
         }
       }
     ]
     };
+  }
+
+  viewJob(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
 }
