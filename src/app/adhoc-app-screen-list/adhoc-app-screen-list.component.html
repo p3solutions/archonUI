@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="row">
+    <div id="create-app-header">
+      <h3> <a (click)="gotoDashboard()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+        </a>Adhoc Query Builder</h3>
+    </div>
+  </div>
+
+  <div class="row-group">
+    <div class="col-md-6" id="app-dropdown">
+      <mat-form-field>
+        <mat-select placeholder="Application Name">
+          <mat-option *ngFor="let appInfo of applicationInfoList" [value]="appInfo.appName">
+            {{appInfo.appName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <a id="open-app" (click)="openAppDialog()" matTooltip="Create Application"><i class="fa fa-plus-circle"></i></a>
+    </div>
+    <div class="col-md-3 heading-item">
+      <div>
+        <b>Workspace Name: </b> {{workspaceName | uppercase}}
+      </div>
+    </div>
+    <div class="col-md-3 heading-item">
+      <div>
+        <b>Metadata Version: </b> {{mmrVersion | uppercase}}
+      </div>
+    </div>
+  </div>
+  <div class="row" id="app_desc">
+    <b>Application Description</b>
+    <p>This is First Application This is First ApplicationThis is First Application This is First Application</p>
+  </div>
+</div>
+<div class="container-fluid">
+  <div id="search-screen">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+    <a id="open-app" (click)="openScreenDialog()" matTooltip="Create Screen"><i class="fa fa-plus-circle"></i></a>
+  </div>
+  <div class="mat-elevation-z8" id="screen-table">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="Position">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+        <td mat-cell *matCellDef="let element; let i = index;">{{element.Position}}</td>
+      </ng-container>
+      <ng-container matColumnDef="screenName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Screen Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.screenName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="screenDesc">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Edit">
+        <th mat-header-cell *matHeaderCellDef> Edit </th>
+        <td mat-cell *matCellDef="let element"><i class="fa fa-edit"></i> </td>
+      </ng-container>
+      <ng-container matColumnDef="Delete">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element"><i class="fa fa-trash"></i> </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

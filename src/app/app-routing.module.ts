@@ -47,6 +47,9 @@ import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-tab
 import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
 import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
 import { ErtSipConfigComponent } from './ert-sip-config/ert-sip-config.component';
+import { AdhocLandingPageComponent } from './adhoc-landing-page/adhoc-landing-page.component';
+import { AdhocAppScreenListComponent } from './adhoc-app-screen-list/adhoc-app-screen-list.component';
+import { AdhocSearchComponent } from './adhoc-search/adhoc-search.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -130,7 +133,27 @@ const routes: Routes = [
             path: 'ert-sip-config', component: ErtSipConfigComponent
           }
         ]
-      }
+      },
+      {
+        path: 'adhoc', component: AdhocLandingPageComponent, canActivate: [AuthenticationGuard], children: [
+          {
+            path: '', redirectTo: 'app-screen-list', pathMatch: 'full'
+          },
+          {
+            path: 'app-screen-list', component: AdhocAppScreenListComponent
+          },
+          {
+            path: 'create-screens', component: AdhocAppScreenListComponent, children: [
+              {
+                path: '', redirectTo: 'search', pathMatch: 'full'
+              },
+              {
+                path: 'search', component: AdhocSearchComponent
+              }
+            ]
+          }
+        ]
+      },
     ]
   },
   {

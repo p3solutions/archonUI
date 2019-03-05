@@ -27,7 +27,7 @@ a:focus,
 a:hover {
   text-decoration: underline;
 }
- 
+
 p {
   font-family: "Avenir Next", sans-serif;
   font-weight: 300;
@@ -186,7 +186,7 @@ body {
   margin-bottom: 10px;
   padding: 10px 17px;
   display: inline-block;
-  margin-right:10%;
+  margin-right: 10%;
   background: #fff;
   border: 1px solid #E6E9ED;
   -webkit-column-break-inside: avoid;
@@ -311,9 +311,11 @@ body {
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
+
 .border-bottom-none {
   border-bottom: none;
 }
+
 footer {
   padding: 15px 20px;
   display: block;
@@ -357,9 +359,11 @@ footer {
 .alert {
   border-radius: 2px;
 }
+
 .color-white {
-  color:white !important;
+  color: white !important;
 }
+
 .trim-text {
   display: inline-block;
   white-space: nowrap;
@@ -402,8 +406,8 @@ table.dataTable.no-footer {
 .workspace-panel-heading {
   text-align: left;
   padding-left: 10px;
-  margin-top:30px;
-  margin-bottom:30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   font-size: 22px;
 }
 
@@ -1180,23 +1184,29 @@ label {
 .fa-trash {
   color: rgb(207, 19, 19);
 }
+
 .margin-0 {
-  margin:0px !important;
+  margin: 0px !important;
 }
+
 .mt-20 {
-  margin-top:20px !important;
+  margin-top: 20px !important;
 }
+
 .margin-10 {
-  margin:10px !important;
+  margin: 10px !important;
 }
+
 .padding-0 {
-  padding:0px !important;
+  padding: 0px !important;
 }
+
 .pl-20 {
-  padding-left:20px !important;
+  padding-left: 20px !important;
 }
+
 .pl-40 {
-  padding-left:40px !important;
+  padding-left: 40px !important;
 }
 
 .node {
@@ -1231,6 +1241,23 @@ svg {
   display: block;
 }
 
-#cancelBtn:hover{
+#cancelBtn:hover {
   background-color: #F94B4C;
+}
+
+.create-app-dialog .flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-app-dialog .flex-container>* {
+  width: 100%;
+}
+
+.create-app-dialog .flex-container form {
+  margin-bottom: 20px;
+}
+
+.create-app-dialog .flex-container form>* {
+  margin: 5px 0;
 }

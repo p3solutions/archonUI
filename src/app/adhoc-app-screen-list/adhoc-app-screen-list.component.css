@@ -1,0 +1,77 @@
+#create-app label {
+    padding: 2px 7px 2px 5px;
+    float: left;
+  }
+  
+  #screen-table {
+    margin: 2px 10px 2px 53px;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  td,
+  th {
+    width: 25%;
+    text-align: left;
+  }
+  
+  ::ng-deep svg {
+    height: 8vh;
+  }
+  
+  #open-app {
+    margin: 10px;
+    font-size: 33px;
+    cursor: pointer
+  }
+  
+  #search-screen {
+    text-align: end;
+  }
+  
+  #create-app-header {
+    display: block;
+    margin: 2px 2px 2px 47px;
+    float: left;
+  }
+  
+  #create-app-header a {
+    padding: 2px 15px 2px 5px;
+  }
+  
+  .row-group {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  #app-dropdown {
+    text-align: left;
+    margin: 2px 2px 2px 39px;
+  }
+  
+  .heading-item {
+    padding: 15px
+  }
+  
+  #open-app {
+    margin: 10px;
+    font-size: 33px;
+    cursor: pointer
+  }
+  
+  #app_desc {
+    float: left;
+    margin: 0px 0px 0px 50px;
+    display: inline-block;
+    text-align: left;
+    background-color: #E6E9ED;
+  }
+  
+  th {
+    color: #333;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: "Roboto", "Montserrat", sans-serif;
+  }

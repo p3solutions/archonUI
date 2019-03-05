@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Create Screen</h1>
+<div mat-dialog-content>
+  <form #createScreenForm="ngForm" class="flex-container">
+    <mat-form-field>
+      <input name="screenName" #screenName="ngModel" required matInput placeholder="Screen Name" [(ngModel)]="screenInfo.screenName">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput name="screenDesc" required placeholder="Description" #screenDesc="ngModel" [(ngModel)]="screenInfo.screenDesc"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [disabled]="!createScreenForm.form.valid" [mat-dialog-close]="screenInfo">Create Screen</button>
+</div>
