@@ -92,7 +92,7 @@ export class DbExtractorLastStepComponent implements OnInit {
 
   close() {
     if (this.isSuccessMsg) {
-      this.router.navigate(['/status']);
+      this.router.navigate(['/schedule-monitoring']);
     } else {
       this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
     }

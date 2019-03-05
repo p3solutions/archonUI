@@ -628,7 +628,7 @@ i.link:hover {
   margin-bottom: 5px;
   margin-left: -18px;
   padding: 6px;
-  width: 55px;
+  width: auto;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;

@@ -112,7 +112,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MaterialModule} from './material-module';
 import { ScheduleJobComponent } from './schedule-job/schedule-job.component';
-import {BsDatepickerModule, TimepickerModule} from 'ngx-bootstrap';
+import {BsDatepickerModule, TimepickerModule, ModalModule} from 'ngx-bootstrap';
 import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
 import { AuditingComponent } from './auditing/auditing.component';
 import { ScheduleMonitoringService } from './schedulemonitoring/schedule-monitoring.service';
@@ -201,7 +201,7 @@ export function tokenGetter() {
                 }),
                 BrowserModule,
                 FormsModule,
-                BsDatepickerModule.forRoot(),TimepickerModule.forRoot(),
+                BsDatepickerModule.forRoot(), TimepickerModule.forRoot(),
                 // HttpClientInMemoryWebApiModule.forRoot(
                 //     InMemoryDataService,
                 //     { dataEncapsulation: false }

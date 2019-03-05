@@ -11,6 +11,8 @@ import { map, catchError } from 'rxjs/operators';
 export class ScheduleMonitoringService {
 
   getStatusUrl = environment.apiUrl + 'jobStatus/fetchScheduleJob?tool=';
+  stopJobUrl = environment.apiUrl + 'jobStatus/stopSchedule?scheduleId=';
+  detailsJobUrl = environment.apiUrl + 'jobStatus/fetchScheduleDetails?scheduleId=';
 
   constructor(private http: HttpClient, private userinfoService: UserinfoService) { }
 
@@ -19,14 +21,33 @@ export class ScheduleMonitoringService {
   }
 
   getJobStatuses(_tool?, _jobStatus?, _index?): Observable<any> {
-    let tool, jobStatus, Index;
-    Index = 1 ;
-    tool = 'RDBMS_EXTRACTION';
-    jobStatus = 'COMPLETED';
-    return this.http.get<any>(this.getStatusUrl + tool + '&jobStatus=' + jobStatus  + '&startIndex=' + Index,
+    const Index = 1;
+    return this.http.get<any>(this.getStatusUrl + _tool + '&jobStatus=' + _jobStatus  + '&startIndex=' + Index,
     { headers: this.getHeaders() }).pipe(
       map(this.extractJobOrigins),
       catchError(this.handleError<any>('getJobStatus')));
+  }
+
+  getDetails(scheduleId) {
+    return this.http.get<any>(this.detailsJobUrl + scheduleId ,
+    { headers: this.getHeaders() }).pipe(
+      map(this.extractDetails),
+      catchError(this.handleError<any>('getJobDetails')));
+  }
+
+ extractDetails(res){
+  const data = res.data.RdbmsShowDetails;
+  return data || [];
+ }
+
+  stopJob(scheduleId) {
+  return this.http.post<any>(this.stopJobUrl + scheduleId, { headers: this.getHeaders() }).pipe(
+    map(this.extractStop),
+    catchError(this.handleError<any>('StopJob')));
+  }
+
+  private extractStop(res) {
+  return res;
   }
 
   private extractJobOrigins(res: any) {
