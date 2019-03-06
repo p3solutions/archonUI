@@ -125,4 +125,7 @@ export class ErtCharReplacementComponent implements OnInit {
     }
     return hexCode;
   }
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
 }
