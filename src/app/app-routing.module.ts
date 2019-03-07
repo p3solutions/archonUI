@@ -65,6 +65,8 @@ const routes: Routes = [
             path: 'manage-members/:id', component: ManageMembersComponent
           }, {
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
+          }, {
+            path: 'char-replacement', component: ErtCharReplacementComponent
           }
         ]
       }, {
@@ -101,9 +103,6 @@ const routes: Routes = [
             path: 'ert-jobs', component: ErtJobsComponent
           },
           {
-            path: 'ert-char-replacement', component: ErtCharReplacementComponent
-          },
-          {
             path: 'ert-jobs-config', component: ErtJobsConfigComponent
           },
           {
@@ -125,10 +124,10 @@ const routes: Routes = [
             path: 'ert-table-col-config/:ertJobId', component: ErtTableColumnConfigComponent
           },
           {
-            path: 'ert-datarecord-config' , component: ErtDatarecordConfigComponent
+            path: 'ert-datarecord-config', component: ErtDatarecordConfigComponent
           },
           {
-            path: 'ert-sip-config' , component: ErtSipConfigComponent
+            path: 'ert-sip-config', component: ErtSipConfigComponent
           }
         ]
       }

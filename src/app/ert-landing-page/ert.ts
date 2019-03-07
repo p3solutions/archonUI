@@ -18,6 +18,7 @@ export class ErtTableObj {
     modifiedTableName = '';
     isSelected = false;
     filterNconfig = new FilterAndOrderConfig();
+    relatedTableDetails: RelatedTableDetails[];
 }
 
 export class ErtColumnListObj {
@@ -65,7 +66,7 @@ export class TableDetailsListObj {
     tableId = '';
     tableName = '';
     modifiedTableName = '';
-    isMainTable = true;
+    isMainTable = false;
     columnList: ColumnListObj[] = [];
     usrDefinedColumnList: UsrDefinedColumnListObj[] = [];
     filterAndOrderConfig = new FilterAndOrderConfig();
