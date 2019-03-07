@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuditService } from './audit.service';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-auditing',
@@ -13,76 +14,114 @@ export class AuditingComponent implements OnInit {
   isAvailable = true;
   dtOptions: DataTables.Settings = {};
   output;
-  
+  selectedJobStatus = '';
+  Status = ['CRITICAL', 'NORMAL', 'WARNING', 'ERROR'];
+  Events = [];
+  Service = [];
+  selectedEvent = '';
+  selectedService = '';
+  enddate = '';
+  startdate = '';
+  colorTheme = 'theme-dark-blue';
+  bsConfig: Partial<BsDatepickerConfig>  = Object.assign({}, { containerClass: this.colorTheme });
+
   constructor(private router: Router, private auditService: AuditService) { }
 
   ngOnInit() {
     this.renderTable();
-    this.auditService.getJobStatuses().subscribe(x => {
-      console.log(x);
+    this.getAudit();
+    this.auditService.getEvetns().subscribe(x => {
+      for (const i of x) {
+      this.Events.push(i.eventName);
+      this.Service.push(i.serviceId);
+      }
     });
-
   }
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
+  getAudit() {
+    let fromdate, todate;
+    if (this.startdate !== '') {
+      const from = new Date(this.startdate);
+      fromdate = from.toDateString();
+    }
+    if (this.enddate !== '') {
+      const from = new Date(this.enddate);
+      todate = from.toDateString();
+    }
+    const params = {
+      'serviceId' : this.selectService,
+      'eventName' : this.selectEvent,
+      'severityLevel' : this.selectJobStatus,
+      'fromDate': fromdate,
+      'toDate' : todate
+    };
+    this.auditService.getJobStatuses(params).subscribe(x => {
+      this.output = x;
+    });
+  }
+
+  selectJobStatus(param) {
+  this.selectedJobStatus = param;
+  }
+
+  selectEvent(e){
+  this.selectedEvent = e;
+  }
+
+  selectService(service) {
+    this.selectedService = service;
+  }
+
   renderTable() {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 2,
+      pageLength: 10,
       scrollX: true,
       autoWidth: true,
       data: this.output,
       columns : [
         {
-          title: 'Job Type',
-          data: 'jobType'
+          title: 'Severity Level',
+          data: 'severityLevel'
         },
         {
-          title: 'Tool',
-          data: 'tool'
+          title: 'User Name',
+          data: 'userName'
         },
         {
-          title: 'User',
-          data: 'user'
+          title: 'WorkSpace Name',
+          data: 'workspaceName'
         },
         {
-          title: 'jobName',
-          data: 'jobName'
+          title: 'Related Job ID',
+          data: 'releatedJobId'
         },
         {
-          title: 'Schedule Time',
-          data: 'scheduledDate'
+          title: 'Service Name',
+          data: 'serviceId'
         },
         {
-          title: 'Start Time',
-          data: 'scheduledDate'
+          title: 'Event Name',
+          data: 'eventName'
         },
         {
-          title: 'End Time',
-          data: 'endDate'
+          title: 'Event Desc',
+          data: 'eventDescription'
         },
         {
-          title: 'Status',
-          render: function (data: any, type: any, full: any) {
-            console.log(full.status);
-            return '<button class="btn btn-success" view-person-id="' + full.jobName + '">Success</button>';
-          }
+          title: 'Event Details',
+          data: 'eventDetails'
         },
         {
-        title: 'Details',
-        render: function (data: any, type: any, full: any) {
-          return '<button class="btn btn-primary" view-person-id="' + full.jobName + '">Details</button>';
-        }
-      },
-      {
         title: 'Download',
         render: function (data: any, type: any, full: any) {
-          return '<button class="btn btn-danger" view-person-id="' + full.jobName + '">Stop</button>';
+          return '<a data-tooltip="Download"><i class="fa fa-download fa-2x" id="' + full.releatedJobId + '" source="Downloads"></i></a>';
         }
-      }
+        }
     ]
     };
   }

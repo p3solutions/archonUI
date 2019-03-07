@@ -90,10 +90,18 @@
                   </tr>
                 </thead>
                 <tbody >
-                  <tr *ngFor="let i of keysCommon">
-                    <td>{{i}}</td>
-                    <td>{{common[i]}}</td>
+                  <tr *ngFor="let i of common" class="text-left">
+                    <td>{{i.name}}</td>
+                    <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
+                    <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium': 'GMT' }}</td>
                   </tr>
+                  <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
+                  <tr *ngFor="let i of input" class="text-left">
+                    <td>{{i.name}}</td>
+                    <td>{{i.value}}</td>
+                  </tr>
+                  <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
+                  <tr><td>{{message?.name}}</td><td>{{message?.value}}</td></tr>
                 </tbody>
               </table>
       </div>

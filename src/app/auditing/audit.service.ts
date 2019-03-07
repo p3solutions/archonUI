@@ -11,6 +11,7 @@ import { map, catchError } from 'rxjs/operators';
 export class AuditService {
 
   getAuditUrl = environment.apiUrl + 'audits/auditing';
+  getEventsUrl = environment.apiUrl + 'audits/events';
 
   constructor(private http: HttpClient, private userinfoService: UserinfoService) { }
 
@@ -18,8 +19,19 @@ export class AuditService {
     return this.userinfoService.getHeaders();
   }
 
-  getJobStatuses(): Observable<any> {
-    return this.http.post<any>(this.getAuditUrl, { headers: this.getHeaders() }).pipe(
+  getEvetns(): Observable<any> {
+    return this.http.get<any>(this.getEventsUrl, { headers: this.getHeaders() }).pipe(
+      map(this.extractEvents),
+      catchError(this.handleError<any>('getEvents')));
+  }
+
+  private extractEvents(res: any) {
+    const data = res.data.Events;
+    return data || [];
+  }
+
+  getJobStatuses(params) {
+    return this.http.request<any>('GET', this.getAuditUrl, { body: params , headers: this.getHeaders() }).pipe(
       map(this.extractJobOrigins),
       catchError(this.handleError<any>('getJobStatus')));
   }

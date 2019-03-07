@@ -36,7 +36,7 @@ export class ScheduleMonitoringService {
   }
 
  extractDetails(res){
-  const data = res.data.RdbmsShowDetails;
+  const data = res.data.ShowDetails;
   return data || [];
  }
 

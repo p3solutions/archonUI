@@ -22,15 +22,15 @@
     <div class="btn-group col-md-2 p-0">
       <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
-        {{selectedTool? ('Tool: selectedTool') : ('Filter By Input : All')}}
+        {{selectedEvent ? selectedEvent : 'Event: All' }}
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobOrigin('')">JOB
-            RDBMS</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item dropdown-data trim-text j-origin" *ngFor="let jOrigin of jobOriginList" title="{{jOrigin}}"
-            (click)="selectJobOrigin(jOrigin)">{{jOrigin}}</a>
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectEvent('');getAudit()">Event
+                : All</a>
+            <div class="dropdown-divider"></div>
+          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let e of Events" (click)="selectEvent(e);getAudit()">
+            {{e}}</a>
         </div>
       </div>
     </div>
@@ -38,36 +38,51 @@
     <div class="btn-group col-md-2 p-0">
       <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
-        {{selectedTool? ('Tool: selectedTool') : ('Tool: All')}}
+        {{selectedService ? selectedService : 'Service: All' }}
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobOrigin('')">JOB
-            RDBMS</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item dropdown-data trim-text j-origin" *ngFor="let jOrigin of jobOriginList" title="{{jOrigin}}"
-            (click)="selectJobOrigin(jOrigin)">{{jOrigin}}</a>
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectService('');getAudit()">Service
+                : All</a>
+            <div class="dropdown-divider"></div>
+          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let service of Service" (click)="selectService(service);getAudit()">
+            {{service}}</a>
         </div>
       </div>
     </div>
 
     <div class="btn-group col-md-2 p-0">
       <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false" title="{{selectedJobStatus? selectedJobStatus : 'JOB STATUS: ALL'}}">
-        {{selectedJobStatus? selectedJobStatus : 'JOB STATUS: All'}}
+        aria-expanded="false">
+        {{selectedJobStatus? selectedJobStatus : 'Severity Level: All'}}
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobStatus('')">JOB
-            STATUS: All</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item dropdown-data trim-text j-status" *ngFor="let jStatus of jobStatusList" title="{{jStatus}}"
-            (click)="selectJobStatus(jStatus)">{{jStatus}}</a>
-        </div>
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectJobStatus('');getAudit()">Severity Level
+                : All</a>
+            <div class="dropdown-divider"></div>
+          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" *ngFor="let i of Status"  (click)="selectJobStatus(i);getAudit()">
+          {{i}} </a>
       </div>
     </div>
-
 </div>
+
+<div class="btn-group col-md-2 p-0">
+<input type="text" [(ngModel)]="startdate"
+                     placeholder="From Date" (click)="getAudit()"
+                     class="form-control" style="height: 34px"
+                     bsDatepicker [bsConfig]="bsConfig" placement="bottom" required>
+</div>
+
+<div class="btn-group col-md-1" style="width: 48px;"></div>
+
+<div class="btn-group col-md-2 p-0">
+  <input type="text" [(ngModel)]="enddate"
+                       placeholder="To Date" (click)="getAudit()"
+                       class="form-control" style="height: 34px"
+                       bsDatepicker [bsConfig]="bsConfig" placement="bottom" required>
+  </div>
+
 </div>
 
 <div class="row" style="padding-top: 95px;">

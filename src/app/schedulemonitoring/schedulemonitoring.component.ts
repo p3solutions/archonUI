@@ -23,7 +23,7 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   updateSuccess = false;
   common;
   input;
-  keysCommon: string[];
+  jobMessage;
 
   constructor(private router: Router, private renderer: Renderer, private service: ScheduleMonitoringService) {
   }
@@ -39,8 +39,8 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
     if (event.target.getAttribute('source') === 'Details') {
       this.service.getDetails(event.target.getAttribute('id')).subscribe(result => {
       this.common = result.common;
-      this.keysCommon = Object.keys(this.common);
       this.input = result.input;
+      this.jobMessage = result.message;
       });
       el.click();
     } else if (event.target.getAttribute('source') === 'Stop') {
