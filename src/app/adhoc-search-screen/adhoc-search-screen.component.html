@@ -1,0 +1,49 @@
+<div class="row" cdkDropList #searchScreen="cdkDropList" [cdkDropListData]="searchColumns" [cdkDropListConnectedTo]="[column]"
+  (cdkDropListDropped)="drop($event)">
+  <mat-card *ngFor="let item of searchColumns" class="col-md-4 column-box">
+    <mat-card-header>
+      <mat-card-title>{{item.columnName}}
+        <span> <a (click)="gotoSearchColumnEdit(item.columnName)"><i class="cursor-pointer" data-toggle="modal"
+              data-target="#editSearchColumn" class="fa fa-edit"></i></a>
+          <i class="fa fa-trash" aria-hidden="true"></i></span>
+      </mat-card-title>
+      <mat-card-subtitle>({{item.tableName}}/{{item.columnName}})</mat-card-subtitle>
+    </mat-card-header>
+    <div style="max-height:50px;overflow: auto;">
+      <input *ngIf="item.fieldType=='TEXT'" type="text" class="form-control">
+      <mat-form-field *ngIf="item.fieldType=='COMBO'">
+        <mat-select placeholder="Search Type">
+          <mat-option value="A">
+            A
+          </mat-option>
+          <mat-option value="B">
+            B
+          </mat-option>
+          <mat-option value="C">
+            C
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-radio-group *ngIf="item.fieldType=='RADIO'">
+        <mat-radio-button value="tbl">Table Search</mat-radio-button>
+        <mat-radio-button value="col">Column Search</mat-radio-button>
+        <mat-radio-button value="tbl">Table Search</mat-radio-button>
+        <mat-radio-button value="col">Column Search</mat-radio-button>
+        <mat-radio-button value="tbl">Table Search</mat-radio-button>
+        <mat-radio-button value="col">Column Search</mat-radio-button>
+        <mat-radio-button value="col">Column Search</mat-radio-button>
+        <mat-radio-button value="tbl">Table Search</mat-radio-button>
+        <mat-radio-button value="col">Column Search</mat-radio-button>
+      </mat-radio-group>
+      <mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory Field</mat-checkbox>
+      <mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory</mat-checkbox>
+      <mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory Field</mat-checkbox>
+      <mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory</mat-checkbox>
+      <mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory Field</mat-checkbox>
+      <mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory</mat-checkbox><mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory Field</mat-checkbox>
+      <mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory</mat-checkbox><mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory Field</mat-checkbox>
+      <mat-checkbox *ngIf="item.fieldType=='CHECK'">Mandatory</mat-checkbox>
+
+    </div>
+  </mat-card>
+</div>

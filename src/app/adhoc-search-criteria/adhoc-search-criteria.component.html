@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-3">
+    <mat-card id="left-card" class="example-card">
+      <mat-card-header class="header-blue">
+        <mat-card-title>Selection Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <mat-radio-group>
+            <mat-radio-button value="tbl">Table Search</mat-radio-button>
+            <mat-radio-button value="col">Column Search</mat-radio-button>
+          </mat-radio-group>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Search Table">
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-tree #tree cdkDropList #column="cdkDropList" [cdkDropListConnectedTo]="[searchScreen]"
+            (cdkDropListDropped)="drop($event)" [cdkDropListData]="dataSource" [dataSource]="dataSource" [treeControl]="treeControl">
+            <mat-tree-node [cdkDragData]="node.name" cdkDrag *matTreeNodeDef="let node" matTreeNodePadding>
+              <button mat-icon-button disabled></button><i class="fa fa-columns" aria-hidden="true"></i>
+              {{node.name | uppercase}}
+            </mat-tree-node>
+            <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+              <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                <i [ngClass]="treeControl.isExpanded(node) ? 'fa fa-chevron-down' : 'fa fa-chevron-right'">
+                </i>
+              </button><i class="fa fa-table" aria-hidden="true"></i>
+              {{node.name | uppercase}}
+            </mat-tree-node>
+          </mat-tree>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-9">
+    <mat-card class="example-card" id="right-card">
+      <mat-card-header class="header-blue">
+        <mat-card-title>Drag a column to create a serach field</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <router-outlet></router-outlet>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

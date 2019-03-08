@@ -3,12 +3,12 @@
     <div id="create-app-header">
       <h3> <a (click)="gotoDashboard()" data-tooltip="Back">
           <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-        </a>Adhoc Query Builder</h3>
+        </a>IA Adhoc Query Builder</h3>
     </div>
   </div>
 
   <div class="row-group">
-    <div class="col-md-6" id="app-dropdown">
+    <div class="col-md-7" id="app-dropdown">
       <mat-form-field>
         <mat-select placeholder="Application Name">
           <mat-option *ngFor="let appInfo of applicationInfoList" [value]="appInfo.appName">
@@ -23,7 +23,7 @@
         <b>Workspace Name: </b> {{workspaceName | uppercase}}
       </div>
     </div>
-    <div class="col-md-3 heading-item">
+    <div class="col-md-2 heading-item">
       <div>
         <b>Metadata Version: </b> {{mmrVersion | uppercase}}
       </div>
@@ -44,24 +44,24 @@
   <div class="mat-elevation-z8" id="screen-table">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="Position">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-        <td mat-cell *matCellDef="let element; let i = index;">{{element.Position}}</td>
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.Position}}</td>
       </ng-container>
       <ng-container matColumnDef="screenName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Screen Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.screenName}} </td>
+        <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Screen Name </th>
+        <td style="width:25%" mat-cell *matCellDef="let element"> {{element.screenName}} </td>
       </ng-container>
       <ng-container matColumnDef="screenDesc">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-        <td mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
+        <th style="width:49%" mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <td style="width:49%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
       </ng-container>
       <ng-container matColumnDef="Edit">
-        <th mat-header-cell *matHeaderCellDef> Edit </th>
-        <td mat-cell *matCellDef="let element"><i class="fa fa-edit"></i> </td>
+        <th style="width:8%" mat-header-cell *matHeaderCellDef> Edit </th>
+        <td style="width:8%" mat-cell *matCellDef="let element" (click)="gotoScreen()"><i class="fa fa-edit"></i> </td>
       </ng-container>
       <ng-container matColumnDef="Delete">
-        <th mat-header-cell *matHeaderCellDef> Delete </th>
-        <td mat-cell *matCellDef="let element"><i class="fa fa-trash"></i> </td>
+        <th style="width:8%" mat-header-cell *matHeaderCellDef> Delete </th>
+        <td style="width:8%" mat-cell *matCellDef="let element"><i class="fa fa-trash"></i> </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

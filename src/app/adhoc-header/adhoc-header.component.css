@@ -1,0 +1,15 @@
+#create-app-header {
+  display: block;
+  margin: 2px 2px 2px 9px;
+  float: left;
+}
+
+#create-app-header a {
+  padding: 2px 15px 2px 5px;
+}
+
+#adhoc-header-info {
+  display: inline-flex;
+  justify-content: space-between;
+  font-size: larger;
+}

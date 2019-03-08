@@ -1,0 +1,50 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container>* {
+  width: 100%;
+}
+
+#popup-header {
+  background-color: #E6E9ED;
+  border-radius: 3px;
+  text-align: center;
+  margin-left: 0px
+}
+
+#table-col-info {
+  display: inline-flex;
+  justify-content: space-around;
+  margin: 12px 0px 0px 0px;
+  font-size: 16px;
+}
+
+#nextbtn button {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+#popup-header h3 {
+  margin: 8px 2px 5px 0px;
+}
+
+.example-container form {
+  margin-bottom: 20px;
+}
+
+.example-container form>* {
+  margin: 5px 0;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdhocSearchComponent } from './adhoc-search.component';
+import { AdhocSearchScreenComponent } from './adhoc-search-screen.component';
 
-describe('AdhocSearchComponent', () => {
-  let component: AdhocSearchComponent;
-  let fixture: ComponentFixture<AdhocSearchComponent>;
+describe('AdhocSearchScreenComponent', () => {
+  let component: AdhocSearchScreenComponent;
+  let fixture: ComponentFixture<AdhocSearchScreenComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdhocSearchComponent ]
+      declarations: [ AdhocSearchScreenComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdhocSearchComponent);
+    fixture = TestBed.createComponent(AdhocSearchScreenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

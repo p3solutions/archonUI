@@ -1,0 +1,18 @@
+::ng-deep .mat-card-header-text {
+  width: 100%;
+  margin: 0px !important;
+}
+
+::ng-deep .mat-card-title span {
+  float: right;
+  color: #1385f8  !important;
+}
+
+.mat-card.column-box {
+  width: 30.25%;
+  padding: 11px 10px 8px 10px;
+  margin: 0px 9px 17px 17px;
+}
+::ng-deep .mat-card-title span i{
+  padding: 0 7px
+}

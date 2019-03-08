@@ -1,0 +1,50 @@
+<div class="example-container">
+  <div class="row" id="popup-header">
+    <h3>Edit Search Area</h3>
+  </div>
+  <div id="table-col-info">
+    <div>
+      <b>Selected Table Name: </b> {{searchColumn.tableName}}
+    </div>
+    <div>
+      <b>Selected Column Name: </b> {{searchColumn.columnName}}
+    </div>
+  </div>
+  <form class="example-container" [formGroup]="editSearchForm">
+    <mat-form-field>
+      <input matInput formControlName="label" placeholder="Label">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="fieldType" placeholder="Field Type" #field (selectionChange)="fieldTypeChange($event.value)">
+        <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType">
+          {{fieldType}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="searchType" placeholder="Search Type">
+        <mat-option *ngFor="let searchType of searchTypes" [value]="searchType">
+          {{searchType}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="inputFunction" placeholder="Input Function">
+        <mat-option *ngFor="let inputFunction of inputFunctions" [value]="inputFunction">
+          {{inputFunction}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="!isOptionFieldDisable">
+      <textarea matInput formControlName="options" name="option" [disabled]="isOptionFieldDisable" placeholder="Option"></textarea>
+    </mat-form-field>
+    <section class="example-section">
+      <mat-checkbox class="example-margin" formControlName="isMandatoryField">Mandatory Field</mat-checkbox>
+    </section>
+  </form>
+</div>
+<div class="row" id="nextbtn">
+  <button type="button" class="btn btn-primary btn-sm" [disabled]="!editSearchForm.valid" (click)="update()" style="float: right;margin-right: 12px">Update</button>
+  <button class="btn btn-primary btn-sm" (click)="cancel()" style="float:right;margin-right:5px;">
+    Cancel</button>
+</div>

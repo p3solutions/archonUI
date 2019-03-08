@@ -1,3 +1,29 @@
-<p>
-  adhoc-header works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div id="create-app-header">
+      <h3> <a (click)="gotoDashboard()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+        </a>IA Adhoc Query Builder</h3>
+    </div>
+  </div>
+  <div>
+    <div class="row" style="margin-bottom: 10px;">
+      <div class="col-md-3"></div>
+      <div class="col-md-9" id="adhoc-header-info">
+        <div>
+          <b>Screen Name: </b> Screen one
+        </div>
+        <div>
+          <b>Application: </b> Screen one
+        </div>
+        <div>
+          <b>Workspace: </b> Screen one
+        </div>
+        <div>
+          <b>Metadata Version: </b> Screen one
+        </div>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

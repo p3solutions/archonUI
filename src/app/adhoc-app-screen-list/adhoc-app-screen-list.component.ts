@@ -4,6 +4,7 @@ import { ScreenInfo, ApplicationInfo } from '../adhoc-landing-page/adhoc';
 import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort } from '@angular/material';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ManageMasterMetadataService } from '../manage-master-metadata/manage-master-metadata.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-screen-dialog',
@@ -47,12 +48,12 @@ export class AdhocAppScreenListComponent implements OnInit {
   screenInfo = new ScreenInfo();
   displayedColumns: string[] = ['Position', 'screenName', 'screenDesc', 'Edit', 'Delete'];
   ScreenInfoList: ScreenInfo[] = [
-    { Position: 1, screenDesc: 'A', screenName: 'AA' },
-    { Position: 2, screenDesc: 'B', screenName: 'AB' },
-    { Position: 3, screenDesc: 'C', screenName: 'AC' },
-    { Position: 4, screenDesc: 'D', screenName: 'AD' },
-    { Position: 5, screenDesc: 'E', screenName: 'AE' },
-    { Position: 6, screenDesc: 'F', screenName: 'AF' }
+    { Position: 1, screenId: '1', searchScreenDetail: null, screenDesc: 'A', screenName: 'AA' },
+    { Position: 2, screenId: '2', searchScreenDetail: null, screenDesc: 'B', screenName: 'AB' },
+    { Position: 3, screenId: '3', searchScreenDetail: null, screenDesc: 'C', screenName: 'AC' },
+    { Position: 4, screenId: '4', searchScreenDetail: null, screenDesc: 'D', screenName: 'AD' },
+    { Position: 5, screenId: '5', searchScreenDetail: null, screenDesc: 'E', screenName: 'AE' },
+    { Position: 6, screenId: '6', searchScreenDetail: null, screenDesc: 'F', screenName: 'AF' }
   ];
   applicationInfoList: ApplicationInfo[] = [];
   appInfo = new ApplicationInfo;
@@ -62,15 +63,15 @@ export class AdhocAppScreenListComponent implements OnInit {
   dataSource = new MatTableDataSource<ScreenInfo>(this.ScreenInfoList);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(public dialog: MatDialog,  private workspaceHeaderService: WorkspaceHeaderService,
-    private manageMetaService: ManageMasterMetadataService) { }
+  constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
+    private manageMetaService: ManageMasterMetadataService, private router: Router) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.applicationInfoList.push({ appName: 'App 1', appDesc: 'First App' });
-    this.applicationInfoList.push({ appName: 'App 2', appDesc: 'Second App' });
-    this.applicationInfoList.push({ appName: 'App 3', appDesc: 'Third App' });
+    this.applicationInfoList.push({ appId: '1', appName: 'App 1', appDesc: 'First App' });
+    this.applicationInfoList.push({ appId: '2', appName: 'App 2', appDesc: 'Second App' });
+    this.applicationInfoList.push({ appId: '3', appName: 'App 3', appDesc: 'Third App' });
     this.getHeaderInfo();
   }
 
@@ -113,5 +114,9 @@ export class AdhocAppScreenListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  gotoScreen() {
+    this.router.navigate(['/workspace/adhoc/screen/table']);
   }
 }

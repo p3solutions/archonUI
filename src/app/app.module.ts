@@ -117,7 +117,11 @@ import { AdhocLandingPageComponent } from './adhoc-landing-page/adhoc-landing-pa
 import { AdhocHeaderComponent } from './adhoc-header/adhoc-header.component';
 import { AdhocAppScreenListComponent, CreateScreenDialogComponent,
         CreateAppDialogComponent } from './adhoc-app-screen-list/adhoc-app-screen-list.component';
-import { AdhocSearchComponent } from './adhoc-search/adhoc-search.component';
+import { AdhocTableSelectionComponent } from './adhoc-table-selection/adhoc-table-selection.component';
+import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-search-criteria.component';
+import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-screen.component';
+import { AdhocEditSearchScreenPopupComponent } from './adhoc-edit-search-screen-popup/adhoc-edit-search-screen-popup.component';
+import { AdhocScreenService } from './adhoc-search-criteria/adhoc-screen.service';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -194,9 +198,12 @@ export function tokenGetter() {
                 AdhocLandingPageComponent,
                 AdhocHeaderComponent,
                 AdhocAppScreenListComponent,
-                AdhocSearchComponent,
                 CreateAppDialogComponent,
-                CreateScreenDialogComponent
+                CreateScreenDialogComponent,
+                AdhocTableSelectionComponent,
+                AdhocSearchCriteriaComponent,
+                AdhocSearchScreenComponent,
+                AdhocEditSearchScreenPopupComponent
         ],
         imports: [
                 JwtModule.forRoot({
@@ -263,7 +270,8 @@ export function tokenGetter() {
                 EditRelationshipInfoService,
                 AddDirectJoinService,
                 DbExtractorService,
-                StoredProcViewService
+                StoredProcViewService,
+                AdhocScreenService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent
