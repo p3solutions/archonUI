@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AdhocService } from '../adhoc-landing-page/adhoc.service';
+import { AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adhoc-header',
@@ -6,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./adhoc-header.component.css']
 })
 export class AdhocHeaderComponent implements OnInit {
-
-  constructor() { }
+  adhocHeaderInfo = new AdhocHeaderInfo();
+  constructor(private adhocService: AdhocService, private router: Router) { }
 
   ngOnInit() {
+    this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
+      if (result === null) {
+        this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+      } else {
+        this.adhocHeaderInfo = result;
+      }
+    });
   }
 
 }

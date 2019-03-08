@@ -55,3 +55,9 @@ export class Adhoc {
     screenInfo = new ScreenInfo();
 }
 
+export class AdhocHeaderInfo {
+    workspaceName: string;
+    screenName: string;
+    appName: string;
+    metadataVersion: string;
+}

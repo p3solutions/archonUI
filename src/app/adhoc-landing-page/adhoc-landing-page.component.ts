@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdhocService } from './adhoc.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adhoc-landing-page',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdhocLandingPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private adhocService: AdhocService, private router: Router) { }
 
   ngOnInit() {
+    // this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
+    //   if (result === null) {
+    //     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+    //   }
+    // });
   }
-
 }

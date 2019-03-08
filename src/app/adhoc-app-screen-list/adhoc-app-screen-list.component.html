@@ -10,7 +10,7 @@
   <div class="row-group">
     <div class="col-md-7" id="app-dropdown">
       <mat-form-field>
-        <mat-select placeholder="Application Name">
+        <mat-select [(value)]="selectedApp" placeholder="Application Name">
           <mat-option *ngFor="let appInfo of applicationInfoList" [value]="appInfo.appName">
             {{appInfo.appName}}
           </mat-option>
@@ -57,7 +57,7 @@
       </ng-container>
       <ng-container matColumnDef="Edit">
         <th style="width:8%" mat-header-cell *matHeaderCellDef> Edit </th>
-        <td style="width:8%" mat-cell *matCellDef="let element" (click)="gotoScreen()"><i class="fa fa-edit"></i> </td>
+        <td style="width:8%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.screenName)"><i class="fa fa-edit"></i> </td>
       </ng-container>
       <ng-container matColumnDef="Delete">
         <th style="width:8%" mat-header-cell *matHeaderCellDef> Delete </th>

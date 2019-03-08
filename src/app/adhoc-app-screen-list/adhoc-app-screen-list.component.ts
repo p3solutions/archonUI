@@ -1,10 +1,11 @@
 
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { ScreenInfo, ApplicationInfo } from '../adhoc-landing-page/adhoc';
+import { ScreenInfo, ApplicationInfo, AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
 import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort } from '@angular/material';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ManageMasterMetadataService } from '../manage-master-metadata/manage-master-metadata.service';
 import { Router } from '@angular/router';
+import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 
 @Component({
   selector: 'app-create-screen-dialog',
@@ -60,11 +61,13 @@ export class AdhocAppScreenListComponent implements OnInit {
   workspaceName = '';
   mmrVersion = '';
   workspaceId = '';
+  selectedApp = 'App 1';
   dataSource = new MatTableDataSource<ScreenInfo>(this.ScreenInfoList);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
-    private manageMetaService: ManageMasterMetadataService, private router: Router) { }
+    private manageMetaService: ManageMasterMetadataService, private router: Router,
+    private adhocService: AdhocService) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -116,7 +119,13 @@ export class AdhocAppScreenListComponent implements OnInit {
     }
   }
 
-  gotoScreen() {
+  gotoScreen(screenName: string) {
+    const adhocHeaderInfo = new AdhocHeaderInfo();
+    adhocHeaderInfo.workspaceName = this.workspaceName;
+    adhocHeaderInfo.metadataVersion = this.mmrVersion;
+    adhocHeaderInfo.screenName = screenName;
+    adhocHeaderInfo.appName = this.selectedApp;
+    this.adhocService.updateAdhocHeaderInfo(adhocHeaderInfo);
     this.router.navigate(['/workspace/adhoc/screen/table']);
   }
 }
