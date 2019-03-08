@@ -24,7 +24,7 @@
 
       <!-- <label class="btn btn-primary" for="my-file-selector" style="width:85%" > -->
           <button type="button" style="float:left" class="btn btn-secondary browse-btn" onclick="document.getElementById('uploadReadQueryFile').click()">Upload files</button>
-          <input type="file" class="hide btn btn-secondary browse-btn" accept=".sql,.txt" id="uploadReadQueryFile" (change)="uploadQueryFile($event.target.files)" formControlName="queryFileToUpload" >
+          <input type="file" class="hide btn btn-secondary browse-btn" accept=".sql" id="uploadReadQueryFile" (change)="uploadQueryFile($event.target.files)" formControlName="queryFileToUpload" >
         <!-- </label> -->
         <p style="margin-top:6px">{{queryFileName}}</p>
     </div>

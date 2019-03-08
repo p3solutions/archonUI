@@ -26,8 +26,10 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
     if (this.selectedTableList[0] !== undefined) {
       this.selectedTableId = this.selectedTableList[0].tableId;
-      this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-      this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
+      const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+      this.selectedTableName = tempTableObj.tableName;
+      this.ExpectedTableName = tempTableObj.modifiedTableName;
+      tempTableObj.isMainTable = true;
     }
   }
 
@@ -109,6 +111,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
       'ertJobStatus': ertJobStatus,
       'schemaResultsTableCount': this.ertService.schemaResultsTableCount.toString(),
+      'isIngest': false,
       'databaseConfig': {
         'databaseId': this.workspaceHeaderService.getDatabaseID()
       },
@@ -131,6 +134,8 @@ export class ErtTableColumnConfigComponent implements OnInit {
     if (param.ingestionDataConfig.infoArchiveName === '' || param.ingestionDataConfig.infoArchiveSchemaName === ''
       || param.ingestionDataConfig.infoArchiveUserName === '' || param.ingestionDataConfig.infoArchivePassword === '') {
       delete param['ingestionDataConfig'];
+    } else {
+      param.isIngest = true;
     }
     console.log(param);
     this.ertService.saveErtJob(param).subscribe(result => {

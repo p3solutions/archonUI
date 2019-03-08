@@ -8,10 +8,7 @@
 }
 
 #replacement-heading {
-  padding: 17px 24px 15px;
   text-align: left;
-  font-weight: 500;
-  font-size: 20px;
 }
 
 body {
@@ -38,4 +35,64 @@ body {
 
 #char-replacement-table a {
   cursor: pointer;
+}
+
+#replacement-heading i {
+  font-size: 24px;
+  padding: 0px 5px 0px 13px;
+  margin: 3px 3px 0px 7px;
+}
+
+.example-form {
+  /* min-width: 150px; */
+  max-width: 858px;
+  padding: 2p;
+  width: 100%;
+}
+
+mat-form-field {
+  padding: 1px 30px 0px 0px;
+  width: 360px;
+}
+
+.add-char-code {
+  display: initial;
+  padding: 15px 15px 12px 10px;
+  font-size: x-large;
+}
+
+.add-char-code a {
+  padding: 6px 19px 7px 7px;
+  cursor: pointer;
+}
+
+a.disabled {
+  color: gray;
+  cursor: not-allowed;
+  text-decoration: underline;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+  text-align: left;
+}
+
+::ng-deep svg {
+  height: 8vh;
+}
+
+th {
+  color: #333;
+  font-weight: bold;
+  font-size: 15px;
+  font-family: "Roboto", "Montserrat", sans-serif;
+}
+
+#char-table {
+  margin: 2px 16px 2px 67px;
 }

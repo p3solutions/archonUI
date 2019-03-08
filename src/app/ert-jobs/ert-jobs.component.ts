@@ -50,7 +50,7 @@ export class ErtJobsComponent implements OnInit {
     } else if (ertJobMode === 'SIP') {
       this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'SIP' } });
     } else {
-      this.router.navigate(['/workspace/ert/ert-table/', ertJobId]);
+      this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'TABLE' } });
     }
   }
 
@@ -61,7 +61,7 @@ export class ErtJobsComponent implements OnInit {
   }
 
   runJob(ertJobId, jobStatus) {
-    if (jobStatus === 'READY') {
+    if (jobStatus === 'READY' || jobStatus === 'COMPLETED' || jobStatus === 'FAILED') {
       this.ertService.runJob(ertJobId).subscribe(result => {
         if (result.httpStatus === 200) {
           alert('Job has Started');
