@@ -28,7 +28,6 @@ export class AuditingComponent implements OnInit {
   constructor(private router: Router, private auditService: AuditService) { }
 
   ngOnInit() {
-    this.renderTable();
     this.getAudit();
     this.auditService.getEvetns().subscribe(x => {
       for (const i of x) {
@@ -59,8 +58,11 @@ export class AuditingComponent implements OnInit {
       'fromDate': fromdate,
       'toDate' : todate
     };
+    this.isAvailable = false;
     this.auditService.getJobStatuses(params).subscribe(x => {
       this.output = x;
+      this.isAvailable = true;
+      this.renderTable();
     });
   }
 
