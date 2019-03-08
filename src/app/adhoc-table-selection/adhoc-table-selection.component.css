@@ -2,7 +2,6 @@
   position: absolute;
   right: 16px;
   margin-top: 20px;
-  margin-bottom: 7px;
 }
 
 #ert-table-id {
@@ -20,8 +19,9 @@
 }
 
 #table-heading {
+  padding: 12px 0px 13px 0px;
   float: left;
-  margin: 5px 0px 0px 8px;
+  margin: 5px 0px 0px 24px;
 }
 
 .inner-addon {
@@ -35,9 +35,9 @@
 }
 
 .right-addon .glyphicon {
-  right: 42px;
+  right: 29px;
   bottom: 53px;
-  top: 64px;
+  top: 56px
 }
 
 .right-addon input {
@@ -129,7 +129,7 @@ div.sticky {
 
 .well {
   min-height: 22px;
-  margin: 8px 8px 8px 8px;
+  margin-bottom: 9px;
   background-color: #fff;
   /* border: 1px solid #333; */
   border-radius: 4px;
@@ -305,12 +305,12 @@ table tr td:nth-child(6) {
   height: 395px;
 }
 
-.filter-item-list {
+.filter-item-list{
   border: 2px solid #E6E9ED;
   overflow: auto;
 }
 
-.filter-well {
+.filter-well{
   min-height: 22px;
   margin-bottom: 9px;
   background-color: #fff;
@@ -331,17 +331,3 @@ table tr td:nth-child(6) {
   border: 1px solid white;
 }
 
-#graph-card-heading {
-  text-align: left;
-  margin: 0px 0px 0px 12px;
-}
-
-
-#nextbtn button {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-
-.input-group .fa-search{
-  display: table-cell;
-}

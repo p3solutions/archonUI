@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import * as d3 from 'd3';
-import { getSIPGraphData, getRelationshipListForSip} from '../ert-datarecord-config/tree';
+import { toJson } from '../ert-datarecord-config/tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datarecord-config/class';
-import { ErtService } from '../ert-landing-page/ert.service';
+
 
 @Component({
   selector: 'app-adhoc-table-selection',
@@ -14,7 +14,7 @@ import { ErtService } from '../ert-landing-page/ert.service';
 })
 export class AdhocTableSelectionComponent implements OnInit {
 
-  workspaceID: any;
+ workspaceID: any;
   tableList: any;
   relationshipInfo: any[];
   selectedValues: string[] = [];
@@ -22,13 +22,11 @@ export class AdhocTableSelectionComponent implements OnInit {
   secondaryTable = [];
   joinListMap = new Map();
   data;
-  exclude_click = ['rgb(249, 75, 76)', 'rgb(224, 224, 224)'];
-  selectedPrimaryTable: any;
-  schemaResultsTableCount: any;
-
+  schemaResultsTableCount = 0;
+  selectedPrimaryTable;
 
   constructor(public router: Router, private tablelistService: TableListService,
-    private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
+    private workspaceHeaderService: WorkspaceHeaderService) { }
 
   ngOnInit() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
@@ -36,31 +34,27 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.tableList = res;
       this.schemaResultsTableCount = this.tableList.length;
     });
-    if (this.ertService.data !== undefined) {
-      this.data = this.ertService.data;
-      this.selectedValues = this.ertService.selectedValues;
-      this.joinListMap = this.ertService.joinListMap;
-      this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
-      this.createchart();
-      }
+    // if (this.ertService.data !== undefined) {
+    //   this.data = this.ertService.data;
+    //   this.selectedValues = this.ertService.selectedValues;
+    //   this.joinListMap = this.ertService.joinListMap;
+    //   this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
+    //   this.createchart();
+    // }
   }
-
   gotoDataRecFinal() {
-    const RelationSIP = getRelationshipListForSip(this.data);
     // this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
-    // this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, 
-    // this.selectedPrimaryTable, RelationSIP);
-    this.router.navigate(['/workspace/adhoc/screen/search']);
+    // this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable, '');
+    // this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'data-record' } });
   }
   gotoJobConfiguration() {
-    this.router.navigate(['workspace/ert/ert-jobs-config']);
+    // this.router.navigate(['workspace/ert/ert-jobs-config']);
   }
 
   populategraph(value, event) {
     this.selectedPrimaryTable = event.target.value;
     d3.select('svg').remove();
     this.selectedValues = [];
-    this.joinListMap.clear();
     this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
       this.primaryTable = getPrimaryArray(this.relationshipInfo);
@@ -69,7 +63,7 @@ export class AdhocTableSelectionComponent implements OnInit {
         this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
       }
       this.selectedValues.push(value.tableName);
-      this.data = JSON.parse(getSIPGraphData(this.selectedValues, this.joinListMap));
+      this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
       this.createchart();
     });
   }
@@ -86,14 +80,14 @@ export class AdhocTableSelectionComponent implements OnInit {
     let node, link;
 
     // tslint:disable-next-line: max-line-length
-    const svg = d3.select('body app-root app-workspace-landing-page app-ert-landing-page #ert-landing-id .container-fluid app-ert-sip-config #ert-table-id .row .col-md-9 .card')
+    const svg = d3.select('body app-root app-workspace-landing-page app-adhoc-header .container-fluid app-adhoc-table-selection #ert-table-id .entry-card .col-md-9 .card')
       .append('svg')
       .call(d3.zoom().scaleExtent([1 / 2, 8]).on('zoom', zoomed))
       .append('g')
       .attr('transform', 'translate(40,0)');
 
     // tslint:disable-next-line: max-line-length
-    const div = d3.select('body app-root app-workspace-landing-page app-ert-landing-page #ert-landing-id .container-fluid app-ert-sip-config #ert-table-id .row .col-md-9 .card').append('div')
+    const div = d3.select('body app-root app-workspace-landing-page app-adhoc-header .container-fluid app-adhoc-table-selection #ert-table-id .entry-card .col-md-9 .card').append('div')
       .attr('class', 'tooltipd3')
       .style('opacity', 0);
 
@@ -102,6 +96,7 @@ export class AdhocTableSelectionComponent implements OnInit {
       .force('charge', d3.forceManyBody().distanceMax(300).strength(-1000)) // added min, stength default:-15
       .force('center', d3.forceCenter(width / 2, height / 4))
       .on('tick', ticked);
+
 
     // update starts
     function update(data) {
@@ -117,8 +112,8 @@ export class AdhocTableSelectionComponent implements OnInit {
         .append('line')
         .attr('class', 'link')
         .style('stroke', '#000')
-        .style('stroke-dasharray', function(d) { if (d.target.data.color === '#e0e0e0') {return '4,2'; }})
         .style('opacity', '0.2')
+        .style('visibility', function (d) { if (d.target.data.visible === false) { return 'hidden'; } })
         .style('stroke-width', 2).attr('marker-end', 'url(#end)');
       svg.append('svg:defs').selectAll('marker')
         .data(['end'])      // Different link/path types can be defined here
@@ -144,6 +139,10 @@ export class AdhocTableSelectionComponent implements OnInit {
         .attr('stroke-width', 2)
         .style('fill', color)
         .style('opacity', 1)
+        .style('visibility', function (d) {
+          // return d ? 'hidden' : 'visible';
+          if (d.data.visible === false) { return 'hidden'; }
+        })
         .on('click', clicked)
         .call(d3.drag()
           .on('start', dragstarted)
@@ -168,15 +167,15 @@ export class AdhocTableSelectionComponent implements OnInit {
         .attr('dy', 4)
         .text(function (d: any) { return d.data.name; });
       nodeEnter.on('mouseover', function (d) {
-        let ifSelected;
-        if (d.data.color === '#F94B4C') {
-          ifSelected = 'Primary Table';
-        } else if (d.data.color === 'white') {
-          ifSelected = 'Select Value';
-        } else if (d.data.color === 'black') {
-          ifSelected = 'Value Already Selected';
-        } else {
-          ifSelected = 'Already a Selected Parent';
+        link.style('visibility', function (d) { if (d.target.data.visible === false) { return 'visible'; } });
+        node.style('visibility', function (d) { if (d.data.visible === false) { return 'visible'; } });
+        let ifSelected = 'Primary Table';
+        if (d.parent !== null) {
+          if (!d.parent.data.enableClick) {
+            ifSelected = 'Value Already Selected in this Level';
+          } else {
+            ifSelected = 'Select Value';
+          }
         }
         div.transition().duration(200).style('opacity', .9);
         div.html(ifSelected)
@@ -189,8 +188,10 @@ export class AdhocTableSelectionComponent implements OnInit {
         });
       });
       nodeEnter.on('mouseout', function () {
+        link.style('visibility', function (d) { if (d.target.data.visible === false) { return 'hidden'; } });
+        node.style('visibility', function (d) { if (d.data.visible === false) { return 'hidden'; } });
         div.transition().duration(500).style('opacity', 0);
-        link.style('stroke-dasharray', function(d) { if (d.target.data.color === '#e0e0e0') {return '4,2'; }});
+        link.style('stroke-dasharray', 0);
       });
       node = nodeEnter.merge(node);
       simulation.nodes(nodes);
@@ -240,31 +241,21 @@ export class AdhocTableSelectionComponent implements OnInit {
         // }
         // update();
         const currentColor = d3.select(this).style('fill');
-        if (!self.exclude_click.includes(currentColor)) {
-          // if (d.parent.data.enableClick || d.data.enableClick) {
-          if (currentColor === 'white') {
-            onClickChangeGraph(d.data);
-          } else {
-            const children = d.data.children;
-            let eligibleForDeselect = true;
-            for (let i of children) {
-            if (i.enableClick) {
-            eligibleForDeselect = false;
-            }
-            }
-            // currentColor = 'white';
-            // d.data.enableClick = false;
-            // d.parent.data.enableClick = true;
-            if (eligibleForDeselect) {
-              const index = self.selectedValues.indexOf(d.data.name);
-              self.selectedValues.splice(index, 1);
+        if (currentColor !== 'rgb(249, 75, 76)') {
+          if (d.parent.data.enableClick || d.data.enableClick) {
+            if (currentColor === 'white') {
+              onClickChangeGraph(d.data);
+            } else {
+              // currentColor = 'white';
+              // d.data.enableClick = false;
+              // d.parent.data.enableClick = true;
+              self.selectedValues.pop();
               self.joinListMap.delete(d.data.name);
-              self.data = JSON.parse(getSIPGraphData(self.selectedValues, self.joinListMap));
+              self.data = JSON.parse(toJson(self.selectedValues, self.joinListMap));
               update(self.data);
             }
+            // d3.select(this).style('fill', currentColor);
           }
-          // d3.select(this).style('fill', currentColor);
-          // }
         }
       }
     }
@@ -278,7 +269,7 @@ export class AdhocTableSelectionComponent implements OnInit {
           self.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, self.secondaryTable));
         }
         self.selectedValues.push(value.name);
-        self.data = JSON.parse(getSIPGraphData(self.selectedValues, self.joinListMap));
+        self.data = JSON.parse(toJson(self.selectedValues, self.joinListMap));
         update(self.data);
       });
     }
