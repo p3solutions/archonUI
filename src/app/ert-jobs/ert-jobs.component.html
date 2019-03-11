@@ -10,8 +10,24 @@
     <span (click)="gotoEditJob(item.jobId)" class="cursor-poniter fonticonbelow"><i class="fa fa-pencil-square-o"
         aria-hidden="true"></i></span>
     <a  [class.disabled]="item.jobStatus!=='READY'"
-   (click)="!item.jobStatus!=='READY' && runJob(item.jobId,item.jobStatus)"  class="cursor-poniter fonticonbelow"><i class="fa fa-play" aria-hidden="true"></i></a>
+   (click)="!item.jobStatus!=='READY' && openScheduleModel(item.jobId,item.jobStatus)"  class="cursor-poniter fonticonbelow"><i class="fa fa-play" aria-hidden="true"></i></a>
     <span class="fonticonbelow"><i class="fa fa-eye" aria-hidden="true"></i></span>
     <span class="icon_category"><i class="fa fa-table" aria-hidden="true"></i></span>
+  </div>
+</div>
+<app-schedule-job class="modal fade" id="openScheduleJob" role="dialog" (ObjectEmit)="runJob($event)"></app-schedule-job>
+<button  data-toggle="modal" id="openScheduleModel" href="#openScheduleJob" data-keyboard="false" data-backdrop="static" style="display:none">Schedule</button>
+<button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
+<div id="successModel" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h1>{{successMsg}}</h1>
+        <p *ngIf="isSuccessMsg">check on Job Status page</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="close()">Close</button>
+      </div>
+    </div>
   </div>
 </div>

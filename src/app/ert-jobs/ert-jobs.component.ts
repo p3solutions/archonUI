@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserinfoService } from '../userinfo.service';
@@ -12,6 +12,11 @@ import { Router } from '@angular/router';
 })
 export class ErtJobsComponent implements OnInit {
   ertJobs: ERTJobs[];
+  scheduledeErtJobId = '';
+  isSuccessMsg: boolean;
+  successMsg: string;
+  @ViewChild('click') button: ElementRef;
+
 
   constructor(private ertService: ErtService, private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
@@ -39,17 +44,39 @@ export class ErtJobsComponent implements OnInit {
 
   deleteErtJob(ertJobId: string) {
     this.ertService.deleteErtJob(ertJobId).subscribe(result => {
-        this.getErtJobList();
+      this.getErtJobList();
     });
   }
 
-  runJob(ertJobId, jobStatus) {
-    if (jobStatus === 'READY') {
-      this.ertService.runJob(ertJobId).subscribe(result => {
-        if (result.httpStatus === 200) {
-          alert('job Has Started');
-        }
-      });
+  openScheduleModel(ertJobId, jobStatus) {
+    if (jobStatus === 'READY' || jobStatus === 'COMPLETED' || jobStatus === 'FAILED') {
+      this.scheduledeErtJobId = ertJobId;
+      document.getElementById('openScheduleModel').click();
+    }
+  }
+
+  runJob(scheduleObject) {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    const param: any = {
+      'ertJobId': this.scheduledeErtJobId,
+      'scheduledConfig': scheduleObject
+    };
+    this.ertService.runJob(param).subscribe(result => {
+      el.click();
+      if (result.httpStatus === 200) {
+        this.isSuccessMsg = true;
+        this.successMsg = 'Your Job has Started';
+      } else {
+        this.isSuccessMsg = false;
+        this.successMsg = 'Unable to Process Your Job';
+      }
+    });
+  }
+  close() {
+    if (this.isSuccessMsg) {
+      this.router.navigate(['/schedule-monitoring']);
+    } else {
+      this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
     }
   }
 }

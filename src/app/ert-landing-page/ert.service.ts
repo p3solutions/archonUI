@@ -26,7 +26,7 @@ export class ErtService {
   getERTcolumnlistUrl = this.apiUrl + 'ert/ertColumnList?ertJobId=';
   saveErtJobUrl = this.apiUrl + 'ert/ertJobSession';
   getErtJobUrl = this.apiUrl + 'ert/ertJobs?userId=';
-  runjobUrl = this.apiUrl + 'ert/runjob?ertJobId=';
+  runjobUrl = this.apiUrl + 'ert/runjob';
   deleteErtJobUrl = this.apiUrl + 'ert/ertJobSession?jobId=';
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
@@ -83,8 +83,8 @@ export class ErtService {
       );
   }
 
-  runJob(ertJobId: any): Observable<any> {
-    return this.http.post<any>(this.runjobUrl + ertJobId, { headers: this.userInfoService.getHeaders() }).
+  runJob(param: any): Observable<any> {
+    return this.http.put<any>(this.runjobUrl, param, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractDataForRunJob),
         catchError(this.handleError('runJob', []))
       );
