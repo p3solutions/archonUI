@@ -212,6 +212,7 @@ export class TableListComponent implements OnInit {
     this.selectedSecColMap.clear();
     this.finalSecColMap.clear();
     this.selectedSecTbl.clear();
+    this.finalSecColArray = [];
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
