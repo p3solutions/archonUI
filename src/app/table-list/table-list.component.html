@@ -251,7 +251,7 @@
                               [hidden]="secTbl.tableName === selectedPrimTbl">
                               <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.tableName}}"
                                 (click)="highlightTable($event, false, secTbl)">
-                                <input id="{{prefixSecTblId + (secTbl.tableName | lowercase)}}" class="cb-{{i}}" type="checkbox"
+                                <input id="{{prefixSecTblId + (secTbl.tableName)}}" class="cb-{{i}}" type="checkbox"
                                   (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
                                 {{secTbl.tableName}}
                                 <i class="fa fa-angle-right unselected"></i>
