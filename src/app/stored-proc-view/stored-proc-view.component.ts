@@ -31,6 +31,7 @@ export class StoredProcViewComponent implements OnInit {
   updateNotif: boolean;
   updateSuccess: boolean;
   errorMsg: any;
+  isSPVAvailable: boolean;
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
     private storedProcViewService: StoredProcViewService) {
   }
@@ -41,6 +42,10 @@ export class StoredProcViewComponent implements OnInit {
       if (result.tableId !== null || result.spvInfoList !== null) {
         this.primaryTableId = result.tableId;
         this.spvInfoListTwo = result.spvInfoList.map(obj => ({ isSPVChecked: false, type: obj.type, name: obj.name, isBorderSet: false }));
+        this.isSPVAvailable = true;
+        if (this.spvInfoListTwo.length === 0) {
+          this.isSPVAvailable = false;
+        }
       }
     });
   }
