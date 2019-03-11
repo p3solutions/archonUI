@@ -54,22 +54,22 @@
     <div class="btn-group col-md-2 p-0">
       <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
-        {{selectedJobStatus? selectedJobStatus : 'Select Severity'}}
+        {{selectedWS? selectedWS : 'Select WorkSpace'}}
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectJobStatus('');getAudit()">Severity Level
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectWorkspace('');getAudit()">WorkSpace
                 : All</a>
             <div class="dropdown-divider"></div>
-          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" *ngFor="let i of Status"  (click)="selectJobStatus(i);getAudit()">
-          {{i}} </a>
+          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" *ngFor="let i of userWorkspaceArray"  (click)="selectWorkspace(i);getAudit()">
+          {{i.workspaceName}} </a>
       </div>
     </div>
 </div>
 
 <div class="btn-group col-md-2 p-0">
 <input type="text" [(ngModel)]="startdate"
-                     placeholder="From Date" (click)="getAudit()"
+                     placeholder="From Date" (ngModelChange)="getAudit()"
                      class="form-control" style="height: 34px"
                      bsDatepicker [bsConfig]="bsConfig" placement="bottom" required>
 </div>
@@ -78,7 +78,7 @@
 
 <div class="btn-group col-md-2 p-0">
   <input type="text" [(ngModel)]="enddate"
-                       placeholder="To Date" (click)="getAudit()"
+                       placeholder="To Date" (ngModelChange)="getAudit()"
                        class="form-control" style="height: 34px"
                        bsDatepicker [bsConfig]="bsConfig" placement="bottom" required>
   </div>
@@ -87,7 +87,7 @@
 
 <div class="row" style="padding-top: 95px;">
 <div id="schedule-job" class="workspace-panel-content" *ngIf="isAvailable">
-<table datatable [dtOptions]="dtOptions"  class="row-border hover schedule" style="width: 100%"></table>
+<table datatable [dtOptions]="dtOptions"  class="table table-hover table-bordered nowrap" style="width: 100%"></table>
   </div>
 
 </div>
