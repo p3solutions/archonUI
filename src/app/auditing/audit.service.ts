@@ -31,7 +31,8 @@ export class AuditService {
   }
 
   getJobStatuses(params) {
-    return this.http.request<any>('GET', this.getAuditUrl, { body: params , headers: this.getHeaders() }).pipe(
+    console.log(params);
+    return this.http.post<any>(this.getAuditUrl, params , { headers: this.getHeaders() }).pipe(
       map(this.extractJobOrigins),
       catchError(this.handleError<any>('getJobStatus')));
   }
@@ -40,6 +41,7 @@ export class AuditService {
     const data = res.data.Audits;
     return data || [];
   }
+
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

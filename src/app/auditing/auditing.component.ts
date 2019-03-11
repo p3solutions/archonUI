@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuditService } from './audit.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { UserWorkspaceService } from '../user-workspace.service';
 
 @Component({
   selector: 'app-auditing',
@@ -14,8 +15,7 @@ export class AuditingComponent implements OnInit {
   isAvailable = true;
   dtOptions: DataTables.Settings = {};
   output;
-  selectedJobStatus = '';
-  Status = ['CRITICAL', 'NORMAL', 'WARNING', 'ERROR'];
+  selectedWS = '';
   Events = [];
   Service = [];
   selectedEvent = '';
@@ -24,8 +24,10 @@ export class AuditingComponent implements OnInit {
   startdate = '';
   colorTheme = 'theme-dark-blue';
   bsConfig: Partial<BsDatepickerConfig>  = Object.assign({}, { containerClass: this.colorTheme });
+  userWorkspaceArray;
+  selectedWSId = '';
 
-  constructor(private router: Router, private auditService: AuditService) { }
+  constructor(private router: Router, private auditService: AuditService, private userWorkspaceService: UserWorkspaceService) { }
 
   ngOnInit() {
     this.getAudit();
@@ -35,6 +37,10 @@ export class AuditingComponent implements OnInit {
       this.Service.push(i.serviceId);
       }
     });
+    this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
+      this.userWorkspaceArray = res;
+      console.log(this.userWorkspaceArray);
+    });
   }
 
   gotoDashboard() {
@@ -42,35 +48,39 @@ export class AuditingComponent implements OnInit {
   }
 
   getAudit() {
-    let fromdate, todate;
+    let fromdate = '', todate = '';
     if (this.startdate !== '') {
       const from = new Date(this.startdate);
-      fromdate = from.toDateString();
+      fromdate = new Intl.DateTimeFormat().format(from);
     }
     if (this.enddate !== '') {
       const from = new Date(this.enddate);
-      todate = from.toDateString();
+      todate = new Intl.DateTimeFormat().format(from);
     }
     const params = {
-      'serviceId' : this.selectService,
-      'eventName' : this.selectEvent,
-      'severityLevel' : this.selectJobStatus,
+      'userId': '',
+      'workspaceId': this.selectedWSId,
+      'serviceId' : this.selectedService,
+      'eventName' : this.selectedEvent,
+      'severityLevel' : '',
       'fromDate': fromdate,
       'toDate' : todate
     };
     this.isAvailable = false;
     this.auditService.getJobStatuses(params).subscribe(x => {
+      console.log(x);
       this.output = x;
       this.isAvailable = true;
       this.renderTable();
     });
   }
 
-  selectJobStatus(param) {
-  this.selectedJobStatus = param;
+  selectWorkspace(param) {
+  this.selectedWS = param.workspaceName;
+  this.selectedWSId = param.id;
   }
 
-  selectEvent(e){
+  selectEvent(e) {
   this.selectedEvent = e;
   }
 
@@ -86,10 +96,6 @@ export class AuditingComponent implements OnInit {
       autoWidth: true,
       data: this.output,
       columns : [
-        {
-          title: 'Severity Level',
-          data: 'severityLevel'
-        },
         {
           title: 'User Name',
           data: 'userName'
