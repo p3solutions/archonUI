@@ -3,7 +3,9 @@
     <div id="ert-landing-id">
       <div id="job-config">
         <div id="job-config-heading">
-          Job Configurations
+          <a (click)="goToJobs()" data-tooltip="Back">
+            <i class="fa fa-arrow-left fa-sm" aria-hidden="true"></i>
+          </a>  Job Configurations
         </div>
         <div id="job-name-heading" class="form-group">
           <input type="text" class="form-control" [(ngModel)]="ertJobParams.ertJobTitle" (keyup)="enableJobSelection()"
@@ -22,7 +24,7 @@
             </div>
             <div class="select-job">
               <div class="select-job-type">
-                <input type="radio" disabled="true" (click)="goToExtraction($event,'DATA RECORD')" name="selectjob">
+                <input type="radio" disabled="true" (click)="goToExtraction($event,'DATA_RECORD')" name="selectjob">
                 Data Record
               </div>
               <div class="job-desc">
@@ -32,11 +34,11 @@
               <div class="select-job-type">
                 <input type="radio" disabled="true" (click)="goToExtraction($event,'SIP')" name="selectjob"> SIP</div>
               <div class="job-desc">
-                <i class="fa fa-server"></i> Choose option for SIP Extraction</div>
+                <i class="fa fa-file-archive-o"></i> Choose option for SIP Extraction</div>
             </div>
           </div>
           <div style="float:right">
-            <button type="button" id="cancelBtn" class="btn btn-default">Cancel</button>
+            <button type="button" id="cancelBtn" (click)="goToJobs()"  class="btn btn-primary">Cancel</button>
           </div>
         </div>
       </div>

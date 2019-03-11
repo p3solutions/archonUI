@@ -28,6 +28,9 @@ export class StoredProcViewComponent implements OnInit {
   tempSPVObj: { isSPVChecked: boolean, type: string, name: string, isBorderSet: boolean }
     = { isSPVChecked: false, type: '', name: '', isBorderSet: false };
   workspaceid = '';
+  updateNotif: boolean;
+  updateSuccess: boolean;
+  errorMsg: any;
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
     private storedProcViewService: StoredProcViewService) {
   }
@@ -158,6 +161,8 @@ export class StoredProcViewComponent implements OnInit {
   }
 
   addSPVJoin() {
+    this.updateNotif = false;
+    this.updateSuccess = false;
     const paramObj = {
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
       'primaryTable': {
@@ -165,8 +170,20 @@ export class StoredProcViewComponent implements OnInit {
         'tableName': this.tableName,
       },
       'spvInfoList': this.selectedSPVJoinList};
-    this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((result) => {
-      alert(result.message);
+    this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
+      if (res && res.errorDetails.length === 0) {
+        this.updateSuccess = true;
+        this.storedProcViewService.changeSPVBooleanValue(true);
+      } else {
+        this.errorMsg = res.errorDetails[0].errors[0].errorMessage;
+        this.updateNotif = true;
+      }
     });
+  }
+
+  closeErrorMsg() {
+    this.errorMsg = '';
+    this.updateNotif = false;
+    this.updateSuccess = false;
   }
 }

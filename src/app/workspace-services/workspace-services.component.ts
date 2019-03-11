@@ -48,7 +48,7 @@ export class WorkspaceServicesComponent implements OnInit {
         //   // );
 
         const serviceActionsList = this.workspaceService.updateServiceActionsList(serviceActions);
-        this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
+        this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 4);
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({ 'interval': false });
 

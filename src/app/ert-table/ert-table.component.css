@@ -437,3 +437,9 @@ table tr td:nth-child(6) {
   float: left;
   margin: 6px 2px 2px 4px;
 }
+
+alert1 {
+  padding: 15px;
+  border: 1px solid transparent
+}
+

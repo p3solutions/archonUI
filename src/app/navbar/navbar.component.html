@@ -2,18 +2,19 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a href="#">
-        <img alt="Brand" src="assets/archonWhite.png" class="org-logo">
+        <img alt="Brand" src="assets/archonWhite.png" class="org-logo"> 
+         
       </a>
     </div>
     <div>
       <ul class="nav navbar-nav navbar-right">
         <li class="active">
-          <a [routerLink]="['/workspace/workspace-dashboard']"><i class="fa fa-home"></i>
+          <a [routerLink]="['/workspace/workspace-dashboard']"><i class="fa fa-home" matTooltip="Home"></i>
           </a>
         </li>
         <li class="dropdown user-menu1">
           <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false"> <i class="fa fa-list-alt"></i> </a>
+            aria-expanded="false"> <i class="fa fa-list-alt" matTooltip="My Activities"></i> </a>
           <ul class="dropdown-menu">
             <li title="Status Monitor">
               <a [routerLink]="['/status']" class="trim-text">Status Monitoring</a>
@@ -28,7 +29,7 @@
         </li>
         <li role="presentation" class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-bell" data-toggle="tooltip" data-placement="bottom" title="Notifications"></i>
+            <i class="fa fa-bell" data-toggle="tooltip" data-placement="bottom" matTooltip="Notifications" ></i>
             <span class="badge bg-red">6</span>
           </a>
           <ul id="notifications" class="dropdown-menu msg_list" role="menu">
@@ -77,7 +78,8 @@
         </li>
         <li class="dropdown user-menu">
           <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false"><img class="userImg" src="../../assets/userImg.png" />
+            aria-expanded="false"><img class="userImg" src="../../assets/loginAvatar.jpg"  />
+           <span class="user-role"> {{userChangeName}} </span>
 
           </a>
           <ul class="dropdown-menu">
@@ -97,8 +99,8 @@
             </li>
           </ul>
         </li>
-        <li role="presentation">
-
+        <li  role="presentation">
+           
         </li>
       </ul>
 

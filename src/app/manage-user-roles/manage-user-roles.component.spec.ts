@@ -38,18 +38,4 @@ describe('ManageUserRolesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // ToDo: revisit again
-  it('Should navigate to dashboard', () => {
-    component.gotoDashboard();
-    fixture.detectChanges();
-    // find DebugElements with an attached WorkspaceServicesComponentDirective
-    const workspaceServiceTag = fixture.debugElement
-      .queryAll(By.css('app-workspace-services'));
-    // get the attached link directive instances using the DebugElement injectors
-    const links = workspaceServiceTag
-      .map(dE => dE.injector.get(WorkspaceServicesComponent) as WorkspaceServicesComponent);
-    const dashboardUrl = 'workspace/workspace-dashboard/workspace-services';
-    // expect(links[1].navigatedTo).toBe(dashboardUrl);
-  });
 });

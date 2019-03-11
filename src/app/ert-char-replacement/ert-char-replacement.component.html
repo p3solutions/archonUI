@@ -2,132 +2,85 @@
   <div class="card-body">
     <div id="ert-landing-id">
       <div class="row" id="replacement-heading">
-        Character Replacement for WorkSpace test
+        <h3><a (click)="gotoDashboard()" data-tooltip="Back">
+            <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+          </a>
+          Character Replacement</h3>
       </div>
-      <div class="row" id="replace-char-id">
-        <div class="col-md-5 form-group" id="code-point-id">
-          <label class="lbl-left">Code Point</label>
-          <input type="text" name="code-point" class="form-control" id="code-point" placeholder="Code Point">
-        </div>
-        <div class="col-md-5 form-group">
-          <label class="lbl-left">Replacement Char</label>
-          <input type="text" name="replacement-char" class="form-control" id="replacement-char" placeholder="Replacement Char">
-        </div>
-        <div class="col-md-2 form-group" id="add-refresh-icon">
-          <ul class="nav nav-tabs mgmt-panel fl-r">
-            <li class="trim-text">
-              <a href="#" data-toggle="modal" data-target="#char-added-success"><i class="fa fa-plus"></i></a>
-            </li>
-            <li class="trim-text">
-              <a href="#"><i class="fa fa-refresh"></i></a>
-            </li>
-          </ul>
+      <div style="display:flex">
+        <form class="example-form" #charreplaceform="ngForm">
+          <mat-form-field class="example-full-width">
+            <input matInput #codepointSel="ngModel" (change)="createReplacementChar()" (keyup)="checkForNumber()" required [(ngModel)]="charReplaceInfo.codePoint"
+              name="code-point" placeholder="Code Point">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput #replacementcharSel="ngModel" required [(ngModel)]="charReplaceInfo.replacementChar" name="replacement-char"
+              placeholder="Replacement Char">
+          </mat-form-field>
+        </form>
+        <div class="add-char-code">
+          <a [class.disabled]="!charreplaceform.form.valid" matTooltip="Add Char Record" (click)="charreplaceform.form.valid && saveCharReplacement()">
+            <i class="fa fa-plus-square"></i>
+          </a>
+          <a [class.disabled]="!charreplaceform.form.valid" matTooltip="Refresh Current Record" (click)="charreplaceform.form.valid && refreshCharRecord()">
+            <i class="fa fa-refresh"></i>
+          </a>
         </div>
       </div>
-      <div id="char-replacement-table">
-        <table class="table">
-          <thead>
-            <th class="text-center table-heading">Code Point</th>
-            <th class="text-center table-heading">Hex code</th>
-            <th class="text-center table-heading" rowspan="2">Char Representation</th>
-            <th class="text-center table-heading">Replacement char</th>
-            <th class="text-center table-heading">Date Updated</th>
-            <th class="text-center table-heading">Edit</th>
-            <th class="text-center table-heading">Delete</th>
-          </thead>
-          <tbody>
-            <tr>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td><a><i class="fa fa-edit"></i></a></td>
-              <td><a><i class="fa fa-trash"></i></a></td>
-            </tr>
-            <tr>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td><a><i class="fa fa-edit"></i></a></td>
-              <td><a><i class="fa fa-trash"></i></a></td>
-            </tr>
-            <tr>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td><a><i class="fa fa-edit"></i></a></td>
-              <td><a><i class="fa fa-trash"></i></a></td>
-            </tr>
-            <tr>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td><a><i class="fa fa-edit"></i></a></td>
-              <td><a><i class="fa fa-trash"></i></a></td>
-            </tr>
-            <tr>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td><a><i class="fa fa-edit"></i></a></td>
-              <td><a><i class="fa fa-trash"></i></a></td>
-            </tr>
-            <tr>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td><a><i class="fa fa-edit"></i></a></td>
-              <td><a><i class="fa fa-trash"></i></a></td>
-            </tr>
-            <tr>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td><a><i class="fa fa-edit"></i></a></td>
-              <td><a><i class="fa fa-trash"></i></a></td>
-            </tr>
-            <tr>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td>a</td>
-              <td><a><i class="fa fa-edit"></i></a></td>
-              <td><a><i class="fa fa-trash"></i></a></td>
-            </tr>
-          </tbody>
+      <div class="mat-elevation-z8" id="char-table">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="codePoint">
+            <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Code Point </th>
+            <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.codePoint}}</td>
+          </ng-container>
+          <ng-container matColumnDef="hexCode">
+            <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Hex code </th>
+            <td style="width:15%" mat-cell *matCellDef="let element"> {{element.hexCode}} </td>
+          </ng-container>
+          <ng-container matColumnDef="charRepresentation">
+            <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Char Representation </th>
+            <td style="width:15%" mat-cell *matCellDef="let element"> {{element.charRepresentation}} </td>
+          </ng-container>
+          <ng-container matColumnDef="replacementChar">
+            <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Replacement char </th>
+            <td style="width:15%" mat-cell *matCellDef="let element"> {{element.replacementChar}} </td>
+          </ng-container>
+          <ng-container matColumnDef="updatedAt">
+            <th style="width:20%" mat-header-cell *matHeaderCellDef mat-sort-header> Date Updated </th>
+            <td style="width:20%" mat-cell *matCellDef="let element"> {{element.updatedAt * 1000| date:'medium'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Edit">
+            <th style="width:10%" mat-header-cell *matHeaderCellDef> Edit </th>
+            <td style="width:10%" class="cursor-pointer" matTooltip="Edit" mat-cell (click)="editCharRecord(element.id)" *matCellDef="let element"><i class="fa fa-edit"></i>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Delete">
+            <th style="width:10%" mat-header-cell *matHeaderCellDef> Delete </th>
+            <td style="width:10%" class="cursor-pointer" matTooltip="Delete" mat-cell (click)="deleteCharRecord(element.id)" *matCellDef="let element"><i class="fa fa-trash"></i>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
       </div>
-    </div>
-
-    <div id="char-added-success" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title" style="text-align:center">Message</h4>
-          </div>
-          <div class="modal-body">
-            <p>Character "codepoint" added successfully to replacement configuration</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      <button type="button" id="openSuccessModelBtn" style="display: none" class="btn btn-info btn-lg" data-toggle="modal"
+        data-target="#char-added-success">Open Modal</button>
+      <div id="char-added-success" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title" style="text-align:center">Message</h4>
+            </div>
+            <div class="modal-body">
+              <p>{{successMsg}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>

@@ -47,6 +47,8 @@ import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-tab
 import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
 import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
 import { AuditingComponent } from './auditing/auditing.component';
+import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
+import { ErtSipConfigComponent } from './ert-sip-config/ert-sip-config.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -65,6 +67,8 @@ const routes: Routes = [
             path: 'manage-members/:id', component: ManageMembersComponent
           }, {
             path: 'manage-master-metadata/:id', component: ManageMasterMetadataComponent
+          }, {
+            path: 'char-replacement', component: ErtCharReplacementComponent
           }
         ]
       }, {
@@ -101,9 +105,6 @@ const routes: Routes = [
             path: 'ert-jobs', component: ErtJobsComponent
           },
           {
-            path: 'ert-char-replacement', component: ErtCharReplacementComponent
-          },
-          {
             path: 'ert-jobs-config', component: ErtJobsConfigComponent
           },
           {
@@ -123,6 +124,12 @@ const routes: Routes = [
           },
           {
             path: 'ert-table-col-config/:ertJobId', component: ErtTableColumnConfigComponent
+          },
+          {
+            path: 'ert-datarecord-config', component: ErtDatarecordConfigComponent
+          },
+          {
+            path: 'ert-sip-config', component: ErtSipConfigComponent
           }
         ]
       }

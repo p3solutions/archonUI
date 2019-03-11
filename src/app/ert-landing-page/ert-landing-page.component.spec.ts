@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { ManageMasterMetadataService } from '../manage-master-metadata/manage-master-metadata.service';
 
 describe('ErtLandingPageComponent', () => {
   let component: ErtLandingPageComponent;
@@ -15,7 +16,7 @@ describe('ErtLandingPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ErtLandingPageComponent],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
-      providers: [UserinfoService, WorkspaceHeaderService]
+      providers: [UserinfoService, WorkspaceHeaderService, ManageMasterMetadataService]
     })
       .compileComponents();
   }));
@@ -23,6 +24,9 @@ describe('ErtLandingPageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ErtLandingPageComponent);
     component = fixture.componentInstance;
+    const WHS = TestBed.get(WorkspaceHeaderService);
+    spyOn(WHS, 'getSelectedWorkspaceName').and.returnValue('');
+    spyOn(WHS, 'getSelectedWorkspaceId').and.returnValue('');
     fixture.detectChanges();
   });
 

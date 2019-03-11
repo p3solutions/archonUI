@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
 import {
   ErtTableListObj, ErtColumnListObj, TableDetailsListObj,
-  ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo
+  ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo, ExtractConfig
 } from './ert';
 
 @Injectable({
@@ -19,6 +19,9 @@ export class ErtService {
   ertJobParams: ErtJobParams = new ErtJobParams();
   ingestionDataConfig: IngestionDataConfig = new IngestionDataConfig();
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
+  selectedValues: string[] = [];
+  data: any;
+  selectedPrimaryTable: any;
   constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
   private apiUrl = environment.apiUrl;
   getERTtableListUrl = this.apiUrl + 'ert/ertTableList?workspaceId=';
@@ -28,6 +31,11 @@ export class ErtService {
   getErtJobUrl = this.apiUrl + 'ert/ertJobs?userId=';
   runjobUrl = this.apiUrl + 'ert/runjob';
   deleteErtJobUrl = this.apiUrl + 'ert/ertJobSession?jobId=';
+  extractConfigUrl = this.apiUrl + 'ert/extractconfig?ertJobId=';
+  schemaResultsTableCount = 0;
+  joinListMap = new Map();
+  mmrVersion = '';
+  RelationSIP: any[];
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }
@@ -36,12 +44,36 @@ export class ErtService {
     this.ingestionDataConfig = ingestionDataConfig;
   }
 
-  setSelectedList(selectedList: TableDetailsListObj[]) {
+  setSelectedList(selectedList: TableDetailsListObj[], schemaResultsTableCount: number) {
     this.selectedList = selectedList;
+    this.schemaResultsTableCount = schemaResultsTableCount;
+  }
+
+  setschemaResultsTableCount(schemaResultsTableCount: number) {
+    this.schemaResultsTableCount = schemaResultsTableCount;
   }
 
   setXmlSplitSize(extractDataConfigInfo: ExtractDataConfigInfo) {
     this.extractDataConfigInfo = extractDataConfigInfo;
+  }
+
+  setMMRVersion(mmrVersion: string) {
+    this.mmrVersion = mmrVersion;
+  }
+
+  getExtractConfig(ertJobId: string): Observable<ExtractConfig> {
+    return this.http.get<ExtractConfig>(this.extractConfigUrl + ertJobId,
+      { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractDataForColumn),
+        catchError(this.handleError('getExtractConfig', []))
+      );
+  }
+
+  setSelectValueAndDataOfGraph(selectedValues: string[], data: any, joinListMap, selectedPrimaryTable, RelationSIP) {
+    this.selectedValues = selectedValues;
+    this.data = data;
+    this.joinListMap = joinListMap;
+    this.selectedPrimaryTable = selectedPrimaryTable;
+    this.RelationSIP = RelationSIP;
   }
 
   getERTtableList(workspaceId: string, ertJobId = ''): Observable<ErtTableListObj> {
