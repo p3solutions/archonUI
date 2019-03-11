@@ -107,6 +107,7 @@ export class AuditingComponent implements OnInit {
         {
           title: 'Related Job ID',
           data: 'releatedJobId'
+          // <i class="fa fa-info-circle" aria-hidden="true"></i>
         },
         {
           title: 'Service Name',

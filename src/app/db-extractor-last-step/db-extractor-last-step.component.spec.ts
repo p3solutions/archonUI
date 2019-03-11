@@ -5,8 +5,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
-import { ProcessDetailsObj } from '../db-extractor';
 import { DbExtractorService } from '../db-extractor/db-extractor.service';
+import { ScheduleJobComponent } from '../schedule-job/schedule-job.component';
+import { FormsModule } from '@angular/forms';
+import { BsDatepickerModule, TimepickerModule } from 'ngx-bootstrap';
 
 describe('DbExtractorLastStepComponent', () => {
   let component: DbExtractorLastStepComponent;
@@ -27,8 +29,8 @@ describe('DbExtractorLastStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DbExtractorLastStepComponent],
-      imports: [RouterTestingModule, HttpClientModule],
+      declarations: [DbExtractorLastStepComponent, ScheduleJobComponent],
+      imports: [RouterTestingModule, HttpClientModule, FormsModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot()],
       providers: [UserinfoService, WorkspaceHeaderService]
     })
       .compileComponents();

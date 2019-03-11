@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScheduleJobComponent } from './schedule-job.component';
+import { FormsModule } from '@angular/forms';
+import { BsDatepickerModule, TimepickerModule } from 'ngx-bootstrap';
 
 describe('ScheduleJobComponent', () => {
   let component: ScheduleJobComponent;
@@ -8,6 +10,7 @@ describe('ScheduleJobComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [FormsModule , BsDatepickerModule.forRoot(), TimepickerModule.forRoot()],
       declarations: [ ScheduleJobComponent ]
     })
     .compileComponents();

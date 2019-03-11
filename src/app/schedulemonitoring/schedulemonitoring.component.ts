@@ -137,7 +137,7 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
             } else if (full.status === 'IN_PROGRESS') {
               return '<a data-tooltip="In_Progress"><i class="fa fa-spinner fa-2x"></i></a>';
             } else if (full.status === 'FAILED') {
-              return '<a data-tooltip="Failed"><i class="fa fa-thumbs-o-downfa-2x"></i></a>';
+              return '<a data-tooltip="Failed"><i class="fa fa-thumbs-o-down fa-2x"></i></a>';
             } else if (full.status === 'USER_OR_ADMIN_STOPPED') {
               return '<a data-tooltip="Stopped"><i class="fa fa-ban fa-2x"></i></a>';
             }
