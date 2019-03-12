@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Renderer } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuditService } from './audit.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { UserWorkspaceService } from '../user-workspace.service';
+import { ScheduleMonitoringService } from '../schedulemonitoring/schedule-monitoring.service';
 
 @Component({
   selector: 'app-auditing',
   templateUrl: './auditing.component.html',
   styleUrls: ['./auditing.component.css']
 })
-export class AuditingComponent implements OnInit {
+export class AuditingComponent implements OnInit, AfterViewInit {
 
   loadStatus = true;
   isAvailable = true;
@@ -26,8 +27,14 @@ export class AuditingComponent implements OnInit {
   bsConfig: Partial<BsDatepickerConfig>  = Object.assign({}, { containerClass: this.colorTheme });
   userWorkspaceArray;
   selectedWSId = '';
+  jobMessage;
+  input;
+  common;
+  @ViewChild('click') button: ElementRef;
+  uniqueService;
 
-  constructor(private router: Router, private auditService: AuditService, private userWorkspaceService: UserWorkspaceService) { }
+  constructor(private router: Router, private auditService: AuditService, private userWorkspaceService: UserWorkspaceService,
+    private renderer: Renderer, private service: ScheduleMonitoringService) { }
 
   ngOnInit() {
     this.getAudit();
@@ -36,12 +43,42 @@ export class AuditingComponent implements OnInit {
       this.Events.push(i.eventName);
       this.Service.push(i.serviceId);
       }
+      this.uniqueService = Array.from(new Set(this.Service));
     });
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
-      console.log(this.userWorkspaceArray);
     });
   }
+
+  ngAfterViewInit(): void {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.renderer.listenGlobal('document', 'click', (event) => {
+    if (event.target.getAttribute('source') === 'Details') {
+      this.service.getDetails(event.target.getAttribute('id')).subscribe(result => {
+      this.common = result.common;
+      this.input = result.input;
+      this.jobMessage = result.message;
+      });
+      el.click();
+    } else if (event.target.getAttribute('source') === 'Downloads') {
+      this.auditService.downloadZip(event.target.getAttribute('id')).subscribe(result => {
+        this.downloadFile(result);
+      });
+    }
+  });
+}
+
+downloadFile(content) {
+  const fileName = 'audit' + '-data.zip';
+  const type = 'zip';
+  const e = document.createEvent('MouseEvents');
+  const a = document.createElement('a');
+  a.download = fileName;
+  a.href = window.URL.createObjectURL(content);
+  a.dataset.downloadurl = [type, a.download, a.href].join(':');
+  e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+  a.dispatchEvent(e);
+}
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
@@ -68,7 +105,6 @@ export class AuditingComponent implements OnInit {
     };
     this.isAvailable = false;
     this.auditService.getJobStatuses(params).subscribe(x => {
-      console.log(x);
       this.output = x;
       this.isAvailable = true;
       this.renderTable();
@@ -106,8 +142,14 @@ export class AuditingComponent implements OnInit {
         },
         {
           title: 'Related Job ID',
-          data: 'releatedJobId'
-          // <i class="fa fa-info-circle" aria-hidden="true"></i>
+          render: function (data: any, type: any, full: any) {
+            if (full.releatedJobId !== null) {
+// tslint:disable-next-line: max-line-length
+            return '<a data-tooltip="View Job Details"><i class="fa fa-info-circle fa-2x" id="' + full.releatedJobId + '" source="Details"></i></a>';
+            } else {
+            return '<a data-tooltip="No Job Details" style="color: grey"><i class="fa fa-info-circle fa-2x"></i></a>';
+            }
+          }
         },
         {
           title: 'Service Name',
@@ -128,7 +170,11 @@ export class AuditingComponent implements OnInit {
         {
         title: 'Download',
         render: function (data: any, type: any, full: any) {
+          if (full.releatedJobId !== null) {
           return '<a data-tooltip="Download"><i class="fa fa-download fa-2x" id="' + full.releatedJobId + '" source="Downloads"></i></a>';
+          } else {
+          return '<a data-tooltip="Not Available"><i class="fa fa-download fa-2x" style="color: grey"></i></a>';
+          }
         }
         }
     ]

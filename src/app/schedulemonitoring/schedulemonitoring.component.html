@@ -69,8 +69,10 @@
 
 <div class="row" style="padding-top: 95px;">
 <div id="schedule-job" class="workspace-panel-content" *ngIf="isAvailable">
-<table datatable [dtOptions]="dtOptions"  class="table table-hover table-bordered nowrap" style="width: 100%"></table>
-  </div>
+<div style="padding: 30px 13px">
+<table datatable [dtOptions]="dtOptions"  class="table table-hover table-bordered nowrap padding" style="width: 100%"></table>
+</div>
+</div>
 </div>
 
 <!-- Modal -->
@@ -101,7 +103,7 @@
                     <td>{{i.value}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
-                  <tr><td>{{message?.name}}</td><td>{{message?.value}}</td></tr>
+                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
                 </tbody>
               </table>
       </div>
