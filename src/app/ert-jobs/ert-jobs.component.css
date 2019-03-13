@@ -12,17 +12,13 @@
 }
 
 .card {
+  padding: 0px;
   text-align: left;
-  margin: 0 10px 20px;
+  margin: 0 13px 20px;
   transition: 0.3s;
-  width: 31%;
+  width: 23%;
   border-radius: 5px;
   border: 1px solid #E6E9ED
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  padding-left: 10px
 }
 
 .container {
@@ -44,7 +40,9 @@
 }
 
 .card h4 {
-  color: #2196F3;
+  font-size: 20px;
+  text-align: left;
+  color: #121212;
 }
 
 .card span {
@@ -65,4 +63,16 @@ label {
   border-bottom: 2px solid #E6E9ED;
   padding: 4px 2px 0px 3px;
   text-align: left;
+}
+.flex-cards-bar {
+  background-color: #efeff0;
+  margin: 0px;
+  height: 45px;
+  margin-top: -10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.trim-text h2 {
+  width: 8em;
+  display: inline-block;
 }

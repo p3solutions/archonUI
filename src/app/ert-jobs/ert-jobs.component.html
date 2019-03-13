@@ -21,10 +21,12 @@
     </div>
   </div>
   <div *ngFor="let item of ertJobs" class="col-md-3 card">
+      <div class="flex-cards-bar">
     <span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job" class="cursor-poniter fonticon"><i
         class="fa fa-trash" aria-hidden="true"></i></span>
     <span (click)="showJobDetails(item.jobId)" class="fonticon"><i class="fa fa-expand" aria-hidden="true"></i></span>
     <h4><b>{{item.jobTitle===''?'No_title':item.jobTitle}}</b></h4>
+    </div>
     <hr>
     <p><b>Job Status:</b> {{item.jobStatus}}</p>
     <p><b>Job Mode:</b> {{item.jobMode}}</p>
