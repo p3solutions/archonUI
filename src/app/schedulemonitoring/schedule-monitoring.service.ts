@@ -10,9 +10,9 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class ScheduleMonitoringService {
 
-  getStatusUrl = environment.apiUrl + 'jobStatus/fetchScheduleJob?tool=';
+  getStatusUrl = environment.apiUrl + 'jobStatus/scheduleJob?tool=';
   stopJobUrl = environment.apiUrl + 'jobStatus/stopSchedule?scheduleId=';
-  detailsJobUrl = environment.apiUrl + 'jobStatus/fetchScheduleDetails?scheduleId=';
+  detailsJobUrl = environment.apiUrl + 'jobStatus/scheduleDetails?scheduleId=';
 
   constructor(private http: HttpClient, private userinfoService: UserinfoService) { }
 
