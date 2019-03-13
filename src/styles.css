@@ -864,7 +864,7 @@ ol.multi-step-indicators li.active {
 }
 
 .width-5-pc {
-  background: #1abc9c;
+  background: #87c2ef;
   width: 5%;
   -moz-animation: width-5-pc 2s ease;
   -webkit-animation: width-5-pc 2s ease;
@@ -891,7 +891,7 @@ ol.multi-step-indicators li.active {
 }
 
 .width-33-pc {
-  background: #1abc9c;
+  background: #87c2ef;
   width: 33%;
   -moz-animation: width-33-pc 2s ease;
   -webkit-animation: width-33-pc 2s ease;
@@ -918,7 +918,7 @@ ol.multi-step-indicators li.active {
 }
 
 .width-66-pc {
-  background: #1abc9c;
+  background: #87c2ef;
   width: 66%;
   -moz-animation: width-66-pc 2s ease;
   -webkit-animation: width-66-pc 2s ease;
@@ -945,7 +945,7 @@ ol.multi-step-indicators li.active {
 }
 
 .width-100-pc {
-  background: #1abc9c;
+  background: #87c2ef;
   width: 100%;
   -moz-animation: width-100-pc 1s ease;
   -webkit-animation: width-100-pc 1s ease;
@@ -972,7 +972,7 @@ ol.multi-step-indicators li.active {
 }
 
 .width-33-pc-rev {
-  background: #1abc9c;
+  background: #87c2ef;
   width: 5%;
   /* starting point to reducted to */
   -moz-animation: width-33-pc-rev 2s ease;
@@ -1000,7 +1000,7 @@ ol.multi-step-indicators li.active {
 }
 
 .width-66-pc-rev {
-  background: #1abc9c;
+  background: #87c2ef;
   width: 33%;
   /* starting point to reducted to */
   -moz-animation: width-66-pc-rev 2s ease;

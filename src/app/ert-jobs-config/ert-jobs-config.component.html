@@ -3,7 +3,9 @@
     <div id="ert-landing-id">
       <div id="job-config">
         <div id="job-config-heading">
-          Job Configurations
+          <a (click)="goToJobs()" data-tooltip="Back">
+            <i class="fa fa-arrow-left fa-sm" aria-hidden="true"></i>
+          </a>  Job Configurations
         </div>
         <div id="job-name-heading" class="form-group">
           <input type="text" class="form-control" [(ngModel)]="ertJobParams.ertJobTitle" (keyup)="enableJobSelection()"

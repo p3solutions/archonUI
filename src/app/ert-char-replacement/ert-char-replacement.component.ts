@@ -52,9 +52,9 @@ export class ErtCharReplacementComponent implements OnInit {
   addCharReplacement() {
     this.charReplacementService.saveCharRecord(this.workspaceId, this.charReplaceInfo).subscribe(result => {
       if (result.httpStatus === 200) {
-        this.successMsg = result.data;
+        this.successMsg = 'Successfully added the record';
       } else {
-        this.successMsg = 'Failed';
+        this.successMsg = 'Already an entry exists for given code point';
       }
       document.getElementById('openSuccessModelBtn').click();
     });
@@ -63,9 +63,9 @@ export class ErtCharReplacementComponent implements OnInit {
   updateCharRecord() {
     this.charReplacementService.editCharRecord(this.charReplaceInfo.id, this.charReplaceInfo).subscribe(result => {
       if (result.httpStatus === 200) {
-        this.successMsg = result.data;
+        this.successMsg = 'Successfully updated the record';
       } else {
-        this.successMsg = 'Failed';
+        this.successMsg = 'Already an entry exists for given code point';
       }
       document.getElementById('openSuccessModelBtn').click();
     });
@@ -124,5 +124,8 @@ export class ErtCharReplacementComponent implements OnInit {
         break;
     }
     return hexCode;
+  }
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 }

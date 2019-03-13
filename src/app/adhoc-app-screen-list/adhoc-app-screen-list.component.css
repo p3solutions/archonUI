@@ -11,12 +11,13 @@ table {
   width: 100%;
 }
 
-td, th {
+td,
+th {
   text-align: left;
 }
 
-::ng-deep svg {
-  height: 8vh;
+::ng-deep #screen-table svg {
+  height: 8vh !important;
 }
 
 #open-app {

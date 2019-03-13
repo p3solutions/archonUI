@@ -56,12 +56,16 @@ export class AdhocAppScreenListComponent implements OnInit {
     { Position: 5, screenId: '5', searchScreenDetail: null, screenDesc: 'E', screenName: 'AE' },
     { Position: 6, screenId: '6', searchScreenDetail: null, screenDesc: 'F', screenName: 'AF' }
   ];
-  applicationInfoList: ApplicationInfo[] = [];
-  appInfo = new ApplicationInfo;
+  applicationInfoList: ApplicationInfo[] = [
+    { appId: '1', appName: 'App 1', appDesc: 'First App' },
+    { appId: '2', appName: 'App 12', appDesc: 'Second App' },
+    { appId: '3', appName: 'App 33', appDesc: 'Third App' }
+  ];
+  appInfoObject = new ApplicationInfo();
+  appInfo = new ApplicationInfo();
   workspaceName = '';
   mmrVersion = '';
   workspaceId = '';
-  selectedApp = 'App 1';
   dataSource = new MatTableDataSource<ScreenInfo>(this.ScreenInfoList);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -72,10 +76,8 @@ export class AdhocAppScreenListComponent implements OnInit {
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.applicationInfoList.push({ appId: '1', appName: 'App 1', appDesc: 'First App' });
-    this.applicationInfoList.push({ appId: '2', appName: 'App 2', appDesc: 'Second App' });
-    this.applicationInfoList.push({ appId: '3', appName: 'App 3', appDesc: 'Third App' });
     this.getHeaderInfo();
+    this.selectedApp(this.applicationInfoList[0].appId);
   }
 
   getHeaderInfo() {
@@ -84,6 +86,9 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.manageMetaService.getMMRVersionList(this.workspaceId).subscribe((result) => {
       this.mmrVersion = result[0].versionNo;
     });
+  }
+  selectedApp(appId: string) {
+    this.appInfoObject = JSON.parse(JSON.stringify(this.applicationInfoList.filter(a => a.appId === appId)[0]));
   }
   openScreenDialog(): void {
     const dialogScreenRef = this.dialog.open(CreateScreenDialogComponent, {
@@ -124,7 +129,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     adhocHeaderInfo.workspaceName = this.workspaceName;
     adhocHeaderInfo.metadataVersion = this.mmrVersion;
     adhocHeaderInfo.screenName = screenName;
-    adhocHeaderInfo.appName = this.selectedApp;
+    adhocHeaderInfo.appName = this.appInfoObject.appName;
     this.adhocService.updateAdhocHeaderInfo(adhocHeaderInfo);
     this.router.navigate(['/workspace/adhoc/screen/table']);
   }

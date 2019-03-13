@@ -122,6 +122,8 @@ import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-sear
 import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-screen.component';
 import { AdhocEditSearchScreenPopupComponent } from './adhoc-edit-search-screen-popup/adhoc-edit-search-screen-popup.component';
 import { AdhocScreenService } from './adhoc-search-criteria/adhoc-screen.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AdhocSearchPanelComponent } from './adhoc-search-panel/adhoc-search-panel.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -203,7 +205,8 @@ export function tokenGetter() {
                 AdhocTableSelectionComponent,
                 AdhocSearchCriteriaComponent,
                 AdhocSearchScreenComponent,
-                AdhocEditSearchScreenPopupComponent
+                AdhocEditSearchScreenPopupComponent,
+                AdhocSearchPanelComponent
         ],
         imports: [
                 JwtModule.forRoot({

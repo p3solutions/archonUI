@@ -13,22 +13,25 @@
         </p>
         <p>
           <mat-form-field appearance="outline">
-            <input matInput placeholder="Search Table">
+            <input #search matInput (keyup)="filterTableAndColumn(search.value)" placeholder="Search Table">
           </mat-form-field>
         </p>
         <p>
-          <mat-tree #tree cdkDropList #column="cdkDropList" [cdkDropListConnectedTo]="[searchScreen]"
-            (cdkDropListDropped)="drop($event)" [cdkDropListData]="dataSource" [dataSource]="dataSource" [treeControl]="treeControl">
-            <mat-tree-node [cdkDragData]="node.name" cdkDrag *matTreeNodeDef="let node" matTreeNodePadding>
-              <button mat-icon-button disabled></button><i class="fa fa-columns" aria-hidden="true"></i>
-              {{node.name | uppercase}}
+          <mat-tree cdkDropList #column="cdkDropList" [cdkDropListConnectedTo]="[searchScreen,panelScreen]"
+            [cdkDropListData]="dataSource" (cdkDropListDropped)="drop($event)" #tree [dataSource]="dataSource"
+            [treeControl]="treeControl">
+            <mat-tree-node [ngClass]="node.node.visible===false ? 'hide-node' : ''" [cdkDragDisabled]="node.node.type=='Table'"
+              [cdkDragData]="node" *matTreeNodeDef="let node" cdkDrag matTreeNodePadding>
+              <button mat-icon-button disabled></button><i [ngClass]="node.node.type=='Table'? 'fa fa-table' : 'fa fa-columns'"
+                aria-hidden="true"></i>
+              {{node.node.name | uppercase}}
             </mat-tree-node>
             <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-              <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+              <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.node.name">
                 <i [ngClass]="treeControl.isExpanded(node) ? 'fa fa-chevron-down' : 'fa fa-chevron-right'">
                 </i>
               </button><i class="fa fa-table" aria-hidden="true"></i>
-              {{node.name | uppercase}}
+              {{node.node.name | uppercase}}
             </mat-tree-node>
           </mat-tree>
         </p>
@@ -36,13 +39,40 @@
     </mat-card>
   </div>
   <div class="col-md-9">
-    <mat-card class="example-card" id="right-card">
-      <mat-card-header class="header-blue">
-        <mat-card-title>Drag a column to create a serach field</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <router-outlet></router-outlet>
-      </mat-card-content>
-    </mat-card>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header id="search-column-header">
+          <mat-panel-title>
+            Drag a column to create a search field
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div id="drag-search-column" class="row search-screen" cdkDropList #searchScreen="cdkDropList"
+          [cdkDropListData]="searchColumns" (cdkDropListDropped)="drop($event)">
+          <app-adhoc-search-screen *ngIf="!isSearchScreen" (showEditEvent)="showEdit($event)"></app-adhoc-search-screen>
+          <app-adhoc-edit-search-screen-popup (showSearchEvent)="showSearch($event)" *ngIf="isSearchScreen"></app-adhoc-edit-search-screen-popup>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header id="drag-panel-column-header">
+          <mat-panel-title>
+            Search Result Screen Design
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div id="drag-panel-column" class="row panel-screen" cdkDropList #panelScreen="cdkDropList" [cdkDropListData]="searchColumns"
+          (cdkDropListDropped)="drop($event)">
+          <app-adhoc-search-panel (voted)="onVoted($event)"></app-adhoc-search-panel>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
+</div>
+<div class="row" id="nextbtn">
+  <button type="button" class="btn btn-primary next btn-sm" [disabled]="data == null" (click)="gotoDataRecFinal()"
+    style="float: right;margin-right: 12px">Next</button>
+  <button class="btn btn-primary Previous btn-sm" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">
+    Back</button>
+  <button class="btn btn-secondary Previous btn-sm" id="clearBtn" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">
+    clear</button>
 </div>

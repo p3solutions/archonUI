@@ -14,7 +14,7 @@ import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datare
 })
 export class AdhocTableSelectionComponent implements OnInit {
 
- workspaceID: any;
+  workspaceID: any;
   tableList: any;
   relationshipInfo: any[];
   selectedValues: string[] = [];
@@ -45,7 +45,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   gotoDataRecFinal() {
     // this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
     // this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable, '');
-    // this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'data-record' } });
+    this.router.navigate(['/workspace/adhoc/screen/search-criteria']);
   }
   gotoJobConfiguration() {
     // this.router.navigate(['workspace/ert/ert-jobs-config']);

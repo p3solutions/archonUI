@@ -10,9 +10,9 @@
   <div class="row-group">
     <div class="col-md-7" id="app-dropdown">
       <mat-form-field>
-        <mat-select [(value)]="selectedApp" placeholder="Application Name">
-          <mat-option *ngFor="let appInfo of applicationInfoList" [value]="appInfo.appName">
-            {{appInfo.appName}}
+        <mat-select [(ngModel)]="appInfoObject.appId" placeholder="Application Name" (selectionChange)="selectedApp($event.value)">
+          <mat-option *ngFor="let app of applicationInfoList" [value]="app.appId">
+            {{app.appName}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -31,7 +31,7 @@
   </div>
   <div class="row" id="app_desc">
     <b>Application Description</b>
-    <p>This is First Application This is First ApplicationThis is First Application This is First Application</p>
+    <p>{{appInfoObject.appDesc}}</p>
   </div>
 </div>
 <div class="container-fluid">
@@ -57,11 +57,11 @@
       </ng-container>
       <ng-container matColumnDef="Edit">
         <th style="width:8%" mat-header-cell *matHeaderCellDef> Edit </th>
-        <td style="width:8%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.screenName)"><i class="fa fa-edit"></i> </td>
+        <td style="width:8%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.screenName)"><i class="cursor-poniter fa fa-edit"></i> </td>
       </ng-container>
       <ng-container matColumnDef="Delete">
         <th style="width:8%" mat-header-cell *matHeaderCellDef> Delete </th>
-        <td style="width:8%" mat-cell *matCellDef="let element"><i class="fa fa-trash"></i> </td>
+        <td style="width:8%" mat-cell *matCellDef="let element"><i class="cursor-poniter fa fa-trash"></i> </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

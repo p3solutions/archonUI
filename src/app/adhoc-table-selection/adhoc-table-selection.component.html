@@ -4,19 +4,23 @@
       <div class="card" style="height:455px">
         <div class="card-body" id="ert-tbl-search">
           <div class="row" style="margin-bottom: 12px;">
-            <div class="col-md-6">
-              <label id=table-heading>Table list</label>
+            <div class="col-md-6" class="search-graph-heading">
+              <h3>Table list</h3>
             </div>
-            
-            <div class="inner-addon right-addon">
+            <div class="form-group has-feedback" id="search-box">
+              <input type="text" class="form-control" id="inputValidation" placeholder="Search" />
+              <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+            <!-- <div class="inner-addon right-addon">
               <a href="" style="z-index:1" class="glyphicon glyphicon-search"></a>
               <input type="text" class="form-control search-input" id="listSearch" placeholder="Table Search">
-            </div>
+            </div> -->
           </div>
           <div id="tbl-list">
             <div class="scroll-div border">
               <div class="well" *ngFor="let i of tableList">
-                <div><input style="float:left" type="radio" [value]="i.tableName" [checked]="i.tableName == selectedPrimaryTable"  name="x" (click)="populategraph(i, $event)"></div>
+                <div><input style="float:left" type="radio" [value]="i.tableName" [checked]="i.tableName == selectedPrimaryTable"
+                    name="x" (click)="populategraph(i, $event)"></div>
                 <div class="first-div">{{i.tableName}}</div>
                 <div><i class="fa fa-chevron-right icon-div "></i></div>
               </div>
@@ -27,17 +31,18 @@
     </div>
     <div class="col-md-9">
       <div class="card" style="height:455px">
-        <div class="card-body"> 
-          <!-- <div class="row">
-            <h3>Select a graph source table to generate a graph view</h3>
-          </div> -->
+        <div class="card-body">
+          <div class="row graph-heading">
+            <h3>Table Relationship</h3>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary next" [disabled]="data == null" (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Next</button>
-    <button class="btn btn-primary Previous" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
+    <button type="button" class="btn btn-primary next btn-sm" [disabled]="data == null" (click)="gotoDataRecFinal()"
+      style="float: right;margin-right: 12px">Next</button>
+    <button class="btn btn-primary Previous btn-sm" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">
       Back</button>
   </div>
 </div>

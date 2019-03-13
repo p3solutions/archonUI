@@ -155,15 +155,12 @@ const routes: Routes = [
                 path: 'table', component: AdhocTableSelectionComponent
               },
               {
-                path: 'search', component: AdhocSearchCriteriaComponent, children: [
+                path: 'search-criteria', component: AdhocSearchCriteriaComponent, children: [
                   {
-                    path: '', redirectTo: 'column', pathMatch: 'full'
+                    path: 'search-screen', component: AdhocSearchScreenComponent
                   },
                   {
-                    path: 'column', component: AdhocSearchScreenComponent
-                  },
-                  {
-                    path: 'column-edit', component: AdhocEditSearchScreenPopupComponent
+                    path: 'edit-search-screen', component: AdhocEditSearchScreenPopupComponent
                   },
                 ]
               }
