@@ -1,13 +1,13 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <div class="col-md-1">
+      <div class="arrow">
         <a (click)="gotoDashboard()" data-tooltip="Back">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
         </a>
       </div>
-      <div class="col-md-8">
-        <h3 style="margin: 2px;text-align: left">ERT</h3>
+      <div class="ert">
+        ERT
       </div>
     </div>
     <div class="col-md-3" style="text-align:left">
@@ -17,13 +17,15 @@
       </div> -->
     </div>
     <div class="col-md-3" style="text-align: right">
-      <a style="font-size: 42px" [routerLink]="['/workspace/ert/ert-jobs-config']" title="Add Job"><i class="fa fa-plus-circle"></i></a>
+      <a style="font-size: 32px; padding-right: 17px; padding-top: -4px;" [routerLink]="['/workspace/ert/ert-jobs-config']" title="Add Job"><i class="fa fa-plus-circle"></i></a>
     </div>
   </div>
+
+
   <div *ngFor="let item of ertJobs" class="col-md-3 card">
       <div class="flex-cards-bar">
           <div class='title'>{{item.jobTitle===''?'No_title':item.jobTitle | titlecase}}<div class='info'><span (click)="showJobDetails(item.jobId)"  title="Click for more info"><i class="fa fa-info-circle" aria-hidden="true"></i></span></div></div>
-          <div class='delete'><span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job"><i class="fa fa-times" aria-hidden="true"></i></span></div>  
+          <div class='delete'><span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job">X</span></div>  
     </div>
     <div class="flex-cards-body">
         <div class='body-left'>Job Status: </div><div class='body-right'> {{item.jobStatus}}</div>

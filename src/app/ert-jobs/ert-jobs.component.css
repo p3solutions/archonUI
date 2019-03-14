@@ -25,10 +25,6 @@
   padding: 2px 16px;
 }
 
-.delete {
-  float: right;
-  padding: 12px 10px 10px 10px;
-}
 .foo-icon {
   float: right;
   padding: 12px 10px 10px 10px;
@@ -37,18 +33,21 @@
   float: right;
   padding: 12px 0px 10px 0px;
 }
-.fa-times
+.delete
 {
-  font-size: 22px;  
-  color: #e0e2e3;
+  float: right;
+  padding: 5px 10px 5px 10px;
+  font-size: 18px;
+  color: #858586;
   cursor: pointer;
-}
-.fa-times:hover
-{
-  width: 18px;
-  height: 23px;
   border-radius: 4px;
-  background-color: #858586;
+  margin-top: 5px;
+  margin-right: 7px;
+}
+.delete:hover
+{
+  color: #000;
+  background-color: #e0e2e3;
 }
 .fa-info-circle {
   font-size: 20px;  
@@ -62,26 +61,26 @@
 }
 .fa-play {
   text-align: center;
-  font-size: 15px;  
+  font-size: 13px;  
   color: #ffffff;
   cursor: pointer;
   background-color: #80adf8;
   width: 30px;
   height: 30px;
   border-radius: 15px;
-  padding-top: 6px;
+  padding-top: 8px;
   padding-left: 3px;
 }
 .fa-play:hover {
   text-align: center;
-  font-size: 15px;  
+  font-size: 13px;  
   color: #ffffff;
   cursor: pointer;
   background-color: #2879ff;
   width: 30px;
   height: 30px;
   border-radius: 15px;
-  padding-top: 6px;
+  padding-top: 8px;
   padding-left: 3px;
 }
 .fa-pencil-square-o {
@@ -146,10 +145,6 @@
   color: #2b2b2b;
 }
 
-.card span {
-  color: #2196F3;
-}
-
 a.disabled {
   color: gray;
   cursor: not-allowed;
@@ -174,15 +169,24 @@ label {
   border-top-right-radius: 5px;
 }
 .flex-cards-footer {
-  background-color: #f6f7f8;
-  margin: 0px;
+  border-top: 1px solid #E6E9ED;
   height: 50px;
   margin-top: 0px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
 }
 .trim-text h2 {
   width: 8em;
   display: inline-block;
+}
+.arrow {
+  display:inline-block; 
+  float: left;
+  padding-left: 13px;
+  font-size: 23px;
+  
+}
+.ert {
+  font-size: 24px; 
+  padding-left: 13px;
+  float: left;
 }
 
