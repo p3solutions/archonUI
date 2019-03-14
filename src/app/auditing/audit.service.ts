@@ -13,7 +13,7 @@ export class AuditService {
   getAuditUrl = environment.apiUrl + 'audits/auditing?userId=';
   getEventsUrl = environment.apiUrl + 'audits/events';
   downloadUrl = environment.apiUrl + 'audits/download?jobId=';
-
+  jobDetails = environment.apiUrl + 'jobStatus/jobDetails?jobId=';
   constructor(private http: HttpClient, private userinfoService: UserinfoService) { }
 
   getHeaders() {
@@ -26,6 +26,17 @@ export class AuditService {
       catchError(this.handleError<any>('getEvents')));
   }
 
+  getJobDetails(jobId: string): Observable<any> {
+    return this.http.get<any>(this.jobDetails + jobId, { headers: this.getHeaders() }).pipe(
+      map(this.extractJobDetails),
+      catchError(this.handleError<any>('getJobDetails')));
+  }
+
+  private extractJobDetails(res: any) {
+    const data = res.data.ShowDetails;
+    return data || [];
+  }
+
   private extractEvents(res: any) {
     const data = res.data.Events;
     return data || [];
@@ -33,10 +44,10 @@ export class AuditService {
 
   getJobStatuses(params) {
     return this.http.get<any>(this.getAuditUrl + params.userId + '&workspaceId=' + params.workspaceId
-    + '&eventName=' + params.eventName + '&severityLevel=' + params.severityLevel
-    + '&fromDate=' + params.fromDate + '&toDate=' + params.toDate + '&serviceId=' + params.serviceId , { headers: this.getHeaders() }).pipe(
-      map(this.extractJobOrigins),
-      catchError(this.handleError<any>('getJobStatus')));
+      + '&eventName=' + params.eventName + '&severityLevel=' + params.severityLevel
+      + '&fromDate=' + params.fromDate + '&toDate=' + params.toDate + '&serviceId=' + params.serviceId, { headers: this.getHeaders() }).pipe(
+        map(this.extractJobOrigins),
+        catchError(this.handleError<any>('getJobStatus')));
   }
 
   private extractJobOrigins(res: any) {
@@ -45,7 +56,7 @@ export class AuditService {
   }
 
   downloadZip(jobId) {
-    return this.http.get<any>(this.downloadUrl + jobId, {headers: this.getHeaders()}).pipe(catchError(this.handleError<any>('download')));
+    return this.http.get<any>(this.downloadUrl + jobId, { headers: this.getHeaders() }).pipe(catchError(this.handleError<any>('download')));
   }
 
 
