@@ -34,9 +34,9 @@
     </div><br>
    
     <div class="flex-cards-footer">
-       <div class='foo-icon'><a [class.disabled]="item.madeDisable" title="Run Job" (click)="!madeDisable && runJob(item.jobId,item.jobStatus)"
-       ><i class="fa fa-play" aria-hidden="true"></i></a></div>
-       <div class='foo-iconedit'><span (click)="gotoEditJob(item.jobId)" title="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></div>
+      <div class='foo-icon'><a [class.disabled]="item.madeDisable" title="Run Job" (click)="!madeDisable && runJob(item.jobId,item.jobStatus)"
+       class="cursor-poniter fonticonbelow" ><i class="fa fa-play" aria-hidden="true"></i></a></div> 
+        <div class='foo-iconedit'><span (click)="gotoEditJob(item.jobId)" title="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></div>
       </div>
   </div>
 </div>
