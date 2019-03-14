@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -55,10 +55,10 @@ export class AuditService {
     return data || [];
   }
 
-  downloadZip(jobId) {
-    return this.http.get<any>(this.downloadUrl + jobId, { headers: this.getHeaders() }).pipe(catchError(this.handleError<any>('download')));
+  downloadZip(jobId): Observable<Blob> {
+    return this.http.get(this.downloadUrl + jobId, { headers: this.getHeaders() , responseType: 'blob'} )
+    .pipe(catchError(this.handleError<any>('download')));
   }
-
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
