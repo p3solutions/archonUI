@@ -100,11 +100,11 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
           data: 'user'
         },
         {
-          title: 'jobName',
+          title: 'Job Name',
           data: 'jobName'
         },
         {
-          title: 'jobRuns',
+          title: 'Job Runs',
           data: 'jobRun'
         },
         {
