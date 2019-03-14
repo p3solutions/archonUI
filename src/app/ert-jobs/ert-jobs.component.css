@@ -25,10 +25,95 @@
   padding: 2px 16px;
 }
 
-.fonticon {
+.delete {
   float: right;
-  padding: 0 8px;
+  padding: 12px 10px 10px 10px;
 }
+.foo-icon {
+  float: right;
+  padding: 12px 10px 10px 10px;
+}
+.foo-iconedit {
+  float: right;
+  padding: 12px 0px 10px 0px;
+}
+.fa-times
+{
+  font-size: 22px;  
+  color: #e0e2e3;
+  cursor: pointer;
+}
+.fa-times:hover
+{
+  width: 18px;
+  height: 23px;
+  border-radius: 4px;
+  background-color: #858586;
+}
+.fa-info-circle {
+  font-size: 20px;  
+  color: #80adf8;
+  cursor: pointer;
+}
+.fa-info-circle:hover {
+  font-size: 20px;  
+  color: #2879ff;
+  cursor: pointer;
+}
+.fa-play {
+  text-align: center;
+  font-size: 15px;  
+  color: #ffffff;
+  cursor: pointer;
+  background-color: #80adf8;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  padding-top: 6px;
+  padding-left: 3px;
+}
+.fa-play:hover {
+  text-align: center;
+  font-size: 15px;  
+  color: #ffffff;
+  cursor: pointer;
+  background-color: #2879ff;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  padding-top: 6px;
+  padding-left: 3px;
+}
+.fa-pencil-square-o {
+  text-align: center;
+  font-size: 15px;  
+  color: #ffffff;
+  cursor: pointer;
+  background-color: #80adf8;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  padding-top: 7px;
+  padding-left: 3px;
+}
+.fa-pencil-square-o:hover {
+  text-align: center;
+  font-size: 15px;  
+  color: #ffffff;
+  cursor: pointer;
+  background-color: #2879ff;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  padding-top: 7px;
+  padding-left: 3px;
+}
+
+.info {
+  padding-left: 10px;
+  display:inline-block;  
+}
+
 
 .fonticonbelow {
   float: left;
@@ -39,10 +124,26 @@
   float: right;
 }
 
-.card h4 {
+.title {
+  display:inline-block;
   font-size: 20px;
+  padding: 10px 15px 10px 15px;
   text-align: left;
   color: #121212;
+}
+.body-left {
+  display:inline-block;  
+  padding: 10px 15px 0px 15px;
+  font-size: 16px;
+  width: 50%; 
+  color: #121212;
+}
+.body-right {
+  display:inline-block;
+  padding: 10px 15px 0px 15px;
+  font-size: 13px;
+  width: 50%; 
+  color: #2b2b2b;
 }
 
 .card span {
@@ -67,8 +168,16 @@ label {
 .flex-cards-bar {
   background-color: #efeff0;
   margin: 0px;
-  height: 45px;
-  margin-top: -10px;
+  height: 50px;
+  margin-top: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.flex-cards-footer {
+  background-color: #f6f7f8;
+  margin: 0px;
+  height: 50px;
+  margin-top: 0px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -76,3 +185,4 @@ label {
   width: 8em;
   display: inline-block;
 }
+
