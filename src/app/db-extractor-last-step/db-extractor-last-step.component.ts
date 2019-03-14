@@ -20,7 +20,7 @@ export class DbExtractorLastStepComponent implements OnInit {
   processDetailsObj = new ProcessDetailsObj();
   configuredDB = new ConfiguredDB();
   @ViewChild('click') button: ElementRef;
-
+  scheduleNow: boolean;
   constructor(private router: Router, private dbExtractorService: DbExtractorService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService) { }
@@ -35,6 +35,7 @@ export class DbExtractorLastStepComponent implements OnInit {
 
   Start($event) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.scheduleNow = $event.scheduleNow;
     let param: any = {
       'ownerId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
@@ -92,7 +93,11 @@ export class DbExtractorLastStepComponent implements OnInit {
 
   close() {
     if (this.isSuccessMsg) {
-      this.router.navigate(['/schedule-monitoring']);
+      if (this.scheduleNow) {
+        this.router.navigate(['/status']);
+      } else {
+        this.router.navigate(['/schedule-monitoring']);
+      }
     } else {
       this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
     }

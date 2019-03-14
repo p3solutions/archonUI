@@ -18,6 +18,7 @@ export class ErtJobsComponent implements OnInit {
   @ViewChild('click') button: ElementRef;
   ertJobDetail = new ERTJobs();
   ertJobId = '';
+  scheduleNow: boolean;
 
   constructor(private ertService: ErtService, private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
@@ -73,6 +74,7 @@ export class ErtJobsComponent implements OnInit {
 
   runJob(scheduleObject) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.scheduleNow = scheduleObject.scheduleNow;
     const param: any = {
       'ertJobId': this.scheduledeErtJobId,
       'scheduledConfig': scheduleObject
@@ -90,7 +92,11 @@ export class ErtJobsComponent implements OnInit {
   }
   close() {
     if (this.isSuccessMsg) {
-      this.router.navigate(['/schedule-monitoring']);
+      if (this.scheduleNow) {
+        this.router.navigate(['/status']);
+      } else {
+        this.router.navigate(['/schedule-monitoring']);
+      }
     } else {
       this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
     }
