@@ -37,7 +37,11 @@ export class AuditingComponent implements OnInit, AfterViewInit {
     private renderer: Renderer, private service: ScheduleMonitoringService) { }
 
   ngOnInit() {
-    this.getAudit();
+    if (this.selectedEvent !== '' || this.selectedService !== '' || this.selectedWS !== '' || this.startdate !== '' || this.enddate !== '') {
+      this.getAudit();
+    } else {
+      this.renderTable();
+    }
     this.auditService.getEvetns().subscribe(x => {
       for (const i of x) {
         this.Events.push(i.eventName);
@@ -53,12 +57,11 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
     this.renderer.listenGlobal('document', 'click', (event) => {
-      if (event.target.getAttribute('source') === 'Details') {
+      if (event.target.getAttribute('source') === 'Details-Job') {
         this.auditService.getJobDetails(event.target.getAttribute('id')).subscribe(result => {
           this.common = result.common;
           this.input = result.input;
           this.jobMessage = result.message;
-          console.log(this.common, this.input, this.jobMessage);
         });
         el.click();
       } else if (event.target.getAttribute('source') === 'Downloads') {
@@ -146,7 +149,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
           render: function (data: any, type: any, full: any) {
             if (full.releatedJobId !== null) {
               // tslint:disable-next-line: max-line-length
-              return '<a data-tooltip="View Job Details"><i class="fa fa-info-circle fa-2x" id="' + full.releatedJobId + '" source="Details"></i></a>';
+              return '<a data-tooltip="View Job Details"><i class="fa fa-info-circle fa-2x" id="' + full.releatedJobId + '" source="Details-Job"></i></a>';
             } else {
               return '<a data-tooltip="No Job Details" style="color: grey"><i class="fa fa-info-circle fa-2x"></i></a>';
             }
