@@ -5,6 +5,8 @@ import { ServiceActionsObject } from '../workspace-objects';
 import { StatusService } from './status.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { ErrorObject } from '../error-object';
+import { ScheduleMonitoringService } from '../schedulemonitoring/schedule-monitoring.service';
+import { AuditService } from '../auditing/audit.service';
 // import * as $ from 'jquery';
 
 @Component({
@@ -28,12 +30,16 @@ export class StatusScreenComponent implements OnInit {
   retryLoader = false;
   errorObject: ErrorObject;
   searchKeyword: any = '';
+  common: any;
+  input: any;
+  jobMessage: any;
 
   constructor(
     private router: Router,
     private workspaceService: WorkspaceServicesService,
     private statusService: StatusService,
-    private commonUtilityService: CommonUtilityService
+    private commonUtilityService: CommonUtilityService,
+    private service: AuditService
   ) { }
 
   ngOnInit() {
@@ -114,6 +120,12 @@ export class StatusScreenComponent implements OnInit {
     this.selectedJD.status = status;
     this.selectedJD.jobDetails = jobDetails;
     this.selectedJD.inputs = inputs;
+    // added for jobDetails
+    this.service.getJobDetails(jobId).subscribe(result => {
+      this.common = result.common;
+      this.input = result.input;
+      this.jobMessage = result.message;
+    });
   }
 
   createStatusTable(xData) {
