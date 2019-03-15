@@ -33,7 +33,7 @@
       <div class="card-body" *ngIf="homeStage">
         <div class="col col-md-12">
           <div class="col col-md-3">
-            <h4 class="card-title header">Relationship Info
+            <h4 class="card-title headerr">Relationship Info
             </h4>
           </div>
           <!-- <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span> -->
@@ -46,9 +46,9 @@
               <li>
                 <a href="#" data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct Join</a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="#">Column-Match Join</a>
-              </li>
+              </li> -->
               <li>
                 <!-- <a href="#" data-toggle="modal" data-target="#modelStoredProcView">SP/View Join</a> -->
                 <a (click)="openStoredProcView()">SP/View Join</a>
@@ -73,7 +73,7 @@
           </div>
         </div>
         <div class="row col col-md-12 primary-table">
-          <h5 class="card-title sub-header">Primary Table:
+          <h5 class="card-title sub-headerr">Primary Table:
             <strong>{{tableName}}</strong>
           </h5>
         </div>
@@ -158,14 +158,18 @@
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
           <div class="text-left">
             <div class="modal-header">
-              <div class="back-arrow">
+              <div class="back-arrowr">
                 <a (click)="gotoBack()" data-tooltip="Back">
                   <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
                 </a>
               </div>
-              <div class="col-md-5 analyze-header">Data Analyzer</div>
+               <div class="col-md-5 analyze-header">Data Analyzer</div>
+               <div class="row col col-md-12 primary-table">
+                <h5 class="card-title sub-headerrs">Primary Table:
+                  <strong>{{tableName}}</strong>
+                </h5>
+              </div>
             </div>
-
             <div class="modal-body row">
               <!-- carousel -->
               <div id="dataAModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
@@ -238,7 +242,7 @@
                       </div>
                       <div class="col-md-6" style="height: 295px;">
                         <div class="col-md-12">
-                          {{selectedSecTbl.size}} out of {{secTblArray.length}} selected
+                          {{selectedSecTbl.size}} out of {{secTblArray.length - 1}} selected
                         </div>
                         <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
                           <div class="col-md-12 p-0 tabular-div-row">
@@ -251,7 +255,7 @@
                               [hidden]="secTbl.tableName === selectedPrimTbl">
                               <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.tableName}}"
                                 (click)="highlightTable($event, false, secTbl)">
-                                <input id="{{prefixSecTblId + (secTbl.tableName | lowercase)}}" class="cb-{{i}}" type="checkbox"
+                                <input id="{{prefixSecTblId + (secTbl.tableName)}}" class="cb-{{i}}" type="checkbox"
                                   (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
                                 {{secTbl.tableName}}
                                 <i class="fa fa-angle-right unselected"></i>
@@ -288,7 +292,7 @@
                               </div> -->
                           </div>
                         </div>
-                        <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div>
+                        <!-- <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> -->
                       </div>
                     </div>
                   </div>

@@ -1,0 +1,96 @@
+.workspace-header {
+    /* height: 125px; */
+    padding: 20px 0 0;
+    border-bottom: 2px solid #E6E9ED;
+  }
+  
+  .workspace-dropdown {
+    padding: 10px;
+  }
+  
+  .workspace-dropdown select {
+    border-radius: 3px;
+    padding: 5px;
+    background-color: #fff;
+  }
+  
+  .workspace-dropdown option {
+    font-size: 15px;
+    padding: 5px 2px;
+  }
+  
+  .dropdown-toggle::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .3em;
+    vertical-align: middle;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-left: .3em solid transparent;
+  }
+  
+  .dropdown-item {
+    display: block;
+    /* width: 100%; */
+    padding: 3px 25px;
+    clear: both;
+    font-size: 16px;
+    font-weight: 400;
+    color: #292b2c;
+    text-align: inherit;
+    white-space: nowrap;
+    background: 0 0;
+    border: 0;
+    text-decoration: none;
+  }
+  
+  .dropdown-menu,
+  .dropdown-menu a {
+    width: 187px;
+    margin: 0;
+  }
+  .dropdown-menu a:focus,
+  .dropdown-menu a:hover {
+    color: #262626;
+    text-decoration: none;
+    background-color: lightskyblue;
+    cursor: pointer;
+    margin: 0;  
+  }
+  
+  .dropdown-item.selected {
+    background-color: #269AF8;
+  }
+  
+  .dropdown-divider {
+    height: 1px;
+    margin: .5rem 0;
+    overflow: hidden;
+    background-color: #eceeef;
+  }
+  
+  .dropdown-toggle {
+    /* background-color: #fff; */
+    border: 1px solid #ccc;
+    text-align: right;
+    width: 187px;
+  }
+  .searchbox {
+    position: relative;
+    border-radius: 2px;
+    display: inline-block;
+    padding: 5px 21px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  table::ng-deep th {
+    text-align: center
+  }
+

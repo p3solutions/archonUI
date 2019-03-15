@@ -1,0 +1,139 @@
+<app-navbar></app-navbar>
+
+<div class="workspacelist-container">
+
+
+  <div class="col-md-4">
+    <div class="col-md-1 back-arrow">
+      <a (click)="gotoDashboard()" data-tooltip="Back">
+        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <div class="col-md-8">
+      <h3 class="workspace-panel-heading">
+        Auditing <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span>
+      </h3>
+    </div>
+  </div>
+
+  <div class="col-md-12 m-l-45" style="padding-top: 10px;" *ngIf="loadStatus">
+
+    <div class="btn-group col-md-2 p-0">
+      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        {{selectedEvent ? selectedEvent : 'Select Event' }}
+      </button>
+      <div class="dropdown-menu">
+        <div class="scrollable">
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectEvent('');getAudit()">Event
+                : All</a>
+            <div class="dropdown-divider"></div>
+          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let e of Events" (click)="selectEvent(e);getAudit()">
+            {{e}}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group col-md-2 p-0">
+      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        {{selectedService ? selectedService : 'Select Service' }}
+      </button>
+      <div class="dropdown-menu">
+        <div class="scrollable">
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectService('');getAudit()">Service
+                : All</a>
+            <div class="dropdown-divider"></div>
+          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let service of uniqueService" (click)="selectService(service);getAudit()">
+            {{service}}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group col-md-2 p-0">
+      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        {{selectedWS? selectedWS : 'Select WorkSpace'}}
+      </button>
+      <div class="dropdown-menu">
+        <div class="scrollable">
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectWorkspace('');getAudit()">WorkSpace
+                : All</a>
+            <div class="dropdown-divider"></div>
+          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" *ngFor="let i of userWorkspaceArray"  (click)="selectWorkspace(i);getAudit()">
+          {{i.workspaceName}} </a>
+      </div>
+    </div>
+</div>
+
+<div class="btn-group col-md-2 p-0">
+<input type="text" [(ngModel)]="startdate"
+                     placeholder="From Date" (ngModelChange)="getAudit()"
+                     class="form-control" style="height: 34px"
+                     bsDatepicker [bsConfig]="bsConfig" placement="bottom" required>                   
+</div>
+
+<div class="btn-group col-md-1" style="width: 48px;padding-left: 0px;cursor: pointer;" (click)="startdate = '';getAudit();">
+    <a data-tooltip="Reset"><i class="fa fa-minus-square" style="font-size: 2.4em"></i></a>
+</div>
+
+<div class="btn-group col-md-2 p-0">
+  <input type="text" [(ngModel)]="enddate"
+                       placeholder="To Date" (ngModelChange)="getAudit()"
+                       class="form-control" style="height: 34px"
+                       bsDatepicker [bsConfig]="bsConfig" placement="bottom" required>
+  </div>
+
+<div class="btn-group col-md-1" style="width: 48px;padding-left: 0px;cursor: pointer;" (click)="enddate = '';getAudit();">
+    <a data-tooltip="Reset"><i class="fa fa-minus-square" style="font-size: 2.4em"></i></a>
+</div>
+
+</div>
+
+<div class="row" style="padding-top: 95px;">
+<div id="schedule-job" class="workspace-panel-content" *ngIf="isAvailable">
+<div style="padding: 30px 13px">
+<table datatable [dtOptions]="dtOptions"  class="table table-hover table-bordered nowrap" style="width: 100%"></table>
+</div>
+</div>
+
+</div>
+
+<!-- Modal -->
+<div id="detailsModel" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title text-left">Job Details</h4>
+          </div>
+        <div class="modal-body">
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Values</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr *ngFor="let i of common" class="text-left">
+                    <td>{{i.name}}</td>
+                    <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
+                    <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium': 'GMT' }}</td>
+                  </tr>
+                  <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
+                  <tr *ngFor="let i of input" class="text-left">
+                    <td>{{i.name}}</td>
+                    <td>{{i.value}}</td>
+                  </tr>
+                  <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
+                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
+                </tbody>
+              </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  <button #click data-toggle="modal" href="#detailsModel" [hidden]="true"></button>

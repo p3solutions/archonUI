@@ -29,4 +29,20 @@
 
   .pointer {
     cursor:pointer;
+    margin-top: -20px;    
   }
+  .sub-headerrs {
+    margin-left: 29px;
+    margin-top: 10px;
+    float: left;
+  }
+  .ana-result {
+    text-align: left;
+    display :inline;
+    }
+    .secbutton {
+      margin-right: 4px;
+    }
+    .prebutton {
+      margin-right: -22px;
+    }

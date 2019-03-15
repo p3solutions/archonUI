@@ -113,6 +113,13 @@ import { ErtSipConfigComponent } from './ert-sip-config/ert-sip-config.component
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MaterialModule} from './material-module';
+import { ScheduleJobComponent } from './schedule-job/schedule-job.component';
+import {BsDatepickerModule, TimepickerModule, ModalModule} from 'ngx-bootstrap';
+import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
+import { AuditingComponent } from './auditing/auditing.component';
+import { ScheduleMonitoringService } from './schedulemonitoring/schedule-monitoring.service';
+import { AuditService } from './auditing/audit.service';
+
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -184,6 +191,9 @@ export function tokenGetter() {
                 ErtExtractDigestComponent,
                 ErtTableColumnConfigComponent,
                 ErtJobsComponent,
+                ScheduleJobComponent,
+                SchedulemonitoringComponent,
+                AuditingComponent,
                 ErtDatarecordConfigComponent,
                 ErtSipConfigComponent
         ],
@@ -195,11 +205,11 @@ export function tokenGetter() {
                 }),
                 BrowserModule,
                 FormsModule,
+                BsDatepickerModule.forRoot(), TimepickerModule.forRoot(),
                 // HttpClientInMemoryWebApiModule.forRoot(
                 //     InMemoryDataService,
                 //     { dataEncapsulation: false }
                 // ),
-                FormsModule,
                 ReactiveFormsModule,
                 DataTablesModule,
                 MatTableModule,
@@ -252,7 +262,9 @@ export function tokenGetter() {
                 EditRelationshipInfoService,
                 AddDirectJoinService,
                 DbExtractorService,
-                StoredProcViewService
+                StoredProcViewService,
+                ScheduleMonitoringService,
+                AuditService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent]

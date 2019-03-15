@@ -13,6 +13,7 @@
         </div>
       </div>
       <div class="modal-body">
+        <div *ngIf="isSPVAvailable">
         <div class="row" style="display: -webkit-box;">
           <div style="text-transform: uppercase;width:27%"><strong>Stored Procedure(SP)/Views</strong></div>
           <div style="text-transform: uppercase;width:28%"><strong>Relating Tables from SP/View</strong></div>
@@ -59,7 +60,11 @@
               <div class="sec-div-third-col">{{item.dataType}}</div>
             </div>
           </div>
+          </div>         
         </div>
+        <div *ngIf="!isSPVAvailable"><h5>
+            No Stored Procedures and views information available
+          </h5> </div>
         <div class="modal-footer">
             <div class="col-md-7">         
                 <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
