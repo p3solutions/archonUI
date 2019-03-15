@@ -136,45 +136,28 @@
 
                 <div id="collapse-job-{{ind}}" class="panel-collapse collapse tabular-div {{(jobRetry && ind === 0) ? 'in' : ''}}">
                   <div class="panel-body">
-                    <div>
-                      <div class="col-md-12 p-0 tabular-div-row">
-                        <div class="col-md-4 tabular-div-column column-header" title="Job Status">
-                          Job Status
-                        </div>
-                        <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfo.jobStatus}}">
-                          {{attempt?.jobInfo.jobStatus}}
-                        </div>
-                      </div>
-                      <div class="col-md-12 p-0 tabular-div-row">
-                        <div class="col-md-4 tabular-div-column column-header" title="Scheduled Time">
-                          Scheduled Time
-                        </div>
-                        <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfo.scheduledTime | date: 'medium'}}">
-                          {{attempt?.jobInfo.scheduledTime | date: 'medium'}}
-                        </div>
-                      </div>
-                      <div class="col-md-12 p-0 tabular-div-row">
-                        <div class="col-md-4 tabular-div-column column-header" title="Start Time">
-                          Start Time
-                        </div>
-                        <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfo.startTime | date: 'medium'}}">
-                          {{attempt?.jobInfo.startTime | date: 'medium'}}
-                        </div>
-                      </div>
-                      <div class="col-md-12 p-0 tabular-div-row m-b-10">
-                        <div class="col-md-4 tabular-div-column column-header" title="End Time">
-                          End Time
-                        </div>
-                        <div class="col-md-8 tabular-div-column" title="{{attempt?.jobInfo.endTime | date: 'medium'}}">
-                          {{attempt?.jobInfo.endTime | date: 'medium'}}
-                        </div>
-                      </div>
-                    </div>
-                    <div *ngFor="let msgObj of attempt.jobMessage" class="col-md-12 tabular-div-row tabular-div-column trim-text"
-                      title="{{msgObj.message}}">
-                      {{msgObj.message}}
-                    </div>
-
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Field</th>
+                          <th>Values</th>
+                        </tr>
+                      </thead>
+                      <tbody >
+                        <tr *ngFor="let i of common" class="text-left">
+                          <td>{{i.name}}</td>
+                          <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
+                          <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium': 'GMT' }}</td>
+                        </tr>
+                        <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
+                        <tr *ngFor="let i of input" class="text-left">
+                          <td>{{i.name}}</td>
+                          <td>{{i.value}}</td>
+                        </tr>
+                        <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
+                        <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
 

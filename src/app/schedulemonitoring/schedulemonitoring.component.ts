@@ -14,7 +14,7 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   dtOptions: DataTables.Settings = {};
   output;
   Status = ['SCHEDULED', 'IN_PROGRESS', 'COMPLETED', 'FAILED' , 'USER_OR_ADMIN_STOPPED'];
-  tools = ['RDBMS_EXTRACTION'];
+  tools = ['RDBMS_EXTRACTION', 'ERT_EXTRACTION'];
   @ViewChild('click') button: ElementRef;
   selectedTool = '';
   selectedJobStatus = '';
