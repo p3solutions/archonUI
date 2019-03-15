@@ -14,9 +14,9 @@
 .card {
   padding: 0px;
   text-align: left;
-  margin: 0 13px 20px;
+  margin: 0 18px 20px;
   transition: 0.3s;
-  width: 23%;
+  width: 22%;
   border-radius: 5px;
   border: 1px solid #E6E9ED
 }
@@ -27,20 +27,21 @@
 
 .foo-icon {
   float: right;
-  padding: 12px 10px 10px 10px;
+  padding: 6px 10px 5px 10px;
 }
 .foo-iconedit {
   float: right;
-  padding: 12px 0px 10px 0px;
+  padding: 6px 0px 5px 0px;
 }
 .delete
 {
   float: right;
-  padding: 5px 10px 5px 10px;
-  font-size: 18px;
+  padding: 7px 10px 5px 10px;
+  font-size: 12px;
+  font-family: cursive;
   color: #858586;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 15px;
   margin-top: 5px;
   margin-right: 7px;
 }
@@ -50,12 +51,12 @@
   background-color: #e0e2e3;
 }
 .fa-info-circle {
-  font-size: 20px;  
-  color: #80adf8;
+  font-size: 16px;  
+  color: #6daeeb;
   cursor: pointer;
 }
 .fa-info-circle:hover {
-    color: #2879ff;
+    color: #115498;
  }
 
 .fa-pencil-square-o {
@@ -63,15 +64,15 @@
   font-size: 15px;  
   color: #ffffff;
   cursor: pointer;
-  background-color: #80adf8;
-  width: 30px;
-  height: 30px;
+  background-color: #6daeeb;
+  width: 26px;
+  height: 26px;
   border-radius: 15px;
-  padding-top: 7px;
+  padding-top: 5px;
   padding-left: 3px;
 }
 .fa-pencil-square-o:hover {
-   background-color: #2879ff;
+   background-color: #115498;
  }
 
 .info {
@@ -85,7 +86,7 @@
 
 .title {
   display:inline-block;
-  font-size: 20px;
+  font-size: 16px;
   padding: 10px 15px 10px 15px;
   text-align: left;
   color: #121212;
@@ -93,15 +94,22 @@
 .body-left {
   display:inline-block;  
   padding: 10px 15px 0px 15px;
-  font-size: 16px;
-  width: 50%; 
+  font-size: 14px;
+  width: 45%; 
+  color: #121212;
+}
+.body-center {
+  display:inline-block;  
+  padding: 10px 0px 0px 0px;
+  font-size: 14px;
+  width: 5%; 
   color: #121212;
 }
 .body-right {
   display:inline-block;
   padding: 10px 15px 0px 15px;
-  font-size: 13px;
-  width: 50%; 
+  font-size: 11px;
+  width: 40%; 
   color: #2b2b2b;
 }
 
@@ -117,14 +125,14 @@ label {
 .flex-cards-bar {
   background-color: #efeff0;
   margin: 0px;
-  height: 50px;
+  height: 40px;
   margin-top: 0px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 .flex-cards-footer {
   border-top: 1px solid #E6E9ED;
-  height: 50px;
+  height: 40px;
   margin-top: 0px;
 }
 .trim-text h2 {
@@ -134,7 +142,7 @@ label {
 .arrow {
   float: left;
   display:inline-block; 
-  padding-left: 13px;
+  padding-left: 18px;
   font-size: 23px;  
 }
 .ert {
@@ -150,15 +158,15 @@ a.disabled {
 .fonticonbelow {
   float: left;
   color: #ffffff;
-  padding-top: 6px;
+  padding-top: 4px;
   padding-left: 3px;
-  background-color: #80adf8;
-  width: 30px;
-  height: 30px;
+  background-color: #6daeeb;
+  width: 26px;
+  height: 26px;
   border-radius: 15px;
   text-align: center;
   font-size: 13px;
 }
 .fonticonbelow:hover {
-    background-color: #2879ff;
+    background-color: #115498;
  }

@@ -17,7 +17,7 @@
       </div> -->
     </div>
     <div class="col-md-3" style="text-align: right">
-      <a style="font-size: 32px; padding-right: 17px; padding-top: -4px;" [routerLink]="['/workspace/ert/ert-jobs-config']" title="Add Job"><i class="fa fa-plus-circle"></i></a>
+      <a style="font-size: 32px; padding-right: 22px; padding-top: -4px;" [routerLink]="['/workspace/ert/ert-jobs-config']" title="Add Job"><i class="fa fa-plus-circle"></i></a>
     </div>
   </div>
 
@@ -28,9 +28,9 @@
           <div class='delete'><span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job">X</span></div>  
     </div>
     <div class="flex-cards-body">
-        <div class='body-left'>Job Status: </div><div class='body-right'> {{item.jobStatus}}</div>
-        <div class='body-left'>Job Mode: </div><div class='body-right'>{{item.jobMode}}</div>
-        <div class='body-left'>Created Date: </div><div class='body-right'> {{item.createdDate | date}}</div>
+        <div class='body-left'>Job Status</div><div class='body-center'>:</div><div class='body-right'> {{item.jobStatus}}</div>
+        <div class='body-left'>Job Mode</div><div class='body-center'>:</div><div class='body-right'>{{item.jobMode}}</div>
+        <div class='body-left'>Created Date</div><div class='body-center'>:</div><div class='body-right'> {{item.createdDate | date}}</div>
     </div><br>
    
     <div class="flex-cards-footer">
