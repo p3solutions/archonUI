@@ -36,18 +36,23 @@
 .delete
 {
   float: right;
-  padding: 7px 10px 5px 10px;
-  font-size: 12px;
-  font-family: cursive;
-  color: #858586;
-  cursor: pointer;
-  border-radius: 15px;
-  margin-top: 5px;
-  margin-right: 7px;
+  text-align: center;
+  border-radius: 20px;
+  width: 23px;
+  margin-top: 8px;
+  margin-right: 6px;
+  padding-right: 4px;  
 }
 .delete:hover
 {
-  color: #000;
+  float: right;
+  text-align: center;
+  border-radius: 20px;
+  width: 23px;
+  margin-top: 8px;
+  margin-right: 6px;
+  padding-right: 4px; 
+  border: 1px solid #d1d2d3;
   background-color: #e0e2e3;
 }
 .fa-info-circle {
@@ -56,7 +61,7 @@
   cursor: pointer;
 }
 .fa-info-circle:hover {
-    color: #115498;
+    color: #0A85F8;
  }
 
 .fa-pencil-square-o {
@@ -72,7 +77,7 @@
   padding-left: 3px;
 }
 .fa-pencil-square-o:hover {
-   background-color: #115498;
+   background-color: #0A85F8;
  }
 
 .info {
@@ -168,5 +173,5 @@ a.disabled {
   font-size: 13px;
 }
 .fonticonbelow:hover {
-    background-color: #115498;
+    background-color: #0A85F8;
  }
