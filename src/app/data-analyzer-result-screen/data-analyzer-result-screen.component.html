@@ -1,8 +1,13 @@
-<div class="col-md-12 marginClass">
-  <div class="col-md-5" align="left">Analysis Status : Completed</div>
+<div class="row col col-md-12 primary-table">
+  <h5 class="card-title sub-headerrs">Primary Table:
+    <strong>{{primaryTableName}}</strong>
+  </h5>
+</div>
+<div class="col-md-12">
+  <div class="col-md-5 ana-result">Data Analysis Status : Completed</div>
   <div class="col-md-7 pointer">
-    <button type="button" class="btn btn-primary" (click)="activateSecondaryFn()" id="Select">Secondary Tables</button>
-    <button type="button" class="btn btn-primary" (click)="activatePrimaryFn();selectRow()">Primary Columns</button>
+    <button type="button" class="btn btn-primary secbutton" (click)="activateSecondaryFn()" id="Select">Secondary Tables</button> 
+    <button type="button" class="btn btn-primary prebutton" (click)="activatePrimaryFn();selectRow()">Primary Columns</button>
   </div>
 </div>
 <div *ngIf="activatePrimary">

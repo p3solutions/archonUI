@@ -33,7 +33,7 @@
       <div class="card-body" *ngIf="homeStage">
         <div class="col col-md-12">
           <div class="col col-md-3">
-            <h4 class="card-title header">Relationship Info
+            <h4 class="card-title headerr">Relationship Info
             </h4>
           </div>
           <!-- <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span> -->
@@ -73,7 +73,7 @@
           </div>
         </div>
         <div class="row col col-md-12 primary-table">
-          <h5 class="card-title sub-header">Primary Table:
+          <h5 class="card-title sub-headerr">Primary Table:
             <strong>{{tableName}}</strong>
           </h5>
         </div>
@@ -158,14 +158,18 @@
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
           <div class="text-left">
             <div class="modal-header">
-              <div class="back-arrow">
+              <div class="back-arrowr">
                 <a (click)="gotoBack()" data-tooltip="Back">
                   <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
                 </a>
               </div>
-              <div class="col-md-5 analyze-header">Data Analyzer - {{tableName | titlecase}} </div>
+               <div class="col-md-5 analyze-header">Data Analyzer</div>
+               <div class="row col col-md-12 primary-table">
+                <h5 class="card-title sub-headerrs">Primary Table:
+                  <strong>{{tableName}}</strong>
+                </h5>
+              </div>
             </div>
-
             <div class="modal-body row">
               <!-- carousel -->
               <div id="dataAModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
