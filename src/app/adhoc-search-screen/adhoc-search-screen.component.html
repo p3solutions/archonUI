@@ -3,7 +3,8 @@
     <mat-card-header>
       <mat-card-title>{{item.label}}
         <span> <a class="cursor-poniter" (click)="gotoSearchColumnEdit(item?.columnId)"><i class="fa fa-edit"></i></a>
-          <a class="cursor-poniter" (click)="deleteSearchColumn(item?.columnId,item?.tableId)"><i class="fa fa-trash" aria-hidden="true"></i></a></span>
+          <a class="cursor-poniter" (click)="deleteSearchColumn(item?.columnId,item?.tableId)"><i class="fa fa-trash"
+              aria-hidden="true"></i></a></span>
       </mat-card-title>
       <mat-card-subtitle>({{item.tableName}}/{{item.columnName}})</mat-card-subtitle>
     </mat-card-header>

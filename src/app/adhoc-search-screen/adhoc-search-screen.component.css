@@ -11,7 +11,7 @@
   font-size: x-large;
 }
 
-.mat-card.column-box {
+::ng-deep .mat-card.column-box {
   width: 30.25%;
   padding: 11px 10px 8px 10px;
   margin: 0px 9px 17px 17px;
@@ -19,6 +19,7 @@
   border-radius: 3px;
   border: solid 1px #c9d1df;
   background-color: #fafafa;
+  text-align: left;
 }
 
 ::ng-deep .search-screen .mat-card-title span i {
@@ -29,11 +30,11 @@
   padding: 0.6em !important;
 }
 
-.column-box mat-form-field.select {
+::ng-deep .column-box mat-form-field.select {
   width: -webkit-fill-available
 }
 
-.column-box mat-form-field.text-box {
+::ng-deep .column-box mat-form-field.text-box {
   width: -webkit-fill-available
 }
 

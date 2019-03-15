@@ -122,8 +122,9 @@ import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-sear
 import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-screen.component';
 import { AdhocEditSearchScreenPopupComponent } from './adhoc-edit-search-screen-popup/adhoc-edit-search-screen-popup.component';
 import { AdhocScreenService } from './adhoc-search-criteria/adhoc-screen.service';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AdhocSearchPanelComponent } from './adhoc-search-panel/adhoc-search-panel.component';
+import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
+import { AdhocEditPanelColumnPopupComponent } from './adhoc-edit-panel-column-popup/adhoc-edit-panel-column-popup.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -206,8 +207,9 @@ export function tokenGetter() {
                 AdhocSearchCriteriaComponent,
                 AdhocSearchScreenComponent,
                 AdhocEditSearchScreenPopupComponent,
-                AdhocSearchPanelComponent
-        ],
+                AdhocSearchPanelComponent,
+                AdhocEditPanelColumnPopupComponent
+                ],
         imports: [
                 JwtModule.forRoot({
                         config: {
@@ -231,7 +233,8 @@ export function tokenGetter() {
                 BrowserAnimationsModule,
                 MatButtonModule,
                 MatCheckboxModule,
-                MaterialModule
+                MaterialModule,
+                MatSelectInfiniteScrollModule
         ],
         providers: [
                 JwtHelperService,

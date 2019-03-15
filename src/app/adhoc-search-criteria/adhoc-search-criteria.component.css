@@ -9,12 +9,14 @@ i {
 
 .mat-card#left-card {
   padding: 0px;
-  min-height: 445px;
+  overflow: auto;
+  min-height: 500px;
+  max-height: 500px;
 }
 
 .mat-card#right-card {
   padding: 0px;
-  min-height: 445px;
+  min-height: 500px;
 }
 
 .mat-card-content {
@@ -78,14 +80,11 @@ mat-card-header.header-blue {
 }
 
 #drag-search-column {
-  height: 316px;
-  overflow: auto
+  min-height: 250px;
+  max-height: 358px;
+  overflow: auto;
 }
 
-#drag-panel-column {
-  height: 316px;
-  overflow: auto
-}
 
 #mat-expansion-panel-header-2 {
   background-color: #64b5f6
@@ -94,3 +93,4 @@ mat-card-header.header-blue {
 #mat-expansion-panel-header-3 {
   background-color: #64b5f6
 }
+

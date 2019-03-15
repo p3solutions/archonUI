@@ -75,6 +75,7 @@
 
 .modal-body .info {
   display: inline-flex;
+  text-align: left;
 }
 
 .info {
@@ -119,12 +120,17 @@ tbody {
   white-space: pre-wrap;
   overflow: auto;
 }
+
 #edit-column {
   width: 70%;
-    margin-left: 15%;
+  margin-left: 15%;
 }
 
 #info-btn button {
   padding-right: 20px;
   padding-left: 20px;
+}
+
+pre {
+  text-align: left;
 }

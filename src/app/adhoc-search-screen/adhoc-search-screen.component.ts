@@ -11,6 +11,7 @@ import { AdhocService } from '../adhoc-landing-page/adhoc.service';
   styleUrls: ['./adhoc-search-screen.component.css']
 })
 export class AdhocSearchScreenComponent implements OnInit {
+  searchColumns1: SearchColumn[];
   searchColumns: SearchColumn[];
   TREE_DATA: TableColumnNode[];
   @Output() showEditEvent = new EventEmitter<boolean>();
@@ -19,21 +20,23 @@ export class AdhocSearchScreenComponent implements OnInit {
 
   ngOnInit() {
     this.adhocScreenService.updatedSearchColumns.subscribe(result => {
-      this.searchColumns = JSON.parse(JSON.stringify(result));
+      this.searchColumns1 = JSON.parse(JSON.stringify(result));
+      this.searchColumns = Object.assign([], this.searchColumns1);
     });
     this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
       if (result === null) {
         this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
       }
     });
+    this.searchColumns = Object.assign([], this.searchColumns1);
   }
 
   gotoSearchColumnEdit(columnId) {
     const temp = this.searchColumns.find(a => a.columnId === columnId);
     this.adhocScreenService.updateSearchColumn(temp);
     this.showEditEvent.emit(true);
-   // this.router.navigate(['/workspace/adhoc/screen/search-criteria/edit-search-screen']);
   }
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.searchColumns, event.previousIndex, event.currentIndex);
   }

@@ -1,29 +1,55 @@
 /* Styles for tab labels */
 
 .mat-tab-label {
-    min-width: 25px !important;
-    padding: 5px;
-    background-color: transparent;
-    color: #333;
-    font-weight: 700;
+  min-width: 25px !important;
+  padding: 5px;
+  background-color: transparent;
+  color: #333;
+  font-weight: 700;
 }
 
 /* Styles for the active tab label */
 
 .mat-tab-label.mat-tab-label-active {
-    min-width: 25px !important;
-    padding: 5px;
-    background-color: transparent;
-    color: #333;
-    font-weight: 700;
+  min-width: 25px !important;
+  padding: 5px;
+  background-color: transparent;
+  color: #333;
+  font-weight: 700;
 }
 
 /* Styles for the ink bar */
 
 .mat-ink-bar {
-    background-color: green;
+  background-color: green;
 }
 
 p {
-    font-family: Roboto;
+  font-family: Roboto;
+}
+
+.addBtn {
+  width: 8%;
+  padding: 14px 3px 2px 0px
+}
+
+.tab {
+  width: 61%;
+}
+
+.rename {
+  width: 31%;
+}
+
+.rename-box {
+  width: 100%;
+  text-align: right;
+}
+
+.renameBtn {
+  margin-left: 3%;
+}
+
+.mat-tab-body-content{
+  height: 50vh !important;
 }

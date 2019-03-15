@@ -1,0 +1,137 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container>* {
+    width: 100%;
+  }
+  
+  #popup-header {
+    background-color: #E6E9ED;
+    border-radius: 3px;
+    text-align: center;
+    margin-left: 0px
+  }
+  
+  #table-col-info {
+    display: inline-flex;
+    justify-content: space-around;
+    margin: 12px 0px 0px 0px;
+    font-size: 16px;
+  }
+  
+  #nextbtn button {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  
+  #popup-header h3 {
+    margin: 8px 2px 5px 0px;
+  }
+  
+  .example-container form {
+    margin-bottom: 20px;
+  }
+  
+  .example-container form>* {
+    margin: 5px 0;
+  }
+  
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  
+  .example-margin {
+    margin: 0 10px;
+  }
+  
+  #output-function {
+    width: 96%;
+  }
+  
+  #output-div a {
+    font-size: 25px;
+    float: right;
+    padding: 9px 2px;
+  }
+  
+  .fa-info-circle {
+    color: #1385f8
+  }
+  
+  .modal-header {
+    background-color: #64b5f6;
+  }
+  
+  .modal-header i {
+    font-size: xx-large;
+    color: #333;
+    padding: 0px 7px 2px 2px;
+  }
+  
+  .modal-body .info {
+    display: inline-flex;
+    text-align: left;
+  }
+  
+  .info {
+    display: inline-flex;
+    width: 100%;
+    font-size: 16px;
+    margin-left: 4px;
+  }
+  
+  .first-heading {
+    width: 30%;
+  }
+  
+  .col-heading {
+    width: 4%;
+  }
+  
+  #function-info {
+    margin: 11px 2px 2px 0px;
+    height: 250px;
+  }
+  
+  #ip-op-table {
+    border-radius: 4px;
+    margin-left: 8%;
+    margin-top: 9px;
+  }
+  
+  td {
+    padding: 5px 15px 5px 15px;
+    margin: 0px 8px 2px 2px;
+    text-align: left;
+  }
+  
+  tbody {
+    font-size: 16px;
+    border-radius: 3px;
+    background-color: #f7f9fb
+  }
+  
+  #function-info {
+    white-space: pre-wrap;
+    overflow: auto;
+  }
+  
+  #edit-column {
+    width: 70%;
+    margin-left: 15%;
+  }
+  
+  #info-btn button {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  
+  pre {
+    text-align: left;
+  }
+  

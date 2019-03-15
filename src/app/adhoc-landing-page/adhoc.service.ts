@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AdhocHeaderInfo } from './adhoc';
-import { BehaviorSubject } from 'rxjs';
+import { AdhocHeaderInfo, ApplicationInfo } from './adhoc';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

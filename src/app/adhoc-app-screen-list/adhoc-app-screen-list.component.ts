@@ -6,7 +6,8 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { ManageMasterMetadataService } from '../manage-master-metadata/manage-master-metadata.service';
 import { Router } from '@angular/router';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
-
+import { Observable } from 'rxjs';
+import { fromEvent } from 'rxjs';
 @Component({
   selector: 'app-create-screen-dialog',
   templateUrl: 'create-screen-dialog.html',
@@ -57,10 +58,30 @@ export class AdhocAppScreenListComponent implements OnInit {
     { Position: 6, screenId: '6', searchScreenDetail: null, screenDesc: 'F', screenName: 'AF' }
   ];
   applicationInfoList: ApplicationInfo[] = [
-    { appId: '1', appName: 'App 1', appDesc: 'First App' },
-    { appId: '2', appName: 'App 12', appDesc: 'Second App' },
-    { appId: '3', appName: 'App 33', appDesc: 'Third App' }
+    // { appId: '1', appName: 'App 1', appDesc: 'First App' },
+    // { appId: '2', appName: 'App 12', appDesc: 'Second App' },
+    // { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+    // { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+    // { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+    // { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+    // { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+    // { appId: '3', appName: 'App 33', appDesc: 'Third App' },
   ];
+  observable = Observable.create(observer => {
+    const applicationInfoList: ApplicationInfo[] = [
+      { appId: '1', appName: 'App 1', appDesc: 'First App' },
+      { appId: '2', appName: 'App 12', appDesc: 'Second App' },
+      { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+      { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+      { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+      { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+      { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+      { appId: '3', appName: 'App 33', appDesc: 'Third App' },
+    ];
+    observer.next(applicationInfoList);
+    console.log('am done');
+    observer.complete();
+  });
   appInfoObject = new ApplicationInfo();
   appInfo = new ApplicationInfo();
   workspaceName = '';
@@ -77,7 +98,10 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.getHeaderInfo();
-    this.selectedApp(this.applicationInfoList[0].appId);
+    this.observable.subscribe((data) => {
+      this.applicationInfoList = data;
+      this.selectedApp(this.applicationInfoList[0].appId);
+    });
   }
 
   getHeaderInfo() {
@@ -132,5 +156,12 @@ export class AdhocAppScreenListComponent implements OnInit {
     adhocHeaderInfo.appName = this.appInfoObject.appName;
     this.adhocService.updateAdhocHeaderInfo(adhocHeaderInfo);
     this.router.navigate(['/workspace/adhoc/screen/table']);
+  }
+
+  getNextBatch() {
+    console.log(1);
+    this.observable.subscribe((data) => {
+      this.applicationInfoList = this.applicationInfoList.concat(JSON.parse(JSON.stringify(data)));
+    });
   }
 }

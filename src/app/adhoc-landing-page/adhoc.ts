@@ -11,7 +11,7 @@ export class TableColumnNode {
     name: string;
     type: string;
     visible: boolean;
-    columns?: TableColumnNode[];
+    columns?: TableColumnNode[] = [];
 }
 
 export class TableColumnInfo {
@@ -23,7 +23,7 @@ export class TableColumnInfo {
 
 export class SearchScreenDetail {
     tableColumn = new TableColumnInfo();
-    SearchColumnInfo: SearchColumn[];
+    SearchColumnInfo: SearchColumn[] = [];
 }
 
 export class ScreenInfo {
@@ -47,21 +47,19 @@ export class SearchColumn {
     columnId: string;
     sequenceNo: string;
     tableName: string;
-    columnName: string;
+    columnName: string; // name
     label: string;
     fieldType = 'TEXT';
     searchType = '=';
     inputFunction = 'Gender Description Common';
-    isMandatoryField = false;
+    isMandatoryField = false; // required
     optionInfo = new OptionInfo();
+    dateRange = false;
+    hidden = false;
+    encrypted = false;
 }
 
-export class Adhoc {
-    workspaceId: string;
-    metadataVersion: string;
-    appId: string;
-    screenInfo = new ScreenInfo();
-}
+
 
 export class AdhocHeaderInfo {
     workspaceName: string;
@@ -75,58 +73,66 @@ export class InputFunctionsInfo {
     functionName: string;
     functionDesc: string;
     text: string;
-    input: string[];
-    output: string[];
+    input: string[] = [];
+    output: string[] = [];
 }
 
 export class Tab {
-    tabName = '';
-    tabSequence = null;
-    panelColumn: PanelColumns[];
+    tabName = 'Tab';
+    tabIndex = 0; // taborder
+    panelColumn: PanelColumns[] = [];
 }
 
 export class MainPanelDetails {
-    panelColumn: PanelColumns[];
+    panelColumn: PanelColumns[] = [];
 }
 
 export class InlinePanelDetails {
-    tabs: Tab[];
+    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabIndex': 0, 'panelColumn': [] }];
 }
 
 export class SidePanelDetails {
-    tabs: Tab[];
+    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabIndex': 0, 'panelColumn': [] }];
 }
 
 export class MaskDetail {
-    type = 'start';
+    maskType = 'start';
     visibleTextSize = 4;
 }
 
-export class PanelColumns {
+export class PanelColumns { // resultFields
     tableId: string;
     columnId: string;
-    sequenceNo: string;
+    sequenceNo: string; // position
     schemaName: string;
     tableName: string;
     columnName: string;
     label: string;
     outputFunction = '';
     maskDetail = new MaskDetail();
-    isMaskField = false;
-    sortingValue = 'Disable Sorting in this column';
-    isEnableFilter = false;
-    isHideColumn = false;
+    isMaskField = false; // maskfield
+    sortingValue = 'Disable Sorting in this column'; // sorting
+    isEnableFilter = false; //
+    isHideColumn = false; // isHidden
+    blob = false;
+    encrypted = false;
+    todecrypt = true;
 }
 
 
-export class PanelDetails {
+export class PanelDetails {   // search result
     mainPanelDetails = new MainPanelDetails();
     inlinePanelDetails = new InlinePanelDetails();
     sidePanelDetails = new SidePanelDetails();
 }
 
-
-
+export class Adhoc {
+    workspaceId: string;
+    metadataVersion: string;
+    appId: string;
+    screenInfo = new ScreenInfo();
+    panelDetails = new PanelDetails();
+}
 
 export function checkOption(controlName: string) {
     return (formGroup: FormGroup) => {

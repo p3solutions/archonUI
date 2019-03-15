@@ -1,10 +1,10 @@
-<mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="0">
-  <mat-tab label="Main Panel Details">
+<mat-tab-group (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex">
 
-    <mat-card cdkDrag *ngFor="let item of panelColumns" class="col-md-4 column-box">
+  <mat-tab label="Main Panel Details">
+    <mat-card cdkDrag *ngFor="let item of  panelDetails?.mainPanelDetails?.panelColumn" class="col-md-4 column-box">
       <mat-card-header>
         <mat-card-title>{{item.label}}
-          <span> <a class="cursor-poniter" (click)="gotoSearchColumnEdit(item?.columnId)"><i class="fa fa-edit"></i></a>
+          <span> <a class="cursor-poniter" (click)="gotoMainPanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i class="fa fa-edit"></i></a>
             <a class="cursor-poniter" (click)="deleteSearchColumn(item?.columnId,item?.tableId)"><i class="fa fa-trash"
                 aria-hidden="true"></i></a></span>
         </mat-card-title>
@@ -36,34 +36,90 @@
         </mat-select>
       </mat-form-field>
     </mat-card>
-
   </mat-tab>
-  <mat-tab>
+
+  <mat-tab label="Inline Panel Details">
     <ng-template mat-tab-label>
       Inline Panel Details
     </ng-template>
     <div style="display:inline-flex;width:100%">
-      <div id="add" style="width:8%">
-        <button mat-raised-button class="example-add-tab-button" (click)="addTab()">
-          <i class=" fa fa-plus"></i>
-        </button>
+      <div class="addBtn">
+        <button mat-raised-button class="example-add-tab-button" (click)="addTabInInlinePanel($event)">
+          <i class=" fa fa-plus"></i></button>
       </div>
-      <div id="tab" style="width:80%">
-        <mat-tab-group [selectedIndex]="selected" (selectedTabChange)="setInlinePanel($event)">
-          <mat-tab *ngFor="let tab of tabs; let index = index">
+      <div class="tab">
+        <mat-tab-group *ngIf="openPanelIndex===1" #MatInlineTabGroup [(selectedIndex)]="selectedInlineTab"
+          (selectedTabChange)="inlinePanelTabChanged($event)">
+          <mat-tab label="tab.tabName" *ngFor="let tab of panelDetails?.inlinePanelDetails?.tabs; let index = index">
             <ng-template mat-tab-label>
-              Tab{{index+1}}
-              <a (click)="removeTab(index)"><i class="fa fa-close"></i></a>
+              {{tab.tabName}}
+              <a (click)="removeInlineTab(index)"><i class="fa fa-close"></i></a>
             </ng-template>
-            content 1{{index}}
+            <mat-card cdkDrag *ngFor="let item of  tab?.panelColumn" class="col-md-4 column-box">
+              <mat-card-header>
+                <mat-card-title>{{item.label}}
+                  <span> <a class="cursor-poniter" (click)="gotoInlinePanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i class="fa fa-edit"></i></a>
+                    <a class="cursor-poniter" (click)="deleteSearchColumn(item?.columnId,item?.tableId)"><i class="fa fa-trash"
+                        aria-hidden="true"></i></a></span>
+                </mat-card-title>
+                <mat-card-subtitle>({{item.tableName}}/{{item.columnName}})</mat-card-subtitle>
+              </mat-card-header>
+            </mat-card>
           </mat-tab>
         </mat-tab-group>
       </div>
-      <div id="rename">
-        <input type="text">
-        <button type="button">Update</button>
+      <div class="rename">
+        <div class="rename-box">
+          <mat-form-field appearance="standard">
+            <mat-label>Rename Tab</mat-label>
+            <input matInput placeholder="Rename Tab">
+          </mat-form-field>
+          <button mat-raised-button class="renameBtn" (click)="addTabInInlinePanel($event)">
+            Rename</button>
+        </div>
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="Side Panel Details"> Content 3 </mat-tab>
+  <mat-tab label="Side Panel Details">
+    <ng-template mat-tab-label>
+      Side Panel Details
+    </ng-template>
+    <div style="display:inline-flex;width:100%">
+      <div class="addBtn">
+        <button mat-raised-button class="example-add-tab-button" (click)="addTabInSidePanel()">
+          <i class=" fa fa-plus"></i></button>
+      </div>
+      <div class="tab">
+        <mat-tab-group #MatSideTabGroup *ngIf="openPanelIndex===2" [(selectedIndex)]="selectedSideTab"
+          (selectedTabChange)="sidePanelTabChanged($event)">
+          <mat-tab label="tab.tabName" *ngFor="let tab of panelDetails?.sidePanelDetails?.tabs; let index = index">
+            <ng-template mat-tab-label>
+              {{tab.tabName}}
+              <a (click)="removeSideTab(index)"><i class="fa fa-close"></i></a>
+            </ng-template>
+            <mat-card cdkDrag *ngFor="let item of  tab?.panelColumn" class="col-md-4 column-box">
+              <mat-card-header>
+                <mat-card-title>{{item.label}}
+                  <span> <a class="cursor-poniter" (click)="gotoSidePanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i class="fa fa-edit"></i></a>
+                    <a class="cursor-poniter" (click)="deleteSearchColumn(item?.columnId,item?.tableId)"><i class="fa fa-trash"
+                        aria-hidden="true"></i></a></span>
+                </mat-card-title>
+                <mat-card-subtitle>({{item.tableName}}/{{item.columnName}})</mat-card-subtitle>
+              </mat-card-header>
+            </mat-card>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+      <div class="rename">
+        <div class="rename-box">
+          <mat-form-field appearance="standard">
+            <mat-label>Rename Tab</mat-label>
+            <input matInput placeholder="Rename Tab">
+          </mat-form-field>
+          <button mat-raised-button class="renameBtn" (click)="addTabInInlinePanel($event)">
+            Rename</button>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
 </mat-tab-group>

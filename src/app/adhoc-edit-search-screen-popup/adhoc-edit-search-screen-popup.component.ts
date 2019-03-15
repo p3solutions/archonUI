@@ -74,7 +74,7 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
   }
   ];
   @Output() showSearchEvent = new EventEmitter<boolean>();
-  constructor(private router: Router, private adhocScreenService: AdhocScreenService, private formBuilder: FormBuilder) { }
+  constructor(private adhocScreenService: AdhocScreenService, private formBuilder: FormBuilder) { }
   ngOnInit() {
     this.adhocScreenService.updatedSearchColumn.subscribe(result => {
       this.searchColumn = result;
@@ -149,7 +149,6 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
 
   cancel() {
     this.showSearchEvent.emit(false);
-   // this.router.navigate(['/workspace/adhoc/screen/search-criteria/search-screen']);
   }
 
 }
