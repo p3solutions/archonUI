@@ -11,6 +11,7 @@ export class WorkspaceHeaderService {
   private workspace: any;
   setSelectedWorkspace(workspace: any) {
     this.workspace = workspace;
+    console.log(this.workspace);
   }
   getSelectedWorkspaceName() {
     return this.workspace.workspaceName;

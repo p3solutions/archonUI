@@ -43,6 +43,10 @@
           </li>
         </ul>
       </div>
+      <div class="dropdown" style="margin-right: 110px;" *ngIf="phase == 'Analysis'">
+        <button class="btn btn-default dropdown-toggle" type="button" id="btn" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
+        </button>
+      </div>
     </div>
     <div classs="row">
       <div class="phase-config">
@@ -53,3 +57,45 @@
   </div>
 </div>
 <hr>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-left">Metalyzer Audit</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Values</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let i of common" class="text-left">
+              <td>{{i.name}}</td>
+              <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
+              <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium': 'GMT' }}</td>
+            </tr>
+            <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
+            <tr *ngFor="let i of input" class="text-left">
+              <td>{{i.name}}</td>
+              <td>{{i.value}}</td>
+            </tr>
+            <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
+            <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

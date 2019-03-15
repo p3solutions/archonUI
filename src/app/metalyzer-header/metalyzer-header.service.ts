@@ -9,6 +9,7 @@ import { UserinfoService } from '../userinfo.service';
 export class MetalyzerHeaderService {
   workspaceinfoUrl = environment.apiUrl + 'workspaces/';
   exportxmlUrl = environment.apiUrl + 'metalyzer/exportMetadata/';
+  getAuditUrl = environment.apiUrl + 'metalyzer/auditEvents';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
   cast = this.phase.asObservable();
@@ -50,6 +51,19 @@ export class MetalyzerHeaderService {
     const data = res.data.workspaces.workspaceName;
     return data || [];
   }
+
+  getAudit(param) {
+    return this.http.post(this.getAuditUrl, param, {headers: this.userinfoService.getHeaders()}).pipe(
+      map(this.extractAudit),
+      catchError(this.handleError<string>('getAudit'))
+    );
+  }
+
+  private extractAudit(res: any) {
+    const data = res.data;
+    return data || [];
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
