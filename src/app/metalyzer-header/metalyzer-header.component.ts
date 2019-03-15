@@ -64,6 +64,28 @@ export class MetalyzerHeaderComponent implements OnInit {
     e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
     a.dispatchEvent(e);
   }
+  downloadFilepdf(content, fileType) {
+    const fileName = this.wsName + '-metadata.pdf';
+    const type = fileType || 'pdf';
+    const e = document.createEvent('MouseEvents');
+    const a = document.createElement('a');
+    a.download = fileName || 'output.pdf';
+    a.href = window.URL.createObjectURL(content);
+    a.dataset.downloadurl = [type, a.download, a.href].join(':');
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+  }
+  downloadFilesecpdf(content, fileType) {
+    const fileName = this.wsName + '-metadata.pdf';
+    const type = fileType || 'pdf';
+    const e = document.createEvent('MouseEvents');
+    const a = document.createElement('a');
+    a.download = fileName || 'output.pdf';
+    a.href = window.URL.createObjectURL(content);
+    a.dataset.downloadurl = [type, a.download, a.href].join(':');
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+  }
   exportxml() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
@@ -78,6 +100,22 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.metalyzerHeaderService.getExportjson(this.workspaceID, this.databaseID, this.json)
       .subscribe(result => {
         this.downloadFilejson(result, result.type);
+      });
+  }
+  exportOverallpdf() {
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.databaseID = this.workspaceHeaderService.getDatabaseID();
+    this.metalyzerHeaderService.getExportOverallpdf(this.workspaceID)
+      .subscribe(result => {
+        this.downloadFilepdf(result, result.type);
+      });
+  }
+  exportSelectedpdf() {
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.databaseID = this.workspaceHeaderService.getDatabaseID();
+    this.metalyzerHeaderService.getExportSelectedpdf(this.workspaceID, this.userselectTableslist.tableId)
+      .subscribe(result => {
+        this.downloadFilesecpdf(result, result.type);
       });
   }
 }

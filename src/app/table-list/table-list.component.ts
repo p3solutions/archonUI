@@ -211,6 +211,8 @@ export class TableListComponent implements OnInit {
     this.secTblColMap.clear();
     this.selectedSecColMap.clear();
     this.finalSecColMap.clear();
+    this.selectedSecTbl.clear();
+    this.finalSecColArray = [];
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
@@ -339,11 +341,7 @@ export class TableListComponent implements OnInit {
         this.enableNextBtn = this.selectedPrimColMap.size > 0;
         break;
       case '1':
-        if (this.finalSecColMap.size === 0) {
-          this.enableNextBtn = this.selectedPrimColMap.size > 0;
-        } else {
           this.enableNextBtn = this.finalSecColMap.size > 0;
-        }
         break;
       // case '2':
       //   this.enableNextBtn
@@ -367,11 +365,13 @@ export class TableListComponent implements OnInit {
     document.getElementById('prev-slide').click();
     this.finalSecColArray = [];
     this.handleStepIindicator(false);
+    this.enableNextBtn = this.selectedPrimColMap.size > 0;
   }
 
   nextStep(e) {
     document.getElementById('next-slide').click();
     this.handleStepIindicator(true);
+    this.enableNextBtn = this.finalSecColMap.size > 0;
   }
 
   getAllSelectedTblsCols() {
@@ -450,6 +450,14 @@ export class TableListComponent implements OnInit {
     const progressSelector = 'progress-bar';
     switch (slideNo) {
       case '0':
+      // if (this.finalSecColMap.size === 0) {
+      //   this.enableNextBtn = this.selectedPrimColMap.size > 0;
+      // } else {
+      //   this.enableNextBtn = this.finalSecColMap.size > 0;
+      // }
+        if (this.selectedSecTbl.size === 0) {
+          this.enableNextBtn = false;
+        }
         // this.removeClass(progressSelector, 'width-5-pc');
         // this.removeClass(progressSelector, 'width-5-25-pc-rev');
         // this.addClass(progressSelector, 'width-5-25-pc');
