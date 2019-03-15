@@ -5,6 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErtService } from '../ert-landing-page/ert.service';
+import { ScheduleJobComponent } from '../schedule-job/schedule-job.component';
+import { BsDatepickerModule, TimepickerModule } from 'ngx-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 describe('ErtJobsComponent', () => {
   let component: ErtJobsComponent;
@@ -12,9 +15,9 @@ describe('ErtJobsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ErtJobsComponent],
+      declarations: [ErtJobsComponent, ScheduleJobComponent],
       providers: [UserinfoService, WorkspaceHeaderService, ErtService],
-      imports: [HttpClientModule, RouterTestingModule]
+      imports: [HttpClientModule, RouterTestingModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), FormsModule]
     })
       .compileComponents();
   }));

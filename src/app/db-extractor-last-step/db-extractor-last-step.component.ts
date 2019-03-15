@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { DbExtractorService } from '../db-extractor/db-extractor.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
-import { ProcessDetails, ProcessDetailsObj } from '../db-extractor';
+import { ProcessDetailsObj } from '../db-extractor';
 import { UserinfoService } from '../userinfo.service';
 import { ConfiguredDB } from '../workspace-objects';
 
@@ -19,6 +19,8 @@ export class DbExtractorLastStepComponent implements OnInit {
   successMsg: string;
   processDetailsObj = new ProcessDetailsObj();
   configuredDB = new ConfiguredDB();
+  @ViewChild('click') button: ElementRef;
+  scheduleNow: boolean;
   constructor(private router: Router, private dbExtractorService: DbExtractorService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService) { }
@@ -31,14 +33,9 @@ export class DbExtractorLastStepComponent implements OnInit {
     );
   }
 
-
-
-  prevStepTwo() {
-    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 });
-    this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
-  }
-
-  Start() {
+  Start($event) {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.scheduleNow = $event.scheduleNow;
     let param: any = {
       'ownerId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
@@ -59,11 +56,12 @@ export class DbExtractorLastStepComponent implements OnInit {
         'includeRecordsCount': this.processDetailsObj.incRecordCount,
         'splitDateInXmlForxDBCompatiblity': this.processDetailsObj.xmlXDBCompability,
         'extractLOBwithinXml': this.processDetailsObj.extractLOBWithXML
-      }
+      },
+      'scheduledConfig': $event
     };
-
     param = this.modifiedParamAccToProcess(param);
     this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload).subscribe((result) => {
+      el.click();
       if (result.httpStatus === 200) {
         this.isSuccessMsg = true;
         this.successMsg = 'Your Job has Started';
@@ -72,6 +70,13 @@ export class DbExtractorLastStepComponent implements OnInit {
         this.successMsg = 'Unable to Process Your Job';
       }
     });
+  }
+
+
+
+  prevStepTwo() {
+    this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 33.33, stepThreeProgBarValue: 0 });
+    this.router.navigate(['/workspace/db-extractor/db-extractor-parameter']);
   }
 
   modifiedParamAccToProcess(param: any): any {
@@ -88,7 +93,11 @@ export class DbExtractorLastStepComponent implements OnInit {
 
   close() {
     if (this.isSuccessMsg) {
-      this.router.navigate(['/status']);
+      if (this.scheduleNow) {
+        this.router.navigate(['/status']);
+      } else {
+        this.router.navigate(['/schedule-monitoring']);
+      }
     } else {
       this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
     }
