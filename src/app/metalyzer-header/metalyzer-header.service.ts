@@ -10,6 +10,7 @@ export class MetalyzerHeaderService {
   workspaceinfoUrl = environment.apiUrl + 'workspaces/';
   exportxmlUrl = environment.apiUrl + 'metalyzer/exportMetadata/';
   getAuditUrl = environment.apiUrl + 'metalyzer/auditEvents';
+  exportpdfUrl = environment.apiUrl + 'metalyzer/export/erDiagram?';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
   cast = this.phase.asObservable();
@@ -45,6 +46,16 @@ export class MetalyzerHeaderService {
   getExportjson(workspaceId, databaseID, json): Observable<Blob> {
     const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: json };
     return this.http.post(this.exportxmlUrl, params,
+      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+  }
+  getExportOverallpdf(workspaceId): Observable<Blob> {
+    const url = this.exportpdfUrl + 'workspaceId=' + workspaceId;
+    return this.http.get(url,
+      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+  }
+  getExportSelectedpdf(workspaceId, tableID): Observable<Blob> {
+    const url = this.exportpdfUrl + 'workspaceId=' + workspaceId + '&tableId=' + tableID;
+    return this.http.get(url,
       { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
   }
   private extractWorkspace(res: any) {
