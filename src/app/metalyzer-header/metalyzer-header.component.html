@@ -79,7 +79,7 @@
             </tr>
           </thead>
           <tbody >
-            <tr *ngFor="let i of auditArray" class="text-left">
+            <tr *ngFor="let i of auditArray | paginate: { itemsPerPage: 10, currentPage: p }" class="text-left">
               <td>{{i.modifiedBy}}</td>
               <td>{{i.createdAt * 1000 | date: 'medium' }}</td>
               <td>{{i.modificationMode}}</td>
@@ -87,6 +87,7 @@
             </tr>
           </tbody>
         </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
