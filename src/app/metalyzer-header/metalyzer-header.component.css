@@ -12,6 +12,11 @@ p {
   display: inline;
 }
 
+.modal-dialog {
+  margin: 100px auto auto;
+  width: 1050px;
+}
+
 .phase-config {
   padding-left: 2%;
 }
@@ -45,6 +50,8 @@ p {
 span {
   float: right;
 }
+
+    
 .form-inline {
   padding: 2px 2px 2px 0px;
   font-family: "Montserrat", sans-serif;

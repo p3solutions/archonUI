@@ -13,8 +13,8 @@
         </h3>
       </div>
     </div>
-    <div class="col-md-6 col-md-push-2">
-      <a data-toggle="modal" (click)="openMMRVersionModel()" style="font-size: 42px" data-toggle="modal" title="Create New Version" data-target="#mmr-config-model"><i class="fa fa-plus-circle"></i></a>
+    <div class="col-md-6 col-md-push-2" *ngIf="role.name == 'ROLE_OWNER'">
+      <a data-toggle="modal" (click)="openMMRVersionModel()" style="font-size: 42px" data-toggle="modal" title="Create New Version" data-target="#mmr-config-model"><i class="fa fa-plus-circle" style="cursor: pointer;"></i></a>
     </div>
   </div>
   <div class="row">
