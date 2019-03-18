@@ -12,6 +12,11 @@ p {
   display: inline;
 }
 
+.modal-dialog {
+  margin: 100px auto auto;
+  width: 1050px;
+}
+
 .phase-config {
   padding-left: 2%;
 }

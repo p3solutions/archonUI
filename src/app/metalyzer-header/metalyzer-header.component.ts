@@ -21,6 +21,8 @@ export class MetalyzerHeaderComponent implements OnInit {
   exportxmlview: any;
   userselectTableslist: any;
   userid: any;
+  auditArray = [];
+
   constructor(
     private router: Router,
     private tablelistService: TableListService,
@@ -90,7 +92,7 @@ export class MetalyzerHeaderComponent implements OnInit {
       'userId': this.userid
     };
     this.metalyzerHeaderService.getAudit(param).subscribe(result => {
-      console.log(result);
+      this.auditArray = result;
     });
   }
 }

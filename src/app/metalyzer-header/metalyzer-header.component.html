@@ -69,26 +69,22 @@
         <h4 class="modal-title text-left">Metalyzer Audit</h4>
       </div>
       <div class="modal-body">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th>Field</th>
-              <th>Values</th>
+              <th>Modified By</th>
+              <th>Modified At</th>
+              <th>Modification Mode</th>
+              <th>Modification Description</th>
             </tr>
           </thead>
           <tbody >
-            <tr *ngFor="let i of common" class="text-left">
-              <td>{{i.name}}</td>
-              <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
-              <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium': 'GMT' }}</td>
+            <tr *ngFor="let i of auditArray" class="text-left">
+              <td>{{i.modifiedBy}}</td>
+              <td>{{i.createdAt * 1000 | date: 'medium' }}</td>
+              <td>{{i.modificationMode}}</td>
+              <td>{{i.modificationDescription[0]}}</td>
             </tr>
-            <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
-            <tr *ngFor="let i of input" class="text-left">
-              <td>{{i.name}}</td>
-              <td>{{i.value}}</td>
-            </tr>
-            <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
-            <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
           </tbody>
         </table>
       </div>
