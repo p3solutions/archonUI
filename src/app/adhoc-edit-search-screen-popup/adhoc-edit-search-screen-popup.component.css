@@ -122,8 +122,12 @@ tbody {
 }
 
 #edit-column {
+  margin-top: 10px;
+  min-height: 358px;
   width: 70%;
   margin-left: 15%;
+  max-height: 360px;
+  overflow: auto;
 }
 
 #info-btn button {
@@ -133,4 +137,19 @@ tbody {
 
 pre {
   text-align: left;
+}
+
+#required {
+  text-align: left;
+  font-size: 16px;
+}
+
+::ng-deep #mandatory-div svg {
+  height: 0vh !important;
+}
+
+a.disabled {
+  color: gray;
+  cursor: not-allowed;
+  text-decoration: underline;
 }

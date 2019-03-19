@@ -1,7 +1,7 @@
-import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
-import { SearchColumn, TableColumnNode } from '../adhoc-landing-page/adhoc';
+import { SearchCriteria, TableColumnNode } from '../adhoc-landing-page/adhoc';
 import { Router } from '@angular/router';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 
@@ -11,45 +11,68 @@ import { AdhocService } from '../adhoc-landing-page/adhoc.service';
   styleUrls: ['./adhoc-search-screen.component.css']
 })
 export class AdhocSearchScreenComponent implements OnInit {
-  searchColumns1: SearchColumn[];
-  searchColumns: SearchColumn[];
+  searchCriteria: SearchCriteria[] = [];
   TREE_DATA: TableColumnNode[];
   @Output() showEditEvent = new EventEmitter<boolean>();
+  @Output() updateSearchCriteriaLength  = new EventEmitter<number>();
+
   constructor(private adhocScreenService: AdhocScreenService,
-    private router: Router, private adhocService: AdhocService) { }
+    public router: Router, private adhocService: AdhocService) { }
 
   ngOnInit() {
-    this.adhocScreenService.updatedSearchColumns.subscribe(result => {
-      this.searchColumns1 = JSON.parse(JSON.stringify(result));
-      this.searchColumns = Object.assign([], this.searchColumns1);
+    this.adhocScreenService.updatedSearchCriteria.subscribe(result => {
+      this.searchCriteria = JSON.parse(JSON.stringify(result));
     });
-    this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
-      if (result === null) {
-        this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-      }
-    });
-    this.searchColumns = Object.assign([], this.searchColumns1);
+    // this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
+    //   if (result === null) {
+    //     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+    //   }
+    // });
   }
 
-  gotoSearchColumnEdit(columnId) {
-    const temp = this.searchColumns.find(a => a.columnId === columnId);
-    this.adhocScreenService.updateSearchColumn(temp);
+  gotoSearchCriteriaEdit(columnId) {
+    const temp = this.searchCriteria.find(a => a.columnId === columnId);
+    this.adhocScreenService.updateSearchCriterion(temp);
     this.showEditEvent.emit(true);
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.searchColumns, event.previousIndex, event.currentIndex);
+    if (event.container !== event.previousContainer) {
+      this.adhocScreenService.updatedTreeData.subscribe(result => {
+        this.TREE_DATA = JSON.parse(JSON.stringify(result));
+      });
+      const tableId = this.adhocScreenService.treeMap.get(event.item.data.node.id);
+      const tableName = this.TREE_DATA.find(a => a.id === tableId).name;
+      this.adhocScreenService.updatedSearchCriteria.subscribe(result => {
+        this.searchCriteria = result;
+      });
+      if (this.searchCriteria.filter(a => a.columnId === event.item.data.node.id).length === 0) {
+        const tempSearchCriteria = new SearchCriteria();
+        tempSearchCriteria.tableId = tableId;
+        tempSearchCriteria.columnId = event.item.data.node.id;
+        tempSearchCriteria.name = event.item.data.node.name;
+        tempSearchCriteria.tableName = tableName;
+        tempSearchCriteria.label = event.item.data.node.name;
+        this.searchCriteria.push(tempSearchCriteria);
+      } else {
+        alert('Not allowed');
+      }
+    } else if (event.container === event.previousContainer) {
+       moveItemInArray(this.searchCriteria, event.previousIndex, event.currentIndex);
+    }
+    this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
+    this.updateSearchCriteriaLength.emit(this.searchCriteria.length);
   }
-  deleteSearchColumn(columnId, tableId) {
-    const index = this.searchColumns.findIndex(a => a.columnId === columnId);
+
+  deleteSearchCriteria(columnId, tableId) {
+    const index = this.searchCriteria.findIndex(a => a.columnId === columnId);
     this.adhocScreenService.updatedTreeData.subscribe(result => {
       this.TREE_DATA = JSON.parse(JSON.stringify(result));
     });
-    this.TREE_DATA.find(a => a.id === tableId).columns.find(b => b.id === columnId).visible = true;
     if (index !== -1) {
-      this.searchColumns.splice(index, 1);
+      this.searchCriteria.splice(index, 1);
     }
-    this.adhocScreenService.updateTreeData(this.TREE_DATA);
-    this.adhocScreenService.updateSearchColumns(this.searchColumns);
+    this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
+    this.updateSearchCriteriaLength.emit(this.searchCriteria.length);
   }
 }

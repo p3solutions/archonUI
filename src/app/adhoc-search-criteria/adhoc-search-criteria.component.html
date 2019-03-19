@@ -7,8 +7,8 @@
       <mat-card-content>
         <p>
           <mat-radio-group>
-            <mat-radio-button value="tbl">Table Search</mat-radio-button>
-            <mat-radio-button value="col">Column Search</mat-radio-button>
+            <mat-radio-button color="primary" value="tbl">Table Search</mat-radio-button>
+            <mat-radio-button color="primary" value="col">Column Search</mat-radio-button>
           </mat-radio-group>
         </p>
         <p>
@@ -17,7 +17,7 @@
           </mat-form-field>
         </p>
         <p>
-          <mat-tree cdkDropList #column="cdkDropList" [cdkDropListConnectedTo]="['drag-search-column',panelScreen]"
+          <mat-tree cdkDropList #column="cdkDropList" [cdkDropListConnectedTo]="['drag-search-column','drag-panel-column']"
             [cdkDropListData]="dataSource" (cdkDropListDropped)="drop($event)" #tree [dataSource]="dataSource"
             [treeControl]="treeControl">
             <mat-tree-node [ngClass]="node.node.visible===false ? 'hide-node' : ''" [cdkDragDisabled]="node.node.type=='Table'"
@@ -47,15 +47,13 @@
               Drag a column to create a search field
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div id="drag-search-column" class="row search-screen" cdkDropList [cdkDropListData]="searchColumns"
-            (cdkDropListDropped)="drop($event)">
-            <app-adhoc-search-screen *ngIf="!isSearchScreen" (showEditEvent)="showEdit($event)"></app-adhoc-search-screen>
-            <app-adhoc-edit-search-screen-popup (showSearchEvent)="showSearch($event)" *ngIf="isSearchScreen"></app-adhoc-edit-search-screen-popup>
-          </div>
+          <app-adhoc-search-screen *ngIf="!isSearchScreen" (updateSearchCriteriaLength)="updateSearchCriteriaLength($event)"
+            (showEditEvent)="showEdit($event)"></app-adhoc-search-screen>
+          <app-adhoc-edit-search-screen-popup (showSearchEvent)="showSearch($event)" *ngIf="isSearchScreen"></app-adhoc-edit-search-screen-popup>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
-    <div>
+    <div *ngIf="searchCriteriaLength!==0">
       <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
           <mat-expansion-panel-header id="drag-panel-column-header">
@@ -63,24 +61,21 @@
               Search Result Screen Design
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div id="drag-panel-column" class="row panel-screen" cdkDropList #panelScreen="cdkDropList" [cdkDropListData]="searchColumns"
-            (cdkDropListDropped)="drop($event)">
-            <app-adhoc-search-panel *ngIf="!isPanelColumnScreen" (showPanelEditEvent)="showPanelEdit($event)"
-              (sidePanelTabChange)="sidePanelTabChange($event)" (inlinePanelTabChange)="inlinePanelTabChange($event)"
-              (panelChanged)="onPanelChanged($event)"></app-adhoc-search-panel>
-            <app-adhoc-edit-panel-column-popup [openedPanelIndex]="openedPanelIndex" [inlinePanelTab]="inlinePanelTab"
-              [sidePanelTab]="sidePanelTab" (showPanelSearchColumnEvent)="showPanelSearchColumn($event)" *ngIf="isPanelColumnScreen"></app-adhoc-edit-panel-column-popup>
-          </div>
+          <app-adhoc-search-panel *ngIf="!isPanelColumnScreen" (searchResultLength)=searchResultLengthFn($event)
+            (showPanelEditEvent)="showPanelEdit($event)" (sidePanelTabChange)="sidePanelTabChange($event)"
+            (inlinePanelTabChange)="inlinePanelTabChange($event)" (panelChanged)="onPanelChanged($event)"></app-adhoc-search-panel>
+          <app-adhoc-edit-panel-column-popup [openedPanelIndex]="openedPanelIndex" [inlinePanelTab]="inlinePanelTab"
+            [sidePanelTab]="sidePanelTab" (showPanelSearchColumnEvent)="showPanelSearchColumn($event)" *ngIf="isPanelColumnScreen"></app-adhoc-edit-panel-column-popup>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
   </div>
 </div>
 <div class="row" id="nextbtn">
-  <button type="button" class="btn btn-primary next btn-sm" [disabled]="data == null" (click)="gotoDataRecFinal()"
-    style="float: right;margin-right: 12px">Next</button>
-  <button class="btn btn-primary Previous btn-sm" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">
+  <button type="button" class="btn btn-primary next btn-sm" [disabled]="searchResultLength===0||searchCriteriaLength===0"
+    (click)="gotoNestedScreen()" style="float: right;margin-right: 12px">Next</button>
+  <button class="btn btn-primary Previous btn-sm" (click)="gotoGraph()" style="float:right;margin-right:5px;">
     Back</button>
-  <button class="btn btn-secondary Previous btn-sm" id="clearBtn" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">
+  <button class="btn Previous btn-sm" id="clearBtn" (click)="clear()" style="float:right;margin-right:5px;">
     clear</button>
 </div>

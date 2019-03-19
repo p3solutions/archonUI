@@ -9,13 +9,9 @@ import { Router } from '@angular/router';
 })
 export class AdhocLandingPageComponent implements OnInit {
 
-  constructor(private adhocService: AdhocService, private router: Router) { }
+  constructor(private adhocService: AdhocService) { }
 
   ngOnInit() {
-    // this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
-    //   if (result === null) {
-    //     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-    //   }
-    // });
+
   }
 }

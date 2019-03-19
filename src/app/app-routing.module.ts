@@ -155,14 +155,7 @@ const routes: Routes = [
                 path: 'table', component: AdhocTableSelectionComponent
               },
               {
-                path: 'search-criteria', component: AdhocSearchCriteriaComponent, children: [
-                  {
-                    path: 'search-screen', component: AdhocSearchScreenComponent
-                  },
-                  {
-                    path: 'edit-search-screen', component: AdhocEditSearchScreenPopupComponent
-                  },
-                ]
+                path: 'search-criteria', component: AdhocSearchCriteriaComponent
               }
             ]
           }

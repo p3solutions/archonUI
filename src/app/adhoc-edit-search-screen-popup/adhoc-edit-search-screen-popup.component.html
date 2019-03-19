@@ -5,13 +5,13 @@
     </div>
     <div id="table-col-info">
       <div>
-        <b>Selected Table Name: </b> {{searchColumn.tableName}}
+        <b>Selected Table Name: </b> {{SearchCriterion.tableName}}
       </div>
       <div>
-        <b>Selected Column Name: </b> {{searchColumn.columnName}}
+        <b>Selected Column Name: </b> {{SearchCriterion.name}}
       </div>
     </div>
-    <form class="example-container" [formGroup]="editSearchForm">
+    <form class="example-container" [formGroup]="editSearchCriteriaForm">
       <mat-form-field>
         <input matInput formControlName="label" placeholder="Label">
       </mat-form-field>
@@ -31,26 +31,30 @@
       </mat-form-field>
       <div id="input-div">
         <mat-form-field id="input-function">
-          <mat-select formControlName="inputFunction" placeholder="Input Function">
+          <mat-select #selectorInput formControlName="inputFunction" placeholder="Input Function">
             <mat-option *ngFor="let inputFunction of inputFunctions;let i:index" [value]="inputFunction">
               {{inputFunction}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <a (click)="getInfo()">
+        <a [class.disabled]="selectorInput.value===''" (click)="!(selectorInput.value==='') && getInfo()">
           <i class="fa fa-info-circle" aria-hidden="true"></i>
         </a>
       </div>
       <mat-form-field *ngIf="!isOptionFieldDisable">
         <textarea matInput formControlName="option" name="option" placeholder="Option"></textarea>
       </mat-form-field>
-      <div>
-        <input type="checkbox" formControlName="isMandatoryField">Mandatory Field
-      </div>
+      <!-- <div id="required">
+        <input style="margin: 2px 9px 0px 0px;" type="checkbox" formControlName="isRequired">Mandatory Field
+      </div> -->
+      <section class="example-section" id="mandatory-div">
+        <mat-checkbox color="primary" class="example-margin" formControlName="isRequired">Mandatory Field</mat-checkbox>
+      </section>
     </form>
   </div>
-  <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary btn-sm" [disabled]="!editSearchForm.valid" (click)="update()" style="float: right;margin-right: 12px">Update</button>
+  <div class="row" style="margin-right: 0px" id="nextbtn">
+    <button type="button" class="btn btn-primary btn-sm" [disabled]="!editSearchCriteriaForm.valid" (click)="update()"
+      style="float: right;margin-right: 12px">Update</button>
     <button class="btn btn-primary btn-sm" (click)="cancel()" style="float:right;margin-right:5px;">
       Cancel</button>
   </div>

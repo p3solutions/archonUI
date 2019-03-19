@@ -6,6 +6,13 @@ export class ApplicationInfo {
     appDesc = '';
 }
 
+export class ScreenInfo {
+    screenId = '';
+    Position: number;
+    screenName = '';
+    screenDesc = '';
+}
+
 export class TableColumnNode {
     id: string;
     name: string;
@@ -14,25 +21,6 @@ export class TableColumnNode {
     columns?: TableColumnNode[] = [];
 }
 
-export class TableColumnInfo {
-    tableId: string;
-    tableName: string;
-    columns: { columnId: string, columnName: string }[] = [];
-    tableColumnTree: string;
-}
-
-export class SearchScreenDetail {
-    tableColumn = new TableColumnInfo();
-    SearchColumnInfo: SearchColumn[] = [];
-}
-
-export class ScreenInfo {
-    screenId = '';
-    Position: number;
-    screenName = '';
-    screenDesc = '';
-    searchScreenDetail = new SearchScreenDetail();
-}
 
 export class Option {
     label: string;
@@ -42,30 +30,32 @@ export class OptionInfo {
     optionString = '';
     option: Option[] = [];
 }
-export class SearchColumn {
+export class SearchCriteria {
     tableId: string;
     columnId: string;
-    sequenceNo: string;
-    tableName: string;
-    columnName: string; // name
+    order: string;
+    tableName: string; // table name
+    name: string; // column name
     label: string;
     fieldType = 'TEXT';
     searchType = '=';
-    inputFunction = 'Gender Description Common';
-    isMandatoryField = false; // required
+    inputFunction = '';
+    isRequired = false;
     optionInfo = new OptionInfo();
-    dateRange = false;
-    hidden = false;
-    encrypted = false;
+    isDateRange = false;
+    isHidden = false;
+    isEncrypted = false;
+    isBetween = false;
+    isBetweenInclusive = false;
+    src = '';
 }
-
-
 
 export class AdhocHeaderInfo {
     workspaceName: string;
     screenName: string;
     appName: string;
     metadataVersion: string;
+    workspaceId: string;
 }
 
 export class InputFunctionsInfo {
@@ -79,60 +69,170 @@ export class InputFunctionsInfo {
 
 export class Tab {
     tabName = 'Tab';
-    tabIndex = 0; // taborder
-    panelColumn: PanelColumns[] = [];
+    tabOrder = 0;
+    resultFields: ResultFields[] = [];
 }
 
-export class MainPanelDetails {
-    panelColumn: PanelColumns[] = [];
+export class InlinePanel {
+    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabOrder': 0, 'resultFields': [] }];
 }
 
-export class InlinePanelDetails {
-    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabIndex': 0, 'panelColumn': [] }];
-}
-
-export class SidePanelDetails {
-    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabIndex': 0, 'panelColumn': [] }];
+export class SidePanel {
+    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabOrder': 0, 'resultFields': [] }];
 }
 
 export class MaskDetail {
     maskType = 'start';
-    visibleTextSize = 4;
+    masklength = 4;
 }
 
-export class PanelColumns { // resultFields
+export class ResultFields {
     tableId: string;
     columnId: string;
-    sequenceNo: string; // position
+    order: string;
     schemaName: string;
     tableName: string;
-    columnName: string;
+    name: string;
     label: string;
     outputFunction = '';
     maskDetail = new MaskDetail();
-    isMaskField = false; // maskfield
-    sortingValue = 'Disable Sorting in this column'; // sorting
-    isEnableFilter = false; //
-    isHideColumn = false; // isHidden
+    isMaskField = false;
+    sorting = 'Disable sorting in this column';
+    isEnableFilter = false;
+    isHidden = false;
     blob = false;
-    encrypted = false;
-    todecrypt = true;
+    isEncrypted = false;
+    isTodecrypt = true;
+}
+
+export class SearchResult {
+    mainPanel: ResultFields[] = [];
+    inlinePanel = new InlinePanel();
+    sidePanel = new SidePanel();
+}
+export class LinearTableMapOrder {
+    order: number;
+    tableName = '';
+    tableId = '';
+}
+export class ColumnList {
+    columnId = '';
+    name = '';
+    ordinal = 0;
+    type = '';
+    typeLength = '';
+    index = '';
+}
+
+export class JoinList {
+    pkTable = '';
+    pkColumn = '';
+    sourceTableCardinality = '';
+    fkTable = '';
+    fkColumn = '';
+    targetTableCardinality = '';
+}
+export class RelationshipList {
+    joinName = '';
+    joinList: JoinList[] = [];
 }
 
 
-export class PanelDetails {   // search result
-    mainPanelDetails = new MainPanelDetails();
-    inlinePanelDetails = new InlinePanelDetails();
-    sidePanelDetails = new SidePanelDetails();
+export class SelectedTables {
+    tableId = '';
+    tableName = '';
+    schemaName = '';
+    columnList: ColumnList[] = [];
+    relationshipList: RelationshipList[] = [];
+}
+
+export class GraphDetails {
+    data = '';
+    selectedValues = '';
+    joinListMap = '';
+    selectedPrimaryTable = '';
+}
+
+export class NestedLinks {
+    searchName = '';
+    primaryTable = '';
+    version = '4';
+    screenDesc = 'Created by Archon';
+    screenType = 'Search';
+    graphDetails = new GraphDetails();
+    linearTableMapOrder: LinearTableMapOrder[] = [];
+    searchResult = new SearchResult();
 }
 
 export class Adhoc {
-    workspaceId: string;
-    metadataVersion: string;
-    appId: string;
+    selectedTables = new SelectedTables();
+    selectedTableListString = '';
+    graphDetails = new GraphDetails();
+    applicationInfo = new ApplicationInfo();
     screenInfo = new ScreenInfo();
-    panelDetails = new PanelDetails();
+    outputLoc = '';
+    primaryTable = '';
+    version = '';
+    screenType = '';
+    linearTableMapOrder: LinearTableMapOrder[] = [];
+    searchCriteria: SearchCriteria[] = [];
+    SearchResult = new SearchResult();
+    nestedLinks: NestedLinks[] = [];
 }
+
+
+export const inputFunctionList: InputFunctionsInfo[] = [{
+    'sequenceNo': 0,
+    'functionName': 'Gender Description Common', 'functionDesc': 'Converts gender acronym into its description values.'
+    , 'text': `declare function local:genderDesc1($field){\n
+    if($field = 'M') then 'Male'\n
+    else if($field = 'm') then 'Male'\n
+    else if($field = 'F') then 'Female'\n
+    else if($field = 'f') then 'Female'\n
+    else if($field = 'U') then 'Unknown'\n
+    else if($field = 'u') then 'Unknown' else 'Unknown'\n
+    }`, 'input': ['M', 'm', 'F', 'f', 'U', 'u'], 'output': ['Male', 'Male', 'Female', 'Female', 'Unknown', 'Unknown']
+},
+{
+    'sequenceNo': 1,
+    'functionName': 'Gender Description to acronym', 'functionDesc': 'Converts gender description to its acronym.'
+    , 'text': `declare function local:genderDesc2($field){\n
+      if(lower-case($field) = 'male') then 'M'\n
+      else if(lower-case($field) = 'female') then 'F'\n
+      else 'U'\n
+    };`, 'input': ['M', 'm', 'F', 'f', 'U', 'u'], 'output': ['Male', 'Male', 'Female', 'Female', 'Unknown', 'Unknown']
+},
+{
+    'sequenceNo': 2,
+    'functionName': 'Date From YYYY-MM-DD to MM-DD-YYYY', 'functionDesc': 'Convert Date from yyyy-mm-dd to mm-dd-yyyy'
+    , 'text': `declare function local:dateymd2mdy($field){\n
+      if($field = '')\n
+      then ''\n
+      else\n
+        concat(substring($field,6),'-',substring($field,1,4))\n
+    };`, 'input': ['2018-01-01', '1970-12-31'], 'output': ['01-01-2018', '12-31-1970']
+},
+{
+    'sequenceNo': 3,
+    'functionName': 'Date From YYYY-MM-DD to YYYYMMDD', 'functionDesc': 'Convert Date from yyyy-mm-dd to yyyymmdd'
+    , 'text': `declare function local:dateyyyymmdd($field){\n
+      if($field = '')\n
+      then ''\n
+      else\n
+        concat(substring($field,1,4),substring($field,6,2),substring($field,9,2))\n
+    };`, 'input': ['2018-01-01', '1970-12-31'], 'output': ['20180101', '19701231']
+},
+{
+    'sequenceNo': 4,
+    'functionName': 'Date From YYYYMMDD To MM-DD-YYYY', 'functionDesc': 'Convert Date from yyyymmdd to mm-dd-yyyy '
+    , 'text': `declare function local:date_mm_dd_yyyy($field){\n
+      if($field = '')\n
+      then ''\n
+      else\n
+        concat(substring($field,5,2),'-',substring($field,7,2),'-',substring($field,1,4))\n
+    };`, 'input': ['20180101', '19701231'], 'output': ['01-01-2018', '12-31-1970']
+}
+];
 
 export function checkOption(controlName: string) {
     return (formGroup: FormGroup) => {

@@ -5,48 +5,64 @@
     </div>
     <div id="table-col-info">
       <div>
-        <b>Selected Table Name: </b> {{panelColumn.tableName}}
+        <b>Selected Table Name: </b> {{resultFields.tableName}}
       </div>
       <div>
-        <b>Selected Column Name: </b> {{panelColumn.columnName}}
+        <b>Selected Column Name: </b> {{resultFields.name}}
       </div>
     </div>
-    <form class="example-container" [formGroup]="editPanelColumnForm">
+    <form class="example-container" [formGroup]="editResultFieldsForm">
       <mat-form-field>
         <input matInput formControlName="label" placeholder="Label">
       </mat-form-field>
       <div id="output-div">
         <mat-form-field id="output-function">
-          <mat-select formControlName="outputFunction" placeholder="Output Function">
+          <mat-select #selectorInput  formControlName="outputFunction" placeholder="Output Function">
             <mat-option *ngFor="let outputFunction of outputFunctions;let i:index" [value]="outputFunction">
               {{outputFunction}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <a (click)="getInfo()">
+        <a [class.disabled]="selectorInput.value===''" (click)="!(selectorInput.value==='') && getInfo()">
           <i class="fa fa-info-circle" aria-hidden="true"></i>
         </a>
       </div>
-      <div>
-        <input type="checkbox" formControlName="isMaskField"> Mask Field
-        <input type="radio" value="start" name="maskType" formControlName="maskType"> Mask At Start
-        <input type="radio" value="end" name="maskType" formControlName="maskType"> Mask At End
+      <div id="mask-div">
+        <section class="example-section">
+          <mat-checkbox color="primary" class="example-margin" formControlName="isMaskField">Mask Field</mat-checkbox>
+        </section>
+        <section class="example-section">
+          <mat-radio-group formControlName="maskType">
+            <mat-radio-button color="primary" style="margin-right: 40px;" name="maskType" value="start">Mask At Start</mat-radio-button>
+            <mat-radio-button color="primary" name="maskType" value="end">Mask At End</mat-radio-button>
+          </mat-radio-group>
+        </section>
+        <div>
+          <mat-form-field>
+            <mat-select formControlName="masklength" placeholder="Mask Value">
+              <mat-option *ngFor="let maskValue of maskValues" [value]="maskValue">
+                {{maskValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
       <mat-form-field>
-        <mat-select formControlName="sortingValue" placeholder="Sort Value">
+        <mat-select formControlName="sorting" placeholder="Sort Value">
           <mat-option *ngFor="let sortValue of sortingValue" [value]="sortValue">
             {{sortValue}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div>
-        <input type="checkbox" formControlName="isEnableFilter">Enable Filter
-        <input type="checkbox" formControlName="isHideColumn">Hide Column
-      </div>
+      <section class="example-section" id="filter-hide-div">
+        <mat-checkbox color="primary" style="margin-right: 40px;" class="example-margin" formControlName="isEnableFilter">Enable
+          Filter</mat-checkbox>
+        <mat-checkbox color="primary" class="example-margin" formControlName="isHidden">Hide Column</mat-checkbox>
+      </section>
     </form>
   </div>
-  <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary btn-sm" [disabled]="!editPanelColumnForm.valid" (click)="update()"
+  <div class="row" style="margin-right: 0px" id="nextbtn">
+    <button type="button" class="btn btn-primary btn-sm" [disabled]="!editResultFieldsForm.valid" (click)="update()"
       style="float: right;margin-right: 12px">Update</button>
     <button class="btn btn-primary btn-sm" (click)="cancel()" style="float:right;margin-right:5px;">
       Cancel</button>
@@ -66,15 +82,15 @@
         <div class="row info">
           <div class="first-heading"><b>Function Name</b></div>
           <div class="col-heading">:</div>
-          <div>{{inputFunctionInfo?.functionName}}</div>
+          <div>{{outputFunctionInfo?.functionName}}</div>
         </div>
         <div class="row info">
           <div class="first-heading"><b>Function Description</b></div>
           <div class="col-heading">:</div>
-          <div>{{inputFunctionInfo?.functionDesc}}</div>
+          <div>{{outputFunctionInfo?.functionDesc}}</div>
         </div>
         <div id="function-info">
-          <pre>{{inputFunctionInfo?.text}}</pre>
+          <pre>{{outputFunctionInfo?.text}}</pre>
         </div>
         <div class="row info">
           <b>Example:</b>
@@ -85,11 +101,11 @@
             <tbody></tbody>
             <tr>
               <td style="background-color:#f0f4f7; text-align: left;">Input</td>
-              <td *ngFor="let item of inputFunctionInfo?.input">{{item}}</td>
+              <td *ngFor="let item of outputFunctionInfo?.input">{{item}}</td>
             </tr>
             <tr>
               <td style="background-color:#f0f4f7; text-align: left;">Output</td>
-              <td *ngFor="let item of inputFunctionInfo?.output">{{item}}</td>
+              <td *ngFor="let item of outputFunctionInfo?.output">{{item}}</td>
             </tr>
           </table>
         </div>

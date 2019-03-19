@@ -29,27 +29,113 @@ p {
 }
 
 .addBtn {
-  width: 8%;
-  padding: 14px 3px 2px 0px
+  width: 5%;
+  padding: 12px 3px 0px 0px
 }
 
 .tab {
-  width: 61%;
+  width: 66%;
 }
 
 .rename {
-  width: 31%;
+  width: 29%
 }
 
 .rename-box {
-  width: 100%;
-  text-align: right;
+  display: inline-flex;
 }
 
 .renameBtn {
   margin-left: 3%;
 }
 
-.mat-tab-body-content{
-  height: 50vh !important;
+.mat-tab-body-content {
+  height: 43vh !important;
+  margin: 7px 0px 5px 0px;
+}
+
+.fa-trash {
+  color: #1385f8
+}
+
+.panel-column-box .mat-card-header-text {
+  width: 100%;
+  margin: 0px !important;
+  color: #000;
+  font-weight: 600;
+}
+
+.panel-screen .mat-card-title span {
+  float: right;
+  color: #1385f8 !important;
+  font-size: x-large;
+}
+
+.mat-card.panel-column-box {
+  padding: 7px 7px 7px 7px;
+  border-radius: 3px;
+  border: solid 1px #c9d1df;
+  background-color: #fafafa;
+  text-align: left;
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
+}
+
+.mat-card.panel-column-box-tab {
+  width: 50%;
+  padding: 7px 7px 7px 7px;
+  border-radius: 3px;
+  border: solid 1px #c9d1df;
+  background-color: #fafafa;
+  text-align: left;
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
+
+}
+
+.panel-screen .mat-card-title span i {
+  padding: 0 7px
+}
+
+.panel-column-box-tab .mat-card-header-text {
+  width: 100%;
+  margin: 0px !important;
+  color: #000;
+  font-weight: 600;
+}
+
+.panel-column-box-tab .mat-tab-body-wrapper {
+  background-color: #f3f6f9;
+}
+
+::ng-deep mat-card.panel-column-box .mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
+}
+
+::ng-deep mat-card.panel-column-box-tab .mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
+}
+
+.addBtn .mat-raised-button {
+  min-width: 44px;
+  background-color: #64b5f6;
+}
+
+.rename .mat-form-field-wrapper {
+  padding-bottom: 16px;
+}
+
+.renameBtn-div {
+  margin-top: 15px;
+  margin-left: 6px;
+}
+
+.renameBtn-div button {
+  background-color: #64b5f6;
+}
+
+.renameBtn-div button span.mat-button-wrapper {
+  font-weight: 600;
+}
+
+.example-tab-icon {
+  margin-left: 8px;
 }

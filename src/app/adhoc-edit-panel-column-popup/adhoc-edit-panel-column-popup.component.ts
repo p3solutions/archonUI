@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
-import { Tab, PanelColumns, PanelDetails } from '../adhoc-landing-page/adhoc';
+import { Tab, ResultFields, SearchResult, InputFunctionsInfo, inputFunctionList } from '../adhoc-landing-page/adhoc';
 
 @Component({
   selector: 'app-adhoc-edit-panel-column-popup',
@@ -16,108 +16,124 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
   @Input() openedPanelIndex: number;
   @Input() inlinePanelTab = new Tab();
   @Input() sidePanelTab = new Tab();
-  editPanelColumnForm: FormGroup;
-  panelColumn = new PanelColumns();
-  panelDetails = new PanelDetails();
-  sortingValue: string[] = ['=', 'Starts with', 'Ends with', 'Wild', '&lt', '&lt =', '&gt', '&gt =', 'Between'
-    , 'Between and Inclusion'];
-  outputFunctions: string[] = ['Gender Description Common', 'Gender Description to acronym',
+  editResultFieldsForm: FormGroup;
+  resultFields = new ResultFields();
+  searchResult = new SearchResult();
+  outputFunctionInfo = new InputFunctionsInfo();
+  outputFunctionsList = inputFunctionList;
+  sortingValue: string[] = ['Disable sorting in this column', 'Disable sorting in this column',
+    'Enable default sort-Ascending', 'Enable default sort-Descending'];
+  outputFunctions: string[] = ['', 'Gender Description Common', 'Gender Description to acronym',
     'Date From YYYY-MM-DD to MM-DD-YYYY', 'Date From YYYY-MM-DD to YYYYMMDD', 'Date From YYYYMMDD To MM-DD-YYYY'];
+  maskValues: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   constructor(private adhocScreenService: AdhocScreenService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.adhocScreenService.updatedPanelColumn.subscribe(result => {
-      this.panelColumn = result;
+
+    this.adhocScreenService.updatedSearchResult.subscribe(result => {
+      this.searchResult = result;
+    });
+    this.adhocScreenService.updatedResultField.subscribe(result => {
+      this.resultFields = result;
     });
     this.adhocScreenService.updatedPanelChanged.subscribe(result => {
       this.openPanelIndex = result;
     });
     this.adhocScreenService.updatedInlinePanelTabChange.subscribe(result => {
-      this.selectedInlineTab = result.tabIndex;
+      this.selectedInlineTab = result.tabOrder;
     });
     this.adhocScreenService.updatedSidePanelTabChange.subscribe(result => {
-      this.selectedSideTab = result.tabIndex;
+      this.selectedSideTab = result.tabOrder;
     });
     this.initEditSearchForm();
   }
 
 
   initEditSearchForm() {
-    this.editPanelColumnForm = this.formBuilder.group({
-      label: new FormControl(this.panelColumn.label, Validators.required),
-      sortingValue: new FormControl(this.panelColumn.sortingValue, Validators.required),
-      outputFunction: new FormControl(this.panelColumn.outputFunction, Validators.required),
-      isMaskField: new FormControl(this.panelColumn.isMaskField),
-      maskType: new FormControl(this.panelColumn.maskDetail.maskType),
-      visibleTextSize: new FormControl(this.panelColumn.maskDetail.visibleTextSize),
-      isEnableFilter: new FormControl(this.panelColumn.isEnableFilter),
-      isHideColumn: new FormControl(this.panelColumn.isHideColumn)
+    this.editResultFieldsForm = this.formBuilder.group({
+      label: new FormControl(this.resultFields.label, Validators.required),
+      sorting: new FormControl(this.resultFields.sorting, Validators.required),
+      outputFunction: new FormControl(this.resultFields.outputFunction),
+      isMaskField: new FormControl(this.resultFields.isMaskField),
+      maskType: new FormControl(this.resultFields.maskDetail.maskType),
+      masklength: new FormControl(this.resultFields.maskDetail.masklength),
+      isEnableFilter: new FormControl(this.resultFields.isEnableFilter),
+      isHidden: new FormControl(this.resultFields.isHidden)
     });
   }
 
   update() {
-    this.adhocScreenService.updatedPanelDetails.subscribe(result => {
-      this.panelDetails = result;
-    });
-    const columnId = this.panelColumn.columnId;
-    const tableId = this.panelColumn.tableId;
-    const label = this.panelColumn.label;
-    this.panelColumn.label = this.editPanelColumnForm.get('label').value;
-    this.panelColumn.sortingValue = this.editPanelColumnForm.get('sortingValue').value;
-    this.panelColumn.outputFunction = this.editPanelColumnForm.get('outputFunction').value;
-    this.panelColumn.isHideColumn = this.editPanelColumnForm.get('isHideColumn').value;
-    this.panelColumn.isEnableFilter = this.editPanelColumnForm.get('isEnableFilter').value;
-    this.panelColumn.isMaskField = this.editPanelColumnForm.get('isMaskField').value;
-    this.panelColumn.maskDetail.maskType = this.editPanelColumnForm.get('maskType').value;
-    this.panelColumn.maskDetail.visibleTextSize = this.editPanelColumnForm.get('visibleTextSize').value;
-    if (this.checkDuplicatePanelColumn(this.editPanelColumnForm.get('label').value)) {
-      if (this.openedPanelIndex === 0) {
-        const index = this.panelDetails.mainPanelDetails.panelColumn.findIndex(a => a.columnId === columnId &&
-          a.tableId === tableId && a.label === label);
-        if (index !== -1) {
-          this.panelDetails.mainPanelDetails.panelColumn.splice(index, 1, this.panelColumn);
-        }
-      } else if (this.openedPanelIndex === 1) {
-        const index = this.panelDetails.inlinePanelDetails.tabs[this.selectedInlineTab].
-          panelColumn.findIndex(a => a.columnId === columnId && a.tableId === tableId && a.label === label);
-        if (index !== -1) {
-          this.panelDetails.inlinePanelDetails.tabs[this.selectedInlineTab].panelColumn.splice(index, 1, this.panelColumn);
-        }
-
-      } else if (this.openedPanelIndex === 2) {
-        const index = this.panelDetails.sidePanelDetails.tabs[this.selectedSideTab].
-          panelColumn.findIndex(a => a.columnId === columnId && a.tableId === tableId && a.label === label);
-        if (index !== -1) {
-          this.panelDetails.sidePanelDetails.tabs[this.selectedSideTab].panelColumn.splice(index, 1, this.panelColumn);
-        }
-      }
-      this.cancel();
+    const columnId = this.resultFields.columnId;
+    const tableId = this.resultFields.tableId;
+    const label = this.resultFields.label;
+    const tempBoolean = this.checkDuplicateResultFields(this.editResultFieldsForm.get('label').value);
+    if (tempBoolean) {
+      this.resultFields.label = this.editResultFieldsForm.get('label').value;
     }
-    this.adhocScreenService.updatePanelDetails(this.panelDetails);
+    this.resultFields.sorting = this.editResultFieldsForm.get('sorting').value;
+    this.resultFields.outputFunction = this.editResultFieldsForm.get('outputFunction').value;
+    this.resultFields.isHidden = this.editResultFieldsForm.get('isHidden').value;
+    this.resultFields.isEnableFilter = this.editResultFieldsForm.get('isEnableFilter').value;
+    this.resultFields.isMaskField = this.editResultFieldsForm.get('isMaskField').value;
+    this.resultFields.maskDetail.maskType = this.editResultFieldsForm.get('maskType').value;
+    this.resultFields.maskDetail.masklength = this.editResultFieldsForm.get('masklength').value;
+    if (this.openedPanelIndex === 0) {
+      const index = this.searchResult.mainPanel.findIndex(a => a.columnId === columnId &&
+        a.tableId === tableId && a.label === label);
+      if (index !== -1) {
+        this.searchResult.mainPanel.splice(index, 1, this.resultFields);
+      }
+    } else if (this.openedPanelIndex === 1) {
+      const index = this.searchResult.inlinePanel.tabs[this.selectedInlineTab].
+        resultFields.findIndex(a => a.columnId === columnId && a.tableId === tableId && a.label === label);
+      if (index !== -1) {
+        this.searchResult.inlinePanel.tabs[this.selectedInlineTab].resultFields.splice(index, 1, this.resultFields);
+      }
+
+    } else if (this.openedPanelIndex === 2) {
+      const index = this.searchResult.sidePanel.tabs[this.selectedSideTab].
+        resultFields.findIndex(a => a.columnId === columnId && a.tableId === tableId && a.label === label);
+      if (index !== -1) {
+        this.searchResult.sidePanel.tabs[this.selectedSideTab].resultFields.splice(index, 1, this.resultFields);
+      }
+    }
+    this.adhocScreenService.updateSearchResult(this.searchResult);
+    this.cancel();
   }
 
-  checkDuplicatePanelColumn(label) {
-    if (this.panelDetails.mainPanelDetails.panelColumn.filter(a => a.label === label).length > 0) {
-      return false;
-    }
-
-    for (const inlineTab of this.panelDetails.inlinePanelDetails.tabs) {
-      if (inlineTab.panelColumn.filter(a => a.label === label).length > 0) {
-        return false;
+  checkDuplicateResultFields(label) {
+    let temp = true;
+    for (const item of this.searchResult.mainPanel) {
+      if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
+        temp = false;
+        break;
       }
     }
-
-    for (const sideTab of this.panelDetails.sidePanelDetails.tabs) {
-      if (sideTab.panelColumn.filter(a => a.label === label).length > 0) {
-        return false;
+    for (const inlineTab of this.searchResult.inlinePanel.tabs) {
+      for (const item of inlineTab.resultFields) {
+        if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
+          temp = false;
+          break;
+        }
       }
     }
-    return true;
+    for (const sideTab of this.searchResult.sidePanel.tabs) {
+      for (const item of sideTab.resultFields) {
+        if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
+          temp = false;
+          break;
+        }
+      }
+    }
+    return temp;
   }
-  // getInfo() {
-  //   this.inputFunctionInfo = this.inputFunctionList.find(a => a.functionName === this.editSearchForm.get('inputFunction').value);
-  //   document.getElementById('openFunctionInfoModel').click();
-  // }
+  getInfo() {
+    this.outputFunctionInfo = this.outputFunctionsList.find(a => a.functionName.replace(/ /g, '').toLocaleLowerCase() ===
+      this.editResultFieldsForm.get('outputFunction').value.replace(/ /g, '').toLocaleLowerCase());
+    if (this.outputFunctionInfo.functionName !== '') {
+      document.getElementById('openFunctionInfoModel').click();
+    }
+  }
 
   cancel() {
     this.showPanelSearchColumnEvent.emit(false);

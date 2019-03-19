@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SearchColumn, TableColumnNode, PanelColumns, MainPanelDetails, PanelDetails, Tab } from '../adhoc-landing-page/adhoc';
+import { SearchCriteria, TableColumnNode, ResultFields, SearchResult, Tab } from '../adhoc-landing-page/adhoc';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdhocScreenService {
-  searchcolumns: BehaviorSubject<SearchColumn[]> = new BehaviorSubject<SearchColumn[]>([]);
-  updatedSearchColumns = this.searchcolumns.asObservable();
+  treeMap = new Map();
 
-  searchcolumn: BehaviorSubject<SearchColumn> = new BehaviorSubject<SearchColumn>(new SearchColumn());
-  updatedSearchColumn = this.searchcolumn.asObservable();
+  searchCriteria: BehaviorSubject<SearchCriteria[]> = new BehaviorSubject<SearchCriteria[]>([]);
+  updatedSearchCriteria = this.searchCriteria.asObservable();
 
-  panelcolumn: BehaviorSubject<PanelColumns> = new BehaviorSubject<PanelColumns>(new PanelColumns());
-  updatedPanelColumn = this.panelcolumn.asObservable();
+  searchCriterion: BehaviorSubject<SearchCriteria> = new BehaviorSubject<SearchCriteria>(new SearchCriteria());
+  updatedSearchCriterion = this.searchCriterion.asObservable();
+
+  resultField: BehaviorSubject<ResultFields> = new BehaviorSubject<ResultFields>(new ResultFields());
+  updatedResultField = this.resultField.asObservable();
 
   treeData: BehaviorSubject<TableColumnNode[]> = new BehaviorSubject<TableColumnNode[]>([]);
   updatedTreeData = this.treeData.asObservable();
 
-  panelDetails: BehaviorSubject<PanelDetails> = new BehaviorSubject<PanelDetails>(new PanelDetails());
-  updatedPanelDetails = this.panelDetails.asObservable();
+  searchResult: BehaviorSubject<SearchResult> = new BehaviorSubject<SearchResult>(new SearchResult());
+  updatedSearchResult = this.searchResult.asObservable();
 
   panelChanged: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   updatedPanelChanged = this.panelChanged.asObservable();
@@ -30,18 +32,17 @@ export class AdhocScreenService {
   sidePanelTabChange: BehaviorSubject<Tab> = new BehaviorSubject<Tab>(new Tab());
   updatedSidePanelTabChange = this.sidePanelTabChange.asObservable();
 
-
-  updateSearchColumn(_searchcolumn: SearchColumn) {
-    this.searchcolumn.next(_searchcolumn);
+  updateSearchCriterion(_searchCriterion: SearchCriteria) {
+    this.searchCriterion.next(_searchCriterion);
   }
-  updateSearchColumns(_searchcolumns: SearchColumn[]) {
-    this.searchcolumns.next(_searchcolumns);
+  updateSearchCriteria(_searchCriteria: SearchCriteria[]) {
+    this.searchCriteria.next(_searchCriteria);
   }
-  updatePanelColumn(_panelcolumn: PanelColumns) {
-    this.panelcolumn.next(_panelcolumn);
+  updateResultField(_resultField: ResultFields) {
+    this.resultField.next(_resultField);
   }
-  updatePanelDetails(_panelDetails: PanelDetails) {
-    this.panelDetails.next(_panelDetails);
+  updateSearchResult(_searchResult: SearchResult) {
+    this.searchResult.next(_searchResult);
   }
   updateInlinePanelTabChange(_tab: Tab) {
     this.inlinePanelTabChange.next(_tab);
@@ -54,8 +55,13 @@ export class AdhocScreenService {
     this.panelChanged.next(_openPanelindex);
   }
 
-  updateTreeData(treeData: TableColumnNode[]) {
-    this.treeData.next(treeData);
+  updateTreeData(_treeData: TableColumnNode[]) {
+    this.treeData.next(_treeData);
+  }
+
+
+  setTreeMap(_treeMap: any) {
+    this.treeMap = _treeMap;
   }
   constructor() { }
 }

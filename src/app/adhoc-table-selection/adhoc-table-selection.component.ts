@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import * as d3 from 'd3';
 import { toJson } from '../ert-datarecord-config/tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datarecord-config/class';
+import { AdhocSavedObjectService } from '../adhoc-header/adhoc-saved-object.service';
+import { GraphDetails } from '../adhoc-landing-page/adhoc';
 
 
 @Component({
@@ -24,31 +26,61 @@ export class AdhocTableSelectionComponent implements OnInit {
   data;
   schemaResultsTableCount = 0;
   selectedPrimaryTable;
-
+  redirect = '';
   constructor(public router: Router, private tablelistService: TableListService,
-    private workspaceHeaderService: WorkspaceHeaderService) { }
+    private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
+    private adhocSavedObjectService: AdhocSavedObjectService) { }
 
   ngOnInit() {
+    this.redirect = this.activatedRoute.snapshot.queryParamMap.get('redirect');
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
       this.tableList = res;
       this.schemaResultsTableCount = this.tableList.length;
     });
-    // if (this.ertService.data !== undefined) {
-    //   this.data = this.ertService.data;
-    //   this.selectedValues = this.ertService.selectedValues;
-    //   this.joinListMap = this.ertService.joinListMap;
-    //   this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
-    //   this.createchart();
-    // }
+    if (this.redirect !== null) {
+      const temp = this.adhocSavedObjectService.nestedLinks.find(a => a.searchName === 'NestedLink1');
+      if (temp.graphDetails.data !== '') {
+        this.data = temp.graphDetails.data;
+        this.selectedValues = JSON.parse(temp.graphDetails.selectedValues);
+        this.joinListMap = new Map(JSON.parse(temp.graphDetails.joinListMap));
+        this.selectedPrimaryTable = JSON.parse(temp.graphDetails.selectedPrimaryTable);
+        this.createchart();
+      }
+    } else if (this.adhocSavedObjectService.graphDetails.data !== '') {
+      this.data = this.adhocSavedObjectService.graphDetails.data;
+      this.selectedValues = JSON.parse(this.adhocSavedObjectService.graphDetails.selectedValues);
+      this.joinListMap = new Map(JSON.parse(this.adhocSavedObjectService.graphDetails.joinListMap));
+      this.selectedPrimaryTable = JSON.parse(this.adhocSavedObjectService.graphDetails.selectedPrimaryTable);
+      this.createchart();
+    }
   }
   gotoDataRecFinal() {
-    // this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
-    // this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable, '');
-    this.router.navigate(['/workspace/adhoc/screen/search-criteria']);
+    if (this.redirect !== null) {
+      const nestedLinks = this.adhocSavedObjectService.nestedLinks;
+      const temp = nestedLinks.find(a => a.searchName === 'NestedLink1');
+      temp.graphDetails.data = this.data;
+      temp.graphDetails.selectedValues = JSON.stringify(this.selectedValues);
+      temp.graphDetails.selectedPrimaryTable = JSON.stringify(this.selectedPrimaryTable);
+      temp.graphDetails.joinListMap = JSON.stringify(Array.from(this.joinListMap.entries()));
+      const index = nestedLinks.findIndex(a => a.searchName === 'NestedLink1');
+      if (index !== -1) {
+        nestedLinks.splice(index, 1, temp);
+        this.adhocSavedObjectService.setNestedLinks(nestedLinks);
+      }
+      this.router.navigate(['workspace/adhoc/screen/search-criteria/'], { queryParams: { redirect: 'N' } });
+    } else {
+      const graphDetails = new GraphDetails();
+      graphDetails.data = this.data;
+      graphDetails.selectedValues = JSON.stringify(this.selectedValues);
+      graphDetails.selectedPrimaryTable = JSON.stringify(this.selectedPrimaryTable);
+      graphDetails.joinListMap = JSON.stringify(Array.from(this.joinListMap.entries()));
+      this.adhocSavedObjectService.setGraphDetails(graphDetails);
+      this.router.navigate(['/workspace/adhoc/screen/search-criteria']);
+    }
   }
-  gotoJobConfiguration() {
-    // this.router.navigate(['workspace/ert/ert-jobs-config']);
+  gotoScreenApp() {
+    this.router.navigate(['/workspace/adhoc/app-screen-list']);
   }
 
   populategraph(value, event) {

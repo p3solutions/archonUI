@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AdhocHeaderComponent implements OnInit {
   adhocHeaderInfo = new AdhocHeaderInfo();
-  constructor(private adhocService: AdhocService, private router: Router) { }
+  constructor(private adhocService: AdhocService, public router: Router) { }
 
   ngOnInit() {
     this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {

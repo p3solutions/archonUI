@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 import { Observable } from 'rxjs';
 import { fromEvent } from 'rxjs';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 @Component({
   selector: 'app-create-screen-dialog',
   templateUrl: 'create-screen-dialog.html',
@@ -50,12 +51,12 @@ export class AdhocAppScreenListComponent implements OnInit {
   screenInfo = new ScreenInfo();
   displayedColumns: string[] = ['Position', 'screenName', 'screenDesc', 'Edit', 'Delete'];
   ScreenInfoList: ScreenInfo[] = [
-    { Position: 1, screenId: '1', searchScreenDetail: null, screenDesc: 'A', screenName: 'AA' },
-    { Position: 2, screenId: '2', searchScreenDetail: null, screenDesc: 'B', screenName: 'AB' },
-    { Position: 3, screenId: '3', searchScreenDetail: null, screenDesc: 'C', screenName: 'AC' },
-    { Position: 4, screenId: '4', searchScreenDetail: null, screenDesc: 'D', screenName: 'AD' },
-    { Position: 5, screenId: '5', searchScreenDetail: null, screenDesc: 'E', screenName: 'AE' },
-    { Position: 6, screenId: '6', searchScreenDetail: null, screenDesc: 'F', screenName: 'AF' }
+    { Position: 1, screenId: '1', screenDesc: 'A', screenName: 'AA' },
+    { Position: 2, screenId: '2', screenDesc: 'B', screenName: 'AB' },
+    { Position: 3, screenId: '3', screenDesc: 'C', screenName: 'AC' },
+    { Position: 4, screenId: '4', screenDesc: 'D', screenName: 'AD' },
+    { Position: 5, screenId: '5', screenDesc: 'E', screenName: 'AE' },
+    { Position: 6, screenId: '6', screenDesc: 'F', screenName: 'AF' }
   ];
   applicationInfoList: ApplicationInfo[] = [
     // { appId: '1', appName: 'App 1', appDesc: 'First App' },
@@ -87,19 +88,26 @@ export class AdhocAppScreenListComponent implements OnInit {
   workspaceName = '';
   mmrVersion = '';
   workspaceId = '';
+  startIndex = 0;
   dataSource = new MatTableDataSource<ScreenInfo>(this.ScreenInfoList);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
-    private manageMetaService: ManageMasterMetadataService, private router: Router,
-    private adhocService: AdhocService) { }
+    private router: Router, private adhocService: AdhocService) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.getHeaderInfo();
-    this.observable.subscribe((data) => {
-      this.applicationInfoList = data;
+    this.getApplication();
+  }
+
+  getApplication() {
+    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.adhocService.getApplication(this.workspaceId, this.startIndex).subscribe(result => {
+      for (const app of result) {
+        this.applicationInfoList.push({ 'appId': app.id, 'appDesc': app.appDescription, 'appName': app.appName });
+      }
       this.selectedApp(this.applicationInfoList[0].appId);
     });
   }
@@ -107,7 +115,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   getHeaderInfo() {
     this.workspaceName = this.workspaceHeaderService.getSelectedWorkspaceName();
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.manageMetaService.getMMRVersionList(this.workspaceId).subscribe((result) => {
+    this.adhocService.getMMRVersionList(this.workspaceId).subscribe((result) => {
       this.mmrVersion = result[0].versionNo;
     });
   }
@@ -135,8 +143,22 @@ export class AdhocAppScreenListComponent implements OnInit {
     });
 
     dialogAppRef.afterClosed().subscribe(result => {
-      console.log('The App dialog was closed');
       console.log(result);
+      this.createApplication(result);
+    });
+  }
+
+  createApplication(result) {
+    const param: any = {
+      'appName': result.appName,
+      'appDescription': result.appDesc,
+      'workspaceId': this.workspaceId,
+      'metadataVersion': this.mmrVersion
+    };
+
+    this.adhocService.createApplication(param).subscribe((response) => {
+      console.log(response);
+      this.applicationInfoList.push({ 'appId': response.id, 'appDesc': response.appDescription, 'appName': response.appName })
     });
   }
 
@@ -148,20 +170,25 @@ export class AdhocAppScreenListComponent implements OnInit {
     }
   }
 
+
   gotoScreen(screenName: string) {
     const adhocHeaderInfo = new AdhocHeaderInfo();
     adhocHeaderInfo.workspaceName = this.workspaceName;
     adhocHeaderInfo.metadataVersion = this.mmrVersion;
     adhocHeaderInfo.screenName = screenName;
     adhocHeaderInfo.appName = this.appInfoObject.appName;
+    adhocHeaderInfo.workspaceId = this.workspaceId;
     this.adhocService.updateAdhocHeaderInfo(adhocHeaderInfo);
     this.router.navigate(['/workspace/adhoc/screen/table']);
   }
 
   getNextBatch() {
-    console.log(1);
-    this.observable.subscribe((data) => {
-      this.applicationInfoList = this.applicationInfoList.concat(JSON.parse(JSON.stringify(data)));
+    this.startIndex = this.startIndex + 1;
+    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.adhocService.getApplication(this.workspaceId, this.startIndex).subscribe(result => {
+      for (const app of result) {
+        this.applicationInfoList.push({ 'appId': app.id, 'appDesc': app.appDescription, 'appName': app.appName });
+      }
     });
   }
 }
