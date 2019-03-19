@@ -1261,3 +1261,11 @@ svg {
 .create-app-dialog .flex-container form>* {
   margin: 5px 0;
 }
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color:#c9d1df;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: #c9d1df !important;
+}
