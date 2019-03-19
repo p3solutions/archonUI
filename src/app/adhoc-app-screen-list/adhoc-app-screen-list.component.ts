@@ -158,9 +158,10 @@ export class AdhocAppScreenListComponent implements OnInit {
 
     this.adhocService.createApplication(param).subscribe((response) => {
       console.log(response);
-      this.applicationInfoList.push({ 'appId': response.id, 'appDesc': response.appDescription, 'appName': response.appName })
+      this.applicationInfoList.push({ 'appId': response.id, 'appDesc': response.appDescription, 'appName': response.appName });
     });
   }
+
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

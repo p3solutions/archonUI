@@ -41,8 +41,8 @@
   <div class="col-md-9">
     <div style="padding-bottom: 12px;">
       <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header id="search-column-header">
+        <mat-expansion-panel [expanded]="openSearch" (opened)="openSearch = true" (closed)="openSearch = false" >
+          <mat-expansion-panel-header  [style.height.px]="51" id="search-column-header">
             <mat-panel-title>
               Drag a column to create a search field
             </mat-panel-title>

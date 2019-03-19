@@ -84,5 +84,6 @@ mat-card-header.header-blue {
 .mat-expansion-panel-header{
   font-size: 20px;
   font-weight: 500;
-  color:#333
+  color:#333;
+  height: 53px;
 }

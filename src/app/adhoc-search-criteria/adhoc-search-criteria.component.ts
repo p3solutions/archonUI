@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TableColumnNode, SearchCriteria, ResultFields, SearchResult, Tab, NestedLinks, SelectedTables, AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
+import { TableColumnNode, SearchCriteria, ResultFields, SearchResult, Tab, NestedLinks, SelectedTables,
+   AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -25,6 +26,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   panelOpenState = false;
   searchCriteriaLength = 0;
   searchResultLength = 0;
+  openSearch = true;
   TREE_DATA: TableColumnNode[] = [
     {
       id: '1',
