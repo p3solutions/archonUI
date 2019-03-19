@@ -14,33 +14,18 @@
       </div>
     </div>
   </div>
-
   <div class="flex-container" *ngFor="let panelRow of panelGroupList; let indRow = index">
+    <mat-card class="example-card" *ngFor="let panel of panelRow; let indCol = index">
+      <mat-card-header class="flex-card-header" (click)=goTo(panel)>
+        <mat-card-title>{{panel.panelName}}</mat-card-title>
+      </mat-card-header>
+      <img class="icon-img" style="cursor: pointer" [attr.src]="'assets/' + panel.panelImage" (click)=goTo(panel)>
+      <mat-card-content>
+        <h4>Description</h4>
+        <p>Configure , View and Edit workspaces.<p>
+      </mat-card-content>
+    </mat-card>
+</div>   
 
-    <div class="flex-cards card" *ngFor="let panel of panelRow; let indCol = index" id="{{'flex-cards-' + indRow + '-' + indCol}}">
-      <div class="flex-card-header" [title]="panel?.panelName" (click)=goTo(panel)>
-        <img class="icon-img" [attr.src]="'assets/' + panel.panelImage" />
-      </div>
-      <div class="flex-cards-bar">
-        <div class="trim-text flex-card-title">
-          {{panel.panelName}}
-        </div>
-        <span *ngIf="panel && panel.panelDesc" class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), true, $event)"
-          title="Click for more info">
-          <i class="fa fa-caret-up archon-icondown"></i>
-        </span>
-      </div>
-      <div class="card-reveal">
-        <p class="">
-          <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), false, $event)"
-            title="Click to hide info">
-            <i class="fa fa-caret-down archon-iconup"></i>
-          </span>
-        </p>
-        <p>Description: {{panel.panelDesc ? panel.panelDesc : defDesc}}</p>
-      </div>
-    </div>
-
-  </div>
 </div>
 
