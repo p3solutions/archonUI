@@ -30,6 +30,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   jobMessage;
   input;
   common;
+  jobOutput;
   @ViewChild('click') button: ElementRef;
   uniqueService;
 
@@ -62,6 +63,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
           this.common = result.common;
           this.input = result.input;
           this.jobMessage = result.message;
+          this.jobOutput = result.output;
         });
         el.click();
       } else if (event.target.getAttribute('source') === 'Downloads') {
