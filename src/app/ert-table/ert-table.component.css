@@ -596,3 +596,11 @@ alert1 {
   padding-left: 25px;
   text-transform: capitalize;
 }
+.back {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
+}
