@@ -1,58 +1,39 @@
-<div class="workspacelist-container">
     <div class="row">
-      <div class="col-md-4">
-        <div class="col-md-1 back-arrow">
+      <div class="col-md-6">
+        <div class="col-md-1 back-arrow" style="margin-left: 10px">
           <a (click)="gotoManagementPanel()" data-tooltip="Back">
             <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
           </a>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8" style="margin-left: -25px">
           <h3 class="workspace-panel-heading">
             Databases
-            <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
           </h3>
         </div>
       </div>
-      <div class="col-md-4 col-md-offset-4">
-        <button *ngIf="info?.show" type="button" class="btn btn-primary" (click)="openCreateAddDBmodal()" id="db-add">Add New Database Connection
-          <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-        </button>
+      <div class="col-md-6 search">
+        <mat-form-field class="search-width">
+          <input matInput [(ngModel)]="searchText" placeholder="Search">
+        </mat-form-field>
+        <a style="font-size: 42px" (click)="openCreateAddDBmodal()" data-tooltip="Add Database"><i class="fa fa-plus-circle"></i></a>
       </div>
     </div>
-  
-  </div>
-  
-  
-    <div class="flex-container" *ngFor="let dbListGroupObj of dbListActions; let indRow = index">
-  
-      <div class="flex-cards card" *ngFor="let db of dbListGroupObj; let indCol = index" id="{{'flex-cards-' + indRow + '-' + indCol}}">
-          <div class="flex-card-header cur-def" [title]="db?.profileName">
-            <a data-toggle="modal" href="#db-profile-model"><img class="icon-img"  [attr.src]="'assets/livearchival.png'" (click)="viewDBmodal(db)"/></a>
-          </div> 
-          <div class="flex-cards-bar">
-            <div class="trim-text flex-card-title">
-              {{db?.profileName}}
-            </div>
-            <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), true, $event)" title="Click for more info">
-              <i class="fa fa-caret-up archon-icondown"></i>
-            </span>
-          </div>
-          <div class="card-reveal">
-            <p class="">
-              <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), false, $event)" title="Click to hide info">
-                <i class="fa fa-caret-down archon-iconup"></i>
-              </span>
-            </p>
-            <p > Host: {{db?.host}}</p>
-            <p > Owner: {{db.owner.name}}</p>
-            <p > Server Type: {{db?.type}}</p>
-          </div>
-        </div>
-  
-  </div> 
-  
-  
-  <button style="display: none" id="populate-db-list" (click)="getConfigDBList()"></button>
+
+  <div class="flex-container" *ngFor="let dbListGroupObj of dbListActions; let indRow = index">
+    <mat-card class="example-card" *ngFor="let db of dbListGroupObj | searchTable: searchText; let indCol = index">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{db?.profileName}}</mat-card-title>
+        <div class="spacer"></div>
+        <a (click)="viewDBmodal(db)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
+      </mat-card-header>
+      <mat-card-content class="content">
+        <div class='body-left'>Host</div><div class='body-center'>:</div><div class='body-right'>{{db?.host}}</div>
+        <div class='body-left'>Owner</div><div class='body-center'>:</div><div class='body-right'>{{db.owner.name}}</div>
+        <div class='body-left'>Server Type</div><div class='body-center'>:</div><div class='body-right'>{{db?.type}}</div>
+      </mat-card-content>
+    </mat-card>
+</div>   
   
   <ng-template #createNewDatabaseWizard></ng-template>
 
