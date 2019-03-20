@@ -25,11 +25,11 @@ export class ManagementPanelComponent implements OnInit {
       panelImage: 'user.png',
       panelDesc: 'View and Modify User Role.',
     },
-    // {
-    //   panelName: 'Permissions',
-    //   panelImage: 'endtoendtoolkit.png',
-    //   panelDesc: 'Configure, view and edit permissions.',
-    // }
+    {
+      panelName: 'Permissions',
+      panelImage: 'endtoendtoolkit.png',
+      panelDesc: 'Configure, View and Edit Permissions.',
+    }
   ];
   defDesc = 'Here is some more information about this product that is only revealed once clicked on.';
   panelGroupList: any;

@@ -52,7 +52,7 @@ table.table td {
 
 .example-header-image {
   background-image: url('assets/livearchival.png');
-  background-size: contain
+  background-size: contain;
 }
 
 .spacer {
