@@ -10,7 +10,7 @@
           placeholder="Search Table"></div>
           
           <div class='body-right'>
-            <a (click)="getErtAvailableTable()" title="Add More Table" *ngIf="from ==='TABLE'"
+            <a (click)="getErtAvailableTable()" matTooltip="Add More Table" *ngIf="from ==='TABLE'"
         class="cursor-poniter" data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
 
 
@@ -39,48 +39,49 @@
     </div>
     <div class="col-md-9">
       <div class="card" style="height:455px; margin-right: 25px;">
+        <div class="table-list">
+          Selected Table Columns List
+         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-3" id="sel-table-name">{{tableName}}</div>
-            <div id="" class="col-md-3">
+            <div class="col-md-5" id="sel-table-name"> <div class='alias-name'>       
+               
+                    <mat-form-field>
+                        <input type="text" matInput name="tablename" id="tablename"  [(ngModel)]="modifiedTableName"  placeholder="Table Alias Name" (keyup)="toModifiedTableName()">
+                      </mat-form-field>
+                  <!-- <input type="" class="form-control" [(ngModel)]="modifiedTableName" (keyup)="toModifiedTableName()"
+                  name="tablename" id="tablename" placeholder="Enter table Name">--></div> 
+      </div>
+            
+            <div id="" class="col-md-4">
               <div *ngIf="errorMsg!==''" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button> {{errorMsg}}
               </div>
             </div>
-            <div class="col-md-6">
+
+            <div class="col-md-3">
               <ul class="nav nav-tabs mgmt-panel fl-r" style="margin-right: 12px;">
-                <li title="Add User Defined Column" class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel('addNewColumn')"
-                    data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus"></i></a>
+                <li matTooltip="Add User Defined Column" class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel('addNewColumn')"
+                    data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus-circle edit-circle"></i></a>
                 <li>
-                <li title="Add Filter" class="icon-list trim-text"><a href="#" data-toggle="modal" (click)="openFilteronfig()"
+                <li matTooltip="Add Filter"  title="Add Filter" class="icon-list trim-text"><a href="#" data-toggle="modal" (click)="openFilteronfig()"
                     data-target="#filter-modal"><i class="fa fa-filter"></i></a>
                 <li>
-                <li title="Reset all modification" data-toggle="modal" data-target="#reset_confirm_model" class="icon-list trim-text"><a ><i class="fa fa-undo"></i></a>
+                <li matTooltip="Reset all modification" data-toggle="modal" data-target="#reset_confirm_model" class="icon-list trim-text"><a ><i class="fa fa-undo"></i></a>
                 <li>
               </ul>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-10">
-              <div id="table-name-heading" class="form-group">
-                <label id="lbl-alias">Table Alias Name</label>
-                <input type="text" class="form-control" [(ngModel)]="modifiedTableName" (keyup)="toModifiedTableName()"
-                  name="tablename" id="tablename" placeholder="Enter table Name">
-              </div>
-            </div>
-            <div class="col-md-2"></div>
-          </div>
+          </div>          
           <div id="select-tbl-list">
             <div class="scroll-div">
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Key</th>
                     <th>Include</th>
                     <th>Column</th>
-                    <th>Column(as required in Output)
+                    <th>Column(As required in Output)
                     <th>Type</th>
                     <th>Config</th>
                     <th>Edit</th>
@@ -89,21 +90,20 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of showColumns()">
-                    <td><i [ngClass]="{'fa fa-key':item?.isPrimaryKey}"></i></td>
                     <td><input (change)="selectColumns(item?.originalColumnName,item?.isSelected)" [(ngModel)]="item.isSelected"
                         type="checkbox"></td>
-                    <td>{{item?.originalColumnName}}</td>
+                    <td>{{item?.originalColumnName}} <i [ngClass]="{'fa fa-key':item?.isPrimaryKey}"></i></td>
                     <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
                         [ngModel]="item?.modifiedColumnName"></td>
                     <td>{{item?.dataType}}</td>
                     <td><a *ngIf="item.dataType!=='USERDEFINED'" href="" data-toggle="modal" (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
-                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#config-modal' : '#config-modal'"><i class="fa fa-cogs"></i></a></td>
+                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#config-modal' : '#config-modal'"><i class="fa fa-cog"></i></a></td>
                     <td><a *ngIf="item.dataType==='USERDEFINED'" (click)="openUsrDefinedColumnModel(item?.originalColumnName)"
                         data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
                     <td><a (click)="deleteUsrDefinedColumnForEdit(item?.originalColumnName)" *ngIf="item.dataType==='USERDEFINED'"><i class="fa fa-trash"></i></a></td>
                   </tr>
                   <tr *ngFor="let item of showUserDefinedColumn()">
-                    <td></td>
+                   
                     <td><input (change)="selectUserDefinedColumns(item?.originalColumnName,item?.isSelected)"
                         [(ngModel)]="item.isSelected" type="checkbox"></td>
                     <td>{{item?.originalColumnName}}</td>
@@ -124,10 +124,10 @@
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()" style="float: right;margin-right: 12px">Next</button>
+    <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()" style="float: right;margin-right: 24px">Next</button>
     <button class="btn btn-primary Previous" id="back-to-job-config" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
-    <button class="btn btn-primary Previous" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
+    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>

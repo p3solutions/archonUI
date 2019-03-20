@@ -6,7 +6,7 @@
   
   #ert-table-id {
     position: relative;
-    font-family: "Montserrat", sans-serif;
+    
     font-weight: 300;
     font-size: 16px;
     letter-spacing: 0.2
@@ -172,7 +172,7 @@
   }
   
   #add-edit-column {
-    font-family: "Montserrat", sans-serif;
+    
     font-weight: 300;
     font-size: 16px;
     letter-spacing: 0.2;
