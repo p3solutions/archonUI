@@ -11,7 +11,7 @@
       <!-- <li class="trim-text">
         <a [routerLink]="['member-request',workspaceId]">Member Requests</a>
       </li> -->
-      <li class="trim-text" *ngIf="role.name == 'ROLE_OWNER'">
+      <li class="trim-text" *ngIf="role?.name == 'ROLE_OWNER'">
         <a [routerLink]="['manage-members',workspaceId]">Manage Members</a>
       </li>
       <li class="trim-text">
