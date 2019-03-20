@@ -20,7 +20,7 @@ export class ErtJobsComponent implements OnInit {
   ertJobId = '';
   scheduleNow: boolean;
 
-  constructor(private ertService: ErtService, private userInfoService: UserinfoService,
+  constructor(public ertService: ErtService, private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
 
   ngOnInit() {
