@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-md-6">
-        <div class="card" style="height:455px">
+        <div class="card" style="height:415px">
           <div class="card-body" id="extract-data">
             <div class="save-extract-heading">
               <div>
@@ -29,7 +29,7 @@
             </div>
             <div class="row">
               <div class="col-md-12 col-lg-12 font-left" id="extract-slider-heading">
-                <label>Xml/SIP file split size in MB(<small>Default 100</small>)</label>
+                  <small>Xml/SIP file split size in MB (Default 100)</small>
               </div>
             </div>
             <div class="row">
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="card" style="height:455px">
+        <div class="card" style="height:415px">
           <div class="card-body" id="ingest-data">
             <div class="save-extract-heading">
               <div>
@@ -94,9 +94,9 @@
   <div class="row" id="saveBtnId">
     <button type="button" [disabled]="isDisabledSaveBtn" class="btn btn-primary next" (click)="gotoTableColConfig()"
       style="float: right;margin-right: 12px">Next</button>
-    <button class="btn btn-primary Previous" (click)="gotoTableExtraction()" style="float:right;margin-right:5px;">&laquo;
+    <button class="btn btn-primary Previous back" (click)="gotoTableExtraction()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
-    <button class="btn btn-primary Previous" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
+    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>

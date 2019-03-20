@@ -7,7 +7,7 @@
         </a>
       </div>
       <div class="col-md-8">
-        <h3 style="margin: 2px;text-align: left">ERT</h3>
+        <h3 style="margin: -2px;text-align: left">ERT</h3>
       </div>
     </div>
     <div class="col-md-3" style="text-align:left">
@@ -16,8 +16,10 @@
         <strong>Success!</strong> Job has started.
       </div> -->
     </div>
-    <div class="col-md-3" style="text-align: right" *ngIf="ertService.mmrVersion !== ''">
-      <a style="font-size: 42px" [routerLink]="['/workspace/ert/ert-jobs-config']" title="Add Job"><i class="fa fa-plus-circle"></i></a>
+
+    <div class="col-md-3" style="text-align: right; margin-top: -9px;" *ngIf="ertService.mmrVersion !== ''">
+      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert/ert-jobs-config']" title="Add Job"><i class="fa fa-plus-circle"></i></a>
+
     </div>
     <div class="col-md-3" style="text-align: right" *ngIf="ertService.mmrVersion == ''">
         <a style="font-size: 42px;color: grey" title="No MMR Version"><i class="fa fa-plus-circle"></i></a>
@@ -51,41 +53,42 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Job Dashboard</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <label>Job Name:</label>
-          {{ertJobDetail.jobTitle}}
-        </div>
-        <div class="row">
-          <label>Job Type:</label>
-          {{ertJobDetail.jobMode}}
-        </div>
-        <div class="row">
-          <label>Job Status:</label>
-          {{ertJobDetail.jobStatus}}
-        </div>
-        <div class="row">
-          <label>Created By:</label>
-          {{ertJobDetail.createdBy}}
-        </div>
-        <div class="row">
-          <label>Created Date:</label>
-          {{ertJobDetail.createdDate | date}}
-        </div>
-        <div class="row">
-          <label>Last Accessed By:</label>
-          {{ertJobDetail.lastAccessedBy}}
-        </div>
-        <div class="row">
-          <label>Last Accessed Date:</label>
-          {{ertJobDetail.lastAccessedDate | date }}
-        </div>
-      </div>
+            <div class='model-title'><i class="fa fa-tachometer"></i><div class='info-r'>Job Dashboard</div></div>
+          </div>
+      <table class="table table-hover">    
+          <tbody>
+            <tr>
+              <td class="tdl">Job Name</td>
+              <td class="tdr">{{ertJobDetail.jobTitle | titlecase}}</td>
+            </tr>
+            <tr>
+              <td class="tdl">Job Type</td>
+              <td class="tdr">{{ertJobDetail.jobMode}}</td>
+            </tr>
+            <tr>
+              <td class="tdl">Job Status</td>
+              <td class="tdr">{{ertJobDetail.jobStatus}}</td>
+            </tr>
+       <tr>
+              <td class="tdl">Created By</td>
+              <td class="tdr">{{ertJobDetail.createdBy}}</td>
+            </tr>
+        <tr>
+            <td class="tdl">Created Date</td>
+            <td class="tdr"> {{ertJobDetail.createdDate | date}}</td>
+          </tr>
+        <tr>
+            <td class="tdl">Last Accessed By</td>
+            <td class="tdr">{{ertJobDetail.lastAccessedBy}}</td>
+          </tr>
+        <tr>
+            <td class="tdl">Last Accessed Date</td>
+            <td class="tdr">{{ertJobDetail.lastAccessedDate | date }}</td>
+          </tr> 
+        </tbody>
+      </table>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default modal-close" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

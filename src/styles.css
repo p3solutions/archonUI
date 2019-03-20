@@ -2,7 +2,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
-  font-family: "Roboto", "Montserrat", sans-serif;
+  font-family: "Roboto", sans-serif;
   background: #FAFAFA;
   overflow-x: hidden;
 }
@@ -12,15 +12,18 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Roboto", "Montserrat", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 /* Links */
 
-a,
+a {
+  color: #80adf8;
+}
+
 a:focus,
 a:hover {
-  color: #1385f8;
+  color: #2879ff;
 }
 
 a:focus,
@@ -29,7 +32,7 @@ a:hover {
 }
  
 p {
-  font-family: "Avenir Next", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-size: 16px;
   letter-spacing: 0.2px;
@@ -1134,7 +1137,7 @@ ol.multi-step-indicators li.active {
 }
 
 label {
-  font-family: "Montserrat", sans-serif;
+  
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 0.2px;

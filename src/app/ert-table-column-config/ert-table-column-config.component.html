@@ -1,23 +1,18 @@
 <div id="ert-table-id">
   <div class="row">
     <div class="col-md-3">
-      <div class="card" style="height:455px">
-        <div class="card-body" id="ert-tbl-search">
-          <div class="row" style="margin-bottom: 12px;">
-            <div class="inner-addon right-addon">
+      <div class="card" style="height:455px; margin-left: 25px;">
+          <div class="table-list">
+              Table List
+             </div>
+             <div class='body-left'><a href="" style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
               <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
-                placeholder="Search">
-            </div>
-            <div class="col-md-6">
-              <label id=table-heading></label>
-            </div>
-          </div>
-          <div id="tbl-list">
+                placeholder="Search Table"></div>
+                
+
+        <div class="card-body" id="ert-tbl-search">          
+          <div id="tbl-list"  style="height: 326px;">
             <div class="scroll-div border">
-              <div class="sticky">
-                <div class="first-div">Tables list</div>
-                <div></div>
-              </div>
               <div class="well" (click)="selectTable(item.tableId)" *ngFor="let item of selectedTableList | searchTable:searchTableName">
                 <div class="first-div">{{item.tableName}}</div>
               </div>
@@ -27,9 +22,9 @@
       </div>
     </div>
     <div class="col-md-9">
-      <div class="card" style="height:455px">
+      <div class="card" style="height:455px; margin-right: 25px;">
         <div class="card-body">
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-6">
               <div id="table-name-heading" class="form-group" style="padding: 10px;">
                 <label id="lbl-alias">{{selectedTableName}}</label>
@@ -40,14 +35,14 @@
                 <label id="lbl-alias">{{ExpectedTableName}}</label>
               </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card" style="height:350px;overflow-y:auto">
+          </div> -->
+          <div class="col-md-6">
+            <div class="card" style="height:453px;overflow-y:auto;margin-left: -15px;">
               <div class="card-body" id="ingest-data">
-                <div class="save-extract-heading">
-                  <div>
-                    <label style="font-weight: bold;">[Original Table]</label>
-                  </div>
+                <div class="table-c-list">
+                
+                   Original Table - {{selectedTableName}}
+                 
                 </div>
                 <div class="form-group">
                   <div *ngFor="let item of showColumns('original')" class="table-col-exptd">
@@ -57,13 +52,13 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card" style="height:350px;overflow-y:auto">
+          <div class="col-md-6">
+            <div class="card" style="height:453px;overflow-y:auto;margin-right: -15px;">
               <div class="card-body" id="delete-data">
-                <div class="del-data">
-                  <div>
-                    <label style="font-weight: bold;">[Expected Table]</label>
-                  </div>
+                <div class="table-c-list">
+                
+                   Expected Table - {{ExpectedTableName}}
+                
                 </div>
                 <div class="form-group">
                   <div *ngFor="let item of showColumns('expected')" class="table-col-exptd">
@@ -85,9 +80,9 @@
       As Complete</button>
     <button type="button" class="btn btn-primary next" (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 12px">Save
       As Draft</button>
-    <button class="btn btn-primary Previous" (click)="gotoExtractData()" style="float:right;margin-right:5px;">&laquo;
+    <button class="btn btn-primary Previous back" (click)="gotoExtractData()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
-    <button class="btn btn-primary Previous" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
+    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>
