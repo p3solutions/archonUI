@@ -14,7 +14,7 @@
 ::ng-deep .mat-card.column-box {
   width: 30.25%;
   padding: 11px 10px 8px 10px;
-  margin: 11px 10px 8px 10px;
+  margin: 11px 10px 0px 2px;
   border-radius: 3px;
   border: solid 1px #c9d1df;
   background-color: #fafafa;
@@ -62,4 +62,3 @@
 ::ng-deep mat-card.col-md-4.column-box.cdk-drag.mat-card.ng-star-inserted {
   padding-bottom: 10px;
 }
-

@@ -130,7 +130,7 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
   getInfo() {
     this.outputFunctionInfo = this.outputFunctionsList.find(a => a.functionName.replace(/ /g, '').toLocaleLowerCase() ===
       this.editResultFieldsForm.get('outputFunction').value.replace(/ /g, '').toLocaleLowerCase());
-    if (this.outputFunctionInfo.functionName !== '') {
+    if (this.outputFunctionInfo !== undefined) {
       document.getElementById('openFunctionInfoModel').click();
     }
   }

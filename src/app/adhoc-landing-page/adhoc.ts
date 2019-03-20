@@ -8,9 +8,10 @@ export class ApplicationInfo {
 
 export class ScreenInfo {
     screenId = '';
-    Position: number;
+    position: number;
     screenName = '';
     screenDesc = '';
+    linkedScreen = '';
 }
 
 export class TableColumnNode {
@@ -101,8 +102,8 @@ export class ResultFields {
     isEnableFilter = false;
     isHidden = false;
     blob = false;
-    isEncrypted = false;
-    isTodecrypt = true;
+    encrypted = false;
+    todecrypt = true;
 }
 
 export class SearchResult {

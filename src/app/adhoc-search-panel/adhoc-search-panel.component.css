@@ -34,11 +34,14 @@ p {
 }
 
 .tab {
-  width: 66%;
+  width: 73%;
 }
 
 .rename {
-  width: 29%
+  float: right;
+  position: absolute;
+  top: 7px;
+  right: 26px;
 }
 
 .rename-box {
@@ -72,7 +75,7 @@ p {
 }
 
 .mat-card.panel-column-box {
-  padding: 7px 7px 7px 7px;
+  padding: 14px 6px 0px 13px;
   border-radius: 3px;
   border: solid 1px #c9d1df;
   background-color: #fafafa;
@@ -81,8 +84,8 @@ p {
 }
 
 .mat-card.panel-column-box-tab {
-  width: 50%;
-  padding: 7px 7px 7px 7px;
+  width: 44%;
+  padding: 14px 6px 0px 13px;
   border-radius: 3px;
   border: solid 1px #c9d1df;
   background-color: #fafafa;
@@ -114,9 +117,12 @@ p {
   box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
 }
 
-.addBtn .mat-raised-button {
+button.example-add-tab-button.mat-raised-button {
   min-width: 44px;
   background-color: #64b5f6;
+  float: left;
+  margin-top: 11px;
+  margin-right: 7px
 }
 
 .rename .mat-form-field-wrapper {
@@ -138,4 +144,16 @@ p {
 
 .example-tab-icon {
   margin-left: 8px;
+}
+
+.tab .mat-tab-group {
+  display: unset;
+}
+
+::ng-deep mat-card.panel-column-box .mat-card-header-text mat-card-subtitle.mat-card-subtitle {
+  margin-bottom: 0px !important;
+}
+
+::ng-deep mat-card.panel-column-box div.mat-card-header-text mat-card-subtitle.mat-card-subtitle {
+  margin-bottom: 0px !important;
 }

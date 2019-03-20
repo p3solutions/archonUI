@@ -1263,9 +1263,23 @@ svg {
 }
 
 .mat-form-field-appearance-outline .mat-form-field-outline {
-  color:#c9d1df;
+  color: #c9d1df;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-outline-thick {
   color: #c9d1df !important;
+}
+
+.graph-heading-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 53px;
+  line-height: 28.5714px;
+  text-size-adjust: 100%;
+  margin: 0px 0px 8px 0px;
+  padding: 0px 0px 3px 19px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: #64b5f6
 }

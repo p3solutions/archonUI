@@ -40,30 +40,47 @@
     <mat-form-field>
       <input matInput name="screen-filter" (keyup)="applyFilter($event.target.value)" placeholder="Search">
     </mat-form-field>
-    <a id="open-app" (click)="openScreenDialog()" matTooltip="Create Screen"><i class="fa fa-plus-circle"></i></a>
+    <a id="open-app" (click)="addScreen()" matTooltip="Create Screen"><i class="fa fa-plus-circle"></i></a>
   </div>
   <div class="mat-elevation-z8" id="screen-table">
     <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="Position">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.Position}}</td>
+      <ng-container matColumnDef="position">
+        <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+        <td style="width:8%" mat-cell *matCellDef="let element; let i = index;">{{element.position}}</td>
       </ng-container>
       <ng-container matColumnDef="screenName">
-        <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Screen Name </th>
-        <td style="width:25%" mat-cell *matCellDef="let element"> {{element.screenName}} </td>
+        <th style="width:13%" mat-header-cell *matHeaderCellDef mat-sort-header> Screen Name </th>
+        <td style="width:13%" mat-cell *matCellDef="let element"> <i class="cursor-poniter fa fa-link"></i>
+          {{element.screenName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="linkedScreen">
+        <th style="width:13%" mat-header-cell *matHeaderCellDef mat-sort-header> Linked Screen </th>
+        <td style="width:13%" mat-cell *matCellDef="let element"> {{element.linkedScreen}} </td>
       </ng-container>
       <ng-container matColumnDef="screenDesc">
-        <th style="width:49%" mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-        <td style="width:49%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
+        <th style="width:33%" mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <td style="width:33%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
       </ng-container>
-      <ng-container matColumnDef="Edit">
-        <th style="width:8%" mat-header-cell *matHeaderCellDef> Edit </th>
-        <td style="width:8%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.screenName)"><i class="cursor-poniter fa fa-edit"></i>
+      <ng-container matColumnDef="edit">
+        <th style="width:6%" mat-header-cell *matHeaderCellDef> Edit </th>
+        <td style="width:6%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.screenName)"><i class="cursor-poniter fa fa-edit"></i>
         </td>
       </ng-container>
-      <ng-container matColumnDef="Delete">
-        <th style="width:8%" mat-header-cell *matHeaderCellDef> Delete </th>
-        <td style="width:8%" mat-cell *matCellDef="let element"><i class="cursor-poniter fa fa-trash"></i> </td>
+      <ng-container matColumnDef="nestedLink">
+        <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Nested Link </th>
+        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element" (click)="addNestedLink(element.screenId)"><i
+            class="cursor-poniter fa fa-plus"></i>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Delete</th>
+        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element"><i class="cursor-poniter fa fa-trash"></i>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="download">
+        <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Download </th>
+        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element"><i class="cursor-poniter fa fa-download"></i>
+        </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

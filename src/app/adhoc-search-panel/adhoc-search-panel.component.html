@@ -18,11 +18,9 @@
       <ng-template mat-tab-label>
         Inline Panel Details
       </ng-template>
-      <div style="display:inline-flex;width:100%">
-        <div class="addBtn">
-          <button mat-raised-button class="example-add-tab-button" (click)="addTabInInlinePanel($event)">
-            <i class=" fa fa-plus"></i></button>
-        </div>
+      <button mat-raised-button class="example-add-tab-button" (click)="addTabInInlinePanel($event)">
+        <i class=" fa fa-plus"></i></button>
+      <div style="width:100%">
         <div class="tab">
           <mat-tab-group *ngIf="openPanelIndex===1" #MatInlineTabGroup [(selectedIndex)]="selectedInlineTab"
             (selectedTabChange)="inlinePanelTabChanged($event)">
@@ -47,16 +45,16 @@
             </mat-tab>
           </mat-tab-group>
         </div>
-        <div class="rename">
-          <div class="rename-box">
-            <mat-form-field appearance="standard">
-              <mat-label>Rename Tab</mat-label>
-              <input matInput [(ngModel)]="inlineTabName" placeholder="Rename Tab">
-            </mat-form-field>
-            <div class="renameBtn-div">
-              <button mat-raised-button [disabled]="inlineTabName===''" class="renameBtn" (click)="renameInlineTabName()">
-                Rename</button>
-            </div>
+      </div>
+      <div class="rename">
+        <div class="rename-box">
+          <mat-form-field appearance="standard">
+            <mat-label>Rename Tab</mat-label>
+            <input matInput [(ngModel)]="inlineTabName" placeholder="Rename Tab">
+          </mat-form-field>
+          <div class="renameBtn-div">
+            <button mat-raised-button [disabled]="inlineTabName===''" class="renameBtn" (click)="renameInlineTabName()">
+              Rename</button>
           </div>
         </div>
       </div>
@@ -65,11 +63,9 @@
       <ng-template mat-tab-label>
         Side Panel Details
       </ng-template>
-      <div style="display:inline-flex;width:100%">
-        <div class="addBtn">
-          <button mat-raised-button class="example-add-tab-button" (click)="addTabInSidePanel()">
-            <i class=" fa fa-plus"></i></button>
-        </div>
+      <button mat-raised-button class="example-add-tab-button" (click)="addTabInSidePanel()">
+        <i class=" fa fa-plus"></i></button>
+      <div style="width:100%">
         <div class="tab">
           <mat-tab-group #MatSideTabGroup *ngIf="openPanelIndex===2" [(selectedIndex)]="selectedSideTab"
             (selectedTabChange)="sidePanelTabChanged($event)">

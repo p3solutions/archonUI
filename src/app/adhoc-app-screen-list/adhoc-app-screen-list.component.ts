@@ -49,14 +49,14 @@ export class CreateAppDialogComponent {
 })
 export class AdhocAppScreenListComponent implements OnInit {
   screenInfo = new ScreenInfo();
-  displayedColumns: string[] = ['Position', 'screenName', 'screenDesc', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['position', 'screenName', 'linkedScreen', 'screenDesc', 'edit', 'nestedLink', 'delete', 'download'];
   ScreenInfoList: ScreenInfo[] = [
-    { Position: 1, screenId: '1', screenDesc: 'A', screenName: 'AA' },
-    { Position: 2, screenId: '2', screenDesc: 'B', screenName: 'AB' },
-    { Position: 3, screenId: '3', screenDesc: 'C', screenName: 'AC' },
-    { Position: 4, screenId: '4', screenDesc: 'D', screenName: 'AD' },
-    { Position: 5, screenId: '5', screenDesc: 'E', screenName: 'AE' },
-    { Position: 6, screenId: '6', screenDesc: 'F', screenName: 'AF' }
+    { position: 1, screenId: '1', linkedScreen: 'Linked 1', screenDesc: 'A', screenName: 'AA' },
+    { position: 2, screenId: '2', linkedScreen: 'Linked 1', screenDesc: 'B', screenName: 'AB' },
+    { position: 3, screenId: '3', linkedScreen: 'Linked 1', screenDesc: 'C', screenName: 'AC' },
+    { position: 4, screenId: '4', linkedScreen: 'Linked 1', screenDesc: 'D', screenName: 'AD' },
+    { position: 5, screenId: '5', linkedScreen: 'Linked 1', screenDesc: 'E', screenName: 'AE' },
+    { position: 6, screenId: '6', linkedScreen: 'Linked 1', screenDesc: 'F', screenName: 'AF' }
   ];
   applicationInfoList: ApplicationInfo[] = [
     // { appId: '1', appName: 'App 1', appDesc: 'First App' },
@@ -169,6 +169,17 @@ export class AdhocAppScreenListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  addScreen() {
+    this.screenInfo = new ScreenInfo();
+    this.openScreenDialog();
+  }
+
+  addNestedLink(screenId) {
+    this.screenInfo = new ScreenInfo();
+    this.screenInfo.linkedScreen = this.ScreenInfoList.filter(a => a.screenId === screenId)[0].screenName;
+    this.openScreenDialog();
   }
 
 
