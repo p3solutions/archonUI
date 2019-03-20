@@ -22,7 +22,7 @@ export class ManagementPanelComponent implements OnInit {
     },
     {
       panelName: 'Users',
-      panelImage: 'livearchival.png',
+      panelImage: 'user.png',
       panelDesc: 'Configure, view and edit users.',
     },
     {
@@ -39,7 +39,7 @@ export class ManagementPanelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.panelGroupList = this.commonUtilityService.groupOutArray(this.panelList, 3);
+    this.panelGroupList = this.commonUtilityService.groupOutArray(this.panelList, 4);
   }
 
   goTo(panel) {

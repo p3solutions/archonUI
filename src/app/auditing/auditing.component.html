@@ -3,17 +3,18 @@
 <div class="workspacelist-container">
 
 
-  <div class="col-md-4">
-    <div class="col-md-1 back-arrow">
-      <a (click)="gotoDashboard()" data-tooltip="Back">
-        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-      </a>
-    </div>
-
-    <div class="col-md-8">
-      <h3 class="workspace-panel-heading">
-        Auditing <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span>
-      </h3>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-1 back-arrow">
+        <a (click)="gotoDashboard()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="col-md-8">
+        <h3 class="workspace-panel-heading">
+          Auditing
+        </h3>
+      </div>
     </div>
   </div>
 
@@ -91,7 +92,7 @@
 
 </div>
 
-<div class="row" style="padding-top: 95px;">
+<div class="row" style="padding-top: 10px;">
 <div id="schedule-job" class="workspace-panel-content" *ngIf="isAvailable">
 <div style="padding: 30px 13px">
 <table datatable [dtOptions]="dtOptions"  class="table table-hover table-bordered nowrap" style="width: 100%"></table>
