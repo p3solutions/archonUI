@@ -24,6 +24,7 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   common;
   input;
   jobMessage;
+  jobOutput: any;
 
   constructor(private router: Router, private renderer: Renderer, private service: ScheduleMonitoringService) {
   }
@@ -41,6 +42,8 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
       this.common = result.common;
       this.input = result.input;
       this.jobMessage = result.message;
+      this.jobOutput = result.output;
+      console.log(result);
       });
       el.click();
     } else if (event.target.getAttribute('source') === 'Stop') {

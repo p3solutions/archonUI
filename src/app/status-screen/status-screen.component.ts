@@ -33,6 +33,7 @@ export class StatusScreenComponent implements OnInit {
   common: any;
   input: any;
   jobMessage: any;
+  jobOutput: any;
 
   constructor(
     private router: Router,
@@ -125,6 +126,7 @@ export class StatusScreenComponent implements OnInit {
       this.common = result.common;
       this.input = result.input;
       this.jobMessage = result.message;
+      this.jobOutput = result.output;
     });
   }
 

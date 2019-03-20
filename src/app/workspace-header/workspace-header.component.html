@@ -53,10 +53,11 @@
 
     <div class="col-md-9">
       <!-- <app-workspace-header-info [selectedWorkspace]="currentWorkspace"></app-workspace-header-info> -->
-      <app-workspace-mgmt-panel *ngIf="userWorkspaceArray?.length>0" [workspaceId]="(currentWorkspace ? currentWorkspace.id : 'id')"></app-workspace-mgmt-panel>
+      <app-workspace-mgmt-panel *ngIf="userWorkspaceArray?.length>0" [workspaceId]="(currentWorkspace ? currentWorkspace.id : 'id')" [role]="workspaceHeaderService.getSelectedWorkspaceWorkspaceRole()"></app-workspace-mgmt-panel>
     </div>
 
   </div>
   
 </div>
 <ng-template #createNewWorkspace></ng-template>
+

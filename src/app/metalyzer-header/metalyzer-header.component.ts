@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { MetalyzerHeaderService } from './metalyzer-header.service';
 import { TableListService } from '../table-list/table-list.service';
+import { UserinfoService } from '../userinfo.service';
 
 @Component({
   selector: 'app-metalyzer-header',
@@ -19,22 +20,24 @@ export class MetalyzerHeaderComponent implements OnInit {
   databaseID: any;
   exportxmlview: any;
   userselectTableslist: any;
+  userid: any;
+  auditArray = [];
+
   constructor(
     private router: Router,
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
-    private metalyzerHeaderService: MetalyzerHeaderService
+    private metalyzerHeaderService: MetalyzerHeaderService,
+    private userInfoService: UserinfoService
   ) {
   }
 
   ngOnInit() {
     this.metalyzerHeaderService.cast
       .subscribe(data => {
-        console.log('phase in header component', data);
         this.phase = data;
       });
     this.metalyzerHeaderService.getWorkspaceName().subscribe(result => {
-      console.log('wsname in header component', result);
       this.wsName = result;
     });
     this.tablelistService.userselectTableslist.subscribe(data => {
@@ -102,6 +105,19 @@ export class MetalyzerHeaderComponent implements OnInit {
         this.downloadFilejson(result, result.type);
       });
   }
+
+  getAudit() {
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.userid = this.userInfoService.getUserId();
+    const param = {
+      'workspaceId': this.workspaceID,
+      'userId': this.userid
+    };
+    this.metalyzerHeaderService.getAudit(param).subscribe(result => {
+      this.auditArray = result;
+    });
+  }
+  
   exportOverallpdf() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
