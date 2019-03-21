@@ -236,7 +236,7 @@ function addChildren(nodeList, parentNode, tableRelationshipDtls, isVisible){
         parentNode.children.push(node);
       }
     }
-}
+  }
 
 //function getDataForGraph(inputTableList: string [], tableRelationshipDtls): string {
 export  function toJson(inputTableList: string [], tableRelationshipDtls): string {
