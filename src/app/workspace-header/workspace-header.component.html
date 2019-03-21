@@ -1,19 +1,20 @@
 <div class="workspace-header">
   <div class="row">
     <div class="col-md-12">
-      <div class="pull-left margin-0 pl-20 ws-title color-white">Workspace</div>
+      <div class="pull-left margin-0 pl-20 ws-title color-black">Workspace</div>
     </div>
-    <div class="col-md-3 pl-40">
+    <div class="col-md-3 pl-37">
      
-     
-        <!-- <mat-form-field>
-            <mat-select placeholder="Favorite food">
+      <!-- <div class="btn-group mt-20 pull-left" id="selectedWorkspace">
+        <mat-form-field>
+            <mat-select placeholder="Workspace" [formControl]="selected">
               <mat-option *ngFor="let ws of userWorkspaceArray" (click)="selectWorkspace(ws)"
-              id="{{ws.id}}" >
+              id="{{ws.id}}" [value]="ws.workspaceName">
               {{ws.workspaceName}}
               </mat-option>
             </mat-select>
-          </mat-form-field> -->
+          </mat-form-field> 
+      </div> -->
 
 
       <div class="btn-group mt-20 pull-left" id="selectedWorkspace">
@@ -31,28 +32,19 @@
           <div class="dropdown-divider" *ngIf="userRole?.roleName == 'ROLE_MEMBER'"></div>
           <a class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_MEMBER'" (click)="contactAdmin()">Contact Your
             Admin</a>
-          <!-- <div class="dropdown-divider" *ngIf="enableWorkspace && userWorkspaceArray?.length > 0"></div>
-          <a class="dropdown-item" *ngIf="enableWorkspace">+ Create workspace</a> -->
         </div>
-        <!-- <select  #selectedWorkspace (change)="onChange(selectedWorkspace.value)">
-            <option class="dropdown-item" *ngIf="userWorkspaceArray && userWorkspaceArray.length === 0" selected="selected" value="0">{{selectedWorkspaceName? selectedWorkspaceName : 'SELECT WORKSPACE'}}</option>
-            <option class="dropdown-item  dropdown-data" *ngFor="let ws of userWorkspaceArray" id="{{ws.id}}" value="{{ws}}">{{ws.workspaceName}}</option>
-            <option class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_ADMIN'" value="1">+ Create workspace</option>
-            <option class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_MEMBER'" value="2">Contact Your Admin</option>
-          </select> -->
       </div>
 
-
-
-
-      <div class="col-md-1 mt-20 pull-left">
-          <i class="fa fa-plus-circle" matTooltip="Create New Workspace" (click)="openCreateWSModal()"></i>
+      <div class="col-md-1 mt-20 pull-left pull-more">
+          <span class="fa-stack" matTooltip="Create New Workspace" (click)="openCreateWSModal()">
+            <i class="fa fa-circle-thin fa-stack-2x"></i>
+            <i class="fa fa-plus fa-stack-1x"></i>
+        </span>
       </div>
     </div>
  
 
-    <div class="col-md-9">
-      <!-- <app-workspace-header-info [selectedWorkspace]="currentWorkspace"></app-workspace-header-info> -->
+    <div class="col-md-12">
       <app-workspace-mgmt-panel *ngIf="userWorkspaceArray?.length>0" [workspaceId]="(currentWorkspace ? currentWorkspace.id : 'id')" [role]="workspaceHeaderService.getSelectedWorkspaceWorkspaceRole()"></app-workspace-mgmt-panel>
     </div>
 

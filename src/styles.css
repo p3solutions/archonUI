@@ -362,6 +362,10 @@ footer {
 .color-white {
   color:white !important;
 }
+
+.color-black{
+  color:black !important;
+}
 .trim-text {
   display: inline-block;
   white-space: nowrap;
@@ -1199,6 +1203,12 @@ label {
 .pl-40 {
   padding-left:40px !important;
 }
+
+.pl-37 {
+  padding-left:37px !important;
+}
+
+
 
 .node {
   pointer-events: all;

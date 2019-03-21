@@ -1,8 +1,7 @@
 .workspace-header {
   /* height: 125px; */
   padding: 20px 0 0;
-  /* border-bottom: 2px solid #E6E9ED; */
-  background: #115498;
+  border-bottom: 2px solid #E6E9ED;
 }
 .workspace-dropdown {
   padding: 10px;
@@ -74,8 +73,13 @@
   width: 195px;
   overflow-x: hidden;
 }
-.fa-plus-circle {
-  font-size: 36px;
-  color: #fff;
+
+.fa-stack {
+  font-size: 17px;
+  color: #269AF8;
   cursor: pointer;
+}
+
+.pull-more {
+  padding-left: 6px;
 }
