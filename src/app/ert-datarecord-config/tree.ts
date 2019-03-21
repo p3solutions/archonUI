@@ -154,44 +154,20 @@ function tableNode(data) {
     }
 
   }
-function isToAdd(inputTableList, primarytableName, secondaryTableName): boolean {
-   const childArray = [];
-   let retVal = true;
-
-   for ( const i of inputTableList) {
-     if (i !== primarytableName ) {
-       childArray.push(i);
-     } else if (i === primarytableName) {
-       break;
-     }
-   }
-   if ( childArray != null) {
-      for ( const j of childArray) {
-        if (j === secondaryTableName) {
-          retVal = false;
-        }
-      }
-
-   }
-  return retVal;
-}
-
-function getChildTableList(inputTableList , tableName: string, map): Prop[] {
-  const  tableList = [];
-  let entireArray = [];
-  let childArray = [];
-  entireArray = map.get(tableName);
-  for (const i of entireArray) {
-    childArray = i.childTable;
-  }
-  for (const i of childArray) {
-    if (isToAdd(inputTableList, tableName, i.secondaryTableName)) {
-    tableList.push(new Prop(i.secondaryTableid, i.secondaryTableName, 'white', false));
+  function getChildren(tableName: string, map): Prop[] {
+    const  tableList = [];
+    let entireArray = [];
+    let childArray = [];
+    entireArray = map.get(tableName);
+    for (const i of entireArray) {
+      childArray = i.childTable;
     }
+    for (const i of childArray) {
+      tableList.push(new Prop(i.secondaryTableid, i.secondaryTableName, 'white', false));
+    }
+      return tableList;
   }
-    return tableList;
-}
-
+  
 function getTableProperty(tableName: string, map): Prop {
     let table: Prop;
     let entireArray;
@@ -215,64 +191,99 @@ function getTableProperty(tableName: string, map): Prop {
     return table;
 }
 
-function isSelectedPath(inputTableList: string[], tableName: string, parent: string): boolean {
-    for (let i = 0; i < inputTableList.length; i++) {
-        if ((tableName === inputTableList[i]) && (parent === inputTableList[i - 1]) ) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function isPath(inputTableList: string[], tableName: string, parent: string): boolean {
-  for (let i = 0; i < inputTableList.length; i++) {
-    if ((tableName === inputTableList[i]) && (parent === inputTableList[i - 1])) {
-        return true;
+//  nodeList ['ADDRESS', 'MEMBER', 'CLAIM', 'CLAIM_LIST']
+//  eg1 : if  nodeName : 'CLAIM'    childName : 'CLAIM_LIST'  return value will be false
+//  eg2 : if  nodeName : 'MEMBER'   childName : 'ADDRESS' return value will be true (Since ADDRESS is  parent of MEMBER)
+//  eg3 : if  nodeName : 'CLAIM_LIST'    childName : 'ADDRESS'  return value will be true (Since ADDRESS is one of the parent in selected path)
+function isAlreadyParent(nodeList, parentName, childName):boolean{
+  let currentNodeIdx = -1;
+  for(let i = 0; i < nodeList.length; i++){
+    if(nodeList[i].name === parentName){
+      currentNodeIdx = i;
     }
   }
-return false;
+
+  // Traverse till the parentName and see if child name is already one of the parent.
+  for(let j = 0; j < currentNodeIdx; j++){
+    if(nodeList[j].name === childName){
+      return true;
+    }
+  }
+
+
+  return false;
 }
 
-export function toJson(inputTableList: string [], map) {
-    const tree = new Tree();
-    const toggleTable = inputTableList[inputTableList.length - 1]; // Last table is selected table.
+function isAldreadyChild(children, name):boolean{
+  for(let i = 0; i < children.length; i++){
+    if(children[i].name === name){
+      return true;
+    }
+  }
+  return false;
+}
 
-    for (let i = 0; i < inputTableList.length; i++) {
-        const parent = getTableProperty(inputTableList[i], map);
+function addChildren(nodeList, parentNode, tableRelationshipDtls, isVisible){
+    console.log(parentNode);
+    const childTableList: Prop [] = getChildren(parentNode.name, tableRelationshipDtls);
 
-        if (i === 0) {
-           // parent.isSelected = isSelectedPath(inputTableList,parent.tableName);
-            parent.color = '#F94B4C';
-             // Set the selected flag for last table in the input table list
-            if (toggleTable === parent.name) {
-              parent.enableClick = true; // isSelectedPath(inputTableList, parent.name);
-            }
-            tree.add(parent);
-        }
-
-        const childTableList: Prop [] = getChildTableList(inputTableList, parent.name, map);
-        for ( let j = 0; j < childTableList.length; j++) {
-
-          // Last selected node children should be visible as it is getting inserted for first time.
-          if (toggleTable === childTableList[j].name) {
-            childTableList[j].enableClick = isSelectedPath(inputTableList, childTableList[j].name, parent.name);
-          }
-
-          // Hide the siblings visibility other than selected one (black ones)
-          if ( parent.name !== toggleTable) {
-            childTableList[j].visible = false; // This node is sibling to selected node
-          }
-
-          if (isPath(inputTableList, childTableList[j].name, parent.name)) {
-            childTableList[j].color = 'black';
-            childTableList[j].visible = true; // Enable this node while only it's sibilings should be hidden.
-          }
-          tree.add(childTableList[j], parent);
-        }
-
+    for(let i = 0; childTableList[i]; i++ ){
+      if((isAldreadyChild(parentNode.children, childTableList[i].name) === false) &&
+        isAlreadyParent(nodeList, parentNode.name, childTableList[i].name) === false)
+      {
+        const node = new tableNode(childTableList[i]);
+        node.visible = isVisible;
+        parentNode.children.push(node);
       }
-    return JSON.stringify(tree.root);
-   }
+    }
+}
+
+//function getDataForGraph(inputTableList: string [], tableRelationshipDtls): string {
+export  function toJson(inputTableList: string [], tableRelationshipDtls): string {
+
+  const tree = new Tree();
+  let parent;
+  let selectedTableList = [];
+
+  // Insert selected paths in the tree First
+  for(let i = 0; i < inputTableList.length; i++){
+      const table = getTableProperty(inputTableList[i], tableRelationshipDtls);
+
+      if( i === 0){
+        table.color = '#F94B4C'; //Red for root node.
+        table.enableClick = true;
+        tree.add(table);
+        parent = table; // This is the root table.
+        selectedTableList.push(table);
+        console.log("Root Table added" + parent.name);
+      }
+      else{
+        table.color = 'black';
+        table.enableClick = true;
+        table.visible = true;
+        tree.add(table, parent);
+        selectedTableList.push(table);
+        parent = table; // Current table becomes the parent for next insertion.
+      }
+    }
+
+  // Travese Selected path and get the nodes for adding children
+  // For Data record it is only linear traversal.
+  let nodeList = [];
+  for(let j = 0; j < selectedTableList.length; j++){
+     nodeList.push(tree.findBFS(selectedTableList[j]));
+  }
+
+  for(let k = 0; k < nodeList.length; k++){
+    let visible = (k === nodeList.length-1)?true:false;
+    console.log("Node Length :"+nodeList.length + "K: "+k + "Visible :" +visible);
+    addChildren(nodeList, nodeList[k], tableRelationshipDtls, visible);
+  }
+  //console.log(nodeList);
+  let retVal = JSON.stringify(tree.root);
+  // console.log(b);
+  return retVal;
+}
 
    // ------- SIP Code -------//
 
