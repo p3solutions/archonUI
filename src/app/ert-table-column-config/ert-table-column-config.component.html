@@ -90,15 +90,15 @@
   <div class="modal-dialog">
     <div class="modal-content" style="width: 430px;">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Confirm Cancel</h4>
+        <div class="modal-title">Confirm Cancel</div>
       </div>
       <div class="modal-body">
-        <p style="text-align:left">Are you sure ?</p>
+        <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="cancel()" data-dismiss="modal">YES</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+          <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-primary next" (click)="cancel()" data-dismiss="modal">YES</button>
+        
       </div>
     </div>
   </div>
