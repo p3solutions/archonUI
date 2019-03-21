@@ -12,7 +12,8 @@
 }
 
 .save-extract-heading div {
-  margin: 0px 350px 0px 0px;
+  margin: 0px 0px 0px 20px;
+  text-align: left;
 }
 
 .save-extract-heading label {
