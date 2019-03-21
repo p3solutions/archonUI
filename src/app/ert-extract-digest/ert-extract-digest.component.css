@@ -5,14 +5,14 @@
 
 #ert-table-id {
   position: relative;
-  font-family: "Montserrat", sans-serif;
+  
   font-weight: 300;
   font-size: 16px;
   letter-spacing: 0.2
 }
 
 .save-extract-heading div {
-  margin: 24px 350px 10px 0px;
+  margin: 0px 350px 0px 0px;
 }
 
 .save-extract-heading label {
@@ -50,6 +50,7 @@ mv-slider::ng-deep .slider-handle {
 }
 
 #ingest-data input[type=password] {
+  font-size: 12px;
   border: none;
   border-bottom: 1px solid #2196F3;
   margin-left: 13px;
@@ -59,6 +60,7 @@ mv-slider::ng-deep .slider-handle {
 }
 
 #ingest-data small {
+  font-size: 12px;
   float: left;
   padding: 3px 8px 5px 16px;
 }
@@ -113,4 +115,29 @@ mv-slider::ng-deep .slider-horizontal {
   border-bottom: 1px solid #2196F3;
   margin: 14px 19px 26px;
   width: 92%;
+}
+.cancelBtn {
+  color: #fff;
+  background-color: #64b5f6;
+  border-color: #64b5f6;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+.next {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
+}
+.back {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
 }

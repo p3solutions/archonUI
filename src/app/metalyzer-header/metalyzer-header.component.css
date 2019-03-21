@@ -12,6 +12,11 @@ p {
   display: inline;
 }
 
+.modal-dialog {
+  margin: 100px auto auto;
+  width: 1050px;
+}
+
 .phase-config {
   padding-left: 2%;
 }
@@ -19,7 +24,7 @@ p {
 .dropdown {
   margin-top: 10px;
   float: right;
-  margin-right: 200px;
+  margin-right: 147px;
   cursor: pointer;
 }
 
@@ -45,9 +50,11 @@ p {
 span {
   float: right;
 }
+
+    
 .form-inline {
   padding: 2px 2px 2px 0px;
-  font-family: "Montserrat", sans-serif;
+  
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 0.2;

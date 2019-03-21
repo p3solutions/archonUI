@@ -6,22 +6,36 @@
 
 #ert-table-id {
   position: relative;
-  font-family: "Montserrat", sans-serif;
+  
   font-weight: 300;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2
 }
 
 .search-input {
-  border-radius: 20px;
-  margin-left: 20px;
-  width: 85%;
+  border-radius: 0px;
+  margin-left: 0px;
+  width: 100%;
+  height: 35px;
 }
 
 #table-heading {
   padding: 12px 0px 13px 0px;
   float: left;
   margin: 5px 0px 0px 24px;
+}
+.glyphicon {
+  position: relative;
+  top: 21px;
+  margin-right: 10px;
+  float: right;
+  display: inline-block;
+  
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .inner-addon {
@@ -45,32 +59,35 @@
 }
 
 .icon-list {
-  margin: -4px -10px 0px 0px;
-  font-size: 16px;
+  margin: -2px -21px 0px 0px;
+  font-size: 25px;
   color: #269af8;
+}
+.icon-list:hover {
+  margin: -2px -21px 0px 0px;
+  font-size: 25px;
+  color: #000;
 }
 
 #sel-table-name {
-  padding: 11px 28px 9px 37px;
+  padding: 8px 28px 6px 18px;
   text-align: left;
 }
 
 input#tablename {
   border: none;
-  border-bottom: 1px solid #2196F3;
-  margin-left: 13px;
+ /* border-bottom: 1px solid #2196F3;
+   margin-left: 13px; */
 }
 
 #lbl-alias {
-  float: left;
-  margin-left: 20px;
+  margin-left: -20px;
   color: #2196F3;
-  padding: 1px;
 }
 
 #ert-tbl-search {
   padding-bottom: 13px;
-  border-bottom: 2px solid #E6E9ED;
+  border-bottom: 0px solid #E6E9ED;
 }
 
 .pointer {
@@ -105,7 +122,7 @@ div.sticky {
   top: 0;
   padding: 8px 10px;
   background-color: #2196F3;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
   margin-bottom: 6px;
@@ -119,33 +136,44 @@ div.sticky {
 }
 
 #select-tbl-list .scroll-div {
-  height: 303px;
-  overflow: scroll;
+  height: 340px;
+  overflow: auto;
 }
 
 #tbl-list .scroll-div {
-  height: 326px;
-  overflow: scroll;
+  height: 323px;
+  margin-top: 10px;
+  max-height: 326px;
+  overflow: auto;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 15px;
 }
 
 .well {
-  min-height: 22px;
-  margin-bottom: 9px;
+  min-height: 30px;
+  margin-bottom: 6px;
   background-color: #fff;
-  border: 1px solid #333;
+  /* border: 1px solid #333; */
   border-radius: 4px;
   box-shadow: inset 0 1px 1px #fcf8e3;
   font-weight: 300;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
-  padding: 10px 10px;
+  padding: 5px 5px;
   cursor: pointer;
 }
 
 .well:hover {
   background-color: #f5f5f5;
   border: 1px solid white;
+}
+
+input[type=checkbox], input[type=radio] {
+  margin: 1px 0 0;
+  margin-top: 1px\9;
+  line-height: normal;
 }
 
 input#ucolumnname {
@@ -173,9 +201,9 @@ input#ucolumnname {
 }
 
 #add-edit-column {
-  font-family: "Montserrat", sans-serif;
+  
   font-weight: 300;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2;
   border: 2px solid #E6E9ED;
 }
@@ -223,7 +251,7 @@ input#ucolumnname {
   margin: 0px 0px 0px 28px;
   padding: 7px 27px 7px 26px;
   color: white;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 #nav-tab .active-tab {
@@ -246,12 +274,9 @@ input#ucolumnname {
 }
 
 #select-tbl-list thead {
-  font-family: "Montserrat", sans-serif;
-  background-color: #2196F3;
-  color: white;
-  font-size: 13px;
+  color: #0c0c0c;
+  font-size: 12px;
   letter-spacing: 0.2px;
-  text-transform: uppercase;
 }
 
 #select-tbl-list td {
@@ -335,7 +360,7 @@ table tr td:nth-child(6) {
   border-radius: 4px;
   box-shadow: inset 0 1px 1px #fcf8e3;
   font-weight: 300;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
   padding: 10px 10px;
@@ -348,9 +373,9 @@ table tr td:nth-child(6) {
 }
 
 #add-edit-column {
-  font-family: "Montserrat", sans-serif;
+  
   font-weight: 300;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.2;
   border: 2px solid #E6E9ED;
 }
@@ -420,9 +445,9 @@ table tr td:nth-child(6) {
 }
 
 #avaliable-table-list {
-  font-family: "Montserrat", sans-serif;
+  
   font-weight: 300;
-  font-size: 13px;
+  font-size: 12px;
   overflow: scroll
 }
 
@@ -437,9 +462,145 @@ table tr td:nth-child(6) {
   float: left;
   margin: 6px 2px 2px 4px;
 }
-
 alert1 {
   padding: 15px;
   border: 1px solid transparent
 }
+.table-list {
+  background-color: #64b5f6;
+  text-align: left;
+  padding: 8px;
+  font-size: 16px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  padding-left: 14px;
+}
 
+.body-left {
+  display:inline-block;  
+  padding: -1px 0px 0px 10px;
+  margin-left: 10px;
+  font-size: 12px;
+  width: 80%; 
+  color: #121212;
+}
+
+.body-right {
+  display: inline-block;
+  float: right;
+  padding: 9px 10px 0px 0px;
+  font-size: 26px;
+  width: 15%;
+  color: #2b2b2b;
+}
+.alias-name {
+  display:inline-block;  
+  padding: -1px 0px 0px 10px;
+  margin-left: 10px;
+  font-size: 12px;
+  width: 93%; 
+  color: #121212;
+}
+
+.alias {
+  display: inline-block;
+   /* float: right;
+  padding: 13px 10px 0px 0px; */
+  font-size: 26px;
+  width: 63%;
+  color: #2b2b2b;
+}
+
+.form-control {
+  font-size: 12px;
+  height: 30px;
+    border-radius: 2px;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  padding: 4px;
+  line-height: 1.42857143;
+  vertical-align: middle;
+  border-top: 1px solid #ddd;
+}
+/* .edit-circle {
+  text-align: center;
+  font-size: 15px;  
+  color: #ffffff;
+  cursor: pointer;
+  background-color: #6daeeb;
+  width: 26px;
+  height: 26px;
+  border-radius: 15px;
+  padding-top: 5px;
+  padding-left: 3px;
+}
+.edit-circle:hover {
+   background-color: #0A85F8;
+ } */
+
+ .a {
+  color: #80adf8;
+}
+.a:focus, a:hover {
+  color: #2879ff;
+}
+.fa-cog {
+  font-size: 22px;
+  color: #80adf8;  
+}
+.fa-cog:hover {
+  font-size: 22px;
+  color: #2879ff;  
+}
+.fa-edit {
+  font-size: 22px;
+  color: #80adf8;
+}
+.fa-edit:hover {
+  font-size: 22px;
+  color: #2879ff;
+}
+.fa-trash {
+  font-size: 22px;
+  color: #80adf8;
+}
+.fa-trash:hover {
+  font-size: 22px;
+  color: #2879ff;
+}
+.nav-tabs>li>a {
+  background: transparent;
+  
+}
+.nav-tabs>li>a:hover {
+  background: transparent; 
+  border:1px solid transparent;
+}
+.nav-tabs {
+  border-bottom: 0px solid #ddd;
+}
+.cancelBtn {
+  color: #fff;
+  background-color: #64b5f6;
+  border-color: #64b5f6;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+.next {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
+}
+.back {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
+}

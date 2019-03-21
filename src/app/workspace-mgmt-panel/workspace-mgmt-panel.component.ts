@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+
 @Component({
   selector: 'app-workspace-mgmt-panel',
   templateUrl: './workspace-mgmt-panel.component.html',
@@ -7,9 +8,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class WorkspaceMgmtPanelComponent implements OnInit {
   @Input() workspaceId: string;
+  @Input() role;
 
-  constructor() { }
+  constructor() {
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
 }

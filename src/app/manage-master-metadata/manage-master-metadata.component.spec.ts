@@ -54,6 +54,7 @@ describe('ManageMasterMetadataComponent', () => {
     masterMetaDataService = TestBed.get(ManageMasterMetadataService);
     const WHS = TestBed.get(WorkspaceHeaderService);
     spyOn(WHS, 'getSelectedWorkspaceId').and.returnValue('');
+    spyOn(WHS, 'getSelectedWorkspaceWorkspaceRole').and.returnValue('');
   });
 
   // it('Should display the observable data for Manage-master Metadata component', () => {
