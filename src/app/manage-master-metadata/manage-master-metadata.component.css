@@ -19,18 +19,18 @@ ul {
 }
 
 td {
-  font-size: 14px;
+  font-size: 12px;
   
 }
 
 th {
-  font-size: 15px;
+  font-size: 12px;
 }
 
 #mmr-version {
   
   font-weight: 500;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2;
 }
 
@@ -48,4 +48,43 @@ th {
 textarea {
   width: 531px;
 }
-
+.manage-members {
+  padding: 30px;
+  height: 400px;
+  overflow-y: auto;
+}
+.modal-header {
+  padding: 4px;
+  padding-left: 15px;
+  background-color: #2879ff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+ }
+ .modal-title {
+  float: left;
+  display:inline-block;
+  font-size: 18px;
+  padding: -1px 15px 10px 15px;
+  text-align: left;
+  color: #ffffff;
+}
+.cancelBtn{
+  color: #fff;
+  background-color: #64b5f6;
+  border-color: #64b5f6;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
+}
+.next {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
+}
+.form-control {
+  font-size: 12px;
+  border-radius: 2px;
+}
