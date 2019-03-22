@@ -28,10 +28,14 @@
         </form>
         <div class="add-char-code">
           <a [class.disabled]="!charreplaceform.form.valid" matTooltip="Add Char Record" (click)="charreplaceform.form.valid && saveCharReplacement()">
-            <i class="fa fa-plus-square"></i>
+          <i class="material-icons">
+add_circle
+</i>
           </a>
           <a [class.disabled]="!charreplaceform.form.valid" matTooltip="Refresh Current Record" (click)="charreplaceform.form.valid && refreshCharRecord()">
-            <i class="fa fa-refresh"></i>
+              <i class="material-icons">
+                  loop
+                  </i>
           </a>
         </div>
       </div>
@@ -59,12 +63,16 @@
           </ng-container>
           <ng-container matColumnDef="Edit">
             <th style="width:10%" mat-header-cell *matHeaderCellDef> Edit </th>
-            <td style="width:10%" class="cursor-pointer" matTooltip="Edit" mat-cell (click)="editCharRecord(element.id)" *matCellDef="let element"><i class="fa fa-edit"></i>
+            <td style="width:10%" class="cursor-pointer" matTooltip="Edit" mat-cell (click)="editCharRecord(element.id)" *matCellDef="let element"><i class="material-icons">
+                edit
+                </i>
             </td>
           </ng-container>
           <ng-container matColumnDef="Delete">
             <th style="width:10%" mat-header-cell *matHeaderCellDef> Delete </th>
-            <td style="width:10%" class="cursor-pointer" matTooltip="Delete" mat-cell (click)="deleteCharRecord(element.id)" *matCellDef="let element"><i class="fa fa-trash"></i>
+            <td style="width:10%" class="cursor-pointer" matTooltip="Delete" mat-cell (click)="deleteCharRecord(element.id)" *matCellDef="let element"><i class="material-icons">
+                delete
+                </i>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
