@@ -10,7 +10,7 @@
               <a class="cursor-poniter" (click)="deleteMainPanelColumn(item?.columnId,item?.tableId,item?.label)"><i
                   class="fa fa-trash" aria-hidden="true"></i></a></span>
           </mat-card-title>
-          <mat-card-subtitle>({{item.tableName}}/{{item.name}})</mat-card-subtitle>
+          <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
         </mat-card-header>
       </mat-card>
     </mat-tab>
@@ -24,7 +24,7 @@
         <div class="tab">
           <mat-tab-group *ngIf="openPanelIndex===1" #MatInlineTabGroup [(selectedIndex)]="selectedInlineTab"
             (selectedTabChange)="inlinePanelTabChanged($event)">
-            <mat-tab label="tab.tabName" *ngFor="let tab of searchResult?.inlinePanel?.tabs; let index = index">
+            <mat-tab label="tab.tabName" *ngFor="let tab of searchResult?.inLinePanel?.tabs; let index = index">
               <ng-template mat-tab-label>
                 {{tab.tabName}}
                 <a class="example-tab-icon" [hidden]="index===0" (click)="removeInlineTab(index)"><i class="fa fa-close"></i></a>
@@ -38,7 +38,7 @@
                         <a class="cursor-poniter" (click)="deleteInlinePanelColumn(item?.columnId,item?.tableId,item?.label)"><i
                             class="fa fa-trash" aria-hidden="true"></i></a></span>
                     </mat-card-title>
-                    <mat-card-subtitle>({{item.tableName}}/{{item.name}})</mat-card-subtitle>
+                    <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
                   </mat-card-header>
                 </mat-card>
               </div>
@@ -83,7 +83,7 @@
                         <a class="cursor-poniter" (click)="deleteSidePanelColumn(item?.columnId,item?.tableId,item?.label)"><i
                             class="fa fa-trash" aria-hidden="true"></i></a></span>
                     </mat-card-title>
-                    <mat-card-subtitle>({{item.tableName}}/{{item.name}})</mat-card-subtitle>
+                    <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
                   </mat-card-header>
                 </mat-card>
               </div>

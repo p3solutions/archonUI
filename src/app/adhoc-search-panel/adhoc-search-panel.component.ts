@@ -50,21 +50,22 @@ export class AdhocSearchPanelComponent implements OnInit {
     //     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
     //   }
     // });
+    this.checkSearchResultLength();
   }
 
   addTabInInlinePanel(event) {
     const tempTab = new Tab();
     tempTab.tabName = 'Tab ' + +(this.inlineTabs + 1);
-    this.searchResult.inlinePanel.tabs.push(tempTab);
+    this.searchResult.inLinePanel.tabs.push(tempTab);
     this.adhocScreenService.updateSearchResult(this.searchResult);
-    this.selectedInlineTab = this.searchResult.inlinePanel.tabs.length - 1;
+    this.selectedInlineTab = this.searchResult.inLinePanel.tabs.length - 1;
     this.inlineTabs = this.inlineTabs + 1;
   }
 
   removeInlineTab(index) {
-    this.searchResult.inlinePanel.tabs.splice(index, 1);
+    this.searchResult.inLinePanel.tabs.splice(index, 1);
     this.adhocScreenService.updateSearchResult(this.searchResult);
-    this.selectedInlineTab = this.searchResult.inlinePanel.tabs.length - 1;
+    this.selectedInlineTab = this.searchResult.inLinePanel.tabs.length - 1;
   }
 
   addTabInSidePanel() {
@@ -91,7 +92,7 @@ export class AdhocSearchPanelComponent implements OnInit {
   inlinePanelTabChanged(tabChangeEvent) {
     this.selectedInlineTab = tabChangeEvent.index;
     let tempInlineTab = new Tab();
-    tempInlineTab = this.searchResult.inlinePanel.tabs[tabChangeEvent.index];
+    tempInlineTab = this.searchResult.inLinePanel.tabs[tabChangeEvent.index];
     tempInlineTab.tabOrder = tabChangeEvent.index;
     this.selectedInlineTabObject = tempInlineTab;
     this.inlinePanelTabChange.emit(tempInlineTab);
@@ -117,7 +118,7 @@ export class AdhocSearchPanelComponent implements OnInit {
     this.showPanelEditEvent.emit(true);
   }
   gotoInlinePanelColumnEdit(columnId: string, tableId: string, label: string) {
-    const temp = this.searchResult.inlinePanel.tabs[this.selectedInlineTab].resultFields.find(a => a.columnId ===
+    const temp = this.searchResult.inLinePanel.tabs[this.selectedInlineTab].resultFields.find(a => a.columnId ===
       columnId && a.tableId === tableId && a.label === label);
     this.adhocScreenService.updateResultField(temp);
     this.showPanelEditEvent.emit(true);
@@ -139,10 +140,10 @@ export class AdhocSearchPanelComponent implements OnInit {
     this.adhocScreenService.updateSearchResult(this.searchResult);
   }
   deleteInlinePanelColumn(columnId: string, tableId: string, label: string) {
-    const index = this.searchResult.inlinePanel.tabs[this.selectedInlineTab].resultFields.findIndex(a => a.columnId ===
+    const index = this.searchResult.inLinePanel.tabs[this.selectedInlineTab].resultFields.findIndex(a => a.columnId ===
       columnId && a.tableId === tableId && a.label === label);
     if (index !== -1) {
-      this.searchResult.inlinePanel.tabs[this.selectedInlineTab].resultFields.splice(index, 1);
+      this.searchResult.inLinePanel.tabs[this.selectedInlineTab].resultFields.splice(index, 1);
     }
     this.checkSearchResultLength();
     this.adhocScreenService.updateSearchResult(this.searchResult);
@@ -179,13 +180,15 @@ export class AdhocSearchPanelComponent implements OnInit {
         this.searchResult.mainPanel.push(tempResultFields);
       }
       if (this.openPanelIndex === 1) {
-        const temp = this.searchResult.inlinePanel.tabs[this.selectedInlineTab];
+        const temp = this.searchResult.inLinePanel.tabs[this.selectedInlineTab];
         temp.resultFields.push(tempResultFields);
       }
       if (this.openPanelIndex === 2) {
         const temp = this.searchResult.sidePanel.tabs[this.selectedSideTab];
         temp.resultFields.push(tempResultFields);
       }
+    } else {
+      document.getElementById('label-popup-btn').click();
     }
     this.checkSearchResultLength();
     this.adhocScreenService.updateSearchResult(this.searchResult);
@@ -200,7 +203,7 @@ export class AdhocSearchPanelComponent implements OnInit {
         break;
       }
     }
-    for (const inlineTab of this.searchResult.inlinePanel.tabs) {
+    for (const inlineTab of this.searchResult.inLinePanel.tabs) {
       for (const item of inlineTab.resultFields) {
         searchResultLength = searchResultLength + 1;
         if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
@@ -225,7 +228,7 @@ export class AdhocSearchPanelComponent implements OnInit {
     for (const item of this.searchResult.mainPanel) {
       searchResultLength = searchResultLength + 1;
     }
-    for (const inlineTab of this.searchResult.inlinePanel.tabs) {
+    for (const inlineTab of this.searchResult.inLinePanel.tabs) {
       for (const item of inlineTab.resultFields) {
         searchResultLength = searchResultLength + 1;
       }
@@ -242,6 +245,6 @@ export class AdhocSearchPanelComponent implements OnInit {
     this.searchResult.sidePanel.tabs[this.selectedSideTab].tabName = this.sideTabName;
   }
   renameInlineTabName() {
-    this.searchResult.inlinePanel.tabs[this.selectedInlineTab].tabName = this.inlineTabName;
+    this.searchResult.inLinePanel.tabs[this.selectedInlineTab].tabName = this.inlineTabName;
   }
 }

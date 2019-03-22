@@ -56,7 +56,7 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
       outputFunction: new FormControl(this.resultFields.outputFunction),
       isMaskField: new FormControl(this.resultFields.isMaskField),
       maskType: new FormControl(this.resultFields.maskDetail.maskType),
-      masklength: new FormControl(this.resultFields.maskDetail.masklength),
+      maskLength: new FormControl(this.resultFields.maskDetail.maskLength),
       isEnableFilter: new FormControl(this.resultFields.isEnableFilter),
       isHidden: new FormControl(this.resultFields.isHidden)
     });
@@ -76,7 +76,7 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
     this.resultFields.isEnableFilter = this.editResultFieldsForm.get('isEnableFilter').value;
     this.resultFields.isMaskField = this.editResultFieldsForm.get('isMaskField').value;
     this.resultFields.maskDetail.maskType = this.editResultFieldsForm.get('maskType').value;
-    this.resultFields.maskDetail.masklength = this.editResultFieldsForm.get('masklength').value;
+    this.resultFields.maskDetail.maskLength = this.editResultFieldsForm.get('maskLength').value;
     if (this.openedPanelIndex === 0) {
       const index = this.searchResult.mainPanel.findIndex(a => a.columnId === columnId &&
         a.tableId === tableId && a.label === label);
@@ -84,10 +84,10 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
         this.searchResult.mainPanel.splice(index, 1, this.resultFields);
       }
     } else if (this.openedPanelIndex === 1) {
-      const index = this.searchResult.inlinePanel.tabs[this.selectedInlineTab].
+      const index = this.searchResult.inLinePanel.tabs[this.selectedInlineTab].
         resultFields.findIndex(a => a.columnId === columnId && a.tableId === tableId && a.label === label);
       if (index !== -1) {
-        this.searchResult.inlinePanel.tabs[this.selectedInlineTab].resultFields.splice(index, 1, this.resultFields);
+        this.searchResult.inLinePanel.tabs[this.selectedInlineTab].resultFields.splice(index, 1, this.resultFields);
       }
 
     } else if (this.openedPanelIndex === 2) {
@@ -109,7 +109,7 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
         break;
       }
     }
-    for (const inlineTab of this.searchResult.inlinePanel.tabs) {
+    for (const inlineTab of this.searchResult.inLinePanel.tabs) {
       for (const item of inlineTab.resultFields) {
         if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
           temp = false;

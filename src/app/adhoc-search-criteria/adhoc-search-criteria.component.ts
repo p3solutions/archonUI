@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TableColumnNode, SearchCriteria, ResultFields, SearchResult, Tab, NestedLinks, SelectedTables,
-   AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
+import {
+  TableColumnNode, SearchCriteria, ResultFields, SearchResult, Tab, NestedLinks, SelectedTables,
+  AdhocHeaderInfo,
+  Adhoc
+} from '../adhoc-landing-page/adhoc';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -27,73 +30,12 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   searchCriteriaLength = 0;
   searchResultLength = 0;
   openSearch = true;
-  TREE_DATA: TableColumnNode[] = [
-    {
-      id: '1',
-      type: 'Table',
-      name: 'Address',
-      visible: true,
-      columns: [
-        {
-          id: '11',
-          type: 'Column', name: 'Address 1', visible: true
-        },
-        {
-          id: '21',
-          type: 'Column', name: 'Address 2', visible: true
-        },
-        {
-          id: '31',
-          type: 'Column', name: 'Address 3', visible: true
-        },
-      ]
-    },
-    {
-      id: '2',
-      type: 'Table',
-      name: 'Claim',
-      visible: true,
-      columns: [
-        {
-          id: '12',
-          type: 'Column', name: 'Claim 1', visible: true
-        },
-        {
-          id: '22',
-          type: 'Column', name: 'Claim 2', visible: true
-        },
-        {
-          id: '32',
-          type: 'Column', name: 'Claim 3', visible: true
-        },
-      ]
-    },
-    {
-      id: '3',
-      type: 'Table',
-      name: 'Member',
-      visible: true,
-      columns: [
-        {
-          id: '13',
-          type: 'Column', name: 'Member', visible: true
-        },
-        {
-          id: '23',
-          type: 'Column', name: 'Member', visible: true
-        },
-        {
-          id: '33',
-          type: 'Column', name: 'Member', visible: true
-        },
-      ]
-    }
-  ];
+  TREE_DATA: TableColumnNode[] = [];
   isSearchScreen = false;
   isPanelColumnScreen = false;
   treeMap = new Map();
-  redirect = '';
   tableColumnList: SelectedTables[] = [];
+  screenInfoObject = new Adhoc();
   treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
   transformer = (node: TableColumnNode, level: number) => {
     return {
@@ -112,45 +54,42 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     private adhocSavedObjectService: AdhocSavedObjectService, public activatedRoute: ActivatedRoute, ) {
   }
   ngOnInit() {
-    let selectedValues: string[] = [];
-    let joinListMap = new Map();
-    this.redirect = this.activatedRoute.snapshot.paramMap.get('redirect');
-    this.initTab();
-    if (this.redirect === null) {
-      this.adhocScreenService.updateTreeData(this.TREE_DATA);
-      this.dataSource.data = JSON.parse(JSON.stringify(this.TREE_DATA));
-      this.createMapOfTree();
-    } else {
-      selectedValues = JSON.parse(this.adhocSavedObjectService.graphDetails.selectedValues);
-      joinListMap = new Map(JSON.parse(this.adhocSavedObjectService.graphDetails.joinListMap));
+    this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;
+    if (this.screenInfoObject.sessionAdhocModel.searchCriteria.length > 0) {
+      this.adhocScreenService.updateSearchCriteria(this.screenInfoObject.sessionAdhocModel.searchCriteria);
     }
-    // const tabelIds = this.getTableIdFromTableName(selectedValues, joinListMap);
-    // this.getTableColumnList(tabelIds);
+    if (this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel.length > 0) {
+      this.adhocScreenService.updateSearchResult(this.screenInfoObject.sessionAdhocModel.searchResult);
+    }
+    this.initTab();
+    this.getTableColumnList();
   }
 
-  getTableIdFromTableName(selectedValues: string[] = [], joinListMap = new Map): string[] {
+  filterOnlySelectedTable() {
+    const selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+    const joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
     const tableNames = selectedValues;
-    const tableIds: string[] = [];
+    const selectedTables: SelectedTables[] = [];
     for (const table of tableNames) {
       const tableId = joinListMap.get(table)[0].primaryTableId;
-      tableIds.push(tableId);
+      selectedTables.push(this.tableColumnList.filter(a => a.tableId === tableId)[0]);
     }
-    return tableIds;
+    this.tableColumnList = selectedTables;
+    this.createTableColumnTree();
   }
 
-  getTableColumnList(tableIds: string[] = []) {
+  getTableColumnList() {
     let tempHeader = new AdhocHeaderInfo();
     this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
       tempHeader = response;
     });
     const param: any = {
-      'tableIdList': tableIds,
       'mmrVersion': tempHeader.metadataVersion,
       'workspaceId': tempHeader.workspaceId
     };
-    console.log(JSON.stringify(param));
     this.adhocService.getTableColumnList(param).subscribe(response => {
-
+      this.tableColumnList = response;
+      this.filterOnlySelectedTable();
     });
   }
 
@@ -160,10 +99,10 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       tableColumnNode = new TableColumnNode();
       tableColumnNode.id = table.tableId;
       tableColumnNode.type = 'Table';
-      tableColumnNode.name = table.tableName;
-      tableColumnNode.visible = false;
+      tableColumnNode.name = table.schemaName + '/' + table.tableName;
+      tableColumnNode.visible = true;
       for (const column of table.columnList) {
-        tableColumnNode.columns.push({ 'id': column.columnId, 'name': column.name, 'type': 'column', 'visible': false });
+        tableColumnNode.columns.push({ 'id': column.columnId, 'name': column.name, 'type': 'column', 'visible': true });
       }
       this.TREE_DATA.push(tableColumnNode);
     }
@@ -235,11 +174,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   }
 
   gotoGraph() {
-    if (this.redirect !== null) {
-      this.router.navigate(['workspace/adhoc/screen/table/'], { queryParams: { redirect: 'N' } });
-    } else {
-      this.router.navigate(['/workspace/adhoc/screen/table']);
-    }
+    this.router.navigate(['/workspace/adhoc/screen/table']);
   }
 
   searchResultLengthFn(length: number) {
@@ -255,6 +190,38 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     this.adhocScreenService.updatedSearchResult.subscribe(result => {
       searchResult = JSON.parse(JSON.stringify(result));
     });
+    let tempHeader = new AdhocHeaderInfo();
+    this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
+      tempHeader = response;
+    });
+    this.screenInfoObject.screenId = this.screenInfoObject.id;
+    this.screenInfoObject.sessionAdhocModel.applicationInfo = this.screenInfoObject.applicationInfo;
+    delete this.screenInfoObject.sessionAdhocModel.applicationInfo['createdAt'];
+    delete this.screenInfoObject.sessionAdhocModel.applicationInfo['updatedAt'];
+    delete this.screenInfoObject['childScreenInfo'];
+    delete this.screenInfoObject['id'];
+    if (this.screenInfoObject.parentScreenInfo.screenId === '') {
+      delete this.screenInfoObject['parentScreenInfo'];
+    }
+    delete this.screenInfoObject.sessionAdhocModel.applicationInfo['updatedAt'];
+    delete this.screenInfoObject.sessionAdhocModel['outputLoc'];
+    this.screenInfoObject.sessionAdhocModel.searchCriteria = searchCriteria;
+    this.screenInfoObject.sessionAdhocModel.searchResult = searchResult;
+    this.screenInfoObject.sessionAdhocModel.selectedTables = this.tableColumnList;
+    this.screenInfoObject.mmrVersion = tempHeader.metadataVersion;
+    this.addOrder();
+    this.addSchemaName(this.tableColumnList[0].schemaName);
+    this.screenInfoObject.schemaName = this.tableColumnList[0].schemaName;
+    this.screenInfoObject.sessionAdhocModel.primaryTable = this.tableColumnList[0].schemaName + '/' + this.tableColumnList[0].tableName;
+    this.screenInfoObject.sessionAdhoc = this.screenInfoObject.sessionAdhocModel;
+    delete this.screenInfoObject['sessionAdhocModel'];
+    delete this.screenInfoObject['position'];
+    delete this.screenInfoObject['createdAt'];
+    delete this.screenInfoObject['updatedAt'];
+    this.adhocService.updateScreen(this.screenInfoObject, this.screenInfoObject.screenId).subscribe(result => {
+      console.log(result);
+    });
+
     this.adhocScreenService.updateSearchCriteria([]);
     this.adhocScreenService.updateSearchResult(new SearchResult());
     this.adhocScreenService.updateSearchCriterion(new SearchCriteria());
@@ -262,33 +229,38 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     this.adhocScreenService.updateSidePanelTabChange(new Tab());
     this.adhocScreenService.updateResultField(new ResultFields());
     this.adhocScreenService.updatePanelChanged(0);
-    const tempNestedLink = new NestedLinks();
-    tempNestedLink.searchName = 'NestedLink1';
-    const tempNestedLinks = this.adhocSavedObjectService.nestedLinks;
-    tempNestedLinks.push(tempNestedLink);
-    this.adhocSavedObjectService.setNestedLinks(tempNestedLinks);
-    this.adhocScreenService.updatedSearchResult.subscribe(result => {
-      searchResult = JSON.parse(JSON.stringify(result));
+    this.router.navigate(['workspace/adhoc/app-screen-list']);
+  }
+
+  addOrder() {
+    this.screenInfoObject.sessionAdhocModel.searchCriteria.forEach((value, index) => {
+      value.order = index + 1;
     });
-    this.adhocSavedObjectService.setSearchCriteria(searchCriteria);
-    this.adhocSavedObjectService.setSearchResult(searchResult);
-    this.router.navigate(['workspace/adhoc/screen/table/'], { queryParams: { redirect: 'N' } });
+    this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel.forEach((value, index) => {
+      value.order = index + 1;
+    });
+    const inlineTabs: Tab[] = this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel.tabs;
+    const sideTabs: Tab[] = this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel.tabs;
+    for (let i = 0; i < inlineTabs.length; i++) {
+      inlineTabs[i].tabOrder = i + 1;
+      inlineTabs[i].resultFields.forEach((value, index) => {
+        value.order = index + 1;
+      });
+    }
+    for (let i = 0; i < sideTabs.length; i++) {
+      sideTabs[i].tabOrder = i + 1;
+      sideTabs[i].resultFields.forEach((value, index) => {
+        value.order = index + 1;
+      });
+    }
+  }
+
+  addSchemaName(schemaName) {
+    this.screenInfoObject.sessionAdhocModel.linearTableMapOrder.forEach((value, index) => {
+      value.tableName = schemaName + '/' + value.tableName;
+    });
   }
 
   clear() {
-    let searchResult = new SearchResult();
-    this.adhocScreenService.updatedSearchResult.subscribe(result => {
-      searchResult = JSON.parse(JSON.stringify(result));
-    });
-    let tempNestedLink = new NestedLinks();
-    const tempNestedLinks = this.adhocSavedObjectService.nestedLinks;
-    tempNestedLink = tempNestedLinks.find(a => a.searchName === 'NestedLink1');
-    const index = tempNestedLinks.findIndex(a => a.searchName === 'NestedLink1');
-    tempNestedLink.searchResult = searchResult;
-    if (index !== -1) {
-      tempNestedLinks.splice(index, 1, tempNestedLink);
-    }
-    this.adhocSavedObjectService.setNestedLinks(tempNestedLinks);
-    this.router.navigate(['workspace/adhoc/screen/table/'], { queryParams: { redirect: 'N' } });
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AdhocHeaderInfo, SelectedTables } from './adhoc';
+import { AdhocHeaderInfo, SelectedTables, Adhoc } from './adhoc';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
@@ -15,10 +15,12 @@ export class AdhocService {
   private apiUrl = environment.apiUrl;
   getMMRVersionListUrl = this.apiUrl + 'metalyzer/getVersionNumberList?workspaceId=';
   createApplicationUrl = this.apiUrl + 'adhocbuilder/application';
+  createScreenUrl = this.apiUrl + 'adhocbuilder/screen';
   getApplicationUrl = this.apiUrl + 'adhocbuilder/application?startIndex=';
-  getTableColumnListUrl = this.apiUrl + 'adhocbuilder/tableList';
-
-
+  getTableColumnListUrl = this.apiUrl + 'adhocbuilder/tableList?metadataVersion=';
+  getScreenUrl = this.apiUrl + 'adhocbuilder/screen?startIndex=';
+  getSearchScreenUrl = this.apiUrl + 'adhocbuilder/searchScreenName?startIndex=';
+  deleteScreenUrl = this.apiUrl + 'adhocbuilder/screen?screenId=';
   constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
 
   updateAdhocHeaderInfo(adhocHeaderInfo: AdhocHeaderInfo) {
@@ -49,9 +51,50 @@ export class AdhocService {
   }
 
   getTableColumnList(param): Observable<SelectedTables[]> {
-    return this.http.get<SelectedTables[]>(this.getTableColumnListUrl, { headers: this.userInfoService.getHeaders(), params: { param } }).
+    return this.http.get<SelectedTables[]>(this.getTableColumnListUrl +
+      param.mmrVersion + '&workspaceId=' + param.workspaceId, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractDataForTableColumnList),
         catchError(this.handleError('getTableColumnList', []))
+      );
+  }
+
+  createScreen(param): Observable<Adhoc> {
+    return this.http.post<Adhoc>(this.createScreenUrl, param, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('createScreen', []))
+      );
+  }
+
+  updateScreen(param, screenId): Observable<Adhoc> {
+    return this.http.put<Adhoc>(this.createScreenUrl + '?screenId=' + screenId, param, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('updateScreen', []))
+      );
+  }
+
+  getScreen(startIndex, workspaceId, appId): Observable<Adhoc[]> {
+    return this.http.get<Adhoc[]>(this.getScreenUrl + startIndex +
+      '&workspaceId=' + workspaceId + '&appId=' + appId, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('getScreen', []))
+      );
+  }
+
+  getSearchScreen(startIndex, searchScreenText, appId): Observable<Adhoc[]> {
+    return this.http.get<Adhoc[]>(this.getSearchScreenUrl + startIndex +
+      '&appId=' + appId + '&screenName=' + searchScreenText, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('getSearchScreen', []))
+      );
+  }
+
+
+
+  deleteScreen(screenId): Observable<string> {
+    return this.http.delete<string>(this.deleteScreenUrl + screenId,
+      { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('deleteScreen', []))
       );
   }
 
@@ -66,7 +109,7 @@ export class AdhocService {
   }
 
   private extractDataForTableColumnList(res: any) {
-    const body = res.data.details;
+    const body = res.data.Details;
     return body || [];
   }
 

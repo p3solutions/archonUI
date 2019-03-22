@@ -11,8 +11,7 @@ table {
   width: 100%;
 }
 
-td,
-th {
+td, th {
   text-align: left;
 }
 
@@ -112,4 +111,8 @@ p {
 
 .fa-link {
   color: #0085f4
+}
+
+td.mat-cell .mat-icon-button {
+  width: 15px;
 }

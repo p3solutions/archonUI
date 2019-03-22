@@ -17,13 +17,14 @@
           </mat-form-field>
         </p>
         <p>
-          <mat-tree cdkDropList #column="cdkDropList" [cdkDropListConnectedTo]="['drag-search-column','drag-panel-column']"
-            [cdkDropListData]="dataSource" (cdkDropListDropped)="drop($event)" #tree [dataSource]="dataSource"
-            [treeControl]="treeControl">
-            <mat-tree-node [ngClass]="node.node.visible===false ? 'hide-node' : ''" [cdkDragDisabled]="node.node.type=='Table'"
-              [cdkDragData]="node" *matTreeNodeDef="let node" cdkDrag matTreeNodePadding>
-              <button mat-icon-button disabled></button><i [ngClass]="node.node.type=='Table'? 'fa fa-table' : 'fa fa-columns'"
-                aria-hidden="true"></i>
+          <mat-tree cdkDropList #column="cdkDropList"
+            [cdkDropListConnectedTo]="['drag-search-column','drag-panel-column']" [cdkDropListData]="dataSource"
+            (cdkDropListDropped)="drop($event)" #tree [dataSource]="dataSource" [treeControl]="treeControl">
+            <mat-tree-node [ngClass]="node.node.visible===false ? 'hide-node' : ''"
+              [cdkDragDisabled]="node.node.type=='Table'" [cdkDragData]="node" *matTreeNodeDef="let node" cdkDrag
+              matTreeNodePadding>
+              <button mat-icon-button disabled></button><i
+                [ngClass]="node.node.type=='Table'? 'fa fa-table' : 'fa fa-columns'" aria-hidden="true"></i>
               {{node.node.name | uppercase}}
             </mat-tree-node>
             <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
@@ -42,40 +43,85 @@
     <div style="padding-bottom: 12px;">
       <mat-accordion>
         <mat-expansion-panel [expanded]="openSearch" (opened)="openSearch = true" (closed)="openSearch = false">
-          <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'" id="search-column-header">
+          <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'"
+            id="search-column-header">
             <mat-panel-title>
               Drag a column to create a search field
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <app-adhoc-search-screen *ngIf="!isSearchScreen" (updateSearchCriteriaLength)="updateSearchCriteriaLength($event)"
-            (showEditEvent)="showEdit($event)"></app-adhoc-search-screen>
-          <app-adhoc-edit-search-screen-popup (showSearchEvent)="showSearch($event)" *ngIf="isSearchScreen"></app-adhoc-edit-search-screen-popup>
+          <app-adhoc-search-screen *ngIf="!isSearchScreen"
+            (updateSearchCriteriaLength)="updateSearchCriteriaLength($event)" (showEditEvent)="showEdit($event)">
+          </app-adhoc-search-screen>
+          <app-adhoc-edit-search-screen-popup (showSearchEvent)="showSearch($event)" *ngIf="isSearchScreen">
+          </app-adhoc-edit-search-screen-popup>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
     <div *ngIf="searchCriteriaLength!==0">
       <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-          <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'" id="drag-panel-column-header">
+          <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'"
+            id="drag-panel-column-header">
             <mat-panel-title>
               Search Result Screen Design
             </mat-panel-title>
           </mat-expansion-panel-header>
           <app-adhoc-search-panel *ngIf="!isPanelColumnScreen" (searchResultLength)=searchResultLengthFn($event)
             (showPanelEditEvent)="showPanelEdit($event)" (sidePanelTabChange)="sidePanelTabChange($event)"
-            (inlinePanelTabChange)="inlinePanelTabChange($event)" (panelChanged)="onPanelChanged($event)"></app-adhoc-search-panel>
+            (inlinePanelTabChange)="inlinePanelTabChange($event)" (panelChanged)="onPanelChanged($event)">
+          </app-adhoc-search-panel>
           <app-adhoc-edit-panel-column-popup [openedPanelIndex]="openedPanelIndex" [inlinePanelTab]="inlinePanelTab"
-            [sidePanelTab]="sidePanelTab" (showPanelSearchColumnEvent)="showPanelSearchColumn($event)" *ngIf="isPanelColumnScreen"></app-adhoc-edit-panel-column-popup>
+            [sidePanelTab]="sidePanelTab" (showPanelSearchColumnEvent)="showPanelSearchColumn($event)"
+            *ngIf="isPanelColumnScreen"></app-adhoc-edit-panel-column-popup>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
   </div>
 </div>
 <div class="row" id="nextbtn">
-  <button type="button" class="btn btn-primary next btn-sm" [disabled]="searchResultLength===0||searchCriteriaLength===0"
-    (click)="gotoNestedScreen()" style="float: right;margin-right: 12px">Next</button>
+  <button type="button" class="btn btn-primary next btn-sm"
+    [disabled]="searchResultLength===0||searchCriteriaLength===0" (click)="gotoNestedScreen()"
+    style="float: right;margin-right: 12px">save</button>
   <button class="btn btn-primary Previous btn-sm" (click)="gotoGraph()" style="float:right;margin-right:5px;">
     Back</button>
   <button class="btn Previous btn-sm" id="clearBtn" (click)="clear()" style="float:right;margin-right:5px;">
     clear</button>
+</div>
+
+<button style="display:none" type="button" id="label-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#label-popup">Open Modal</button>
+<div id="label-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Information</h4>
+      </div>
+      <div class="modal-body">
+        <p>Column Label already present</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="label-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#label-popup">Open Modal</button>
+<div id="saveScreen" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Information</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{screenInfoObject.screenName}} is Saved Successfully</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
 </div>

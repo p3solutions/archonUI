@@ -1,18 +1,51 @@
 import { FormGroup } from '@angular/forms';
 
 export class ApplicationInfo {
-    appId = '';
+    id = '';
+    createdAt = '';
+    updatedAt = '';
+    workspaceId = '';
+    metadataVersion = '';
     appName = '';
     appDesc = '';
 }
 
-export class ScreenInfo {
-    screenId = '';
-    position: number;
-    screenName = '';
-    screenDesc = '';
-    linkedScreen = '';
-}
+// export class ScreenInfo {
+//     id = '';
+//     //position: number; // frontend
+//     screenName = '';
+//     screenDesc = '';
+//     createdAt = '';
+//     updatedAt = '';
+//     applicationInfo = new ApplicationInfo();
+//     appId = '';
+//     "workspaceId": "5c876f12068c2311147b6bf9",
+//     "schemaName": "SH",
+//         "sessionAdhocModel": null,
+//             "softDeleted": false
+// }
+
+// id
+// createdAt": 1552972646,
+// updatedAt": 1552972646,
+// appId": "5c9018a7068c235749a47d7f",
+// screenName": "Screen - ",
+// screenDesc": null,
+// applicationInfo": {
+// id": "5c9018a7068c235749a47d7f",
+// createdAt": 1552947367,
+// updatedAt": 1552947367,
+// appName": "app5 - test",
+// appDesc": "app2 is name of application in adhoc query",
+// workspaceId": "5c876f12068c2311147b6bf9",
+// metadataVersion": "12",
+// softDeleted": false
+//         }
+// "workspaceId": "5c876f12068c2311147b6bf9",
+//     "schemaName": "SH",
+//         "sessionAdhocModel": null,
+//             "softDeleted": false
+
 
 export class TableColumnNode {
     id: string;
@@ -34,8 +67,8 @@ export class OptionInfo {
 export class SearchCriteria {
     tableId: string;
     columnId: string;
-    order: string;
-    tableName: string; // table name
+    order: number;
+    table: string; // table name
     name: string; // column name
     label: string;
     fieldType = 'TEXT';
@@ -84,13 +117,13 @@ export class SidePanel {
 
 export class MaskDetail {
     maskType = 'start';
-    masklength = 4;
+    maskLength = 4;
 }
 
 export class ResultFields {
     tableId: string;
     columnId: string;
-    order: string;
+    order: number;
     schemaName: string;
     tableName: string;
     name: string;
@@ -108,14 +141,17 @@ export class ResultFields {
 
 export class SearchResult {
     mainPanel: ResultFields[] = [];
-    inlinePanel = new InlinePanel();
+    inLinePanel = new InlinePanel();
     sidePanel = new SidePanel();
 }
+
+
 export class LinearTableMapOrder {
-    order: number;
+    ordinal: number;
     tableName = '';
     tableId = '';
 }
+
 export class ColumnList {
     columnId = '';
     name = '';
@@ -133,11 +169,12 @@ export class JoinList {
     fkColumn = '';
     targetTableCardinality = '';
 }
+
+
 export class RelationshipList {
     joinName = '';
     joinList: JoinList[] = [];
 }
-
 
 export class SelectedTables {
     tableId = '';
@@ -153,6 +190,15 @@ export class GraphDetails {
     joinListMap = '';
     selectedPrimaryTable = '';
 }
+export class ParentScreenInfo {
+    screenId = '';
+    screenName = '';
+}
+
+export class ChildScreenInfo {
+    screenId = '';
+    screenName = '';
+}
 
 export class NestedLinks {
     searchName = '';
@@ -165,20 +211,35 @@ export class NestedLinks {
     searchResult = new SearchResult();
 }
 
-export class Adhoc {
-    selectedTables = new SelectedTables();
+export class SessionAdhoc {
+    selectedTables: SelectedTables[] = [];
     selectedTableListString = '';
     graphDetails = new GraphDetails();
     applicationInfo = new ApplicationInfo();
-    screenInfo = new ScreenInfo();
     outputLoc = '';
     primaryTable = '';
-    version = '';
-    screenType = '';
+    version = '4';
+    screenType = 'Search';
     linearTableMapOrder: LinearTableMapOrder[] = [];
     searchCriteria: SearchCriteria[] = [];
-    SearchResult = new SearchResult();
-    nestedLinks: NestedLinks[] = [];
+    searchResult = new SearchResult();
+}
+
+export class Adhoc {
+    mmrVersion = '';
+    position = null;
+    appId = '';
+    workspaceId = '';
+    schemaName = '';
+    screenName = '';
+    screenDesc = '';
+    id = '';
+    screenId = '';
+    applicationInfo = new ApplicationInfo();
+    parentScreenInfo = new ParentScreenInfo();
+    childScreenInfo: ChildScreenInfo[] = [];
+    sessionAdhoc = new SessionAdhoc();
+    sessionAdhocModel = new SessionAdhoc();
 }
 
 

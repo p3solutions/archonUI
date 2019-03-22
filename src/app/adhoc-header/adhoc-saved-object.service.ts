@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SearchCriteria, SearchResult, GraphDetails, NestedLinks } from '../adhoc-landing-page/adhoc';
+import { SearchCriteria, SearchResult, GraphDetails, NestedLinks, Adhoc } from '../adhoc-landing-page/adhoc';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ export class AdhocSavedObjectService {
   searchCriteria: SearchCriteria[] = [];
   searchResult = new SearchResult();
   graphDetails = new GraphDetails();
-  nestedLinks: NestedLinks[] = [];
+  screenInfoObject = new Adhoc();
   constructor() { }
   setSearchCriteria(searchCriteria: SearchCriteria[]) {
     this.searchCriteria = searchCriteria;
@@ -22,7 +22,7 @@ export class AdhocSavedObjectService {
     this.graphDetails = graphDetails;
   }
 
-  setNestedLinks(nestedLinks: NestedLinks[]) {
-    this.nestedLinks = nestedLinks;
+  setScreenInfoObject(screenInfoObject: Adhoc) {
+    this.screenInfoObject = screenInfoObject;
   }
 }

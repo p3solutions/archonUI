@@ -14,7 +14,7 @@ export class AdhocSearchScreenComponent implements OnInit {
   searchCriteria: SearchCriteria[] = [];
   TREE_DATA: TableColumnNode[];
   @Output() showEditEvent = new EventEmitter<boolean>();
-  @Output() updateSearchCriteriaLength  = new EventEmitter<number>();
+  @Output() updateSearchCriteriaLength = new EventEmitter<number>();
 
   constructor(private adhocScreenService: AdhocScreenService,
     public router: Router, private adhocService: AdhocService) { }
@@ -22,6 +22,7 @@ export class AdhocSearchScreenComponent implements OnInit {
   ngOnInit() {
     this.adhocScreenService.updatedSearchCriteria.subscribe(result => {
       this.searchCriteria = JSON.parse(JSON.stringify(result));
+      this.updateSearchCriteriaLength.emit(this.searchCriteria.length);
     });
     // this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
     //   if (result === null) {
@@ -51,14 +52,14 @@ export class AdhocSearchScreenComponent implements OnInit {
         tempSearchCriteria.tableId = tableId;
         tempSearchCriteria.columnId = event.item.data.node.id;
         tempSearchCriteria.name = event.item.data.node.name;
-        tempSearchCriteria.tableName = tableName;
+        tempSearchCriteria.table = tableName;
         tempSearchCriteria.label = event.item.data.node.name;
         this.searchCriteria.push(tempSearchCriteria);
       } else {
-        alert('Not allowed');
+        document.getElementById('label-popup-btn').click();
       }
     } else if (event.container === event.previousContainer) {
-       moveItemInArray(this.searchCriteria, event.previousIndex, event.currentIndex);
+      moveItemInArray(this.searchCriteria, event.previousIndex, event.currentIndex);
     }
     this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
     this.updateSearchCriteriaLength.emit(this.searchCriteria.length);
