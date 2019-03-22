@@ -17,6 +17,7 @@ import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import { DataTablesModule } from 'angular-datatables';
 
 describe('StatusScreenComponent', () => {
   let component: StatusScreenComponent;
@@ -69,7 +70,7 @@ describe('StatusScreenComponent', () => {
       imports: [
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule,
+        RouterTestingModule, DataTablesModule
       ],
       providers: [
         HttpClientModule,
