@@ -34,7 +34,7 @@ a:hover {
 p {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 
@@ -249,13 +249,13 @@ body {
 }
 
 .form-control {
-  height: 40px;
+  height: 30px;
   border-radius: 2px;
 }
 
 .form-control-feedback {
   margin-top: 7px;
-  height: 32px;
+  height: 30px;
   color: #269af8;
   line-height: 30px;
 }
@@ -1139,7 +1139,7 @@ ol.multi-step-indicators li.active {
 label {
   
   font-weight: 500;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 

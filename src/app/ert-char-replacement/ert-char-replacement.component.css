@@ -14,7 +14,7 @@
 body {
   
   font-weight: 500;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2;
   padding: 9px 16px;
 }
@@ -45,7 +45,8 @@ body {
 
 .example-form {
   /* min-width: 150px; */
-  max-width: 858px;
+  max-width: 805px;
+  font-size: 12px;
   padding: 2p;
   width: 100%;
 }
@@ -58,7 +59,7 @@ mat-form-field {
 .add-char-code {
   display: initial;
   padding: 15px 15px 12px 10px;
-  font-size: x-large;
+  font-size: 12px;
 }
 
 .add-char-code a {
@@ -89,10 +90,36 @@ th {
 th {
   color: #333;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 12px;
   font-family: "Roboto", sans-serif;
 }
 
 #char-table {
-  margin: 2px 16px 2px 67px;
+  margin: 2px 40px 2px 40px;
+}
+.mat-cell, .mat-footer-cell {
+  font-size: 12px;
+}
+.modal-header {
+  padding: 4px;
+  padding-left: 15px;
+  background-color: #2879ff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+ }
+ .modal-title {
+  float: left;
+  display:inline-block;
+  font-size: 18px;
+  padding: -1px 15px 10px 15px;
+  text-align: left;
+  color: #ffffff;
+}
+.next {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
 }
