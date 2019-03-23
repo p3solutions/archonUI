@@ -8,6 +8,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { ErtService } from '../ert-landing-page/ert.service';
 import { TableListService } from '../table-list/table-list.service';
 import { UserinfoService } from '../userinfo.service';
+import { SearchPipe } from '../search.pipe';
 
 describe('ErtSipConfigComponent', () => {
   let component: ErtSipConfigComponent;
@@ -15,7 +16,7 @@ describe('ErtSipConfigComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ErtSipConfigComponent],
+      declarations: [ErtSipConfigComponent, SearchPipe],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
       providers: [WorkspaceHeaderService, ErtService, TableListService, UserinfoService]
     })

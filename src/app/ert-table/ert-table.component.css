@@ -102,7 +102,7 @@ input#tablename {
 
 #select-tbl-list {
   width: 98%;
-  border-bottom: 2px solid #E6E9ED;
+  border-bottom: 1px solid #E6E9ED;
   margin-left: 13px;
 }
 
@@ -192,12 +192,13 @@ input#ucolumnname {
 
 #lbl-id {
   float: left;
+  font-size: 12px;
   margin: 3xp 3px 3px 3px;
-  padding: 10px 0px 5px;
+  padding: 5px 0px 5px;
 }
 
 #edit-column-div {
-  border: 2px solid #E6E9ED;
+  border: 1px solid #E6E9ED;
 }
 
 #add-edit-column {
@@ -205,7 +206,7 @@ input#ucolumnname {
   font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.2;
-  border: 2px solid #E6E9ED;
+  border: 1px solid #E6E9ED;
 }
 
 .add-edit-heading {
@@ -218,9 +219,10 @@ input#ucolumnname {
 }
 
 #add-edit {
-  border-bottom: 2px solid #E6E9ED;
+  border-bottom: 1px solid #E6E9ED;
   background-color: #2196F3;
   color: white;
+  font-size: 12px;
 }
 
 .add-edit-form-item {
@@ -237,40 +239,48 @@ input#ucolumnname {
 }
 
 .action {
-  margin: 23px 2px 12px 35px;
+  margin: 11px 2px 12px 45px;
+  text-align: start;
+  float: inherit;
+  font-size: 18px;
   cursor: pointer;
 }
 
 #nav-tab {
   margin: 0px 0px 11px 0px;
-  background-color: #2196F3;
+  background-color: #64b5f6;
 }
 
 #nav-tab a {
   float: left;
-  margin: 0px 0px 0px 28px;
+  margin: 0px 0px 0px 0px;
   padding: 7px 27px 7px 26px;
   color: white;
   font-size: 12px;
+  text-decoration: none;
 }
 
 #nav-tab .active-tab {
-  background-color: cadetblue;
+  background-color: #2879ff;
+  text-decoration: none;
 }
 
 #filter-modal .add-edit-heading {
   width: 33.33%;
+  font-size: 12px;
 }
 
 #filter-modal .add-edit-form-item {
   float: left;
+  font-size: 12px;
   margin: 11px 88px 23px 40px;
 }
 
 #filter-modal .action {
   margin: 8px 2px 0px 35px;
   cursor: pointer;
-  padding: 17px 0px 0px 0px;
+  padding: 10px 0px 0px 0px;
+  font-size: 18px;
 }
 
 #select-tbl-list thead {
@@ -285,7 +295,7 @@ input#ucolumnname {
 
 .save-extract-heading {
   width: 100%;
-  border-bottom: 2px solid #E6E9ED
+  border-bottom: 1px solid #E6E9ED
 }
 
 .save-extract-heading div {
@@ -302,14 +312,16 @@ input#ucolumnname {
 
 #config-table-header div {
   width: 20%;
+  font-size: 12px;
 }
 
 #config-table div {
   width: 20%;
+  font-size: 12px;
 }
 
 .config-table {
-  border: 2px solid #E6E9ED;
+  border: 1px solid #E6E9ED;
   height: 200px;
   overflow: auto;
 }
@@ -324,7 +336,7 @@ table tr td:nth-child(6) {
 }
 
 #add-edit-tbl {
-  border: 2px solid #E6E9ED;
+  border: 1px solid #E6E9ED;
   height: 200px;
   overflow: auto;
 }
@@ -343,12 +355,12 @@ table tr td:nth-child(6) {
 }
 
 #filter-option {
-  border: 2px solid #E6E9ED;
+  border: 1px solid #E6E9ED;
   height: 395px;
 }
 
 .filter-item-list {
-  border: 2px solid #E6E9ED;
+  border: 1px solid #E6E9ED;
   overflow: auto;
 }
 
@@ -356,14 +368,14 @@ table tr td:nth-child(6) {
   min-height: 22px;
   margin-bottom: 9px;
   background-color: #fff;
-  border: 1px solid #333;
+  border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: inset 0 1px 1px #fcf8e3;
   font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
-  padding: 10px 10px;
+  padding: 6px 6px;
   cursor: pointer;
 }
 
@@ -377,32 +389,33 @@ table tr td:nth-child(6) {
   font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.2;
-  border: 2px solid #E6E9ED;
+  border: 1px solid #E6E9ED;
 }
 
 #user-defined {
-  border-bottom: 2px solid #E6E9ED;
+  border-bottom: 1px solid #E6E9ED;
   background-color: #2196F3;
   color: white;
 }
 
 #user-defined-table .add-edit-form-item {
   float: left;
-  margin: 5px 0px 11px 0px;
+  margin: 6px 0px 11px 0px;
   width: 25%;
 }
 
 #user-defined-table {
-  margin: 8px 3px 1px 0px;
-  border: 2px solid #E6E9ED;
-  height: 166px;
+  margin: -2px 0px 1px 0px;
+  border: 1px solid #E6E9ED;
+  font-size: 12px;
+  height: 136px;
   overflow: auto
 }
 
 .user-defined-box {
-  padding: 8px 2px 3px 0px;
-  border-bottom: 2px solid #E6E9ED;
-  height: 50px;
+  padding: 0px 2px 3px 0px;
+  border-bottom: 1px solid #E6E9ED;
+  height: 39px;
 }
 
 :host {
@@ -426,13 +439,13 @@ table tr td:nth-child(6) {
 
 .filter-div {
   display: inline-block;
-  border: 2px solid #E6E9ED;
+  border: 1px solid #E6E9ED;
   margin: 2px 2px 2px 0px;
   padding: 5px 8px 5px 15px;
 }
 
 .filter-div div {
-  margin: 0px 5px 0px 24px;
+  margin: 2px 5px 0px 24px;
   float: left;
 }
 
@@ -445,14 +458,13 @@ table tr td:nth-child(6) {
 }
 
 #avaliable-table-list {
-  
-  font-weight: 300;
   font-size: 12px;
-  overflow: scroll
+  overflow: auto;
+  height: 220px;
 }
 
 #avaliable-table-list div {
-  padding: 9px 0px 0px 9px;
+  padding: 4px 0px 0px 12px;
   text-align: left;
   display: inline-block;
   margin: 0px 0px 4px 0px;
@@ -588,12 +600,21 @@ alert1 {
   margin-bottom: 10px;
   text-transform: capitalize;
 }
+.cancelBtnp {
+  color: #fff;
+  background-color: #64b5f6;
+  border-color: #64b5f6;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
+}
 .next {
   color: #fff;
   background-color: #2879ff;
   border-color: #2879ff;
   padding-right: 25px;
   padding-left: 25px;
+  margin-bottom: 10px;
   text-transform: capitalize;
 }
 .back {
@@ -602,5 +623,27 @@ alert1 {
   border-color: #2879ff;
   padding-right: 25px;
   padding-left: 25px;
+  margin-bottom: 10px;
   text-transform: capitalize;
+}
+.modal-header {
+  padding: 4px;
+  padding-left: 15px;
+  background-color: #2879ff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+ }
+ .modal-title {
+  float: left;
+  display:inline-block;
+  font-size: 18px;
+  padding: -1px 15px 10px 15px;
+  text-align: left;
+  color: #ffffff;
+}
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+  /* color: inherit; */
 }

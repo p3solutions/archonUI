@@ -1,10 +1,10 @@
-td{
-    font-size: 14px;
+td {
+    font-size: 12px;
     text-align: center;
     
 }
 th {
-    font-size: 15px;
+    font-size: 12px;
     text-align: center;
 }
 
@@ -22,6 +22,7 @@ span,i {
 }
 
 .manage-members {
+  font-size: 12px;
     padding: 30px;
     height: 400px;
     overflow-y: auto;
@@ -57,4 +58,43 @@ th.disp-bl {
     margin-right: 54px;
     margin-top: 15px;
 } 
-
+.back {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+.cancelBtn {
+  color: #fff;
+  background-color: #64b5f6;
+  border-color: #64b5f6;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
+}
+.next {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  text-transform: capitalize;
+}
+.modal-header {
+  padding: 4px;
+  padding-left: 15px;
+  background-color: #2879ff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+ }
+ .modal-title {
+  float: left;
+  display:inline-block;
+  font-size: 18px;
+  padding: -1px 15px 10px 15px;
+  text-align: left;
+  color: #ffffff;
+}

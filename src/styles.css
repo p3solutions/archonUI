@@ -34,7 +34,7 @@ a:hover {
 p {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 
@@ -249,13 +249,13 @@ body {
 }
 
 .form-control {
-  height: 40px;
+  height: 30px;
   border-radius: 2px;
 }
 
 .form-control-feedback {
   margin-top: 7px;
-  height: 32px;
+  height: 30px;
   color: #269af8;
   line-height: 30px;
 }
@@ -1139,7 +1139,7 @@ ol.multi-step-indicators li.active {
 label {
   
   font-weight: 500;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 
@@ -1230,4 +1230,57 @@ svg {
 
 .show-div {
   display: block;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  color: #80adf8;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  cursor: pointer;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+.material-icons:hover, .material-icons:focus {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  color: #2879ff;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  cursor: pointer;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }

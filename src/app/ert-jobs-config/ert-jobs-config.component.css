@@ -2,12 +2,11 @@ input#jobname {
   border: none;
   border-bottom: 1px solid #2196F3;
   margin-left: 13px;
+  font-size: 12px;
 }
 
 #job-config {
-  
-  font-weight: 500;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2px;
   margin: 0px 46px 0px 11px;
 }
@@ -16,14 +15,16 @@ input#jobname {
   padding: 17px 0px 15px;
   text-align: left;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
+  margin-left: 15px;
 }
 
 #job-section {
   margin-left: 15px;
-  margin-top: 45px;
-  width: 70%;
+  margin-top: 25px;
+  width: 100%;
   height: 80%;
+  font-size: 12px;
 }
 
 #job-section-heading {
@@ -33,18 +34,20 @@ input#jobname {
 #job-section-box {
   height: 265px;
   width: 100%;
-  border: 2px solid darkgrey;
+  border: 1px solid darkgrey;
   margin: 16px 0px 7px 1px;
   padding: 9px 5px 6px 3px;
 }
 
 .job-desc {
+  font-size: 12px;
   text-align: left;
   margin: 0px 0px 0px 37px
 }
 
 
 .select-job-type {
+  font-size: 12px;
   text-align: left;
   margin: 8px 6px 7px 17px;
 }
@@ -63,4 +66,13 @@ small {
   border: 1px solid black;
   background-color: darkgray;
 } */
+.cancelBtn {
+  color: #fff;
+  background-color: #64b5f6;
+  border-color: #64b5f6;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
 
