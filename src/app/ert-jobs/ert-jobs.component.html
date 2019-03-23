@@ -21,7 +21,7 @@
       <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert/ert-jobs-config']" title="Add Job"><i class="fa fa-plus-circle"></i></a>
 
     </div>
-    <div class="col-md-3" style="text-align: right" *ngIf="ertService.mmrVersion == ''">
+    <div class="col-md-3" style="text-align: right" *ngIf="ertService.mmrVersion == '' || ertService.mmrVersion == 'null'">
         <a style="font-size: 42px;color: grey" title="No MMR Version"><i class="fa fa-plus-circle"></i></a>
       </div>
   </div>
