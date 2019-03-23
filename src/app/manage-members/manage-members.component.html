@@ -13,8 +13,10 @@
         </h3>
       </div>
     </div>
-    <div class="col-md-6">
-            <button  data-toggle="modal" data-target="#add-member-modal" class="btn btn-primary pull-right btn-form add-btn">ADD MEMBERS</button>
+    <div class="col-md-6 col-md-push-2">
+        <a title="Add MEMBERS" style="font-size: 42px" data-toggle="modal"  data-target="#add-member-modal"><i class="fa fa-plus-circle" style="cursor: pointer;"></i></a>
+<!--    
+            <button  data-toggle="modal" data-target="#add-member-modal" class="btn btn-primary pull-right btn-form add-btn">ADD MEMBERS</button> -->
       <!-- <button data-toggle="modal" data-target="#myModal1" class="btn btn-primary pull-right add-btn-form">ADD MEMBERS</button> -->
       <!-- <a href="" data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id)">
         Change Role
@@ -22,7 +24,7 @@
     </div> 
   </div>
   <div class="row">
-    <div id="manager-members" class="workspace-panel-content manage-members col-md-7">
+    <div id="manager-members" class="workspace-panel-content manage-members">
       <!-- <div *ngIf="isAvailable"> -->
         <table id="manage-members-table" class="display" cellspacing="0" width="100%">
           <thead>
@@ -39,7 +41,7 @@
   </div>
   <div class="row">
     <div class="workspace-panel-content">
-      <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
+      <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form back ">Back</button>
     </div>
   </div>
 </div>
@@ -50,18 +52,15 @@
 <div class="modal fade" id="confirmDelMemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
     <div class="modal-content text-left">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Delete</h4>
+      <div class="modal-header">        
+        <div class="modal-title">Delete</div>
       </div>
       <div class="modal-body text-center" style="height: 100px;">
           Confirm delete member?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="confirmDelete()" disabled="{{delProgress ? 'true' : null }}">Confirm
+          <button type="button" class="btn btn-secondary cancel cancelBtn" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary next" (click)="confirmDelete()" disabled="{{delProgress ? 'true' : null }}">Confirm
             <span [ngClass]="{'archon-loading-icon' : delProgress}"></span>
           </button>
           <div *ngIf="deleteNotif?.show" class="alert alert-danger alert-dismissible m-t-10" role="alert">

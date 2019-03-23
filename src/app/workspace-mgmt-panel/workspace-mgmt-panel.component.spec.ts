@@ -24,7 +24,7 @@ describe('WorkspaceMgmtPanelComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkspaceMgmtPanelComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement.query(By.css('#workspace-mgmt-panel'));
+    // de = fixture.debugElement.query(By.css('#workspace-mgmt-panel'));
     // workspaceMgmtPanel = de.nativeElement;
     fixture.detectChanges();
   });

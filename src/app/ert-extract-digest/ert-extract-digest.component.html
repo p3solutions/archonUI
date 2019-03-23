@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col-md-6">
-        <div class="card" style="height:455px">
+        <div class="card" style="height:415px">
           <div class="card-body" id="extract-data">
             <div class="save-extract-heading">
               <div>
@@ -29,11 +29,11 @@
             </div>
             <div class="row">
               <div class="col-md-12 col-lg-12 font-left" id="extract-slider-heading">
-                <label>Xml/SIP file split size in MB(<small>Default 100</small>)</label>
+                  <small>Xml/SIP file split size in MB (Default 100)</small>
               </div>
             </div>
             <div class="row">
-              <div class=" col-md-12 col-lg-12" style="height: 60px">
+              <div class=" col-md-12 col-lg-12" style="height: 60px; font-size: 12px;">
                 <mv-slider [value]="extractDataConfigInfo.xmlFileSplitSize" [step]="10" (change)="setXMLFileSplitSize($event)"
                   [ticksLabels]="[0,200,400,600,800,1000]" [ticks]="[0,200,400,600,800,1000]"></mv-slider>
               </div>
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="card" style="height:455px">
+        <div class="card" style="height:415px">
           <div class="card-body" id="ingest-data">
             <div class="save-extract-heading">
               <div>
@@ -94,9 +94,9 @@
   <div class="row" id="saveBtnId">
     <button type="button" [disabled]="isDisabledSaveBtn" class="btn btn-primary next" (click)="gotoTableColConfig()"
       style="float: right;margin-right: 12px">Next</button>
-    <button class="btn btn-primary Previous" (click)="gotoTableExtraction()" style="float:right;margin-right:5px;">&laquo;
+    <button class="btn btn-primary Previous back" (click)="gotoTableExtraction()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
-    <button class="btn btn-primary Previous" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
+    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>
@@ -104,15 +104,15 @@
   <div class="modal-dialog">
     <div class="modal-content" style="width: 430px;">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Confirm Cancel</h4>
+        <div class="modal-title">Confirm Cancel</div>
       </div>
       <div class="modal-body">
-        <p style="text-align:left">Are you sure ?</p>
+        <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="cancel()" data-dismiss="modal">YES</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+          <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary next" (click)="cancel()" data-dismiss="modal">Yes</button>
+        
       </div>
     </div>
   </div>

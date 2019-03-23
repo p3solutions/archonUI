@@ -5,15 +5,14 @@ ul {
 }
 
 td {
-  font-size: 15px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;  
   width: 20%;
 }
 
 table {
   /* margin-top: 10px; */
   margin-left: 75px;
-  width: 72%;
+  width: 86%;
   text-align: left;
 }
 
@@ -26,4 +25,14 @@ table {
 }
 .workspace-panel-content{
   margin-top: 10px;
+  widows: 100%;
+}
+.back {
+  color: #fff;
+  background-color: #2879ff;
+  border-color: #2879ff;
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
 }
