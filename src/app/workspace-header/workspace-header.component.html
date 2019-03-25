@@ -1,9 +1,9 @@
 <div class="workspace-header">
   <div class="row">
     <div class="col-md-12">
-      <div class="pull-left margin-0 pl-20 ws-title color-black">Workspace</div>
+      <div class="pull-left margin-0 pl-22 ws-title color-black">Workspace</div>
     </div>
-    <div class="col-md-3 pl-37">
+    <div class="col-md-3 pl-37" style="margin-top: -10px">
      
       <!-- <div class="btn-group mt-20 pull-left" id="selectedWorkspace">
         <mat-form-field>
@@ -37,6 +37,7 @@
 
       <div class="col-md-1 mt-20 pull-left pull-more">
           <span class="fa-stack" matTooltip="Create New Workspace" (click)="openCreateWSModal()">
+              <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-circle-thin fa-stack-2x"></i>
             <i class="fa fa-plus fa-stack-1x"></i>
         </span>
@@ -44,12 +45,11 @@
     </div>
  
 
-    <div class="col-md-12">
+    <div class="col-md-12" style="padding-top: 10px">
       <app-workspace-mgmt-panel *ngIf="userWorkspaceArray?.length>0" [workspaceId]="(currentWorkspace ? currentWorkspace.id : 'id')" [role]="workspaceHeaderService.getSelectedWorkspaceWorkspaceRole()"></app-workspace-mgmt-panel>
     </div>
 
   </div>
-  
 </div>
 <ng-template #createNewWorkspace></ng-template>
 

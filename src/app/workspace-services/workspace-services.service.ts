@@ -33,6 +33,11 @@ export class WorkspaceServicesService {
             service.iconName = 'querybuilder.png';
             break;
           }
+          case 'ERT': {
+            service.serviceName = 'ERT';
+            service.iconName = 'ert.png';
+            break;
+          }
         }
       }
     }

@@ -15,22 +15,22 @@
 .nav-tabs>li>a:hover {
     background:#dbe6fa !important;
     border-bottom:2px solid #1385f8;
-    color: #000 !important;
+    color: #000000 !important;
 }
 .nav-tabs>li>a:focus {
     background:#dbe6fa !important;
     border-bottom:2px solid #1385f8;
-    color: #000 !important;
+    color: #000000 !important;
 }
 .nav-tabs>li>a.active {
-    background:#dbe6fa !important;
+    background: #e7e7e7 !important;
     border-bottom:2px solid #1385f8;
 }
 .nav>li>a {
     padding: 10px 12px !important;
     font-weight: normal !important;
     font-size: 19px !important;
-    color: black !important;
+    color: #333333 !important;
 }
 
 .mt-10{

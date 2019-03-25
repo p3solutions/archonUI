@@ -18,7 +18,7 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceName : string;
   // @Input() private serviceId : string;
   // @Input() private serviceType : string;
-  defDesc = 'Description: Here is some more information about this product that is only revealed once clicked on.';
+  defDesc = 'Here is some more information about this product that is only revealed once clicked on.';
   serviceActions: ServiceActionsObject[];
   private wsId_Mode: string;
   private tableList: any;
@@ -46,9 +46,10 @@ export class WorkspaceServicesComponent implements OnInit {
         //   //     serviceName: 'Adhoc Query Builder'
         //   //   }
         //   // );
+        console.log(serviceActions);
 
         const serviceActionsList = this.workspaceService.updateServiceActionsList(serviceActions);
-        this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 4);
+        this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({ 'interval': false });
 

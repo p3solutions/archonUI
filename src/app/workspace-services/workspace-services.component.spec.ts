@@ -9,6 +9,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { TableListService } from '../table-list/table-list.service';
 import { CommonUtilityService } from '../common-utility.service';
+import { MatCardModule } from '@angular/material';
 
 describe('WorkspaceServicesComponent', () => {
   let component: WorkspaceServicesComponent;
@@ -16,7 +17,7 @@ describe('WorkspaceServicesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, MatCardModule],
       declarations: [ WorkspaceServicesComponent ],
       providers: [WorkspaceServicesService, UserinfoService,
         WorkspaceHeaderService, MetalyzerHeaderService, TableListService, CommonUtilityService]
