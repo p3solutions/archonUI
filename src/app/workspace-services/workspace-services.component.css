@@ -67,3 +67,8 @@
 .centre{
   justify-content: center;
 }
+
+.flex-container:nth-child(3n+2):last-child {
+  margin-left: 2%;
+  justify-content: left;
+}
