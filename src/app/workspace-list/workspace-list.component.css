@@ -31,12 +31,12 @@ table.table td {
   display: flex;
   padding: 8px 0px 30px 0px;
   justify-content: space-evenly;
-  margin-left: -32px;
-  margin-right: -32px;
+  margin-left: -3px;
+  margin-right: -10px;
 }
 
 .example-card {
-  max-width: 420px;
+  max-width: 442px;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.43);
   transition:0.5s;
 }
@@ -64,6 +64,7 @@ table.table td {
   font-size: 14px;
   width: 37%; 
   padding-left: 5px;
+  color: #000101;
 }
 .body-center {
   display:inline-block;  
@@ -76,4 +77,10 @@ table.table td {
   padding: 10px 15px 0px 15px;
   font-size: 14px;
   width: 51%; 
+  color: #3d3d3e;
+}
+
+ .header { 
+  margin-top: 10px;
+  margin-left: -9px;
 }
