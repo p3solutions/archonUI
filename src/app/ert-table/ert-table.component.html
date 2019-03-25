@@ -6,7 +6,7 @@
         Table List
        </div>
        <div class='body-left'><a href="" style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
-        <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+        <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch" (keyup)="searchTablelist(searchTableName)"
           placeholder="Search Table"></div>
           
           <div class='body-right'>

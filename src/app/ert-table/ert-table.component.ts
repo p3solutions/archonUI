@@ -46,6 +46,7 @@ export class ErtTableComponent implements OnInit {
   from: string;
   disabledUserDefinedColName = false;
   errorMsg = '';
+  ErtTablesearchList: ErtTableListObj = new ErtTableListObj();
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService) {
   }
@@ -214,6 +215,13 @@ export class ErtTableComponent implements OnInit {
       }
       this.selectedTableId = this.selectedTableList[0].tableId;
       this.getERTcolumnlist(this.selectedTableId, '');
+    });
+  }
+
+  searchTablelist(searchTableName) {
+    this.ertService.getERTtablesearchList(this.workspaceId, searchTableName).subscribe((result) => {
+      this.ErtTablesearchList = result;
+       console.log(this.ErtTablesearchList, 'yrdy');
     });
   }
 
