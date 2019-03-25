@@ -68,7 +68,10 @@
   justify-content: center;
 }
 
-.flex-container:nth-child(3n+2):last-child {
-  margin-left: 2%;
+.test > mat-card{
+  margin-left: 32px;
+}
+
+.test {
   justify-content: left;
 }
