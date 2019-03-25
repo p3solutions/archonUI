@@ -8,6 +8,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule, MatCardModule, MatInputModule } from '@angular/material';
+import { SearchPipe } from '../search.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DatabaseListComponent', () => {
   let component: DatabaseListComponent;
@@ -15,8 +19,8 @@ describe('DatabaseListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DatabaseListComponent],
-      imports: [HttpClientModule, RouterTestingModule],
+      declarations: [DatabaseListComponent, SearchPipe],
+      imports: [HttpClientModule, RouterTestingModule, FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule],
       providers: [DatabaseListService, UserinfoService, DynamicLoaderService, CommonUtilityService, WorkspaceHeaderService]
     })
       .compileComponents();

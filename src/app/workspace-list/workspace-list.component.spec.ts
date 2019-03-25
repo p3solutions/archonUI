@@ -10,10 +10,11 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonUtilityService } from '../common-utility.service';
-import { ManagementLandingPageComponent } from '../management-landing-page/management-landing-page.component';
-import { ManagementPanelComponent } from '../management-panel/management-panel.component';
-import { WorkspaceHeaderInfoComponent } from '../workspace-header-info/workspace-header-info.component';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { SearchPipe } from '../search.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule, MatCardModule, MatInputModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 // Reason: Object Event Error Thrown
 describe('WorkspaceListComponent', () => {
@@ -22,8 +23,8 @@ describe('WorkspaceListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WorkspaceListComponent],
-      imports: [HttpClientModule, RouterTestingModule],
+      declarations: [WorkspaceListComponent, SearchPipe],
+      imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, FormsModule],
       providers: [WorkspaceListService, DynamicLoaderService, UserinfoService,
          WorkspaceHeaderService, CommonUtilityService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
