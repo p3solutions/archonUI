@@ -146,6 +146,14 @@ td.tdr {
   text-align: left;
 }
 
+.test > mat-card{
+  margin-left: 32px;
+}
+
+.test {
+  justify-content: left;
+}
+
  
 
 
