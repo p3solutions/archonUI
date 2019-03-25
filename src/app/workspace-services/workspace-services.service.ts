@@ -21,21 +21,29 @@ export class WorkspaceServicesService {
           case 'SERVICE_METALYZER': {
             service.serviceName = 'Metalyzer';
             service.iconName = 'metalyzer.png';
+            service.serviceActionType = 'ALL';
+            service.desc = 'Relationship analyzing tool for any relational database. It helps user to find the relationship among tables from the relational databases.';
             break;
           }
           case 'SERVICE_DB_EXTRACTOR': {
             service.serviceName = 'RDBMS Extractor';
             service.iconName = 'rdbmsextractor.png';
+            service.serviceActionType = 'ALL';
+            service.desc = 'Extraction tool with unique capability to understand and connect database system.';
             break;
           }
           case 'SERVICE_IA_ADHOC_QUERY_BUILDER': {
             service.serviceName = 'IA Adhoc Query Builder';
             service.iconName = 'querybuilder.png';
+            service.serviceActionType = 'ALL';
+            service.desc = 'To create the screens in a customized way based on user requirements, Custom screen builder will give more options to work on it.';
             break;
           }
           case 'ERT': {
             service.serviceName = 'ERT';
             service.iconName = 'ert.png';
+            service.serviceActionType = 'ALL';
+            service.desc = 'Customize and extract selective data along with manipulation for Table, Data Record and SIP type archival for relational databases.';
             break;
           }
         }

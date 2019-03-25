@@ -18,7 +18,6 @@ export class WorkspaceServicesComponent implements OnInit {
   // @Input() private serviceName : string;
   // @Input() private serviceId : string;
   // @Input() private serviceType : string;
-  defDesc = 'Here is some more information about this product that is only revealed once clicked on.';
   serviceActions: ServiceActionsObject[];
   private wsId_Mode: string;
   private tableList: any;
