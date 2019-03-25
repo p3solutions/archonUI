@@ -17,8 +17,6 @@ export class WorkspaceMgmtPanelComponent implements OnInit {
   ngOnInit() {
   }
 
-  test($event){
-  console.log($event);
-  }
+
 
 }
