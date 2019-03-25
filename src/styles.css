@@ -1241,3 +1241,7 @@ svg {
 .show-div {
   display: block;
 }
+
+.pl-22 {
+  padding-left: 22px !important;
+}
