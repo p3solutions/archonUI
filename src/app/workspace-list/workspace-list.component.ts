@@ -23,6 +23,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     isProgress: boolean;
     dynamicLoaderService: DynamicLoaderService;
     workspaceActions: any;
+    searchText;
+
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     WSListInfo: WorkspaceObject;
 

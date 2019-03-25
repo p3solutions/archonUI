@@ -13,22 +13,22 @@ export class ManagementPanelComponent implements OnInit {
     {
       panelName: 'Databases',
       panelImage: 'livearchival.png',
-      panelDesc: 'Configure, view and edit databases.',
+      panelDesc: 'Configure and View Database Details.',
     },
     {
       panelName: 'Workspaces',
       panelImage: 'metalyzer.png',
-      panelDesc: 'Configure, view and edit workspaces.',
+      panelDesc: 'Configure, View and Workspace Details.',
     },
     {
       panelName: 'Users',
-      panelImage: 'livearchival.png',
-      panelDesc: 'Configure, view and edit users.',
+      panelImage: 'user.png',
+      panelDesc: 'View and Modify User Role.',
     },
     {
       panelName: 'Permissions',
       panelImage: 'endtoendtoolkit.png',
-      panelDesc: 'Configure, view and edit permissions.',
+      panelDesc: 'Configure, View and Edit Permissions.',
     }
   ];
   defDesc = 'Here is some more information about this product that is only revealed once clicked on.';
@@ -39,7 +39,7 @@ export class ManagementPanelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.panelGroupList = this.commonUtilityService.groupOutArray(this.panelList, 3);
+    this.panelGroupList = this.commonUtilityService.groupOutArray(this.panelList, 4);
   }
 
   goTo(panel) {
