@@ -362,6 +362,10 @@ footer {
 .color-white {
   color:white !important;
 }
+
+.color-black{
+  color:black !important;
+}
 .trim-text {
   display: inline-block;
   white-space: nowrap;
@@ -1201,6 +1205,12 @@ label {
   padding-left:40px !important;
 }
 
+.pl-37 {
+  padding-left:37px !important;
+}
+
+
+
 .node {
   pointer-events: all;
   cursor: pointer;
@@ -1233,6 +1243,9 @@ svg {
   display: block;
 }
 
+.pl-22 {
+  padding-left: 22px !important;
+}
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
