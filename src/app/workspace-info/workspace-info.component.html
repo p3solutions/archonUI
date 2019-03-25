@@ -50,7 +50,9 @@
                 {{member?.user?.name}}{{isLast ? '' : ','}}
               </span>
               <a data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-members',workspaceInfoData?.id]">
-                <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
+                <i class="material-icons">
+                    edit
+                    </i>
               </a>
             </td>
           </tr>
@@ -66,7 +68,9 @@
             </td>
             <td class="ws-info-data">{{workspaceInfoData?.masterMetadataVersion}}
               <a data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">
-                <i class="fa fa-pencil archon-icon m-l-10 m-r-10"></i>
+                <i class="material-icons">
+                    edit
+                    </i>
               </a>
             </td>
           </tr>
@@ -76,7 +80,7 @@
   </div>
   <div class="row">
     <div class="workspace-panel-content">
-      <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
+      <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form back">Back</button>
     </div>
   </div>
 </div>

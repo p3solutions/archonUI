@@ -22,6 +22,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   userselectTableslist: any;
   userid: any;
   auditArray = [];
+  updateNotif: boolean;
 
   constructor(
     private router: Router,
@@ -117,7 +118,7 @@ export class MetalyzerHeaderComponent implements OnInit {
       this.auditArray = result;
     });
   }
-  
+
   exportOverallpdf() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
@@ -127,11 +128,19 @@ export class MetalyzerHeaderComponent implements OnInit {
       });
   }
   exportSelectedpdf() {
+    this.updateNotif = false;
+    if (this.userselectTableslist.tableId === undefined) {
+      this.updateNotif = true;
+    }
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportSelectedpdf(this.workspaceID, this.userselectTableslist.tableId)
       .subscribe(result => {
         this.downloadFilesecpdf(result, result.type);
       });
+  }
+
+  closeErrorMsg() {
+    this.updateNotif = false;
   }
 }
