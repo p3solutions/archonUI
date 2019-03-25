@@ -23,7 +23,7 @@
     <mat-card class="example-card" *ngFor="let db of dbListGroupObj | searchTable: searchText; let indCol = index">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>{{db?.profileName}}</mat-card-title>
+        <mat-card-title class="header">{{db?.profileName}}</mat-card-title>
         <div class="spacer"></div>
         <a (click)="viewDBmodal(db)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
       </mat-card-header>

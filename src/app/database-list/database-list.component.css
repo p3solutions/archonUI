@@ -83,6 +83,11 @@ table.table td {
   width: 67%; 
   color: #3d3d3e;
 }
+
+.header {
+  margin-top: 10px;
+    margin-left: -9px;
+}
  
 
 
