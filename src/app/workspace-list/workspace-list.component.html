@@ -1,100 +1,41 @@
-<div class="workspacelist-container">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="col-md-1 back-arrow">
-          <a (click)="gotoManagementPanel()" data-tooltip="Back">
-            <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-          </a>
-        </div>
-        <div class="col-md-8">
-          <h3 class="workspace-panel-heading">
-            Workspaces
-            <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
-          </h3>
-        </div>
-      </div>
-      <div class="col-md-4 col-md-offset-3">
-        <button type="button" class="btn btn-primary" id="workspace-add" (click)="openCreateWSModal()">Create New Workspace
-          <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="col-md-4 col-md-offset-7">
-        <button type="button" class="btn  ws-rejections" id="workspace-add" data-toggle="modal" data-target="#rejectedList">Rejected
-        </button>
-      </div>
-        <div id="rejectedList" role="dialog" class="modal fade">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">
-                  <strong>Rejected Workspace List</strong>
-                </h4>
-              </div>
-              <div class="modal-body">
-                <table datatable id="ws-rejected-table" class="table table-hover table-bordered" *ngIf="!isProgress">
-                  <thead>
-                    <tr>
-                      <th>Workspace Name</th>
-                      <th>Databases(s)</th>
-                      <th>Metadata Version</th>
-                      <th>Last Updated Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let ws of rejectedWorkspaceListInfo">
-                      <td class="ws-rej-data">{{ws.workspaceName}}</td>
-                      <td class="ws-rej-data">
-                        <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">
-                          {{db?.name}}{{isLast ? '' : ', '}}
-                        </span>
-                      </td>
-                      <td class="ws-rej-data">{{ws.masterMetadataVersion}}</td>
-                      <td class="ws-rej-data">{{ws.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+<div class="row">
+      <div class="col-md-6">
+          <div class="col-md-1 back-arrow" style="margin-left: 10px">
+            <a (click)="gotoManagementPanel()" data-tooltip="Back">
+              <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="col-md-8" style="margin-left: -25px">
+            <h3 class="workspace-panel-heading">
+              Workspaces
+            </h3>
           </div>
         </div>
-      
-      <div class="flex-container" *ngFor="let workspaceGroupObj of workspaceActions; let indRow = index">
-        <div class="flex-cards card" *ngFor="let ws of workspaceGroupObj; let indCol = index" id="{{'flex-cards-' + indRow + '-' + indCol}}">
-            <div class="flex-card-header cur-def" [title]="ws?.workspaceName">
-              <a data-toggle="modal" href="#db-profile-model"><img class="icon-img"  [attr.src]="'assets/metalyzer.png'" (click)="viewWSmodal(ws)"/></a>
-            </div> 
-            <div class="flex-cards-bar">
-              <div class="trim-text flex-card-title">
-                {{ws?.workspaceName}}
-              </div>
-              <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), true, $event)" title="Click for more info">
-                <i class="fa fa-caret-up archon-icondown"></i>
-              </span>
-            </div>
-            <div class="card-reveal">
-              <p class="">
-                <span class="pull-right card-toggle" (click)="toggleCard(('flex-cards-' + indRow + '-' + indCol), false, $event)" title="Click to hide info">
-                  <i class="fa fa-caret-down archon-iconup"></i>
-                </span>
-              </p>
-              <p > Databases(S): <span class="m-r-10" *ngFor="let db of ws.databases; let isLast=last">{{db?.name}}{{isLast ? '' : ', '}}</span></p>
-              <p > Metadata Version: {{ws?.masterMetadataVersion}}</p>
-              <p > Last Updated Time: {{ws?.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</p>
-              <p  *ngIf="ws.workspaceState == 'PENDING'">Request Pending
-                <span>
-                  <i class="fa fa-trash-o fa-lg icon-disabled" aria-hidden="true" id="ws-pending-trash"></i>
-                </span>
-              </p>
-            </div>
-          </div>
+        <div class="col-md-6 search">
+          <mat-form-field class="search-width">
+            <input matInput [(ngModel)]="searchText" placeholder="Search">
+          </mat-form-field>
+          <a style="font-size: 42px" data-tooltip="Add Workspace" data-placement="bottom" (click)="openCreateWSModal()"><i class="fa fa-plus-circle"></i></a>
+        </div>
       </div>
-  
-    </div>
 
-  </div>
+      <div class="flex-container" *ngFor="let workspaceGroupObj of workspaceActions; let indRow = index; let last = last" [ngClass]="{'test':last}">
+          <mat-card class="example-card" *ngFor="let ws of workspaceGroupObj | searchTable: searchText; let indCol = index">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title class="header">{{ws?.workspaceName}}</mat-card-title>
+              <div class="spacer"></div>
+              <a (click)="viewWSmodal(ws)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
+            </mat-card-header>
+            <mat-card-content class="content" *ngFor="let db of ws.databases;">
+              <div class='body-left'>Databases(s)</div><div class='body-center'>:</div><div class='body-right'>{{db?.name}}</div>
+              <div class='body-left'>Meta Version</div><div class='body-center'>:</div><div class='body-right'>{{ws?.masterMetadataVersion}}</div>
+              <div class='body-left'>Last Updated Time</div><div class='body-center'>:</div><div class='body-right'>{{ws?.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</div>
+              <div class='body-left'>Status</div><div class='body-center'>:</div><div class='body-right'>{{ws?.workspaceState}}</div>
+            </mat-card-content>
+          </mat-card> 
+        </div>
   
-  <button style="display: none" id="reload-ws-list" (click)="reloadWSlist()"></button>
   <ng-template #createNewWorkspace></ng-template>
   
   <div id="db-profile-model" class="modal fade" role="dialog">
@@ -102,40 +43,39 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Workspaces Profile</h4>
+            <div class='model-title'><i class="fa fa-tachometer"></i><div class='info-r'>Workspace Profile</div></div>
         </div>
         <div class="modal-body">
-          <table class="table" id="table-modal">
+          <table class="table table-hover">
             <thead></thead>
             <tbody>
               <tr>
-                <td>Workspace Name</td>
-                <td>{{WSListInfo?.workspaceName}}</td>
+                <td class="tdl">Workspace Name</td>
+                <td class="tdr">{{WSListInfo?.workspaceName}}</td>
               </tr>
               <tr>
-                <td class="text-left">MasterMetadata Version</td>
-                <td>{{WSListInfo?.masterMetadataVersion}}</td>
+                <td class="text-left tdl">MasterMetadata Version</td>
+                <td class="tdr">{{WSListInfo?.masterMetadataVersion}}</td>
               </tr>
               <tr>
-                <td>WorkspaceState</td>
-                <td>{{WSListInfo?.workspaceState}}</td>
+                <td class="tdl">WorkspaceState</td>
+                <td class="tdr">{{WSListInfo?.workspaceState}}</td>
               </tr>
               <tr>
-                <td>Workspace Members</td>
-                <td>  <span *ngFor="let ws of this.WSListInfo?.members; let isLast=last">
+                <td class="tdl">Workspace Members</td>
+                <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.members; let isLast=last">
                         {{ws?.user.name}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>
               <tr>
-                <td>Workspace Databases Name</td>
-                <td>  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
+                <td class="tdl">Workspace Databases Name</td>
+                <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
                         {{ws?.name}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>
               <tr>
-                <td>Workspace Databases Type</td>
-                <td>  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
+                <td class="tdl">Workspace Databases Type</td>
+                <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
                         {{ws?.type}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>

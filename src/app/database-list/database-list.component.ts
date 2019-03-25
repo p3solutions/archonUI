@@ -20,7 +20,9 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   configuredDB = new ConfiguredDB();
   info: Info;
   dynamicLoaderService: DynamicLoaderService;
-  dbListActions: any;
+  dbListActions = [];
+  searchText;
+
   @ViewChild('createNewDatabaseWizard', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   constructor(
     private configDBListService: DatabaseListService,
