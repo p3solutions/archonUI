@@ -1,5 +1,5 @@
 
-.modal-title {
+/* .modal-title {
   float: left;
 }
 table.table td { 
@@ -20,7 +20,7 @@ table.table td {
   margin-bottom: 0px;
   margin-top: 0px;
   text-transform: uppercase;
-}
+} */
 
 .search{
   text-align: right;
@@ -88,6 +88,64 @@ table.table td {
   margin-top: 10px;
     margin-left: -9px;
 }
+
+.modal-header {
+  padding: 4px;
+  padding-left: 15px;
+  background-color: #2879ff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+ }
+ .info-r {
+  font-size: 18px;
+  padding-left: 10px;
+  display:inline-block;  
+}
+
+.model-title {
+  float: left;
+  display:inline-block;
+  font-size: 20px;
+  padding: -1px 15px 10px 15px;
+  text-align: left;
+  color: #ffffff;
+}
+.modal-close {
+  background-color: #2879ff;
+  border: #2879ff;
+  color: #ffffff;
+}
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 0px;
+}
+.table>tbody>tr>td {
+  text-align: left;
+  padding: 10px 18px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+.table-hover>tbody>tr:hover {
+    background-color: #f0f3f7;
+}
+td.tdl {
+  color: #121212;
+  font-weight: bold;
+  font-size: 12px;
+}
+td.tdr {
+  color: #767676; 
+  font-size: 12px;
+}
+
+.modal-body {
+  border-bottom: 0px solid #E6E9ED;
+  padding: 0px 2px 0px 3px;
+  text-align: left;
+}
+
  
 
 

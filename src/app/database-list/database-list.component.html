@@ -41,40 +41,39 @@
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Database Profile</h4>
+            <div class='model-title'><i class="fa fa-tachometer"></i><div class='info-r'>Database Profile</div></div>
         </div>
         <div class="modal-body">
-          <table class="table" id="table-modal">
+          <table class="table table-hover">
             <thead></thead>
             <tbody>
               <tr>
-                <td>Database Profile Name</td>
+                <td class="tdl">Database Profile Name</td>
                 <td>{{configuredDB.profileName}}</td>
               </tr>
               <tr>
-                <td class="text-left">Database Type</td>
-                <td>{{configuredDB.type}}</td>
+                <td class="text-left tdl">Database Type</td>
+                <td class="tdr">{{configuredDB.type}}</td>
               </tr>
               <tr>
-                <td>Database Host/Ip</td>
-                <td>{{configuredDB.host}}</td>
+                <td class="tdl">Database Host/Ip</td>
+                <td class="tdr">{{configuredDB.host}}</td>
               </tr>
               <tr>
-                <td>Database Port</td>
-                <td>{{configuredDB.port}}</td>
+                <td class="tdl">Database Port</td>
+                <td class="tdr">{{configuredDB.port}}</td>
               </tr>
               <tr>
-                <td>Database Name</td>
-                <td>{{configuredDB.databaseName}}</td>
+                <td class="tdl">Database Name</td>
+                <td class="tdr">{{configuredDB.databaseName}}</td>
               </tr>
               <tr>
-                <td>Database Schema</td>
-                <td>{{configuredDB.schemaName}}</td>
+                <td class="tdl">Database Schema</td>
+                <td class="tdr">{{configuredDB.schemaName}}</td>
               </tr>
               <tr>
-                <td>Database User Name</td>
-                <td>{{configuredDB.userName}}</td>
+                <td class="tdl">Database User Name</td>
+                <td class="tdr">{{configuredDB.userName}}</td>
               </tr>
             </tbody>
           </table>
