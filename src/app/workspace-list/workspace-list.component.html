@@ -19,8 +19,9 @@
         </div>
       </div>
 
-      <div class="flex-container" *ngFor="let workspaceGroupObj of workspaceActions; let indRow = index; let last = last" [ngClass]="{'test':last}">
-          <mat-card class="example-card" *ngFor="let ws of workspaceGroupObj | searchTable: searchText; let indCol = index">
+      <div class="pl-20">
+      <div class="flex-container" *ngFor="let ws of workspaceActions | searchTable: searchText; let indRow = index; let last = last">
+          <mat-card class="example-card">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
               <mat-card-title class="header">{{ws?.workspaceName}}</mat-card-title>
@@ -34,6 +35,7 @@
               <div class='body-left'>Status</div><div class='body-center'>:</div><div class='body-right'>{{ws?.workspaceState}}</div>
             </mat-card-content>
           </mat-card> 
+        </div>
         </div>
   
   <ng-template #createNewWorkspace></ng-template>
