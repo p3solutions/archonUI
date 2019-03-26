@@ -17,7 +17,7 @@ export class ManagementPanelComponent implements OnInit {
     },
     {
       panelName: 'Workspaces',
-      panelImage: 'metalyzer.png',
+      panelImage: 'workspace.png',
       panelDesc: 'Configure, View and Workspace Details.',
     },
     {

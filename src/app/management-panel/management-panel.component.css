@@ -6,6 +6,8 @@
   
   .flex-card-header {
     display: contents;
+    font-size: 18px;
+    color: #000000;
   }
 
   .icon-img {
@@ -25,5 +27,15 @@
   .example-card:hover{
     box-shadow: rgba(0,0,0,0.43) 0px 0px 20px 0px;
     transform:translatey(-10px);
+  }
+
+  .descHeading {
+  font-size: 16px;
+  color:#000000;
+  }
+
+  .desc {
+  font-size: 14px;
+  color: #232323;
   }
   

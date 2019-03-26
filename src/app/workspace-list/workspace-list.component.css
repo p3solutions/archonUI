@@ -47,7 +47,7 @@
 }
 
 .example-header-image {
-  background-image: url('assets/metalyzer.png');
+  background-image: url('assets/workspace.png');
   background-size: contain
 }
 
@@ -86,7 +86,7 @@
 }
 
 .modal-header {
-  padding: 4px;
+  padding: 10px;
   padding-left: 15px;
   background-color: #2879ff;
   border-top-left-radius: 4px;
@@ -149,5 +149,12 @@ td.tdr {
 .test {
   justify-content: left;
 }
+
+.cancel {
+  background-color: #2879ff;
+  border: #2879ff;
+  color: #ffffff;
+}
+
 
 
