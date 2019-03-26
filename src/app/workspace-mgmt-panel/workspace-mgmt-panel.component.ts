@@ -9,11 +9,14 @@ import { Component, OnInit, Input } from '@angular/core';
 export class WorkspaceMgmtPanelComponent implements OnInit {
   @Input() workspaceId: string;
   @Input() role;
+  checkActive = 'Services';
 
   constructor() {
   }
 
   ngOnInit() {
   }
+
+
 
 }

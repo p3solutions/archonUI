@@ -3,6 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ManagementPanelComponent } from './management-panel.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonUtilityService } from '../common-utility.service';
+import { SearchPipe } from '../search.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule, MatCardModule, MatInputModule } from '@angular/material';
 
 describe('ManagementPanelComponent', () => {
   let component: ManagementPanelComponent;
@@ -10,8 +13,8 @@ describe('ManagementPanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManagementPanelComponent ],
-      imports: [RouterTestingModule],
+      declarations: [ ManagementPanelComponent , SearchPipe],
+      imports: [RouterTestingModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule],
       providers: [CommonUtilityService]
     })
     .compileComponents();

@@ -11,6 +11,7 @@ import { Router, RouterModule } from '@angular/router';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { jsonpCallbackContext } from '@angular/common/http/src/module';
 import { MetalyzerComponent } from '../metalyzer/metalyzer.component';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -31,12 +32,13 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   userSelectedWorkspace: string;
   @Output() noWorkspace = new EventEmitter<boolean>();
   newWorkspace: boolean;
+  selected;
 
   constructor(
     private userWorkspaceService: UserWorkspaceService,
     private userinfoService: UserinfoService,
     private workspaceService: WorkspaceServicesService,
-    private workspaceHeaderService: WorkspaceHeaderService,
+    public workspaceHeaderService: WorkspaceHeaderService,
     private router: Router,
     private userProfileService: UserProfileService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -71,7 +73,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     }
   }
   bindDropdownClick() {
-    $('#selectedWorkspace a.dropdown-data').off('click').on('click', function () {
+    $('#selectedWorkspace').off('click').on('click', function () {
       $('#selectedWorkspace a.dropdown-item').removeClass('selected');
       $(this).addClass('selected');
     });
@@ -81,6 +83,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     const bindCallback = this.bindDropdownClick;
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
+      this.selected = new FormControl(this.userWorkspaceArray[0].workspaceName);
       if (res && res.length > 0) {
         const fn = function () {
           const dropdownItem = (<HTMLAnchorElement>document.querySelector('#selectedWorkspace .dropdown-data'));
@@ -126,8 +129,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
-    this.serviceActionsList.push({ serviceName: 'ERT', iconName: 'metalyzer.png',
-     serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r' });
+    this.serviceActionsList.push({ serviceName: 'ERT', iconName: 'ert.png',
+     serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r' , desc: ''});
     const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
     this.workspaceService.updateServiceActions(_temp);
     //  setTimeout(() => {
