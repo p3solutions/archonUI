@@ -36,7 +36,7 @@ export class ErtService {
   joinListMap = new Map();
   mmrVersion = '';
   RelationSIP: any[];
-  startIndex: number;
+  startIndex: 1;
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }
