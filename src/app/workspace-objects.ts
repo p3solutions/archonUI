@@ -28,6 +28,7 @@ export class ServiceActionsObject {
     serviceName: string;
     serviceId: string;
     serviceActionType: string;
+    desc: string;
 }
 export class MemberObject {
     id: string;
