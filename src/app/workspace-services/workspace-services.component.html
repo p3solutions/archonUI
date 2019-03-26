@@ -2,16 +2,17 @@
     <div class="row">
       <div class="col-md-6">
         <div class="col-md-8">
-          <div class="workspace-panel-heading" style="padding-top: 10px; margin-bottom: 10px">
+          <div class="workspace-panel-heading" style="padding-top: 10px; margin-bottom: -4px">
             Services
           </div>
         </div>
       </div>
     </div>
     
-    <div class="row">
-                    <div *ngFor="let serviceGroup of serviceActions; let indRow = index; let last = last" class="flex-container" [ngClass]="{'test':last}">
-                        <mat-card class="example-card" *ngFor="let service of serviceGroup; let indCol = index;" (click)="gotoMetalyzer(service)">
+    <div>
+
+                      <div *ngFor="let service of serviceActions;" class="flex-container">
+                        <mat-card class="example-card"  (click)="gotoMetalyzer(service)">
                           <mat-card-header class="centre">
                             <mat-card-title>{{service?.serviceName}}</mat-card-title>
                           </mat-card-header>
@@ -23,9 +24,9 @@
                         </mat-card> 
                       </div>
                   
-                </div>
+      </div>
   
-              </div>
+</div>
   
   
   
