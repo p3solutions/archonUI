@@ -59,6 +59,7 @@ export class ErtService {
 
   setMMRVersion(mmrVersion: string) {
     this.mmrVersion = mmrVersion;
+    console.log(this.mmrVersion);
   }
 
   getExtractConfig(ertJobId: string): Observable<ExtractConfig> {

@@ -20,7 +20,9 @@ export class ErtLandingPageComponent implements OnInit {
     this.workspaceName = this.workspaceHeaderService.getSelectedWorkspaceName();
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.manageMetaService.getMMRVersionList(this.workspaceId).subscribe((result) => {
-      this.mmrVersion = result[0].versionNo;
+      if (result.length > 0) {
+        this.mmrVersion = result[0].versionNo;
+      }
       this.ertService.setMMRVersion(this.mmrVersion);
     });
   }
