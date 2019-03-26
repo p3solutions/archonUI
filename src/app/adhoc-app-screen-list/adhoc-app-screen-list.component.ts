@@ -169,7 +169,7 @@ export class AdhocAppScreenListComponent implements OnInit {
       if (index !== -1) {
         this.screenInfoList.splice(index, 1);
       }
-      this.getScreen(0);
+    this.getScreen(0);
     });
   }
 
