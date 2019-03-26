@@ -18,7 +18,7 @@
           
           <div id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
-              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 50, currentPage: page } | searchTable:searchTableName"
+              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)" class="well">
                 <div><input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
                     (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected" type="checkbox"></div>
@@ -27,7 +27,7 @@
                 </div>
               </div>
             </div>
-            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            <pagination-controls (pageChange)="getPage(page = $event)"></pagination-controls>
           </div>
         </div>
       </div>

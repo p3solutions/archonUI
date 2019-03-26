@@ -46,6 +46,7 @@ export class ErtTableComponent implements OnInit {
   from: string;
   disabledUserDefinedColName = false;
   errorMsg = '';
+  startIndex = 0;
   ErtTablesearchList: ErtTableListObj = new ErtTableListObj();
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService) {
@@ -187,9 +188,16 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
+  getPage(page: number) {
+    this.selectedTableList = [];
+    const perPage = 50;
+     this.startIndex = (page - 1) * perPage;
+      this.getERTtableList();
+ }
+
   getERTtableList() {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.ertService.getERTtableList(this.workspaceId, this.ertJobId).subscribe((result) => {
+    this.ertService.getERTtableList(this.workspaceId, this.ertJobId, this.startIndex).subscribe((result) => {
       this.ErtTableList = result;
       this.schemaResultsTableCount = result.sourceTableCount;
       for (const item of this.ErtTableList.ertTableList) {
