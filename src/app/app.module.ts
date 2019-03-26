@@ -125,6 +125,13 @@ import { AdhocScreenService } from './adhoc-search-criteria/adhoc-screen.service
 import { AdhocSearchPanelComponent } from './adhoc-search-panel/adhoc-search-panel.component';
 import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
 import { AdhocEditPanelColumnPopupComponent } from './adhoc-edit-panel-column-popup/adhoc-edit-panel-column-popup.component';
+import { ScheduleJobComponent } from './schedule-job/schedule-job.component';
+import {BsDatepickerModule, TimepickerModule, ModalModule} from 'ngx-bootstrap';
+import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
+import { AuditingComponent } from './auditing/auditing.component';
+import { ScheduleMonitoringService } from './schedulemonitoring/schedule-monitoring.service';
+import { AuditService } from './auditing/audit.service';
+
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -196,6 +203,9 @@ export function tokenGetter() {
                 ErtExtractDigestComponent,
                 ErtTableColumnConfigComponent,
                 ErtJobsComponent,
+                ScheduleJobComponent,
+                SchedulemonitoringComponent,
+                AuditingComponent,
                 ErtDatarecordConfigComponent,
                 ErtSipConfigComponent,
                 AdhocLandingPageComponent,
@@ -218,11 +228,11 @@ export function tokenGetter() {
                 }),
                 BrowserModule,
                 FormsModule,
+                BsDatepickerModule.forRoot(), TimepickerModule.forRoot(),
                 // HttpClientInMemoryWebApiModule.forRoot(
                 //     InMemoryDataService,
                 //     { dataEncapsulation: false }
                 // ),
-                FormsModule,
                 ReactiveFormsModule,
                 DataTablesModule,
                 MatTableModule,
@@ -277,7 +287,9 @@ export function tokenGetter() {
                 AddDirectJoinService,
                 DbExtractorService,
                 StoredProcViewService,
-                AdhocScreenService
+                AdhocScreenService,
+                ScheduleMonitoringService,
+                AuditService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent

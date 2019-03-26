@@ -199,6 +199,9 @@ export class ErtTableComponent implements OnInit {
         if (item.filterNconfig !== null) {
           tempObj.filterAndOrderConfig = item.filterNconfig;
         }
+        if (item.relatedTableDetails !== null) {
+          tempObj.relatedTableDetails = item.relatedTableDetails;
+        }
         if (this.ertJobId !== '' && this.ertJobId !== undefined) {
           tempObj.isSelected = true;
         }

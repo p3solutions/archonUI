@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 describe('MetalyzerComponent', () => {
   let component: MetalyzerComponent;
@@ -16,7 +17,7 @@ describe('MetalyzerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MetalyzerComponent, MetalyzerHeaderComponent ],
-      imports: [RouterTestingModule, HttpClientModule],
+      imports: [RouterTestingModule, HttpClientModule, NgxPaginationModule],
       providers: [TableListService, UserinfoService, MetalyzerHeaderService, WorkspaceHeaderService]
     })
     .compileComponents();

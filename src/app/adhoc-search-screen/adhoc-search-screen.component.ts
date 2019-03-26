@@ -52,7 +52,7 @@ export class AdhocSearchScreenComponent implements OnInit {
         tempSearchCriteria.tableId = tableId;
         tempSearchCriteria.columnId = event.item.data.node.id;
         tempSearchCriteria.name = event.item.data.node.name;
-        tempSearchCriteria.table = tableName;
+        tempSearchCriteria.tableName = tableName;
         tempSearchCriteria.label = event.item.data.node.name;
         this.searchCriteria.push(tempSearchCriteria);
       } else {

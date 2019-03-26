@@ -4,7 +4,7 @@ import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule,
-  MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule, MatTabsModule
+  MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule, MatTabsModule, MatCheckboxModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -15,9 +15,17 @@ import { AdhocEditSearchScreenPopupComponent } from '../adhoc-edit-search-screen
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserinfoService } from '../userinfo.service';
+import { AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
+import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 describe('AdhocSearchCriteriaComponent', () => {
   let component: AdhocSearchCriteriaComponent;
   let fixture: ComponentFixture<AdhocSearchCriteriaComponent>;
+  const adhocHeaderInfo = new AdhocHeaderInfo();
+  adhocHeaderInfo.appName = 'app 1';
+  adhocHeaderInfo.metadataVersion = '1';
+  adhocHeaderInfo.screenName = 'Screen 1';
+  adhocHeaderInfo.workspaceId = '12ddwdqwe';
+  adhocHeaderInfo.workspaceName = 'workspace';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,7 +34,7 @@ describe('AdhocSearchCriteriaComponent', () => {
         AdhocEditSearchScreenPopupComponent],
       imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule
         , MatOptionModule, RouterTestingModule, HttpClientTestingModule,
-        MatSelectModule, MatInputModule, DragDropModule, MatTabsModule, BrowserAnimationsModule],
+        MatSelectModule, MatInputModule, DragDropModule, MatCheckboxModule, MatTabsModule, BrowserAnimationsModule],
       providers: [UserinfoService]
 
     })
@@ -36,6 +44,8 @@ describe('AdhocSearchCriteriaComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AdhocSearchCriteriaComponent);
     component = fixture.componentInstance;
+    const WHS = TestBed.get(AdhocService);
+    spyOn(WHS, 'updatedAdhocHeaderInfo').and.returnValue(adhocHeaderInfo);
     fixture.detectChanges();
   });
 

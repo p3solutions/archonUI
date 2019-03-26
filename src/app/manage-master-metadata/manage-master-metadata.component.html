@@ -13,12 +13,12 @@
         </h3>
       </div>
     </div>
-    <div class="col-md-6 col-md-push-2">
-      <a data-toggle="modal" (click)="openMMRVersionModel()" style="font-size: 42px" data-toggle="modal" title="Create New Version" data-target="#mmr-config-model"><i class="fa fa-plus-circle"></i></a>
+    <div class="col-md-6 col-md-push-2" *ngIf="role.name == 'ROLE_OWNER'">
+      <a data-toggle="modal" (click)="openMMRVersionModel()" style="font-size: 42px" data-toggle="modal" title="Create New Version" data-target="#mmr-config-model"><i class="fa fa-plus-circle" style="cursor: pointer;"></i></a>
     </div>
   </div>
   <div class="row">
-    <div id="manager-master-metadata" class="workspace-panel-content">
+    <div id="manager-master-metadata" class="workspace-panel-content manage-members">
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -57,8 +57,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Version Configuration</h4>
+        <div class="modal-title">Version Configuration</div>
       </div>
       <div class="modal-body" id="mmr-version">
         <div class="form-inline"><b>Version:</b>
@@ -73,8 +72,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" [disabled]="disabledSaveBtn" data-dismiss="modal" (click)="saveMMRVersion()" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary cancelBtn" data-dismiss="modal">Close</button>
+        <button type="button" [disabled]="disabledSaveBtn" data-dismiss="modal" (click)="saveMMRVersion()" class="btn btn-primary next">Save</button>
+        
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserinfoService } from '../userinfo.service';
@@ -12,10 +12,15 @@ import { Router } from '@angular/router';
 })
 export class ErtJobsComponent implements OnInit {
   ertJobs: ERTJobs[];
+  scheduledeErtJobId = '';
+  isSuccessMsg: boolean;
+  successMsg: string;
+  @ViewChild('click') button: ElementRef;
   ertJobDetail = new ERTJobs();
   ertJobId = '';
+  scheduleNow: boolean;
 
-  constructor(private ertService: ErtService, private userInfoService: UserinfoService,
+  constructor(public ertService: ErtService, private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
 
   ngOnInit() {
@@ -60,15 +65,40 @@ export class ErtJobsComponent implements OnInit {
     });
   }
 
-  runJob(ertJobId, jobStatus) {
+  openScheduleModel(ertJobId, jobStatus) {
     if (jobStatus === 'READY' || jobStatus === 'COMPLETED' || jobStatus === 'FAILED') {
-      this.ertService.runJob(ertJobId).subscribe(result => {
-        if (result.httpStatus === 200) {
-          alert('Job has Started');
-          this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobStatus = 'In PROGRESS';
-          this.ertJobs.filter(a => a.jobId === ertJobId)[0].madeDisable = true;
-        }
-      });
+      this.scheduledeErtJobId = ertJobId;
+      document.getElementById('openScheduleModel').click();
+    }
+  }
+
+  runJob(scheduleObject) {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.scheduleNow = scheduleObject.scheduleNow;
+    const param: any = {
+      'ertJobId': this.scheduledeErtJobId,
+      'scheduledConfig': scheduleObject
+    };
+    this.ertService.runJob(param).subscribe(result => {
+      el.click();
+      if (result.httpStatus === 200) {
+        this.isSuccessMsg = true;
+        this.successMsg = 'Your Job has Started';
+      } else {
+        this.isSuccessMsg = false;
+        this.successMsg = 'Unable to Process Your Job';
+      }
+    });
+  }
+  close() {
+    if (this.isSuccessMsg) {
+      if (this.scheduleNow) {
+        this.router.navigate(['/status']);
+      } else {
+        this.router.navigate(['/schedule-monitoring']);
+      }
+    } else {
+      this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
     }
   }
 

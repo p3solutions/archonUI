@@ -1,18 +1,15 @@
 <div id="metalyzer" class="row">
   <div classs="metalyzer-header">
-    <div class="row">
-      <div class="title-headers">
-        <a [routerLink] = "['/workspace/workspace-dashboard']"> Home </a>
-        <i class="fa fa-chevron-right"></i>
-        <a [routerLink] = "['/workspace/metalyzer/ALL/configuration']"> Configuration </a>
-        <i class="fa fa-chevron-right"></i>
-        <p> Metalyzer </p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="ws-name">
-        <p>WorkspaceName: {{wsName}}</p>
-      </div>
+      <div class="col-md-5 text-left">
+          <div class="form-inline">
+              <div class="form-group">
+                <b>Workspace Name: </b>{{wsName | uppercase}}
+              </div>
+              <div class="form-group">
+                <b>Phase: </b>{{phase | uppercase}}
+              </div>
+            </div>
+          </div>
       <div class="dropdown col-md-1 .col-md-offset-3" *ngIf="phase == 'Analysis'">
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="export">Export As
           <span>
@@ -36,20 +33,55 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <a href="#">Selected Table</a>
+            <a (click)="exportSelectedpdf()">Selected Table</a>
           </li>
           <li>
-            <a href="#">Overall</a>
+            <a (click)="exportOverallpdf()">Overall</a>
           </li>
         </ul>
       </div>
-    </div>
-    <div classs="row">
-      <div class="phase-config">
-        <p>Phase: {{phase}}</p>
-        <br>
+      <div class="dropdown" style="margin-right: 51px;" *ngIf="phase == 'Analysis'">
+        <button class="btn btn-default dropdown-toggle" type="button" id="btn" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
+        </button>
       </div>
     </div>
   </div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-left">Metalyzer Audit</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Modified By</th>
+              <th>Modified At</th>
+              <th>Modification Mode</th>
+              <th>Modification Description</th>
+            </tr>
+          </thead>
+          <tbody >
+            <tr *ngFor="let i of auditArray | paginate: { itemsPerPage: 10, currentPage: p }" class="text-left">
+              <td>{{i.modifiedBy}}</td>
+              <td>{{i.createdAt * 1000 | date: 'medium' }}</td>
+              <td>{{i.modificationMode}}</td>
+              <td>{{i.modificationDescription[0]}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
-<hr>

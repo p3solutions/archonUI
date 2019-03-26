@@ -12,13 +12,19 @@ p {
   display: inline;
 }
 
+.modal-dialog {
+  margin: 100px auto auto;
+  width: 1050px;
+}
+
 .phase-config {
   padding-left: 2%;
 }
 
 .dropdown {
+  margin-top: 10px;
   float: right;
-  margin-right: 200px;
+  margin-right: 147px;
   cursor: pointer;
 }
 
@@ -44,3 +50,22 @@ p {
 span {
   float: right;
 }
+
+    
+.form-inline {
+  padding: 2px 2px 2px 0px;
+  
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.2;
+  margin: 10px 2px 2px 7px;
+}
+
+.form-group {
+  padding: 5px 0px 7px 29px;
+}
+#metalyzer {
+  border-bottom: 2px solid #E6E9ED;
+  margin-bottom: 10px;
+}
+

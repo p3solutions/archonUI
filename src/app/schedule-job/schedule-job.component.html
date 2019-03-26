@@ -1,0 +1,76 @@
+  <div class="modal-dialog" role="schedulejob">
+    <div class="modal-content">
+      <div class="modal-header">       
+        <div class="modal-title">Schedule Job</div>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Job Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <input type="text" class="form-control" required placeholder="Job Name" aria-describedby="basic-addon1" required [(ngModel)]="jobName"> 
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Job Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <select #jobtype aria-describedby="basic-addon2" class="form-control round" name="process"
+                  required (change)="jobType = jobtype.value">
+                  <option>Schedule Now</option>
+                  <option>Schedule Later</option>
+                </select>
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon3">Schedule Server</span>
+                <select aria-describedby="basic-addon3" class="form-control round" name="process" [(ngModel)]="Server"
+                  required>
+                  <option [ngValue]="null">Select Server</option>
+                  <option>Local</option>
+                </select>
+        </div>
+        <br>
+        <div class="date input-group" >
+            <span class="input-group-addon" id="basic-addon4">Start Date
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="text" [(ngModel)]="startdate" [disabled]="jobType !== 'Schedule Later'"
+                   placeholder="Start Date"
+                   class="form-control"
+                   bsDatepicker [bsConfig]="bsConfig" required>
+          </div>
+          <div class="time input-group check">
+              <span class="input-group-addon check2" id="basic-addon4">Start Time
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <timepicker [(ngModel)]="mytime" [disabled]="jobType !== 'Schedule Later'" [showSeconds]="true" required></timepicker></div>
+          <br>
+          <div class="input-group">
+              <span class="input-group-addon" id="basic-addon4">Interval&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </span>
+                  <select aria-describedby="basic-addon4" class="form-control round" [(ngModel)]="Interval" name="process" [disabled]="jobType !== 'Schedule Later'"
+                    required>
+                    <option [ngValue]="null">Select Frequency</option>
+                    <option>Once</option>
+                    <option>Days</option>
+                    <option>Weeks</option>
+                    <option>Months</option>
+                  </select>
+          </div>
+          <br>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon5">Frequency&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="number" class="form-control" required placeholder="Frequency" aria-describedby="basic-addon5" required [(ngModel)]="Frequency"> 
+          </div>
+          <br>
+          <div class="end-date input-group">
+              <span class="input-group-addon" id="basic-addon4">End Date
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <input type="text" [(ngModel)]="enddate" [disabled]="jobType !== 'Schedule Later'"
+                     placeholder="End Date"
+                     class="form-control"
+                     bsDatepicker [bsConfig]="bsConfig" placement="top" required>
+            </div>
+        </div>  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary next" data-dismiss="modal" (click)="emitObject()">Schedule</button>
+      </div>
+  </div>
+  </div>

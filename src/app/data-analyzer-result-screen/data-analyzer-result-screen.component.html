@@ -1,8 +1,13 @@
-<div class="col-md-12 marginClass">
-  <div class="col-md-5">&nbsp;</div>
+<div class="row col col-md-12 primary-table">
+  <h5 class="card-title sub-headerrs">Primary Table:
+    <strong>{{primaryTableName}}</strong>
+  </h5>
+</div>
+<div class="col-md-12">
+  <div class="col-md-5 ana-result">Data Analysis Status : Completed</div>
   <div class="col-md-7 pointer">
-    <button type="button" class="btn btn-primary" (click)="activateSecondaryFn()" id="Select">Secondary Tables</button>
-    <button type="button" class="btn btn-primary" (click)="activatePrimaryFn();selectRow()">Primary Columns</button>
+    <button type="button" class="btn btn-primary secbutton" (click)="activateSecondaryFn()" id="Select">Secondary Tables</button> 
+    <button type="button" class="btn btn-primary prebutton" (click)="activatePrimaryFn();selectRow()">Primary Columns</button>
   </div>
 </div>
 <div *ngIf="activatePrimary">
@@ -98,7 +103,8 @@
     <button type="button" class="btn btn-primary" href="#addJoins" data-toggle="modal">Add Selected Joins</button>
     <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-toggle="modal" href="#confirmClose">Close</button>
   </div>
-</div>
+  <div class="col-md-12 text-danger">Note: Kindly click close button to clear the Analysis result. </div>
+  </div>
 <!-- Close -->
 <div class="modal fade" id="confirmClose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
@@ -110,7 +116,7 @@
         <h4 class="modal-title">Close Results</h4>
       </div>
       <div class="modal-body text-center" style="height: 100px;">
-        Are you sure? The results will be cleared, You won't be able to add joins later.
+        Are you sure? The results will be cleared.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
@@ -131,7 +137,7 @@
         <h4 class="modal-title">Add Join Results</h4>
       </div>
       <div class="modal-body text-center" style="height: 100px;">
-      The results will be cleared, You won't be able to add joins later.
+        Kindly confirm whether you need to join the selected data?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>

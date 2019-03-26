@@ -34,13 +34,21 @@ export class AdhocTableSelectionComponent implements OnInit {
     private adhocSavedObjectService: AdhocSavedObjectService) { }
 
   ngOnInit() {
+    const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;
-    this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
-      this.tableList = res;
-      this.schemaResultsTableCount = this.tableList.length;
-    });
-    console.log(this.screenInfoObject);
+    if (this.screenInfoObject.sessionAdhocModel.selectedTableListString !== '') {
+      const tempTableList = JSON.parse(this.screenInfoObject.sessionAdhocModel.selectedTableListString);
+      for (const item of tempTableList) {
+        tempTables.push({ 'tableId': item.tableId, 'tableName': item.tableName, 'databaseName': item.schemaName });
+      }
+      this.tableList = tempTables;
+    } else {
+      this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
+        this.tableList = res;
+        this.schemaResultsTableCount = this.tableList.length;
+      });
+    }
     if (this.screenInfoObject.sessionAdhocModel.graphDetails.data !== '') {
       this.data = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.data.replace(/'/g, '"'));
       this.selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));

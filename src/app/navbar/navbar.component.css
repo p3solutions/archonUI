@@ -233,3 +233,7 @@ ul.msg_list li a .message {
 
   font-size: 30px;
 }
+
+.trim-text {
+  cursor: pointer;
+}

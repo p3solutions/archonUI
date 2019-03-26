@@ -2,7 +2,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
-  font-family: "Roboto", "Montserrat", sans-serif;
+  font-family: "Roboto", sans-serif;
   background: #FAFAFA;
   overflow-x: hidden;
 }
@@ -12,15 +12,18 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Roboto", "Montserrat", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 /* Links */
 
-a,
+a {
+  color: #80adf8;
+}
+
 a:focus,
 a:hover {
-  color: #1385f8;
+  color: #2879ff;
 }
 
 a:focus,
@@ -29,9 +32,9 @@ a:hover {
 }
 
 p {
-  font-family: "Avenir Next", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 
@@ -46,15 +49,14 @@ input {
   text-transform: uppercase;
 }
 
-.btn-default,
+/* .btn-default,
 .btn-default:hover,
 .btn-default:focus {
   color: #333;
   text-shadow: none;
-  /* Prevent inheritance from `body` */
   background-color: #fff;
   border: 1px solid #fff;
-}
+} */
 
 /* Base structure */
 
@@ -247,13 +249,13 @@ body {
 }
 
 .form-control {
-  height: 40px;
+  height: 30px;
   border-radius: 2px;
 }
 
 .form-control-feedback {
   margin-top: 7px;
-  height: 32px;
+  height: 30px;
   color: #269af8;
   line-height: 30px;
 }
@@ -406,8 +408,7 @@ table.dataTable.no-footer {
 .workspace-panel-heading {
   text-align: left;
   padding-left: 10px;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom:30px;
   font-size: 22px;
 }
 
@@ -639,7 +640,7 @@ i.link:hover {
   margin-bottom: 5px;
   margin-left: -18px;
   padding: 6px;
-  width: 55px;
+  width: auto;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -1140,9 +1141,9 @@ ol.multi-step-indicators li.active {
 }
 
 label {
-  font-family: "Montserrat", sans-serif;
+  
   font-weight: 500;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2px;
 }
 
@@ -1241,8 +1242,57 @@ svg {
   display: block;
 }
 
-#cancelBtn:hover {
-  background-color: #F94B4C;
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  color: #80adf8;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  cursor: pointer;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+.material-icons:hover, .material-icons:focus {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  color: #2879ff;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  cursor: pointer;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }
 
 .create-app-dialog .flex-container {

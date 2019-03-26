@@ -1,0 +1,116 @@
+<app-navbar></app-navbar>
+<div class="workspacelist-container">
+
+  <div class="col-md-4">
+    <div class="col-md-1 back-arrow">
+      <a (click)="gotoDashboard()" data-tooltip="Back">
+        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <div class="col-md-8">
+      <h3 class="workspace-panel-heading">
+        Schedule Job Monitor <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span>
+      </h3>
+    </div>
+  </div>
+
+  <div class="col-md-12 m-l-45" style="padding-top: 10px;" *ngIf="loadStatus">
+
+    <div class="btn-group col-md-2 p-0">
+      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        {{selectedTool ? selectedTool : 'Tool: All' }}
+      </button>
+      <div class="dropdown-menu">
+        <div class="scrollable">
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectTool('');getStatus()">Tool
+                : All</a>
+            <div class="dropdown-divider"></div>
+          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let job of tools" (click)="selectTool(job);getStatus()">
+            {{job}}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group col-md-2 p-0">
+      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false" title="{{selectedJobStatus? selectedJobStatus : 'JOB STATUS: ALL'}}">
+        {{selectedJobStatus? selectedJobStatus : 'JOB STATUS: All'}}
+      </button>
+      <div class="dropdown-menu">
+        <div class="scrollable">
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectJobStatus('');getStatus()">JOB STATUS
+                : All</a>
+            <div class="dropdown-divider"></div>
+          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" *ngFor="let i of Status"  title="JOB ORIGIN: ALL" (click)="selectJobStatus(i);getStatus()">
+          {{i}} </a>
+      </div>
+    </div>
+</div>
+
+<div class="col-md-7">         
+    <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+        <button type="button" class="close" data-dismiss="alert" (click)="updateSuccess = false" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>{{message}}</strong>
+      </div>
+      <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+          <button type="button" class="close" data-dismiss="alert" (click)="updateNotif = false" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>{{message}}</strong>
+        </div> 
+      </div>
+
+
+</div>
+
+<div class="row" style="padding-top: 95px;">
+<div id="schedule-job" class="workspace-panel-content" *ngIf="isAvailable">
+<div style="padding: 30px 13px">
+<table datatable [dtOptions]="dtOptions"  class="table table-hover table-bordered nowrap padding" style="width: 100%"></table>
+</div>
+</div>
+</div>
+
+<!-- Modal -->
+<div id="detailsModel" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title text-left">Job Details</h4>
+          </div>
+        <div class="modal-body">
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Values</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  <tr *ngFor="let i of common" class="text-left">
+                    <td>{{i.name}}</td>
+                    <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
+                    <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium': 'GMT' }}</td>
+                  </tr>
+                  <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
+                  <tr *ngFor="let i of input" class="text-left">
+                    <td>{{i.name}}</td>
+                    <td>{{i.value}}</td>
+                  </tr>
+                  <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
+                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
+                  <tr><td colspan="2"><h4><b>Output</b></h4></td></tr>
+                  <tr><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
+                </tbody>
+              </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  <button #click data-toggle="modal" href="#detailsModel" [hidden]="true"></button>

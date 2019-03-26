@@ -95,7 +95,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Information</h4>
+        <h4 class="modal-title">Alert</h4>
       </div>
       <div class="modal-body">
         <p>Column Label already present</p>
@@ -107,20 +107,20 @@
   </div>
 </div>
 
-<button style="display:none" type="button" id="label-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
-  data-backdrop="static" data-toggle="modal" data-target="#label-popup">Open Modal</button>
+<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#saveScreen">Open Modal</button>
 <div id="saveScreen" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Information</h4>
+        <h4 class="modal-title">Alert</h4>
       </div>
       <div class="modal-body">
-        <p>{{screenInfoObject.screenName}} is Saved Successfully</p>
+        <p>{{successMsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+        <button type="button" (click)="gotoAppScreen()" class="btn btn-primary" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

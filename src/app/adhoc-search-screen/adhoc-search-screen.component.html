@@ -7,7 +7,7 @@
           <a class="cursor-poniter" (click)="deleteSearchCriteria(item?.columnId,item?.tableId)"><i class="fa fa-trash"
               aria-hidden="true"></i></a></span>
       </mat-card-title>
-      <mat-card-subtitle>({{item.table}})</mat-card-subtitle>
+      <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
     </mat-card-header>
     <mat-form-field *ngIf="item.fieldType=='TEXT'" class="text-box" appearance="outline">
       <mat-label>Text</mat-label>

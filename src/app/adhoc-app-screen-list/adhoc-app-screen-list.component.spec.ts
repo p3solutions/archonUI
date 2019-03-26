@@ -4,7 +4,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
-   MatOptionModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+   MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
@@ -21,7 +21,7 @@ describe('AdhocAppScreenListComponent', () => {
       providers: [WorkspaceHeaderService, AdhocService, UserinfoService],
       imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule,
         ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
-        RouterTestingModule, MatDialogModule],
+        RouterTestingModule, MatDialogModule, MatMenuModule ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

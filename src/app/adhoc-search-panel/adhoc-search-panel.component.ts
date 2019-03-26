@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { Tab, SearchResult, ResultFields, TableColumnNode } from '../adhoc-landing-page/adhoc';
+import { Tab, SearchResult, ResultFields, TableColumnNode, InlinePanel, SidePanel } from '../adhoc-landing-page/adhoc';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
 import { Router } from '@angular/router';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
@@ -35,6 +35,12 @@ export class AdhocSearchPanelComponent implements OnInit {
   ngOnInit() {
     this.adhocScreenService.searchResult.subscribe(result => {
       this.searchResult = JSON.parse(JSON.stringify(result));
+      if (this.searchResult.inLinePanel === null) {
+        this.searchResult.inLinePanel = new InlinePanel();
+      }
+      if (this.searchResult.sidePanel === null) {
+        this.searchResult.sidePanel = new SidePanel();
+      }
     });
     this.adhocScreenService.updatedPanelChanged.subscribe(result => {
       this.openPanelIndex = result;
@@ -178,6 +184,7 @@ export class AdhocSearchPanelComponent implements OnInit {
     if (this.checkDuplicateResultFields(tempResultFields.label)) {
       if (this.openPanelIndex === 0) {
         this.searchResult.mainPanel.push(tempResultFields);
+
       }
       if (this.openPanelIndex === 1) {
         const temp = this.searchResult.inLinePanel.tabs[this.selectedInlineTab];

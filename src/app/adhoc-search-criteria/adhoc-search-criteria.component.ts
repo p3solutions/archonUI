@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {
   TableColumnNode, SearchCriteria, ResultFields, SearchResult, Tab, NestedLinks, SelectedTables,
   AdhocHeaderInfo,
-  Adhoc
+  Adhoc,
+  SidePanel,
+  InlinePanel
 } from '../adhoc-landing-page/adhoc';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -36,6 +38,8 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   treeMap = new Map();
   tableColumnList: SelectedTables[] = [];
   screenInfoObject = new Adhoc();
+  tempHeader = new AdhocHeaderInfo();
+  successMsg = '';
   treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
   transformer = (node: TableColumnNode, level: number) => {
     return {
@@ -59,6 +63,12 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       this.adhocScreenService.updateSearchCriteria(this.screenInfoObject.sessionAdhocModel.searchCriteria);
     }
     if (this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel.length > 0) {
+      if (this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel === null) {
+        this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = new SidePanel();
+      }
+      if (this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel === null) {
+        this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = new InlinePanel();
+      }
       this.adhocScreenService.updateSearchResult(this.screenInfoObject.sessionAdhocModel.searchResult);
     }
     this.initTab();
@@ -79,13 +89,12 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   }
 
   getTableColumnList() {
-    let tempHeader = new AdhocHeaderInfo();
     this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
-      tempHeader = response;
+      this.tempHeader = response;
     });
     const param: any = {
-      'mmrVersion': tempHeader.metadataVersion,
-      'workspaceId': tempHeader.workspaceId
+      'mmrVersion': this.tempHeader.metadataVersion,
+      'workspaceId': this.tempHeader.workspaceId
     };
     this.adhocService.getTableColumnList(param).subscribe(response => {
       this.tableColumnList = response;
@@ -195,33 +204,45 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       tempHeader = response;
     });
     this.screenInfoObject.screenId = this.screenInfoObject.id;
-    this.screenInfoObject.sessionAdhocModel.applicationInfo = this.screenInfoObject.applicationInfo;
-    delete this.screenInfoObject.sessionAdhocModel.applicationInfo['createdAt'];
-    delete this.screenInfoObject.sessionAdhocModel.applicationInfo['updatedAt'];
-    delete this.screenInfoObject['childScreenInfo'];
+    this.screenInfoObject.sessionAdhocModel.screenId = this.screenInfoObject.id;
+    this.screenInfoObject.metadataVersion = this.tempHeader.metadataVersion;
+    this.screenInfoObject.sessionAdhocModel.metadataVersion = this.tempHeader.metadataVersion;
     delete this.screenInfoObject['id'];
     if (this.screenInfoObject.parentScreenInfo.screenId === '') {
-      delete this.screenInfoObject['parentScreenInfo'];
+      this.screenInfoObject['parentScreenInfo'] = null;
     }
-    delete this.screenInfoObject.sessionAdhocModel.applicationInfo['updatedAt'];
-    delete this.screenInfoObject.sessionAdhocModel['outputLoc'];
+    if (this.screenInfoObject.childScreenInfo.length === 0) {
+      this.screenInfoObject['childScreenInfo'] = null;
+    }
     this.screenInfoObject.sessionAdhocModel.searchCriteria = searchCriteria;
     this.screenInfoObject.sessionAdhocModel.searchResult = searchResult;
     this.screenInfoObject.sessionAdhocModel.selectedTables = this.tableColumnList;
-    this.screenInfoObject.mmrVersion = tempHeader.metadataVersion;
     this.addOrder();
     this.addSchemaName(this.tableColumnList[0].schemaName);
     this.screenInfoObject.schemaName = this.tableColumnList[0].schemaName;
     this.screenInfoObject.sessionAdhocModel.primaryTable = this.tableColumnList[0].schemaName + '/' + this.tableColumnList[0].tableName;
     this.screenInfoObject.sessionAdhoc = this.screenInfoObject.sessionAdhocModel;
+    if (this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel.tabs[0].resultFields.length === 0) {
+      this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
+    }
+    if (this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel.tabs[0].resultFields.length === 0) {
+      this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = null;
+    }
     delete this.screenInfoObject['sessionAdhocModel'];
     delete this.screenInfoObject['position'];
     delete this.screenInfoObject['createdAt'];
     delete this.screenInfoObject['updatedAt'];
     this.adhocService.updateScreen(this.screenInfoObject, this.screenInfoObject.screenId).subscribe(result => {
-      console.log(result);
+      document.getElementById('success-popup-btn').click();
+      if (result.httpStatus === 200) {
+        this.successMsg = 'Screen Updated Successfully';
+      } else {
+        this.successMsg = 'Screen Not Updated Successfully';
+      }
     });
+  }
 
+  gotoAppScreen() {
     this.adhocScreenService.updateSearchCriteria([]);
     this.adhocScreenService.updateSearchResult(new SearchResult());
     this.adhocScreenService.updateSearchCriterion(new SearchCriteria());
@@ -234,23 +255,23 @@ export class AdhocSearchCriteriaComponent implements OnInit {
 
   addOrder() {
     this.screenInfoObject.sessionAdhocModel.searchCriteria.forEach((value, index) => {
-      value.order = index + 1;
+      value.ordinal = index + 1;
     });
     this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel.forEach((value, index) => {
-      value.order = index + 1;
+      value.ordinal = index + 1;
     });
     const inlineTabs: Tab[] = this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel.tabs;
     const sideTabs: Tab[] = this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel.tabs;
     for (let i = 0; i < inlineTabs.length; i++) {
       inlineTabs[i].tabOrder = i + 1;
       inlineTabs[i].resultFields.forEach((value, index) => {
-        value.order = index + 1;
+        value.ordinal = index + 1;
       });
     }
     for (let i = 0; i < sideTabs.length; i++) {
       sideTabs[i].tabOrder = i + 1;
       sideTabs[i].resultFields.forEach((value, index) => {
-        value.order = index + 1;
+        value.ordinal = index + 1;
       });
     }
   }

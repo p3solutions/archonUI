@@ -39,7 +39,9 @@
 <div class="container-fluid">
   <div id="search-screen">
     <mat-form-field>
-      <input matInput name="screen-filter" (keyup)="applyFilter($event.target.value)" placeholder="Search">
+      <!-- <input matInput name="screen-filter" (keyup)="applyFilter($event.target.value)" placeholder="Search"> -->
+      <input matInput name="screen-filter" #input placeholder="Search">
+
     </mat-form-field>
     <a id="open-app" (click)="addScreen()" matTooltip="Create Screen"><i class="fa fa-plus-circle"></i></a>
   </div>
@@ -86,14 +88,15 @@
       </ng-container>
       <ng-container matColumnDef="download">
         <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Download </th>
-        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element"><i
-            class="cursor-poniter fa fa-download"></i>
+        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element" (click)="downloadScreen(element.id)">
+          <i class="cursor-poniter fa fa-download"></i>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [length]="totalScreen" [pageSize]="10" showFirstLastButtons>
+    </mat-paginator>
   </div>
 </div>
 <mat-menu #menu="matMenu">
@@ -118,6 +121,26 @@
         <button type="button" (click)="gotoMetadata('cancel')" class="btn btn-primary" data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" (click)="gotoMetadata('metadata')" class="btn btn-default"
           data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Alert</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{successMessage}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-default" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

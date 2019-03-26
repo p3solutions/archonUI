@@ -23,6 +23,7 @@ export class ManageMasterMetadataComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
+  role: any;
   constructor(
     private manage_Master_MetadataService: ManageMasterMetadataService,
     private router: Router,
@@ -39,6 +40,7 @@ export class ManageMasterMetadataComponent implements OnInit {
       destroy: true
     };
     this.getMMRVersionList();
+    this.role = this.workspaceHeaderService.getSelectedWorkspaceWorkspaceRole();
   }
   getManage_Master_MetaData() {
     this.manage_Master_MetadataService.getManageMasterMetaData()

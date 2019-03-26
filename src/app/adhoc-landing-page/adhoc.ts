@@ -67,8 +67,8 @@ export class OptionInfo {
 export class SearchCriteria {
     tableId: string;
     columnId: string;
-    order: number;
-    table: string; // table name
+    ordinal: number;
+    tableName: string; // table name
     name: string; // column name
     label: string;
     fieldType = 'TEXT';
@@ -123,7 +123,7 @@ export class MaskDetail {
 export class ResultFields {
     tableId: string;
     columnId: string;
-    order: number;
+    ordinal: number;
     schemaName: string;
     tableName: string;
     name: string;
@@ -215,18 +215,18 @@ export class SessionAdhoc {
     selectedTables: SelectedTables[] = [];
     selectedTableListString = '';
     graphDetails = new GraphDetails();
-    applicationInfo = new ApplicationInfo();
-    outputLoc = '';
     primaryTable = '';
     version = '4';
     screenType = 'Search';
+    screenId = '';
     linearTableMapOrder: LinearTableMapOrder[] = [];
     searchCriteria: SearchCriteria[] = [];
     searchResult = new SearchResult();
+    metadataVersion = '';
 }
 
 export class Adhoc {
-    mmrVersion = '';
+    metadataVersion = '';
     position = null;
     appId = '';
     workspaceId = '';
@@ -235,7 +235,6 @@ export class Adhoc {
     screenDesc = '';
     id = '';
     screenId = '';
-    applicationInfo = new ApplicationInfo();
     parentScreenInfo = new ParentScreenInfo();
     childScreenInfo: ChildScreenInfo[] = [];
     sessionAdhoc = new SessionAdhoc();
