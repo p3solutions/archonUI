@@ -125,6 +125,11 @@ button.example-add-tab-button.mat-raised-button {
   margin-right: 7px
 }
 
+button.example-add-tab-button.mat-raised-button:hover {
+  background-color: #0a85f8;
+
+}
+
 .rename .mat-form-field-wrapper {
   padding-bottom: 16px;
 }
@@ -136,6 +141,10 @@ button.example-add-tab-button.mat-raised-button {
 
 .renameBtn-div button {
   background-color: #64b5f6;
+}
+
+.renameBtn-div button:hover {
+  background-color: #0a85f8;
 }
 
 .renameBtn-div button span.mat-button-wrapper {

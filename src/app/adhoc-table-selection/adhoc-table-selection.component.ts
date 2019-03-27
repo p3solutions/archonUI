@@ -6,7 +6,8 @@ import * as d3 from 'd3';
 import { toJson } from '../ert-datarecord-config/tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datarecord-config/class';
 import { AdhocSavedObjectService } from '../adhoc-header/adhoc-saved-object.service';
-import { GraphDetails, Adhoc, LinearTableMapOrder } from '../adhoc-landing-page/adhoc';
+import { GraphDetails, Adhoc, LinearTableMapOrder, SearchResult, SearchCriteria, Tab, ResultFields } from '../adhoc-landing-page/adhoc';
+import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
-    private adhocSavedObjectService: AdhocSavedObjectService) { }
+    private adhocSavedObjectService: AdhocSavedObjectService, private adhocScreenService: AdhocScreenService) { }
 
   ngOnInit() {
     const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
@@ -109,6 +110,13 @@ export class AdhocTableSelectionComponent implements OnInit {
   }
 
   deleteSearchResult() {
+    this.adhocScreenService.updateSearchCriteria([]);
+    this.adhocScreenService.updateSearchResult(new SearchResult());
+    this.adhocScreenService.updateSearchCriterion(new SearchCriteria());
+    this.adhocScreenService.updateInlinePanelTabChange(new Tab());
+    this.adhocScreenService.updateSidePanelTabChange(new Tab());
+    this.adhocScreenService.updateResultField(new ResultFields());
+    this.adhocScreenService.updatePanelChanged(0);
     this.screenInfoObject.sessionAdhocModel.searchCriteria = [];
     this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel = [];
     this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = null;

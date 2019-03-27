@@ -63,7 +63,6 @@ export class AdhocAppScreenListComponent implements OnInit {
   totalApps = 0;
   startIndexOfScreen = 0;
   totalScreen = 0;
-  // dataSource = new MatTableDataSource<Adhoc>(this.screenInfoList);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
@@ -128,14 +127,21 @@ export class AdhocAppScreenListComponent implements OnInit {
     });
   }
 
-  downloadScreen(screenId) {
+  downloadScreen(screenId, screenName) {
     this.adhocService.downloadScreen(screenId).subscribe(data => {
-      this.downloadFile(data, screenId);
+      if (data === undefined) {
+        document.getElementById('success-popup-btn').click();
+        this.successMessage = 'No session saved for this screen';
+      } else {
+        document.getElementById('success-popup-btn').click();
+        this.successMessage = 'Download Started';
+        this.downloadFile(data, screenName);
+      }
     });
   }
 
   downloadFile(content, screenName) {
-    const fileName = 'Screen' + screenName + '.zip';
+    const fileName = screenName + '.zip';
     const type = 'zip';
     const e = document.createEvent('MouseEvents');
     const a = document.createElement('a');
@@ -161,11 +167,9 @@ export class AdhocAppScreenListComponent implements OnInit {
       if (index !== -1) {
         this.screenInfoList.splice(index, 1);
       }
-    this.getScreen(0);
+      this.getScreen(0);
     });
   }
-
-
 
   loadLessonsPage() {
     this.dataSource.getScreen(
@@ -298,7 +302,7 @@ export class AdhocAppScreenListComponent implements OnInit {
       });
     } else {
       this.adhocSavedObjectService.setScreenInfoObject(screenInfoObject);
-        this.router.navigate(['/workspace/adhoc/screen/table']);
+      this.router.navigate(['/workspace/adhoc/screen/table']);
     }
   }
 
@@ -322,7 +326,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.childScreenInfo = this.screenInfoList.filter(a => a.id === screenId)[0].childScreenInfo;
   }
 
-  gotoDashboard(){
+  gotoDashboard() {
     this.router.navigate(['/workspace/workspace-dashboard']);
   }
 }

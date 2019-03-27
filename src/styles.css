@@ -1377,3 +1377,36 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
   padding-right: 30px;
   padding-left: 30px;
 }
+
+.mat-menu-content button.mat-menu-item {
+  border-bottom: 1px solid #d1cdcd;
+}
+
+.mat-menu-content:not(:empty) {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: #0a85f8;
+}
+
+.column-box .mat-card-header .mat-card-title {
+  font-size: 17px;
+}
+
+.panel-column-box .mat-card-header .mat-card-title {
+  font-size: 17px;
+}
+
+.panel-column-box-tab .mat-card-header .mat-card-title {
+  font-size: 17px;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #0a85f8;
+}

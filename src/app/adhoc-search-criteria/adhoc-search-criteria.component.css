@@ -68,6 +68,10 @@ mat-card-header.header-blue {
   background-color: #64b5f6;
 }
 
+#clearBtn:hover {
+  background-color: #0a85f8;
+}
+
 /* #mat-expansion-panel-header-2 {
   background-color: #64b5f6
 } 
@@ -118,4 +122,8 @@ mat-card-header.header-blue {
 
 :ng-deep mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
   font-size: 17px !important;
+}
+
+.mat-tree-node:hover {
+  background-color: #f0f0f0 !important;
 }

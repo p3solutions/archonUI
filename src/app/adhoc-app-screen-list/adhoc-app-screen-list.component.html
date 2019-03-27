@@ -112,7 +112,8 @@
       </ng-container>
       <ng-container matColumnDef="download">
         <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Download </th>
-        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element" (click)="downloadScreen(element.id)">
+        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element"
+          (click)="downloadScreen(element.id,element.screenName)">
           <i class="material-icons">
             save_alt
           </i>
@@ -143,9 +144,10 @@
         <p>Please add metadata version for this workspace.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="gotoMetadata('cancel')" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
-        <button type="button" style="display:none" (click)="gotoMetadata('metadata')" class="btn btn-default adhoc-modal-btn"
+        <button type="button" (click)="gotoMetadata('cancel')" class="btn btn-primary adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" (click)="gotoMetadata('metadata')"
+          class="btn btn-default adhoc-modal-btn" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
@@ -164,7 +166,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
-        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

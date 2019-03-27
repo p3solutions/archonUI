@@ -41,6 +41,12 @@ export class ErtJobsConfigComponent implements OnInit {
       for (const item of array) {
         item.disabled = false;
       }
+    } else {
+      const radios = document.getElementsByName('selectjob');
+      const array: any = Array.from(radios);
+      for (const item of array) {
+        item.disabled = true;
+      }
     }
   }
 

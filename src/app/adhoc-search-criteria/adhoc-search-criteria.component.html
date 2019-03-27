@@ -1,14 +1,14 @@
 <div class="row">
   <div class="col-md-3">
-    <mat-card id="left-card" class="example-card">
+    <mat-card id="left-card" class="example-card align-self-stretch">
       <mat-card-header class="header-blue graph-heading-div">
         <mat-card-title>Selection Details</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <p>
-          <mat-radio-group>
-            <mat-radio-button color="primary" value="tbl">Table Search</mat-radio-button>
-            <mat-radio-button color="primary" value="col">Column Search</mat-radio-button>
+          <mat-radio-group [(ngModel)]="searchType">
+            <mat-radio-button value="Table">Table Search</mat-radio-button>
+            <mat-radio-button value="Column">Column Search</mat-radio-button>
           </mat-radio-group>
         </p>
         <p>
@@ -42,7 +42,7 @@
   <div class="col-md-9">
     <div style="padding-bottom: 12px;">
       <mat-accordion>
-        <mat-expansion-panel [expanded]="openSearch" (opened)="openSearch = true" (closed)="openSearch = false">
+        <mat-expansion-panel [expanded]="openSearch" (opened)="panelOpenState = false" (closed)="panelOpenState = true">
           <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'"
             id="search-column-header">
             <mat-panel-title>
@@ -59,7 +59,7 @@
     </div>
     <div *ngIf="searchCriteriaLength!==0">
       <mat-accordion>
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel [expanded]="panelOpenState" (opened)="openSearch = false" (closed)="openSearch = true">
           <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'"
             id="drag-panel-column-header">
             <mat-panel-title>
@@ -118,7 +118,8 @@
         <p>{{successMsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="gotoAppScreen()" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button" (click)="gotoAppScreen()" class="btn btn-primary adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

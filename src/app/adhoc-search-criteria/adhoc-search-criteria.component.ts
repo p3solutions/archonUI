@@ -40,6 +40,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   screenInfoObject = new Adhoc();
   tempHeader = new AdhocHeaderInfo();
   successMsg = '';
+  searchType = 'Table';
   treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
   transformer = (node: TableColumnNode, level: number) => {
     return {
