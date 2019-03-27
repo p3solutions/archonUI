@@ -24,13 +24,14 @@ export class ErtDatarecordConfigComponent implements OnInit {
   data;
   schemaResultsTableCount = 0;
   selectedPrimaryTable;
+  startIndex = 1;
 
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
 
   ngOnInit() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
       this.tableList = res;
       this.schemaResultsTableCount = this.tableList.length;
     });
@@ -49,6 +50,22 @@ export class ErtDatarecordConfigComponent implements OnInit {
   }
   gotoJobConfiguration() {
     this.router.navigate(['workspace/ert/ert-jobs-config']);
+  }
+
+  getPage(page: number) {
+    this.tableList = [];
+    const perPage = 50;
+    this.startIndex = (page - 1) * perPage;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
+      this.tableList = res;
+    });
+  }
+
+  searchTablelist(searchTableName) {
+    this.tableList = [];
+     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe(res => {
+      this.tableList = res;
+    });
   }
 
   populategraph(value, event) {

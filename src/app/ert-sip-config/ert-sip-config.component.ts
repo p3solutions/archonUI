@@ -24,6 +24,7 @@ export class ErtSipConfigComponent implements OnInit {
   exclude_click = ['rgb(249, 75, 76)', 'rgb(224, 224, 224)'];
   selectedPrimaryTable: any;
   schemaResultsTableCount: any;
+  startIndex = 1;
 
 
   constructor(public router: Router, private tablelistService: TableListService,
@@ -31,7 +32,7 @@ export class ErtSipConfigComponent implements OnInit {
 
   ngOnInit() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
       this.tableList = res;
       this.schemaResultsTableCount = this.tableList.length;
     });
@@ -53,6 +54,23 @@ export class ErtSipConfigComponent implements OnInit {
   gotoJobConfiguration() {
     this.router.navigate(['workspace/ert/ert-jobs-config']);
   }
+
+  getPage(page: number) {
+    this.tableList = [];
+    const perPage = 50;
+    this.startIndex = (page - 1) * perPage;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
+      this.tableList = res;
+    });
+  }
+
+  searchTablelist(searchTableName) {
+    this.tableList = [];
+     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe(res => {
+      this.tableList = res;
+    });
+  }
+
 
   populategraph(value, event) {
     this.selectedPrimaryTable = event.target.value;

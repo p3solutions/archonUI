@@ -82,7 +82,8 @@ export class TableListComponent implements OnInit {
   addDirectjoin: boolean;
   isTablelistAvailable: boolean;
   wsName: string;
-
+  startIndex = 1;
+  schemaResultsTableCount: number;
 
   constructor(
     private tablelistService: TableListService,
@@ -125,12 +126,29 @@ export class TableListComponent implements OnInit {
   getTableList() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
-    this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
       this.tableList = res;
+      this.schemaResultsTableCount = this.tableList.length;
       if (this.tableList.length === 0) {
         this.isTablelistAvailable = true;
       }
       this.isAvailable = true;
+    });
+  }
+
+  getPage(page: number) {
+    this.tableList = [];
+    const perPage = 50;
+    this.startIndex = (page - 1) * perPage;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
+      this.tableList = res;
+    });
+  }
+
+  searchTablelist(searchTableName) {
+    this.tableList = [];
+     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe(res => {
+      this.tableList = res;
     });
   }
 

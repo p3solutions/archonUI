@@ -30,18 +30,29 @@ export class TableListService {
   currentValue = this.changeValue.asObservable();
   private selectTableslist = new BehaviorSubject('');
   userselectTableslist = this.selectTableslist.asObservable();
-
+  startIndex = 1;
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
   }
 
-  getTableList(workspaceId): Observable<string[]> {
-    return this.http.get<string[]>(this.tableListUrl + workspaceId, { headers: this.userinfoService.getHeaders() }).
+  getTableList(workspaceId, startIndex): Observable<string[]> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<string[]>(this.tableListUrl + workspaceId + '&startIndex=' + startIndex, { headers: this.userinfoService.getHeaders() }).
     pipe(
       map(this.extractTables),
       catchError(this.handleError('tables-getTableList()', []))
     );
   }
+
+  getTablesearchList(workspaceId, tablesearchname = ''): Observable<string[]> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<string[]>(this.tableListUrl + workspaceId + '&tableName=' + tablesearchname, { headers: this.userinfoService.getHeaders() }).
+    pipe(
+      map(this.extractTables),
+      catchError(this.handleError('tables-getTableList()', []))
+    );
+  }
+
   getListOfRelationTable(id, workspaceId): Observable<any[]> {
     const url = this.relationTableListUrl + id + '&workspaceId=' + workspaceId;
     return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() })

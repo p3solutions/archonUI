@@ -6,14 +6,14 @@
               Table List
              </div>
              <div class='body-left'><a href="" style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
-              <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+              <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch" (keyup)="searchTablelist(searchTableName)"
                 placeholder="Search Table"></div>
                 
 
         <div class="card-body" id="ert-tbl-search">          
           <div id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
-              <div class="well" *ngFor="let i of tableList | searchTable:searchTableName">
+              <div class="well" *ngFor="let i of tableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName">
                 <div><input style="float:left" type="radio" [value]="i.tableName" [checked]="i.tableName == selectedPrimaryTable"  name="x" (click)="populategraph(i, $event)"></div>
                 <div class="first-div">{{i.tableName}}</div>
                 <div><i class="fa fa-chevron-right icon-div "></i></div>
@@ -21,6 +21,7 @@
             </div>
           </div>
         </div>
+        <pagination-controls (pageChange)="getPage(page = $event)"></pagination-controls>
       </div>
     </div>
     <div class="col-md-9">
