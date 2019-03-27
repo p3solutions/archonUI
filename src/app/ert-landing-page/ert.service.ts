@@ -36,6 +36,7 @@ export class ErtService {
   joinListMap = new Map();
   mmrVersion = '';
   RelationSIP: any[];
+  startIndex: 1;
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }
@@ -76,8 +77,8 @@ export class ErtService {
     this.RelationSIP = RelationSIP;
   }
 
-  getERTtableList(workspaceId: string, ertJobId = ''): Observable<ErtTableListObj> {
-    return this.http.get<ErtTableListObj>(this.getERTtableListUrl + workspaceId + '&ertJobId=' + ertJobId,
+  getERTtableList(workspaceId: string, ertJobId = '', startIndex): Observable<ErtTableListObj> {
+    return this.http.get<ErtTableListObj>(this.getERTtableListUrl + workspaceId + '&ertJobId=' + ertJobId + '&startIndex=' + startIndex,
       { headers: this.userInfoService.getHeaders() }).pipe(
         map(this.extractData),
         catchError(this.handleError('getERTtableList', []))

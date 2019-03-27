@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -46,9 +46,10 @@ export class ErtTableComponent implements OnInit {
   from: string;
   disabledUserDefinedColName = false;
   errorMsg = '';
+  startIndex = 1;
   ErtTablesearchList: ErtTableListObj = new ErtTableListObj();
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
-    private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService) {
+    private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -187,9 +188,16 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
+  getPage(page: number) {
+    this.selectedTableList = [];
+    const perPage = 50;
+    this.startIndex = (page - 1) * perPage;
+    this.getERTtableList();
+  }
+
   getERTtableList() {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.ertService.getERTtableList(this.workspaceId, this.ertJobId).subscribe((result) => {
+    this.ertService.getERTtableList(this.workspaceId, this.ertJobId, this.startIndex).subscribe((result) => {
       this.ErtTableList = result;
       this.schemaResultsTableCount = result.sourceTableCount;
       for (const item of this.ErtTableList.ertTableList) {
@@ -219,9 +227,18 @@ export class ErtTableComponent implements OnInit {
   }
 
   searchTablelist(searchTableName) {
+    this.selectedTableList = [];
+    const temp: TableDetailsListObj[] = [];
     this.ertService.getERTtablesearchList(this.workspaceId, searchTableName).subscribe((result) => {
       this.ErtTablesearchList = result;
-       console.log(this.ErtTablesearchList, 'yrdy');
+      for (const item of this.ErtTablesearchList.ertTableList) {
+        const tempObj: TableDetailsListObj = new TableDetailsListObj();
+        tempObj.tableId = item.tableId;
+        tempObj.tableName = item.tableName;
+        tempObj.modifiedTableName = item.modifiedTableName;
+        temp.push(tempObj);
+      }
+      this.selectedTableList = temp;
     });
   }
 
