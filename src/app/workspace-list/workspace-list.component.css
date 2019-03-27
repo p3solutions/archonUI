@@ -133,6 +133,7 @@ td.tdl {
   color: #121212;
   font-weight: bold;
   font-size: 12px;
+  width: 50%;
 }
 td.tdr {
   color: #767676; 
@@ -149,7 +150,13 @@ td.tdr {
   background-color: #2879ff;
   border: #2879ff;
   color: #ffffff;
+  transition:0.5s;
 }
+
+.cancel:hover {
+transform:scale(1.1,1.1);
+}
+
 
 
 

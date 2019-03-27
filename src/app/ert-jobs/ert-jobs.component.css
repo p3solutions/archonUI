@@ -200,7 +200,13 @@ a.disabled {
   background-color: #2879ff;
   border: #2879ff;
   color: #ffffff;
+  transition:0.5s;
 }
+
+.modal-close:hover {
+  transform:scale(1.1,1.1);
+  } 
+
 .table {
   width: 100%;
   max-width: 100%;
@@ -220,6 +226,7 @@ td.tdl {
   color: #121212;
   font-weight: bold;
   font-size: 12px;
+  width: 50%;
 }
 td.tdr {
   color: #767676; 
