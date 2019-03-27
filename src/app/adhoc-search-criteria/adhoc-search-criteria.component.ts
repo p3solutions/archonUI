@@ -283,5 +283,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   }
 
   clear() {
+    this.adhocScreenService.updateResultField(new ResultFields());
+    this.adhocScreenService.updateSearchCriteria([]);
   }
 }

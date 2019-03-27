@@ -11,7 +11,8 @@ table {
   width: 100%;
 }
 
-td, th {
+td,
+th {
   text-align: left;
 }
 
@@ -19,9 +20,9 @@ td, th {
   height: 8vh !important;
 }
 
-#open-app {
+.open-app {
   margin: 10px;
-  font-size: 33px;
+  font-size: 40px;
   cursor: pointer
 }
 
@@ -30,13 +31,14 @@ td, th {
 }
 
 #create-app-header {
-  display: block;
-  margin: 2px 2px 2px 17px;
+  display: inline-flex;
+  margin: 2px 2px 11px 17px;
   float: left;
 }
 
 #create-app-header a {
-  padding: 2px 15px 2px 5px;
+  padding: 21px 13px 7px 13px;
+  text-align: left;
 }
 
 .row-group {
@@ -46,6 +48,7 @@ td, th {
 
 #app-dropdown {
   text-align: left;
+  display: inline-flex;
   margin: 2px 2px 2px 0px;
 }
 
@@ -115,4 +118,49 @@ p {
 
 td.mat-cell .mat-icon-button {
   width: 15px;
+}
+
+modal-body .p {
+  font-size: 15px;
+}
+
+.fa-stack {
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.fa-stack .fa {
+  color: #269AF8;
+}
+
+.fa-stack .fa.fa-circle-thin {
+  color: #269AF8;
+}
+
+.fa-stack .fa.fa-circle {
+  opacity: 0.0;
+  color: #2879ff;
+}
+
+.fa-stack:hover .fa.fa-plus {
+  color: white;
+}
+
+.fa-stack:hover .fa.fa-circle-thin {
+  color: #2879ff;
+}
+
+.fa-stack:hover .fa.fa-circle {
+  opacity: 1.0
+}
+
+.example-container {
+  position: relative;
+  min-height: 200px;
+}
+
+.example-table-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
 }

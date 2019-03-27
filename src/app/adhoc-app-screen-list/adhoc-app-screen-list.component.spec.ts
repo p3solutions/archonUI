@@ -3,8 +3,10 @@ import { AdhocAppScreenListComponent } from './adhoc-app-screen-list.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
-   MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule } from '@angular/material';
+import {
+  MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule
+} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
@@ -19,9 +21,9 @@ describe('AdhocAppScreenListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AdhocAppScreenListComponent],
       providers: [WorkspaceHeaderService, AdhocService, UserinfoService],
-      imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule,
+      imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule,
         ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
-        RouterTestingModule, MatDialogModule, MatMenuModule ],
+        RouterTestingModule, MatDialogModule, MatMenuModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

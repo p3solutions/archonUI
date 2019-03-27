@@ -1,24 +1,37 @@
 <div class="container-fluid">
   <div class="row">
     <div id="create-app-header">
-      <h3> <a (click)="gotoDashboard()" data-tooltip="Back">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-        </a>IA Adhoc Query Builder</h3>
+      <a (click)="gotoDashboard()" data-tooltip="Back">
+        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+      </a>
+      <h3> IA Adhoc Query Builder</h3>
     </div>
   </div>
 
   <div class="row-group">
     <div class="col-md-7" id="app-dropdown">
-      <mat-form-field>
-        <mat-select msInfiniteScroll name="app-select" (infiniteScroll)="getNextBatch()" [threshold]="'0%'"
-          [(ngModel)]="selectedAppObject.id" placeholder="Application Name"
-          (selectionChange)="selectedApp($event.value)">
-          <mat-option appScrollServerCall *ngFor="let app of applicationInfoList" [value]="app.id">
-            {{app.appName}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <a id="open-app" (click)="openAppDialog()" matTooltip="Create Application"><i class="fa fa-plus-circle"></i></a>
+      <div>
+        <mat-form-field>
+          <mat-select msInfiniteScroll name="app-select" (infiniteScroll)="getNextBatch()" [threshold]="'0%'"
+            [(ngModel)]="selectedAppObject.id" placeholder="Application Name"
+            (selectionChange)="selectedApp($event.value)">
+            <mat-option appScrollServerCall *ngFor="let app of applicationInfoList" [value]="app.id">
+              {{app.appName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <!-- <a class="open-app" (click)="openAppDialog()" matTooltip="Create Application"><i class="material-icons">
+            add_circle_outline
+          </i></a> -->
+        <span class="fa-stack open-app" (click)="openAppDialog()" matTooltip="Create Application">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-circle-thin fa-stack-2x"></i>
+          <i class="fa fa-plus fa-stack-1x"></i>
+        </span>
+      </div>
+
     </div>
     <div class="col-md-3 heading-item">
       <div>
@@ -31,7 +44,7 @@
       </div>
     </div>
   </div>
-  <div class="row" id="app_desc">
+  <div class="row" *ngIf="selectedAppObject.appDesc!==''" id="app_desc">
     <b>Application Description</b>
     <p>{{selectedAppObject.appDesc!==null?selectedAppObject.appDesc :'Created By Archon'}}</p>
   </div>
@@ -41,11 +54,17 @@
     <mat-form-field>
       <!-- <input matInput name="screen-filter" (keyup)="applyFilter($event.target.value)" placeholder="Search"> -->
       <input matInput name="screen-filter" #input placeholder="Search">
-
     </mat-form-field>
-    <a id="open-app" (click)="addScreen()" matTooltip="Create Screen"><i class="fa fa-plus-circle"></i></a>
+    <span class="fa-stack" (click)="addScreen()" matTooltip="Create Screen">
+      <i class="fa fa-circle fa-stack-2x"></i>
+      <i class="fa fa-circle-thin fa-stack-2x"></i>
+      <i class="fa fa-plus fa-stack-1x"></i>
+    </span>
+    <!-- <a class="open-app" (click)="addScreen()" matTooltip="Create Screen"><i class="material-icons">
+        add_circle_outline
+      </i></a> -->
   </div>
-  <div class="mat-elevation-z8" id="screen-table">
+  <div class="example-table-container mat-elevation-z8" id="screen-table">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="position">
         <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
@@ -69,33 +88,40 @@
       </ng-container>
       <ng-container matColumnDef="edit">
         <th style="width:6%" mat-header-cell *matHeaderCellDef> Edit </th>
-        <td style="width:6%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)"><i
-            class="cursor-poniter fa fa-edit"></i>
+        <td style="width:6%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)">
+          <i class="material-icons">
+            edit
+          </i>
         </td>
       </ng-container>
       <ng-container matColumnDef="nestedLink">
         <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Nested Link </th>
         <td style="width:9%;text-align: center" mat-cell *matCellDef="let element"
           (click)="(element.parentScreenInfo?.screenName==='') && addNestedLink(element.id)">
-          <i *ngIf="element.parentScreenInfo?.screenName===''" class="cursor-poniter fa fa-plus"></i>
+          <i *ngIf="element.parentScreenInfo?.screenName===''" class="material-icons">
+            add
+          </i>
         </td>
       </ng-container>
       <ng-container matColumnDef="delete">
         <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Delete</th>
-        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element" (click)="deleteScreen(element.id)"><i
-            class="cursor-poniter fa fa-trash"></i>
-        </td>
+        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element" (click)="deleteScreen(element.id)">
+          <i class="material-icons">
+            delete
+          </i> </td>
       </ng-container>
       <ng-container matColumnDef="download">
         <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Download </th>
         <td style="width:9%;text-align: center" mat-cell *matCellDef="let element" (click)="downloadScreen(element.id)">
-          <i class="cursor-poniter fa fa-download"></i>
+          <i class="material-icons">
+            save_alt
+          </i>
         </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [length]="totalScreen" [pageSize]="10" showFirstLastButtons>
+    <mat-paginator [length]="totalScreen" [pageSize]="50" showFirstLastButtons>
     </mat-paginator>
   </div>
 </div>
@@ -110,16 +136,15 @@
 <div id="metaDataVersion" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal-header adhoc-modal-header">
         <h4 class="modal-title">Alert</h4>
       </div>
       <div class="modal-body">
-        <p>Metadata is not present for this Workspace, please Add</p>
+        <p>Please add metadata version for this workspace.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="gotoMetadata('cancel')" class="btn btn-primary" data-dismiss="modal">Ok</button>
-        <button type="button" style="display:none" (click)="gotoMetadata('metadata')" class="btn btn-default"
+        <button type="button" (click)="gotoMetadata('cancel')" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" (click)="gotoMetadata('metadata')" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
       </div>
     </div>
@@ -131,16 +156,15 @@
 <div id="success" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal-header adhoc-modal-header">
         <h4 class="modal-title">Alert</h4>
       </div>
       <div class="modal-body">
         <p>{{successMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-        <button type="button" style="display:none" class="btn btn-default" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

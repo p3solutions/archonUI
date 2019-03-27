@@ -153,3 +153,7 @@ a.disabled {
   cursor: not-allowed;
   text-decoration: underline;
 }
+
+.p-size {
+  font-size: 15px;
+}

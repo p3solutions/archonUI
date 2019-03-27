@@ -29,6 +29,8 @@ export class AdhocTableSelectionComponent implements OnInit {
   screenInfoObject = new Adhoc();
   graphDetails = new GraphDetails();
   linearTableMapOrder: LinearTableMapOrder[] = [];
+  tempValue = '';
+  tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
     private adhocSavedObjectService: AdhocSavedObjectService) { }
@@ -85,20 +87,44 @@ export class AdhocTableSelectionComponent implements OnInit {
   }
 
   populategraph(value, event) {
-    this.selectedPrimaryTable = event.target.value;
-    d3.select('svg').remove();
-    this.selectedValues = [];
-    this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
-      this.relationshipInfo = result;
-      this.primaryTable = getPrimaryArray(this.relationshipInfo);
-      this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-      for (const i of this.primaryTable) {
-        this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
-      }
-      this.selectedValues.push(value.tableName);
-      this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
-      this.createchart();
-    });
+    this.tempValue = event.target.value;
+    if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable !== '') {
+      document.getElementById('success-popup-btn').click();
+    } else {
+      this.selectedPrimaryTable = event.target.value;
+      d3.select('svg').remove();
+      this.selectedValues = [];
+      this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
+        this.relationshipInfo = result;
+        this.primaryTable = getPrimaryArray(this.relationshipInfo);
+        this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+        for (const i of this.primaryTable) {
+          this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+        }
+        this.selectedValues.push(value.tableName);
+        this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+        this.createchart();
+      });
+    }
+  }
+
+  deleteSearchResult() {
+    this.screenInfoObject.sessionAdhocModel.searchCriteria = [];
+    this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel = [];
+    this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = null;
+    this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
+    this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable = '';
+    document.getElementById(this.tempValue).click();
+  }
+
+  cancelSearchResult() {
+    document.getElementById(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable.replace(/'/g, '"')))
+    .click();
+    this.data = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.data.replace(/'/g, '"'));
+    this.selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+    this.joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    this.selectedPrimaryTable = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable.replace(/'/g, '"'));
+    this.createchart();
   }
 
   createchart() {

@@ -74,12 +74,10 @@ export class AdhocAppScreenListComponent implements OnInit {
 
 
   ngOnInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+
     this.getHeaderInfo();
     this.getApplication();
     this.paginator.pageIndex = 0;
-    // this.dataSource.data = this.screenInfoList;
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
@@ -115,7 +113,6 @@ export class AdhocAppScreenListComponent implements OnInit {
       if (this.applicationInfoList.length !== 0) {
         this.selectedApp(this.applicationInfoList[0].id);
       }
-      // this.getScreen(this.paginator);
     });
   }
 
@@ -149,11 +146,6 @@ export class AdhocAppScreenListComponent implements OnInit {
     a.dispatchEvent(e);
   }
   getScreen(startIndexOfScreen) {
-    // this.adhocService.getScreen(startIndexOfScreen, this.workspaceId, this.selectedAppObject.id).subscribe((result) => {
-    //   this.screenInfoList = result;
-    //   this.addPosition();
-    //   this.dataSource.data = this.screenInfoList;
-    // });
     this.dataSource = new ScreenDataSource(this.adhocService);
     this.addPosition();
     this.dataSource.connect().subscribe(result => {
@@ -270,24 +262,9 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.screenInfo = new Adhoc();
   }
 
-
-  applyFilter(filterValue: string) {
-    //  this.getSearchScreen(1, filterValue);
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
-  }
-
   getSearchScreen() {
     this.dataSource.getSearchScreen(this.paginator.pageIndex + 1,
       this.input.nativeElement.value, this.selectedAppObject.id
-      // this.screenInfoList = result;
-      // this.addPosition();
-      // this.dataSource.data = this.screenInfoList;
-      // if (this.dataSource.paginator) {
-      //   this.dataSource.paginator.firstPage();
-      // }
     );
   }
 
@@ -316,10 +293,13 @@ export class AdhocAppScreenListComponent implements OnInit {
     if (screenInfoObject.parentScreenInfo.screenId !== '') {
       this.adhocService.getScreenInfo(screenInfoObject.parentScreenInfo.screenId).subscribe(result => {
         screenInfoObject.sessionAdhocModel.selectedTableListString = JSON.stringify(result.AdhocScreen.sessionAdhocModel.selectedTables);
+        this.adhocSavedObjectService.setScreenInfoObject(screenInfoObject);
+        this.router.navigate(['/workspace/adhoc/screen/table']);
       });
+    } else {
+      this.adhocSavedObjectService.setScreenInfoObject(screenInfoObject);
+        this.router.navigate(['/workspace/adhoc/screen/table']);
     }
-    this.adhocSavedObjectService.setScreenInfoObject(screenInfoObject);
-    this.router.navigate(['/workspace/adhoc/screen/table']);
   }
 
   gotoMetadata(value) {
@@ -340,5 +320,9 @@ export class AdhocAppScreenListComponent implements OnInit {
 
   showChildInfo(screenId) {
     this.childScreenInfo = this.screenInfoList.filter(a => a.id === screenId)[0].childScreenInfo;
+  }
+
+  gotoDashboard(){
+    this.router.navigate(['/workspace/workspace-dashboard']);
   }
 }

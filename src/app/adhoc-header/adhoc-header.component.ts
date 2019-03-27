@@ -22,4 +22,8 @@ export class AdhocHeaderComponent implements OnInit {
     });
   }
 
+  gotoDashboard(){
+    this.router.navigate(['/workspace/workspace-dashboard']);
+  }
+
 }

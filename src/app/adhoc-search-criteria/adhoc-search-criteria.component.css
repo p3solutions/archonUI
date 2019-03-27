@@ -111,3 +111,11 @@ mat-card-header.header-blue {
 ::ng-deep mat-card#left-card div.mat-card-header-text {
   margin: 0 20px;
 }
+
+::ng-deep #saveScreen .modal-body .p {
+  font-size: 15px;
+}
+
+:ng-deep mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
+  font-size: 17px !important;
+}

@@ -368,6 +368,7 @@ table tr td:nth-child(6) {
 
 #inputValidation {
   border-radius: 20px;
+  height: 40px;
 }
 
 #nextbtn button {
@@ -394,3 +395,6 @@ table tr td:nth-child(6) {
     background-color: #64b5f6
 }
 
+modal-body .p{
+  font-size: 15px;
+}

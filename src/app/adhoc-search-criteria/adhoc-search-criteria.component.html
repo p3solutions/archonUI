@@ -93,15 +93,14 @@
 <div id="label-popup" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal-header adhoc-modal-header">
         <h4 class="modal-title">Alert</h4>
       </div>
       <div class="modal-body">
         <p>Column Label already present</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
@@ -112,15 +111,14 @@
 <div id="saveScreen" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal-header adhoc-modal-header">
         <h4 class="modal-title">Alert</h4>
       </div>
       <div class="modal-body">
         <p>{{successMsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="gotoAppScreen()" class="btn btn-primary" data-dismiss="modal">Ok</button>
+        <button type="button" (click)="gotoAppScreen()" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
