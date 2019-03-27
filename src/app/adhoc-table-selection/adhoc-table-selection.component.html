@@ -16,7 +16,7 @@
           </div>
           <div id="tbl-list">
             <div class="scroll-div border">
-              <div class="well" *ngFor="let i of tableList">
+              <div class="well" *ngFor="let i of tableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page }">
                 <div><input [id]="i.tableName" style="float:left" type="radio" [value]="i.tableName"
                     [checked]="i.tableName == selectedPrimaryTable" name="x" (click)="populategraph(i, $event)"></div>
                 <div class="first-div">{{i.tableName}}</div>
@@ -24,6 +24,7 @@
               </div>
             </div>
           </div>
+          <pagination-controls (pageChange)="getPage(page = $event)"></pagination-controls>
         </div>
       </div>
     </div>

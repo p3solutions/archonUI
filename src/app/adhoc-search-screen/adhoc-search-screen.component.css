@@ -61,3 +61,12 @@
 ::ng-deep mat-card.col-md-4.column-box.cdk-drag.mat-card.ng-star-inserted {
   padding-bottom: 10px;
 }
+
+.material-icons {
+  font-size: 26px;
+}
+
+.material-icons:hover,
+.material-icons:focus {
+  font-size: 26px;
+}

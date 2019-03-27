@@ -31,6 +31,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   graphDetails = new GraphDetails();
   linearTableMapOrder: LinearTableMapOrder[] = [];
   tempValue = '';
+  startIndex = 1;
   tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
@@ -46,8 +47,9 @@ export class AdhocTableSelectionComponent implements OnInit {
         tempTables.push({ 'tableId': item.tableId, 'tableName': item.tableName, 'databaseName': item.schemaName });
       }
       this.tableList = tempTables;
+      this.schemaResultsTableCount = this.tableList.length;
     } else {
-      this.tablelistService.getTableList(this.workspaceID).subscribe(res => {
+      this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
         this.tableList = res;
         this.schemaResultsTableCount = this.tableList.length;
       });
@@ -71,6 +73,15 @@ export class AdhocTableSelectionComponent implements OnInit {
     this.screenInfoObject.sessionAdhocModel.linearTableMapOrder = this.linearTableMapOrder;
     this.adhocSavedObjectService.setScreenInfoObject(this.screenInfoObject);
     this.router.navigate(['/workspace/adhoc/screen/search-criteria']);
+  }
+
+  getPage(page: number) {
+    this.tableList = [];
+    const perPage = 50;
+    this.startIndex = (page - 1) * perPage;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
+      this.tableList = res;
+    });
   }
 
   createLinearTableMapOrder(selectedValues: string[] = [], joinListMap = new Map): LinearTableMapOrder[] {
@@ -127,7 +138,7 @@ export class AdhocTableSelectionComponent implements OnInit {
 
   cancelSearchResult() {
     document.getElementById(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable.replace(/'/g, '"')))
-    .click();
+      .click();
     this.data = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.data.replace(/'/g, '"'));
     this.selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
     this.joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));

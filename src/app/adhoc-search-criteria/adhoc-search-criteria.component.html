@@ -1,3 +1,4 @@
+
 <div class="row">
   <div class="col-md-3">
     <mat-card id="left-card" class="example-card align-self-stretch">
@@ -42,7 +43,7 @@
   <div class="col-md-9">
     <div style="padding-bottom: 12px;">
       <mat-accordion>
-        <mat-expansion-panel [expanded]="openSearch" (opened)="panelOpenState = false" (closed)="panelOpenState = true">
+        <mat-expansion-panel [expanded]="openSearch" (opened)="openSearch = true" (closed)="openSearch = false">
           <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'"
             id="search-column-header">
             <mat-panel-title>
@@ -59,7 +60,7 @@
     </div>
     <div *ngIf="searchCriteriaLength!==0">
       <mat-accordion>
-        <mat-expansion-panel [expanded]="panelOpenState" (opened)="openSearch = false" (closed)="openSearch = true">
+        <mat-expansion-panel  (opened)="panelOpenState = true" (closed)="panelOpenState = false">
           <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'"
             id="drag-panel-column-header">
             <mat-panel-title>

@@ -7,6 +7,8 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AdhocTableSelectionComponent', () => {
   let component: AdhocTableSelectionComponent;
@@ -14,11 +16,12 @@ describe('AdhocTableSelectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdhocTableSelectionComponent ],
-      providers: [TableListService, UserinfoService, WorkspaceHeaderService, ErtService],
-      imports: [HttpClientModule, RouterTestingModule]
+      declarations: [AdhocTableSelectionComponent],
+      providers: [TableListService, UserinfoService, NgxPaginationModule, WorkspaceHeaderService, ErtService],
+      imports: [HttpClientModule, RouterTestingModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

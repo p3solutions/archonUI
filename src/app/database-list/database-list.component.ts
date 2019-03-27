@@ -67,7 +67,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.configDBListService.getListOfConfigDatabases().subscribe(result => {
       this.configDBListInfo = result;
       this.isProgress = false;
-      this.dbListActions = this.commonUtilityService.groupOutArray(this.configDBListInfo, 3);
+      this.dbListActions = this.configDBListInfo;
     });
   }
   gotoManagementPanel() {

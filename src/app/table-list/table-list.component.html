@@ -7,10 +7,10 @@
             <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
           </h2>
         </div>
-        <input type="text" class="form-control search-input" placeholder="Search" [(ngModel)]="query" id="listSearch">
+        <input type="text" class="form-control search-input" placeholder="Search Table" [(ngModel)]="query" id="listSearch" (keyup)="searchTablelist(query)">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
         <div class="tablename-list da-table-parent">
-          <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | searchTable:query">
+          <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:query">
             <button type="button" class="btn btn-default list-group-item da-table" title="{{table.tableName}}" (click)="highlightTable($event, true, table); joinTable(table);"><div class="overflow-text">{{table.tableName}}
             </div> <div class="overflow-text-arrow"> <i class="fa fa-angle-right unselected"></i> </div>
             </button>            
@@ -19,6 +19,7 @@
             Tables Are Not Available
           </h5>
         </div>
+        <pagination-controls (pageChange)="getPage(page = $event)"></pagination-controls>
       </div>
     </div>
   </div>

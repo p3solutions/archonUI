@@ -169,3 +169,12 @@ modal-body .p {
   padding-top: 0px;
   padding-bottom: 0px;
 }
+
+.material-icons {
+  font-size: 26px;
+}
+
+.material-icons:hover,
+.material-icons:focus {
+  font-size: 26px;
+}

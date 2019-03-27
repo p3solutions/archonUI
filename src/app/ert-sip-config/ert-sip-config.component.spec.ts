@@ -9,6 +9,7 @@ import { ErtService } from '../ert-landing-page/ert.service';
 import { TableListService } from '../table-list/table-list.service';
 import { UserinfoService } from '../userinfo.service';
 import { SearchPipe } from '../search.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 describe('ErtSipConfigComponent', () => {
   let component: ErtSipConfigComponent;
@@ -17,7 +18,7 @@ describe('ErtSipConfigComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ErtSipConfigComponent, SearchPipe],
-      imports: [FormsModule, RouterTestingModule, HttpClientModule],
+      imports: [FormsModule, RouterTestingModule, HttpClientModule, NgxPaginationModule],
       providers: [WorkspaceHeaderService, ErtService, TableListService, UserinfoService]
     })
       .compileComponents();

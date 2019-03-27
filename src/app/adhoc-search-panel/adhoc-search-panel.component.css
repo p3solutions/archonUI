@@ -166,3 +166,12 @@ button.example-add-tab-button.mat-raised-button:hover {
 ::ng-deep mat-card.panel-column-box div.mat-card-header-text mat-card-subtitle.mat-card-subtitle {
   margin-bottom: 0px !important;
 }
+
+.material-icons {
+  font-size: 26px;
+}
+
+.material-icons:hover,
+.material-icons:focus {
+  font-size: 26px;
+}
