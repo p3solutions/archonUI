@@ -44,50 +44,17 @@ export class WorkspaceServicesComponent implements OnInit {
         //   //     serviceId: '5ac5c6d0a54d7503ad946537',
         //   //     serviceName: 'Adhoc Query Builder'
         //   //   }
-        //   // );
-        console.log(serviceActions);
-
+        //   // ); 
         const serviceActionsList = this.workspaceService.updateServiceActionsList(serviceActions);
-        this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
+        this.serviceActions = serviceActionsList;
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({ 'interval': false });
 
       });
-      // setTimeout(() => {
-      //   const dropdownItem = <HTMLAnchorElement>document.querySelectorAll('#selectedWorkspace .dropdown-data')[0];
-      //   if (dropdownItem !== undefined) {
-      //     const b = dropdownItem.click();
-      //     if (b !== undefined) {
-      //       const b1 = this.workspaceService.updateServiceActionsList(JSON.parse(JSON.stringify(b)));
-      //       this.workspaceService.updateServiceActions(b1);
-      //     }
-      //   }
-      // }, 3000);
     });
   }
 
   ngOnInit() {
-    //  this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
-    // //   // hard-coded values for adhoc-query-builder,
-    // //   // NOTE: whenever this function is called it adds a duplicate of this hard-coded service object
-    // //   // serviceActions.push(
-    // //   //   {
-    // //   //     iconName: 'querybuilder.png',
-    // //   //     serviceActionType: 'ALL',
-    // //   //     serviceId: '5ac5c6d0a54d7503ad946537',
-    // //   //     serviceName: 'Adhoc Query Builder'
-    // //   //   }
-    // //   // );
-
-    //   const serviceActionsList = this.updateServiceActions(serviceActions);
-    //   this.serviceActions = this.commonUtilityService.groupOutArray(serviceActionsList, 3);
-    //   const carousel: any = $('#serviceCarousel');
-    //   carousel.carousel({ 'interval': false });
-    //   // setTimeout(() => {
-
-    //   // }, 9000);
-
-    // });
   }
 
   gotoMetalyzer(service: any) {

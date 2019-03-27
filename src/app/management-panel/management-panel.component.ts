@@ -17,7 +17,7 @@ export class ManagementPanelComponent implements OnInit {
     },
     {
       panelName: 'Workspaces',
-      panelImage: 'metalyzer.png',
+      panelImage: 'workspace.png',
       panelDesc: 'Configure, View and Workspace Details.',
     },
     {
@@ -39,7 +39,7 @@ export class ManagementPanelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.panelGroupList = this.commonUtilityService.groupOutArray(this.panelList, 4);
+    this.panelGroupList = this.panelList;
   }
 
   goTo(panel) {

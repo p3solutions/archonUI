@@ -83,10 +83,5 @@
   padding-left: 6px;
 }
 
-.fa-stack        .fa { color: #269AF8; }
-.fa-stack        .fa.fa-circle-thin { color: #269AF8; }
-.fa-stack        .fa.fa-circle { opacity:0.0; color:#2879ff; }
 
-.fa-stack:hover  .fa.fa-plus { color: white; }
-.fa-stack:hover  .fa.fa-circle-thin { color:#2879ff; }
-.fa-stack:hover  .fa.fa-circle { opacity:1.0 }
+
