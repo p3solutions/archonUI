@@ -2,15 +2,15 @@
   <div class="col-md-3" id="table-list">
     <div class="card">
       <div class="card-body">
-        <div class="row" id="title-name">
-          <h2>Tables
-            <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
-          </h2>
+        <div class="table-list" >
+            Table List <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
         </div>
-        <input type="text" class="form-control search-input" placeholder="Search Table" [(ngModel)]="query" id="listSearch" (keyup)="searchTablelist(query)">
-        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        <div class='body-left'><a href="" style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch" (keyup)="searchTablelist(searchTableName)"
+            placeholder="Search Table"></div>
+      
         <div class="tablename-list da-table-parent">
-          <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:query">
+          <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName">
             <button type="button" class="btn btn-default list-group-item da-table" title="{{table.tableName}}" (click)="highlightTable($event, true, table); joinTable(table);"><div class="overflow-text">{{table.tableName}}
             </div> <div class="overflow-text-arrow"> <i class="fa fa-angle-right unselected"></i> </div>
             </button>            
