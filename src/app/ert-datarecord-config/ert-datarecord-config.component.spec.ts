@@ -8,6 +8,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { SearchPipe } from '../search.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 describe('ErtDatarecordConfigComponent', () => {
   let component: ErtDatarecordConfigComponent;
@@ -17,7 +18,7 @@ describe('ErtDatarecordConfigComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ErtDatarecordConfigComponent, SearchPipe],
       providers: [TableListService, UserinfoService, WorkspaceHeaderService, ErtService],
-      imports: [FormsModule, HttpClientModule, RouterTestingModule]
+      imports: [FormsModule, HttpClientModule, RouterTestingModule, NgxPaginationModule]
     })
     .compileComponents();
   }));
