@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ErtJobParams, IngestionDataConfig } from '../ert-landing-page/ert';
 import { ErtService } from '../ert-landing-page/ert.service';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-ert-jobs-config',
@@ -10,7 +11,7 @@ import { ErtService } from '../ert-landing-page/ert.service';
 })
 export class ErtJobsConfigComponent implements OnInit {
   ertJobParams: ErtJobParams = new ErtJobParams();
-  constructor(public route: Router, private ertService: ErtService) { }
+  constructor(public route: Router, public ertService: ErtService) { }
   ngOnInit() {
     this.ertService.ertJobParams = new ErtJobParams();
     this.ertService.selectedList = [];
@@ -38,14 +39,29 @@ export class ErtJobsConfigComponent implements OnInit {
     if (this.ertJobParams.ertJobTitle !== '') {
       const radios = document.getElementsByName('selectjob');
       const array: any = Array.from(radios);
-      for (const item of array) {
-        item.disabled = false;
-      }
+      for (let i = 0; i < array.length; i++) {
+        if (i === 0) {
+          if (this.ertService.mmrVersion !== '') {
+          array[i].disabled = false;
+          }
+        } else {
+          array[i].disabled = false;
+        }
+    }
+    } else {
+      const radios = document.getElementsByName('selectjob');
+      const array: any = Array.from(radios);
+      for (let i = 0; i < array.length; i++) {
+        if (i === 0) {
+          if (this.ertService.mmrVersion === '') {
+          array[i].disabled = true;
+          }
+        } else {
+          array[i].disabled = true;
+        }
+    }
     }
   }
-  //  this.ertService.mmrVersion == ''"
-  //  matTooltip="Metadata Version required for adding Jobs."
-
 
   goToJobs() {
     this.route.navigate(['/workspace/ert/ert-jobs']);
