@@ -10,14 +10,32 @@
             Databases
           </h3>
         </div>
-      </div>
-      <div class="col-md-6 search">
-        <mat-form-field class="search-width">
-          <input matInput [(ngModel)]="searchText" placeholder="Search">
-        </mat-form-field>
-        <a style="font-size: 42px" (click)="openCreateAddDBmodal()" matTooltip="Add Database"><i class="material-icons plus">
-        </i></a>
-      </div>
+      </div>  
+      <div class="col-md-12"></div>
+    </div>
+    <div class="col-md-12">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 one">
+          <div class="button-wrap" (click)="toggle()" [ngClass]="{'button-active' : toggleBoolean}">
+            <div class="button-bg">
+              <div class="button-out index">Databases</div>
+              <div class="button-in index">Pending Approval</div>
+              <div class="button-switch"></div>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-4"></div>
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+        <div class="col-md-3"></div>
+        <div class="col-md-9 search">
+            <mat-form-field class="search-width">
+              <input matInput [(ngModel)]="searchText" placeholder="Search">
+            </mat-form-field>
+            <a style="font-size: 42px" (click)="openCreateAddDBmodal()" matTooltip="Add Database"><i class="material-icons plus">
+            </i></a>
+          </div>
     </div>
 <div class="pl-20">
   <div class="flex-container" *ngFor="let db of dbListActions| searchTable: searchText;let indRow = index; let last = last">

@@ -24,6 +24,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   searchText;
 
   @ViewChild('createNewDatabaseWizard', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+  toggleBoolean: any;
   constructor(
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -92,4 +93,9 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   toggleCard(cardId, toShow, _event) {
    this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
   }
+
+  toggle() {
+    this.toggleBoolean = !this.toggleBoolean;
+  }
+
 }

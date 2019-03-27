@@ -24,7 +24,7 @@ table.table td {
 
 .search{
   text-align: right;
-  padding-right: 40px;
+  padding-right: 10px;
 }
 
 .search-width{
@@ -160,6 +160,57 @@ td.tdr {
 .cancel:hover {
   transform:scale(1.1,1.1);
   }
+
+  /* Toggle Button */
+  .one *, .one *:before, .one *:after {
+    -moz-box-sizing: border-box; 
+   -webkit-box-sizing: border-box; 
+   box-sizing: border-box;
+ }
+
+ .one .button-wrap {
+   /* width: 120px; */
+   /* margin: 10px auto 0; */
+   cursor: pointer;
+ }
+ .one .button-bg {
+   width: 100%;
+   height: 100%;
+   background-color:#cfd7e3;;
+   border-radius: 40px;
+   color:#595959;
+   transition:all 0.2s ease;
+ }
+ .one .button-switch {
+   position:relative;
+   left:0px;
+   width: 255px;
+   height: 44px;
+   border:solid 22px;
+   border-radius: 36px;
+   transition:all 0.2s ease;
+   border-color:#2879ff;
+ }
+ .one .button-active .button-switch { left:185px;border-color:#2879ff; }
+ .one .button-in, 
+ .one .button-out {
+   position:absolute; 
+   transition:all 0.2s ease;
+   padding-top:10px;
+   font-family: Roboto;
+   font-size:18px;
+ }
+ .one .button-in { margin-left:260px; }
+ .one .button-out { margin-left:20px; color:#ffffff; }
+ .one .button-active .button-out { color:#595959; }
+ .one .button-active .button-in { color:#ffffff;margin-left: 210px;}
+ .one .button-active .button-bg { background-color:#cfd7e3; }
+
+ .index {
+   z-index: 1;
+ }
+ 
+  /* Toggle Button Ends */
 
  
 
