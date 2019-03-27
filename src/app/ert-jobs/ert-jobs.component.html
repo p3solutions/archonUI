@@ -17,12 +17,12 @@
       </div> -->
     </div>
 
-    <div class="col-md-3" style="text-align: right; margin-top: -9px;" *ngIf="ertService?.mmrVersion !== ''">
-      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert/ert-jobs-config']" title="Add Job"><i class="fa fa-plus-circle"></i></a>
+    <div class="col-md-3" style="text-align: right; margin-top: -9px;" *ngIf="ertService.mmrVersion !== ''">
+      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert/ert-jobs-config']" matTooltip="Add Job"><i class="fa fa-plus-circle"></i></a>
 
     </div>
-    <div class="col-md-3" style="text-align: right" *ngIf="ertService?.mmrVersion == ''">
-        <a style="font-size: 42px;color: grey" title="No MMR Version"><i class="fa fa-plus-circle"></i></a>
+    <div class="col-md-3" style="text-align: right;margin-top: -9px;" *ngIf="ertService.mmrVersion == ''">
+        <a style="font-size: 34px; margin-right: 19px;color: grey" matTooltip="Metadata Version required for adding Jobs."><i class="fa fa-plus-circle"></i></a>
       </div>
   </div>
   <div *ngFor="let item of ertJobs" class="col-md-3 card">
