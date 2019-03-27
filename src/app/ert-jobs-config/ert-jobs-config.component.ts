@@ -43,6 +43,9 @@ export class ErtJobsConfigComponent implements OnInit {
       }
     }
   }
+  //  this.ertService.mmrVersion == ''"
+  //  matTooltip="Metadata Version required for adding Jobs."
+
 
   goToJobs() {
     this.route.navigate(['/workspace/ert/ert-jobs']);
