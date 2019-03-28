@@ -49,6 +49,13 @@ import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonito
 import { AuditingComponent } from './auditing/auditing.component';
 import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
 import { ErtSipConfigComponent } from './ert-sip-config/ert-sip-config.component';
+import { AdhocLandingPageComponent } from './adhoc-landing-page/adhoc-landing-page.component';
+import { AdhocAppScreenListComponent } from './adhoc-app-screen-list/adhoc-app-screen-list.component';
+import { AdhocHeaderComponent } from './adhoc-header/adhoc-header.component';
+import { AdhocTableSelectionComponent } from './adhoc-table-selection/adhoc-table-selection.component';
+import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-search-criteria.component';
+import { AdhocEditSearchScreenPopupComponent } from './adhoc-edit-search-screen-popup/adhoc-edit-search-screen-popup.component';
+import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-screen.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -132,7 +139,30 @@ const routes: Routes = [
             path: 'ert-sip-config', component: ErtSipConfigComponent
           }
         ]
-      }
+      },
+      {
+        path: 'adhoc', component: AdhocLandingPageComponent, canActivate: [AuthenticationGuard], children: [
+          {
+            path: '', redirectTo: 'app-screen-list', pathMatch: 'full'
+          },
+          {
+            path: 'app-screen-list', component: AdhocAppScreenListComponent
+          },
+          {
+            path: 'screen', component: AdhocHeaderComponent, children: [
+              {
+                path: '', redirectTo: 'table', pathMatch: 'full'
+              },
+              {
+                path: 'table', component: AdhocTableSelectionComponent
+              },
+              {
+                path: 'search-criteria', component: AdhocSearchCriteriaComponent
+              }
+            ]
+          }
+        ]
+      },
     ]
   },
   {

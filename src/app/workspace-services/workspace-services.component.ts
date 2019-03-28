@@ -81,6 +81,8 @@ export class WorkspaceServicesComponent implements OnInit {
       this.router.navigate(['/workspace/db-extractor']);
     } else if (service.serviceName === 'ERT') {
       this.router.navigate(['/workspace/ert']);
+    } else if (service.serviceName === 'IA Adhoc Query Builder') {
+      this.router.navigate(['/workspace/adhoc']);
     }
   }
 

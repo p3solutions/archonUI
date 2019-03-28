@@ -1,0 +1,170 @@
+i {
+  padding: 0px 9px 0px 0px;
+}
+
+.mat-tree-node {
+  max-height: 30px;
+  min-height: 25px;
+}
+
+html,
+body {
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+}
+
+.mat-card#left-card {
+  padding: 0px;
+  overflow: auto;
+  height: 100%;
+}
+
+.mat-card#right-card {
+  padding: 0px;
+  min-height: 500px;
+}
+
+.mat-card-content {
+  padding: 16px;
+  text-align: left;
+}
+
+mat-radio-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mat-form-field {
+  width: 100%
+}
+
+mat-card-header.header-blue {
+  background-color: #64b5f6;
+  padding: 14px 0px 0px 0px;
+}
+
+::ng-deep .example-card .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.6em !important;
+}
+
+::ng-deep .example-card .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}
+
+
+.hide-node {
+  display: none;
+}
+
+#nextbtn button {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+#nextbtn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#clearBtn {
+  float: right;
+  margin-right: 5px;
+  border-radius: 3px;
+  background-color: #64b5f6;
+}
+
+#clearBtn:hover {
+  background-color: #0a85f8;
+  color: white;
+}
+
+/* #mat-expansion-panel-header-2 {
+  background-color: #64b5f6
+} 
+
+ 
+
+/* .mat-expansion-panel-header,
+.mat-expansion-panel-header.mat-expanded .mat-expansion-panel-header.mat-expanded:hover {
+  background-color: #64b5f6
+} */
+
+#drag-panel-column-header {
+  background-color: #64b5f6
+}
+
+.mat-expansion-panel-header.mat-expanded,
+.mat-expansion-panel-header.mat-expanded:hover {
+  background-color: #64b5f6 !important;
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+  border-radius: 0px;
+  margin: 0px 0px 0px 0px;
+}
+
+.header {
+  background-color: #64b5f6 !important;
+}
+
+.header:hover {
+  background-color: #64b5f6 !important;
+}
+
+.mat-expansion-panel-header {
+  font-size: 20px;
+  font-weight: 500;
+  color: #000000;
+  height: 53px;
+  margin: 0px 0px 0px 0px
+}
+
+::ng-deep mat-card#left-card div.mat-card-header-text {
+  margin: 0 20px;
+}
+
+::ng-deep #saveScreen .modal-body .p {
+  font-size: 15px;
+}
+
+:ng-deep mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
+  font-size: 17px !important;
+}
+
+.mat-tree-node:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.inner-addon {
+  position: relative;
+}
+
+.form-control-feedback {
+  margin-top: 0px;
+  color: #676767
+}
+
+.form-control {
+  border-radius: 3px;
+}
+
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+.right-addon .glyphicon {
+  right: 29px;
+  bottom: 53px;
+  top: 56px
+}
+
+.right-addon input {
+  padding-right: 30px;
+}
+
+.fixVertical {
+  flex: 1 1 100%;
+  min-height: 100vh;
+}

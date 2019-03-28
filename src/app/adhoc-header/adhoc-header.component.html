@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="row">
+    <div id="create-app-header">
+      <a (click)="gotoDashboard()" data-tooltip="Back">
+        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+      </a>
+      <h3> IA Adhoc Query Builder</h3>
+    </div>
+  </div>
+  <div>
+    <div class="row" style="margin-bottom: 10px;">
+      <div class="col-md-3"></div>
+      <div class="col-md-9" id="adhoc-header-info">
+        <div>
+          <b>Screen Name: </b> {{adhocHeaderInfo?.screenName}}
+        </div>
+        <div>
+          <b>Application: </b> {{adhocHeaderInfo?.appName}}
+        </div>
+        <div>
+          <b>Workspace: </b> {{adhocHeaderInfo?.workspaceName}}
+        </div>
+        <div>
+          <b>Metadata Version: </b> {{adhocHeaderInfo?.metadataVersion}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

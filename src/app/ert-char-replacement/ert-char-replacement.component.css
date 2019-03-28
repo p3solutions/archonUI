@@ -79,7 +79,7 @@ th {
   text-align: left;
 }
 
-::ng-deep svg {
+::ng-deep #char-table svg {
   height: 8vh;
 }
 
