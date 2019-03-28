@@ -1,5 +1,6 @@
 #table-list {
   margin-left: 35px;
+  font-size: 12px;
 }
 
 .input-group {
@@ -365,3 +366,72 @@ font-size: 14px;
   margin-left: 16px;
   float: left;
 }
+.table-list {
+  background-color: #64b5f6;
+  text-align: left;
+  padding: 8px;
+  font-size: 16px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  padding-left: 14px;
+}
+.body-left {
+  display:inline-block;  
+  padding: -1px 0px 0px 10px;
+  margin-left: 0px;
+  font-size: 12px;
+  width: 100%; 
+  color: #121212;
+}
+.glyphicon {
+  position: relative;
+  top: 22px;
+  margin-right: 35px;
+  float: right;
+  display: inline-block;    
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+.right-addon .glyphicon {
+  right: 29px;
+  bottom: 53px;
+  top: 56px
+}
+.right-addon input {
+  padding-right: 30px;
+}
+.form-control {
+  font-size: 12px;
+  height: 30px;
+  border-radius: 2px;
+}
+a {
+  color: #80adf8;
+}
+
+a:focus,
+a:hover {
+  color: #2879ff;
+}
+
+a:focus,
+a:hover {
+  text-decoration: underline;
+}
+
+.btn { 
+  font-size: 12px;
+ }
