@@ -25,6 +25,7 @@
 .nav-tabs>li>a.active {
     background: #e7e7e7 !important;
     border-bottom:2px solid #1385f8;
+    color: #000000 !important;
 }
 .nav>li>a {
     padding: 10px 12px !important;

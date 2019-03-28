@@ -20,7 +20,8 @@ describe('DatabaseListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DatabaseListComponent, SearchPipe],
-      imports: [HttpClientModule, RouterTestingModule, FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule],
+      imports: [HttpClientModule, RouterTestingModule,
+        FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule],
       providers: [DatabaseListService, UserinfoService, DynamicLoaderService, CommonUtilityService, WorkspaceHeaderService]
     })
       .compileComponents();

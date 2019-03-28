@@ -1,0 +1,72 @@
+::ng-deep .search-screen .mat-card-header-text {
+  width: 100%;
+  margin: 0px !important;
+  color: #000;
+  font-weight: 600;
+}
+
+::ng-deep .search-screen .mat-card-title span {
+  float: right;
+  color: #1385f8 !important;
+  font-size: x-large;
+}
+
+::ng-deep .mat-card.column-box {
+  width: 32.60%;
+  padding: 11px 10px 8px 10px;
+  margin: 11px 4px 0px 3px;
+  border-radius: 3px;
+  border: solid 1px #c9d1df;
+  background-color: #fafafa;
+  text-align: left;
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
+}
+
+::ng-deep .search-screen .mat-card-title span i {
+  padding: 0 7px
+}
+
+::ng-deep .column-box .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0em 0px 10px 0px !important;}
+
+::ng-deep .column-box mat-form-field.select {
+  width: -webkit-fill-available
+}
+
+::ng-deep .column-box mat-form-field.text-box {
+  width: -webkit-fill-available
+}
+
+::ng-deep .column-box mat-form-field.text-box .mat-form-field-wrapper {
+  padding-bottom: 0px;
+  background-color: #ffffff;
+}
+
+.fa-trash {
+  color: #1385f8
+}
+
+::ng-deep .column-box mat-form-field.text-box div.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  opacity: 0.8 !important;
+  border-radius: 3px !important;
+  background-color: #ffffff !important;
+}
+
+#drag-search-column {
+  min-height: 220px;
+  max-height: 358px;
+  overflow: auto;
+}
+
+::ng-deep mat-card.col-md-4.column-box.cdk-drag.mat-card.ng-star-inserted {
+  padding-bottom: 10px;
+}
+
+.material-icons {
+  font-size: 26px;
+}
+
+.material-icons:hover,
+.material-icons:focus {
+  font-size: 26px;
+}

@@ -15,12 +15,13 @@
         <mat-form-field class="search-width">
           <input matInput [(ngModel)]="searchText" placeholder="Search">
         </mat-form-field>
-        <a style="font-size: 42px" (click)="openCreateAddDBmodal()" data-tooltip="Add Database"><i class="fa fa-plus-circle"></i></a>
+        <a style="font-size: 42px" (click)="openCreateAddDBmodal()" matTooltip="Add Database"><i class="material-icons plus">
+        </i></a>
       </div>
     </div>
-
-  <div class="flex-container" *ngFor="let dbListGroupObj of dbListActions; let indRow = index; let last = last" [ngClass]="{'test':last}">
-    <mat-card class="example-card" *ngFor="let db of dbListGroupObj | searchTable: searchText; let indCol = index">
+<div class="pl-20">
+  <div class="flex-container" *ngFor="let db of dbListActions| searchTable: searchText;let indRow = index; let last = last">
+    <mat-card class="example-card">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title class="header">{{db?.profileName}}</mat-card-title>
@@ -33,6 +34,7 @@
         <div class='body-left'>Server Type</div><div class='body-center'>:</div><div class='body-right'>{{db?.type}}</div>
       </mat-card-content>
     </mat-card> 
+  </div>
   </div>
   <ng-template #createNewDatabaseWizard></ng-template>
 
@@ -79,7 +81,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" id="cancel-btn" class="btn btn-primary btn-popup cancel" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
         </div>
       </div>
   

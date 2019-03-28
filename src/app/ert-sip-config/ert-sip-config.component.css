@@ -5,10 +5,9 @@
   }
   
   #ert-table-id {
-    position: relative;
-    
+    position: relative;    
     font-weight: 300;
-    font-size: 16px;
+    font-size: 12px;
     letter-spacing: 0.2
   }
   
