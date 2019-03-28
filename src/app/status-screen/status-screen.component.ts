@@ -25,6 +25,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   jobMessage: any;
   jobOutput: any;
   @ViewChild('click') button: ElementRef;
+  startIndex = 1;
 
   constructor(
     private router: Router,
@@ -73,7 +74,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getJobList() {
-    this.statusService.getJobList().subscribe(res => {
+    this.statusService.getJobList(this.selectedJobOrigin, this.selectedJobStatus, this.startIndex).subscribe(res => {
     this.jobList = res;
     const _this = this;
     setTimeout(function () {
@@ -103,13 +104,15 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   renderTable() {
+    console.log(this.jobList.list);
     const _this = this;
     this.dtOptions = {
-      pagingType: 'full_numbers',
+      pagingType: 'simple_numbers',
       pageLength: 10,
+      lengthChange: false,
       scrollX: true,
       autoWidth: true,
-      data: this.jobList,
+      data: this.jobList.list,
       columns: [
         {
           title: 'Job Name',
