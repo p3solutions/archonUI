@@ -17,6 +17,7 @@ export class DatabaseListService {
 
   configDBListUrl = environment.apiUrl + 'dbs/configured';
   getAllApproval = environment.apiUrl + 'workspaces/approvalPending';
+  postdecision = environment.apiUrl + 'workspaces/approvalEntry';
 
   constructor(private http: HttpClient,
     private workspaceHeaderService: WorkspaceHeaderService,
@@ -54,6 +55,13 @@ export class DatabaseListService {
   private extractApprove(res: any) {
     const data = res.data.pendingWorkspace;
     return data || [];
+  }
+
+  postDecision(body): Observable<any> {
+    return this.http.post<any>(this.postdecision, body , { headers: this.userinfoService.getHeaders() })
+    .pipe(
+      catchError(this.handleError('postDecision', []))
+    );
   }
 
 

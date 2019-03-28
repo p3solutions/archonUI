@@ -34,6 +34,8 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   workspaceId: any;
   heading: string;
   element: any;
+  reason: string;
+  elementId: any;
   
   constructor(
     private configDBListService: DatabaseListService,
@@ -58,7 +60,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
 
   getAllPending(): any {
     this.configDBListService.getPending().subscribe(result => {
-      console.log(result);
       this.pendingList = result;
       this.dataSource.data = this.pendingList;
     });
@@ -130,6 +131,25 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       this.heading = 'Rejection Confirmation';
     }
     this.element = element;
+    this.elementId = element.id;
+  }
+
+  submit(value) {
+    const resultArray = [];
+    const obj = {
+      workspaceApprovalId: this.elementId,
+      status: value,
+      reason: this.reason
+    };
+    resultArray.push(obj);
+    const body = {
+      workspaceAproval : resultArray
+    }
+    this.configDBListService.postDecision(body).subscribe(result => {
+    if (result) {
+    this.getAllPending();
+    }
+    });
   }
 
 }

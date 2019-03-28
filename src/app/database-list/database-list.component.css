@@ -257,9 +257,20 @@ td.tdr {
 
   .contentcolor{
     background-color: #f8fafc;
-    height: 220px;
+    height: 200px;
+  }
+  
+  .margin-5{
+    margin-top: 3%;
   }
 
+  .body-rightc {
+    color: #474849;
+  }
+
+  .reason {
+    height: 140px;
+  }
 
 
  

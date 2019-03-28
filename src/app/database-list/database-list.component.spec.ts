@@ -9,7 +9,7 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatCardModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatCardModule, MatInputModule, MatTableModule, MatPaginator, MatPaginatorModule } from '@angular/material';
 import { SearchPipe } from '../search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -20,7 +20,7 @@ describe('DatabaseListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DatabaseListComponent, SearchPipe],
-      imports: [HttpClientModule, RouterTestingModule, FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule],
+      imports: [HttpClientModule, RouterTestingModule, MatTableModule ,FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, MatPaginatorModule],
       providers: [DatabaseListService, UserinfoService, DynamicLoaderService, CommonUtilityService, WorkspaceHeaderService]
     })
       .compileComponents();
