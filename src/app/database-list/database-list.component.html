@@ -26,6 +26,7 @@
         </div>
           <div class="col-md-5"></div>
     </div>
+    <div *ngIf="!toggleBoolean"> 
     <div class="col-md-6"></div>
     <div class="col-md-6">
         <div class="col-md-3"></div>
@@ -52,6 +53,7 @@
         <div class='body-left'>Server Type</div><div class='body-center'>:</div><div class='body-right'>{{db?.type}}</div>
       </mat-card-content>
     </mat-card> 
+  </div>
   </div>
   </div>
   <ng-template #createNewDatabaseWizard></ng-template>
@@ -100,6 +102,81 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+    </div>
+
+    <div *ngIf="toggleBoolean" style="padding-top: 45px;">
+      <div class="col-md-12">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+          <mat-form-field class="search-wid">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mat-elevation-z4" id="char-table">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="DB Profile Name">
+            <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> DB Profile Name </th>
+            <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.dbProfileName}}</td>
+          </ng-container>
+          <ng-container matColumnDef="Workspace Name">
+            <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header>Workspace Name</th>
+            <td style="width:15%" mat-cell *matCellDef="let element"> {{element.workspaceName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Workspace Owner">
+            <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Workspace Owner </th>
+            <td style="width:15%" mat-cell *matCellDef="let element"> {{element.workspaceOwnerName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Comments">
+            <th style="width:15%" mat-header-cell *matHeaderCellDef> Comments </th>
+            <td style="width:15%" mat-cell *matCellDef="let element"> {{element.reason}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Approve">
+            <th style="width:10%" mat-header-cell *matHeaderCellDef> Approve </th>
+            <td style="width:10%" class="cursor-pointer" mat-cell  *matCellDef="let element"><i class="material-icons" (click)="openModal(element, 'Approve')" matTooltip="Approve" data-toggle="modal" href="#approval-modal">
+                check_box
+                </i>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Reject">
+            <th style="width:10%" mat-header-cell *matHeaderCellDef> Reject </th>
+            <td style="width:10%" class="cursor-pointer" mat-cell  *matCellDef="let element"><i class="material-icons reject" matTooltip="Reject" (click)="openModal(element, 'Reject')" data-toggle="modal" href="#approval-modal">
+                block
+                </i>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+
+
+    <div id="approval-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+            <div class='model-title' *ngIf="heading == 'Approval Confirmation'"><i class="fa fa-check-square-o fa-lg"></i><div class='info-r'>{{heading}}</div></div>
+            <div class='model-title' *ngIf="heading == 'Rejection Confirmation'"><i class="fa fa-ban fa-lg reject"></i><div class='info-r'>{{heading}}</div></div>
+        </div>
+        <div class="modal-body">
+    <div class="content contentcolor">
+              <div class='body-left'>Database Profile Name</div><div class='body-center'>:</div><div class='body-right'>{{element.dbProfileName}}</div>
+              <div class='body-left'>Workspace Name</div><div class='body-center'>:</div><div class='body-right'>{{element.workspaceName}}</div>
+              <div class='body-left'>Workspace Owner</div><div class='body-center'>:</div><div class='body-right'>{{element.workspaceOwnerName}}</div>
+              <div class='body-left'>Comment</div><div class='body-center'>:</div><div class='body-right'>{{element.reason}}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default cancel bgchange" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-default cancel" data-dismiss="modal" *ngIf="heading == 'Rejection Confirmation'">Reject</button>
+          <button type="button" class="btn btn-default cancel" data-dismiss="modal" *ngIf="heading == 'Approval Confirmation'">Approve</button>
         </div>
       </div>
   

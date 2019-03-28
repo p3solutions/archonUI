@@ -16,6 +16,8 @@ export class DatabaseListService {
   jwtHelper: JwtHelperService = new JwtHelperService();
 
   configDBListUrl = environment.apiUrl + 'dbs/configured';
+  getAllApproval = environment.apiUrl + 'workspaces/approvalPending';
+
   constructor(private http: HttpClient,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService) {
@@ -38,6 +40,19 @@ export class DatabaseListService {
 
   private extractConfigDB(res: any) {
     const data = res.data.configuredDatabases;
+    return data || [];
+  }
+
+  getPending(): Observable<any> {
+    return this.http.get<any>(this.getAllApproval, { headers: this.userinfoService.getHeaders() })
+    .pipe(
+      map(this.extractApprove),
+      catchError(this.handleError('getPending', []))
+    );
+  }
+
+  private extractApprove(res: any) {
+    const data = res.data.pendingWorkspace;
     return data || [];
   }
 

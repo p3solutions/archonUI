@@ -212,6 +212,56 @@ td.tdr {
  
   /* Toggle Button Ends */
 
+  table {
+    width: 100%;
+  }
+  
+  td,
+  th {
+    width: 25%;
+    text-align: left;
+    font-size: 14px;
+    color:#0c0c0c;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  ::ng-deep svg {
+    height: 8vh;
+  }
+  
+  th {
+    font-weight: bold;
+  }
+  
+  #char-table {
+    margin: 60px 27px 2px 40px;
+  }
+  .mat-cell, .mat-footer-cell {
+    font-size: 12px;
+  }
+
+  .search-wid {
+    width: 100%;
+  }
+
+  .reject {
+    color: #ff0000
+  }
+
+  .bgchange {
+    background-color: #64b5f6;
+    color: #000000;
+    border: #64b5f6;
+    transition: 0.5s;
+  }
+
+  .contentcolor{
+    background-color: #f8fafc;
+    height: 220px;
+  }
+
+
+
  
 
 
