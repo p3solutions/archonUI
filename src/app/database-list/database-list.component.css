@@ -174,7 +174,7 @@ td.tdr {
    cursor: pointer;
  }
  .one .button-bg {
-   width: 100%;
+   width: 89%;
    height: 100%;
    background-color:#cfd7e3;;
    border-radius: 40px;
@@ -184,14 +184,14 @@ td.tdr {
  .one .button-switch {
    position:relative;
    left:0px;
-   width: 255px;
+   width: 125px;
    height: 44px;
    border:solid 22px;
    border-radius: 36px;
    transition:all 0.2s ease;
    border-color:#2879ff;
  }
- .one .button-active .button-switch { left:185px;border-color:#2879ff; }
+ .one .button-active .button-switch { left:116px; width: 172px;border-color:#2879ff; }
  .one .button-in, 
  .one .button-out {
    position:absolute; 
@@ -200,10 +200,10 @@ td.tdr {
    font-family: Roboto;
    font-size:18px;
  }
- .one .button-in { margin-left:260px; }
- .one .button-out { margin-left:20px; color:#ffffff; }
+ .one .button-in { margin-left:132px; }
+ .one .button-out { margin-left:20px; margin-right: 20px; color:#ffffff; }
  .one .button-active .button-out { color:#595959; }
- .one .button-active .button-in { color:#ffffff;margin-left: 210px;}
+ .one .button-active .button-in { color:#ffffff;margin-left: 132px;}
  .one .button-active .button-bg { background-color:#cfd7e3; }
 
  .index {
