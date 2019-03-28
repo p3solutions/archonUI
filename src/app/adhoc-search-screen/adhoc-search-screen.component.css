@@ -12,9 +12,9 @@
 }
 
 ::ng-deep .mat-card.column-box {
-  width: 30.25%;
+  width: 32.60%;
   padding: 11px 10px 8px 10px;
-  margin: 11px 10px 0px 2px;
+  margin: 11px 4px 0px 3px;
   border-radius: 3px;
   border: solid 1px #c9d1df;
   background-color: #fafafa;
@@ -27,7 +27,7 @@
 }
 
 ::ng-deep .column-box .mat-form-field-appearance-outline .mat-form-field-infix {
-  padding: 0.4em 0px 9px 0px !important;}
+  padding: 0.4em 0px 10px 0px !important;}
 
 ::ng-deep .column-box mat-form-field.select {
   width: -webkit-fill-available

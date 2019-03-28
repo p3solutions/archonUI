@@ -127,7 +127,7 @@ button.example-add-tab-button.mat-raised-button {
 
 button.example-add-tab-button.mat-raised-button:hover {
   background-color: #0a85f8;
-
+  color: white;
 }
 
 .rename .mat-form-field-wrapper {
@@ -145,6 +145,7 @@ button.example-add-tab-button.mat-raised-button:hover {
 
 .renameBtn-div button:hover {
   background-color: #0a85f8;
+  color: white;
 }
 
 .renameBtn-div button span.mat-button-wrapper {

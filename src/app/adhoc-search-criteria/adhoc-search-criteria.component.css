@@ -76,6 +76,7 @@ mat-card-header.header-blue {
 
 #clearBtn:hover {
   background-color: #0a85f8;
+  color: white;
 }
 
 /* #mat-expansion-panel-header-2 {
@@ -140,6 +141,7 @@ mat-card-header.header-blue {
 
 .form-control-feedback {
   margin-top: 0px;
+  color: #676767
 }
 
 .form-control {
@@ -162,7 +164,7 @@ mat-card-header.header-blue {
   padding-right: 30px;
 }
 
-.fixVertical  {
+.fixVertical {
   flex: 1 1 100%;
-  min-height:100vh;
+  min-height: 100vh;
 }
