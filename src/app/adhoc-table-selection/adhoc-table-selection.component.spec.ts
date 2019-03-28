@@ -17,8 +17,8 @@ describe('AdhocTableSelectionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AdhocTableSelectionComponent],
-      providers: [TableListService, UserinfoService, NgxPaginationModule, WorkspaceHeaderService, ErtService],
-      imports: [HttpClientModule, RouterTestingModule],
+      providers: [TableListService, UserinfoService, WorkspaceHeaderService, ErtService],
+      imports: [HttpClientModule, NgxPaginationModule, RouterTestingModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

@@ -50,7 +50,7 @@ export class CreateAppDialogComponent {
 export class AdhocAppScreenListComponent implements OnInit {
   dataSource: ScreenDataSource;
   screenInfo = new Adhoc();
-  displayedColumns: string[] = ['position', 'screenName', 'parentScreenInfo.screenName',
+  displayedColumns: string[] = ['position', 'link', 'screenName', 'parentScreenInfo.screenName',
     'screenDesc', 'edit', 'nestedLink', 'delete', 'download'];
   screenInfoList: Adhoc[] = [];
   applicationInfoList: ApplicationInfo[] = [];

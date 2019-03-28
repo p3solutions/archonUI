@@ -131,7 +131,7 @@ import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonito
 import { AuditingComponent } from './auditing/auditing.component';
 import { ScheduleMonitoringService } from './schedulemonitoring/schedule-monitoring.service';
 import { AuditService } from './auditing/audit.service';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -244,7 +244,8 @@ export function tokenGetter() {
                 MatButtonModule,
                 MatCheckboxModule,
                 MaterialModule,
-                MatSelectInfiniteScrollModule
+                MatSelectInfiniteScrollModule,
+                FlexLayoutModule
         ],
         providers: [
                 JwtHelperService,

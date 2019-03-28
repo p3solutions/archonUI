@@ -7,11 +7,17 @@ i {
   min-height: 25px;
 }
 
+html,
+body {
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+}
+
 .mat-card#left-card {
   padding: 0px;
   overflow: auto;
-  min-height: 500px;
-  max-height: 500px;
+  height: 100%;
 }
 
 .mat-card#right-card {
@@ -126,4 +132,37 @@ mat-card-header.header-blue {
 
 .mat-tree-node:hover {
   background-color: #f0f0f0 !important;
+}
+
+.inner-addon {
+  position: relative;
+}
+
+.form-control-feedback {
+  margin-top: 0px;
+}
+
+.form-control {
+  border-radius: 3px;
+}
+
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+.right-addon .glyphicon {
+  right: 29px;
+  bottom: 53px;
+  top: 56px
+}
+
+.right-addon input {
+  padding-right: 30px;
+}
+
+.fixVertical  {
+  flex: 1 1 100%;
+  min-height:100vh;
 }

@@ -32,6 +32,9 @@ export class ScreenDataSource implements DataSource<Adhoc> {
                 if (value.sessionAdhocModel === null) {
                     value.sessionAdhocModel = new SessionAdhoc();
                 }
+                if (value.childScreenInfo !== null) {
+                    value.link = true;
+                }
             });
             this.totalScreen = result.totalScreen;
             this.adhocSubject.next(result.list);
@@ -42,26 +45,26 @@ export class ScreenDataSource implements DataSource<Adhoc> {
 
         this.adhocService.getSearchScreen(startIndexOfScreen,
             value, appId).subscribe((result) => {
-              // this.screenInfoList = result;
-              // this.addPosition();
-              // this.dataSource.data = this.screenInfoList;
-              // if (this.dataSource.paginator) {
-              //   this.dataSource.paginator.firstPage();
-              // }
-            result.list.forEach((value, index) => {
-                value.position = index + 1;
-                if (value.parentScreenInfo === null) {
-                    value.parentScreenInfo = new ParentScreenInfo();
-                }
-                if (value.childScreenInfo === null) {
-                    value.childScreenInfo = [];
-                }
-                if (value.sessionAdhocModel === null) {
-                    value.sessionAdhocModel = new SessionAdhoc();
-                }
+                // this.screenInfoList = result;
+                // this.addPosition();
+                // this.dataSource.data = this.screenInfoList;
+                // if (this.dataSource.paginator) {
+                //   this.dataSource.paginator.firstPage();
+                // }
+                result.list.forEach((value, index) => {
+                    value.position = index + 1;
+                    if (value.parentScreenInfo === null) {
+                        value.parentScreenInfo = new ParentScreenInfo();
+                    }
+                    if (value.childScreenInfo === null) {
+                        value.childScreenInfo = [];
+                    }
+                    if (value.sessionAdhocModel === null) {
+                        value.sessionAdhocModel = new SessionAdhoc();
+                    }
+                });
+                this.totalScreen = result.totalScreen;
+                this.adhocSubject.next(result.list);
             });
-            this.totalScreen = result.totalScreen;
-            this.adhocSubject.next(result.list);
-        });
     }
 }

@@ -1261,7 +1261,8 @@ svg {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 32px;  /* Preferred icon size */
+  font-size: 32px;
+  /* Preferred icon size */
   color: #80adf8;
   display: inline-block;
   line-height: 1;
@@ -1289,7 +1290,8 @@ svg {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 32px;  /* Preferred icon size */
+  font-size: 32px;
+  /* Preferred icon size */
   color: #2879ff;
   display: inline-block;
   line-height: 1;
@@ -1326,6 +1328,10 @@ svg {
 
 .create-app-dialog .flex-container form>* {
   margin: 5px 0;
+}
+
+.create-app-dialog button.mat-button {
+  background-color: #64b5f6;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-outline {
@@ -1407,14 +1413,16 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
   border-color: #0a85f8;
 }
+
 .cursor {
   cursor: pointer;
 }
 
-.material-icons.plus:hover::before, .material-icons.plus:focus::before {
+.material-icons.plus:hover::before,
+.material-icons.plus:focus::before {
   content: "add_circle"
 }
 
-.material-icons.plus::before{
-  content:"add_circle_outline"; 
+.material-icons.plus::before {
+  content: "add_circle_outline";
 }

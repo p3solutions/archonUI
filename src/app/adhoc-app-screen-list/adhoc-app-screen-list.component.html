@@ -70,21 +70,26 @@
         <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
         <td style="width:8%" mat-cell *matCellDef="let element; let i = index;">{{element.position}}</td>
       </ng-container>
-      <ng-container matColumnDef="screenName">
-        <th style="width:13%" mat-header-cell *matHeaderCellDef mat-sort-header> Screen Name </th>
-        <td style="width:13%" mat-cell *matCellDef="let element"> <button *ngIf="element.childScreenInfo.length>0"
+      <ng-container matColumnDef="link">
+        <th style="width:3%" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+        <td style="width:3%" mat-cell *matCellDef="let element"> <button *ngIf="element.childScreenInfo.length>0"
             (click)="showChildInfo(element.id)" mat-icon-button [matMenuTriggerFor]="menu">
             <i class="cursor-poniter fa fa-link"></i>
           </button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="screenName">
+        <th style="width:12%" mat-header-cell *matHeaderCellDef mat-sort-header> Screen Name </th>
+        <td style="width:12%" mat-cell *matCellDef="let element">
           {{element.screenName}} </td>
       </ng-container>
       <ng-container matColumnDef="parentScreenInfo.screenName">
-        <th style="width:13%" mat-header-cell *matHeaderCellDef> Linked Screen </th>
-        <td style="width:13%" mat-cell *matCellDef="let element"> {{element.parentScreenInfo?.screenName}} </td>
+        <th style="width:12%" mat-header-cell *matHeaderCellDef> Linked Screen </th>
+        <td style="width:12%" mat-cell *matCellDef="let element"> {{element.parentScreenInfo?.screenName}} </td>
       </ng-container>
       <ng-container matColumnDef="screenDesc">
-        <th style="width:33%" mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-        <td style="width:33%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
+        <th style="width:32%" mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+        <td style="width:32%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
       </ng-container>
       <ng-container matColumnDef="edit">
         <th style="width:6%" mat-header-cell *matHeaderCellDef> Edit </th>

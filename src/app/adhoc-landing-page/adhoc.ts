@@ -228,6 +228,7 @@ export class SessionAdhoc {
 export class Adhoc {
     metadataVersion = '';
     position = null;
+    link = false;
     appId = '';
     workspaceId = '';
     schemaName = '';
