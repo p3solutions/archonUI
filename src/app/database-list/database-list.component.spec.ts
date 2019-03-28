@@ -13,7 +13,7 @@ import { MatFormFieldModule, MatCardModule, MatInputModule } from '@angular/mate
 import { SearchPipe } from '../search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-xdescribe('DatabaseListComponent', () => {
+describe('DatabaseListComponent', () => {
   let component: DatabaseListComponent;
   let fixture: ComponentFixture<DatabaseListComponent>;
 

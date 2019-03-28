@@ -131,7 +131,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.adhocService.downloadScreen(screenId).subscribe(data => {
       if (data === undefined) {
         document.getElementById('success-popup-btn').click();
-        this.successMessage = 'No session saved for this screen';
+        this.successMessage = 'Download Failed';
       } else {
         document.getElementById('success-popup-btn').click();
         this.successMessage = 'Download Started';
