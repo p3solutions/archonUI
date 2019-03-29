@@ -1426,3 +1426,88 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 .material-icons.plus::before {
   content: "add_circle_outline";
 }
+
+.create-user-invite-dialog .flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-user-invite-dialog .flex-container>* {
+  width: 100%;
+}
+
+.create-user-invite-dialog .flex-container form {
+  margin-bottom: 20px;
+}
+
+.create-user-invite-dialog .flex-container form>* {
+  margin: 5px 0;
+}
+
+.create-user-invite-dialog button.mat-button {
+  background-color: #64b5f6;
+}
+
+.create-user-invite-dialog .mat-dialog-title {
+  display: flex;
+  background-color: #2879ff;
+  padding-left: 26px;
+  padding-top: 17px;
+  color: #ffffff;
+  padding-bottom: 17px;
+}
+
+.create-user-invite-dialog .mat-dialog-content {
+  padding: 6px 14px 0px 27px;
+  margin: 0px;
+}
+
+.create-user-invite-dialog .mat-dialog-actions {
+  margin-top: 14px;
+  padding-left: 24px;
+  border-top: 1px solid #b0afaf;
+  text-align: right;
+  padding-right: 11px;
+  padding-bottom: 11px;
+  display: block
+}
+
+.create-user-invite-dialog .mat-dialog-container {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 24px;
+}
+
+.create-user-invite-dialog .material-icons {
+  padding-top: 3px;
+  padding-right: 4px;
+  font-size: 25px;
+  color: #ffffff;
+  padding-bottom: 2px;
+}
+
+.create-user-invite-dialog .material-icons:hover,
+.material-icons:focus {
+  padding-top: 3px;
+  padding-right: 4px;
+  font-size: 25px;
+  color: #ffffff;
+  padding-bottom: 2px;
+}
+
+.create-user-invite-dialog button.invite {
+  background-color: #2879ff;
+  color: #ffffff;
+  font-family: roboto;
+  font-size: 16px;
+}
+
+.create-user-invite-dialog button.cancel {
+  font-family: roboto;
+  font-size: 16px;
+}
+
+.create-user-invite-dialog .mat-form-field-appearance-legacy .mat-form-field-label{
+  color: #121212
+}

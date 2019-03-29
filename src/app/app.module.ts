@@ -47,7 +47,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserinfoService } from './userinfo.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.service';
-import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
+import { ManageUserRolesComponent, CreateUserInviteDialogComponent } from './manage-user-roles/manage-user-roles.component';
 import { ChangeUserRoleComponent } from './change-user-role/change-user-role.component';
 import { ChangeUserRoleService } from './change-user-role/change-user-role.service';
 import { WorkspaceInfoService } from './workspace-info/workspace-info.service';
@@ -115,18 +115,20 @@ import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { MaterialModule } from './material-module';
 import { AdhocLandingPageComponent } from './adhoc-landing-page/adhoc-landing-page.component';
 import { AdhocHeaderComponent } from './adhoc-header/adhoc-header.component';
-import { AdhocAppScreenListComponent, CreateScreenDialogComponent,
-        CreateAppDialogComponent } from './adhoc-app-screen-list/adhoc-app-screen-list.component';
+import {
+        AdhocAppScreenListComponent, CreateScreenDialogComponent,
+        CreateAppDialogComponent
+} from './adhoc-app-screen-list/adhoc-app-screen-list.component';
 import { AdhocTableSelectionComponent } from './adhoc-table-selection/adhoc-table-selection.component';
 import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-search-criteria.component';
 import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-screen.component';
 import { AdhocEditSearchScreenPopupComponent } from './adhoc-edit-search-screen-popup/adhoc-edit-search-screen-popup.component';
 import { AdhocScreenService } from './adhoc-search-criteria/adhoc-screen.service';
 import { AdhocSearchPanelComponent } from './adhoc-search-panel/adhoc-search-panel.component';
-import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
+import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
 import { AdhocEditPanelColumnPopupComponent } from './adhoc-edit-panel-column-popup/adhoc-edit-panel-column-popup.component';
 import { ScheduleJobComponent } from './schedule-job/schedule-job.component';
-import {BsDatepickerModule, TimepickerModule, ModalModule} from 'ngx-bootstrap';
+import { BsDatepickerModule, TimepickerModule, ModalModule } from 'ngx-bootstrap';
 import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
 import { AuditingComponent } from './auditing/auditing.component';
 import { ScheduleMonitoringService } from './schedulemonitoring/schedule-monitoring.service';
@@ -218,8 +220,9 @@ export function tokenGetter() {
                 AdhocSearchScreenComponent,
                 AdhocEditSearchScreenPopupComponent,
                 AdhocSearchPanelComponent,
-                AdhocEditPanelColumnPopupComponent
-                ],
+                AdhocEditPanelColumnPopupComponent,
+                CreateUserInviteDialogComponent
+        ],
         imports: [
                 JwtModule.forRoot({
                         config: {
@@ -294,6 +297,6 @@ export function tokenGetter() {
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent
-                , CreateScreenDialogComponent, CreateAppDialogComponent]
+                , CreateScreenDialogComponent, CreateAppDialogComponent, CreateUserInviteDialogComponent]
 })
 export class AppModule { }

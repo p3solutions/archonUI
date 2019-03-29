@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>
+  <i class="material-icons">mail_outline </i> Invite New User
+</h1>
+<div mat-dialog-content>
+  <form #userInviteForm="ngForm" class="flex-container">
+    <mat-form-field>
+      <input name="email" type="email" email="true" #email="ngModel" [(ngModel)]="userInviteInfo.emailAddress" required
+        matInput placeholder="Email">
+      <mat-error *ngIf="email.errors?.email && !email.errors?.required">
+        Email is invalid.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select #globalGroup="ngModel" [(ngModel)]="userInviteInfo.globalGroup" required name="globalgroup"
+        placeholder="Global Group">
+        <mat-option [value]="1">
+          Admin
+        </mat-option>
+        <mat-option [value]="2">
+          User
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea #bussjust="ngModel" [(ngModel)]="userInviteInfo.businessJustification" matInput name="buss-just"
+        required placeholder="Bussiness Justification"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="cancel" (click)="onNoClick()">Cancel</button>
+  <button mat-button class="invite" [disabled]="!userInviteForm.form.valid" [mat-dialog-close]="userInviteInfo">
+    Invite</button>
+</div>
