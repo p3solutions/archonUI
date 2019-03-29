@@ -74,6 +74,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getJobList() {
+    this.loadStatus = false;
     this.statusService.getJobList(this.selectedJobOrigin, this.selectedJobStatus, this.startIndex).subscribe(res => {
     this.jobList = res;
     const _this = this;
