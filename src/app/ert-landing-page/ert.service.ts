@@ -85,9 +85,8 @@ export class ErtService {
       );
   }
 
-  getERTtablesearchList(workspaceId: string, tablesearchname = ''): Observable<ErtTableListObj> {
-    // console.log(this.getERTtableListUrl + workspaceId + '&tableName=' + tablesearchname);
-    return this.http.get<ErtTableListObj>(this.getERTtableListUrl + workspaceId + '&tableName=' + tablesearchname,
+  getERTtablesearchList(workspaceId: string, tablesearchname = '', ertJobId = ''): Observable<ErtTableListObj> {
+    return this.http.get<ErtTableListObj>(this.getERTtableListUrl + workspaceId + '&tableName=' + tablesearchname + '&ertJobId=' + ertJobId,
       { headers: this.userInfoService.getHeaders() }).pipe(
         map(this.extractData),
         catchError(this.handleError('getERTtableList', []))
