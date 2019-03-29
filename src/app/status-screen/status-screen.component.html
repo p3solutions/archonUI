@@ -23,11 +23,11 @@
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobOrigin('')">JOB
+          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobOrigin('');getJobList()">JOB
             ORIGIN: ALL</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item dropdown-data trim-text j-origin" *ngFor="let jOrigin of jobOriginList" title="{{jOrigin}}"
-            (click)="selectJobOrigin(jOrigin)">{{jOrigin}}</a>
+            (click)="selectJobOrigin(jOrigin);getJobList()">{{jOrigin}}</a>
         </div>
       </div>
     </div>
@@ -38,11 +38,11 @@
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobStatus('')">JOB
+          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobStatus('');getJobList()">JOB
             STATUS: All</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item dropdown-data trim-text j-status" *ngFor="let jStatus of jobStatusList" title="{{jStatus}}"
-            (click)="selectJobStatus(jStatus)">{{jStatus}}</a>
+            (click)="selectJobStatus(jStatus);getJobList()">{{jStatus}}</a>
         </div>
       </div>
     </div>
