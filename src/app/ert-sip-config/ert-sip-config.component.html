@@ -29,6 +29,9 @@
               SIP Record Definition
              </div>
         <div class="card-body"> 
+            <p style="margin-top: 95px;" *ngIf="isRelationNot">
+                No ralationship available for this table
+             </p>
           <!-- <div class="row">
             <h3>Select a graph source table to generate a graph view</h3>
           </div> -->
@@ -37,7 +40,7 @@
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary next" [disabled]="data == null" (click)="gotoDataRecFinal()" style="float: right;margin-right: 25px">Next</button>
+    <button type="button" class="btn btn-primary next" disabled="{{enableNextBtn ? null : 'disabled'}}" (click)="gotoDataRecFinal()" style="float: right;margin-right: 25px">Next</button>
     <button class="btn btn-primary Previous back" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
       Back</button>
   </div>
