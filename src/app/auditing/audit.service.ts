@@ -14,6 +14,7 @@ export class AuditService {
   getEventsUrl = environment.apiUrl + 'audits/events';
   downloadUrl = environment.apiUrl + 'audits/download?jobId=';
   jobDetails = environment.apiUrl + 'jobStatus/jobDetails?jobId=';
+  startIndex = 1;
   constructor(private http: HttpClient, private userinfoService: UserinfoService) { }
 
   getHeaders() {
@@ -45,7 +46,7 @@ export class AuditService {
   getJobStatuses(params) {
     return this.http.get<any>(this.getAuditUrl + params.userId + '&workspaceId=' + params.workspaceId
       + '&eventName=' + params.eventName + '&severityLevel=' + params.severityLevel
-      + '&fromDate=' + params.fromDate + '&toDate=' + params.toDate + '&serviceId=' + params.serviceId, { headers: this.getHeaders() }).pipe(
+      + '&fromDate=' + params.fromDate + '&toDate=' + params.toDate + '&serviceId=' + params.serviceId + '&index=' + this.startIndex, { headers: this.getHeaders() }).pipe(
         map(this.extractJobOrigins),
         catchError(this.handleError<any>('getJobStatus')));
   }

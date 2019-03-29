@@ -105,7 +105,6 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   renderTable() {
-    console.log(this.jobList.list);
     const _this = this;
     this.dtOptions = {
       pagingType: 'simple_numbers',
