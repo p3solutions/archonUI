@@ -17,7 +17,7 @@ th {
 }
 
 ::ng-deep #screen-table svg {
-  height: 8vh !important;
+  height: 6vh !important;
 }
 
 .open-app {
