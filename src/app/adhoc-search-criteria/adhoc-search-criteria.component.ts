@@ -206,8 +206,8 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     });
     this.screenInfoObject.screenId = this.screenInfoObject.id;
     this.screenInfoObject.sessionAdhocModel.screenId = this.screenInfoObject.id;
-    this.screenInfoObject.metadataVersion = this.tempHeader.metadataVersion;
-    this.screenInfoObject.sessionAdhocModel.metadataVersion = this.tempHeader.metadataVersion;
+    this.screenInfoObject.metadataVersion = this.tempHeader.appMetadataVersion;
+    this.screenInfoObject.sessionAdhocModel.metadataVersion = this.tempHeader.appMetadataVersion;
     delete this.screenInfoObject['id'];
     if (this.screenInfoObject.parentScreenInfo.screenId === '') {
       this.screenInfoObject['parentScreenInfo'] = null;

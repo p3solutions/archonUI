@@ -89,6 +89,7 @@ export class AdhocHeaderInfo {
     screenName: string;
     appName: string;
     metadataVersion: string;
+    appMetadataVersion: string;
     workspaceId: string;
 }
 
