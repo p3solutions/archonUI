@@ -21,7 +21,7 @@ describe('DatabaseListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DatabaseListComponent, SearchPipe],
       imports: [HttpClientModule, RouterTestingModule,
-        FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule],
+        FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, MatTableModule, MatPaginatorModule],
       providers: [DatabaseListService, UserinfoService, DynamicLoaderService, CommonUtilityService, WorkspaceHeaderService]
     })
       .compileComponents();
