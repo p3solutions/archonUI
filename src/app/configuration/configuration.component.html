@@ -1,0 +1,32 @@
+<div>
+  <div class="row">
+    <div id="back-div">
+      <div class="back-arrow">
+        <a (click)="gotoManagementPanel()" data-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div>
+        <h3 class="configuration-heading">
+          Configuration
+          <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div id="config-div">
+    <div id="config-mgmt-panel">
+      <ul class="nav nav-tabs mgmt-panel mt-10">
+        <li class="trim-text smtp-config">
+          <a [routerLink]="['smtp-configuration']" [class.active]="checkActive == 'Email SMTP Configuration'"
+            (click)="checkActive = $event.target.innerText">Email SMTP Configuration</a>
+        </li>
+        <li class="trim-text app-config">
+          <a [routerLink]="['smtp-configuration']" [class.active]="checkActive == 'App Configuration'"
+            (click)="checkActive = $event.target.innerText">App Configuration</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

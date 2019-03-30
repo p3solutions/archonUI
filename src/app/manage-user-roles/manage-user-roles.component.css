@@ -189,10 +189,10 @@ th {
 }
 
 th {
-  color: #333;
+  color: #0c0c0c;
   font-weight: bold;
-  font-size: 15px;
-  font-family: "Roboto", "Montserrat", sans-serif;
+  font-size: 14px;
+  font-family: Roboto;
 }
 
 .example-table-container {

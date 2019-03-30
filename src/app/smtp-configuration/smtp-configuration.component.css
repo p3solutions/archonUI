@@ -1,0 +1,59 @@
+.smtp-div .flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.smtp-div .flex-container>* {
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+.smtp-div .flex-container form {
+  margin-bottom: 20px;
+}
+
+.smtp-div .flex-container form>* {
+  margin: 5px 0;
+}
+
+#smtp-outer {
+  width: 50%;
+  margin: 46px auto;
+}
+
+::ng-deep .smtp-div .mat-form-field-appearance-legacy .mat-form-field-label {
+  color: #1385f8;
+}
+
+h3 {
+  font-size: 20px;
+  color: #0c0c0c;
+}
+
+::ng-deep .smtp-div .mat-form-field-appearance-legacy .mat-form-field-label span {
+  color: #f44336;
+}
+
+::ng-deep #action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  font-family: roboto;
+  font-size: 16px;
+  margin-right: 10px
+}
+
+::ng-deep #action-btn button.cancel {
+  font-family: roboto;
+  font-size: 16px;
+  margin-right: 10px;
+  background-color: #64b5f6;
+  color: #1b1b1b;
+}
+
+#action-btn {
+  margin: 17px;
+}
+
+#heading {
+  margin-bottom: 17px;
+}

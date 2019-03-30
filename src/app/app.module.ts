@@ -134,6 +134,8 @@ import { AuditingComponent } from './auditing/auditing.component';
 import { ScheduleMonitoringService } from './schedulemonitoring/schedule-monitoring.service';
 import { AuditService } from './auditing/audit.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ConfigurationComponent } from './configuration/configuration.component';
+import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -221,7 +223,9 @@ export function tokenGetter() {
                 AdhocEditSearchScreenPopupComponent,
                 AdhocSearchPanelComponent,
                 AdhocEditPanelColumnPopupComponent,
-                CreateUserInviteDialogComponent
+                CreateUserInviteDialogComponent,
+                ConfigurationComponent,
+                SmtpConfigurationComponent
         ],
         imports: [
                 JwtModule.forRoot({
