@@ -24,10 +24,10 @@
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectTool('');getStatus()">Tool
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectTool('');getStart()">Tool
                 : All</a>
             <div class="dropdown-divider"></div>
-          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let job of tools" (click)="selectTool(job);getStatus()">
+          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let job of tools" (click)="selectTool(job);getStart()">
             {{job}}</a>
         </div>
       </div>
@@ -40,10 +40,10 @@
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectJobStatus('');getStatus()">JOB STATUS
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectJobStatus('');getStart()">JOB STATUS
                 : All</a>
             <div class="dropdown-divider"></div>
-          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" *ngFor="let i of Status"  title="JOB ORIGIN: ALL" (click)="selectJobStatus(i);getStatus()">
+          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" *ngFor="let i of Status"  title="JOB ORIGIN: ALL" (click)="selectJobStatus(i);getStart()">
           {{i}} </a>
       </div>
     </div>
@@ -67,13 +67,121 @@
 
 </div>
 
-<div class="row" style="padding-top: 95px;">
+<div class="col-md-6"></div>
+    <div class="col-md-6">
+        <div class="col-md-6"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <mat-form-field class="search-wid">
+              <input matInput [(ngModel)]="search" placeholder="Search" (keyup)="getSearch()">
+            </mat-form-field>
+          </div>
+</div>
+
+<div class="row" style="padding-top: 170px;">
+  <div class="example-table-container mat-elevation-z4" id="screen-table">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="Job Type">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Type </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobType}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Tool">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Tool </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.tool}}</td>
+      </ng-container>
+      <ng-container matColumnDef="User">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.user}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Job Name">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Job Runs">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Runs </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobRun}}</td>
+      </ng-container>     
+      <ng-container matColumnDef="Schedule Time">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Schedule Time </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.scheduledDate}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Start Time">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.startTime}}</td>
+      </ng-container>
+      <ng-container matColumnDef="End Time">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.endDate}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Last Run Time">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header>Last Run Time </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.lastRuntime}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Next Start Time">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Next Start Time </th>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.nextStartTime}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Status">
+        <th style="width:10%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
+        <td style="width:10%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+          <i class="material-icons success" matTooltip="Success" *ngIf="element.status === 'SUCCESS'">check_circle</i>
+          <i class="material-icons inpro" matTooltip="In_Progress" *ngIf="element.status === 'IN_PROGRESS'">sync</i>
+          <i class="material-icons failure" matTooltip="Failed" *ngIf="element.status === 'FAILED'">error</i>
+          <i class="material-icons sche" matTooltip="Scheduled" *ngIf="element.status === 'SCHEDULED'">schedule</i>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Details">
+        <th style="width:10%;text-align: center" mat-header-cell *matHeaderCellDef> Details </th>
+        <td style="width:10%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+          <i class="material-icons details" matTooltip="View Job Details" *ngIf="element.scheduleId !== null" (click)="openDetail(element.scheduleId)">info</i>
+          <i class="material-icons details" style="color: grey" matTooltip="No Job Details" *ngIf="element.scheduleId == null">info</i>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="Stop">
+        <th style="width:10%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
+        <td style="width:10%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+          <i class="material-icons replay" matTooltip="Retry" *ngIf="element.status === 'FAILED'" (click)="retryJob(element.id)">replay</i>
+          <i class="material-icons replay" style="color: grey" matTooltip="Nope" *ngIf="element.status !== 'FAILED'">replay</i>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-paginator id="screen-table" [length]="totalScreen" [pageSize]="50" showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+
+
+
+
+
+<!-- <div class="row" style="padding-top: 95px;">
 <div id="schedule-job" class="workspace-panel-content" *ngIf="isAvailable">
 <div style="padding: 30px 13px">
 <table datatable [dtOptions]="dtOptions"  class="table table-hover table-bordered nowrap padding" style="width: 100%"></table>
 </div>
 </div>
-</div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Modal -->
 <div id="detailsModel" class="modal fade" role="dialog">
