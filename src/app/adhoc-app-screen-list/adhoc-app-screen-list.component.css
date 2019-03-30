@@ -175,3 +175,9 @@ modal-body .p {
 .material-icons:focus {
   font-size: 26px;
 }
+
+.link-btn {
+  padding-left: 25px;
+  padding-right: 0px;
+  font-size: 15px;
+}

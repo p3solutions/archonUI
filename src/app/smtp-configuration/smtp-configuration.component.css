@@ -21,17 +21,9 @@
   margin: 46px auto;
 }
 
-::ng-deep .smtp-div .mat-form-field-appearance-legacy .mat-form-field-label {
-  color: #1385f8;
-}
-
 h3 {
   font-size: 20px;
   color: #0c0c0c;
-}
-
-::ng-deep .smtp-div .mat-form-field-appearance-legacy .mat-form-field-label span {
-  color: #f44336;
 }
 
 ::ng-deep #action-btn button.save {

@@ -1,5 +1,3 @@
-
-
 /* 
 
 .icon-button {
@@ -128,6 +126,11 @@ p {
 
 /* New-Component-css */
 
+#search-user {
+  width: 53%;
+  padding-top: 17px;
+  margin-right: 19px;
+}
 
 #user-invite-div {
   display: flex;
@@ -137,7 +140,6 @@ p {
 
 #user-invite {
   display: inline-flex;
-  align-items: center;
   flex-direction: row;
   justify-content: flex-end;
   width: 45%;
@@ -148,13 +150,16 @@ p {
 }
 
 #user-invite-btn {
-  padding: 15px;
+  margin-right: 26px;
 }
 
 #user-invite-btn button {
   background-color: #2879ff;
-  font-size: 16px;
-  padding-top: 4px;
+  font-size: 14px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 #user-invite-btn .material-icons {
@@ -176,7 +181,7 @@ p {
 }
 
 #user-table {
-  padding: 7px 30px 0px 34px;
+  padding: 7px 40px 0px 33px;
 }
 
 table {
@@ -201,6 +206,14 @@ th {
   overflow: auto;
 }
 
-::ng-deep #search-user .mat-form-field-appearance-legacy .mat-form-field-label {
-  color: #121212
+
+.back-arrow {
+  margin-bottom: 0px;
+}
+
+.manage-user-heading {
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 0px;
+  font-size: 22px;
 }

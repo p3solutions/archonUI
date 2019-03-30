@@ -75,7 +75,7 @@ p {
 }
 
 .mat-card.panel-column-box {
-  padding: 14px 6px 0px 13px;
+  padding: 9px 6px 0px 13px;
   border-radius: 3px;
   border: solid 1px #c9d1df;
   background-color: #fafafa;
@@ -85,7 +85,7 @@ p {
 
 .mat-card.panel-column-box-tab {
   width: 44%;
-  padding: 14px 6px 0px 13px;
+  padding: 9px 6px 0px 13px;
   border-radius: 3px;
   border: solid 1px #c9d1df;
   background-color: #fafafa;
@@ -95,7 +95,7 @@ p {
 }
 
 .panel-screen .mat-card-title span i {
-  padding: 0 7px
+  padding: 0px 0px 0px 5px;
 }
 
 .panel-column-box-tab .mat-card-header-text {
@@ -169,10 +169,10 @@ button.example-add-tab-button.mat-raised-button:hover {
 }
 
 .material-icons {
-  font-size: 26px;
+  font-size: 24px;
 }
 
 .material-icons:hover,
 .material-icons:focus {
-  font-size: 26px;
+  font-size: 24px;
 }

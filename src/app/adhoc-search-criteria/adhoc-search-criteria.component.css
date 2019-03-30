@@ -5,6 +5,7 @@ i {
 .mat-tree-node {
   max-height: 30px;
   min-height: 25px;
+  font-size: 12px;
 }
 
 html,
@@ -167,4 +168,13 @@ mat-card-header.header-blue {
 .fixVertical {
   flex: 1 1 100%;
   min-height: 100vh;
+}
+
+
+.mat-card-title {
+  font-size: 18px;
+}
+
+.mat-expansion-panel-header-title {
+  font-size: 18px
 }

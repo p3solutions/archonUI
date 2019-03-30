@@ -18,19 +18,19 @@
 
 .nav-tabs>li>a:hover {
   background: #dbe6fa !important;
-  border-bottom: 2px solid #1385f8;
+  border-bottom: 3px solid #1385f8;
   color: #000000 !important;
 }
 
 .nav-tabs>li>a:focus {
   background: #dbe6fa !important;
-  border-bottom: 2px solid #1385f8;
+  border-bottom: 3px solid #1385f8;
   color: #000000 !important;
 }
 
 .nav-tabs>li>a.active {
   background: #e7e7e7 !important;
-  border-bottom: 2px solid #1385f8;
+  border-bottom: 3px solid #1385f8;
   color: #000000 !important;
 }
 
