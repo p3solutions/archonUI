@@ -51,6 +51,17 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
 
   ngAfterViewInit() {
 
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.getSearch();
+        })
+      )
+      .subscribe();
+
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.sort.sortChange, this.paginator.page)
@@ -68,7 +79,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getSearch() {
-    // this.dataSource.filter(this.search);
+    // this.dataSource.filter(this.search.nativeElement.value.trim().toLowerCase());
   }
 
   gotoDashboard() {
