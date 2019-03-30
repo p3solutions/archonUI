@@ -1,0 +1,109 @@
+<div id="edit-column">
+  <div class="example-container">
+    <div class="row" id="popup-header">
+      <h3>Edit Search Area</h3>
+    </div>
+    <div id="table-col-info">
+      <div>
+        <b>Selected Table Name: </b> {{SearchCriterion.tableName}}
+      </div>
+      <div>
+        <b>Selected Column Name: </b> {{SearchCriterion.name}}
+      </div>
+    </div>
+    <form class="example-container" [formGroup]="editSearchCriteriaForm">
+      <mat-form-field>
+        <input matInput formControlName="label" placeholder="Label">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="fieldType" placeholder="Field Type" #field (selectionChange)="changeFieldType($event.value)">
+          <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType">
+            {{fieldType}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select formControlName="searchType" placeholder="Search Type">
+          <mat-option *ngFor="let searchType of searchTypes" [value]="searchType">
+            {{searchType}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div id="input-div">
+        <mat-form-field id="input-function">
+          <mat-select #selectorInput formControlName="inputFunction" placeholder="Input Function">
+            <mat-option *ngFor="let inputFunction of inputFunctions;let i:index" [value]="inputFunction">
+              {{inputFunction}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <a [class.disabled]="selectorInput.value===''" (click)="!(selectorInput.value==='') && getInfo()">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+        </a>
+      </div>
+      <mat-form-field *ngIf="!isOptionFieldDisable">
+        <textarea matInput formControlName="option" name="option" placeholder="Option"></textarea>
+      </mat-form-field>
+      <!-- <div id="required">
+        <input style="margin: 2px 9px 0px 0px;" type="checkbox" formControlName="isRequired">Mandatory Field
+      </div> -->
+      <section class="example-section" id="mandatory-div">
+        <mat-checkbox  class="example-margin" formControlName="isRequired">Mandatory Field</mat-checkbox>
+      </section>
+    </form>
+  </div>
+  <div class="row" style="margin-right: 0px" id="nextbtn">
+    <button type="button" class="btn btn-primary btn-sm" [disabled]="!editSearchCriteriaForm.valid" (click)="update()"
+      style="float: right;margin-right: 12px">Update</button>
+    <button class="btn btn-primary btn-sm" (click)="cancel()" style="float:right;margin-right:5px;">
+      Cancel</button>
+  </div>
+</div>
+<button style="display:none" id="openFunctionInfoModel" data-toggle="modal" data-target="#functionInfo"></button>
+<div id="functionInfo" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 760px;">
+      <div class="modal-header">
+        <h3 class="modal-title"> <a>
+            <i class="fa fa-lock"></i>
+          </a>
+          Function Information</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row info">
+          <div class="first-heading"><b>Function Name</b></div>
+          <div class="col-heading">:</div>
+          <div>{{inputFunctionInfo?.functionName}}</div>
+        </div>
+        <div class="row info">
+          <div class="first-heading"><b>Function Description</b></div>
+          <div class="col-heading">:</div>
+          <div>{{inputFunctionInfo?.functionDesc}}</div>
+        </div>
+        <div id="function-info">
+          <pre>{{inputFunctionInfo?.text}}</pre>
+        </div>
+        <div class="row info">
+          <b>Example:</b>
+        </div>
+        <div id="ip-op-table">
+          <table>
+            <thead></thead>
+            <tbody></tbody>
+            <tr>
+              <td style="background-color:#f0f4f7; text-align: left;">Input</td>
+              <td *ngFor="let item of inputFunctionInfo?.input">{{item}}</td>
+            </tr>
+            <tr>
+              <td style="background-color:#f0f4f7; text-align: left;">Output</td>
+              <td *ngFor="let item of inputFunctionInfo?.output">{{item}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="info-btn" class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

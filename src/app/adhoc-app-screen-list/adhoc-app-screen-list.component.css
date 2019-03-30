@@ -1,0 +1,177 @@
+#create-app label {
+  padding: 2px 7px 2px 5px;
+  float: left;
+}
+
+#screen-table {
+  margin: 2px 10px 2px 10px;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  text-align: left;
+}
+
+::ng-deep #screen-table svg {
+  height: 8vh !important;
+}
+
+.open-app {
+  margin: 10px;
+  font-size: 40px;
+  cursor: pointer
+}
+
+#search-screen {
+  text-align: end;
+}
+
+#create-app-header {
+  display: inline-flex;
+  margin: 2px 2px 11px 17px;
+  float: left;
+}
+
+#create-app-header a {
+  padding: 21px 13px 7px 13px;
+  text-align: left;
+}
+
+.row-group {
+  display: flex;
+  flex-direction: row;
+}
+
+#app-dropdown {
+  text-align: left;
+  display: inline-flex;
+  margin: 2px 2px 2px 0px;
+}
+
+.heading-item {
+  padding: 15px;
+  text-align: right;
+  font-size: 16px;
+  font-family: roboto;
+  word-wrap: break-word;
+}
+
+#open-app {
+  margin: 10px;
+  font-size: 33px;
+  cursor: pointer
+}
+
+#app_desc {
+  padding: 7px 6px 0px 12px;
+  font-family: roboto;
+  float: left;
+  margin: 0px 0px 0px 9px;
+  /* display: inline-block; */
+  text-align: left;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+}
+
+th {
+  color: #333;
+  font-weight: bold;
+  font-size: 15px;
+  font-family: "Roboto", "Montserrat", sans-serif;
+}
+
+#app-dropdown .mat-form-field {
+  width: 244px;
+}
+
+#search-screen .mat-form-field {
+  width: 265px;
+}
+
+p {
+  font-size: 14px;
+  font-family: roboto;
+}
+
+.fa-trash {
+  color: #0085f4
+}
+
+.fa-plus {
+  color: #0085f4
+}
+
+.fa-edit {
+  color: #0085f4
+}
+
+.fa-download {
+  color: #0085f4
+}
+
+.fa-link {
+  color: #0085f4
+}
+
+modal-body .p {
+  font-size: 15px;
+}
+
+.fa-stack {
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.fa-stack .fa {
+  color: #269AF8;
+}
+
+.fa-stack .fa.fa-circle-thin {
+  color: #269AF8;
+}
+
+.fa-stack .fa.fa-circle {
+  opacity: 0.0;
+  color: #2879ff;
+}
+
+.fa-stack:hover .fa.fa-plus {
+  color: white;
+}
+
+.fa-stack:hover .fa.fa-circle-thin {
+  color: #2879ff;
+}
+
+.fa-stack:hover .fa.fa-circle {
+  opacity: 1.0
+}
+
+.example-container {
+  position: relative;
+  min-height: 200px;
+}
+
+.example-table-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+
+::ng-deep div.mat-menu-content {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.material-icons {
+  font-size: 26px;
+}
+
+.material-icons:hover,
+.material-icons:focus {
+  font-size: 26px;
+}

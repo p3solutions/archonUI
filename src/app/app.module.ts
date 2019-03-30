@@ -89,7 +89,7 @@ import { AddDirectJoinService } from './add-direct-join/add-direct-join.service'
 import { SecondaryColumnPipe } from './secondary-column.pipe';
 import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
 import { KeyvaluePipe } from './keyvalue.pipe';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 import { DbExtractorComponent } from './db-extractor/db-extractor.component';
 import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extractor-step-one.component';
@@ -101,7 +101,7 @@ import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extr
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { StoredProcViewService } from './stored-proc-view/stored-proc-view.service';
-import {ErtLandingPageComponent} from './ert-landing-page/ert-landing-page.component';
+import { ErtLandingPageComponent } from './ert-landing-page/ert-landing-page.component';
 import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
 import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
 import { ErtTableComponent } from './ert-table/ert-table.component';
@@ -110,16 +110,28 @@ import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-tab
 import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
 import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
 import { ErtSipConfigComponent } from './ert-sip-config/ert-sip-config.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule} from '@angular/material';
-import {MaterialModule} from './material-module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MaterialModule } from './material-module';
+import { AdhocLandingPageComponent } from './adhoc-landing-page/adhoc-landing-page.component';
+import { AdhocHeaderComponent } from './adhoc-header/adhoc-header.component';
+import { AdhocAppScreenListComponent, CreateScreenDialogComponent,
+        CreateAppDialogComponent } from './adhoc-app-screen-list/adhoc-app-screen-list.component';
+import { AdhocTableSelectionComponent } from './adhoc-table-selection/adhoc-table-selection.component';
+import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-search-criteria.component';
+import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-screen.component';
+import { AdhocEditSearchScreenPopupComponent } from './adhoc-edit-search-screen-popup/adhoc-edit-search-screen-popup.component';
+import { AdhocScreenService } from './adhoc-search-criteria/adhoc-screen.service';
+import { AdhocSearchPanelComponent } from './adhoc-search-panel/adhoc-search-panel.component';
+import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
+import { AdhocEditPanelColumnPopupComponent } from './adhoc-edit-panel-column-popup/adhoc-edit-panel-column-popup.component';
 import { ScheduleJobComponent } from './schedule-job/schedule-job.component';
 import {BsDatepickerModule, TimepickerModule, ModalModule} from 'ngx-bootstrap';
 import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
 import { AuditingComponent } from './auditing/auditing.component';
 import { ScheduleMonitoringService } from './schedulemonitoring/schedule-monitoring.service';
 import { AuditService } from './auditing/audit.service';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -195,8 +207,19 @@ export function tokenGetter() {
                 SchedulemonitoringComponent,
                 AuditingComponent,
                 ErtDatarecordConfigComponent,
-                ErtSipConfigComponent
-        ],
+                ErtSipConfigComponent,
+                AdhocLandingPageComponent,
+                AdhocHeaderComponent,
+                AdhocAppScreenListComponent,
+                CreateAppDialogComponent,
+                CreateScreenDialogComponent,
+                AdhocTableSelectionComponent,
+                AdhocSearchCriteriaComponent,
+                AdhocSearchScreenComponent,
+                AdhocEditSearchScreenPopupComponent,
+                AdhocSearchPanelComponent,
+                AdhocEditPanelColumnPopupComponent
+                ],
         imports: [
                 JwtModule.forRoot({
                         config: {
@@ -220,7 +243,9 @@ export function tokenGetter() {
                 BrowserAnimationsModule,
                 MatButtonModule,
                 MatCheckboxModule,
-                MaterialModule
+                MaterialModule,
+                MatSelectInfiniteScrollModule,
+                FlexLayoutModule
         ],
         providers: [
                 JwtHelperService,
@@ -263,10 +288,12 @@ export function tokenGetter() {
                 AddDirectJoinService,
                 DbExtractorService,
                 StoredProcViewService,
+                AdhocScreenService,
                 ScheduleMonitoringService,
                 AuditService
         ],
         bootstrap: [AppComponent],
-        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent]
+        entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent
+                , CreateScreenDialogComponent, CreateAppDialogComponent]
 })
 export class AppModule { }

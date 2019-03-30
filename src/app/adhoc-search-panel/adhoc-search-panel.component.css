@@ -1,0 +1,178 @@
+/* Styles for tab labels */
+
+.mat-tab-label {
+  min-width: 25px !important;
+  padding: 5px;
+  background-color: transparent;
+  color: #333;
+  font-weight: 700;
+}
+
+/* Styles for the active tab label */
+
+.mat-tab-label.mat-tab-label-active {
+  min-width: 25px !important;
+  padding: 5px;
+  background-color: transparent;
+  color: #333;
+  font-weight: 700;
+}
+
+/* Styles for the ink bar */
+
+.mat-ink-bar {
+  background-color: green;
+}
+
+p {
+  font-family: Roboto;
+}
+
+.addBtn {
+  width: 5%;
+  padding: 12px 3px 0px 0px
+}
+
+.tab {
+  width: 73%;
+}
+
+.rename {
+  float: right;
+  position: absolute;
+  top: 7px;
+  right: 26px;
+}
+
+.rename-box {
+  display: inline-flex;
+}
+
+.renameBtn {
+  margin-left: 3%;
+}
+
+.mat-tab-body-content {
+  height: 43vh !important;
+  margin: 7px 0px 5px 0px;
+}
+
+.fa-trash {
+  color: #1385f8
+}
+
+.panel-column-box .mat-card-header-text {
+  width: 100%;
+  margin: 0px !important;
+  color: #000;
+  font-weight: 600;
+}
+
+.panel-screen .mat-card-title span {
+  float: right;
+  color: #1385f8 !important;
+  font-size: x-large;
+}
+
+.mat-card.panel-column-box {
+  padding: 14px 6px 0px 13px;
+  border-radius: 3px;
+  border: solid 1px #c9d1df;
+  background-color: #fafafa;
+  text-align: left;
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
+}
+
+.mat-card.panel-column-box-tab {
+  width: 44%;
+  padding: 14px 6px 0px 13px;
+  border-radius: 3px;
+  border: solid 1px #c9d1df;
+  background-color: #fafafa;
+  text-align: left;
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
+
+}
+
+.panel-screen .mat-card-title span i {
+  padding: 0 7px
+}
+
+.panel-column-box-tab .mat-card-header-text {
+  width: 100%;
+  margin: 0px !important;
+  color: #000;
+  font-weight: 600;
+}
+
+.panel-column-box-tab .mat-tab-body-wrapper {
+  background-color: #f3f6f9;
+}
+
+::ng-deep mat-card.panel-column-box .mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
+}
+
+::ng-deep mat-card.panel-column-box-tab .mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, .2), 0 0px 0px 0 rgba(0, 0, 0, .14), 0 0px 0px 0 rgba(0, 0, 0, .12) !important;
+}
+
+button.example-add-tab-button.mat-raised-button {
+  min-width: 44px;
+  background-color: #64b5f6;
+  float: left;
+  margin-top: 11px;
+  margin-right: 7px
+}
+
+button.example-add-tab-button.mat-raised-button:hover {
+  background-color: #0a85f8;
+  color: white;
+}
+
+.rename .mat-form-field-wrapper {
+  padding-bottom: 16px;
+}
+
+.renameBtn-div {
+  margin-top: 15px;
+  margin-left: 6px;
+}
+
+.renameBtn-div button {
+  background-color: #64b5f6;
+}
+
+.renameBtn-div button:hover {
+  background-color: #0a85f8;
+  color: white;
+}
+
+.renameBtn-div button span.mat-button-wrapper {
+  font-weight: 600;
+}
+
+.example-tab-icon {
+  margin-left: 8px;
+}
+
+.tab .mat-tab-group {
+  display: unset;
+}
+
+::ng-deep mat-card.panel-column-box .mat-card-header-text mat-card-subtitle.mat-card-subtitle {
+  margin-bottom: 0px !important;
+}
+
+::ng-deep mat-card.panel-column-box div.mat-card-header-text mat-card-subtitle.mat-card-subtitle {
+  margin-bottom: 0px !important;
+}
+
+.material-icons {
+  font-size: 26px;
+}
+
+.material-icons:hover,
+.material-icons:focus {
+  font-size: 26px;
+}

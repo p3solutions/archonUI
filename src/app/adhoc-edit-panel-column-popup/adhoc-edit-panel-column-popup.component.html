@@ -1,0 +1,118 @@
+<div id="edit-column">
+  <div class="example-container">
+    <div class="row" id="popup-header">
+      <h3>Edit Search Area</h3>
+    </div>
+    <div id="table-col-info">
+      <div>
+        <b>Selected Table Name: </b> {{resultFields.tableName}}
+      </div>
+      <div>
+        <b>Selected Column Name: </b> {{resultFields.name}}
+      </div>
+    </div>
+    <form class="example-container" [formGroup]="editResultFieldsForm">
+      <mat-form-field>
+        <input matInput formControlName="label" placeholder="Label">
+      </mat-form-field>
+      <div id="output-div">
+        <mat-form-field id="output-function">
+          <mat-select #selectorInput  formControlName="outputFunction" placeholder="Output Function">
+            <mat-option *ngFor="let outputFunction of outputFunctions;let i:index" [value]="outputFunction">
+              {{outputFunction}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <a [class.disabled]="selectorInput.value===''" (click)="!(selectorInput.value==='') && getInfo()">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div id="mask-div">
+        <section class="example-section">
+          <mat-checkbox  class="example-margin" formControlName="isMaskField">Mask Field</mat-checkbox>
+        </section>
+        <section class="example-section">
+          <mat-radio-group formControlName="maskType">
+            <mat-radio-button  style="margin-right: 40px;" name="maskType" value="start">Mask At Start</mat-radio-button>
+            <mat-radio-button  name="maskType" value="end">Mask At End</mat-radio-button>
+          </mat-radio-group>
+        </section>
+        <div>
+          <mat-form-field>
+            <mat-select formControlName="maskLength" placeholder="Mask Value">
+              <mat-option *ngFor="let maskValue of maskValues" [value]="maskValue">
+                {{maskValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-form-field>
+        <mat-select formControlName="sorting" placeholder="Sort Value">
+          <mat-option *ngFor="let sortValue of sortingValue" [value]="sortValue">
+            {{sortValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <section class="example-section" id="filter-hide-div">
+        <mat-checkbox  style="margin-right: 40px;" class="example-margin" formControlName="isEnableFilter">Enable
+          Filter</mat-checkbox>
+        <mat-checkbox  class="example-margin" formControlName="isHidden">Hide Column</mat-checkbox>
+      </section>
+    </form>
+  </div>
+  <div class="row" style="margin-right: 0px" id="nextbtn">
+    <button type="button" class="btn btn-primary btn-sm" [disabled]="!editResultFieldsForm.valid" (click)="update()"
+      style="float: right;margin-right: 12px">Update</button>
+    <button class="btn btn-primary btn-sm" (click)="cancel()" style="float:right;margin-right:5px;">
+      Cancel</button>
+  </div>
+</div>
+<button style="display:none" id="openFunctionInfoModel" data-toggle="modal" data-target="#functionInfo"></button>
+<div id="functionInfo" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 760px;">
+      <div class="modal-header">
+        <h3 class="modal-title"> <a>
+            <i class="fa fa-lock"></i>
+          </a>
+          Function Information</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row info">
+          <div class="first-heading"><b>Function Name</b></div>
+          <div class="col-heading">:</div>
+          <div>{{outputFunctionInfo?.functionName}}</div>
+        </div>
+        <div class="row info">
+          <div class="first-heading"><b>Function Description</b></div>
+          <div class="col-heading">:</div>
+          <div>{{outputFunctionInfo?.functionDesc}}</div>
+        </div>
+        <div id="function-info">
+          <pre>{{outputFunctionInfo?.text}}</pre>
+        </div>
+        <div class="row info">
+          <b>Example:</b>
+        </div>
+        <div id="ip-op-table">
+          <table>
+            <thead></thead>
+            <tbody></tbody>
+            <tr>
+              <td style="background-color:#f0f4f7; text-align: left;">Input</td>
+              <td *ngFor="let item of outputFunctionInfo?.input">{{item}}</td>
+            </tr>
+            <tr>
+              <td style="background-color:#f0f4f7; text-align: left;">Output</td>
+              <td *ngFor="let item of outputFunctionInfo?.output">{{item}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="info-btn" class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
