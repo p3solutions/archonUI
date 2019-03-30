@@ -20,9 +20,9 @@ export class ScheduleMonitoringService {
     return this.userinfoService.getHeaders();
   }
 
-  getJobStatuses(_tool?, _jobStatus?, _index?): Observable<any> {
+  getJobStatuses(selectedTool, selectedJobStatus, startIndex): Observable<any> {
     const Index = 1;
-    return this.http.get<any>(this.getStatusUrl + _tool + '&jobStatus=' + _jobStatus  + '&startIndex=' + Index,
+    return this.http.get<any>(this.getStatusUrl + selectedTool + '&jobStatus=' + selectedJobStatus  + '&startIndex=' + startIndex,
     { headers: this.getHeaders() }).pipe(
       map(this.extractJobOrigins),
       catchError(this.handleError<any>('getJobStatus')));
