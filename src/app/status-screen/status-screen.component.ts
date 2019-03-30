@@ -68,7 +68,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getSearch() {
-    this.dataSource.filter(this.search);
+    // this.dataSource.filter(this.search);
   }
 
   gotoDashboard() {
