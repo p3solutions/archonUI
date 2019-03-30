@@ -94,24 +94,24 @@
         <ng-container matColumnDef="Status">
           <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
           <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-            <i class="fa fa-thumbs-o-up fa-2x" matTooltip="Success" *ngIf="element.jobInfo.jobStatus === 'SUCCESS'"></i>
-            <i class="fa fa-spinner fa-2x" matTooltip="In_Progress" *ngIf="element.jobInfo.jobStatus === 'IN_PROGRESS'"></i>
-            <i class="fa fa-thumbs-o-down fa-2x" matTooltip="Failed" *ngIf="element.jobInfo.jobStatus === 'FAILED'"></i>
-            <i class="fa fa-clock-o fa-2x" matTooltip="Scheduled" *ngIf="element.jobInfo.jobStatus === 'SCHEDULED'"></i>
+            <i class="material-icons success" matTooltip="Success" *ngIf="element.jobInfo.jobStatus === 'SUCCESS'">check_circle</i>
+            <i class="material-icons inpro" matTooltip="In_Progress" *ngIf="element.jobInfo.jobStatus === 'IN_PROGRESS'">sync</i>
+            <i class="material-icons failure" matTooltip="Failed" *ngIf="element.jobInfo.jobStatus === 'FAILED'">error</i>
+            <i class="material-icons sche" matTooltip="Scheduled" *ngIf="element.jobInfo.jobStatus === 'SCHEDULED'">schedule</i>
           </td>
         </ng-container>
         <ng-container matColumnDef="Details">
           <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Details </th>
           <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-            <i class="fa fa-info-circle fa-2x" matTooltip="View Job Details" *ngIf="element.id !== null" (click)="openDetail(element.id)"></i>
-            <i class="fa fa-info-circle fa-2x" style="color: grey" matTooltip="No Job Details" *ngIf="element.id == null"></i>
+            <i class="material-icons details" matTooltip="View Job Details" *ngIf="element.id !== null" (click)="openDetail(element.id)">info</i>
+            <i class="material-icons details" style="color: grey" matTooltip="No Job Details" *ngIf="element.id == null">info</i>
           </td>
         </ng-container>
         <ng-container matColumnDef="Retry">
           <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Retry </th>
           <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-            <i class="fa fa-repeat col-orange fa-2x" matTooltip="Retry" *ngIf="element.jobInfo.jobStatus === 'FAILED'" (click)="retryJob(element.id)"></i>
-            <i class="fa fa-repeat fa-2x" style="color: grey" matTooltip="Nope" *ngIf="element.jobInfo.jobStatus !== 'FAILED'"></i>
+            <i class="material-icons replay" matTooltip="Retry" *ngIf="element.jobInfo.jobStatus === 'FAILED'" (click)="retryJob(element.id)">replay</i>
+            <i class="material-icons replay" style="color: grey" matTooltip="Nope" *ngIf="element.jobInfo.jobStatus !== 'FAILED'">replay</i>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

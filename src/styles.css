@@ -1426,3 +1426,30 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 .material-icons.plus::before {
   content: "add_circle_outline";
 }
+
+.success {
+  color: #1CCE00;
+} 
+
+.failure {
+  color: #FD3000;
+} 
+
+.inpro {
+  color: #FECD00;
+} 
+
+.sche {
+  color: #1BBCD4;
+} 
+
+.details {
+  color: #1485F8;
+} 
+
+.replay {
+  color:  #ff6702;
+} 
+
+
+
