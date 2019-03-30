@@ -1,5 +1,5 @@
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6" style="height: 45px;">
         <div class="col-md-1 back-arrow" style="margin-left: 10px">
           <a (click)="gotoManagementPanel()" data-tooltip="Back">
             <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
@@ -11,7 +11,6 @@
           </h3>
         </div>
       </div>  
-      <div class="col-md-12"></div>
     </div>
     <div class="col-md-12">
       <div class="col-md-4"></div>
@@ -28,13 +27,14 @@
     </div>
     <div *ngIf="!toggleBoolean"> 
     <div class="col-md-6"></div>
-    <div class="col-md-6">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
         <div class="col-md-3"></div>
-        <div class="col-md-9 search">
+        <div class="col-md-9 search" style="margin-top: -20px">
             <mat-form-field class="search-width">
               <input matInput [(ngModel)]="searchText" placeholder="Search">
             </mat-form-field>
-            <a style="font-size: 42px" (click)="openCreateAddDBmodal()" matTooltip="Add Database"><i class="material-icons plus">
+            <a style="font-size: 42px" (click)="openCreateAddDBmodal()" matTooltip="Add Database"><i class="material-icons plus col">
             </i></a>
           </div>
     </div>
@@ -132,8 +132,8 @@
             <td style="width:15%" mat-cell *matCellDef="let element"> {{element?.workspaceOwnerName}} </td>
           </ng-container>
           <ng-container matColumnDef="Comments">
-            <th style="width:15%" mat-header-cell *matHeaderCellDef> Comments </th>
-            <td style="width:15%" mat-cell *matCellDef="let element"> {{element?.reason}} </td>
+            <th style="width:45%" mat-header-cell *matHeaderCellDef> Comments </th>
+            <td style="width:45%" mat-cell *matCellDef="let element"> {{element?.reason}} </td>
           </ng-container>
           <ng-container matColumnDef="Approve">
             <th style="width:10%" mat-header-cell *matHeaderCellDef> Approve </th>

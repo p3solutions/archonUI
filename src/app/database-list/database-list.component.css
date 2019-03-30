@@ -226,7 +226,7 @@ td.tdr {
   }
   
   ::ng-deep svg {
-    height: 8vh;
+    height: 6vh;
   }
   
   th {
@@ -245,8 +245,13 @@ td.tdr {
   }
 
   .reject {
+   color: #ff000082;
+  }
+
+  .reject:hover, .reject:focus {
     color: #ff0000
   }
+
 
   .bgchange {
     background-color: #64b5f6;
@@ -270,6 +275,10 @@ td.tdr {
 
   .reason {
     height: 140px;
+  }
+
+  .col {
+    color: #2879ff;
   }
 
 
