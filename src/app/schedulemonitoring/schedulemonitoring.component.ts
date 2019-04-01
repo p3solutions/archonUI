@@ -66,6 +66,30 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
     this.dataSource.getTable(this.selectedTool, this.selectedJobStatus, this.paginator.pageIndex + 1);
   }
 
+  openDetail(id) {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.service.getDetails(id).subscribe(result => {
+      this.common = result.common;
+      this.input = result.input;
+      this.jobMessage = result.message;
+      this.jobOutput = result.output;
+      console.log(result);
+    });
+    el.click();
+  }
+  stop(id) {
+    this.service.stopJob(id).subscribe(result => {
+      if (result.success) {
+     this.updateSuccess = true;
+     this.message = result.data;
+     this.getStart();
+      } else if (result.status === 500) {
+        this.updateNotif = true;
+        this.message = result.message;
+      }
+     });
+  }
+
   selectTool(tool) {
   this.selectedTool = tool;
   }

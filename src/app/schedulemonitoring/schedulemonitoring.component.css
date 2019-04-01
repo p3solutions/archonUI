@@ -91,7 +91,8 @@
   }
 
   table::ng-deep th {
-    text-align: center
+    text-align: center;
+    width: 11%;
   }
 
 .modal-dialog{
@@ -105,11 +106,6 @@
 #screen-table {
   margin: 2px 60px 2px 40px;
 }
-
-table {
-  width: 100%;
-}
-
 td,
 th {
   text-align: left;
@@ -120,6 +116,7 @@ th {
 }
 
 th {
+  width: 25%;
   color: #333;
   font-weight: bold;
   font-size: 15px;
@@ -128,8 +125,12 @@ th {
 
 .example-table-container {
   position: relative;
-  height: 100%;
-  
+  max-height: 400px;
+  overflow-x: auto;
+  /* overflow: auto; */
+  display: inline-block;
+  /* width: 100%; */
+  overflow-y: auto;
 }
 
 .material-icons {
@@ -143,6 +144,11 @@ th {
 
 .search-wid {
   width: 87%;
+}
+
+table.mat-table {
+  border-spacing: 0;
+  width: 135%;
 }
 
 

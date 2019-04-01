@@ -20,12 +20,11 @@ export class ScheduleDataSource implements DataSource<any> {
 
     getTable(selectedTool, selectedJobStatus, startIndex) {
         this.service.getJobStatuses(selectedTool, selectedJobStatus, startIndex).subscribe((result) => {
-            console.log(result, 'ss');
-            result.forEach((value, index) => {
+            result.scheduleJobList.forEach((value, index) => {
                 value.position = index + 1;
             });
-           // this.totalScreen = result.totalScreen;
-            this.adhocSubject.next(result);
+            this.totalScreen = result.totalScheduleJob;
+            this.adhocSubject.next(result.scheduleJobList);
         });
     }
 
