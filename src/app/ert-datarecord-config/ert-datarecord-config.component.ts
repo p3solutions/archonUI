@@ -25,6 +25,8 @@ export class ErtDatarecordConfigComponent implements OnInit {
   schemaResultsTableCount = 0;
   selectedPrimaryTable;
   startIndex = 1;
+  isRelationNot: boolean;
+  enableNextBtn: boolean;
 
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
@@ -69,11 +71,17 @@ export class ErtDatarecordConfigComponent implements OnInit {
   }
 
   populategraph(value, event) {
+    this.isRelationNot = false;
+    this.enableNextBtn = true;
     this.selectedPrimaryTable = event.target.value;
     d3.select('svg').remove();
     this.selectedValues = [];
     this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
+      if (this.relationshipInfo.length === 0) {
+        this.isRelationNot = true;
+        this.enableNextBtn = false;
+      }
       this.primaryTable = getPrimaryArray(this.relationshipInfo);
       this.secondaryTable = getSecondaryArray(this.relationshipInfo);
       for (const i of this.primaryTable) {
