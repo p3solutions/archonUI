@@ -25,8 +25,7 @@
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectEvent('');getAudit()">Event
-                : All</a>
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectEvent('');getAudit()">RESET</a>
             <div class="dropdown-divider"></div>
           <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let e of Events" (click)="selectEvent(e);getAudit()">
             {{e}}</a>
@@ -41,8 +40,7 @@
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectService('');getAudit()">Service
-                : All</a>
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectService('');getAudit()">RESET</a>
             <div class="dropdown-divider"></div>
           <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let service of uniqueService" (click)="selectService(service);getAudit()">
             {{service}}</a>
@@ -57,8 +55,7 @@
       </button>
       <div class="dropdown-menu">
         <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectWorkspace('');getAudit()">WorkSpace
-                : All</a>
+            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectWorkspace('');getAudit()">RESET</a>
             <div class="dropdown-divider"></div>
           <a id="job-status-all" class="dropdown-item dropdown-data trim-text" *ngFor="let i of userWorkspaceArray"  (click)="selectWorkspace(i);getAudit()">
           {{i.workspaceName}} </a>
@@ -90,7 +87,7 @@
 
 </div>
 
-<div class="row" style="padding-top: 10px;">
+<div class="row" style="padding-top: 95px;">
 <div id="schedule-job" class="workspace-panel-content" *ngIf="isAvailable">
 <div style="padding: 30px 13px">
 <table datatable [dtOptions]="dtOptions"  class="table table-hover table-bordered nowrap" style="width: 100%"></table>

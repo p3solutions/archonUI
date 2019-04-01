@@ -200,6 +200,9 @@ export class ErtTableComponent implements OnInit {
     this.ertService.getERTtableList(this.workspaceId, this.ertJobId, this.startIndex).subscribe((result) => {
       this.ErtTableList = result;
       this.schemaResultsTableCount = result.sourceTableCount;
+      if (result.selectedTableCount !== 0) {
+        this.schemaResultsTableCount = result.selectedTableCount;
+      }
       for (const item of this.ErtTableList.ertTableList) {
         const tempObj: TableDetailsListObj = new TableDetailsListObj();
         tempObj.tableId = item.tableId;
@@ -229,7 +232,7 @@ export class ErtTableComponent implements OnInit {
   searchTablelist(searchTableName) {
     this.selectedTableList = [];
     const temp: TableDetailsListObj[] = [];
-    this.ertService.getERTtablesearchList(this.workspaceId, searchTableName).subscribe((result) => {
+    this.ertService.getERTtablesearchList(this.workspaceId, searchTableName, this.ertJobId).subscribe((result) => {
       this.ErtTablesearchList = result;
       for (const item of this.ErtTablesearchList.ertTableList) {
         const tempObj: TableDetailsListObj = new TableDetailsListObj();

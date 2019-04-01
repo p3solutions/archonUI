@@ -9,7 +9,7 @@
   </div>
 
   <div class="row-group">
-    <div class="col-md-7" id="app-dropdown">
+    <div class="col-md-3" id="app-dropdown">
       <div>
         <mat-form-field>
           <mat-select msInfiniteScroll name="app-select" (infiniteScroll)="getNextBatch()" [threshold]="'0%'"
@@ -35,12 +35,17 @@
     </div>
     <div class="col-md-3 heading-item">
       <div>
-        <b>Workspace Name: </b> {{workspaceName | uppercase}}
+        <b>Workspace Name: </b> {{workspaceName}}
       </div>
     </div>
-    <div class="col-md-2 heading-item">
+    <div class="col-md-3 heading-item">
       <div>
-        <b>Metadata Version: </b> {{mmrVersion | uppercase}}
+        <b>Application Metadata Version: </b> {{selectedAppObject?.metadataVersion}}
+      </div>
+    </div>
+    <div class="col-md-3 heading-item">
+      <div>
+        <b>Workspace Metadata Version: </b> {{mmrVersion}}
       </div>
     </div>
   </div>
