@@ -26,20 +26,31 @@ h3 {
   color: #0c0c0c;
 }
 
-::ng-deep #action-btn button.save {
-  background-color: #2879ff;
-  color: #ffffff;
-  font-family: roboto;
+.btn-padding {
   font-size: 16px;
-  margin-right: 10px
+  padding: 6px 12px;
 }
 
-::ng-deep #action-btn button.cancel {
-  font-family: roboto;
-  font-size: 16px;
-  margin-right: 10px;
+#action-btn button.save:hover {
+  background-color: #2879ff;
+  color: #ffffff;
+  transform: scale(1.1, 1.1);
+}
+
+#action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+}
+
+#action-btn button.cancel {
   background-color: #64b5f6;
   color: #1b1b1b;
+  margin-right: 10px;
+}
+
+#action-btn button.cancel:hover {
+  margin-right: 10px;
+  transform: scale(1.1, 1.1);
 }
 
 #action-btn {

@@ -151,16 +151,22 @@ p {
 
 #user-invite-btn {
   margin-right: 26px;
+  margin-top: 13px;
 }
 
 #user-invite-btn button {
   background-color: #2879ff;
   font-size: 14px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 6px;
+  padding-bottom: 2px;
   padding-left: 15px;
   padding-right: 15px;
 }
+
+#user-invite-btn button:hover {
+  transform: scale(1.1, 1.1);
+}
+
 
 #user-invite-btn .material-icons {
   font-size: 21px;

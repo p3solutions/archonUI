@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-configuration',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigurationComponent implements OnInit {
   checkActive = 'Email SMTP Configuration';
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  gotoManagementPanel() {
+    this.router.navigate(['management-landing-page/management-panel']);
   }
 
 }

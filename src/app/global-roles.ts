@@ -4,8 +4,33 @@ export interface GlobalRoles {
     createdAt: string;
 }
 
-export class UserInvite {
+export class UserInvite { // DTO
     emailAddress = '';
     globalGroup = '';
     businessJustification = '';
 }
+
+export class UserInviteResponse { // Model
+    id = '';
+    createdAt = '';
+    updatedAt = '';
+    emailAddress = '';
+    globalGroup = '';
+    businessJustification = '';
+    invitedByUser = '';
+    softDeleted = '';
+    links: Links[] = [];
+}
+
+export class Links {
+    rel = '';
+    href = '';
+    hreflang = '';
+    media = '';
+    title = '';
+    type = '';
+    deprecation = '';
+}
+
+
+

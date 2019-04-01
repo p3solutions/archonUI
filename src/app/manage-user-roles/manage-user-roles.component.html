@@ -49,24 +49,28 @@
             {{element.globalGroup}} </td>
         </ng-container>
         <ng-container matColumnDef="bussinessJustification">
-          <th style="width:35%" mat-header-cell *matHeaderCellDef> Bussiness Justification </th>
-          <td style="width:35%" mat-cell *matCellDef="let element"> {{element.bussinessJustification}} </td>
+          <th style="width:25%" mat-header-cell *matHeaderCellDef> Bussiness Justification </th>
+          <td style="width:25%" mat-cell *matCellDef="let element"> {{element.bussinessJustification}} </td>
+        </ng-container>
+        <ng-container matColumnDef="invitedByUser">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef> Invited By User </th>
+          <td style="width:10%" mat-cell *matCellDef="let element"> {{element.invitedByUser}} </td>
         </ng-container>
         <ng-container matColumnDef="createdAt">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
-          <td style="width:10%" mat-cell *matCellDef="let element"> {{element.createdAt}} </td>
+          <td style="width:10%" mat-cell *matCellDef="let element"> {{element.createdAt * 1000 | date:'medium'}} </td>
         </ng-container>
         <ng-container matColumnDef="updatedAt">
           <th style="width:10%" mat-header-cell *matHeaderCellDef> Updated At </th>
           <td style="width:10%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)">
-            {{element.updatedAt}}
+            {{element.updatedAt * 1000 | date:'medium'}}
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator id="user-table-svg" [length]="200" [pageSize]="50" showFirstLastButtons>
+    <mat-paginator id="user-table-svg" [length]="totalUser" [pageSize]="50" showFirstLastButtons>
     </mat-paginator>
   </div>
   <!-- <div class="col-md-7">
@@ -128,3 +132,24 @@
   some other content
 </app-change-user-role>
 <!-- <a id="preSelectedRoles" name={{preSelectedRole}}></a> -->
+
+
+<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header adhoc-modal-header">
+        <h4 class="modal-title">Alert</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{successMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button btn-padding" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

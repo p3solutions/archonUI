@@ -2,13 +2,14 @@ import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, ChangeDetectorR
 import { ManageUserRolesService } from './manage-user-roles.service';
 import { ManageUserRoles } from '../manage-user-roles';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Data } from '@angular/router/src/config';
 import { GlobalRoles, UserInvite } from '../global-roles';
 import { ChangeGlobalRole } from '../change-global-role';
-import { Subject } from 'rxjs';
+import { Subject, merge } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { InviteUserDataSource } from './invite-user-data-source';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class CreateUserInviteDialogComponent {
     @Inject(MAT_DIALOG_DATA) public userInviteInfo: UserInvite) { }
 
   onNoClick(): void {
+    console.log('close');
     this.createUserInviteInfoDialogRef.close();
   }
 
@@ -33,6 +35,10 @@ export class CreateUserInviteDialogComponent {
   styleUrls: ['./manage-user-roles.component.css']
 })
 export class ManageUserRolesComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  dataSource: InviteUserDataSource;
+  totalUser = 0;
   isAvailable = false;
   isProgress: boolean;
   message: string;
@@ -45,7 +51,8 @@ export class ManageUserRolesComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
-  displayedColumns: string[] = ['userId', 'emailAddress', 'globalGroup', 'bussinessJustification',
+  successMsg = '';
+  displayedColumns: string[] = ['userId', 'emailAddress', 'globalGroup', 'bussinessJustification', 'invitedByUser',
     'createdAt', 'updatedAt'];
   // dtTrigger: Subject<any> = new Subject();
   userInviteInfo = new UserInvite();
@@ -64,7 +71,30 @@ export class ManageUserRolesComponent implements OnInit {
       pagingType: 'full_numbers',
       destroy: true
     };
+    this.getInviteUsers();
   }
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterViewInit() {
+
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => this.loadUsers())
+      )
+      .subscribe();
+  }
+
+  loadUsers() {
+    this.dataSource.getInviteUsers(this.paginator.pageIndex + 1);
+    this.totalUser = this.dataSource.totalUser;
+  }
+
+  getInviteUsers() {
+    this.dataSource = new InviteUserDataSource(this.manageUserRolesService);
+    this.loadUsers();
+  }
+
   receiveSuccessMessage($event) {
     if (true === $event) {
       this.successMessage = true;
@@ -76,15 +106,6 @@ export class ManageUserRolesComponent implements OnInit {
   getManageUserRolesData() {
     this.manageUserRolesService.getManageMembersDetails()
       .subscribe(res => {
-        //   if (this.dtElement && this.dtElement.dtInstance) {
-        //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        //     // Destroy the table first
-        //     dtInstance.destroy();
-        //     // Call the dtTrigger to rerender again
-        //     // this.dtTrigger.next();
-        //   });
-        // }
-        // $('#manage-user-role-info-table').html('');
         this.manageUserRolesRequestData = res;
         this.isAvailable = true;
         this.isProgress = false;
@@ -103,25 +124,10 @@ export class ManageUserRolesComponent implements OnInit {
     this.router.navigate(['management-landing-page/management-panel']);
   }
 
-  // ngOnDestroy() {
-  //   // Do not forget to unsubscribe the event
-  //   this.dtTrigger.unsubscribe();
-  // }
-
-  // ngAfterViewInit(): void {
-  //   this.dtTrigger.next();
-  // }
 
   onconfirm(confirm: boolean) {
     if (confirm) {
-      // document.getElementById('manage-user-role-info-table').innerHTML = '';
-      // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // dtInstance.ajax.reload();
-      // });
       this.isAvailable = false;
-      //   setTimeout(() => {
-      //   this.getManageUserRolesData();
-      // }, 200);
       this.getManageUserRolesData();
     }
   }
@@ -136,6 +142,7 @@ export class ManageUserRolesComponent implements OnInit {
   }
 
   openUserInviteDialog(): void {
+    this.userInviteInfo = new UserInvite();
     const dialogScreenRef = this.dialog.open(CreateUserInviteDialogComponent, {
       width: '550px',
       data: this.userInviteInfo,
@@ -143,12 +150,22 @@ export class ManageUserRolesComponent implements OnInit {
     });
 
     dialogScreenRef.afterClosed().subscribe(result => {
-      this.inviteUser(this.userInviteInfo);
+      this.inviteUser(result);
     });
   }
 
   inviteUser(userInviteInfo) {
-    console.log(userInviteInfo);
+    if (userInviteInfo !== undefined) {
+      this.manageUserRolesService.inviteUser(userInviteInfo).subscribe(response => {
+        document.getElementById('success-popup-btn').click();
+        if (response.httpStatus === 200) {
+          this.successMsg = 'User Invited Successfully';
+        } else {
+          this.successMsg = 'User Not Invited';
+        }
+        this.userInviteInfo = new UserInvite();
+      });
+    }
   }
 }
 

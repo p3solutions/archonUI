@@ -5,27 +5,50 @@
   <div class="smtp-div">
     <mat-card class="example-card">
       <mat-card-content>
-        <form class="flex-container">
+        <form #smtpconfigform="ngForm" class="flex-container">
           <mat-form-field>
-            <input name="host" required matInput placeholder="Host">
+            <input name="host" #host=ngModel [(ngModel)]="smtpConfiguration.host" required matInput placeholder="Host">
           </mat-form-field>
           <mat-form-field>
-            <input name="port" required matInput placeholder="Port">
+            <input name="port" #port=ngModel [(ngModel)]="smtpConfiguration.port" required matInput placeholder="Port">
           </mat-form-field>
           <mat-form-field>
-            <input name="username" required matInput placeholder="Username">
+            <input name="username" #username=ngModel [(ngModel)]="smtpConfiguration.username" required matInput
+              placeholder="Username">
           </mat-form-field>
           <mat-form-field>
-            <input name="password" type=password required matInput placeholder="Password">
+            <input name="password" #password=ngModel [(ngModel)]="smtpConfiguration.password" type=password required
+              matInput placeholder="Password">
           </mat-form-field>
         </form>
       </mat-card-content>
     </mat-card>
   </div>
   <div id="action-btn">
-    <button mat-flat-button class="cancel">Cancel</button>
-    <button mat-flat-button class="save">Save</button>
+    <button (click)="clear()" class="btn cancel btn-padding">Cancel</button>
+    <button [disabled]="!smtpconfigform.form.valid" (click)="saveSMTPConfiguration()"
+      class="btn save btn-primary btn-padding">Save</button>
     <!-- <button mat-button >Cancel</button>
     <button mat-button class="save">Save</button> -->
+  </div>
+</div>
+
+<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header adhoc-modal-header">
+        <h4 class="modal-title">Alert</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{successMessage}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button btn-padding" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
   </div>
 </div>

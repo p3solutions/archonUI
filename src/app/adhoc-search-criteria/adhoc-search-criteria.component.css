@@ -58,6 +58,11 @@ mat-card-header.header-blue {
   display: none;
 }
 
+#nextbtn button:hover {
+  transform: scale(1.1, 1.1);
+}
+
+
 #nextbtn button {
   padding-right: 20px;
   padding-left: 20px;
@@ -76,8 +81,7 @@ mat-card-header.header-blue {
 }
 
 #clearBtn:hover {
-  background-color: #0a85f8;
-  color: white;
+  transform: scale(1.1, 1.1);
 }
 
 /* #mat-expansion-panel-header-2 {

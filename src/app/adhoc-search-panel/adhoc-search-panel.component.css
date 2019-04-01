@@ -144,8 +144,8 @@ button.example-add-tab-button.mat-raised-button:hover {
 }
 
 .renameBtn-div button:hover {
-  background-color: #0a85f8;
-  color: white;
+  transform: scale(1.1, 1.1);
+
 }
 
 .renameBtn-div button span.mat-button-wrapper {

@@ -23,6 +23,8 @@ export class ManageUserRolesService {
   private getAllUsersUrl = this.apiUrl + 'users';
   private getGlobalRoleUrl = this.apiUrl + 'admin/roles/global';
   private changeGlobalRoleUrl = this.apiUrl + 'users/';
+  private inviteUserUrl = this.apiUrl + 'users/invite';
+  private getInviteUsersUrl = this.apiUrl + 'users/allInviteUsers?startIndex=';
 
   constructor(private http: HttpClient) { }
 
@@ -57,6 +59,30 @@ export class ManageUserRolesService {
       map(this.extractGlobalRolesData),
       catchError(this.handleError('globalroles', []))
     );
+  }
+
+  /********************************* services used for new component  **********************************/
+
+  inviteUser(param): Observable<any> {
+    return this.http.post<any>(this.inviteUserUrl, param, { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest),
+        catchError(this.handleError('inviteUser', []))
+      );
+  }
+
+  getInviteUsers(startIndex): Observable<any> {
+    return this.http.get<any>(this.getInviteUsersUrl + startIndex, { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest),
+        catchError(this.handleError('getInviteUsers', []))
+      );
+  }
+
+
+
+
+  private extractDataForAllRequest(res: any) {
+    const body = res;
+    return body || [];
   }
 
   // * Handle HttpClient operation that failed.
