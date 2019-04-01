@@ -24,7 +24,7 @@ table.table td {
 
 .search{
   text-align: right;
-  padding-right: 40px;
+  padding-right: 10px;
 }
 
 .search-width{
@@ -54,6 +54,7 @@ table.table td {
 .example-header-image {
   background-image: url('assets/livearchival.png');
   background-size: contain;
+  border-radius: 33%;
 }
 
 .spacer {
@@ -160,6 +161,127 @@ td.tdr {
 .cancel:hover {
   transform:scale(1.1,1.1);
   }
+
+  /* Toggle Button */
+  .one *, .one *:before, .one *:after {
+    -moz-box-sizing: border-box; 
+   -webkit-box-sizing: border-box; 
+   box-sizing: border-box;
+ }
+
+ .one .button-wrap {
+   /* width: 120px; */
+   /* margin: 10px auto 0; */
+   cursor: pointer;
+ }
+ .one .button-bg {
+   width: 89%;
+   height: 100%;
+   background-color:#cfd7e3;;
+   border-radius: 40px;
+   color:#595959;
+   transition:all 0.2s ease;
+ }
+ .one .button-switch {
+   position:relative;
+   left:0px;
+   width: 125px;
+   height: 44px;
+   border:solid 22px;
+   border-radius: 36px;
+   transition:all 0.2s ease;
+   border-color:#2879ff;
+ }
+ .one .button-active .button-switch { left:116px; width: 172px;border-color:#2879ff; }
+ .one .button-in, 
+ .one .button-out {
+   position:absolute; 
+   transition:all 0.2s ease;
+   padding-top:10px;
+   font-family: Roboto;
+   font-size:18px;
+ }
+ .one .button-in { margin-left:132px; }
+ .one .button-out { margin-left:20px; margin-right: 20px; color:#ffffff; }
+ .one .button-active .button-out { color:#595959; }
+ .one .button-active .button-in { color:#ffffff;margin-left: 132px;}
+ .one .button-active .button-bg { background-color:#cfd7e3; }
+
+ .index {
+   z-index: 1;
+ }
+ 
+  /* Toggle Button Ends */
+
+  table {
+    width: 100%;
+  }
+  
+  td,
+  th {
+    width: 25%;
+    text-align: left;
+    font-size: 14px;
+    color:#0c0c0c;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  ::ng-deep svg {
+    height: 6vh;
+  }
+  
+  th {
+    font-weight: bold;
+  }
+  
+  #char-table {
+    margin: 60px 27px 2px 40px;
+  }
+  .mat-cell, .mat-footer-cell {
+    font-size: 12px;
+  }
+
+  .search-wid {
+    width: 100%;
+  }
+
+  .reject {
+   color: #ff000082;
+  }
+
+  .reject:hover, .reject:focus {
+    color: #ff0000
+  }
+
+
+  .bgchange {
+    background-color: #64b5f6;
+    color: #000000;
+    border: #64b5f6;
+    transition: 0.5s;
+  }
+
+  .contentcolor{
+    background-color: #f8fafc;
+    height: 200px;
+  }
+  
+  .margin-5{
+    margin-top: 3%;
+  }
+
+  .body-rightc {
+    color: #474849;
+  }
+
+  .reason {
+    height: 140px;
+  }
+
+  .col {
+    color: #2879ff;
+  }
+
 
  
 
