@@ -31,6 +31,8 @@ export class TableListService {
   private selectTableslist = new BehaviorSubject('');
   userselectTableslist = this.selectTableslist.asObservable();
   startIndex = 1;
+  tableListUrlMMR = environment.apiUrl + 'metalyzer/getRelationshipList?workspaceId=';
+
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
   }
@@ -61,6 +63,16 @@ export class TableListService {
         catchError(this.handleError('relationtable-getListOfRelationTable()', []))
       );
   }
+
+  getListOfRelationTableMMR(): Observable<any> {
+    const url = this.tableListUrlMMR + '5c9b16ad41c0d80d37702a53' + '&versionNumber=' + 'mmr' + '&tableName=' + 'ADDRESS';
+    return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() })
+      .pipe(
+        map(this.extractRelationTableMMR),
+        catchError(this.handleError('relationtable-getListOfRelationTable()', []))
+      );
+  }
+
   deleteRelationInfoData(workspaceID, primaryTableId, joinName, relationShipIDs): Observable<any> {
     const url = this.deleteRelationsUrl + workspaceID + '&tableId=' + primaryTableId;
     const params = { joinName: joinName, relationshipId: relationShipIDs };
@@ -104,7 +116,12 @@ export class TableListService {
   }
   private extractRelationTableList(res: any) {
     const data = res.data.relationshipInfo;
+    console.log(data, 'current');
     return data || [];
+  }
+
+  private extractRelationTableMMR(res) {
+    console.log(res.data.RelationshipList.relationshipList);
   }
 
   setServiceActionType(serviceActionType: string) {
