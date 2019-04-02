@@ -18,6 +18,14 @@ import { Router } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { DataTablesModule } from 'angular-datatables';
+import { FormsModule } from '@angular/forms';
+import {
+  MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule
+} from '@angular/material';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 describe('StatusScreenComponent', () => {
   let component: StatusScreenComponent;
@@ -68,6 +76,7 @@ describe('StatusScreenComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
         HttpClientModule,
         HttpClientTestingModule,
         RouterTestingModule, DataTablesModule
@@ -80,7 +89,8 @@ describe('StatusScreenComponent', () => {
         CommonUtilityService,
         UserProfileService
       ],
-      declarations: [StatusScreenComponent, KeysPipe, ReverseArrayPipe, NavbarComponent]
+      declarations: [StatusScreenComponent, KeysPipe, ReverseArrayPipe, NavbarComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
