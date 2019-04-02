@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject, tick, fakeAsync, flush, flushMicrotasks } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StatusScreenComponent } from './status-screen.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,13 +11,10 @@ import { WorkspaceServicesService } from '../workspace-services/workspace-servic
 import { UserinfoService } from '../userinfo.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { Observable } from 'rxjs';
-import { jobArray, jobOriginArray, jobStatusArray } from '../hardcoded-collection';
-import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UserProfileService } from '../user-profile/user-profile.service';
-import { DataTablesModule } from 'angular-datatables';
 import { FormsModule } from '@angular/forms';
 import {
   MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
@@ -79,7 +76,7 @@ describe('StatusScreenComponent', () => {
         FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule, DataTablesModule
+        RouterTestingModule
       ],
       providers: [
         HttpClientModule,
