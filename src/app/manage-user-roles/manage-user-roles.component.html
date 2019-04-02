@@ -22,7 +22,7 @@
         </mat-form-field>
       </div>
       <div id="user-invite-btn">
-        <button (click)="openUserInviteDialog()" mat-raised-button color="accent">
+        <button [disabled]="disableInviteBtn" (click)="openUserInviteDialog()" mat-raised-button color="accent">
           <i class="material-icons">
             mail_outline
           </i>
@@ -34,9 +34,9 @@
   <div id="user-table">
     <div class="example-table-container">
       <table mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="userId">
+        <ng-container matColumnDef="id">
           <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
-          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.userId}}</td>
+          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.id}}</td>
         </ng-container>
         <ng-container matColumnDef="emailAddress">
           <th style="width:20%" mat-header-cell *matHeaderCellDef mat-sort-header>Email Address </th>
@@ -48,21 +48,17 @@
           <td style="width:10%" mat-cell *matCellDef="let element">
             {{element.globalGroup}} </td>
         </ng-container>
-        <ng-container matColumnDef="bussinessJustification">
+        <ng-container matColumnDef="businessJustification">
           <th style="width:25%" mat-header-cell *matHeaderCellDef> Bussiness Justification </th>
-          <td style="width:25%" mat-cell *matCellDef="let element"> {{element.bussinessJustification}} </td>
-        </ng-container>
-        <ng-container matColumnDef="invitedByUser">
-          <th style="width:10%" mat-header-cell *matHeaderCellDef> Invited By User </th>
-          <td style="width:10%" mat-cell *matCellDef="let element"> {{element.invitedByUser}} </td>
+          <td style="width:25%" mat-cell *matCellDef="let element"> {{element.businessJustification}} </td>
         </ng-container>
         <ng-container matColumnDef="createdAt">
-          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
-          <td style="width:10%" mat-cell *matCellDef="let element"> {{element.createdAt * 1000 | date:'medium'}} </td>
+          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
+          <td style="width:15%" mat-cell *matCellDef="let element"> {{element.createdAt * 1000 | date:'medium'}} </td>
         </ng-container>
         <ng-container matColumnDef="updatedAt">
-          <th style="width:10%" mat-header-cell *matHeaderCellDef> Updated At </th>
-          <td style="width:10%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)">
+          <th style="width:15%" mat-header-cell *matHeaderCellDef> Updated At </th>
+          <td style="width:15%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)">
             {{element.updatedAt * 1000 | date:'medium'}}
           </td>
         </ng-container>

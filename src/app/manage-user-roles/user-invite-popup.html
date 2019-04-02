@@ -13,11 +13,8 @@
     <mat-form-field>
       <mat-select #globalGroup="ngModel" [(ngModel)]="userInviteInfo.globalGroup" required name="globalgroup"
         placeholder="Global Group">
-        <mat-option [value]="1">
-          Admin
-        </mat-option>
-        <mat-option [value]="2">
-          User
+        <mat-option *ngFor="let item of userInviteInfo.globalGroupList" [value]="item.groupName">
+          {{item.groupName}}
         </mat-option>
       </mat-select>
     </mat-form-field>

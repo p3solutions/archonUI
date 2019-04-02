@@ -11,10 +11,19 @@ import { catchError, map } from 'rxjs/operators';
 export class ConfigurationService {
   private apiUrl = environment.apiUrl;
   saveSMTPConfigurationUrl = this.apiUrl + 'smtp/setup';
+  checkExistingSMTPConfigurationUrl = this.apiUrl + 'smtp/config';
+
   constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
 
   saveSMTPConfiguration(param): Observable<any> {
     return this.http.post<any>(this.saveSMTPConfigurationUrl, param, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('saveSMTPConfiguration', []))
+      );
+  }
+
+  checkExistingSMTPConfiguration(): Observable<any> {
+    return this.http.get<any>(this.checkExistingSMTPConfigurationUrl, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractData),
         catchError(this.handleError('saveSMTPConfiguration', []))
       );

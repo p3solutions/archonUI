@@ -9,6 +9,7 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
 
     totalUser: number;
     private inviteUsersSubject = new BehaviorSubject<UserInviteResponse[]>([]);
+    public totalUserSubject = new BehaviorSubject<number>(0);
 
     constructor(private manageUserRolesService: ManageUserRolesService) { }
 
@@ -22,7 +23,7 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
 
     getInviteUsers(startIndexOfScreen) {
         this.manageUserRolesService.getInviteUsers(startIndexOfScreen).subscribe((result) => {
-            this.totalUser = result.data.model.totalIUser;
+            this.totalUserSubject.next(result.data.model.totalUser);
             this.inviteUsersSubject.next(result.data.model.users);
         });
     }
