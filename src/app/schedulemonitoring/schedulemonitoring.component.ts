@@ -45,6 +45,18 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.getSearch();
+        })
+      )
+      .subscribe();
+
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.sort.sortChange, this.paginator.page)
@@ -100,6 +112,10 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
+
+  getSearch() {
+    this.dataSource.filter(this.paginator.pageIndex + 1, this.search.nativeElement.value);
   }
 
 }

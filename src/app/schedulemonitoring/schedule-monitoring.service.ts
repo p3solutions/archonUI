@@ -13,6 +13,7 @@ export class ScheduleMonitoringService {
   getStatusUrl = environment.apiUrl + 'jobStatus/scheduleJob?tool=';
   stopJobUrl = environment.apiUrl + 'jobStatus/stopSchedule?scheduleId=';
   detailsJobUrl = environment.apiUrl + 'jobStatus/scheduleDetails?scheduleId=';
+  getSearchStatus = environment.apiUrl + 'jobStatus/scheduleJob/search?startIndex=';
 
   constructor(private http: HttpClient, private userinfoService: UserinfoService) { }
 
@@ -21,7 +22,6 @@ export class ScheduleMonitoringService {
   }
 
   getJobStatuses(selectedTool, selectedJobStatus, startIndex): Observable<any> {
-    const Index = 1;
     return this.http.get<any>(this.getStatusUrl + selectedTool + '&jobStatus=' + selectedJobStatus  + '&startIndex=' + startIndex + '&userId=' + this.userinfoService.getUserId(),
     { headers: this.getHeaders() }).pipe(
       map(this.extractJobOrigins),
@@ -61,4 +61,17 @@ export class ScheduleMonitoringService {
       return of(result as T);
     };
   }
+
+  getSearchResult(startIndex , search) {
+    const url = this.getSearchStatus + startIndex + '&userId=' + this.userinfoService.getUserId() + '&jobName=' + search;
+    return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
+      map(this.extractJobSearch),
+      catchError(this.handleError<any>('getUserInfo')));
+  }
+
+  private extractJobSearch(res) {
+    const data = res.data.ScheduledJobs;
+    return data || [];
+  }
+
 }

@@ -30,7 +30,7 @@ export class StatusDataSource implements DataSource<any> {
 
     filter(index, search) {
       this.statusService.getSearchResult(index, search).subscribe(result => {
-          result.list.forEach((value, index) => {
+          result.list.forEach((value, index ) => {
             value.position = index + 1;
         });
         this.totalScreen = result.totalScreen;

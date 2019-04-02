@@ -28,13 +28,14 @@ export class ScheduleDataSource implements DataSource<any> {
         });
     }
 
-    // filter(value) {
-    //     this.adhocSubject.subscribe(result => {
-    //         this.searchArray = result;
-    //         this.searchArray.filter = value;
-    //     });
-    //     this.adhocSubject.next(this.searchArray);
-    //     return this.adhocSubject;
-    // }
+    filter(index, search) {
+        this.service.getSearchResult(index, search).subscribe(result => {
+            result.scheduleJobList.forEach((value, index ) => {
+              value.position = index + 1;
+          });
+          this.totalScreen = result.totalScreen;
+          this.adhocSubject.next(result.scheduleJobList);
+        });
+      }
 
 }
