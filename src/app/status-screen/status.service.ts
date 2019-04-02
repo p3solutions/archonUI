@@ -13,7 +13,7 @@ export class StatusService {
   getStatusListUrl = environment.apiUrl + 'jobStatus/jobList?userId=';
   getRetryStatusUrl = environment.apiUrl + 'jobStatus/jobRetry';
   startIndex = 1;
-  getSearchStatus = environment.apiUrl + '/obStatus/jobList/search?userId=5c9b163daa7f6a97b76607d7&startIndex=1&jobName=MM';
+  getSearchStatus = environment.apiUrl + 'jobStatus/jobList/search?userId=';
 
   constructor(
     private http: HttpClient,
@@ -47,6 +47,18 @@ export class StatusService {
     const param = { 'userId': this.userinfoService.getUserId(), 'jobId': jobId };
     return this.http.post<any>(url, param, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError<any>('getUserInfo')));
+  }
+
+  getSearchResult(startIndex , search) {
+    const url = this.getSearchStatus + this.userinfoService.getUserId() + '&startIndex=' + startIndex + '&jobName=' + search;
+    return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
+      map(this.extractJobSearch),
+      catchError(this.handleError<any>('getUserInfo')));
+  }
+
+  private extractJobSearch(res) {
+    const data = res.data.job_list;
+    return data || [];
   }
 
 

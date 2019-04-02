@@ -79,7 +79,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getSearch() {
-    // this.dataSource.filter(this.search.nativeElement.value.trim().toLowerCase());
+    this.dataSource.filter(this.paginator.pageIndex + 1, this.search.nativeElement.value);
   }
 
   gotoDashboard() {

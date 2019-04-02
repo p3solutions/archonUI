@@ -28,8 +28,14 @@ export class StatusDataSource implements DataSource<any> {
         });
     }
 
-    filter(value) {
-    
+    filter(index, search) {
+      this.statusService.getSearchResult(index, search).subscribe(result => {
+          result.list.forEach((value, index) => {
+            value.position = index + 1;
+        });
+        this.totalScreen = result.totalScreen;
+        this.adhocSubject.next(result.list);
+      });
     }
 
 }
