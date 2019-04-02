@@ -27,7 +27,7 @@ export class SmtpConfigurationComponent implements OnInit {
         this.successMessage = 'SMTP Configuration already Exists';
         this.clear();
       } else if (response.data === false) {
-        this.checkExistingSMTPConfiguration();
+        this.saveSMTPConfiguration();
       }
     });
   }

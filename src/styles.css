@@ -1554,3 +1554,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
   font-size: 16px;
   padding: 6px 12px;
 }
+
+.btn-transform:hover {
+  transform: scale(1.1, 1.1);
+}

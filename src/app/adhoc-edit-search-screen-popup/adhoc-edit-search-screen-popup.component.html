@@ -52,10 +52,9 @@
       </section>
     </form>
   </div>
-  <div class="row" style="margin-right: 0px" id="nextbtn">
-    <button type="button" class="btn btn-primary btn-sm" [disabled]="!editSearchCriteriaForm.valid" (click)="update()"
-      style="float: right;margin-right: 12px">Update</button>
-    <button class="btn btn-primary btn-sm" (click)="cancel()" style="float:right;margin-right:5px;">
+  <div class="row" id="nextbtn">
+    <button type="button" class="btn-transform btn btn-primary btn-sm" [disabled]="!editSearchCriteriaForm.valid" (click)="update()">Update</button>
+    <button class="btn-transform btn btn-primary btn-sm" (click)="cancel()">
       Cancel</button>
   </div>
 </div>
@@ -102,7 +101,7 @@
         </div>
       </div>
       <div id="info-btn" class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button  type="button" class="btn-transform btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

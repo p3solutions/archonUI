@@ -49,7 +49,7 @@
       </mat-card>
     </div>
     <div fxFlex="76%">
-      <div style="padding-bottom: 22px;">
+      <div style="padding-bottom: 20px;">
         <mat-accordion>
           <mat-expansion-panel [expanded]="openSearch" (opened)="openSearch = true" (closed)="openSearch = false">
             <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'"
@@ -89,12 +89,12 @@
   </div>
 </div>
 <div class="row" id="nextbtn">
-  <button type="button" class="btn btn-primary next btn-sm"
+  <button type="button" class="btn-transform btn btn-primary next btn-sm"
     [disabled]="searchResultLength===0||searchCriteriaLength===0" (click)="gotoNestedScreen()"
     style="float: right;margin-right: 12px">save</button>
-  <button class="btn btn-primary Previous btn-sm" (click)="gotoGraph()" style="float:right;margin-right:5px;">
+  <button class="btn-transform btn btn-primary Previous btn-sm" (click)="gotoGraph()" style="float:right;margin-right:5px;">
     Back</button>
-  <button class="btn Previous btn-sm" id="clearBtn" (click)="clear()" style="float:right;margin-right:5px;">
+  <button class="btn-transform btn Previous btn-sm" id="clearBtn" (click)="clear()" style="float:right;margin-right:5px;">
     clear</button>
 </div>
 
@@ -110,7 +110,7 @@
         <p>Column Label already present</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="btn-transform button" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
@@ -128,7 +128,7 @@
         <p>{{successMsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="gotoAppScreen()" class="btn btn-primary adhoc-modal-btn"
+        <button type="button" (click)="gotoAppScreen()" class="btn-transform btn btn-primary adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
       </div>
     </div>
