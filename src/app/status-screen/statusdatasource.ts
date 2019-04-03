@@ -20,6 +20,7 @@ export class StatusDataSource implements DataSource<any> {
 
     getTable(selectedJobOrigin, selectedJobStatus, startIndex) {
         this.statusService.getJobList(selectedJobOrigin, selectedJobStatus, startIndex).subscribe((result) => {
+            console.log(result);
             result.list.forEach((value, index) => {
                 value.position = index + 1;
             });

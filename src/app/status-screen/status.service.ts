@@ -71,7 +71,6 @@ export class StatusService {
     return data || [];
   }
   private extractJobStatusList(res: any) {
-    console.log(res);
     const data = res.data;
     return data || [];
   }
