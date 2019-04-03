@@ -4,9 +4,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export class StatusDataSource implements DataSource<any> {
 
-    totalScreen: number;
+    totalScreen = 50;
     private adhocSubject = new BehaviorSubject<any>([]);
     searchArray = [];
+    indexValue;
 
     constructor(private statusService: StatusService) { }
 
@@ -19,12 +20,14 @@ export class StatusDataSource implements DataSource<any> {
     }
 
     getTable(selectedJobOrigin, selectedJobStatus, startIndex) {
+        this.indexValue = startIndex;
         this.statusService.getJobList(selectedJobOrigin, selectedJobStatus, startIndex).subscribe((result) => {
-            console.log(result);
             result.list.forEach((value, index) => {
                 value.position = index + 1;
             });
-            this.totalScreen = result.totalScreen;
+            if (result.paginationRequired) {
+                this.totalScreen = (this.indexValue + 1) * 50;
+            }
             this.adhocSubject.next(result.list);
         });
     }
