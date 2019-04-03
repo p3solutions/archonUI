@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-
-
 import { ManageUserRoles } from '../manage-user-roles';
 import { headersToString } from 'selenium-webdriver/http';
 import { Data } from '@angular/router/src/config';
@@ -23,6 +20,9 @@ export class ManageUserRolesService {
   private getAllUsersUrl = this.apiUrl + 'users';
   private getGlobalRoleUrl = this.apiUrl + 'admin/roles/global';
   private changeGlobalRoleUrl = this.apiUrl + 'users/';
+  private inviteUserUrl = this.apiUrl + 'users/invite';
+  private getInviteUsersUrl = this.apiUrl + 'users/allInviteUsers?startIndex=';
+
 
   constructor(private http: HttpClient) { }
 
@@ -57,6 +57,37 @@ export class ManageUserRolesService {
       map(this.extractGlobalRolesData),
       catchError(this.handleError('globalroles', []))
     );
+  }
+
+  /********************************* services used for new component  **********************************/
+
+  inviteUser(param): Observable<any> {
+    return this.http.post<any>(this.inviteUserUrl, param, { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest),
+        catchError(this.handleError('inviteUser', []))
+      );
+  }
+
+  getInviteUsers(startIndex): Observable<any> {
+    return this.http.get<any>(this.getInviteUsersUrl + startIndex, { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest),
+        catchError(this.handleError('getInviteUsers', []))
+      );
+  }
+
+  getGlobalGroup(role): Observable<any> {
+    return this.http.get<any>(this.apiUrl + role + '/group/global', { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest),
+        catchError(this.handleError('getInviteUsers', []))
+      );
+  }
+
+
+
+
+  private extractDataForAllRequest(res: any) {
+    const body = res;
+    return body || [];
   }
 
   // * Handle HttpClient operation that failed.

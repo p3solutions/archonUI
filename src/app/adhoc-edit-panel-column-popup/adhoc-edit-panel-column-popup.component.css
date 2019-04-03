@@ -8,8 +8,8 @@
 }
 
 #popup-header {
-  background-color: #E6E9ED;
-  border-radius: 3px;
+  border-radius: 2px;
+  background-color: #f2f5f8;
   text-align: center;
   margin-left: 0px
 }
@@ -17,21 +17,23 @@
 #table-col-info {
   display: inline-flex;
   justify-content: space-around;
-  margin: 12px 0px 0px 0px;
-  font-size: 16px;
+  margin: 11px 0px 11px 0px;
+  font-size: 14px;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #nextbtn button {
   padding-right: 20px;
   padding-left: 20px;
+  margin-right: 5px;
 }
 
 #popup-header h3 {
   margin: 8px 2px 5px 0px;
-}
-
-.example-container form {
-  margin-bottom: 20px;
+  font-size: 18px;
+  color: #000000;
 }
 
 .example-container form>* {
@@ -117,12 +119,17 @@ tbody {
   overflow: auto;
 }
 
+#table-col-info div{
+  width: 50%;
+  text-align: left;
+}
+
 #edit-column {
   margin-top: 10px;
   min-height: 358px;
   width: 70%;
   margin-left: 15%;
-  max-height: 360px;
+  max-height: 455px;
   overflow: auto;
 }
 
@@ -171,4 +178,9 @@ modal-body .p {
 
 ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
   background-color: #0a85f8 !important;
+}
+
+#nextbtn {
+  margin-right: 0px;
+  margin-bottom: 3px;
 }

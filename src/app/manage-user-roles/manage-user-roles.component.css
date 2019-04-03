@@ -1,18 +1,4 @@
-td {
-  font-size: 14px;
-  text-align: center;
-  
-}
-
-th {
-  font-size: 15px;
-  text-align: center;
-}
-
-span,
-i {
-  cursor: pointer;
-}
+/* 
 
 .icon-button {
   color: red;
@@ -23,29 +9,8 @@ i {
   background: transparent;
 }
 
-input {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  display: inline-block;
-  *display: inline;
-  /* for IE7*/
-  zoom: 1;
-  /* for IE7*/
-  vertical-align: middle;
-  margin-left: 20px
-}
 
-label {
-  display: inline-block;
-  *display: inline;
-  /* for IE7*/
-  zoom: 1;
-  /* for IE7*/
-  float: left;
-  padding-top: 4px;
-  text-align: left;
-  width: 140px;
-}
+
 
 p {
   *display: inline-block;
@@ -148,10 +113,114 @@ p {
   overflow: hidden;
   background-color: #eceeef;
 }
+
 .alert-success {
   margin-top: 10px;
 }
 
 .alert-danger {
   margin-top: 10px;
+}
+ */
+
+
+/* New-Component-css */
+
+#search-user {
+  width: 53%;
+  padding-top: 17px;
+  margin-right: 19px;
+}
+
+#user-invite-div {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+#user-invite {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 45%;
+}
+
+#search-user .mat-form-field {
+  width: 100%;
+}
+
+#user-invite-btn {
+  margin-right: 26px;
+  margin-top: 13px;
+}
+
+#user-invite-btn button {
+  background-color: #2879ff;
+  font-size: 14px;
+  padding-top: 6px;
+  padding-bottom: 2px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#user-invite-btn button:hover {
+  transform: scale(1.1, 1.1);
+}
+
+
+#user-invite-btn .material-icons {
+  font-size: 21px;
+  color: #ffffff;
+  padding-bottom: 4px;
+}
+
+#user-invite-btn .material-icons:hover,
+.material-icons:focus {
+  font-size: 21px;
+  color: #ffffff;
+  padding-bottom: 4px;
+}
+
+
+::ng-deep #user-table-svg svg {
+  height: 6vh !important;
+}
+
+#user-table {
+  padding: 7px 40px 0px 33px;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  text-align: left;
+}
+
+th {
+  color: #0c0c0c;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: Roboto;
+}
+
+.example-table-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+  box-shadow: 0px 1px 6px 1.1px rgba(0, 0, 0, 0.35);
+}
+
+
+.back-arrow {
+  margin-bottom: 0px;
+}
+
+.manage-user-heading {
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 0px;
+  font-size: 22px;
 }

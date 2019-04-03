@@ -1,14 +1,35 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, ChangeDetectorRef, Inject } from '@angular/core';
 import { ManageUserRolesService } from './manage-user-roles.service';
 import { ManageUserRoles } from '../manage-user-roles';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { map, tap } from 'rxjs/operators';
 import { Data } from '@angular/router/src/config';
-import { GlobalRoles } from '../global-roles';
+import { GlobalRoles, UserInvite } from '../global-roles';
 import { ChangeGlobalRole } from '../change-global-role';
-import { Subject } from 'rxjs';
+import { Subject, merge } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { InviteUserDataSource } from './invite-user-data-source';
 
+
+@Component({
+  selector: 'app-user-invite-dialog',
+  templateUrl: 'user-invite-popup.html',
+})
+export class CreateUserInviteDialogComponent {
+
+  constructor(
+    public createUserInviteInfoDialogRef: MatDialogRef<CreateUserInviteDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public userInviteInfo: UserInvite) {
+  }
+
+  onNoClick(): void {
+    console.log('close');
+    this.createUserInviteInfoDialogRef.close();
+  }
+
+}
 
 @Component({
   selector: 'app-manage-user-roles',
@@ -16,104 +37,116 @@ import { DataTableDirective } from 'angular-datatables';
   styleUrls: ['./manage-user-roles.component.css']
 })
 export class ManageUserRolesComponent implements OnInit {
-  isAvailable = false;
-  isProgress: boolean;
-  message: string;
-  successMessage = false;
-  errorMessage = false;
-  manageUserRolesRequestData: ManageUserRoles[];
-  selectedUserId: string;
-  userName: string;
-  preSelectedRole: any;
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
-  // dtTrigger: Subject<any> = new Subject();
-
-  constructor(
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  dataSource: InviteUserDataSource;
+  totalUser = 0;
+  successMsg = '';
+  displayedColumns: string[] = ['id', 'emailAddress', 'globalGroup', 'businessJustification',
+    'createdAt', 'updatedAt'];
+  disableInviteBtn = true;
+  roleOfUser = '';
+  userInviteInfo = new UserInvite();
+  constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router
   ) { }
 
   ngOnInit() {
-      this.getManageUserRolesData();
-      this.isProgress = true;
-      this.dtOptions = {
-        stateSave: false,
-        paging: true,
-        pageLength: 10,
-        pagingType: 'full_numbers',
-        destroy: true
-      };
+    this.getInviteUsers();
+    this.checkForEnableBtn();
   }
-  receiveSuccessMessage($event) {
-    if (true === $event) {
-      this.successMessage = true;
-      } else {
-      this.errorMessage = true;
-      }
-   }
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterViewInit() {
 
-  getManageUserRolesData() {
-    this.manageUserRolesService.getManageMembersDetails()
-      .subscribe(res => {
-      //   if (this.dtElement && this.dtElement.dtInstance) {
-      //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      //     // Destroy the table first
-      //     dtInstance.destroy();
-      //     // Call the dtTrigger to rerender again
-      //     // this.dtTrigger.next();
-      //   });
-      // }
-        // $('#manage-user-role-info-table').html('');
-        this.manageUserRolesRequestData = res;
-        this.isAvailable = true;
-        this.isProgress = false;
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => this.loadUsers())
+      )
+      .subscribe();
+  }
+
+  loadUsers() {
+    this.dataSource.getInviteUsers(this.paginator.pageIndex + 1);
+    this.dataSource.totalUserSubject.subscribe(result => {
+      this.totalUser = result;
+    });
+  }
+
+  getGlobalGroup() {
+    if (this.roleOfUser !== '') {
+      this.manageUserRolesService.getGlobalGroup(this.roleOfUser).subscribe(result => {
+        this.userInviteInfo.globalGroupList = result.data.globalRoles;
+        console.log(this.userInviteInfo.globalGroupList);
       });
+    }
   }
-  getUserId(id, roleName, userName) {
-    this.errorMessage = false;
-    this.successMessage = false;
-    this.selectedUserId = id;
-    this.preSelectedRole = roleName;
-    this.userName = userName;
-    document.getElementById('selected-role').innerHTML = this.preSelectedRole;
+
+  getInviteUsers() {
+    this.dataSource = new InviteUserDataSource(this.manageUserRolesService);
+    this.loadUsers();
   }
+
+  checkForEnableBtn() {
+    let accessToken: string;
+    let token_data: any;
+    const jwtHelper: JwtHelperService = new JwtHelperService();
+    accessToken = localStorage.getItem('accessToken');
+    token_data = jwtHelper.decodeToken(accessToken);
+    const roles = token_data.roles;
+    for (const item of roles) {
+      if (item.roleName.toUpperCase().trim().includes('ADMIN')) {
+        this.disableInviteBtn = false;
+        break;
+      }
+    }
+    for (const item of roles) {
+      if (item.roleName.toUpperCase().trim() === 'ROLE_ADMIN') {
+        this.roleOfUser = 'admin';
+        break;
+      }
+      if (item.roleName.toUpperCase().trim() === 'ROLE_SUPER') {
+        this.roleOfUser = 'superadmin';
+        break;
+      }
+    }
+  }
+
 
   gotoManagementPanel() {
     this.router.navigate(['management-landing-page/management-panel']);
   }
 
-  // ngOnDestroy() {
-  //   // Do not forget to unsubscribe the event
-  //   this.dtTrigger.unsubscribe();
-  // }
 
-  // ngAfterViewInit(): void {
-  //   this.dtTrigger.next();
-  // }
+  openUserInviteDialog(): void {
+    this.userInviteInfo = new UserInvite();
+    this.getGlobalGroup();
+    const dialogScreenRef = this.dialog.open(CreateUserInviteDialogComponent, {
+      width: '550px',
+      data: this.userInviteInfo,
+      panelClass: 'create-user-invite-dialog'
+    });
 
-  onconfirm(confirm: boolean) {
-    if (confirm) {
-      // document.getElementById('manage-user-role-info-table').innerHTML = '';
-      // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // dtInstance.ajax.reload();
-      // });
-      this.isAvailable = false;
-    //   setTimeout(() => {
-    //   this.getManageUserRolesData();
-    // }, 200);
-      this.getManageUserRolesData();
-    }
-}
-
-
-  getUserProfile(userobj) {
-    localStorage.setItem('userId', userobj.id);
+    dialogScreenRef.afterClosed().subscribe(result => {
+      this.inviteUser(result);
+    });
   }
 
-  gotoDashboard() {
-    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  inviteUser(userInviteInfo) {
+    if (userInviteInfo !== undefined) {
+      this.manageUserRolesService.inviteUser(userInviteInfo).subscribe(response => {
+        document.getElementById('success-popup-btn').click();
+        if (response.httpStatus === 200) {
+          this.successMsg = 'User Invited Successfully';
+        } else {
+          this.successMsg = 'User Not Invited';
+        }
+        this.userInviteInfo = new UserInvite();
+        this.getInviteUsers();
+      });
+    }
   }
 }
 
