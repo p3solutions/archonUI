@@ -28,8 +28,8 @@ export class MetalyzerComponent implements OnInit {
     if (this.serviceActionType === 'READ') {
       this.router.navigate(['/workspace/metalyzer/READ/analysis']);
     } else if (this.serviceActionType === 'WRITE' || this.serviceActionType === 'ALL') {
-      this.tableListService.getTableList(this.workspaceID, this.startIndex).subscribe(result => {
-        this.tableList = result;
+      this.tableListService.getTableList(this.workspaceID, this.startIndex).subscribe((result: any) => {
+        this.tableList = result.tableList;
       });
       if (this.tableList === undefined) {
         this.metalyzerHeaderService.setPhase('Analysis');

@@ -115,7 +115,7 @@ export class TableListService {
   }
 
   private extractTables(res: any) {
-    const data = res.data.tableList;
+    const data = res.data;
     return data || [];
   }
   private extractRelationTableList(res: any) {

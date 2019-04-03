@@ -66,8 +66,8 @@ export class WorkspaceServicesComponent implements OnInit {
       if (service.serviceActionType === 'READ') {
         this.router.navigate(['/workspace/metalyzer/READ/analysis']);
       } else if (service.serviceActionType === 'WRITE' || service.serviceActionType === 'ALL') {
-        this.tableListService.getTableList(this.workspaceID, this.startIndex).subscribe(result => {
-          this.tableList = result;
+        this.tableListService.getTableList(this.workspaceID, this.startIndex).subscribe((result: any) => {
+          this.tableList = result.tableList;
           if (this.tableList !== undefined) {
             this.metalyzerHeaderService.setPhase('Analysis');
             this.router.navigate(['/workspace/metalyzer/ALL/analysis']);

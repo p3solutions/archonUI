@@ -34,8 +34,8 @@ export class ErtSipConfigComponent implements OnInit {
 
   ngOnInit() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
-      this.tableList = res;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+      this.tableList = res.tableList;
       this.schemaResultsTableCount = this.tableList.length;
     });
     if (this.ertService.data !== undefined) {
@@ -61,15 +61,15 @@ export class ErtSipConfigComponent implements OnInit {
     this.tableList = [];
     const perPage = 50;
     this.startIndex = (page - 1) * perPage;
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
-      this.tableList = res;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+      this.tableList = res.tableList;
     });
   }
 
   searchTablelist(searchTableName) {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe(res => {
-      this.tableList = res;
+     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe((res: any) => {
+      this.tableList = res.tableList;
     });
   }
 
