@@ -80,3 +80,21 @@
 .app-config {
   width: 40%;
 }
+
+#app-outer{
+  margin-top: 12%;
+  width: 100%;
+}
+
+#app-info{
+  flex-direction: row;
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-icon {
+  margin-top: 9px;
+  padding-right: 6px;
+  font-size: 25px;
+}
+

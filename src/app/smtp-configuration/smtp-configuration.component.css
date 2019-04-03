@@ -32,24 +32,23 @@ h3 {
 }
 
 #action-btn button.save:hover {
-  background-color: #2879ff;
-  color: #ffffff;
   transform: scale(1.1, 1.1);
 }
 
 #action-btn button.save {
   background-color: #2879ff;
   color: #ffffff;
+  text-transform: inherit;
 }
 
 #action-btn button.cancel {
   background-color: #64b5f6;
   color: #1b1b1b;
   margin-right: 10px;
+  text-transform: inherit;
 }
 
 #action-btn button.cancel:hover {
-  margin-right: 10px;
   transform: scale(1.1, 1.1);
 }
 
