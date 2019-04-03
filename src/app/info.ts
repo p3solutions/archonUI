@@ -4,4 +4,5 @@ export class Info {
     username: string;
     roles: RoleObject;
     show = false;
+    roleList: RoleObject[] = [];
 }

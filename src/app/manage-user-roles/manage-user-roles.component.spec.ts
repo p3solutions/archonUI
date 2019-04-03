@@ -11,6 +11,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DataTablesModule } from 'angular-datatables';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule
+} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 describe('ManageUserRolesComponent', () => {
   let component: ManageUserRolesComponent;
   let fixture: ComponentFixture<ManageUserRolesComponent>;
@@ -19,11 +26,14 @@ describe('ManageUserRolesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ManageUserRolesComponent, RolePipe, ChangeUserRoleComponent],
-      imports: [RouterTestingModule, HttpClientTestingModule, DataTablesModule],
-      providers: [
-        ChangeUserRoleService,
-        ManageUserRolesService
-      ]
+      imports: [RouterTestingModule, FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule,
+        ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
+        RouterTestingModule, MatDialogModule, HttpClientTestingModule],
+        providers: [
+          ChangeUserRoleService,
+          ManageUserRolesService
+        ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
