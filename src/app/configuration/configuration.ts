@@ -1,6 +1,6 @@
 export class SMTPConfiguration {
     host = '';
-    port = '';
+    port = null;
     username = '';
     password = '';
 }
