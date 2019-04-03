@@ -38,7 +38,7 @@ export class TableListService {
   tableListUrlMMR = environment.apiUrl + 'metalyzer/getRelationshipList?workspaceId=';
 
   constructor(private http: HttpClient,
-    private userinfoService: UserinfoService, private workspaceHeaderService: WorkspaceHeaderService) {
+    private userinfoService: UserinfoService) {
   }
 
   getTableList(workspaceId, startIndex): Observable<string[]> {
