@@ -19,14 +19,20 @@
       <ul class="nav nav-tabs mgmt-panel mt-10">
         <li class="trim-text smtp-config">
           <a [routerLink]="['smtp-configuration']" [class.active]="checkActive == 'Email SMTP Configuration'"
-            (click)="checkActive = $event.target.innerText">Email SMTP Configuration</a>
+            (click)="tabChange($event)">Email SMTP Configuration</a>
         </li>
         <li class="trim-text app-config">
           <a [routerLink]="['smtp-configuration']" [class.active]="checkActive == 'App Configuration'"
-            (click)="checkActive = $event.target.innerText">App Configuration</a>
+            (click)="tabChange($event)">App Configuration</a>
         </li>
       </ul>
     </div>
   </div>
 </div>
-<router-outlet></router-outlet>
+<router-outlet *ngIf="showSmtp"></router-outlet>
+<div id="app-outer" *ngIf="!showSmtp">
+  <div id='app-info'>
+    <i class="app-icon material-icons">info</i>
+    <h3>No configuration required now. Left this page for future needs.</h3>
+  </div>
+</div>
