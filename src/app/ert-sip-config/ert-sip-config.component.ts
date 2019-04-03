@@ -25,6 +25,8 @@ export class ErtSipConfigComponent implements OnInit {
   selectedPrimaryTable: any;
   schemaResultsTableCount: any;
   startIndex = 1;
+  isRelationNot: boolean;
+  enableNextBtn: boolean;
 
 
   constructor(public router: Router, private tablelistService: TableListService,
@@ -73,12 +75,18 @@ export class ErtSipConfigComponent implements OnInit {
 
 
   populategraph(value, event) {
+    this.isRelationNot = false;
+    this.enableNextBtn = true;
     this.selectedPrimaryTable = event.target.value;
     d3.select('svg').remove();
     this.selectedValues = [];
     this.joinListMap.clear();
     this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
       this.relationshipInfo = result;
+      if (this.relationshipInfo.length === 0) {
+        this.isRelationNot = true;
+        this.enableNextBtn = false;
+      }
       this.primaryTable = getPrimaryArray(this.relationshipInfo);
       this.secondaryTable = getSecondaryArray(this.relationshipInfo);
       for (const i of this.primaryTable) {
