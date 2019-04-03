@@ -71,7 +71,8 @@ export class StatusService {
     return data || [];
   }
   private extractJobStatusList(res: any) {
-    const data = res.data.job_list;
+    console.log(res);
+    const data = res.data;
     return data || [];
   }
   private handleError<T>(operation = 'operation', result?: T) {
