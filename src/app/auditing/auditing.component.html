@@ -96,7 +96,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-5">
             <mat-form-field class="search-wid">
-              <input matInput [(ngModel)]="search" placeholder="Search" (keyup)="getSearch()">
+              <input matInput #search placeholder="Search" (keyup)="getSearch()">
             </mat-form-field>
           </div>
 </div>

@@ -67,19 +67,21 @@ totalScreen = 0;
   }
 
   ngAfterViewInit(): void {
-    // const el: HTMLElement = this.button.nativeElement as HTMLElement;
-    // this.renderer.listenGlobal('document', 'click', (event) => {
-    //   if (event.target.getAttribute('source') === 'Details-Job') {
-    //     this.auditService.getJobDetails(event.target.getAttribute('id')).subscribe(result => {
-    //       this.common = result.common;
-    //       this.input = result.input;
-    //       this.jobMessage = result.message;
-    //       this.jobOutput = result.output;
-    //     });
-    //     el.click();
-    //   }
-    // });
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.getAudit();
+        })
+      )
+      .subscribe();
+
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
   }
+
 
   openDetail(releatedJobId) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
@@ -125,7 +127,7 @@ totalScreen = 0;
       todate = new Intl.DateTimeFormat().format(from);
     }
     const params = {
-      'userId': '',
+      'userId': this.search.nativeElement.value,
       'workspaceId': this.selectedWSId,
       'serviceId': this.selectedService,
       'eventName': this.selectedEvent,

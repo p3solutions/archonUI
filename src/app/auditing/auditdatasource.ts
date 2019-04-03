@@ -20,7 +20,6 @@ export class AuditDataSource implements DataSource<any> {
     }
 
     getTable(params) {
-
         this.service.getJobStatuses(params).subscribe(result => {
            console.log(result);
             result.responseModel.forEach((value, index) => {
@@ -31,13 +30,15 @@ export class AuditDataSource implements DataSource<any> {
         });
     }
 
-    // filter(value) {
-    //     this.adhocSubject.subscribe(result => {
-    //         this.searchArray = result;
-    //         this.searchArray.filter = value;
+    // filter(index, search) {
+    //     this.service.getSearchResult(index, search).subscribe(result => {
+    //         console.log(result, 'filder');
+    //         result.responseModel.forEach((value, index ) => {
+    //           value.position = index + 1;
+    //       });
+    //       this.totalScreen = result.totalResponse;
+    //       this.adhocSubject.next(result.responseModel);
     //     });
-    //     this.adhocSubject.next(this.searchArray);
-    //     return this.adhocSubject;
-    // }
+    //   }
 
 }
