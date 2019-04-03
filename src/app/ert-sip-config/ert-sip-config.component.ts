@@ -81,7 +81,7 @@ export class ErtSipConfigComponent implements OnInit {
     d3.select('svg').remove();
     this.selectedValues = [];
     this.joinListMap.clear();
-    this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
+    this.tablelistService.getListOfRelationTableMMR(this.workspaceID, this.ertService.mmrVersion, value.tableName).subscribe(result => {
       this.relationshipInfo = result;
       if (this.relationshipInfo.length === 0) {
         this.isRelationNot = true;

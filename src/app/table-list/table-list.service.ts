@@ -9,6 +9,10 @@ import { RelationshipInfoObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
 import { WorkspaceObject } from '../workspace-objects';
 import { BehaviorSubject } from 'rxjs';
+import {response} from '../table-list/responemmr';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+
+
 @Injectable()
 export class TableListService {
   accessToken: string;
@@ -31,6 +35,8 @@ export class TableListService {
   private selectTableslist = new BehaviorSubject('');
   userselectTableslist = this.selectTableslist.asObservable();
   startIndex = 1;
+  tableListUrlMMR = environment.apiUrl + 'metalyzer/getRelationshipList?workspaceId=';
+
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService) {
   }
@@ -61,6 +67,16 @@ export class TableListService {
         catchError(this.handleError('relationtable-getListOfRelationTable()', []))
       );
   }
+
+  getListOfRelationTableMMR(workspaceId, version, tableName): Observable<any> {
+    const url = this.tableListUrlMMR + workspaceId + '&versionNumber=' + version+ '&tableName=' + tableName;
+    return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() })
+      .pipe(
+        map(this.extractRelationTableMMR),
+        catchError(this.handleError('relationtable-getListOfRelationTableMMR()', []))
+      );
+  }
+
   deleteRelationInfoData(workspaceID, primaryTableId, joinName, relationShipIDs): Observable<any> {
     const url = this.deleteRelationsUrl + workspaceID + '&tableId=' + primaryTableId;
     const params = { joinName: joinName, relationshipId: relationShipIDs };
@@ -104,6 +120,11 @@ export class TableListService {
   }
   private extractRelationTableList(res: any) {
     const data = res.data.relationshipInfo;
+    return data || [];
+  }
+
+  private extractRelationTableMMR(res) {
+    const data: any = response(res.data.RelationshipList.relationshipList);
     return data || [];
   }
 
