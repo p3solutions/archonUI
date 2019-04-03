@@ -9,6 +9,10 @@ import { RelationshipInfoObject } from '../workspace-objects';
 import { environment } from '../../environments/environment';
 import { WorkspaceObject } from '../workspace-objects';
 import { BehaviorSubject } from 'rxjs';
+import {response} from '../table-list/responemmr';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+
+
 @Injectable()
 export class TableListService {
   accessToken: string;
@@ -34,7 +38,7 @@ export class TableListService {
   tableListUrlMMR = environment.apiUrl + 'metalyzer/getRelationshipList?workspaceId=';
 
   constructor(private http: HttpClient,
-    private userinfoService: UserinfoService) {
+    private userinfoService: UserinfoService, private workspaceHeaderService: WorkspaceHeaderService) {
   }
 
   getTableList(workspaceId, startIndex): Observable<string[]> {
@@ -64,12 +68,12 @@ export class TableListService {
       );
   }
 
-  getListOfRelationTableMMR(): Observable<any> {
-    const url = this.tableListUrlMMR + '5c9b16ad41c0d80d37702a53' + '&versionNumber=' + 'mmr' + '&tableName=' + 'ADDRESS';
+  getListOfRelationTableMMR(workspaceId, version, tableName): Observable<any> {
+    const url = this.tableListUrlMMR + workspaceId + '&versionNumber=' + version+ '&tableName=' + tableName;
     return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() })
       .pipe(
         map(this.extractRelationTableMMR),
-        catchError(this.handleError('relationtable-getListOfRelationTable()', []))
+        catchError(this.handleError('relationtable-getListOfRelationTableMMR()', []))
       );
   }
 
@@ -116,12 +120,12 @@ export class TableListService {
   }
   private extractRelationTableList(res: any) {
     const data = res.data.relationshipInfo;
-    console.log(data, 'current');
     return data || [];
   }
 
   private extractRelationTableMMR(res) {
-    console.log(res.data.RelationshipList.relationshipList);
+    const data: any = response(res.data.RelationshipList.relationshipList);
+    return data || [];
   }
 
   setServiceActionType(serviceActionType: string) {

@@ -76,7 +76,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
     this.selectedPrimaryTable = event.target.value;
     d3.select('svg').remove();
     this.selectedValues = [];
-    this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
+    this.tablelistService.getListOfRelationTableMMR(this.workspaceID, this.ertService.mmrVersion, value.tableName).subscribe(result => {
       this.relationshipInfo = result;
       if (this.relationshipInfo.length === 0) {
         this.isRelationNot = true;
