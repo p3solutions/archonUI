@@ -75,6 +75,7 @@ export class TableListComponent implements OnInit {
   xml = 'xml';
   json = 'json';
   databaseID: any;
+  perPage = 50;
 
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('storedprocView', { read: ViewContainerRef }) storedprocViewRef: ViewContainerRef;
@@ -84,6 +85,7 @@ export class TableListComponent implements OnInit {
   wsName: string;
   startIndex = 1;
   schemaResultsTableCount: number;
+  paginationRequired: boolean;
 
   constructor(
     private tablelistService: TableListService,
@@ -126,22 +128,27 @@ export class TableListComponent implements OnInit {
   getTableList() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
-      this.tableList = res;
-      this.schemaResultsTableCount = this.tableList.length;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+      this.tableList = res.tableList;
+     this.schemaResultsTableCount = this.tableList.length;
       if (this.tableList.length === 0) {
         this.isTablelistAvailable = true;
       }
       this.isAvailable = true;
+      if (this.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+    }
     });
   }
 
   getPage(page: number) {
     this.tableList = [];
-    const perPage = 50;
-    this.startIndex = (page - 1) * perPage;
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
-      this.tableList = res;
+    this.startIndex = page;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+      this.tableList = res.tableList;
+      if (this.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex) * 50;
+    }
     });
   }
 
