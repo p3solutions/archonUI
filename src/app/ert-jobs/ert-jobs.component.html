@@ -106,7 +106,7 @@
     </div>
   </div>
 </div>
-<app-schedule-job class="modal fade" id="openScheduleJob" role="dialog" (ObjectEmit)="runJob($event)"></app-schedule-job>
+<app-schedule-job class="modal fade" id="openScheduleJob" [insid]="ERT" role="dialog" (ObjectEmit)="runJob($event)"></app-schedule-job>
 <button  data-toggle="modal" id="openScheduleModel" href="#openScheduleJob" data-keyboard="false" data-backdrop="static" style="display:none">Schedule</button>
 <button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
 <div id="successModel" class="modal fade" role="dialog">

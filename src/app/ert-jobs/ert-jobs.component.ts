@@ -18,6 +18,7 @@ export class ErtJobsComponent implements OnInit {
   @ViewChild('click') button: ElementRef;
   ertJobDetail = new ERTJobs();
   ertJobId = '';
+  ERT = 'ERT';
   scheduleNow: boolean;
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService,
@@ -77,8 +78,10 @@ export class ErtJobsComponent implements OnInit {
     this.scheduleNow = scheduleObject.scheduleNow;
     const param: any = {
       'ertJobId': this.scheduledeErtJobId,
-      'scheduledConfig': scheduleObject
+      'scheduledConfig': scheduleObject,
+      'instanceId': scheduleObject.ins
     };
+    delete param.scheduledConfig['ins'];
     this.ertService.runJob(param).subscribe(result => {
       el.click();
       if (result.httpStatus === 200) {

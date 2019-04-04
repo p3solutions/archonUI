@@ -3,6 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ScheduleJobComponent } from './schedule-job.component';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule, TimepickerModule } from 'ngx-bootstrap';
+import { UserinfoService } from '../userinfo.service';
+import { TableListService } from '../table-list/table-list.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ScheduleJobComponent', () => {
   let component: ScheduleJobComponent;
@@ -10,8 +14,9 @@ describe('ScheduleJobComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule , BsDatepickerModule.forRoot(), TimepickerModule.forRoot()],
-      declarations: [ ScheduleJobComponent ]
+      imports: [FormsModule , HttpClientTestingModule, RouterTestingModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot()],
+      declarations: [ ScheduleJobComponent ],
+      providers: [ UserinfoService, TableListService]
     })
     .compileComponents();
   }));
