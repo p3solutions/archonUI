@@ -1,14 +1,10 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, ChangeDetectorRef, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ViewChildren, QueryList } from '@angular/core';
 import { ManageUserRolesService } from './manage-user-roles.service';
-import { ManageUserRoles } from '../manage-user-roles';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { map, tap } from 'rxjs/operators';
-import { Data } from '@angular/router/src/config';
-import { GlobalRoles, UserInvite } from '../global-roles';
-import { ChangeGlobalRole } from '../change-global-role';
-import { Subject, merge } from 'rxjs';
-import { DataTableDirective } from 'angular-datatables';
+import { tap } from 'rxjs/operators';
+import { UserInvite, GlobalGroup } from '../global-roles';
+import { merge } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { InviteUserDataSource } from './invite-user-data-source';
 
@@ -37,24 +33,39 @@ export class CreateUserInviteDialogComponent {
   styleUrls: ['./manage-user-roles.component.css']
 })
 export class ManageUserRolesComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('matPagintor1') paginator: MatPaginator;
+  @ViewChild('matSort1') sort: MatSort;
+  // @ViewChild('matPagintor2') paginator1: MatPaginator;
+  // @ViewChild('matSort2') sort1: MatSort;
+  // @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+  // @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   dataSource: InviteUserDataSource;
+  dataSource1: InviteUserDataSource;
   totalUser = 0;
   successMsg = '';
-  displayedColumns: string[] = ['id', 'emailAddress', 'globalGroup', 'businessJustification',
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
     'createdAt', 'updatedAt'];
+  // InviteDisplayedColumns: string[] = ['id', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+  //   'createdBy', 'createdAt', 'updatedAt'];
   disableInviteBtn = true;
+  lockedUserAction: string[] = ['Select Action', 'UnLock', 'Revoke Access'];
+  revokedUserAction: string[] = ['Select Action', 'Grant Access', 'Delete'];
+  filterOptionAction: string[] = ['', 'Invited', 'Active', 'Revoked', 'Locked'];
   roleOfUser = '';
   userInviteInfo = new UserInvite();
+  globalGroupList: GlobalGroup[] = [];
+  invited = null;
+  revoked = null;
+  locked = null;
+  showInviteTable = false;
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.getInviteUsers();
     this.checkForEnableBtn();
+    this.getAllUsers(false, '', '');
   }
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
@@ -63,30 +74,96 @@ export class ManageUserRolesComponent implements OnInit {
 
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
-        tap(() => this.loadUsers())
+        tap(() => this.loadAllUsers(this.invited, this.revoked, this.locked))
       )
       .subscribe();
+    // this.sort1.sortChange.subscribe(() => this.paginator1.pageIndex = 0);
+
+    // merge(this.sort1.sortChange, this.paginator1.page)
+    //   .pipe(
+    //     tap(() => this.loadAllUsers1(this.invited, this.revoked, this.locked))
+    //   )
+    //   .subscribe();
   }
 
-  loadUsers() {
-    this.dataSource.getInviteUsers(this.paginator.pageIndex + 1);
+  loadAllUsers(invited, revoked, locked) {
+    this.dataSource.getAllUsers(this.paginator.pageIndex + 1, invited, revoked, locked);
     this.dataSource.totalUserSubject.subscribe(result => {
       this.totalUser = result;
     });
   }
+  // loadAllUsers1(invited, revoked, locked) {
+  //   this.dataSource1.getAllUsers(this.paginator1.pageIndex + 1, invited, revoked, locked);
+  //   this.dataSource1.totalUserSubject.subscribe(result => {
+  //     this.totalUser = result;
+  //   });
+  // }
+  filter(filterValue) {
+    switch (filterValue) {
+      case 'Invited': {
+        this.invited = true;
+        this.revoked = '';
+        this.locked = '';
+        this.displayedColumns = ['id', 'emailAddress', 'globalGroupName', 'status', 'action', 'businessJustification',
+        'createdBy', 'createdAt', 'updatedAt'];
+        this.showInviteTable = true;
+        break;
+      }
+      case 'Active': {
+        this.invited = false;
+        this.revoked = false;
+        this.locked = false;
+        this.showInviteTable = false;
+        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+          'createdAt', 'updatedAt'];
+        break;
+      }
+      case 'Revoked': {
+        this.revoked = true;
+        this.invited = false;
+        this.locked = false;
+        this.showInviteTable = false;
+        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+          'createdAt', 'updatedAt'];
+        break;
+      }
+      case 'Locked': {
+        this.locked = true;
+        this.invited = false;
+        this.revoked = false;
+        this.showInviteTable = false;
+        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+          'createdAt', 'updatedAt'];
+        break;
+      }
+      case '': {
+        this.locked = '';
+        this.invited = false;
+        this.revoked = '';
+        this.showInviteTable = false;
+        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+          'createdAt', 'updatedAt'];
+        break;
+      }
+    }
+    this.getAllUsers(this.invited, this.revoked, this.locked);
+  }
+
+
 
   getGlobalGroup() {
     if (this.roleOfUser !== '') {
       this.manageUserRolesService.getGlobalGroup(this.roleOfUser).subscribe(result => {
         this.userInviteInfo.globalGroupList = result.data.globalRoles;
-        console.log(this.userInviteInfo.globalGroupList);
+        this.globalGroupList = result.data.globalRoles;
       });
     }
   }
 
-  getInviteUsers() {
+
+  getAllUsers(invited, revoked, locked) {
     this.dataSource = new InviteUserDataSource(this.manageUserRolesService);
-    this.loadUsers();
+    this.loadAllUsers(invited, revoked, locked);
   }
 
   checkForEnableBtn() {
@@ -103,15 +180,16 @@ export class ManageUserRolesComponent implements OnInit {
       }
     }
     for (const item of roles) {
-      if (item.roleName.toUpperCase().trim() === 'ROLE_ADMIN') {
-        this.roleOfUser = 'admin';
-        break;
-      }
       if (item.roleName.toUpperCase().trim() === 'ROLE_SUPER') {
         this.roleOfUser = 'superadmin';
         break;
       }
+      if (item.roleName.toUpperCase().trim() === 'ROLE_ADMIN') {
+        this.roleOfUser = 'admin';
+        break;
+      }
     }
+    this.getGlobalGroup();
   }
 
 
@@ -144,7 +222,7 @@ export class ManageUserRolesComponent implements OnInit {
           this.successMsg = 'User Not Invited';
         }
         this.userInviteInfo = new UserInvite();
-        this.getInviteUsers();
+        this.getAllUsers(this.invited, this.revoked, this.locked);
       });
     }
   }

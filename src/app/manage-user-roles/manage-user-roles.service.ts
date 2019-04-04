@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { ManageUserRoles } from '../manage-user-roles';
-import { headersToString } from 'selenium-webdriver/http';
-import { Data } from '@angular/router/src/config';
 import { GlobalRoles } from '../global-roles';
 import { environment } from '../../environments/environment';
 
@@ -17,11 +13,12 @@ export class ManageUserRolesService {
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
 
-  private getAllUsersUrl = this.apiUrl + 'users';
+  // private getAllUsersUrl = this.apiUrl + 'users';
   private getGlobalRoleUrl = this.apiUrl + 'admin/roles/global';
   private changeGlobalRoleUrl = this.apiUrl + 'users/';
   private inviteUserUrl = this.apiUrl + 'users/invite';
   private getInviteUsersUrl = this.apiUrl + 'users/allInviteUsers?startIndex=';
+  private getAllUsersUrl = this.apiUrl + 'users?startIndex=';
 
 
   constructor(private http: HttpClient) { }
@@ -35,12 +32,12 @@ export class ManageUserRolesService {
     return body || [];
   }
 
-  getManageMembersDetails(): Observable<ManageUserRoles[]> {
-    return this.http.get<ManageUserRoles[]>(this.getAllUsersUrl, { headers: this.headers }).pipe(
-      map(this.extractData),
-      catchError(this.handleError('manageuserroles', []))
-    );
-  }
+  // getManageMembersDetails(): Observable<ManageUserRoles[]> {
+  //   return this.http.get<ManageUserRoles[]>(this.getAllUsersUrl, { headers: this.headers }).pipe(
+  //     map(this.extractData),
+  //     catchError(this.handleError('manageuserroles', []))
+  //   );
+  // }
 
   changeGlobalRoleDetails(userid, globalid) {
     const body = {
@@ -82,7 +79,13 @@ export class ManageUserRolesService {
       );
   }
 
-
+  getAllUsers($startIndex, $accessRevoked, $accountLocked): Observable<any> {
+    return this.http.get<any>(this.getAllUsersUrl + $startIndex + '&accessRevoked=' + $accessRevoked +
+      '&accountLocked=' + $accountLocked, { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest),
+        catchError(this.handleError('getAllUsers', []))
+      );
+  }
 
 
   private extractDataForAllRequest(res: any) {

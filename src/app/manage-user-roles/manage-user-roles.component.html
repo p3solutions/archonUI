@@ -21,6 +21,15 @@
           <input matInput name="screen-filter" #input placeholder="Search">
         </mat-form-field>
       </div>
+      <div id="search-user">
+        <mat-form-field>
+          <mat-select name="filter" (selectionChange)="filter($event.value)" placeholder="filter">
+            <mat-option *ngFor="let item of filterOptionAction" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <div id="user-invite-btn">
         <button [disabled]="disableInviteBtn" (click)="openUserInviteDialog()" mat-raised-button color="accent">
           <i class="material-icons">
@@ -33,103 +42,154 @@
   </div>
   <div id="user-table">
     <div class="example-table-container">
-      <table mat-table [dataSource]="dataSource" matSort>
+      <table mat-table [dataSource]="dataSource" #matSort1="matSort" matSort>
         <ng-container matColumnDef="id">
-          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
-          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.id}}</td>
+          <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
+          <td style="width:8%" mat-cell *matCellDef="let element; let i = index;">{{element.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="firstName">
+          <th style="width:6%" mat-header-cell *matHeaderCellDef mat-sort-header> First Name</th>
+          <td style="width:6%" mat-cell *matCellDef="let element; let i = index;">{{element.firstName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="lastName">
+          <th style="width:6%" mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+          <td style="width:6%" mat-cell *matCellDef="let element; let i = index;">{{element.lastName}}</td>
         </ng-container>
         <ng-container matColumnDef="emailAddress">
-          <th style="width:20%" mat-header-cell *matHeaderCellDef mat-sort-header>Email Address </th>
-          <td style="width:20%" mat-cell *matCellDef="let element"> {{element.emailAddress}}
+          <th style="width:13%" mat-header-cell *matHeaderCellDef mat-sort-header>Email Address </th>
+          <td style="width:13%" mat-cell *matCellDef="let element"> {{element.emailAddress}}
           </td>
         </ng-container>
         <ng-container matColumnDef="globalGroup">
-          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Global Group </th>
-          <td style="width:10%" mat-cell *matCellDef="let element">
-            {{element.globalGroup}} </td>
+          <th style="width:11%" mat-header-cell *matHeaderCellDef mat-sort-header> Global Group </th>
+          <td style="width:11%" mat-cell *matCellDef="let element" class="global-select">
+            <select [(ngModel)]="element.globalGroupId">
+              <option *ngFor="let item of globalGroupList" [value]="item.id">
+                {{item.groupName}}
+              </option>
+            </select>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="globalGroupName">
+          <th style="width:11%" mat-header-cell *matHeaderCellDef mat-sort-header> Global Group </th>
+          <td style="width:11%" mat-cell *matCellDef="let element" class="global-select">
+            {{element.globalGroup}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td [ngClass]="{'invited': element.status==='Invited', 'active': element.status==='Active',
+             'locked': element.status==='Locked','revoked': element.status==='Revoked'}" style="width:5%" mat-cell
+            *matCellDef="let element">
+            {{element.status}} </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <td class="action-select" style="width:10%" mat-cell *matCellDef="let element">
+            <button class="btn-transform" *ngIf="element.status==='Invited'">Cancel Invite</button>
+            <select *ngIf="element.status==='Locked'" [(ngModel)]="element.action">
+              <option *ngFor="let item of lockedUserAction" [value]="item">
+                {{item}}
+              </option>
+            </select>
+            <select *ngIf="element.status==='Revoked'" [(ngModel)]="element.action">
+              <option *ngFor="let item of revokedUserAction" [value]="item">
+                {{item}}
+              </option>
+            </select>
+            <button class="btn-transform" *ngIf="element.status==='Active'">Revoke Access</button>
+          </td>
         </ng-container>
         <ng-container matColumnDef="businessJustification">
-          <th style="width:25%" mat-header-cell *matHeaderCellDef> Bussiness Justification </th>
-          <td style="width:25%" mat-cell *matCellDef="let element"> {{element.businessJustification}} </td>
+          <th style="width:13%" mat-header-cell *matHeaderCellDef> Bussiness Justification </th>
+          <td style="width:13%" mat-cell *matCellDef="let element"> {{element.businessJustification}} </td>
+        </ng-container>
+        <ng-container matColumnDef="createdBy">
+          <th style="width:7%" mat-header-cell *matHeaderCellDef> Created By </th>
+          <td style="width:7%" mat-cell *matCellDef="let element"> {{element.invitedByUser}} </td>
         </ng-container>
         <ng-container matColumnDef="createdAt">
-          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
-          <td style="width:15%" mat-cell *matCellDef="let element"> {{element.createdAt * 1000 | date:'medium'}} </td>
+          <th style="width:7%" mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
+          <td style="width:7%" mat-cell *matCellDef="let element"> {{element.createdAt * 1000 | date:'dd/MM/yyyy'}} </td>
         </ng-container>
+        <!-- <ng-container matColumnDef="updatedBy">
+          <th style="width:7%" mat-header-cell *matHeaderCellDef mat-sort-header> Modified By </th>
+          <td style="width:7%" mat-cell *matCellDef="let element"> {{element.updatedBy}} </td>
+        </ng-container> -->
         <ng-container matColumnDef="updatedAt">
-          <th style="width:15%" mat-header-cell *matHeaderCellDef> Updated At </th>
-          <td style="width:15%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)">
-            {{element.updatedAt * 1000 | date:'medium'}}
+          <th style="width:7%" mat-header-cell *matHeaderCellDef> Modified At </th>
+          <td style="width:7%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)">
+            {{element.updatedAt * 1000 | date:'dd/MM/yyyy'}}
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator id="user-table-svg" [length]="totalUser" [pageSize]="50" showFirstLastButtons>
+    <mat-paginator #matPagintor1 id="user-table-svg" [length]="totalUser" [pageSize]="50" showFirstLastButtons>
     </mat-paginator>
   </div>
-  <!-- <div class="col-md-7">
-        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>You don't have privileges to Change Role</strong>
-          </div>
-          <div *ngIf="successMessage" class="alert alert-success" role="alert" data-auto-dismiss="2000">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>Successfully Changed Role</strong>
-          </div>
-       </div>  -->
-
-  <!-- <div class="row"> 
-    <div id="manager-user" class="workspace-panel-content" *ngIf="isAvailable">
-      <table datatable [dtOptions]="dtOptions" id="manage-user-role-info-table" class="table table-hover table-bordered">
-        <thead>
-          <tr>
-            <th>Sl No</th>
-            <th>Name</th>
-            <th>Email Address</th>
-            <th>Created At</th>
-            <th>Global Role</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of this.manageUserRolesRequestData | globalRole ; let i = index">
-            <td class="mm-info-data">{{i+1}}</td>
-            <td class="mm-info-data">
-              <a (click)='getUserProfile(user)' [routerLink]="['/user-profile']" class="trim-text">{{user.name}}</a>
-            </td>
-            <td class="mm-info-data">{{user.emailAddress}}</td>
-            <td class="mm-info-data">{{user.createdAt * 1000 | date:'MMM/dd/yyyy'}}</td>
-            <td class="mm-info-data">{{user.globalRoles[0].roleName}}</td>
-            <td>
-              <a href="" id="preSelectedRoles" name={{preSelectedRole}} data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id, user.globalRoles[0].roleName, user.name)">
-                Change Role
-              </a>
-            </td>
-          </tr>
-        </tbody>
+  <!-- <div id="user-table">
+    <div class="example-table-container">
+      <table mat-table [dataSource]="dataSource1" #matSort2="matSort" matSort>
+        <ng-container matColumnDef="id">
+          <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
+          <td style="width:8%" mat-cell *matCellDef="let element; let i = index;">{{element.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="emailAddress">
+          <th style="width:13%" mat-header-cell *matHeaderCellDef mat-sort-header>Email Address </th>
+          <td style="width:13%" mat-cell *matCellDef="let element"> {{element.emailAddress}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="globalGroup">
+          <th style="width:11%" mat-header-cell *matHeaderCellDef mat-sort-header> Global Group </th>
+          <td style="width:11%" mat-cell *matCellDef="let element" class="global-select">
+            {{item.globalGroup}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td [ngClass]="{'invited': element.status==='Invited', 'active': element.status==='Active',
+             'locked': element.status==='Locked','revoked': element.status==='Revoked'}" style="width:5%" mat-cell
+            *matCellDef="let element">
+            {{element.status}} </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <td class="action-select" style="width:10%" mat-cell *matCellDef="let element">
+            <button class="btn-transform" *ngIf="element.status==='Invited'">Cancel Invite</button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="businessJustification">
+          <th style="width:13%" mat-header-cell *matHeaderCellDef> Bussiness Justification </th>
+          <td style="width:13%" mat-cell *matCellDef="let element"> {{element.businessJustification}} </td>
+        </ng-container>
+        <ng-container matColumnDef="createdBy">
+          <th style="width:7%" mat-header-cell *matHeaderCellDef> Created By </th>
+          <td style="width:7%" mat-cell *matCellDef="let element"> {{element.createdBy}} </td>
+        </ng-container>
+        <ng-container matColumnDef="createdAt">
+          <th style="width:7%" mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
+          <td style="width:7%" mat-cell *matCellDef="let element"> {{element.createdAt * 1000 | date:'shortDate'}} </td>
+        </ng-container>
+         <ng-container matColumnDef="updatedBy">
+          <th style="width:7%" mat-header-cell *matHeaderCellDef mat-sort-header> Modified By </th>
+          <td style="width:7%" mat-cell *matCellDef="let element"> {{element.updatedBy}} </td>
+        </ng-container>
+        <ng-container matColumnDef="updatedAt">
+          <th style="width:7%" mat-header-cell *matHeaderCellDef> Modified At </th>
+          <td style="width:7%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)">
+            {{element.updatedAt * 1000 | date:'shortDate'}}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="InviteDisplayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: InviteDisplayedColumns;"></tr>
       </table>
     </div>
-  </div> -->
-  <!-- <div class="row">
-    <div class="workspace-panel-content">
-      <button (click)="gotoManagementPanel()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
-    </div>
+    <mat-paginator #matPagintor2 id="user-table-svg" [length]="totalUser" [pageSize]="50" showFirstLastButtons>
+    </mat-paginator>
   </div> -->
 </div>
-<app-change-user-role [selectedUserId]="selectedUserId" [preSelectedRole]="preSelectedRole" [userName]="userName"
-  (messageSuccessEvent)="receiveSuccessMessage($event)" (onconfirm)="onconfirm($event)" class="modal fade" id="myModal1"
-  role="dialog">
-  some other content
-</app-change-user-role>
-<!-- <a id="preSelectedRoles" name={{preSelectedRole}}></a> -->
-
-
 <button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
   data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
 <div id="success" class="modal fade" role="dialog">
