@@ -80,5 +80,48 @@
 
 .align-refresh{
 text-align: right;
-padding-right: 64px;
+padding-right: 47px;
+}
+
+#screen-table {
+  margin: 2px 60px 2px 40px;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  text-align: left;
+}
+
+::ng-deep #screen-table svg {
+  height: 6vh !important;
+}
+
+th {
+  color: #333;
+  font-weight: bold;
+  font-size: 15px;
+  font-family: "Roboto", "Montserrat", sans-serif;
+}
+
+.example-table-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.material-icons {
+  font-size: 26px;
+}
+
+.material-icons:hover,
+.material-icons:focus {
+  font-size: 26px;
+}
+
+.search-wid {
+  width: 87%;
 }

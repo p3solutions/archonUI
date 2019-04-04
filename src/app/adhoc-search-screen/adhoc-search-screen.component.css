@@ -12,9 +12,9 @@
 }
 
 ::ng-deep .mat-card.column-box {
-  width: 32.60%;
-  padding: 11px 10px 8px 10px;
-  margin: 11px 4px 0px 3px;
+  width: 31.60%;
+  padding: 11px 9px 8px 10px;
+  margin: 12px 10px 6px 8px;
   border-radius: 3px;
   border: solid 1px #c9d1df;
   background-color: #fafafa;
@@ -23,11 +23,12 @@
 }
 
 ::ng-deep .search-screen .mat-card-title span i {
-  padding: 0 7px
+  padding: 0px 0px 0px 5px;
 }
 
 ::ng-deep .column-box .mat-form-field-appearance-outline .mat-form-field-infix {
-  padding: 0em 0px 10px 0px !important;}
+  padding: 0.1em 0px 7px 0px !important
+}
 
 ::ng-deep .column-box mat-form-field.select {
   width: -webkit-fill-available
@@ -55,6 +56,8 @@
 #drag-search-column {
   min-height: 220px;
   max-height: 358px;
+  margin-top: 7px;
+  margin-left: -12px;
   overflow: auto;
 }
 
@@ -63,10 +66,11 @@
 }
 
 .material-icons {
-  font-size: 26px;
+  font-size: 24px;
 }
 
 .material-icons:hover,
 .material-icons:focus {
-  font-size: 26px;
+  font-size: 24px;
 }
+    

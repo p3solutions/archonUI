@@ -1,0 +1,61 @@
+.smtp-div .flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.smtp-div .flex-container>* {
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+.smtp-div .flex-container form {
+  margin-bottom: 20px;
+}
+
+.smtp-div .flex-container form>* {
+  margin: 5px 0;
+}
+
+#smtp-outer {
+  width: 50%;
+  margin: 46px auto;
+}
+
+h3 {
+  font-size: 20px;
+  color: #0c0c0c;
+}
+
+.btn-padding {
+  font-size: 16px;
+  padding: 6px 12px;
+}
+
+#action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+}
+
+#action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+}
+
+#action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+}
+
+#action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+#action-btn {
+  margin: 17px;
+}
+
+#heading {
+  margin-bottom: 17px;
+}

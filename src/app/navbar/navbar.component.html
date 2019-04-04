@@ -86,8 +86,9 @@
             <li title="Profile">
               <a [routerLink]="['/user-profile']" (click)='callUserProfile()' class="trim-text">Profile</a>
             </li>
-            <li *ngIf="info?.show" role="separator" class="divider"></li>
-            <li *ngIf="info?.show" title="Manage">
+            <!-- removed *ngIf="info?.show" in the below two li-->
+            <li role="separator" class="divider"></li>
+            <li title="Manage">
               <a [routerLink]="['/management-landing-page/management-panel']" class="trim-text">Manage</a>
             </li>
             <li role="separator" class="divider"></li>

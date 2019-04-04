@@ -56,6 +56,9 @@ import { AdhocTableSelectionComponent } from './adhoc-table-selection/adhoc-tabl
 import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-search-criteria.component';
 import { AdhocEditSearchScreenPopupComponent } from './adhoc-edit-search-screen-popup/adhoc-edit-search-screen-popup.component';
 import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-screen.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
+import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
+import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -194,6 +197,15 @@ const routes: Routes = [
         path: 'workspace-list', component: WorkspaceListComponent
       }, {
         path: 'manage-user-roles', component: ManageUserRolesComponent
+      }, {
+        path: 'configuration', component: ConfigurationComponent, children: [
+          {
+            path: '', redirectTo: 'smtp-configuration', pathMatch: 'full'
+          },
+          {
+            path: 'smtp-configuration', component: SmtpConfigurationComponent
+          }
+        ]
       }
     ]
   }, {
@@ -204,6 +216,9 @@ const routes: Routes = [
   },
   {
     path: 'audit', canActivate: [AuthenticationGuard], component: AuditingComponent
+  },
+  {
+    path: 'sso-sign-in', component: SsoSigninFormComponent
   }
 ];
 

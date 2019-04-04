@@ -11,6 +11,12 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { AuditService } from './audit.service';
 import { UserinfoService } from '../userinfo.service';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import {
+  MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule
+} from '@angular/material';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AuditingComponent', () => {
   let component: AuditingComponent;
@@ -18,9 +24,10 @@ describe('AuditingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule , BsDatepickerModule.forRoot(),  DataTablesModule, RouterTestingModule, HttpClientTestingModule],
+      imports: [FormsModule , BsDatepickerModule.forRoot(), MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, DataTablesModule, RouterTestingModule, HttpClientTestingModule],
       declarations: [ AuditingComponent, NavbarComponent ] ,
-      providers: [UserWorkspaceService, AuditService, UserinfoService, UserProfileService]
+      providers: [UserWorkspaceService, AuditService, UserinfoService, UserProfileService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));

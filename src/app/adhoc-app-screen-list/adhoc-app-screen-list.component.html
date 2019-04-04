@@ -78,7 +78,7 @@
       <ng-container matColumnDef="link">
         <th style="width:3%" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
         <td style="width:3%" mat-cell *matCellDef="let element"> <button *ngIf="element.childScreenInfo.length>0"
-            (click)="showChildInfo(element.id)" mat-icon-button [matMenuTriggerFor]="menu">
+            (click)="showChildInfo(element.id)" class="link-btn" mat-icon-button [matMenuTriggerFor]="menu">
             <i class="cursor-poniter fa fa-link"></i>
           </button>
         </td>
@@ -132,9 +132,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [length]="totalScreen" [pageSize]="50" showFirstLastButtons>
-    </mat-paginator>
   </div>
+  <mat-paginator id="screen-table" [length]="totalScreen" [pageSize]="50" showFirstLastButtons>
+  </mat-paginator>
 </div>
 <mat-menu #menu="matMenu">
   <button *ngFor="let item of childScreenInfo" mat-menu-item>
