@@ -136,6 +136,7 @@ import { AuditService } from './auditing/audit.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
+import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -225,7 +226,8 @@ export function tokenGetter() {
                 AdhocEditPanelColumnPopupComponent,
                 CreateUserInviteDialogComponent,
                 ConfigurationComponent,
-                SmtpConfigurationComponent
+                SmtpConfigurationComponent,
+                SsoSigninFormComponent
         ],
         imports: [
                 JwtModule.forRoot({

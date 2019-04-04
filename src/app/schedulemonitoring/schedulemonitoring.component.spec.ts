@@ -8,6 +8,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import { FormsModule } from '@angular/forms';
+import {
+  MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule
+} from '@angular/material';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SchedulemonitoringComponent', () => {
   let component: SchedulemonitoringComponent;
@@ -16,8 +23,9 @@ describe('SchedulemonitoringComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SchedulemonitoringComponent , NavbarComponent],
-      imports: [DataTablesModule, RouterTestingModule, HttpClientTestingModule, HttpClientModule],
-      providers: [UserinfoService, UserProfileService]
+      imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, DataTablesModule, RouterTestingModule, HttpClientTestingModule, HttpClientModule],
+      providers: [UserinfoService, UserProfileService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));

@@ -1,10 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Renderer } from '@angular/core';
 import { Router } from '@angular/router';
-import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { StatusService } from './status.service';
-import { CommonUtilityService } from '../common-utility.service';
 import { ErrorObject } from '../error-object';
 import { AuditService } from '../auditing/audit.service';
+import { StatusDataSource } from './statusdatasource';
+import { MatPaginator, MatSort } from '@angular/material';
+import { merge, fromEvent } from 'rxjs';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-status-screen',
@@ -12,13 +14,12 @@ import { AuditService } from '../auditing/audit.service';
   styleUrls: ['./status-screen.component.css']
 })
 export class StatusScreenComponent implements OnInit , AfterViewInit {
-  dtOptions: DataTables.Settings = {};
   jobList;
   jobOriginList = [];
   jobStatusList = [];
   selectedJobOrigin = '';
   selectedJobStatus = '';
-  loadStatus = false;
+  loadStatus = true;
   errorObject: ErrorObject;
   common: any;
   input: any;
@@ -26,63 +27,68 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   jobOutput: any;
   @ViewChild('click') button: ElementRef;
   startIndex = 1;
+  displayedColumns: string[] = ['Job Name', 'Job Origin', 'Scheduled Time', 'Start Time',
+    'End Time', 'Status', 'Details', 'Retry'];
+  dataSource: StatusDataSource;
+  totalScreen = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('search') search: ElementRef;
 
   constructor(
     private router: Router,
-    private workspaceService: WorkspaceServicesService,
     private statusService: StatusService,
-    private commonUtilityService: CommonUtilityService,
     private service: AuditService,
-    private renderer: Renderer
   ) { }
 
   ngOnInit() {
     this.getJobOrigins();
     this.getJobStatuses();
-    this.getJobList();
+    this.paginator.pageIndex = 0;
+    this.getStart();
   }
 
 
-  ngAfterViewInit(): void {
-    const el: HTMLElement = this.button.nativeElement as HTMLElement;
-    this.renderer.listenGlobal('document', 'click', (event) => {
-      if (event.target.getAttribute('source') === 'Status-Details') {
-        this.service.getJobDetails(event.target.getAttribute('id')).subscribe(result => {
-          this.common = result.common;
-          this.input = result.input;
-          this.jobMessage = result.message;
-          this.jobOutput = result.output;
-        });
-        el.click();
-      } else if (event.target.getAttribute('source') === 'Retry-Job') {
-        this.statusService.setRetryStatus(event.target.getAttribute('id')).subscribe(res => {
-          if (res && res.success) {
-            this.loadStatus = false;
-            this.getJobList();
-          } else {
-            this.errorObject = new ErrorObject;
-            this.errorObject.message = res.errorMessage;
-            this.errorObject.show = true;
-          }
-        });
-      }
-    });
+  ngAfterViewInit() {
+
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.getSearch();
+        })
+      )
+      .subscribe();
+
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => this.loadPage())
+      )
+      .subscribe();
+  }
+
+  loadPage() {
+    this.dataSource.getTable(
+      this.selectedJobOrigin,
+      this.selectedJobStatus,
+      this.paginator.pageIndex + 1);
+  }
+
+  getSearch() {
+    this.dataSource.filter(this.paginator.pageIndex + 1, this.search.nativeElement.value);
   }
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 
-  getJobList() {
-    this.loadStatus = false;
-    this.statusService.getJobList(this.selectedJobOrigin, this.selectedJobStatus, this.startIndex).subscribe(res => {
-    this.jobList = res;
-    const _this = this;
-    setTimeout(function () {
-      _this.loadStatus = true;
-      _this.renderTable();
-    }, 100);
-    });
+  getStart() {
+    this.dataSource = new StatusDataSource(this.statusService);
+    this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
   }
 
   getJobOrigins() {
@@ -104,93 +110,38 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
     this.selectedJobOrigin = origin;
   }
 
-  renderTable() {
-    const _this = this;
-    this.dtOptions = {
-      pagingType: 'simple_numbers',
-      pageLength: 10,
-      lengthChange: false,
-      scrollX: true,
-      autoWidth: true,
-      data: this.jobList.list,
-      columns: [
-        {
-          title: 'Job Name',
-          data: 'jobName'
-        },
-        {
-          title: 'Job Origin',
-          data: 'jobOrigin'
-        },
-        {
-          'title': 'Scheduled Time',
-          'render': function (data, type, rowData) {
-            return _this.commonUtilityService.getDisplayTime(rowData.jobInfo.scheduledTime);
-          }
-        },
-        {
-          'title': 'Start Time',
-          'render': function (data, type, rowData) {
-            return _this.commonUtilityService.getDisplayTime(rowData.jobInfo.startTime);
-          }
-        },
-        {
-          'title': 'End Time',
-          'render': function (data, type, rowData) {
-            return _this.commonUtilityService.getDisplayTime(rowData.jobInfo.endTime);
-          }
-        },
-        {
-          'title': 'Status',
-          'orderable': false,
-          'render': function (data, type, rowData) {
-            let html = '';
-            if (rowData.jobInfo.jobStatus === 'SUCCESS') {
-              html = `<a data-tooltip="Success"><i class="fa fa-thumbs-o-up fa-2x"></i></a>`;
-            } else if (rowData.jobInfo.jobStatus === 'IN_PROGRESS') {
-              html = `<a data-tooltip="In_Progress"><i class="fa fa-spinner fa-2x"></i></a>`;
-            } else if (rowData.jobInfo.jobStatus === 'FAILED') {
-              html = `<a data-tooltip="Failed"><i class="fa fa-thumbs-o-down fa-2x"></i></a>`;
-            } else if (rowData.jobInfo.jobStatus === 'SCHEDULED') {
-              html = `<a data-tooltip="Scheduled"><i class="fa fa-clock-o fa-2x"></i></a>`;
-            }
-            return html;
-          },
-        },
-        {
-          'title': 'Details',
-          'orderable': false,
-          'render': function (data, type, rowData) {
-            if (rowData.id !== null) {
-              return '<a data-tooltip="View Job Details"><i class="fa fa-info-circle fa-2x" id="' + rowData.id + '" source="Status-Details"></i></a>';
-            } else {
-              return '<a data-tooltip="No Job Details" style="color: grey"><i class="fa fa-info-circle fa-2x"></i></a>';
-            }
-          }
-        },
-        {
-          'title': 'Retry',
-          'orderable': false,
-          'render': function (data, type, rowData) {
-            if (rowData.jobInfo.jobStatus === 'FAILED') {
-              return '<a data-tooltip="Retry"><i class="fa fa-repeat col-orange fa-2x" id="' + rowData.id + '" source="Retry-Job"></i></a>';
-            } else {
-              return '<a data-tooltip="Nope" style="color: grey"><i class="fa fa-repeat fa-2x"></i></a>';
-            }
-          }
-        }
-      ]
-    };
-  }
 
   refreshStatusTable() {
     this.loadStatus = false;
     this.selectedJobOrigin = '';
     this.selectedJobStatus = '';
-    this.getJobList();
+    this.getStart();
   }
 
   closeErrorMsg() {
     this.errorObject = null;
+  }
+
+  openDetail(id) {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.service.getJobDetails(id).subscribe(result => {
+      this.common = result.common;
+      this.input = result.input;
+      this.jobMessage = result.message;
+      this.jobOutput = result.output;
+    });
+    el.click();
+  }
+
+  retryJob(id) {
+    this.statusService.setRetryStatus(id).subscribe(res => {
+      if (res && res.success) {
+        this.getStart();
+      } else {
+        this.errorObject = new ErrorObject;
+        this.errorObject.message = res.errorMessage;
+        this.errorObject.show = true;
+      }
+    });
   }
 }

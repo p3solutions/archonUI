@@ -4,6 +4,10 @@ import { AuditService } from './audit.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { ScheduleMonitoringService } from '../schedulemonitoring/schedule-monitoring.service';
+import { MatPaginator, MatSort } from '@angular/material';
+import { merge, fromEvent } from 'rxjs';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { AuditDataSource } from './auditdatasource';
 
 @Component({
   selector: 'app-auditing',
@@ -14,7 +18,6 @@ export class AuditingComponent implements OnInit, AfterViewInit {
 
   loadStatus = true;
   isAvailable = true;
-  dtOptions: DataTables.Settings = {};
   output;
   selectedWS = '';
   Events = [];
@@ -33,6 +36,14 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   jobOutput;
   @ViewChild('click') button: ElementRef;
   uniqueService;
+  displayedColumns: string[] = ['User Name', 'WorkSpace Name', 'Related Job ID', 'Service Name',
+  'Event Name', 'Event Desc', 'Event Details', 'Download'];
+dataSource: AuditDataSource;
+totalScreen = 0;
+@ViewChild(MatPaginator) paginator: MatPaginator;
+@ViewChild(MatSort) sort: MatSort;
+@ViewChild('search') search: ElementRef;
+
 
   constructor(private router: Router, private auditService: AuditService, private userWorkspaceService: UserWorkspaceService,
     private renderer: Renderer, private service: ScheduleMonitoringService) { }
@@ -40,8 +51,8 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if (this.selectedEvent !== '' || this.selectedService !== '' || this.selectedWS !== '' || this.startdate !== '' || this.enddate !== '') {
       this.getAudit();
-    } else {
-      this.renderTable();
+      } else {
+      this.getAudit();
     }
     this.auditService.getEvetns().subscribe(x => {
       for (const i of x) {
@@ -56,23 +67,38 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const el: HTMLElement = this.button.nativeElement as HTMLElement;
-    this.renderer.listenGlobal('document', 'click', (event) => {
-      if (event.target.getAttribute('source') === 'Details-Job') {
-        this.auditService.getJobDetails(event.target.getAttribute('id')).subscribe(result => {
-          this.common = result.common;
-          this.input = result.input;
-          this.jobMessage = result.message;
-          this.jobOutput = result.output;
-        });
-        el.click();
-      } else if (event.target.getAttribute('source') === 'Downloads') {
-        this.auditService.downloadZip(event.target.getAttribute('id')).subscribe(result => {
-          this.downloadFile(result);
-        });
-      }
-    });
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.getAudit();
+        })
+      )
+      .subscribe();
+
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
   }
+
+
+  openDetail(releatedJobId) {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.auditService.getJobDetails(releatedJobId).subscribe(result => {
+      this.common = result.common;
+      this.input = result.input;
+      this.jobMessage = result.message;
+      this.jobOutput = result.output;
+    });
+    el.click();
+  }
+
+  downloadJob(releatedJobId) {
+  this.auditService.downloadZip(releatedJobId).subscribe(result => {
+    this.downloadFile(result);
+  });
+}
 
   downloadFile(content) {
     const fileName = 'audit' + '-data.zip';
@@ -101,7 +127,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
       todate = new Intl.DateTimeFormat().format(from);
     }
     const params = {
-      'userId': '',
+      'userId': this.search.nativeElement.value,
       'workspaceId': this.selectedWSId,
       'serviceId': this.selectedService,
       'eventName': this.selectedEvent,
@@ -110,16 +136,18 @@ export class AuditingComponent implements OnInit, AfterViewInit {
       'toDate': todate
     };
     this.isAvailable = false;
-    this.auditService.getJobStatuses(params).subscribe(x => {
-      this.output = x;
-      this.isAvailable = true;
-      this.renderTable();
-    });
+    this.dataSource = new AuditDataSource(this.auditService);
+    this.dataSource.getTable(params);
+
   }
 
   selectWorkspace(param) {
     this.selectedWS = param.workspaceName;
-    this.selectedWSId = param.id;
+    if (param.id === undefined) {
+    this.selectedWSId = '';
+    } else {
+      this.selectedWSId = param.id;
+    }
   }
 
   selectEvent(e) {
@@ -129,62 +157,4 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   selectService(service) {
     this.selectedService = service;
   }
-
-  renderTable() {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      scrollX: true,
-      autoWidth: true,
-      data: this.output,
-      columns: [
-        {
-          title: 'User Name',
-          data: 'userName'
-        },
-        {
-          title: 'WorkSpace Name',
-          data: 'workspaceName'
-        },
-        {
-          title: 'Related Job ID',
-          render: function (data: any, type: any, full: any) {
-            if (full.releatedJobId !== null) {
-              // tslint:disable-next-line: max-line-length
-              return '<a data-tooltip="View Job Details"><i class="fa fa-info-circle fa-2x" id="' + full.releatedJobId + '" source="Details-Job"></i></a>';
-            } else {
-              return '<a data-tooltip="No Job Details" style="color: grey"><i class="fa fa-info-circle fa-2x"></i></a>';
-            }
-          }
-        },
-        {
-          title: 'Service Name',
-          data: 'serviceId'
-        },
-        {
-          title: 'Event Name',
-          data: 'eventName'
-        },
-        {
-          title: 'Event Desc',
-          data: 'eventDescription'
-        },
-        {
-          title: 'Event Details',
-          data: 'eventDetails'
-        },
-        {
-          title: 'Download',
-          render: function (data: any, type: any, full: any) {
-            if (full.releatedJobId !== null) {
-              return '<a data-tooltip="Download"><i class="fa fa-download fa-2x" id="' + full.releatedJobId + '" source="Downloads"></i></a>';
-            } else {
-              return '<a data-tooltip="Not Available"><i class="fa fa-download fa-2x" style="color: grey"></i></a>';
-            }
-          }
-        }
-      ]
-    };
-  }
-
 }

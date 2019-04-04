@@ -93,4 +93,47 @@
   table::ng-deep th {
     text-align: center
   }
+  .example-table-container {
+    position: relative;
+  max-height: 400px;
+  overflow-x: auto;
+  /* overflow: auto; */
+  display: inline-block;
+  /* width: 100%; */
+  overflow-y: auto;
+  
+  }
+  
+  .material-icons {
+    font-size: 26px;
+  }
+  
+  .material-icons:hover,
+  .material-icons:focus {
+    font-size: 26px;
+  }
+  
+  .search-wid {
+    width: 87%;
+  }
+  
 
+  #screen-table {
+    margin: 2px 60px 2px 40px;
+  }
+  td,
+  th {
+    text-align: left;
+  }
+  
+  ::ng-deep #screen-table svg {
+    height: 6vh !important;
+  }
+  
+  th {
+    width: 25%;
+    color: #333;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: "Roboto", "Montserrat", sans-serif;
+  }

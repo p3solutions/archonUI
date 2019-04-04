@@ -51,6 +51,7 @@ export class AuditService {
         catchError(this.handleError<any>('getJobStatus')));
   }
 
+
   private extractJobOrigins(res: any) {
     const data = res.data.Audits;
     return data || [];
