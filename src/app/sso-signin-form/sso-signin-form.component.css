@@ -1,0 +1,130 @@
+#custom-nav {
+  background-color: #0a85f8;
+  margin-bottom: 0px;
+}
+
+.navbar-default {
+  border: none;
+}
+
+.navbar {
+  border-radius: 0px !important;
+}
+
+#header {
+  padding-left: 28px;
+  padding-top: 16px;
+  padding-bottom: 16px
+}
+
+#sign-div {
+  float: right;
+}
+
+#sign-in-btn button {
+  padding-top: 4px;
+  padding-bottom: 5px;
+  font-size: 20.8px;
+  font-stretch: condensed;
+  color: #034abf;
+  border-radius: 3px;
+  background-color: #fafafa;
+  text-transform: inherit;
+}
+
+body {
+  height: 100%;
+  min-height: 100%
+}
+
+
+#help-icon {
+  margin: 25px;
+}
+
+.container-fluid-background {
+  background: url(../../assets/archonLogoWaterMark.jpg);
+  background-size: 100% 100%;
+  height: 100%;
+}
+
+#brand-img {
+  width: 600px;
+  margin: 50px;
+  margin-top: 0px;
+  margin-left: 50px;
+}
+
+#archon-desc {
+  padding: 25px;
+  color: darkgrey;
+  font-size: 20px;
+  text-align: justify;
+  min-height: 300px;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.archon-logo {
+  margin-top: 10%;
+  opacity: 0.09;
+}
+
+#archon-head {
+  margin-left: 50px;
+}
+
+#landing-card {
+  height: 400px;
+}
+
+#archon-buttons {
+  margin-top: 20px;
+}
+
+.archon-link {
+  margin: 25px;
+}
+
+#content {
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.67;
+  letter-spacing: normal;
+  text-align: left;
+  color: #111111;
+}
+
+#background-image {
+  position: absolute;
+  margin-left: 30%;
+}
+
+.heading {
+  font-family: Roboto;
+  font-size: 36px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 0.83;
+  letter-spacing: normal;
+  text-align: left;
+  color: #111111;
+  margin-bottom: 26px;
+}
+
+#content-div {
+  text-align: left;
+  width: 56%;
+  margin: 0 auto;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+}

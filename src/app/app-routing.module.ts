@@ -58,6 +58,7 @@ import { AdhocEditSearchScreenPopupComponent } from './adhoc-edit-search-screen-
 import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-screen.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
+import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -215,6 +216,9 @@ const routes: Routes = [
   },
   {
     path: 'audit', canActivate: [AuthenticationGuard], component: AuditingComponent
+  },
+  {
+    path: 'sso-sign-in', component: SsoSigninFormComponent
   }
 ];
 
