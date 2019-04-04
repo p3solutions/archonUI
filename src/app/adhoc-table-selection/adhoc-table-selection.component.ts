@@ -8,7 +8,7 @@ import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datare
 import { AdhocSavedObjectService } from '../adhoc-header/adhoc-saved-object.service';
 import { GraphDetails, Adhoc, LinearTableMapOrder, SearchResult, SearchCriteria, Tab, ResultFields } from '../adhoc-landing-page/adhoc';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
-
+import { ErtService } from '../ert-landing-page/ert.service';
 
 @Component({
   selector: 'app-adhoc-table-selection',
@@ -35,7 +35,8 @@ export class AdhocTableSelectionComponent implements OnInit {
   tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
-    private adhocSavedObjectService: AdhocSavedObjectService, private adhocScreenService: AdhocScreenService) { }
+    private adhocSavedObjectService: AdhocSavedObjectService, private adhocScreenService: AdhocScreenService,
+    private ertService: ErtService) { }
 
   ngOnInit() {
     const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
@@ -49,8 +50,8 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.tableList = tempTables;
       this.schemaResultsTableCount = this.tableList.length;
     } else {
-      this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
-        this.tableList = res;
+      this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+        this.tableList = res.tableList;
         this.schemaResultsTableCount = this.tableList.length;
       });
     }
@@ -79,8 +80,8 @@ export class AdhocTableSelectionComponent implements OnInit {
     this.tableList = [];
     const perPage = 50;
     this.startIndex = (page - 1) * perPage;
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
-      this.tableList = res;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+      this.tableList = res.tableList;
     });
   }
 
@@ -106,7 +107,7 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.selectedPrimaryTable = event.target.value;
       d3.select('svg').remove();
       this.selectedValues = [];
-      this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
+      this.tablelistService.getListOfRelationTableMMR(this.workspaceID, this.ertService.mmrVersion, value.tableName).subscribe(result => {
         this.relationshipInfo = result;
         this.primaryTable = getPrimaryArray(this.relationshipInfo);
         this.secondaryTable = getSecondaryArray(this.relationshipInfo);

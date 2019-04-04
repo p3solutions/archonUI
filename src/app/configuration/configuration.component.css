@@ -1,0 +1,100 @@
+.mgmt-panel {
+  font-size: 20px;
+  border-bottom: none;
+}
+
+/* #workspace-info-link {
+      padding-left: 30px;
+  } */
+.fa-cog:hover {
+  color: #000
+}
+
+.fa-cog {
+  font-size: 26px;
+  color: #000;
+  cursor: pointer;
+}
+
+.nav-tabs>li>a:hover {
+  background: #dbe6fa !important;
+  border-bottom: 3px solid #1385f8;
+  color: #000000 !important;
+}
+
+.nav-tabs>li>a:focus {
+  background: #dbe6fa !important;
+  border-bottom: 3px solid #1385f8;
+  color: #000000 !important;
+}
+
+.nav-tabs>li>a.active {
+  background: #e7e7e7 !important;
+  border-bottom: 3px solid #1385f8;
+  color: #000000 !important;
+}
+
+.nav>li>a {
+  padding: 10px 12px !important;
+  font-weight: normal !important;
+  font-size: 19px !important;
+  color: #333333 !important;
+}
+
+.mt-10 {
+  margin-top: 25px;
+}
+
+/* ---------------------------------------------------------------------------- */
+#back-div {
+  display: flex;
+  margin-left: 23px
+}
+
+.back-arrow {
+  margin-bottom: 13px
+}
+
+.configuration-heading {
+  font-family: roboto;
+  padding-left: 19px;
+  font-size: 22px;
+  color: #0c0c0c;
+}
+
+#config-div {
+  border-bottom: 1px solid #949494;
+  margin-left: 38px;
+  margin-right: 38px;
+}
+
+#config-mgmt-panel {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.smtp-config {
+  width: 60%;
+}
+
+.app-config {
+  width: 40%;
+}
+
+#app-outer{
+  margin-top: 12%;
+  width: 100%;
+}
+
+#app-info{
+  flex-direction: row;
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-icon {
+  margin-top: 9px;
+  padding-right: 6px;
+  font-size: 25px;
+}
+

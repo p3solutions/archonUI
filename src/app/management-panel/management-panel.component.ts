@@ -26,7 +26,7 @@ export class ManagementPanelComponent implements OnInit {
       panelDesc: 'View and Modify User Role.',
     },
     {
-      panelName: 'Permissions',
+      panelName: 'Configuration',
       panelImage: 'endtoendtoolkit.png',
       panelDesc: 'Configure, View and Edit Permissions.',
     }
@@ -56,7 +56,8 @@ export class ManagementPanelComponent implements OnInit {
         this.gotoManageUserRoles();
         break;
       }
-      case 'Permissions': {
+      case 'Configuration': {
+        this.gotoConfiguration();
         break;
       }
       default: console.log('Not configured for ', panel.panelName);
@@ -67,13 +68,17 @@ export class ManagementPanelComponent implements OnInit {
     this.router.navigate(['management-landing-page/manage-user-roles']);
   }
   gotoWorkspaceList() {
-        this.router.navigate(['management-landing-page/workspace-list']);
+    this.router.navigate(['management-landing-page/workspace-list']);
   }
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
   gotoConfigDatabaseList() {
     this.router.navigate(['management-landing-page/database-list']);
+  }
+
+  gotoConfiguration() {
+    this.router.navigate(['management-landing-page/configuration']);
   }
   toggleCard(cardId, toShow, _event) {
     this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);

@@ -196,6 +196,7 @@ export class AdhocAppScreenListComponent implements OnInit {
 
   selectedApp(appId: string) {
     this.selectedAppObject = JSON.parse(JSON.stringify(this.applicationInfoList.filter(a => a.id === appId)[0]));
+    console.log(this.selectedAppObject);
     this.getScreen(0);
   }
   openScreenDialog(): void {
@@ -239,7 +240,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     adhoc.workspaceId = this.workspaceId;
     adhoc.screenDesc = result.screenDesc;
     adhoc.screenName = result.screenName;
-    adhoc.metadataVersion = this.mmrVersion;
+    adhoc.metadataVersion = this.selectedAppObject.metadataVersion;
     adhoc.parentScreenInfo = result.parentScreenInfo;
     if (result.parentScreenInfo.screenId === '') {
       adhoc['parentScreenInfo'] = null;
@@ -290,6 +291,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     adhocHeaderInfo.metadataVersion = this.mmrVersion;
     adhocHeaderInfo.screenName = this.screenInfoList.filter(a => a.id === screenId)[0].screenName;
     adhocHeaderInfo.appName = this.selectedAppObject.appName;
+    adhocHeaderInfo.appMetadataVersion = this.selectedAppObject.metadataVersion;
     adhocHeaderInfo.workspaceId = this.workspaceId;
     this.adhocService.updateAdhocHeaderInfo(adhocHeaderInfo);
     let screenInfoObject = new Adhoc();

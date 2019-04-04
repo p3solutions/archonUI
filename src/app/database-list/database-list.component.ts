@@ -7,6 +7,8 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonUtilityService } from '../common-utility.service';
 import { Info } from '../info';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'app-database-list',
@@ -22,8 +24,19 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   dynamicLoaderService: DynamicLoaderService;
   dbListActions = [];
   searchText;
-
+  toggleBoolean = false;
+  pendingList = [];
+  dataSource = new MatTableDataSource(this.pendingList);
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  displayedColumns: string[] = ['DB Profile Name', 'Workspace Name', 'Workspace Owner', 'Comments', 'Approve', 'Reject'];
   @ViewChild('createNewDatabaseWizard', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+  workspaceId: any;
+  heading: string;
+  element: any;
+  reason: string;
+  elementId: any;
+  
   constructor(
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -40,6 +53,16 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.getConfigDBList();
     this.isProgress = true;
     this.getDBInfoByID();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.getAllPending();
+  }
+
+  getAllPending(): any {
+    this.configDBListService.getPending().subscribe(result => {
+      this.pendingList = result;
+      this.dataSource.data = this.pendingList;
+    });
   }
 
   getDBInfoByID() {
@@ -92,4 +115,41 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   toggleCard(cardId, toShow, _event) {
    this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
   }
+
+  toggle() {
+    this.toggleBoolean = !this.toggleBoolean;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openModal(element, method) {
+    if (method === 'Approve') {
+     this.heading = 'Approval Confirmation';
+    } else {
+      this.heading = 'Rejection Confirmation';
+    }
+    this.element = element;
+    this.elementId = element.id;
+  }
+
+  submit(value) {
+    const resultArray = [];
+    const obj = {
+      workspaceApprovalId: this.elementId,
+      status: value,
+      reason: this.reason
+    };
+    resultArray.push(obj);
+    const body = {
+      workspaceAproval : resultArray
+    }
+    this.configDBListService.postDecision(body).subscribe(result => {
+    if (result) {
+    this.getAllPending();
+    }
+    });
+  }
+
 }

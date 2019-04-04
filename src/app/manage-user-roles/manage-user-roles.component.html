@@ -3,16 +3,73 @@
     <div class="col-md-12">
       <div class="col-md-1 back-arrow" style="margin-left: -18px">
         <a (click)="gotoManagementPanel()" data-tooltip="Back">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
         </a>
       </div>
       <div class="col-md-3" style="margin-left: -61px">
-        <h3 class="workspace-panel-heading">
+        <h3 class="manage-user-heading">
           Manage User Roles
           <span id="loading-icon" [ngClass]="{'archon-loading-icon' : isProgress}"></span>
         </h3>
       </div>
-     <div class="col-md-7">
+    </div>
+  </div>
+  <div class="row" id="user-invite-div">
+    <div id="user-invite">
+      <div id="search-user">
+        <mat-form-field>
+          <input matInput name="screen-filter" #input placeholder="Search">
+        </mat-form-field>
+      </div>
+      <div id="user-invite-btn">
+        <button [disabled]="disableInviteBtn" (click)="openUserInviteDialog()" mat-raised-button color="accent">
+          <i class="material-icons">
+            mail_outline
+          </i>
+          Invite New User
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="user-table">
+    <div class="example-table-container">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
+          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="emailAddress">
+          <th style="width:20%" mat-header-cell *matHeaderCellDef mat-sort-header>Email Address </th>
+          <td style="width:20%" mat-cell *matCellDef="let element"> {{element.emailAddress}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="globalGroup">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Global Group </th>
+          <td style="width:10%" mat-cell *matCellDef="let element">
+            {{element.globalGroup}} </td>
+        </ng-container>
+        <ng-container matColumnDef="businessJustification">
+          <th style="width:25%" mat-header-cell *matHeaderCellDef> Bussiness Justification </th>
+          <td style="width:25%" mat-cell *matCellDef="let element"> {{element.businessJustification}} </td>
+        </ng-container>
+        <ng-container matColumnDef="createdAt">
+          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
+          <td style="width:15%" mat-cell *matCellDef="let element"> {{element.createdAt * 1000 | date:'medium'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="updatedAt">
+          <th style="width:15%" mat-header-cell *matHeaderCellDef> Updated At </th>
+          <td style="width:15%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)">
+            {{element.updatedAt * 1000 | date:'medium'}}
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator id="user-table-svg" [length]="totalUser" [pageSize]="50" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+  <!-- <div class="col-md-7">
         <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -25,10 +82,9 @@
             </button>
             <strong>Successfully Changed Role</strong>
           </div>
-       </div> 
-     </div>
-  </div>
-   <div class="row"> 
+       </div>  -->
+
+  <!-- <div class="row"> 
     <div id="manager-user" class="workspace-panel-content" *ngIf="isAvailable">
       <table datatable [dtOptions]="dtOptions" id="manage-user-role-info-table" class="table table-hover table-bordered">
         <thead>
@@ -59,14 +115,37 @@
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+  <!-- <div class="row">
     <div class="workspace-panel-content">
       <button (click)="gotoManagementPanel()" type="submit" class="btn btn-primary pull-right btn-form">Back</button>
     </div>
-  </div>
+  </div> -->
 </div>
-<app-change-user-role [selectedUserId]="selectedUserId" [preSelectedRole]="preSelectedRole" [userName]="userName" (messageSuccessEvent)="receiveSuccessMessage($event)" (onconfirm)="onconfirm($event)" class="modal fade" id="myModal1" role="dialog">
+<app-change-user-role [selectedUserId]="selectedUserId" [preSelectedRole]="preSelectedRole" [userName]="userName"
+  (messageSuccessEvent)="receiveSuccessMessage($event)" (onconfirm)="onconfirm($event)" class="modal fade" id="myModal1"
+  role="dialog">
   some other content
 </app-change-user-role>
 <!-- <a id="preSelectedRoles" name={{preSelectedRole}}></a> -->
+
+
+<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header adhoc-modal-header">
+        <h4 class="modal-title">Alert</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{successMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button btn-padding" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

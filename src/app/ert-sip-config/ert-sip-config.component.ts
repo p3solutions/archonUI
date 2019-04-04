@@ -25,6 +25,8 @@ export class ErtSipConfigComponent implements OnInit {
   selectedPrimaryTable: any;
   schemaResultsTableCount: any;
   startIndex = 1;
+  isRelationNot: boolean;
+  enableNextBtn: boolean;
 
 
   constructor(public router: Router, private tablelistService: TableListService,
@@ -32,8 +34,8 @@ export class ErtSipConfigComponent implements OnInit {
 
   ngOnInit() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
-      this.tableList = res;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+      this.tableList = res.tableList;
       this.schemaResultsTableCount = this.tableList.length;
     });
     if (this.ertService.data !== undefined) {
@@ -59,26 +61,32 @@ export class ErtSipConfigComponent implements OnInit {
     this.tableList = [];
     const perPage = 50;
     this.startIndex = (page - 1) * perPage;
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe(res => {
-      this.tableList = res;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+      this.tableList = res.tableList;
     });
   }
 
   searchTablelist(searchTableName) {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe(res => {
-      this.tableList = res;
+     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe((res: any) => {
+      this.tableList = res.tableList;
     });
   }
 
 
   populategraph(value, event) {
+    this.isRelationNot = false;
+    this.enableNextBtn = true;
     this.selectedPrimaryTable = event.target.value;
     d3.select('svg').remove();
     this.selectedValues = [];
     this.joinListMap.clear();
-    this.tablelistService.getListOfRelationTable(value.tableId, this.workspaceID).subscribe(result => {
+    this.tablelistService.getListOfRelationTableMMR(this.workspaceID, this.ertService.mmrVersion, value.tableName).subscribe(result => {
       this.relationshipInfo = result;
+      if (this.relationshipInfo.length === 0) {
+        this.isRelationNot = true;
+        this.enableNextBtn = false;
+      }
       this.primaryTable = getPrimaryArray(this.relationshipInfo);
       this.secondaryTable = getSecondaryArray(this.relationshipInfo);
       for (const i of this.primaryTable) {

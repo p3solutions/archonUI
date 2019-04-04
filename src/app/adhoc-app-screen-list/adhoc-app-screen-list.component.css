@@ -57,6 +57,7 @@ th {
   text-align: right;
   font-size: 16px;
   font-family: roboto;
+  word-wrap: break-word;
 }
 
 #open-app {
@@ -173,4 +174,10 @@ modal-body .p {
 .material-icons:hover,
 .material-icons:focus {
   font-size: 26px;
+}
+
+.link-btn {
+  padding-left: 25px;
+  padding-right: 0px;
+  font-size: 15px;
 }
