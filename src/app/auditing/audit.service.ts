@@ -53,7 +53,7 @@ export class AuditService {
 
 
   private extractJobOrigins(res: any) {
-    const data = res.data.Audits;
+    const data = res.data;
     return data || [];
   }
 
