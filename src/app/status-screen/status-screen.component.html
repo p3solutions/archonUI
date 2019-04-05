@@ -81,15 +81,15 @@
         </ng-container>
         <ng-container matColumnDef="Scheduled Time">
           <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Scheduled Time </th>
-          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.scheduledTime * 1000| date:'medium'}}</td>
+          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.scheduledTime | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Start Time">
           <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
-          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.startTime * 1000| date:'medium'}}</td>
+          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.startTime | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="End Time">
           <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
-          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.endTime * 1000| date:'medium'}}</td>
+          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.endTime | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Status">
           <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
@@ -144,7 +144,7 @@
                   <tr *ngFor="let i of common" class="text-left">
                     <td>{{i.name}}</td>
                     <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
-                    <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium': 'GMT' }}</td>
+                    <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">

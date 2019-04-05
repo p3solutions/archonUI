@@ -20,10 +20,13 @@
         <br>
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon3">Schedule Server</span>
-                <select aria-describedby="basic-addon3" class="form-control round" name="process" [(ngModel)]="Server"
-                  required>
+                <select #jobinstances aria-describedby="basic-addon3" class="form-control round" name="process"
+                  required (change)="instances = jobinstances.value">
                   <option [ngValue]="null">Select Server</option>
-                  <option>Local</option>
+                  <option >Local</option>
+                  <option *ngFor="let instances of jobInstancesList" [value]="instances">{{instances}}</option>
+
+
                 </select>
         </div>
         <br>

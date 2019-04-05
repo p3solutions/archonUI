@@ -1,5 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { ScheduleJobService } from './schedule-job.service';
+
 
 @Component({
   selector: 'app-schedule-job',
@@ -20,10 +22,20 @@ export class ScheduleJobComponent implements OnInit {
   Interval;
 
   @Output() ObjectEmit = new EventEmitter<any>();
+  @Input() insid: any;
+  jobInstancesList = [];
+  instances: any;
 
-  constructor() { }
+  constructor(
+    private Schedulejobservice: ScheduleJobService,
+  ) { }
 
   ngOnInit() {
+    if (this.insid === 'ERT') {
+      this.getErtInstance();
+      } else {
+        this.getRdbmsInstance();
+      }
   }
 
   emitObject() {
@@ -41,9 +53,21 @@ export class ScheduleJobComponent implements OnInit {
         'startDate': Date1.valueOf(),
         'frequency': this.Frequency,
         'endDate': this.enddate.valueOf(),
-        'interval': this.Interval
+        'interval': this.Interval,
+        'ins' : this.instances
         };
   this.ObjectEmit.emit(Obj);
+  }
+
+  getErtInstance() {
+    this.Schedulejobservice.getErtInstances().subscribe((res) => {
+      this.jobInstancesList = res;
+    });
+  }
+  getRdbmsInstance() {
+    this.Schedulejobservice.getRdbmsInstances().subscribe((res) => {
+      this.jobInstancesList = res;
+    });
   }
 
 }
