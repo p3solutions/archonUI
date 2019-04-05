@@ -21,6 +21,7 @@ export class DbExtractorLastStepComponent implements OnInit {
   configuredDB = new ConfiguredDB();
   @ViewChild('click') button: ElementRef;
   scheduleNow: boolean;
+  instanceId: any;
   constructor(private router: Router, private dbExtractorService: DbExtractorService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private userinfoService: UserinfoService) { }
@@ -36,6 +37,7 @@ export class DbExtractorLastStepComponent implements OnInit {
   Start($event) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
     this.scheduleNow = $event.scheduleNow;
+    this.instanceId = $event.ins;
     let param: any = {
       'ownerId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
@@ -59,8 +61,9 @@ export class DbExtractorLastStepComponent implements OnInit {
       },
       'scheduledConfig': $event
     };
+    delete param.scheduledConfig['ins'];
     param = this.modifiedParamAccToProcess(param);
-    this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload).subscribe((result) => {
+    this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload, this.instanceId).subscribe((result) => {
       el.click();
       if (result.httpStatus === 200) {
         this.isSuccessMsg = true;
