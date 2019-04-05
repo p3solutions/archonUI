@@ -41,12 +41,14 @@ export class DbExtractorService {
     );
   }
 
-  dbExtractor(params: any, file: File): Observable<any> {
+  dbExtractor(params: any, file: File, instanceID): Observable<any> {
     const formData: FormData = new FormData();
     if (file != null) {
       formData.append('file', file);
     }
     formData.append('RdbmsDto', JSON.stringify(params));
+    formData.append('instanceId', JSON.stringify(instanceID));
+
     return this.http.post(this.postProcessDetailsUrl, formData, { headers: this.headers }).pipe(
       map(this.extractDataForSuccess),
       catchError(this.handleError('dbExtractor', {}))
