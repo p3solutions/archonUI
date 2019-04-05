@@ -53,6 +53,7 @@ export class ManageUserRolesComponent implements OnInit {
   locked = null;
   changeUserStatusUrl = '';
   param: any;
+  confirmMessage = '';
   tempChangeGlobalGroupUrl = '';
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
@@ -143,6 +144,7 @@ export class ManageUserRolesComponent implements OnInit {
   getAllUsers(invited, revoked, locked) {
     this.dataSource = new InviteUserDataSource(this.manageUserRolesService);
     this.loadAllUsers(invited, revoked, locked);
+    this.getGlobalGroup();
   }
 
   checkForEnableBtn() {
@@ -217,15 +219,19 @@ export class ManageUserRolesComponent implements OnInit {
   }
 
   changeUserStatus(userId, $event) {
-    if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() !== 'selectaction') {
+    if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() !== 'selectaction' &&
+    ($event.target.value).replace(/ /g, '').toLocaleLowerCase() !== 'delete') {
       document.getElementById('confirmDialog').click();
       if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'revokeaccess') {
+      this.confirmMessage = 'Are sure to revoke the access for the user?';
         this.changeUserStatusUrl = userId + '&accessRevoked=' + true;
       } else if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'grantaccess') {
         this.changeUserStatusUrl = userId + '&accessRevoked=' + false +
           '&accountLocked=' + false;
+          this.confirmMessage = 'Are sure to grant the access for the user?';
       } else if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'unlock') {
         this.changeUserStatusUrl = userId + '&accountLocked=' + false;
+        this.confirmMessage = 'Are sure to unlock the user?';
       }
     }
   }
@@ -233,6 +239,7 @@ export class ManageUserRolesComponent implements OnInit {
   revokeAccess(userId) {
     document.getElementById('confirmDialog').click();
     this.changeUserStatusUrl = userId + '&accessRevoked=' + true;
+    this.confirmMessage = 'Are sure to revoke the access for the user?';
   }
 
 
@@ -257,6 +264,7 @@ export class ManageUserRolesComponent implements OnInit {
       } else {
         this.successMsg = response.errorMessage;
       }
+      this.getGlobalGroup();
       this.getAllUsers(this.invited, this.revoked, this.locked);
     });
   }
@@ -270,6 +278,7 @@ export class ManageUserRolesComponent implements OnInit {
       } else {
         this.successMsg = 'Access is Denied';
       }
+      this.getGlobalGroup();
       this.getAllUsers(this.invited, this.revoked, this.locked);
     });
   }
@@ -278,6 +287,7 @@ export class ManageUserRolesComponent implements OnInit {
   getUserByEmailId(emailId) {
     let response;
     this.dataSource.filter = emailId.trim().toLowerCase();
+    this.getGlobalGroup();
     if (this.invited === true && emailId !== '') {
       this.dataSource.connect().subscribe(result => {
         response = result;
