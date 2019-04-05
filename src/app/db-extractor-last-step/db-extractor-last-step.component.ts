@@ -37,7 +37,11 @@ export class DbExtractorLastStepComponent implements OnInit {
   Start($event) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
     this.scheduleNow = $event.scheduleNow;
+    if ($event.ins === 'Local') {
+      this.instanceId = '';
+    } else {
     this.instanceId = $event.ins;
+  }
     let param: any = {
       'ownerId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),

@@ -20,6 +20,7 @@ export class ErtJobsComponent implements OnInit {
   ertJobId = '';
   ERT = 'ERT';
   scheduleNow: boolean;
+  instanceId: any;
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
@@ -76,10 +77,15 @@ export class ErtJobsComponent implements OnInit {
   runJob(scheduleObject) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
     this.scheduleNow = scheduleObject.scheduleNow;
+    if (scheduleObject.ins === 'Local') {
+      this.instanceId = '';
+    } else {
+    this.instanceId = scheduleObject.ins;
+  }
     const param: any = {
       'ertJobId': this.scheduledeErtJobId,
       'scheduledConfig': scheduleObject,
-      'instanceId': scheduleObject.ins
+      'instanceId': this.instanceId
     };
     delete param.scheduledConfig['ins'];
     this.ertService.runJob(param).subscribe(result => {
