@@ -19,25 +19,16 @@ export class ManageUserRolesService {
   private inviteUserUrl = this.apiUrl + 'users/invite';
   private getInviteUsersUrl = this.apiUrl + 'users/allInviteUsers?startIndex=';
   private getAllUsersUrl = this.apiUrl + 'users?startIndex=';
+  private changeUserStatusUrl = this.apiUrl + 'users/accessRevoke?userId=';
+  private getUserByEmailIdUrl = this.apiUrl + 'users/manage/role?emailAddress=';
 
 
   constructor(private http: HttpClient) { }
 
-  private extractData(res: any) {
-    const body = res.data.users;
-    return body || [];
-  }
   private extractGlobalRolesData(res: any) {
     const body = res.data.globalRoles;
     return body || [];
   }
-
-  // getManageMembersDetails(): Observable<ManageUserRoles[]> {
-  //   return this.http.get<ManageUserRoles[]>(this.getAllUsersUrl, { headers: this.headers }).pipe(
-  //     map(this.extractData),
-  //     catchError(this.handleError('manageuserroles', []))
-  //   );
-  // }
 
   changeGlobalRoleDetails(userid, globalid) {
     const body = {
@@ -84,6 +75,27 @@ export class ManageUserRolesService {
       '&accountLocked=' + $accountLocked, { headers: this.headers }).
       pipe(map(this.extractDataForAllRequest),
         catchError(this.handleError('getAllUsers', []))
+      );
+  }
+
+  getUserByEmailId(emailId): Observable<any> {
+    return this.http.get<any>(this.getUserByEmailIdUrl + emailId, { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest),
+        catchError(this.handleError('getUserByEmailId', []))
+      );
+  }
+
+  changeUserStatus($url): Observable<any> {
+    return this.http.patch<any>(this.changeUserStatusUrl + $url, null, { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest),
+        catchError(this.handleError('changeUserStatus', []))
+      );
+  }
+
+  changeGlobalGroup($url, param): Observable<any> {
+    return this.http.patch<any>(this.apiUrl + $url, param, { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest),
+        catchError(this.handleError('changeGlobalGroup', []))
       );
   }
 

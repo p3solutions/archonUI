@@ -35,18 +35,12 @@ export class CreateUserInviteDialogComponent {
 export class ManageUserRolesComponent implements OnInit {
   @ViewChild('matPagintor1') paginator: MatPaginator;
   @ViewChild('matSort1') sort: MatSort;
-  // @ViewChild('matPagintor2') paginator1: MatPaginator;
-  // @ViewChild('matSort2') sort1: MatSort;
-  // @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
-  // @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   dataSource: InviteUserDataSource;
   dataSource1: InviteUserDataSource;
   totalUser = 0;
   successMsg = '';
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
     'createdAt', 'updatedAt'];
-  // InviteDisplayedColumns: string[] = ['id', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
-  //   'createdBy', 'createdAt', 'updatedAt'];
   disableInviteBtn = true;
   lockedUserAction: string[] = ['Select Action', 'UnLock', 'Revoke Access'];
   revokedUserAction: string[] = ['Select Action', 'Grant Access', 'Delete'];
@@ -57,7 +51,9 @@ export class ManageUserRolesComponent implements OnInit {
   invited = null;
   revoked = null;
   locked = null;
-  showInviteTable = false;
+  changeUserStatusUrl = '';
+  param: any;
+  tempChangeGlobalGroupUrl = '';
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router
@@ -77,13 +73,6 @@ export class ManageUserRolesComponent implements OnInit {
         tap(() => this.loadAllUsers(this.invited, this.revoked, this.locked))
       )
       .subscribe();
-    // this.sort1.sortChange.subscribe(() => this.paginator1.pageIndex = 0);
-
-    // merge(this.sort1.sortChange, this.paginator1.page)
-    //   .pipe(
-    //     tap(() => this.loadAllUsers1(this.invited, this.revoked, this.locked))
-    //   )
-    //   .subscribe();
   }
 
   loadAllUsers(invited, revoked, locked) {
@@ -92,12 +81,7 @@ export class ManageUserRolesComponent implements OnInit {
       this.totalUser = result;
     });
   }
-  // loadAllUsers1(invited, revoked, locked) {
-  //   this.dataSource1.getAllUsers(this.paginator1.pageIndex + 1, invited, revoked, locked);
-  //   this.dataSource1.totalUserSubject.subscribe(result => {
-  //     this.totalUser = result;
-  //   });
-  // }
+
   filter(filterValue) {
     switch (filterValue) {
       case 'Invited': {
@@ -105,15 +89,13 @@ export class ManageUserRolesComponent implements OnInit {
         this.revoked = '';
         this.locked = '';
         this.displayedColumns = ['id', 'emailAddress', 'globalGroupName', 'status', 'action', 'businessJustification',
-        'createdBy', 'createdAt', 'updatedAt'];
-        this.showInviteTable = true;
+          'createdBy', 'createdAt', 'updatedAt'];
         break;
       }
       case 'Active': {
         this.invited = false;
         this.revoked = false;
         this.locked = false;
-        this.showInviteTable = false;
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
           'createdAt', 'updatedAt'];
         break;
@@ -121,8 +103,7 @@ export class ManageUserRolesComponent implements OnInit {
       case 'Revoked': {
         this.revoked = true;
         this.invited = false;
-        this.locked = false;
-        this.showInviteTable = false;
+        this.locked = '';
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
           'createdAt', 'updatedAt'];
         break;
@@ -130,8 +111,7 @@ export class ManageUserRolesComponent implements OnInit {
       case 'Locked': {
         this.locked = true;
         this.invited = false;
-        this.revoked = false;
-        this.showInviteTable = false;
+        this.revoked = '';
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
           'createdAt', 'updatedAt'];
         break;
@@ -140,7 +120,6 @@ export class ManageUserRolesComponent implements OnInit {
         this.locked = '';
         this.invited = false;
         this.revoked = '';
-        this.showInviteTable = false;
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
           'createdAt', 'updatedAt'];
         break;
@@ -179,6 +158,17 @@ export class ManageUserRolesComponent implements OnInit {
         break;
       }
     }
+    this.findRoleOFUser();
+    this.getGlobalGroup();
+  }
+
+  findRoleOFUser() {
+    let accessToken: string;
+    let token_data: any;
+    const jwtHelper: JwtHelperService = new JwtHelperService();
+    accessToken = localStorage.getItem('accessToken');
+    token_data = jwtHelper.decodeToken(accessToken);
+    const roles = token_data.roles;
     for (const item of roles) {
       if (item.roleName.toUpperCase().trim() === 'ROLE_SUPER') {
         this.roleOfUser = 'superadmin';
@@ -189,7 +179,6 @@ export class ManageUserRolesComponent implements OnInit {
         break;
       }
     }
-    this.getGlobalGroup();
   }
 
 
@@ -224,6 +213,81 @@ export class ManageUserRolesComponent implements OnInit {
         this.userInviteInfo = new UserInvite();
         this.getAllUsers(this.invited, this.revoked, this.locked);
       });
+    }
+  }
+
+  changeUserStatus(userId, $event) {
+    if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() !== 'selectaction') {
+      document.getElementById('confirmDialog').click();
+      if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'revokeaccess') {
+        this.changeUserStatusUrl = userId + '&accessRevoked=' + true;
+      } else if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'grantaccess') {
+        this.changeUserStatusUrl = userId + '&accessRevoked=' + false +
+          '&accountLocked=' + false;
+      } else if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'unlock') {
+        this.changeUserStatusUrl = userId + '&accountLocked=' + false;
+      }
+    }
+  }
+
+  revokeAccess(userId) {
+    document.getElementById('confirmDialog').click();
+    this.changeUserStatusUrl = userId + '&accessRevoked=' + true;
+  }
+
+
+  changeGlobalGroup(userId, globalGroupId) {
+    document.getElementById('confirmChangeGlobalRole').click();
+    if (this.roleOfUser = 'superadmin') {
+      this.tempChangeGlobalGroupUrl = 'superadmin/' + userId + '/groups/global';
+    } else if (this.roleOfUser = 'admin') {
+      this.tempChangeGlobalGroupUrl = 'users/' + userId + '/groups/global';
+    }
+    this.param = {
+      'userId': userId,
+      'globalGroupId': globalGroupId
+    };
+  }
+
+  confirmChangeUserStatus() {
+    this.manageUserRolesService.changeUserStatus(this.changeUserStatusUrl).subscribe(response => {
+      document.getElementById('success-popup-btn').click();
+      if (response.httpStatus === 200) {
+        this.successMsg = 'Status changed successfully';
+      } else {
+        this.successMsg = response.errorMessage;
+      }
+      this.getAllUsers(this.invited, this.revoked, this.locked);
+    });
+  }
+
+  confirmChangeGlobalGroupStatus() {
+    this.manageUserRolesService.changeGlobalGroup(this.tempChangeGlobalGroupUrl, this.param).subscribe(response => {
+      document.getElementById('success-popup-btn').click();
+      console.log(response);
+      if (response.httpStatus === 200) {
+        this.successMsg = 'Global Group changed Successfully';
+      } else {
+        this.successMsg = 'Access is Denied';
+      }
+      this.getAllUsers(this.invited, this.revoked, this.locked);
+    });
+  }
+
+
+  getUserByEmailId(emailId) {
+    let response;
+    this.dataSource.filter = emailId.trim().toLowerCase();
+    if (this.invited === true && emailId !== '') {
+      this.dataSource.connect().subscribe(result => {
+        response = result;
+      });
+      this.dataSource._filterData(response);
+    } else if (emailId !== '') {
+      this.dataSource = new InviteUserDataSource(this.manageUserRolesService);
+      this.dataSource.getUsersByEmailId(emailId);
+    } else {
+      this.getAllUsers(this.invited, this.revoked, this.locked);
     }
   }
 }
