@@ -143,4 +143,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   closeErrorMsg() {
     this.updateNotif = false;
   }
+  gotoDashboard() {
+    this.router.navigate(['/workspace/workspace-dashboard']);
+  }
 }

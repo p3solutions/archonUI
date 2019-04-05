@@ -136,7 +136,9 @@ import { AuditService } from './auditing/audit.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
+import { ScheduleJobService } from './schedule-job/schedule-job.service';
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
+
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
 }
@@ -299,7 +301,8 @@ export function tokenGetter() {
                 StoredProcViewService,
                 AdhocScreenService,
                 ScheduleMonitoringService,
-                AuditService
+                AuditService,
+                ScheduleJobService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent

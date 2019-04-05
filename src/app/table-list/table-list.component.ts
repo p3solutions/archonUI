@@ -154,8 +154,8 @@ export class TableListComponent implements OnInit {
 
   searchTablelist(searchTableName) {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe(res => {
-      this.tableList = res;
+     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe((res: any) => {
+      this.tableList = res.tableList;
     });
   }
 

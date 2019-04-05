@@ -8,6 +8,7 @@ export class AuditDataSource implements DataSource<any> {
     private adhocSubject = new BehaviorSubject<any>([]);
     searchArray = [];
     output;
+    indexValue: any;
 
     constructor(private service: AuditService) { }
 
@@ -19,13 +20,15 @@ export class AuditDataSource implements DataSource<any> {
         this.adhocSubject.complete();
     }
 
-    getTable(params) {
+    getTable(params, startIndex) {
+        this.indexValue = startIndex;
         this.service.getJobStatuses(params).subscribe(result => {
-           console.log(result);
-            result.responseModel.forEach((value, index) => {
+                result.responseModel.forEach((value, index) => {
                 value.position = index + 1;
             });
-            this.totalScreen = result.totalResponse;
+            if (result.paginationRequired) {
+                this.totalScreen = (this.indexValue + 1) * 50;
+            }
             this.adhocSubject.next(result.responseModel);
         });
     }

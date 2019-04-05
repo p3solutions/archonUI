@@ -49,6 +49,7 @@ totalScreen = 0;
     private renderer: Renderer, private service: ScheduleMonitoringService) { }
 
   ngOnInit() {
+    this.paginator.pageIndex = 0;
     if (this.selectedEvent !== '' || this.selectedService !== '' || this.selectedWS !== '' || this.startdate !== '' || this.enddate !== '') {
       this.getAudit();
       } else {
@@ -137,7 +138,7 @@ totalScreen = 0;
     };
     this.isAvailable = false;
     this.dataSource = new AuditDataSource(this.auditService);
-    this.dataSource.getTable(params);
+    this.dataSource.getTable(params, this.paginator.pageIndex + 1);
 
   }
 

@@ -51,7 +51,7 @@ export class ScheduleMonitoringService {
   }
 
   private extractJobOrigins(res: any) {
-    const data = res.data.ScheduledJobs;
+    const data = res.data;
     return data || [];
   }
 
@@ -70,7 +70,7 @@ export class ScheduleMonitoringService {
   }
 
   private extractJobSearch(res) {
-    const data = res.data.ScheduledJobs;
+    const data = res.data;
     return data || [];
   }
 
