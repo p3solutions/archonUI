@@ -30,11 +30,20 @@ export class UserInvite { // DTO
 
 export class UserInviteResponse { // Model
     id = '';
+    firstName = '';
+    lastName = '';
+    // status = '';
+     action = 'Select Action';
+     createdBy = '';
+    // updatedBy = '';
     createdAt = '';
     updatedAt = '';
     emailAddress = '';
     globalGroup = '';
+    globalGroupId = '';
     businessJustification = '';
+    accessRevoked = '';
+    accountLocked = '';
     invitedByUser = '';
     softDeleted = '';
     links: Links[] = [];
