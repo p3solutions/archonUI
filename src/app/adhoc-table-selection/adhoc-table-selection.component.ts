@@ -10,6 +10,7 @@ import { GraphDetails, Adhoc, LinearTableMapOrder, SearchResult, SearchCriteria,
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
+import { TableSelectionService } from './table-selection.service';
 
 @Component({
   selector: 'app-adhoc-table-selection',
@@ -18,9 +19,10 @@ import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 })
 export class AdhocTableSelectionComponent implements OnInit {
 
+  includesArray = [];
   workspaceID: any;
-  tableList: any;
-  relationshipInfo: any[];
+  tableList = [];
+  relationshipInfo = [];
   selectedValues: string[] = [];
   primaryTable = [];
   secondaryTable = [];
@@ -37,7 +39,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
     private adhocSavedObjectService: AdhocSavedObjectService, private adhocScreenService: AdhocScreenService,
-    private ertService: ErtService, private adhocService: AdhocService ) { }
+    private tableService: TableSelectionService, private adhocService: AdhocService ) { }
 
   ngOnInit() {
     const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
@@ -50,6 +52,9 @@ export class AdhocTableSelectionComponent implements OnInit {
       }
       this.tableList = tempTables;
       this.schemaResultsTableCount = this.tableList.length;
+      for (const i of this.tableList) {
+      this.includesArray.push(i.tableName);
+      }
     } else {
       this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
         this.tableList = res.tableList;
@@ -112,8 +117,17 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.selectedPrimaryTable = event.target.value;
       d3.select('svg').remove();
       this.selectedValues = [];
+      this.relationshipInfo = [];
       this.tablelistService.getListOfRelationTableMMR(this.workspaceID, tempHeader.appMetadataVersion, value.tableName).subscribe(result => {
-        this.relationshipInfo = result;
+        if (this.tableService.booleanNested) {
+          for (const i of result) {
+            if (this.includesArray.includes(i.secondaryTable.tableName)) {
+            this.relationshipInfo.push(i);
+            }
+          }
+        } else {
+          this.relationshipInfo = result;
+        }
         this.primaryTable = getPrimaryArray(this.relationshipInfo);
         this.secondaryTable = getSecondaryArray(this.relationshipInfo);
         for (const i of this.primaryTable) {
@@ -345,8 +359,21 @@ export class AdhocTableSelectionComponent implements OnInit {
     }
 
     function onClickChangeGraph(value) {
-      self.tablelistService.getListOfRelationTable(value.id, self.workspaceID).subscribe(result => {
-        self.relationshipInfo = result;
+      self.relationshipInfo = [];
+      let tempHeader = new AdhocHeaderInfo();
+      self.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
+      tempHeader = response;
+      });
+      self.tablelistService.getListOfRelationTableMMR(value.id, tempHeader.appMetadataVersion , self.workspaceID).subscribe(result => {
+        if (self.tableService.booleanNested) {
+          for (const i of result) {
+              if (self.includesArray.includes(i.secondaryTable.tableName)) {
+                self.relationshipInfo.push(i);
+              }
+            }
+        } else {
+          self.relationshipInfo = result;
+        }
         self.primaryTable = getPrimaryArray(self.relationshipInfo);
         self.secondaryTable = getSecondaryArray(self.relationshipInfo);
         for (const i of self.primaryTable) {

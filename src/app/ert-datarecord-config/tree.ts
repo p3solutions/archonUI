@@ -240,7 +240,6 @@ function addChildren(nodeList, parentNode, tableRelationshipDtls, isVisible){
 
 //function getDataForGraph(inputTableList: string [], tableRelationshipDtls): string {
 export  function toJson(inputTableList: string [], tableRelationshipDtls): string {
-
   const tree = new Tree();
   let parent;
   let selectedTableList = [];

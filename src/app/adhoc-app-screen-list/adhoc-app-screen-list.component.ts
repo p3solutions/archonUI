@@ -9,6 +9,7 @@ import { AdhocSavedObjectService } from '../adhoc-header/adhoc-saved-object.serv
 import { ScreenDataSource } from './screen-data-source';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { merge, fromEvent } from 'rxjs';
+import { TableSelectionService } from '../adhoc-table-selection/table-selection.service';
 @Component({
   selector: 'app-create-screen-dialog',
   templateUrl: 'create-screen-dialog.html',
@@ -69,7 +70,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   childScreenInfo: ChildScreenInfo[] = [];
   successMessage = '';
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
-    private router: Router, private adhocService: AdhocService, private adhocSavedObjectService: AdhocSavedObjectService, ) { }
+    private router: Router, private adhocService: AdhocService, private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
 
 
   ngOnInit() {
@@ -196,7 +197,6 @@ export class AdhocAppScreenListComponent implements OnInit {
 
   selectedApp(appId: string) {
     this.selectedAppObject = JSON.parse(JSON.stringify(this.applicationInfoList.filter(a => a.id === appId)[0]));
-    console.log(this.selectedAppObject);
     this.getScreen(0);
   }
   openScreenDialog(): void {
@@ -285,7 +285,12 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
 
-  gotoScreen(screenId: string) {
+  gotoScreen(screenId: string, element) {
+    if (element.parentScreenInfo.screenName !== '') {
+    this.tableSelection.booleanNested = true;
+    } else {
+      this.tableSelection.booleanNested = false;
+    }
     const adhocHeaderInfo = new AdhocHeaderInfo();
     adhocHeaderInfo.workspaceName = this.workspaceName;
     adhocHeaderInfo.metadataVersion = this.mmrVersion;
