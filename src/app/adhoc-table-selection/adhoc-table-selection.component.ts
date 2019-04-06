@@ -6,9 +6,10 @@ import * as d3 from 'd3';
 import { toJson } from '../ert-datarecord-config/tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datarecord-config/class';
 import { AdhocSavedObjectService } from '../adhoc-header/adhoc-saved-object.service';
-import { GraphDetails, Adhoc, LinearTableMapOrder, SearchResult, SearchCriteria, Tab, ResultFields } from '../adhoc-landing-page/adhoc';
+import { GraphDetails, Adhoc, LinearTableMapOrder, SearchResult, SearchCriteria, Tab, ResultFields, AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
 import { ErtService } from '../ert-landing-page/ert.service';
+import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 
 @Component({
   selector: 'app-adhoc-table-selection',
@@ -36,7 +37,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
     private adhocSavedObjectService: AdhocSavedObjectService, private adhocScreenService: AdhocScreenService,
-    private ertService: ErtService) { }
+    private ertService: ErtService, private adhocService: AdhocService ) { }
 
   ngOnInit() {
     const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
@@ -100,7 +101,10 @@ export class AdhocTableSelectionComponent implements OnInit {
   }
 
   populategraph(value, event) {
-    // need to change
+    let tempHeader = new AdhocHeaderInfo();
+    this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
+      tempHeader = response;
+    });
     this.tempValue = event.target.value;
     if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable !== '') {
       document.getElementById('success-popup-btn').click();
@@ -108,7 +112,7 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.selectedPrimaryTable = event.target.value;
       d3.select('svg').remove();
       this.selectedValues = [];
-      this.tablelistService.getListOfRelationTableMMR(this.workspaceID, 'marked', value.tableName).subscribe(result => {
+      this.tablelistService.getListOfRelationTableMMR(this.workspaceID, tempHeader.appMetadataVersion, value.tableName).subscribe(result => {
         this.relationshipInfo = result;
         this.primaryTable = getPrimaryArray(this.relationshipInfo);
         this.secondaryTable = getSecondaryArray(this.relationshipInfo);
