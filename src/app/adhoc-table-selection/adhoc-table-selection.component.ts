@@ -100,6 +100,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   }
 
   populategraph(value, event) {
+    // need to change
     this.tempValue = event.target.value;
     if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable !== '') {
       document.getElementById('success-popup-btn').click();
@@ -107,7 +108,7 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.selectedPrimaryTable = event.target.value;
       d3.select('svg').remove();
       this.selectedValues = [];
-      this.tablelistService.getListOfRelationTableMMR(this.workspaceID, this.ertService.mmrVersion, value.tableName).subscribe(result => {
+      this.tablelistService.getListOfRelationTableMMR(this.workspaceID, 'marked', value.tableName).subscribe(result => {
         this.relationshipInfo = result;
         this.primaryTable = getPrimaryArray(this.relationshipInfo);
         this.secondaryTable = getSecondaryArray(this.relationshipInfo);
