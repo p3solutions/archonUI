@@ -18,6 +18,8 @@ export class NavbarComponent implements OnInit {
   private router: Router;
   userChangeName: string;
   rolesForManage: string[] = ['ADMIN', 'MANAGE_DB'];
+  notifiactionArray = [];
+  count: any;
 
   constructor(private userProfileService: UserProfileService , private navService: NavbarService) { }
   ngOnInit() {
@@ -50,10 +52,7 @@ export class NavbarComponent implements OnInit {
         $(this).closest('body').toggleClass('active');
       });
     });
-
-    this.navService.getNotification().subscribe(result => {
-      console.log(result);
-    });
+    this.getNotification();
   }
 
   // Get information from the info service
@@ -77,6 +76,19 @@ export class NavbarComponent implements OnInit {
   logout() {
     localStorage.removeItem('accessToken');
     this.router.navigate(['sign-in']);
+  }
+
+  getNotification() {
+    setInterval(() => {
+      this.navService.getNotification().subscribe(result => {
+        this.notifiactionArray = result;
+        this.count = this.notifiactionArray.length;
+      });
+  }, 10000);
+  }
+
+  updateNotification() {
+   // this.navService.updateNotification().subscribe();
   }
 
 }

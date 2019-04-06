@@ -30,47 +30,24 @@
         <li role="presentation" class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-bell" data-toggle="tooltip" data-placement="bottom" matTooltip="Notifications" ></i>
-            <span class="badge bg-red">6</span>
+            <span class="badge bg-red">{{count}}</span>
           </a>
           <ul id="notifications" class="dropdown-menu msg_list" role="menu">
-            <li>
+            <li *ngFor="let i of notifiactionArray">
               <a href="#">
                 <span>
-                  <span>User 1</span>
-                  <span class="time">3 mins ago</span>
+                  <span>{{i.userId}}</span>
+                  <span class="time">{{i.createdAt * 1000 | date:'medium'}}</span>
                 </span>
                 <span class="message">
-                  Performed an activity.
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span>
-                  <span>User 1</span>
-                  <span class="time">3 mins ago</span>
-                </span>
-                <span class="message">
-                  Performed an awesome activity which u need to see immediatly and perform some operation on top of it.
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span>
-                  <span>User 1</span>
-                  <span class="time">3 mins ago</span>
-                </span>
-                <span class="message">
-                  Performed an activity.
+                  {{i.message}}
                 </span>
               </a>
             </li>
             <li class="all-notification">
               <div class="text-center">
-                <a href="#">
-                  <div id="see-all-notif">See All Notifications</div>
-
+                <a>
+                  <div id="see-all-notif">All Notifications</div>
                 </a>
               </div>
             </li>

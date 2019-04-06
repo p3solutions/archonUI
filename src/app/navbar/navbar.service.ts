@@ -13,10 +13,13 @@ export class NavbarService {
 updateUrl = environment.apiUrl + 'workspaces/markRead?notificationId=';
 getNotificationUrl = environment.apiUrl + 'workspaces/notificationList?userId=';
 
-  constructor(private userinfoService: UserinfoService, private http: HttpClient,) { }
+  constructor(private userinfoService: UserinfoService, private http: HttpClient) { }
+
+  updateNotification(){
+  }
 
   getNotification() {
-    const url = this.getNotificationUrl + this.userinfoService.getUserId();
+    const url = this.getNotificationUrl + 'superadmin';
     return this.http.get(url,
       { headers: this.userinfoService.getHeaders()}).pipe(
         map(this.extractDetails),
