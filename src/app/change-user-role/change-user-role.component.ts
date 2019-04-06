@@ -28,7 +28,7 @@ export class ChangeUserRoleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const navbarComponent = new NavbarComponent(null);
+    const navbarComponent = new NavbarComponent(null, null);
     this.info = navbarComponent.getInfo();
     this.getGlobalRoleData();
   }

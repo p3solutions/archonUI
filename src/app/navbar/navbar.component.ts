@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import { NavbarService } from './navbar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,7 @@ export class NavbarComponent implements OnInit {
   userChangeName: string;
   rolesForManage: string[] = ['ADMIN', 'MANAGE_DB'];
 
-  constructor(private userProfileService: UserProfileService) { }
+  constructor(private userProfileService: UserProfileService , private navService: NavbarService) { }
   ngOnInit() {
     this.userProfileService.UserNamechange.subscribe(data => {
       this.userChangeName = data;
@@ -44,12 +45,14 @@ export class NavbarComponent implements OnInit {
       }
     }
 
-
-
     $(document).ready(function () {
       $('.button').click(function () {
         $(this).closest('body').toggleClass('active');
       });
+    });
+
+    this.navService.getNotification().subscribe(result => {
+      console.log(result);
     });
   }
 
