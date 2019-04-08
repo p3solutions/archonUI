@@ -98,7 +98,7 @@
       </ng-container>
       <ng-container matColumnDef="edit">
         <th style="width:6%" mat-header-cell *matHeaderCellDef> Edit </th>
-        <td style="width:6%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id)">
+        <td style="width:6%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id, element)">
           <i class="material-icons">
             edit
           </i>
