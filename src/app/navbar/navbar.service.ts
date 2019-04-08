@@ -23,7 +23,7 @@ getNotificationUrl = environment.apiUrl + 'workspaces/notificationList?userId=';
   }
 
   getNotification() {
-    const url = this.getNotificationUrl + 'superadmin';
+    const url = this.getNotificationUrl + this.userinfoService.getUserId();
     return this.http.get(url,
       { headers: this.userinfoService.getHeaders()}).pipe(
         map(this.extractDetails),
