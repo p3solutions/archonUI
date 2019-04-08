@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
   userChangeName: string;
   rolesForManage: string[] = ['ADMIN', 'MANAGE_DB'];
   notifiactionArray = [];
-  count: any;
+  count = 0;
 
   constructor(private userProfileService: UserProfileService , private navService: NavbarService) { }
   ngOnInit() {
@@ -82,7 +82,11 @@ export class NavbarComponent implements OnInit {
     setInterval(() => {
       this.navService.getNotification().subscribe(result => {
         this.notifiactionArray = result;
-        this.count = this.notifiactionArray.length;
+        for (const i of this.notifiactionArray) {
+          if (i.read) {
+            this.count = this.count + 1;
+          }
+        }
       });
   }, 10000);
   }
