@@ -17,13 +17,13 @@ getNotificationUrl = environment.apiUrl + 'workspaces/notificationList?userId=';
 
   updateNotification(id) {
     const url = this.updateUrl + id;
-    return this.http.post(url, { headers: this.userinfoService.getHeaders()}).pipe(
+    return this.http.post(url, null , { headers: this.userinfoService.getHeaders()}).pipe(
       catchError(this.handleError<string>('updateNotification'))
     );
   }
 
   getNotification() {
-    const url = this.getNotificationUrl + this.userinfoService.getUserId();
+    const url = this.getNotificationUrl + 'superadmin';
     return this.http.get(url,
       { headers: this.userinfoService.getHeaders()}).pipe(
         map(this.extractDetails),

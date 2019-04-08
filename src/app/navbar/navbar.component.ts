@@ -81,9 +81,10 @@ export class NavbarComponent implements OnInit {
   getNotification() {
     setInterval(() => {
       this.navService.getNotification().subscribe(result => {
+        this.count = 0;
         this.notifiactionArray = result;
         for (const i of this.notifiactionArray) {
-          if (i.read) {
+          if (i.read === false) {
             this.count = this.count + 1;
           }
         }
