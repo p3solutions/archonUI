@@ -33,8 +33,8 @@
             <span class="badge bg-red">{{count}}</span>
           </a>
           <ul id="notifications" class="dropdown-menu msg_list" role="menu">
-            <li *ngFor="let i of notifiactionArray">
-              <a href="#">
+            <li *ngFor="let i of notifiactionArray" matTooltip="Marked as Read" (mouseleave)="updateNotification(i.id)">
+              <a>
                 <span>
                   <span>{{i.userId}}</span>
                   <span class="time">{{i.createdAt * 1000 | date:'medium'}}</span>
@@ -46,9 +46,7 @@
             </li>
             <li class="all-notification">
               <div class="text-center">
-                <a>
                   <div id="see-all-notif">All Notifications</div>
-                </a>
               </div>
             </li>
           </ul>

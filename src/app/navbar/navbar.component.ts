@@ -87,8 +87,10 @@ export class NavbarComponent implements OnInit {
   }, 10000);
   }
 
-  updateNotification() {
-   // this.navService.updateNotification().subscribe();
+  updateNotification(id) {
+   this.navService.updateNotification(id).subscribe(result => {
+     this.getNotification();
+   });
   }
 
 }
