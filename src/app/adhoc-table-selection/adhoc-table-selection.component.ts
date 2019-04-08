@@ -364,7 +364,7 @@ export class AdhocTableSelectionComponent implements OnInit {
       self.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
       tempHeader = response;
       });
-      self.tablelistService.getListOfRelationTableMMR(value.name, tempHeader.appMetadataVersion , self.workspaceID).subscribe(result => {
+      self.tablelistService.getListOfRelationTableMMR(self.workspaceID, tempHeader.appMetadataVersion , value.name).subscribe(result => {
         if (self.tableService.booleanNested) {
           for (const i of result) {
               if (self.includesArray.includes(i.secondaryTable.tableName)) {
