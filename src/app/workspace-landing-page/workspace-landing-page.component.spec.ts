@@ -8,6 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs';
 import { Info } from '../info';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import { UserinfoService } from '../userinfo.service';
 
 describe('WorkspaceLandingPageComponent', () => {
   let component: WorkspaceLandingPageComponent;
@@ -29,7 +30,7 @@ describe('WorkspaceLandingPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule],
-      providers: [RouterTestingModule, InfoService, HttpClientTestingModule, UserProfileService ],
+      providers: [RouterTestingModule, InfoService, HttpClientTestingModule, UserProfileService , UserinfoService],
       declarations: [WorkspaceLandingPageComponent, NavbarComponent]
     })
     .compileComponents();
