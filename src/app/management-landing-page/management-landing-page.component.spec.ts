@@ -4,6 +4,8 @@ import { ManagementLandingPageComponent } from './management-landing-page.compon
 import { NavbarComponent } from '../navbar/navbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import { UserinfoService } from '../userinfo.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ManagementLandingPageComponent', () => {
   let component: ManagementLandingPageComponent;
@@ -12,8 +14,8 @@ describe('ManagementLandingPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ManagementLandingPageComponent, NavbarComponent],
-      imports: [RouterTestingModule],
-      providers: [ UserProfileService
+      imports: [RouterTestingModule, HttpClientModule],
+      providers: [ UserProfileService, UserinfoService
       ],
     })
     .compileComponents();

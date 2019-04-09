@@ -69,7 +69,7 @@ export class TableListService {
   }
 
   getListOfRelationTableMMR(workspaceId, version, tableName): Observable<any> {
-    const url = this.tableListUrlMMR + workspaceId + '&versionNumber=' + version+ '&tableName=' + tableName;
+    const url = this.tableListUrlMMR + workspaceId + '&versionNumber=' + version + '&tableName=' + tableName;
     return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() })
       .pipe(
         map(this.extractRelationTableMMR),
@@ -124,7 +124,8 @@ export class TableListService {
   }
 
   private extractRelationTableMMR(res) {
-    const data: any = response(res.data.RelationshipList.relationshipList);
+    // const data: any = response(res.data.RelationshipList.relationshipList);
+    const data = res.data.relationshipInfo;
     return data || [];
   }
 

@@ -119,3 +119,8 @@ th {
   padding-left: 25px;
   text-transform: capitalize;
 }
+.example-table-container {
+  position: relative;
+  max-height: 385px;
+  overflow-x: auto;
+ }
