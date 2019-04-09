@@ -11,7 +11,9 @@ import { catchError, map } from 'rxjs/operators';
 export class ConfigurationService {
   private apiUrl = environment.apiUrl;
   saveSMTPConfigurationUrl = this.apiUrl + 'smtp/setup';
-  checkExistingSMTPConfigurationUrl = this.apiUrl + 'smtp/config';
+  saveRoleGroupConfigurationUrl = this.apiUrl + 'admin/group/global';
+  checkExistingSMTPConfigurationUrl = this.apiUrl + 'admin/group/global';
+  getAllRolesUrl = this.apiUrl + 'roles/global';
 
   constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
 
@@ -22,10 +24,24 @@ export class ConfigurationService {
       );
   }
 
+  saveRoleGroupConfiguration(param): Observable<any> {
+    return this.http.post<any>(this.saveRoleGroupConfigurationUrl, param, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('saveRoleGroupConfiguration', []))
+      );
+  }
+
   checkExistingSMTPConfiguration(): Observable<any> {
     return this.http.get<any>(this.checkExistingSMTPConfigurationUrl, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractData),
-        catchError(this.handleError('saveSMTPConfiguration', []))
+        catchError(this.handleError('checkExistingSMTPConfiguration', []))
+      );
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get<any>(this.getAllRolesUrl, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('getAllUsers', []))
       );
   }
 

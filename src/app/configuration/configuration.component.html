@@ -17,11 +17,15 @@
   <div id="config-div">
     <div id="config-mgmt-panel">
       <ul class="nav nav-tabs mgmt-panel mt-10">
-        <li class="trim-text smtp-config">
+        <li class="trim-text" style="width:30%">
           <a [routerLink]="['smtp-configuration']" [class.active]="checkActive == 'Email SMTP Configuration'"
             (click)="tabChange($event)">Email SMTP Configuration</a>
         </li>
-        <li class="trim-text app-config">
+        <li class="trim-text" style="width:33%">
+          <a [routerLink]="['role-group-configuration']" [class.active]="checkActive == 'Groups and Roles Configuration'"
+            (click)="tabChange($event)">Groups and Roles Configuration</a>
+        </li>
+        <li class="trim-text" style="width:21%">
           <a [routerLink]="['smtp-configuration']" [class.active]="checkActive == 'App Configuration'"
             (click)="tabChange($event)">App Configuration</a>
         </li>

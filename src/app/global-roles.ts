@@ -33,8 +33,8 @@ export class UserInviteResponse { // Model
     firstName = '';
     lastName = '';
     // status = '';
-     action = 'Select Action';
-     createdBy = '';
+    action = 'Select Action';
+    createdBy = '';
     // updatedBy = '';
     createdAt = '';
     updatedAt = '';
@@ -59,5 +59,13 @@ export class Links {
     deprecation = '';
 }
 
-
+export class RolesInfo {
+    id = '';
+    createdAt = '';
+    updatedAt = '';
+    corelatedInstanceId = '';
+    instanceId = '';
+    roleName = '';
+    softDeleted = '';
+}
 

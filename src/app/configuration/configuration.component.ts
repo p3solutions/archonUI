@@ -19,12 +19,22 @@ export class ConfigurationComponent implements OnInit {
   }
 
   tabChange($event) {
-    if ($event.target.innerText === 'Email SMTP Configuration') {
-      this.checkActive = $event.target.innerText;
-      this.showSmtp = true;
-    } else if ($event.target.innerText === 'App Configuration') {
-      this.checkActive = $event.target.innerText;
-      this.showSmtp = false;
+    switch ($event.target.innerText.replace(/ /g, '').toLocaleLowerCase()) {
+      case 'emailsmtpconfiguration': {
+        this.checkActive = $event.target.innerText;
+        this.showSmtp = true;
+        break;
+      }
+      case 'appconfiguration': {
+        this.checkActive = $event.target.innerText;
+        this.showSmtp = false;
+        break;
+      }
+      case 'groupsandrolesconfiguration': {
+        this.checkActive = $event.target.innerText;
+        this.showSmtp = true;
+        break;
+      }
     }
   }
 }
