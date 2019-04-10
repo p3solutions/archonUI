@@ -14,7 +14,9 @@
       </div>
     </div>
     <div class="col-md-6 col-md-push-2" *ngIf="role.name == 'ROLE_OWNER'">
-      <a data-toggle="modal" (click)="openMMRVersionModel()" style="font-size: 42px" data-toggle="modal" title="Create New Version" data-target="#mmr-config-model"><i class="fa fa-plus-circle" style="cursor: pointer;"></i></a>
+      <a data-toggle="modal" (click)="openMMRVersionModel()" style="font-size: 42px" data-toggle="modal" matTooltip="Create New Version" data-target="#mmr-config-model"><i class="material-icons">
+        add_circle
+        </i></a>
     </div>
   </div>
   <div class="row">
