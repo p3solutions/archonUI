@@ -1,4 +1,5 @@
 import { FormGroup } from '@angular/forms';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 export class ApplicationInfo {
     id = '';
@@ -241,6 +242,7 @@ export class Adhoc {
     childScreenInfo: ChildScreenInfo[] = [];
     sessionAdhoc = new SessionAdhoc();
     sessionAdhocModel = new SessionAdhoc();
+    userId = '';
 }
 
 
@@ -325,4 +327,10 @@ export function checkOption(controlName: string) {
             }
         }
     };
+}
+export function getUserId(): string {
+    const jwtHelper: JwtHelperService = new JwtHelperService();
+    const accessToken = localStorage.getItem('accessToken');
+    const token_data = jwtHelper.decodeToken(accessToken);
+    return token_data.user.id;
 }
