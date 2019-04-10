@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./configuration.component.css']
 })
 export class ConfigurationComponent implements OnInit {
-  checkActive = 'Email SMTP Configuration';
+  checkActive = 'emailsmtp';
   showSmtp = true;
   constructor(private router: Router) { }
 
@@ -20,18 +20,18 @@ export class ConfigurationComponent implements OnInit {
 
   tabChange($event) {
     switch ($event.target.innerText.replace(/ /g, '').toLocaleLowerCase()) {
-      case 'emailsmtpconfiguration': {
-        this.checkActive = $event.target.innerText;
+      case 'emailsmtp': {
+        this.checkActive = 'emailsmtp';
         this.showSmtp = true;
         break;
       }
-      case 'appconfiguration': {
-        this.checkActive = $event.target.innerText;
+      case 'application': {
+        this.checkActive = 'application';
         this.showSmtp = false;
         break;
       }
-      case 'groupsandrolesconfiguration': {
-        this.checkActive = $event.target.innerText;
+      case 'groupsandroles': {
+        this.checkActive = 'groupsandroles';
         this.showSmtp = true;
         break;
       }

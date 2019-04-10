@@ -26,9 +26,7 @@ export class ConfigurationService {
 
   saveRoleGroupConfiguration(param): Observable<any> {
     return this.http.post<any>(this.saveRoleGroupConfigurationUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractData),
-        catchError(this.handleError('saveRoleGroupConfiguration', []))
-      );
+      pipe(map(this.extractData));
   }
 
   checkExistingSMTPConfiguration(): Observable<any> {

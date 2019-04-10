@@ -49,13 +49,11 @@ export class RoleGroupConfigurationComponent implements OnInit {
     token_data = jwtHelper.decodeToken(accessToken);
     const roles = token_data.roles;
     for (const item of roles) {
-      if (item.roleName.replace(/_/g, ' ').replace(/ /g, '').toLocaleLowerCase() === 'rolesuper') {
+      if (item.roleName.replace(/_/g, ' ').replace(/ /g, '').toLocaleLowerCase().trim() === 'rolesuper') {
         this.roleOfUser = 'superadmin';
-        break;
       }
-      if (item.roleName.replace(/_/g, ' ').replace(/ /g, '').toLocaleLowerCase() === 'roleadmin') {
+      if (item.roleName.replace(/_/g, ' ').replace(/ /g, '').toLocaleLowerCase().trim() === 'roleadmin') {
         this.roleOfUser = 'admin';
-        break;
       }
     }
   }
@@ -91,39 +89,39 @@ export class RoleGroupConfigurationComponent implements OnInit {
   }
 
   saveGroupRoleConfig() {
-    let tempOption = true;
-    let roleId: string[] = [];
-    for (const item of this.RoleGroupList) {
-      roleId = [];
-      for (const roles of this.rolesAvailable) {
-        if (item[roles].checked) {
-          roleId.push(item[roles].roleId);
-        }
-      }
-      const param = {
-        'globalName': item.groupName,
-        'roleId': roleId
-      };
-      this.configurationService.saveRoleGroupConfiguration(param).subscribe(response => {
-        if (response.httpStatus === 200) {
-          tempOption = true;
-        } else {
-          tempOption = false;
-        }
-      },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-          } else {
-            console.log(err.error.errorMessage);
+    if (this.roleOfUser === 'superadmin') {
+      let tempOption = true;
+      let roleId: string[] = [];
+      for (const item of this.RoleGroupList) {
+        roleId = [];
+        for (const roles of this.rolesAvailable) {
+          if (item[roles].checked) {
+            roleId.push(item[roles].roleId);
           }
-        });
-    }
-    if (tempOption === true) {
+        }
+        const param = {
+          'globalName': item.groupName,
+          'roleId': roleId
+        };
+        this.configurationService.saveRoleGroupConfiguration(param).subscribe(response => {
+          if (response.httpStatus === 200) {
+            tempOption = true;
+            this.successMsg = 'Configuration saved successfully.';
+          } else {
+            tempOption = false;
+          }
+        },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+            } else {
+              this.successMsg = err.error.errorMessage;
+            }
+          });
+      }
       document.getElementById('success-popup-btn').click();
-      this.successMsg = 'Configuration saved successfully.';
-    } else if (tempOption === false) {
+    } else {
       document.getElementById('success-popup-btn').click();
-      this.successMsg = 'Configuration not saved successfully.';
+      this.successMsg = 'Only Super Admin can change the Groups and Roles configuration.';
     }
   }
 
