@@ -34,7 +34,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let x of populatePrimaryValuesArray | paginate: { itemsPerPage: 7, currentPage: p };let i=index">
+          <tr *ngFor="let x of populatePrimaryValuesArray | paginate: { id: 'primaryPopulate' , itemsPerPage: 7, currentPage: p };let i=index">
             <td>{{x.tableName}}</td>
             <td>{{x.dataType}}</td>
             <td>{{x.secondaryColumnName}}</td>
@@ -43,7 +43,7 @@
           </tr>
         </tbody>
       </table>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls id="primaryPopulate" (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>
@@ -71,7 +71,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let x of populateSecondaryValuesArray | paginate: { itemsPerPage: 7, currentPage: p };let i=index">
+          <tr *ngFor="let x of populateSecondaryValuesArray | paginate: { id: 'secondaryPopulate' , itemsPerPage: 7, currentPage: p };let i=index">
             <td>{{x.primaryColumn}}</td>
             <td>{{x.dataType}}</td>
             <td>{{x.secondaryColumnName}}</td>
@@ -80,7 +80,7 @@
           </tr>
         </tbody>
       </table>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls id="secondaryPopulate" (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>
