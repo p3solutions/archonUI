@@ -47,18 +47,16 @@ export class ScheduleJobComponent implements OnInit {
     const time = this.mytime.toTimeString();
     const comb = `${date} ${time}`;
     const Date1 = new Date(comb);
-    // this.enddate.setDate(this.startdate.getDate() + 1);
     const Obj = {
         'jobName': this.jobName,
         'scheduleNow': scheduleNow,
         'startDate': Date1.valueOf(),
         'frequency': this.Frequency,
-        'endDate': this.enddate.valueOf(),
+        'endDate': this.enddate.setHours(23, 59, 59, 0),
         'interval': this.Interval,
         'ins' : this.instances
         };
-  console.log(Obj);
-  // this.ObjectEmit.emit(Obj);
+  this.ObjectEmit.emit(Obj);
   }
 
   getErtInstance() {

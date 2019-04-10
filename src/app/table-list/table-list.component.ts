@@ -76,6 +76,7 @@ export class TableListComponent implements OnInit {
   json = 'json';
   databaseID: any;
   perPage = 50;
+  searchTableName;
 
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('storedprocView', { read: ViewContainerRef }) storedprocViewRef: ViewContainerRef;
@@ -152,9 +153,9 @@ export class TableListComponent implements OnInit {
     });
   }
 
-  searchTablelist(searchTableName) {
+  searchTablelist() {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe((res: any) => {
+     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
       this.tableList = res.tableList;
     });
   }
@@ -179,13 +180,11 @@ export class TableListComponent implements OnInit {
 
   openDataAModal() {
     this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId).subscribe(res => {
-      console.log(res);
       if (res.data.jobIds.length > 0) {
         this.homeStage = false;
         this.dataAModal = true;
         this.dataAnalysisjobID = res.data.jobIds[0];
         this.getJobStatus();
-        console.log(this.dataAnalysisjobID, 'job ID');
       } else {
         this.homeStage = false;
         this.dataAModal = true;
