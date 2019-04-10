@@ -16,15 +16,15 @@ export class ScheduleJobComponent implements OnInit {
   enddate: Date = new Date();
   startdate: Date = new Date();
   jobType;
-  Frequency;
-  jobName;
+  Frequency = '';
+  jobName = '';
   Server;
-  Interval;
+  Interval = 'Once';
 
   @Output() ObjectEmit = new EventEmitter<any>();
   @Input() insid: any;
   jobInstancesList = [];
-  instances: any;
+  instances = '';
 
   constructor(
     private Schedulejobservice: ScheduleJobService,
@@ -52,7 +52,7 @@ export class ScheduleJobComponent implements OnInit {
         'scheduleNow': scheduleNow,
         'startDate': Date1.valueOf(),
         'frequency': this.Frequency,
-        'endDate': this.enddate.valueOf(),
+        'endDate': this.enddate.setHours(23, 59, 59, 0),
         'interval': this.Interval,
         'ins' : this.instances
         };

@@ -6,6 +6,7 @@ import { SignUp } from '../sign-up';
 import { SignupFormService } from './signup-form.service';
 import { ErrorObject } from '../error-object';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { ConfirmPasswordValidator } from './confirm-password-validator';
 
 @Component({
   selector: 'app-signup-form',
@@ -27,20 +28,25 @@ export class SignupFormComponent implements OnInit {
   constructor(
     private signupService: SignupFormService,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
     this.createSignUpForm();
-    setTimeout(() => this.enableSignUp(), 3000);
+    // setTimeout(() => this.enableSignUp(), 3000);
   }
   createSignUpForm() {
-    this.signUpForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
+    this.signUpForm = this.fb.group({
+      userId: new FormControl('', [Validators.required]),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      // confirmPassword: new FormControl('', [Validators.required])
-    });
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+    }, {
+        validator: ConfirmPasswordValidator.MatchPassword
+      });
   }
 
   onSignUp() {
@@ -75,12 +81,12 @@ export class SignupFormComponent implements OnInit {
       }
     );
   }
-  enableSignUp() {
-    if (this.signUpForm.value.emailAddress && this.signUpForm.value.password && this.signUpForm.value.name) {
-      this.enableSignUpBtn = true;
-    } else {
-      this.enableSignUpBtn = false;
-    }
-  }
+  // enableSignUp() {
+  //   if (this.signUpForm.value.emailAddress && this.signUpForm.value.password && this.signUpForm.value.name) {
+  //     this.enableSignUpBtn = true;
+  //   } else {
+  //     this.enableSignUpBtn = false;
+  //   }
+  // }
 }
 

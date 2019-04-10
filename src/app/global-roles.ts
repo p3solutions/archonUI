@@ -30,11 +30,20 @@ export class UserInvite { // DTO
 
 export class UserInviteResponse { // Model
     id = '';
+    firstName = '';
+    lastName = '';
+    // status = '';
+    action = 'Select Action';
+    createdBy = '';
+    // updatedBy = '';
     createdAt = '';
     updatedAt = '';
     emailAddress = '';
     globalGroup = '';
+    globalGroupId = '';
     businessJustification = '';
+    accessRevoked = '';
+    accountLocked = '';
     invitedByUser = '';
     softDeleted = '';
     links: Links[] = [];
@@ -50,5 +59,13 @@ export class Links {
     deprecation = '';
 }
 
-
+export class RolesInfo {
+    id = '';
+    createdAt = '';
+    updatedAt = '';
+    corelatedInstanceId = '';
+    instanceId = '';
+    roleName = '';
+    softDeleted = '';
+}
 

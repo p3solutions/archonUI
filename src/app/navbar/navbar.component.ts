@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import { NavbarService } from './navbar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,8 +18,10 @@ export class NavbarComponent implements OnInit {
   private router: Router;
   userChangeName: string;
   rolesForManage: string[] = ['ADMIN', 'MANAGE_DB'];
+  notifiactionArray = [];
+  count = 0;
 
-  constructor(private userProfileService: UserProfileService) { }
+  constructor(private userProfileService: UserProfileService , private navService: NavbarService) { }
   ngOnInit() {
     this.userProfileService.UserNamechange.subscribe(data => {
       this.userChangeName = data;
@@ -44,13 +47,12 @@ export class NavbarComponent implements OnInit {
       }
     }
 
-
-
     $(document).ready(function () {
       $('.button').click(function () {
         $(this).closest('body').toggleClass('active');
       });
     });
+    this.getNotification();
   }
 
   // Get information from the info service
@@ -74,6 +76,26 @@ export class NavbarComponent implements OnInit {
   logout() {
     localStorage.removeItem('accessToken');
     this.router.navigate(['sign-in']);
+  }
+
+  getNotification() {
+    setInterval(() => {
+      this.navService.getNotification().subscribe(result => {
+        this.count = 0;
+        this.notifiactionArray = result;
+        for (const i of this.notifiactionArray) {
+          if (i.read === false) {
+            this.count = this.count + 1;
+          }
+        }
+      });
+  }, 10000);
+  }
+
+  updateNotification(id) {
+   this.navService.updateNotification(id).subscribe(result => {
+     this.getNotification();
+   });
   }
 
 }

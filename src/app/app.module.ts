@@ -138,6 +138,7 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
 import { ScheduleJobService } from './schedule-job/schedule-job.service';
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
+import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
 
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
@@ -229,7 +230,8 @@ export function tokenGetter() {
                 CreateUserInviteDialogComponent,
                 ConfigurationComponent,
                 SmtpConfigurationComponent,
-                SsoSigninFormComponent
+                SsoSigninFormComponent,
+                RoleGroupConfigurationComponent
         ],
         imports: [
                 JwtModule.forRoot({

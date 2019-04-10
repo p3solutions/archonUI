@@ -1,5 +1,8 @@
 export class SignUp {
-    name = '';
+    firstname = '';
+    lastname  = '';
     emailAddress = '';
     password = '';
+    userId = '';
+    confirmPassword = '';
 }

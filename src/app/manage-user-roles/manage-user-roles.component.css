@@ -208,9 +208,10 @@ th {
 
 .example-table-container {
   position: relative;
-  max-height: 400px;
-  overflow: auto;
-  box-shadow: 0px 1px 6px 1.1px rgba(0, 0, 0, 0.35);
+  max-height: 450px;
+  overflow-y: auto;
+  overflow-x: scroll;
+  box-shadow: 0px 1px 6px 1.1px rgba(0, 0, 0, 0.35)
 }
 
 
@@ -223,4 +224,89 @@ th {
   padding-left: 10px;
   margin-bottom: 0px;
   font-size: 22px;
+}
+
+table.mat-table {
+  border-spacing: 0;
+  width: 135%;
+}
+
+table::ng-deep th {
+  text-align: left;
+  width: 11%;
+}
+
+td.global-select select {
+  height: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.63);
+  background-color: #f6f8fa;
+}
+
+
+td.action-select select {
+  height: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.63);
+  background-color: #f6f8fa;
+  width: 51.3%;
+  text-align-last: center;
+}
+
+td.action-select button {
+  height: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 0 rgb(0, 0, 0.63);
+  background-color: #f6f8fa;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none
+}
+
+.invited {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0a85f8;
+}
+
+.active {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0fac0b;
+}
+
+.locked {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #fe6600;
+}
+
+.revoked {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ff0000;
 }

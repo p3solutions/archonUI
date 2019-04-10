@@ -135,14 +135,14 @@
         <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Details </th>
         <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
           <i class="material-icons details" matTooltip="View Job Details" *ngIf="element.scheduleId !== null" (click)="openDetail(element.scheduleId)">info</i>
-          <i class="material-icons details" style="color: grey" matTooltip="No Job Details" *ngIf="element.scheduleId == null">info</i>
+          <i class="material-icons" style="color: grey" matTooltip="No Job Details" *ngIf="element.scheduleId == null">info</i>
         </td>
       </ng-container>
       <ng-container matColumnDef="Stop">
         <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
         <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-          <i class="material-icons details" matTooltip="Stop" *ngIf="element.status !== 'USER_OR_ADMIN_STOPPED'" (click)="stop(element.scheduleId)">stop</i>
-          <i class="material-icons details" style="color: grey" matTooltip="Stopped" *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">stop</i>
+          <i class="material-icons failure" matTooltip="Stop" *ngIf="element.status !== 'USER_OR_ADMIN_STOPPED'" (click)="stop(element.scheduleId)">stop</i>
+          <i class="material-icons" style="color: grey" matTooltip="Stopped" *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">stop</i>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

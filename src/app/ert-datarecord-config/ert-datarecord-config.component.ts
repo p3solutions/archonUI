@@ -286,7 +286,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
     }
 
     function onClickChangeGraph(value) {
-      self.tablelistService.getListOfRelationTable(value.id, self.workspaceID).subscribe(result => {
+      self.tablelistService.getListOfRelationTableMMR(self.workspaceID, self.ertService.mmrVersion, value.name).subscribe(result => {
         self.relationshipInfo = result;
         self.primaryTable = getPrimaryArray(self.relationshipInfo);
         self.secondaryTable = getSecondaryArray(self.relationshipInfo);

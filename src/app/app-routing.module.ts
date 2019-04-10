@@ -59,6 +59,7 @@ import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-s
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
+import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -204,6 +205,9 @@ const routes: Routes = [
           },
           {
             path: 'smtp-configuration', component: SmtpConfigurationComponent
+          },
+          {
+            path: 'role-group-configuration', component: RoleGroupConfigurationComponent
           }
         ]
       }

@@ -5,26 +5,44 @@
   </div>
   <div class="x_content">
     <br />
-    <form class="form-horizontal form-label-left input_mask" (ngSubmit)="onSignUp()" [formGroup]="signUpForm">
+    <form class="form-horizontal form-label-left input_mask" [formGroup]="signUpForm">
       <div class="row form-fields">
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="text" matInput  name="name" formControlName="name" placeholder="Full Name"
-              (keyup)="enableSignUp()" s>
+            <input type="text" matInput name="id" formControlName="userId" placeholder="User Id">
           </mat-form-field>
-          
+
+        </div>
+        <div class="col-md-12 form-group has-feedback" style="display:inline-flex">
+          <mat-form-field style="margin-right:7px">
+            <input type="text" matInput name="firstName" formControlName="firstName" placeholder="First Name">
+          </mat-form-field>
+          <mat-form-field>
+            <input type="text" matInput name="lastName" formControlName="lastName" placeholder="Last Name">
+          </mat-form-field>
         </div>
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="email" matInput  name="signin-email" formControlName="emailAddress"
-              placeholder="Email" (keyup)="enableSignUp()">
+            <input type="email" matInput name="signin-email" formControlName="emailAddress" placeholder="Email">
           </mat-form-field>
         </div>
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="password" matInput  name="signin-password" formControlName="password"
-              placeholder="Password" (keyup)="enableSignUp()">
+            <input type="password" matInput name="signin-password" formControlName="password" placeholder="Password">
           </mat-form-field>
+          <mat-error style="text-align:left">
+           *Password must contain atleast 6 characters.
+          </mat-error>
+        </div>
+        <div class="col-md-12 form-group has-feedback">
+          <mat-form-field>
+            <input type="password" matInput name="signin-confirm-password" formControlName="confirmPassword"
+              placeholder="Confirm Password">
+          </mat-form-field>
+          <mat-error style="text-align:left"
+            *ngIf="signUpForm.get('confirmPassword').errors && signUpForm.get('confirmPassword').errors.ConfirmPassword">
+            Password and Confirm Password don't match.
+          </mat-error>
         </div>
         <!-- <div class="col-md-12 form-group has-feedback">
           <input type="password" class="form-control input-form" name="signin-password" formControlName="password" placeholder="Confirm Password">
@@ -50,8 +68,8 @@
           <a routerLink="/sign-in">Sign In</a>
         </div>
         <div class="col-md-6 form-group">
-          <button type="submit" class="btn pull-right btn-form btn-primary {{ enableSignUpBtn ? '' : 'bg-disabled'}}"
-            [disabled]="!enableSignUpBtn">
+          <button type="submit" (click)="onSignUp()" class="btn pull-right btn-form btn-primary {{ enableSignUpBtn ? '' : 'bg-disabled'}}"
+            [disabled]="!signUpForm.valid">
             SIGN UP
             <i *ngIf="inProgress" class="fa fa-spinner fa-spin inline-loader"></i>
           </button>
