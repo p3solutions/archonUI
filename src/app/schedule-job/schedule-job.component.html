@@ -22,7 +22,6 @@
             <span class="input-group-addon" id="basic-addon3">Schedule Server</span>
                 <select #jobinstances aria-describedby="basic-addon3" class="form-control round" name="process"
                   required (change)="instances = jobinstances.value">
-                  <option [ngValue]="null">Select Server</option>
                   <option >Local</option>
                   <option *ngFor="let instances of jobInstancesList" [value]="instances">{{instances}}</option>
 
@@ -47,9 +46,8 @@
               <span class="input-group-addon" id="basic-addon4">Interval&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </span>
-                  <select aria-describedby="basic-addon4" class="form-control round" [(ngModel)]="Interval" name="process" [disabled]="jobType !== 'Schedule Later'"
+                  <select aria-describedby="basic-addon4" #Int class="form-control round" (change)="Interval = Int.value" name="process" [disabled]="jobType !== 'Schedule Later'"
                     required>
-                    <option [ngValue]="null">Select Frequency</option>
                     <option>Once</option>
                     <option>Days</option>
                     <option>Weeks</option>
@@ -59,13 +57,13 @@
           <br>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon5">Frequency&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <input type="number" class="form-control" required placeholder="Frequency" aria-describedby="basic-addon5" required [(ngModel)]="Frequency"> 
+            <input type="number" class="form-control" required placeholder="Frequency" aria-describedby="basic-addon5" required [(ngModel)]="Frequency" [disabled]="Interval == 'Once'"> 
           </div>
           <br>
           <div class="end-date input-group">
               <span class="input-group-addon" id="basic-addon4">End Date
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-              <input type="text" [(ngModel)]="enddate" [disabled]="jobType !== 'Schedule Later'"
+              <input type="text" [(ngModel)]="enddate" [disabled]="Interval == 'Once'"
                      placeholder="End Date"
                      class="form-control"
                      bsDatepicker [bsConfig]="bsConfig" placement="top" required>
@@ -73,7 +71,7 @@
         </div>  
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" data-dismiss="modal" (click)="emitObject()">Schedule</button>
+        <button type="button" class="btn btn-primary next" data-dismiss="modal" (click)="emitObject()" [disabled]="jobName == ''">Schedule</button>
       </div>
   </div>
   </div>
