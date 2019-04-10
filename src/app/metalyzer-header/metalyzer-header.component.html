@@ -6,12 +6,15 @@
           </button>
           <strong> Please select a table</strong>
         </div> 
-      <div class="col-md-5 text-left">
+      <div class="col-md-6 text-left">
          
           <div class="form-inline">
               <a (click)="gotoDashboard()" data-tooltip="Back">
                   <i class="fa fa-arrow-left fa-lg form-group" aria-hidden="true"></i>
                 </a>
+                <div class="form-group">
+                  <b>Metalyzer</b>
+                </div>
               <div class="form-group">
                 <b>Workspace Name: </b>{{wsName | uppercase}}
               </div>
@@ -50,7 +53,7 @@
           </li>
         </ul>
       </div>
-      <div class="dropdown" style="margin-right: 51px;" *ngIf="phase == 'Analysis'">
+      <div class="dropdown" style="margin-right: 37px;" *ngIf="phase == 'Analysis'">
         <button class="btn btn-default dropdown-toggle" type="button" id="btn" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
         </button>
       </div>
