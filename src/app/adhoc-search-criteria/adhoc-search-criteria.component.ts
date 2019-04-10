@@ -4,7 +4,8 @@ import {
   AdhocHeaderInfo,
   Adhoc,
   SidePanel,
-  InlinePanel
+  InlinePanel,
+  getUserId
 } from '../adhoc-landing-page/adhoc';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -216,6 +217,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       this.screenInfoObject['childScreenInfo'] = null;
     }
     this.screenInfoObject.sessionAdhocModel.searchCriteria = searchCriteria;
+    this.screenInfoObject.userId = getUserId();
     this.screenInfoObject.sessionAdhocModel.searchResult = searchResult;
     this.screenInfoObject.sessionAdhocModel.selectedTables = this.tableColumnList;
     this.addOrder();

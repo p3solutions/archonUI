@@ -1,6 +1,6 @@
 
 import { Component, OnInit, ViewChild, Inject, ElementRef } from '@angular/core';
-import { ApplicationInfo, AdhocHeaderInfo, Adhoc, ChildScreenInfo, ParentScreenInfo, SessionAdhoc } from '../adhoc-landing-page/adhoc';
+import { ApplicationInfo, AdhocHeaderInfo, Adhoc, ChildScreenInfo, ParentScreenInfo, SessionAdhoc, getUserId } from '../adhoc-landing-page/adhoc';
 import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort } from '@angular/material';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Router } from '@angular/router';
@@ -70,7 +70,8 @@ export class AdhocAppScreenListComponent implements OnInit {
   childScreenInfo: ChildScreenInfo[] = [];
   successMessage = '';
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
-    private router: Router, private adhocService: AdhocService, private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
+    private router: Router, private adhocService: AdhocService,
+    private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
 
 
   ngOnInit() {
@@ -129,7 +130,8 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   downloadScreen(screenId, screenName) {
-    this.adhocService.downloadScreen(screenId).subscribe(data => {
+    const userId = getUserId();
+    this.adhocService.downloadScreen(screenId, userId).subscribe(data => {
       if (data === undefined) {
         document.getElementById('success-popup-btn').click();
         this.successMessage = 'Download Failed';
@@ -163,7 +165,8 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   deleteScreen(screenId) {
-    this.adhocService.deleteScreen(screenId).subscribe(result => {
+    const userId = getUserId();
+    this.adhocService.deleteScreen(screenId, userId).subscribe(result => {
       const index = this.screenInfoList.findIndex(a => a.id === screenId);
       if (index !== -1) {
         this.screenInfoList.splice(index, 1);
@@ -227,7 +230,8 @@ export class AdhocAppScreenListComponent implements OnInit {
       'appName': result.appName,
       'appDesc': result.appDesc,
       'workspaceId': this.workspaceId,
-      'metadataVersion': this.mmrVersion
+      'metadataVersion': this.mmrVersion,
+      'userId': getUserId()
     };
     this.adhocService.createApplication(param).subscribe((response) => {
       this.applicationInfoList = this.applicationInfoList.concat(response);
@@ -250,6 +254,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     }
     adhoc.sessionAdhoc = null;
     adhoc.schemaName = null;
+    adhoc.userId = getUserId();
     delete adhoc['sessionAdhocModel'];
     delete adhoc['applicationInfo'];
     delete adhoc['position'];
@@ -287,7 +292,7 @@ export class AdhocAppScreenListComponent implements OnInit {
 
   gotoScreen(screenId: string, element) {
     if (element.parentScreenInfo.screenName !== '') {
-    this.tableSelection.booleanNested = true;
+      this.tableSelection.booleanNested = true;
     } else {
       this.tableSelection.booleanNested = false;
     }
