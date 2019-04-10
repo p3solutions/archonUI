@@ -1,0 +1,78 @@
+<div id="body-div">
+  <div id="search-div">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+  </div>
+  <div id="role-group-table">
+    <div class="example-table-container">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="groupName">
+          <th style="width:22%; text-align:left" mat-header-cell *matHeaderCellDef> Group Name </th>
+          <td style="width:22%" mat-cell *matCellDef="let element; let i = index;">{{element?.groupName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="user">
+          <th style="width:13%" mat-header-cell *matHeaderCellDef> User</th>
+          <td style="width:13%" mat-cell *matCellDef="let element; let i = index;">
+            <mat-checkbox class="example-margin" [(ngModel)]="element.roleUser.checked"></mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="auditor">
+          <th style="width:13%" mat-header-cell *matHeaderCellDef> Auditor </th>
+          <td style="width:13%" mat-cell *matCellDef="let element; let i = index;">
+            <mat-checkbox class="example-margin" [(ngModel)]="element.roleAudit.checked"></mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="admin">
+          <th style="width:13%" mat-header-cell *matHeaderCellDef>Admin </th>
+          <td style="width:13%" mat-cell *matCellDef="let element">
+            <mat-checkbox class="example-margin" [(ngModel)]="element.roleAdmin.checked"></mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="dbadmin">
+          <th style="width:13%" mat-header-cell *matHeaderCellDef> DB Admin </th>
+          <td style="width:13%" mat-cell *matCellDef="let element" class="global-select">
+            <mat-checkbox class="example-margin" [(ngModel)]="element.roleManageDb.checked"></mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="archonadmin">
+          <th style="width:13%" mat-header-cell *matHeaderCellDef> Archon Admin </th>
+          <td style="width:13%" mat-cell *matCellDef="let element" class="global-select">
+            <mat-checkbox class="example-margin" [(ngModel)]="element.roleManageArchon.checked"></mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="superadmin">
+          <th style="width:13%" mat-header-cell *matHeaderCellDef> Super Admin </th>
+          <td style="width:13%" mat-cell *matCellDef="let element">
+            <mat-checkbox class="example-margin" [(ngModel)]="element.roleSuper.checked"></mat-checkbox>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+  <div id="action-btn">
+    <button (click)="reset()" class="btn btn-padding cancel btn-transform">Reset</button>
+    <button (click)="saveGroupRoleConfig()" class="btn btn-transform save btn-padding">Save</button>
+  </div>
+</div>
+<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header adhoc-modal-header">
+        <h4 class="modal-title">Alert</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{successMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button btn-padding" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

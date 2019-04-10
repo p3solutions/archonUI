@@ -174,11 +174,9 @@ export class ManageUserRolesComponent implements OnInit {
     for (const item of roles) {
       if (item.roleName.toUpperCase().trim() === 'ROLE_SUPER') {
         this.roleOfUser = 'superadmin';
-        break;
       }
       if (item.roleName.toUpperCase().trim() === 'ROLE_ADMIN') {
         this.roleOfUser = 'admin';
-        break;
       }
     }
   }

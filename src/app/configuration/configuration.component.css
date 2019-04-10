@@ -69,8 +69,8 @@
 }
 
 #config-mgmt-panel {
-  width: 40%;
-  margin: 0 auto;
+  width: 67%;
+  margin-left: 22%
 }
 
 .smtp-config {
