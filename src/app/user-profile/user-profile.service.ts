@@ -12,7 +12,7 @@ export class UserProfileService {
   accessToken = localStorage.getItem('accessToken');
   token_data = this.jwtHelper.decodeToken(this.accessToken);
 
-  private UserName = new BehaviorSubject(this.token_data.user.name);
+  private UserName = new BehaviorSubject(this.token_data.user.firstName + ' ' + this.token_data.user.lastName);
   UserNamechange = this.UserName.asObservable();
 
   constructor() { }
