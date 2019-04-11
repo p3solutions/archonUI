@@ -11,43 +11,6 @@ export class ApplicationInfo {
     appDesc = '';
 }
 
-// export class ScreenInfo {
-//     id = '';
-//     //position: number; // frontend
-//     screenName = '';
-//     screenDesc = '';
-//     createdAt = '';
-//     updatedAt = '';
-//     applicationInfo = new ApplicationInfo();
-//     appId = '';
-//     "workspaceId": "5c876f12068c2311147b6bf9",
-//     "schemaName": "SH",
-//         "sessionAdhocModel": null,
-//             "softDeleted": false
-// }
-
-// id
-// createdAt": 1552972646,
-// updatedAt": 1552972646,
-// appId": "5c9018a7068c235749a47d7f",
-// screenName": "Screen - ",
-// screenDesc": null,
-// applicationInfo": {
-// id": "5c9018a7068c235749a47d7f",
-// createdAt": 1552947367,
-// updatedAt": 1552947367,
-// appName": "app5 - test",
-// appDesc": "app2 is name of application in adhoc query",
-// workspaceId": "5c876f12068c2311147b6bf9",
-// metadataVersion": "12",
-// softDeleted": false
-//         }
-// "workspaceId": "5c876f12068c2311147b6bf9",
-//     "schemaName": "SH",
-//         "sessionAdhocModel": null,
-//             "softDeleted": false
-
-
 export class TableColumnNode {
     id: string;
     name: string;
@@ -230,6 +193,7 @@ export class SessionAdhoc {
 export class Adhoc {
     metadataVersion = '';
     position = null;
+    madeDownlaodDisabled = false;
     link = false;
     appId = '';
     workspaceId = '';

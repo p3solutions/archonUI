@@ -2,11 +2,10 @@ import { DataSource } from '@angular/cdk/table';
 import { Adhoc, ParentScreenInfo, SessionAdhoc, ResultFields } from '../adhoc-landing-page/adhoc';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
-import { CollectionViewer } from '@angular/cdk/collections';
 
 export class ScreenDataSource implements DataSource<Adhoc> {
 
-    totalScreen: number;
+    paginationRequired = false;
     private adhocSubject = new BehaviorSubject<Adhoc[]>([]);
 
     constructor(private adhocService: AdhocService) { }
@@ -31,12 +30,13 @@ export class ScreenDataSource implements DataSource<Adhoc> {
                 }
                 if (value.sessionAdhocModel === null) {
                     value.sessionAdhocModel = new SessionAdhoc();
+                    value.madeDownlaodDisabled = true;
                 }
                 if (value.childScreenInfo !== null) {
                     value.link = true;
                 }
             });
-            this.totalScreen = result.totalScreen;
+            this.paginationRequired = result.paginatiomRequired;
             this.adhocSubject.next(result.list);
         });
     }
@@ -45,12 +45,6 @@ export class ScreenDataSource implements DataSource<Adhoc> {
 
         this.adhocService.getSearchScreen(startIndexOfScreen,
             value, appId).subscribe((result) => {
-                // this.screenInfoList = result;
-                // this.addPosition();
-                // this.dataSource.data = this.screenInfoList;
-                // if (this.dataSource.paginator) {
-                //   this.dataSource.paginator.firstPage();
-                // }
                 result.list.forEach((value, index) => {
                     value.position = index + 1;
                     if (value.parentScreenInfo === null) {
@@ -61,9 +55,10 @@ export class ScreenDataSource implements DataSource<Adhoc> {
                     }
                     if (value.sessionAdhocModel === null) {
                         value.sessionAdhocModel = new SessionAdhoc();
+                        value.madeDownlaodDisabled = true;
                     }
                 });
-                this.totalScreen = result.totalScreen;
+                this.paginationRequired = result.paginatiomRequired;
                 this.adhocSubject.next(result.list);
             });
     }

@@ -60,15 +60,17 @@ export class AdhocAppScreenListComponent implements OnInit {
   workspaceName = '';
   mmrVersion = '';
   workspaceId = '';
-  startIndex = 0;
+  startIndex = 1;
   totalApps = 0;
   startIndexOfScreen = 0;
+  isApplicationLeft = false;
   totalScreen = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
   childScreenInfo: ChildScreenInfo[] = [];
   successMessage = '';
+  deleteScreenId = '';
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
     private router: Router, private adhocService: AdhocService,
     private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
@@ -110,7 +112,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.adhocService.getApplication(this.workspaceId, this.startIndex).subscribe(result => {
       this.applicationInfoList = result.list;
-      this.totalApps = result.totalApp;
+      this.isApplicationLeft = result.paginationRequired;
       if (this.applicationInfoList.length !== 0) {
         this.selectedApp(this.applicationInfoList[0].id);
       }
@@ -159,15 +161,25 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.addPosition();
     this.dataSource.connect().subscribe(result => {
       this.screenInfoList = result;
-      this.totalScreen = this.dataSource.totalScreen;
+      this.totalScreen = (this.paginator.pageIndex + 1) * 50;
+      if (this.dataSource.paginationRequired) {
+        this.totalScreen = this.totalScreen + 50;
+      } else {
+        this.totalScreen = this.screenInfoList.length;
+      }
     });
     this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id);
   }
 
-  deleteScreen(screenId) {
+  deleteScreenPopUp(screenId) {
+    this.deleteScreenId = screenId;
+    document.getElementById('delete-popup-btn').click();
+  }
+
+  deleteScreen() {
     const userId = getUserId();
-    this.adhocService.deleteScreen(screenId, userId).subscribe(result => {
-      const index = this.screenInfoList.findIndex(a => a.id === screenId);
+    this.adhocService.deleteScreen(this.deleteScreenId, userId).subscribe(result => {
+      const index = this.screenInfoList.findIndex(a => a.id === this.deleteScreenId);
       if (index !== -1) {
         this.screenInfoList.splice(index, 1);
       }
@@ -203,6 +215,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.getScreen(0);
   }
   openScreenDialog(): void {
+    this.screenInfo = new Adhoc();
     const dialogScreenRef = this.dialog.open(CreateScreenDialogComponent, {
       width: '550px',
       data: this.screenInfo,
@@ -215,6 +228,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   openAppDialog(): void {
+    this.appInfo = new ApplicationInfo();
     const dialogAppRef = this.dialog.open(CreateAppDialogComponent, {
       width: '550px',
       data: this.appInfo,
@@ -234,7 +248,13 @@ export class AdhocAppScreenListComponent implements OnInit {
       'userId': getUserId()
     };
     this.adhocService.createApplication(param).subscribe((response) => {
-      this.applicationInfoList = this.applicationInfoList.concat(response);
+      document.getElementById('success-popup-btn').click();
+      if (response.httpStatus === 200) {
+        this.successMessage = 'Application Added Successfully';
+        this.applicationInfoList = this.applicationInfoList.concat(response.data);
+      } else {
+        this.successMessage = 'Application not Added Successfully';
+      }
     });
   }
 
@@ -276,6 +296,16 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.dataSource.getSearchScreen(this.paginator.pageIndex + 1,
       this.input.nativeElement.value, this.selectedAppObject.id
     );
+    this.totalScreen = (this.paginator.pageIndex + 1) * 50;
+    if (this.dataSource.paginationRequired) {
+      this.totalScreen = this.totalScreen + 50;
+    } else {
+      if (this.paginator.pageIndex === 0) {
+        this.totalScreen = this.screenInfoList.length;
+      } else {
+        this.totalScreen = this.totalScreen + this.screenInfoList.length;
+      }
+    }
   }
 
   addScreen() {
@@ -308,9 +338,18 @@ export class AdhocAppScreenListComponent implements OnInit {
     screenInfoObject = this.screenInfoList.filter(a => a.id === screenId)[0];
     if (screenInfoObject.parentScreenInfo.screenId !== '') {
       this.adhocService.getScreenInfo(screenInfoObject.parentScreenInfo.screenId).subscribe(result => {
-        screenInfoObject.sessionAdhocModel.selectedTableListString = JSON.stringify(result.AdhocScreen.sessionAdhocModel.selectedTables);
-        this.adhocSavedObjectService.setScreenInfoObject(screenInfoObject);
-        this.router.navigate(['/workspace/adhoc/screen/table']);
+        if (result.AdhocScreen.sessionAdhocModel === null) {
+          this.successMessage = 'Please add screen in Linked screen.';
+          document.getElementById('success-popup-btn').click();
+        } else {
+          console.log(screenInfoObject);
+          console.log(result.AdhocScreen);
+          if (screenInfoObject.sessionAdhocModel.primaryTable !== result.AdhocScreen.sessionAdhocModel.primaryTable) {
+          }
+          screenInfoObject.sessionAdhocModel.selectedTableListString = JSON.stringify(result.AdhocScreen.sessionAdhocModel.selectedTables);
+          this.adhocSavedObjectService.setScreenInfoObject(screenInfoObject);
+          this.router.navigate(['/workspace/adhoc/screen/table']);
+        }
       });
     } else {
       this.adhocSavedObjectService.setScreenInfoObject(screenInfoObject);
@@ -327,11 +366,15 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   getNextBatch() {
-    this.startIndex = this.startIndex + 1;
-    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.adhocService.getApplication(this.workspaceId, this.startIndex).subscribe(result => {
-      this.applicationInfoList = this.applicationInfoList.concat(result);
-    });
+    console.log(this.isApplicationLeft);
+    if (this.isApplicationLeft) {
+      this.startIndex = this.startIndex + 1;
+      this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+      this.adhocService.getApplication(this.workspaceId, this.startIndex).subscribe(result => {
+        this.applicationInfoList = this.applicationInfoList.concat(result.list);
+        this.isApplicationLeft = result.paginationRequired;
+      });
+    }
   }
 
   showChildInfo(screenId) {
@@ -341,4 +384,5 @@ export class AdhocAppScreenListComponent implements OnInit {
   gotoDashboard() {
     this.router.navigate(['/workspace/workspace-dashboard']);
   }
+
 }
