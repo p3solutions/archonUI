@@ -112,7 +112,6 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
 
 
   refreshStatusTable() {
-    this.loadStatus = false;
     this.selectedJobOrigin = '';
     this.selectedJobStatus = '';
     this.getStart();
