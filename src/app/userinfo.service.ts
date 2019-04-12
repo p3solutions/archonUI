@@ -33,6 +33,12 @@ export class UserinfoService {
     return this.token_data.roles[0];
   }
 
+  getRoleList() {
+    this.getTokenData();
+    const roleList = this.token_data.roles.map(function (item) { return item['roleName']; });
+    return roleList;
+  }
+
   getUserId() {
     this.getTokenData();
     return this.token_data.user.id;
