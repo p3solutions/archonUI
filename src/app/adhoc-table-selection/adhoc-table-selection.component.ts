@@ -37,7 +37,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   tempValue = '';
   startIndex = 1;
   searchTableName = '';
-  page = '';
+  page;
   tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,

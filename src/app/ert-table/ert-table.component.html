@@ -170,7 +170,7 @@
                     </div>
                     <form class="form-inline" id="add-edit-form" [formGroup]="myForm">
                       <div formArrayName="addEditColumn">
-                        <div *ngFor="let addEditItem of myForm['controls'].addEditColumn.controls; let i=index">
+                        <div *ngFor="let addEditItem of myForm.controls.addEditColumn['controls']; let i=index">
                           <div [formGroupName]="i">
                             <div class="add-edit-form-item form-group">
                               <input type="text" class="form-control form-control-sm" formControlName="prefix">
@@ -180,9 +180,6 @@
                                 <option [ngValue]="null">Select Column</option>
                                 <option [ngValue]="item" *ngFor="let item of ursDefinedColumnNameList">{{item}}</option>
                               </select>
-                              <small [hidden]="myForm.controls.addEditColumn.controls[i].controls.column.valid">
-                                Street is required
-                              </small>
                             </div>
                             <div class="add-edit-form-item form-group">
                               <input type="text" class="form-control form-control-sm" formControlName="suffix">

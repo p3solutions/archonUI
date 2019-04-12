@@ -24,7 +24,7 @@ export class ManageMasterMetadataComponent implements OnInit {
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   role: any;
-  page = 1;
+  page =1;
   constructor(
     private manage_Master_MetadataService: ManageMasterMetadataService,
     private router: Router,
