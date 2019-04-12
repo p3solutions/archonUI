@@ -77,7 +77,7 @@ export class TableListComponent implements OnInit {
   databaseID: any;
   perPage = 50;
   searchTableName;
-
+  page;
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('storedprocView', { read: ViewContainerRef }) storedprocViewRef: ViewContainerRef;
 

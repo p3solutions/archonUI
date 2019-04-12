@@ -1,4 +1,4 @@
-<div id="drag-panel-column" class="row panel-screen" cdkDropList [cdkDropListData]="searchCriteria"
+<div id="drag-panel-column" class="row panel-screen" cdkDropList
   (cdkDropListDropped)="drop($event)">
   <mat-tab-group (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex">
     <mat-tab label="Main Panel Details">

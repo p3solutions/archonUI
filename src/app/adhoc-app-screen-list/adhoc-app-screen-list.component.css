@@ -188,10 +188,14 @@ a.disabled {
   text-decoration: underline;
 }
 
-a.disabled .material-icons{
+a.disabled .material-icons {
   cursor: not-allowed;
 }
 
-#app_desc p{
+#app_desc p {
   word-break: break-all;
-} 
+}
+
+.hide-html {
+  display: none;
+}

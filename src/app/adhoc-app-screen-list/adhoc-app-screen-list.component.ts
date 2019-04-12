@@ -1,6 +1,9 @@
 
 import { Component, OnInit, ViewChild, Inject, ElementRef } from '@angular/core';
-import { ApplicationInfo, AdhocHeaderInfo, Adhoc, ChildScreenInfo, ParentScreenInfo, SessionAdhoc, getUserId } from '../adhoc-landing-page/adhoc';
+import {
+  ApplicationInfo, AdhocHeaderInfo, Adhoc, ChildScreenInfo,
+  ParentScreenInfo, SessionAdhoc, getUserId
+} from '../adhoc-landing-page/adhoc';
 import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort } from '@angular/material';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Router } from '@angular/router';
@@ -165,7 +168,11 @@ export class AdhocAppScreenListComponent implements OnInit {
       if (this.dataSource.paginationRequired) {
         this.totalScreen = this.totalScreen + 50;
       } else {
-        this.totalScreen = this.screenInfoList.length;
+        if (this.paginator.pageIndex === 0) {
+          this.totalScreen = this.screenInfoList.length;
+        } else {
+          this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
+        }
       }
     });
     this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id);
@@ -215,7 +222,6 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.getScreen(0);
   }
   openScreenDialog(): void {
-    this.screenInfo = new Adhoc();
     const dialogScreenRef = this.dialog.open(CreateScreenDialogComponent, {
       width: '550px',
       data: this.screenInfo,
@@ -303,12 +309,13 @@ export class AdhocAppScreenListComponent implements OnInit {
       if (this.paginator.pageIndex === 0) {
         this.totalScreen = this.screenInfoList.length;
       } else {
-        this.totalScreen = this.totalScreen + this.screenInfoList.length;
+        this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
       }
     }
   }
 
   addScreen() {
+    this.screenInfo = new Adhoc();
     this.openScreenDialog();
   }
 
@@ -342,8 +349,6 @@ export class AdhocAppScreenListComponent implements OnInit {
           this.successMessage = 'Please add screen in Linked screen.';
           document.getElementById('success-popup-btn').click();
         } else {
-          console.log(screenInfoObject);
-          console.log(result.AdhocScreen);
           if (screenInfoObject.sessionAdhocModel.primaryTable !== result.AdhocScreen.sessionAdhocModel.primaryTable) {
           }
           screenInfoObject.sessionAdhocModel.selectedTableListString = JSON.stringify(result.AdhocScreen.sessionAdhocModel.selectedTables);
@@ -366,7 +371,6 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   getNextBatch() {
-    console.log(this.isApplicationLeft);
     if (this.isApplicationLeft) {
       this.startIndex = this.startIndex + 1;
       this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
@@ -385,4 +389,13 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.router.navigate(['/workspace/workspace-dashboard']);
   }
 
+  datasourceHasValue() {
+    let isScreenPresent;
+    if (this.screenInfoList.length > 0) {
+      isScreenPresent = false;
+    } else {
+      isScreenPresent = true;
+    }
+    return isScreenPresent;
+  }
 }
