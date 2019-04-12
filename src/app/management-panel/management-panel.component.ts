@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CommonUtilityService } from '../common-utility.service';
+import { UserinfoService } from '../userinfo.service';
 
 @Component({
   selector: 'app-management-panel',
@@ -9,6 +10,8 @@ import { CommonUtilityService } from '../common-utility.service';
 })
 export class ManagementPanelComponent implements OnInit {
 
+  checkAdmin = ['ROLE_MANAGE_DB']; // enable database
+  checkSuper = ['ROLE_SUPER']; // enable configuration
   panelList = [
     {
       panelName: 'Databases',
@@ -32,13 +35,15 @@ export class ManagementPanelComponent implements OnInit {
     }
   ];
   defDesc = 'Here is some more information about this product that is only revealed once clicked on.';
-  panelGroupList: any;
+  panelGroupList = [];
   constructor(
     private router: Router,
-    private commonUtilityService: CommonUtilityService
+    private commonUtilityService: CommonUtilityService,
+    private userinfoService: UserinfoService
   ) { }
 
   ngOnInit() {
+    const check = this.userinfoService.getRoleList();
     this.panelGroupList = this.panelList;
   }
 

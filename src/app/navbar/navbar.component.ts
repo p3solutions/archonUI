@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
   info: Info;
   private router: Router;
   userChangeName: string;
-  rolesForManage: string[] = ['ADMIN', 'MANAGE_DB'];
+  rolesForManage: string[] = ['ADMIN', 'MANAGE_DB', 'SUPER'];
   notifiactionArray = [];
   count = 0;
 
@@ -28,16 +28,6 @@ export class NavbarComponent implements OnInit {
       this.getInfo();
     });
     this.info = this.getInfo();
-    // if (this.info.roles.roleName === 'ROLE_USER') {
-    //   this.info.show = true;
-    // } else if (this.info.roles.roleName === 'ROLE_DB_ADMIN') {
-    //   this.info.show = true;
-    // } else if (this.info.roles.roleName === 'ROLE_SUPER_ADMIN') {
-    //   this.info.show = true;
-    // } else if (this.info.roles.roleName === 'ROLE_DB_MEMBER') {
-    //   this.info.show = true;
-    // }
-
     for (const item of this.info.roleList) {
       for (const role of this.rolesForManage) {
         if (item.roleName.toUpperCase().trim().includes(role)) {
@@ -63,10 +53,8 @@ export class NavbarComponent implements OnInit {
     const jwtHelper: JwtHelperService = new JwtHelperService();
     accessToken = localStorage.getItem('accessToken');
     token_data = jwtHelper.decodeToken(accessToken);
-    console.log(token_data);
     info = new Info();
     info.id = token_data.user.id;
-    info.roles = token_data.roles[0];
     info.roleList = token_data.roles;
     info.username = this.userChangeName;
     return info;

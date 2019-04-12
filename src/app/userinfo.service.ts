@@ -15,6 +15,7 @@ export class UserinfoService {
   jwtHelper: JwtHelperService = new JwtHelperService();
   token_data: any;
   errorObject: ErrorObject;
+  userRole;
   private loginUrl = 'sign-in';
   constructor(
     private http: HttpClient,
@@ -23,14 +24,13 @@ export class UserinfoService {
     this.http = http;
   }
 
+  getUserRole(role) {
+    this.userRole = role;
+  }
+
   getTokenData() {
     this.accessToken = localStorage.getItem('accessToken');
     this.token_data = this.jwtHelper.decodeToken(this.accessToken);
-  }
-
-  getUserRoles() {
-    this.getTokenData();
-    return this.token_data.roles[0];
   }
 
   getRoleList() {
