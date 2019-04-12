@@ -131,12 +131,11 @@ export class TableListComponent implements OnInit {
     this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
       this.tableList = res.tableList;
-     this.schemaResultsTableCount = this.tableList.length;
       if (this.tableList.length === 0) {
         this.isTablelistAvailable = true;
       }
       this.isAvailable = true;
-      if (this.paginationRequired) {
+      if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
     }
     });
@@ -147,8 +146,8 @@ export class TableListComponent implements OnInit {
     this.startIndex = page;
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
       this.tableList = res.tableList;
-      if (this.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex) * 50;
+      if (res.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
     }
     });
   }

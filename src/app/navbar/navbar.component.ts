@@ -89,7 +89,7 @@ export class NavbarComponent implements OnInit {
           }
         }
       });
-  }, 10000);
+  }, 60000);
   }
 
   updateNotification(id) {
