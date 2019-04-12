@@ -85,7 +85,7 @@ export class TableListComponent implements OnInit {
   isTablelistAvailable: boolean;
   wsName: string;
   startIndex = 1;
-  schemaResultsTableCount: number;
+  schemaResultsTableCount = 0;
   paginationRequired: boolean;
 
   constructor(

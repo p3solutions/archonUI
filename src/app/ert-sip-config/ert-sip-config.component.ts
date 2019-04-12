@@ -23,7 +23,7 @@ export class ErtSipConfigComponent implements OnInit {
   data;
   exclude_click = ['rgb(249, 75, 76)', 'rgb(224, 224, 224)'];
   selectedPrimaryTable: any;
-  schemaResultsTableCount: any;
+  schemaResultsTableCount = 0;
   startIndex = 1;
   isRelationNot: boolean;
   enableNextBtn: boolean;
