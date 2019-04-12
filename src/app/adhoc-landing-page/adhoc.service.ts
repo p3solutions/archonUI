@@ -41,7 +41,7 @@ export class AdhocService {
 
   createApplication(param): Observable<any> {
     return this.http.post<any>(this.createApplicationUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractData),
+      pipe(map(this.extractDataForSuccess),
         catchError(this.handleError('createApplication', []))
       );
   }

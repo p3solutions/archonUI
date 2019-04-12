@@ -58,13 +58,19 @@ export class DbExtractorExecQueryComponent implements OnInit {
   }
 
   uploadQueryFile(files: FileList) {
+    const ext = files.item(0).name.match(/\.([^\.]+)$/)[1];
     this.isQueryFileExist = files != null ? true : false;
-    if (this.executeQueryForm.value.queryTitle && this.isQueryFileExist && this.executeQueryForm.value.isQueryFile === true) {
+    if (this.executeQueryForm.value.queryTitle && this.isQueryFileExist
+      && this.executeQueryForm.value.isQueryFile === true && ext === 'sql') {
       this.enableNextBtn = false;
-
     }
     this.queryFileToUpload = files.item(0);
-    this.queryFileName = files.item(0).name;
+    if (ext === 'sql') {
+      this.queryFileName = files.item(0).name;
+    } else {
+      this.enableNextBtn = true;
+      this.queryFileName = 'please upload .sql file only';
+    }
   }
 
   setUploadQueryFile() {

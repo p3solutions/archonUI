@@ -147,9 +147,27 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   }
 
   filterTableAndColumn(str: string) {
+    const tempTableColumnNodeList: TableColumnNode[] = [];
+    let tempTableColumnNode = new TableColumnNode();
     if (str !== '') {
-      this.dataSource.data = JSON.parse(JSON.stringify(this.TREE_DATA.filter(a => a.name.toLocaleLowerCase()
-        .includes(str.toLocaleLowerCase()))));
+      if (this.searchType === 'Table') {
+        this.dataSource.data = JSON.parse(JSON.stringify(this.TREE_DATA.filter(a => a.name.toLocaleLowerCase()
+          .includes(str.toLocaleLowerCase()))));
+      } else if (this.searchType === 'Column') {
+        for (const node of this.TREE_DATA) {
+          tempTableColumnNode = new TableColumnNode();
+          const temp = node.columns.filter(a => a.name.toLocaleLowerCase()
+            .includes(str.toLocaleLowerCase()));
+          if (temp.length > 0) {
+            tempTableColumnNode.columns = temp;
+            tempTableColumnNode.id = node.id;
+            tempTableColumnNode.name =  node.name;
+            tempTableColumnNode.type = node.type;
+            tempTableColumnNodeList.push(tempTableColumnNode);
+          }
+        }
+        this.dataSource.data = JSON.parse(JSON.stringify(tempTableColumnNodeList));
+      }
     } else {
       this.dataSource.data = JSON.parse(JSON.stringify(this.TREE_DATA));
     }
