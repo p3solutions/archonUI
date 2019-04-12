@@ -63,6 +63,7 @@ export class NavbarComponent implements OnInit {
     const jwtHelper: JwtHelperService = new JwtHelperService();
     accessToken = localStorage.getItem('accessToken');
     token_data = jwtHelper.decodeToken(accessToken);
+    console.log(token_data);
     info = new Info();
     info.id = token_data.user.id;
     info.roles = token_data.roles[0];
