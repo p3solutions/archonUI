@@ -9,6 +9,7 @@ import { Info } from '../info';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { UserinfoService } from '../userinfo.service';
 
 @Component({
   selector: 'app-database-list',
@@ -36,6 +37,8 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   element: any;
   reason: string;
   elementId: any;
+  checkAdmin = ['ROLE_MANAGE_DB']; // enable pending approval
+  allowToggle = false;
   
   constructor(
     private configDBListService: DatabaseListService,
@@ -43,7 +46,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     @Inject(ViewContainerRef) viewContainerRef,
     private router: Router,
     private workspaceHeaderService: WorkspaceHeaderService,
-    private commonUtilityService: CommonUtilityService
+    private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService
     ) {
     this.dynamicLoaderService = dynamicLoaderService;
     this.viewContainerRef = viewContainerRef;
@@ -56,6 +59,13 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.getAllPending();
+    const check = this.userinfoService.getRoleList();
+    for (const i of check) {
+     if (this.checkAdmin.includes(i)) {
+       this.allowToggle = true;
+       break;
+     }
+    }
   }
 
   getAllPending(): any {
@@ -78,15 +88,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   }
 
   getConfigDBList() {
-    const navbarComponent = new NavbarComponent(null, null);
-    this.info = navbarComponent.getInfo();
-    if (this.info.roles.roleName === 'ROLE_DB_ADMIN') {
-      this.info.show = true;
-    } else if (this.info.roles.roleName === 'ROLE_SUPER_ADMIN') {
-      this.info.show = true;
-    } else if (this.info.roles.roleName === 'ROLE_DB_MEMBER') {
-      this.info.show = true;
-    }
     this.configDBListService.getListOfConfigDatabases().subscribe(result => {
       this.configDBListInfo = result;
       this.isProgress = false;
@@ -117,7 +118,9 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   }
 
   toggle() {
-    this.toggleBoolean = !this.toggleBoolean;
+    if (this.allowToggle) {
+      this.toggleBoolean = !this.toggleBoolean;
+    }
   }
 
   applyFilter(filterValue: string) {

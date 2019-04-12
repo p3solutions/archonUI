@@ -17,24 +17,27 @@ export class ManagementPanelComponent implements OnInit {
       panelName: 'Databases',
       panelImage: 'livearchival.png',
       panelDesc: 'Configure and View Database Details.',
+      enable: false
     },
     {
       panelName: 'Workspaces',
       panelImage: 'workspace.png',
       panelDesc: 'Configure, View and Workspace Details.',
+      enable: true
     },
     {
       panelName: 'Users',
       panelImage: 'user.png',
       panelDesc: 'View and Modify User Role.',
+      enable: true
     },
     {
       panelName: 'Configuration',
       panelImage: 'endtoendtoolkit.png',
       panelDesc: 'Configure, View and Edit Permissions.',
+      enable: false
     }
   ];
-  defDesc = 'Here is some more information about this product that is only revealed once clicked on.';
   panelGroupList = [];
   constructor(
     private router: Router,
@@ -44,6 +47,22 @@ export class ManagementPanelComponent implements OnInit {
 
   ngOnInit() {
     const check = this.userinfoService.getRoleList();
+    for (const i of this.panelList) {
+      if (i.panelName === 'Databases') {
+      for (const j of check) {
+        if (this.checkAdmin.includes(j)) {
+        i.enable = true;
+        }
+      }
+      }
+      if (i.panelName === 'Configuration') {
+        for (const j of check) {
+          if (this.checkSuper.includes(j)) {
+          i.enable = true;
+          }
+        }
+        }
+    }
     this.panelGroupList = this.panelList;
   }
 

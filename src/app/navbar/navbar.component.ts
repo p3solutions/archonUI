@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NavbarService } from './navbar.service';
+import { UserinfoService } from '../userinfo.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,11 +19,20 @@ export class NavbarComponent implements OnInit {
   private router: Router;
   userChangeName: string;
   rolesForManage: string[] = ['ADMIN', 'MANAGE_DB', 'SUPER'];
+  enableAuditArray = ['ROLE_AUDIT'];
+  enableAudit = false;
   notifiactionArray = [];
   count = 0;
 
-  constructor(private userProfileService: UserProfileService , private navService: NavbarService) { }
+  constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService) { }
   ngOnInit() {
+    const check = this.userinfoService.getRoleList();
+    for (const i of check) {
+     if (this.enableAuditArray.includes(i)) {
+       this.enableAudit = true;
+       break;
+     }
+    }
     this.userProfileService.UserNamechange.subscribe(data => {
       this.userChangeName = data;
       this.getInfo();
