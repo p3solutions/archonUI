@@ -124,7 +124,7 @@
       <ng-container matColumnDef="Status">
         <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
         <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-          <i class="material-icons success" matTooltip="Success" *ngIf="element.status === 'SUCCESS'">check_circle</i>
+          <i class="material-icons success" matTooltip="Success" *ngIf="element.status === 'COMPLETED'">check_circle</i>
           <i class="material-icons inpro" matTooltip="In_Progress" *ngIf="element.status === 'IN_PROGRESS'">sync</i>
           <i class="material-icons failure" matTooltip="Failed" *ngIf="element.status === 'FAILED'">error</i>
           <i class="material-icons sche" matTooltip="Scheduled" *ngIf="element.status === 'SCHEDULED'">schedule</i>

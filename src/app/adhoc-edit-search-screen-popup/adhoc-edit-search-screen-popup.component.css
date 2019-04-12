@@ -149,7 +149,7 @@ pre {
 }
 
 ::ng-deep #mandatory-div svg {
-  height: 0vh !important;
+  height: unset;
 }
 
 a.disabled {

@@ -5,7 +5,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
-  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule, MatTooltipModule
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,7 +21,7 @@ describe('AdhocAppScreenListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AdhocAppScreenListComponent],
       providers: [WorkspaceHeaderService, AdhocService, UserinfoService],
-      imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule,
+      imports: [FormsModule, MatTableModule, MatTooltipModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule,
         ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
         RouterTestingModule, MatDialogModule, MatMenuModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
