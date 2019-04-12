@@ -30,6 +30,7 @@ export class ErtSipConfigComponent implements OnInit {
   perPage = 50;
   searchTableName;
   paginationRequired: boolean;
+  page = 1;
 
 
   constructor(public router: Router, private tablelistService: TableListService,

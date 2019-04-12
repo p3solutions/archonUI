@@ -9,6 +9,8 @@ import { ErtService } from '../ert-landing-page/ert.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchPipe } from '../search.pipe';
 
 describe('AdhocTableSelectionComponent', () => {
   let component: AdhocTableSelectionComponent;
@@ -16,9 +18,9 @@ describe('AdhocTableSelectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AdhocTableSelectionComponent],
+      declarations: [AdhocTableSelectionComponent, SearchPipe],
       providers: [TableListService, UserinfoService, WorkspaceHeaderService, ErtService],
-      imports: [HttpClientModule, NgxPaginationModule, RouterTestingModule],
+      imports: [HttpClientModule, FormsModule, ReactiveFormsModule, NgxPaginationModule, RouterTestingModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

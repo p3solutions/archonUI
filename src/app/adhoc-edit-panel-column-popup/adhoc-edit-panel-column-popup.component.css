@@ -153,11 +153,11 @@ pre {
 }
 
 ::ng-deep #filter-hide-div svg {
-  height: 0vh !important;
+  height: unset;
 }
 
 ::ng-deep #mask-div svg {
-  height: 0vh !important;
+  height: unset;
 }
 
 a.disabled {

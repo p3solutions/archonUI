@@ -1598,3 +1598,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 mat-checkbox svg {
   height:unset;
 }
+
+.word-breaker{
+  word-break: break-all;
+}
