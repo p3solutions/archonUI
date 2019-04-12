@@ -27,6 +27,9 @@ export class ErtSipConfigComponent implements OnInit {
   startIndex = 1;
   isRelationNot: boolean;
   enableNextBtn: boolean;
+  perPage = 50;
+  searchTableName;
+  paginationRequired: boolean;
 
 
   constructor(public router: Router, private tablelistService: TableListService,
@@ -36,7 +39,9 @@ export class ErtSipConfigComponent implements OnInit {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
       this.tableList = res.tableList;
-      this.schemaResultsTableCount = this.tableList.length;
+      if (res.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+    }
     });
     if (this.ertService.data !== undefined) {
       this.data = this.ertService.data;
@@ -59,16 +64,18 @@ export class ErtSipConfigComponent implements OnInit {
 
   getPage(page: number) {
     this.tableList = [];
-    const perPage = 50;
-    this.startIndex = (page - 1) * perPage;
+    this.startIndex = page;
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
       this.tableList = res.tableList;
+      if (res.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+    }
     });
   }
 
-  searchTablelist(searchTableName) {
+  searchTablelist() {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, searchTableName).subscribe((res: any) => {
+     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
       this.tableList = res.tableList;
     });
   }
