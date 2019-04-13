@@ -1606,3 +1606,7 @@ mat-checkbox svg {
   margin-right: 10px;
   text-transform: inherit;
 }
+
+.word-breaker{
+  word-break: break-all;
+}

@@ -11,12 +11,14 @@
               <input type="text" class="form-control search-input" id="listSearch" placeholder="Table Search">
             </div> -->
           <div class="form-group has-feedback" id="search-box">
-            <input type="text" class="form-control" id="inputValidation" placeholder="Search" />
+            <input type="text" class="form-control" [(ngModel)]="searchTableName" id="listSearch"
+              (keyup)="searchTablelist()" placeholder="Search" />
             <span class="glyphicon glyphicon-search icon-color form-control-feedback"></span>
           </div>
           <div id="tbl-list">
             <div class="scroll-div border">
-              <div class="well" *ngFor="let i of tableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page }">
+              <div class="well"
+                *ngFor="let i of tableList | paginate: { itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName">
                 <div><input [id]="i.tableName" style="float:left" type="radio" [value]="i.tableName"
                     [checked]="i.tableName == selectedPrimaryTable" name="x" (click)="populategraph(i, $event)"></div>
                 <div class="first-div">{{i.tableName}}</div>
@@ -39,9 +41,10 @@
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn-transform btn btn-primary next btn-sm" [disabled]="data == null" (click)="gotoDataRecFinal()"
-      style="float: right;margin-right: 12px">Next</button>
-    <button class="btn-transform btn btn-primary Previous btn-sm" (click)="gotoScreenApp()" style="float:right;margin-right:5px;">
+    <button type="button" class="btn-transform btn btn-primary next btn-sm" [disabled]="data == null"
+      (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Next</button>
+    <button class="btn-transform btn btn-primary Previous btn-sm" (click)="gotoScreenApp()"
+      style="float:right;margin-right:5px;">
       Back</button>
   </div>
 </div>
@@ -58,9 +61,10 @@
         <p>Change in the graph source will result in loss of search result.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="cancelSearchResult()" class="btn btn-primary adhoc-modal-btn"
-          data-dismiss="modal">cancel</button>
-        <button type="button" (click)="deleteSearchResult()" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button" (click)="cancelSearchResult()"
+          class="btn btn-padding btn-transform btn-primary adhoc-modal-btn" data-dismiss="modal">cancel</button>
+        <button type="button" (click)="deleteSearchResult()"
+          class="btn btn-padding btn-transform  btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

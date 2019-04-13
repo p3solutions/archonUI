@@ -23,7 +23,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   userid: any;
   auditArray = [];
   updateNotif: boolean;
-
+  p = 1;
   constructor(
     private router: Router,
     private tablelistService: TableListService,
