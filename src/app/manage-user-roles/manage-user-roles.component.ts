@@ -48,7 +48,7 @@ export class ManageUserRolesComponent implements OnInit {
   roleOfUser = '';
   userInviteInfo = new UserInvite();
   globalGroupList: GlobalGroup[] = [];
-  invited = null;
+  invited = false;
   revoked = null;
   locked = null;
   changeUserStatusUrl = '';
@@ -270,7 +270,7 @@ export class ManageUserRolesComponent implements OnInit {
   confirmChangeGlobalGroupStatus() {
     this.manageUserRolesService.changeGlobalGroup(this.tempChangeGlobalGroupUrl, this.param).subscribe(response => {
       document.getElementById('success-popup-btn').click();
-      console.log(response);
+      console.log(this.invited, this.revoked, this.locked);
       if (response.httpStatus === 200) {
         this.successMsg = 'Global Group changed Successfully';
       } else {

@@ -1461,27 +1461,27 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 
 .success {
   color: #1CCE00;
-} 
+}
 
 .failure {
   color: #FD3000;
-} 
+}
 
 .inpro {
   color: #FECD00;
-} 
+}
 
 .sche {
   color: #1BBCD4;
-} 
+}
 
 .details {
   color: #1485F8;
-} 
+}
 
 .replay {
-  color:  #ff6702;
-} 
+  color: #ff6702;
+}
 
 
 
@@ -1579,6 +1579,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 .btn-padding {
   font-size: 16px;
   padding: 6px 12px;
+  text-transform: inherit;
 }
 
 .btn-transform:hover {
@@ -1596,5 +1597,12 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 }
 
 mat-checkbox svg {
-  height:unset;
+  height: unset;
+}
+
+.btn-to-cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
 }
