@@ -48,7 +48,7 @@ export class ManageUserRolesComponent implements OnInit {
   roleOfUser = '';
   userInviteInfo = new UserInvite();
   globalGroupList: GlobalGroup[] = [];
-  invited = null;
+  invited = false;
   revoked = null;
   locked = null;
   changeUserStatusUrl = '';
@@ -155,7 +155,7 @@ export class ManageUserRolesComponent implements OnInit {
     token_data = jwtHelper.decodeToken(accessToken);
     const roles = token_data.roles;
     for (const item of roles) {
-      if (item.roleName.toUpperCase().trim().includes('ADMIN')) {
+      if (item.roleName.toUpperCase().trim().includes('SUPER')) {
         this.disableInviteBtn = false;
         break;
       }
@@ -270,11 +270,10 @@ export class ManageUserRolesComponent implements OnInit {
   confirmChangeGlobalGroupStatus() {
     this.manageUserRolesService.changeGlobalGroup(this.tempChangeGlobalGroupUrl, this.param).subscribe(response => {
       document.getElementById('success-popup-btn').click();
-      console.log(response);
       if (response.httpStatus === 200) {
         this.successMsg = 'Global Group changed Successfully';
       } else {
-        this.successMsg = 'Access is Denied';
+        this.successMsg = 'Access is Denied. Please Check Permission Level.';
       }
       this.getGlobalGroup();
       this.getAllUsers(this.invited, this.revoked, this.locked);

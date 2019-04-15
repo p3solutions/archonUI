@@ -22,7 +22,7 @@
             <li title="Status Monitor">
               <a class="trim-text" [routerLink]="['/schedule-monitoring']">Schedule Monitoring</a>
             </li>
-            <li title="Status Monitor">
+            <li title="Status Monitor" *ngIf="enableAudit">
               <a  class="trim-text" [routerLink]="['/audit']">Auditing</a>
             </li>
           </ul>

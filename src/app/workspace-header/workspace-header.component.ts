@@ -22,7 +22,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   serviceActionsList: ServiceActionsObject[];
   userId: string;
   userRole: any;
-  enableWorkspace = false;
+  enableCreate = false;
+  enableCreateRoles = ['ROLE_ADMIN', 'ROLE_SUPER', 'ROLE_MANAGE_DB', 'ROLE_MANAGE_ARCHON'];
   selectedWorkspaceName: string;
   currentWorkspace: WorkspaceObject;
   fn: any;
@@ -64,8 +65,13 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     } else {
       this.getUserWorkspaceList();
     }
-    this.userRole = this.userinfoService.getUserRoles();
-    this.enableWorkspace = archonConfig.workSpaceAllowedAdmins.includes(this.userRole.roleName);
+    const check = this.userinfoService.getRoleList();
+    for (const i of check) {
+     if (this.enableCreateRoles.includes(i)) {
+       this.enableCreate = true;
+       break;
+     }
+    }
   }
   ngOnDestroy() {
     if (this.viewContainerRef) {
