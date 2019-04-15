@@ -12,7 +12,7 @@ export class ConfigurationService {
   private apiUrl = environment.apiUrl;
   saveSMTPConfigurationUrl = this.apiUrl + 'smtp/setup';
   saveRoleGroupConfigurationUrl = this.apiUrl + 'admin/group/global';
-  checkExistingSMTPConfigurationUrl = this.apiUrl + 'admin/group/global';
+  checkExistingSMTPConfigurationUrl = this.apiUrl + 'smtp/config'; 
   getAllRolesUrl = this.apiUrl + 'roles/global';
 
   constructor(private http: HttpClient, private userInfoService: UserinfoService) { }

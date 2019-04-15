@@ -48,7 +48,7 @@ export class ManageUserRolesComponent implements OnInit {
   roleOfUser = '';
   userInviteInfo = new UserInvite();
   globalGroupList: GlobalGroup[] = [];
-  invited = null;
+  invited = false;
   revoked = null;
   locked = null;
   changeUserStatusUrl = '';
