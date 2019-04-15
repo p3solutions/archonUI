@@ -39,7 +39,6 @@ export class WorkspaceHeaderService {
     return this.workspace.updatedAt;
   }
   getSelectedWorkspaceWorkspaceRole() {
-    console.log(this.workspace.workspaceRole);
     return this.workspace.workspaceRole;
   }
   getSelectedWorkspaceWorkspaceState() {
