@@ -56,11 +56,11 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.getWSInfoID();
         const check = this.userinfoService.getRoleList();
         for (const i of check) {
-        if (this.enableCreateRoles.includes(i)) {
-         this.enableCreate = true;
-         break;
+         if (this.enableCreateRoles.includes(i)) {
+           this.enableCreate = true;
+           break;
+         }
         }
-       }
     }
 
     getWorkspaceListInfo(id: string) {
