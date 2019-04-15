@@ -30,7 +30,7 @@ export class ManagementPanelComponent implements OnInit {
       panelName: 'Users',
       panelImage: 'user.png',
       panelDesc: 'View and Modify User Role.',
-      enable: true
+      enable: false
     },
     {
       panelName: 'Configuration',

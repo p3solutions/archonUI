@@ -36,6 +36,7 @@ export class UserinfoService {
   getRoleList() {
     this.getTokenData();
     const roleList = this.token_data.roles.map(function (item) { return item['roleName']; });
+    console.log(roleList, 'rolelist');
     return roleList;
   }
 
