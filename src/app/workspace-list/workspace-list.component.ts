@@ -73,12 +73,13 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     getWSInfoID() {
-        this.workspaceListService.getWSInfoID(this.workspaceHeaderService.getSelectedWorkspaceId()).subscribe(
-          (result) => {
-            this.WSListInfo = result;
-          }
-        );
+            this.workspaceListService.getWSInfoID(this.workspaceHeaderService.getSelectedWorkspaceId()).subscribe(
+                (result) => {
+                  this.WSListInfo = result;
+                }
+              );
       }
+
     reloadWSlist() {
         this.getWorkspaceListInfo(this.token_data.user.id);
     }
