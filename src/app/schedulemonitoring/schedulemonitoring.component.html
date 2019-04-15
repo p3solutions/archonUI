@@ -20,8 +20,8 @@
     <div class="btn-group col-md-2 p-0">     
       <div>
           <mat-form-field>
-            <mat-select msInfiniteScroll name="jop-select" (infiniteScroll)="selectTool(job);getStart()" [threshold]="'0%'"
-              [(ngModel)]="job" placeholder="TOOL : All">
+            <mat-select msInfiniteScroll name="jop-select" [threshold]="'0%'"
+               placeholder="TOOL : All">
               <mat-option appScrollServerCall [value]="" (click)="selectTool('');getStart()">
                   Tool : All
               </mat-option>
@@ -36,8 +36,8 @@
     <div class="btn-group col-md-2 p-0">     
     <div>
         <mat-form-field>
-          <mat-select msInfiniteScroll name="status-select" (infiniteScroll)="selectJobStatus(i);getStart()" [threshold]="'0%'"
-            [(ngModel)]="i" placeholder="JOB STATUS : All">
+          <mat-select msInfiniteScroll name="status-select" [threshold]="'0%'"
+             placeholder="JOB STATUS : All">
             <mat-option appScrollServerCall [value]="" (click)="selectJobStatus('');getStart()">
                 JOB STATUS : All
             </mat-option>

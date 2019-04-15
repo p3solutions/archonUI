@@ -210,6 +210,10 @@ td.tdr {
  .index {
    z-index: 1;
  }
+
+ .one-width {
+ width: 350px;
+ }
  
   /* Toggle Button Ends */
 

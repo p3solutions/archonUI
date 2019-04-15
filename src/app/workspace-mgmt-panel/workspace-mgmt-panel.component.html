@@ -3,11 +3,13 @@
       <li class="trim-text services">
             <a [routerLink]="['/workspace/workspace-dashboard/workspace-services']" [class.active]="checkActive == 'Services'" (click)="checkActive = $event.target.innerText">Services</a>
       </li>
-      <li class="trim-text width" *ngIf="role?.name == 'ROLE_OWNER'">
-        <a [routerLink]="['manage-members',workspaceId]" [class.active]="checkActive == 'Manage Members'" (click)="checkActive = $event.target.innerText">Manage Members</a>
+      <li class="trim-text width">
+        <a *ngIf="role?.name == 'ROLE_OWNER'" [routerLink]="['manage-members',workspaceId]" [class.active]="checkActive == 'Manage Members'" (click)="checkActive = $event.target.innerText">Manage Members</a>
+        <a *ngIf="role?.name !== 'ROLE_OWNER'"  matTooltip="Only Workspace Owner Can Access"  [class.active]="checkActive == 'Manage Members'">Manage Members</a>
       </li>
       <li class="trim-text width">
-        <a [routerLink]="['manage-master-metadata',workspaceId]" [class.active]="checkActive == 'Manage Metadata Version'" (click)="checkActive = $event.target.innerText">Manage Metadata Version</a>
+        <a *ngIf="role?.name == 'ROLE_OWNER'" [routerLink]="['manage-master-metadata',workspaceId]" [class.active]="checkActive == 'Manage Metadata Version'" (click)="checkActive = $event.target.innerText">Manage Metadata Version</a>
+        <a *ngIf="role?.name !== 'ROLE_OWNER'"  matTooltip="Only Workspace Owner Can Access"  [class.active]="checkActive == 'Manage Metadata Version'">Manage Metadata Version</a>
       </li>
       <li id="workspace-info-link" class="trim-text width">
         <a [routerLink]="['workspace-info',workspaceId]" [class.active]="checkActive == 'Workspace Info.'" (click)="checkActive = $event.target.innerText">Workspace Info.</a>

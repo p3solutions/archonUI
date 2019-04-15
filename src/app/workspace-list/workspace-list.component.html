@@ -15,7 +15,7 @@
           <mat-form-field class="search-width">
             <input matInput [(ngModel)]="searchText" placeholder="Search">
           </mat-form-field>
-          <a style="font-size: 42px" matTooltip="Add Workspace" (click)="openCreateWSModal()"><i class="material-icons plus col">
+          <a *ngIf="enableCreate" style="font-size: 42px" matTooltip="Add Workspace" (click)="openCreateWSModal()"><i class="material-icons plus col">
           </i></a>
         </div>
       </div>
