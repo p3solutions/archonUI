@@ -12,6 +12,7 @@ export class ManagementPanelComponent implements OnInit {
 
   checkAdmin = ['ROLE_MANAGE_DB']; // enable database
   checkSuper = ['ROLE_SUPER']; // enable configuration
+  checkUser = ['ROLE_ADMIN', 'ROLE_SUPER', 'ROLE_MANAGE_DB']; // enable users
   panelList = [
     {
       panelName: 'Databases',
@@ -62,6 +63,13 @@ export class ManagementPanelComponent implements OnInit {
           }
         }
         }
+        if (i.panelName === 'Users') {
+          for (const j of check) {
+            if (this.checkUser.includes(j)) {
+            i.enable = true;
+            }
+          }
+          }
     }
     this.panelGroupList = this.panelList;
   }
