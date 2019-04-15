@@ -6,6 +6,9 @@ import { CommonUtilityService } from '../common-utility.service';
 import { SearchPipe } from '../search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatCardModule, MatInputModule } from '@angular/material';
+import { UserinfoService } from '../userinfo.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClient } from 'selenium-webdriver/http';
 
 describe('ManagementPanelComponent', () => {
   let component: ManagementPanelComponent;
@@ -14,8 +17,8 @@ describe('ManagementPanelComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ManagementPanelComponent , SearchPipe],
-      imports: [RouterTestingModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule],
-      providers: [CommonUtilityService]
+      imports: [RouterTestingModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, HttpClientTestingModule],
+      providers: [CommonUtilityService, UserinfoService]
     })
     .compileComponents();
   }));

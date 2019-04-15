@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CommonUtilityService } from '../common-utility.service';
+import { UserinfoService } from '../userinfo.service';
 
 @Component({
   selector: 'app-management-panel',
@@ -9,36 +10,67 @@ import { CommonUtilityService } from '../common-utility.service';
 })
 export class ManagementPanelComponent implements OnInit {
 
+  checkAdmin = ['ROLE_MANAGE_DB', 'ROLE_ADMIN']; // enable database
+  checkSuper = ['ROLE_SUPER']; // enable configuration
+  checkUser = ['ROLE_ADMIN', 'ROLE_SUPER', 'ROLE_MANAGE_DB']; // enable users
   panelList = [
     {
       panelName: 'Databases',
       panelImage: 'livearchival.png',
       panelDesc: 'Configure and View Database Details.',
+      enable: false
     },
     {
       panelName: 'Workspaces',
       panelImage: 'workspace.png',
       panelDesc: 'Configure, View and Workspace Details.',
+      enable: true
     },
     {
       panelName: 'Users',
       panelImage: 'user.png',
       panelDesc: 'View and Modify User Role.',
+      enable: false
     },
     {
       panelName: 'Configuration',
       panelImage: 'endtoendtoolkit.png',
       panelDesc: 'Configure, View and Edit Permissions.',
+      enable: false
     }
   ];
-  defDesc = 'Here is some more information about this product that is only revealed once clicked on.';
-  panelGroupList: any;
+  panelGroupList = [];
   constructor(
     private router: Router,
-    private commonUtilityService: CommonUtilityService
+    private commonUtilityService: CommonUtilityService,
+    private userinfoService: UserinfoService
   ) { }
 
   ngOnInit() {
+    const check = this.userinfoService.getRoleList();
+    for (const i of this.panelList) {
+      if (i.panelName === 'Databases') {
+      for (const j of check) {
+        if (this.checkAdmin.includes(j)) {
+        i.enable = true;
+        }
+      }
+      }
+      if (i.panelName === 'Configuration') {
+        for (const j of check) {
+          if (this.checkSuper.includes(j)) {
+          i.enable = true;
+          }
+        }
+        }
+        if (i.panelName === 'Users') {
+          for (const j of check) {
+            if (this.checkUser.includes(j)) {
+            i.enable = true;
+            }
+          }
+          }
+    }
     this.panelGroupList = this.panelList;
   }
 

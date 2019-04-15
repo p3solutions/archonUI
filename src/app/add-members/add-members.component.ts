@@ -50,22 +50,23 @@ export class AddMembersComponent implements OnInit, OnChanges {
     this.isLoading = true;
     this.userList = [];
     this.addMembersService.getAllUsers()
-    .subscribe(res => {
-      res.forEach((user: any) => {
+    .subscribe((res: any) => {
+      res.usersList.forEach((user: any) => {
         this.isLoading = false;
-        if (user.globalRoles[0].roleName === 'ROLE_MEMBER' || user.globalRoles[0].roleName === 'ROLE_ADMIN' ||
-        user.globalRoles[0].roleName === 'ROLE_NOT_ASSIGNED') {
-            let existingUserIndex;
-            for (let i = 0; i < this.existingUsers.length; i++) {
-              if (this.existingUsers[i] === user.id) {
-                existingUserIndex = i;
-                break;
-              }
-            }
-            if (existingUserIndex === undefined) {
-              this.userList.push(user);
-            }
-          }
+        this.userList.push(user);
+        // if (user.globalRoles[0].roleName === 'ROLE_MEMBER' || user.globalRoles[0].roleName === 'ROLE_ADMIN' ||
+        // user.globalRoles[0].roleName === 'ROLE_NOT_ASSIGNED') {
+        //     let existingUserIndex;
+        //     for (let i = 0; i < this.existingUsers.length; i++) {
+        //       if (this.existingUsers[i] === user.id) {
+        //         existingUserIndex = i;
+        //         break;
+        //       }
+        //     }
+        //     if (existingUserIndex === undefined) {
+        //       this.userList.push(user);
+        //     }
+        //   }
       });
     });
   }

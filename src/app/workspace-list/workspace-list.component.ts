@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { UserinfoService } from '../userinfo.service';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     dynamicLoaderService: DynamicLoaderService;
     workspaceActions: any;
     searchText;
+    enableCreate = false;
+    enableCreateRoles = ['ROLE_ADMIN', 'ROLE_SUPER', 'ROLE_MANAGE_DB', 'ROLE_MANAGE_ARCHON'];
 
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     WSListInfo: WorkspaceObject;
@@ -34,7 +37,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         private workspaceListService: WorkspaceListService,
         private workspaceHeaderService: WorkspaceHeaderService,
         private router: Router,
-        private commonUtilityService: CommonUtilityService
+        private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService
 
     ) {
         this.dynamicLoaderService = dynamicLoaderService;
@@ -51,6 +54,13 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.getWorkspaceListInfo(this.token_data.user.id);
         this.isProgress = true;
         this.getWSInfoID();
+        const check = this.userinfoService.getRoleList();
+        for (const i of check) {
+         if (this.enableCreateRoles.includes(i)) {
+           this.enableCreate = true;
+           break;
+         }
+        }
     }
 
     getWorkspaceListInfo(id: string) {
@@ -63,12 +73,13 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     getWSInfoID() {
-        this.workspaceListService.getWSInfoID(this.workspaceHeaderService.getSelectedWorkspaceId()).subscribe(
-          (result) => {
-            this.WSListInfo = result;
-          }
-        );
+            this.workspaceListService.getWSInfoID(this.workspaceHeaderService.getSelectedWorkspaceId()).subscribe(
+                (result) => {
+                  this.WSListInfo = result;
+                }
+              );
       }
+
     reloadWSlist() {
         this.getWorkspaceListInfo(this.token_data.user.id);
     }
