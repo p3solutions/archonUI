@@ -10,7 +10,9 @@ import { UserProfileService } from '../user-profile/user-profile.service';
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
-  @Input() username: string;
+  // @Input() username: string;
+  @Input() firstName: string;
+  @Input() lastName: string;
   @Input() useremail: string;
   @Input() userid: string;
   @Output() UpdateProfile = new EventEmitter<boolean>();
@@ -29,7 +31,9 @@ export class EditProfileComponent implements OnInit {
   updateUserInfo() {
     this.oldUserInfo = {
       id: this.userid,
-      username: this.username,
+      // username: this.username,
+      firstName : this.firstName,
+      lastName : this.lastName,
       useremail: this.useremail
     };
     this.errorObject = this.userinfoService.isInvalidEditValues(this.oldUserInfo);
@@ -38,12 +42,15 @@ export class EditProfileComponent implements OnInit {
     }
     const params = {
       id: this.userid,
-      name: this.username,
+      firstName : this.firstName,
+      lastName : this.lastName,
       emailAddress: this.useremail
     };
-    if (this.userinfoService.getUpdatedName()) {
+    if (this.userinfoService.getUpdatedFirstName()) {
       this.nameLoader = true;
-      params.name = this.userinfoService.getUpdatedName();
+      params.firstName = this.userinfoService.getUpdatedFirstName();
+      params.lastName = this.userinfoService.getUpdatedLastName();
+
     }
     /* if (this.userinfoService.getUpdatedEmail()) {
       this.emailLoader = true;
@@ -51,12 +58,13 @@ export class EditProfileComponent implements OnInit {
     } */
     this.userinfoService.updateUserProfile(params).subscribe(res => {
       if (res.success) {
-        this.username = res.data.name;
+        this.firstName = res.data.firstName,
+        this.lastName = res.data.lastName,
         this.useremail = res.data.emailAddress;
         this.nameLoader = this.emailLoader = false;
         (<HTMLButtonElement>document.querySelector('#editProfileModal .cancel')).click();
         this.UpdateProfile.emit(true);
-        this.userProfileService.changeUserName(this.username);
+        this.userProfileService.changeUserName(this.firstName + ' ' + this.lastName);
       }
     });
   }
