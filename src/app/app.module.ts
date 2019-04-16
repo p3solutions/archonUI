@@ -136,6 +136,7 @@ import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configurat
 import { ScheduleJobService } from './schedule-job/schedule-job.service';
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
+import { RedirectComponent } from './redirect/redirect.component';
 
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
@@ -227,7 +228,8 @@ export function tokenGetter() {
                 ConfigurationComponent,
                 SmtpConfigurationComponent,
                 SsoSigninFormComponent,
-                RoleGroupConfigurationComponent
+                RoleGroupConfigurationComponent,
+                RedirectComponent
         ],
         imports: [
                 JwtModule.forRoot({

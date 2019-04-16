@@ -60,6 +60,8 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
+import { RedirectComponent } from './redirect/redirect.component';
+import { RedirectGuard } from './redirect/redirect.guard';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -170,10 +172,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: '', component: LandingPageComponent, children: [
+    path: '', component: SsoSigninFormComponent , pathMatch: 'full', children: [
       {
-        path: '', redirectTo: '/sign-in', pathMatch: 'full'
-      }, {
         path: 'sign-in', component: SigninFormComponent
       }, {
         path: 'forgot-password', component: ForgotpasswordFormComponent
@@ -223,6 +223,9 @@ const routes: Routes = [
   },
   {
     path: 'sso-sign-in', component: SsoSigninFormComponent
+  },
+  {
+    path: 'landing' , canActivate: [RedirectGuard], component: RedirectComponent
   }
 ];
 
