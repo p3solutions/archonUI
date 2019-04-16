@@ -10,36 +10,39 @@ import { ConfigurationService } from '../configuration/configuration.service';
 export class SmtpConfigurationComponent implements OnInit {
   successMessage = '';
   smtpConfiguration = new SMTPConfiguration();
+  inProgress = false;
 
   constructor(private configurationService: ConfigurationService) { }
 
   ngOnInit() {
+    this.checkExistingSMTPConfiguration();
   }
 
   clear() {
     this.smtpConfiguration = new SMTPConfiguration();
+    this.checkExistingSMTPConfiguration();
   }
 
   checkExistingSMTPConfiguration() {
     this.configurationService.checkExistingSMTPConfiguration().subscribe(response => {
-      if (response.data === true) {
-        document.getElementById('success-popup-btn').click();
-        this.successMessage = 'SMTP Configuration already Exists';
-        this.clear();
-      } else if (response.data === false) {
-        this.saveSMTPConfiguration();
+      if (response.data !== false) {
+        this.smtpConfiguration = response.data;
       }
     });
   }
 
   saveSMTPConfiguration() {
+    this.inProgress = true;
     this.configurationService.saveSMTPConfiguration(this.smtpConfiguration).subscribe(response => {
       document.getElementById('success-popup-btn').click();
       if (response.httpStatus === 200) {
-        this.successMessage = 'SMTP Configuration Saved Successfully';
+        this.successMessage = 'SMTP configuration saved successfully.';
+        this.inProgress = false;
       } else {
-        this.successMessage = 'SMTP Configuration Not Saved';
-      } this.clear();
+        this.successMessage = 'SMTP configuration not saved. Please Check the details.';
+        this.inProgress = false;
+      }
+      this.clear();
     });
   }
 }
