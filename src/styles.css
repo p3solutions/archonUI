@@ -1602,3 +1602,6 @@ mat-checkbox svg {
 .word-breaker{
   word-break: break-all;
 }
+.mat-datepicker-toggle-default-icon {
+  height: unset;
+}
