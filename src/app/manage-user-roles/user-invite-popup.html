@@ -19,7 +19,7 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <textarea #bussjust="ngModel" [(ngModel)]="userInviteInfo.businessJustification" matInput name="buss-just"
+      <textarea #bussjust="ngModel" maxlength="150" [(ngModel)]="userInviteInfo.businessJustification" matInput name="buss-just"
         required placeholder="Bussiness Justification"></textarea>
     </mat-form-field>
   </form>

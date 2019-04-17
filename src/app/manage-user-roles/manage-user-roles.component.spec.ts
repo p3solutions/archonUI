@@ -16,6 +16,7 @@ import {
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { UserinfoService } from '../userinfo.service';
 describe('ManageUserRolesComponent', () => {
   let component: ManageUserRolesComponent;
   let fixture: ComponentFixture<ManageUserRolesComponent>;
@@ -28,7 +29,8 @@ describe('ManageUserRolesComponent', () => {
         ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
         RouterTestingModule, MatDialogModule, HttpClientTestingModule],
         providers: [
-          ManageUserRolesService
+          ManageUserRolesService,
+          UserinfoService
         ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

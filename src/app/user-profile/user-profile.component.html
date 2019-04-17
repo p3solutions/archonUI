@@ -20,15 +20,28 @@
       <strong>Name Changed Successfully.</strong>
     </div>
     <div class="col-md-3 m-10 pull-right">
-      <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary pull-right btn-form">Change Password</button>
+      <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary pull-right btn-form">Change
+        Password</button>
       <app-change-password [userId]="userInfo?.id"></app-change-password>
     </div>
   </div>
-  
+
   <div class="row">
-    <div *ngIf="onUpdate" id="user-info" class="workspace-panel-content col-md-12 text-left" [attr.data-user-id]="userInfo?.id">
+    <div *ngIf="onUpdate" id="user-info" class="workspace-panel-content col-md-12 text-left"
+      [attr.data-user-id]="userInfo?.id">
       <table class="table table-hover">
         <tbody>
+          <tr>
+            <td class="col-md-2 col-title">
+              <b>User Id</b>
+            </td>
+            <td *ngIf="userInfo" class="ws-info-data col-info-data">
+              {{userInfo?.id}}
+            </td>
+            <td *ngIf="!userInfo" class="text-center">
+              <i class="fa fa-spinner fa-spin loading"></i>
+            </td>
+          </tr>
           <tr>
             <td class="col-md-2 col-title">
               <b>Name</b>
@@ -36,9 +49,10 @@
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
               {{userInfo?.firstName + ' ' + userInfo?.lastName}}
               <span data-tooltip="Edit">
-                <i class="fa fa-pencil archon-icon" (click)="focusOnInputBox()" data-toggle="modal" data-target="#editProfileModal"></i>
+                <i class="fa fa-pencil archon-icon" (click)="focusOnInputBox()" data-toggle="modal"
+                  data-target="#editProfileModal"></i>
               </span>
-               </td>
+            </td>
             <td *ngIf="!userInfo" class="text-center">
               <i class="fa fa-spinner fa-spin loading"></i>
             </td>
@@ -79,9 +93,9 @@
               <b>Workspaces</b>
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
-                <span class="m-r-10" *ngFor="let ws of userInfo.workspaceList; let isLast=last">
-                   <a (click)="setWorkspace(ws)">{{ws?.workspaceName}}</a>{{isLast ? '' : ', '}}
-                </span>
+              <span class="m-r-10" *ngFor="let ws of userInfo.workspaceList; let isLast=last">
+                <a (click)="setWorkspace(ws)">{{ws?.workspaceName}}</a>{{isLast ? '' : ', '}}
+              </span>
             </td>
             <td *ngIf="!userInfo" class="text-center">
               <i class="fa fa-spinner fa-spin loading"></i>
