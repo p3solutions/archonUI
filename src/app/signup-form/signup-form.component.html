@@ -30,7 +30,7 @@
           <mat-form-field>
             <input type="password" matInput name="signin-password" formControlName="password" placeholder="Password">
           </mat-form-field>
-          <mat-error style="text-align:left">
+          <mat-error *ngIf="signUpForm.get('password').value.length<6" style="text-align:left">
            *Password must contain atleast 6 characters.
           </mat-error>
         </div>
