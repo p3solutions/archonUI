@@ -6,7 +6,7 @@
     <mat-form-field>
       <input name="email" type="email" email="true" #email="ngModel" [(ngModel)]="userInviteInfo.emailAddress" required
         matInput placeholder="Email">
-      <mat-error *ngIf="email.errors?.email && !email.errors?.required">
+      <mat-error *ngIf="email.invalid && !email.errors?.required">
         Email is invalid.
       </mat-error>
     </mat-form-field>
@@ -19,7 +19,7 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <textarea #bussjust="ngModel" [(ngModel)]="userInviteInfo.businessJustification" matInput name="buss-just"
+      <textarea #bussjust="ngModel" maxlength="150" [(ngModel)]="userInviteInfo.businessJustification" matInput name="buss-just"
         required placeholder="Bussiness Justification"></textarea>
     </mat-form-field>
   </form>

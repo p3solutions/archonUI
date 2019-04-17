@@ -13,7 +13,7 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
   editSearchCriteriaForm: FormGroup;
   isOptionFieldDisable = true;
   fieldTypes: string[] = ['TEXT', 'COMBO', 'RADIO', 'CHECK'];
-  searchTypes: string[] = ['=', 'Starts with', 'Ends with', 'Wild', '&lt', '&lt =', '&gt', '&gt =', 'Between'
+  searchTypes: string[] = ['=', 'Starts with', 'Ends with', 'Wild', '<', '< =', '>', '> =', 'Between'
     , 'Between and Inclusion'];
   inputFunctions: string[] = ['', 'Gender Description Common', 'Gender Description to acronym',
     'Date From YYYY-MM-DD to MM-DD-YYYY', 'Date From YYYY-MM-DD to YYYYMMDD', 'Date From YYYYMMDD To MM-DD-YYYY'];

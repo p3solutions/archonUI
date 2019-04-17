@@ -13,8 +13,11 @@
             <input name="port" #port=ngModel [(ngModel)]="smtpConfiguration.port" required matInput placeholder="Port">
           </mat-form-field>
           <mat-form-field>
-            <input name="username" #username=ngModel [(ngModel)]="smtpConfiguration.username" required matInput
+            <input name="username" email #username=ngModel [(ngModel)]="smtpConfiguration.username" required matInput
               placeholder="Username">
+              <mat-error *ngIf="username.invalid && !username.errors?.required">
+                Email is invalid.
+              </mat-error>
           </mat-form-field>
           <mat-form-field>
             <input name="password" #password=ngModel [(ngModel)]="smtpConfiguration.password" type=password required
@@ -26,10 +29,10 @@
   </div>
   <div id="action-btn">
     <button (click)="clear()" class="btn cancel btn-padding">Cancel</button>
-    <button [disabled]="!smtpconfigform.form.valid" (click)="checkExistingSMTPConfiguration()"
-      class="btn save btn-primary btn-padding">Save</button>
-    <!-- <button mat-button >Cancel</button>
-    <button mat-button class="save">Save</button> -->
+    <button [disabled]="!smtpconfigform.form.valid" (click)="saveSMTPConfiguration()"
+      class="btn save btn-primary btn-padding">Save
+      <i *ngIf="inProgress" class="fa fa-spinner fa-spin"></i>
+    </button>
   </div>
 </div>
 
