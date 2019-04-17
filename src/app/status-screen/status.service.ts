@@ -14,6 +14,7 @@ export class StatusService {
   getRetryStatusUrl = environment.apiUrl + 'jobStatus/jobRetry';
   startIndex = 1;
   getSearchStatus = environment.apiUrl + 'jobStatus/jobList/search?userId=';
+  downloadUrl = environment.apiUrl + 'audits/download?jobId=';
 
   constructor(
     private http: HttpClient,
@@ -54,6 +55,11 @@ export class StatusService {
     return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
       map(this.extractJobSearch),
       catchError(this.handleError<any>('getUserInfo')));
+  }
+
+  downloadZip(jobId): Observable<Blob> {
+    return this.http.get(this.downloadUrl + jobId, { headers: this.getHeaders() , responseType: 'blob'} )
+    .pipe(catchError(this.handleError<any>('download')));
   }
 
   private extractJobSearch(res) {
