@@ -95,7 +95,7 @@ export class ManageUserRolesComponent implements OnInit {
         this.invited = true;
         this.revoked = null;
         this.locked = null;
-        this.displayedColumns = ['id', 'emailAddress', 'globalGroupName', 'status', 'action', 'businessJustification',
+        this.displayedColumns = ['emailAddress', 'globalGroupName', 'status', 'action', 'businessJustification',
           'createdBy', 'createdAt', 'updatedAt'];
         break;
       }
