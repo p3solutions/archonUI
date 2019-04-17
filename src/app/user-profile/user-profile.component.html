@@ -47,7 +47,7 @@
               <b>Name</b>
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
-              {{userInfo?.name}}
+              {{userInfo?.firstName + ' ' + userInfo?.lastName}}
               <span data-tooltip="Edit">
                 <i class="fa fa-pencil archon-icon" (click)="focusOnInputBox()" data-toggle="modal"
                   data-target="#editProfileModal"></i>
@@ -111,5 +111,5 @@
     </div>
   </div>
 </div>
-<app-edit-profile [userid]="userInfo?.id" [username]="userInfo?.name" [useremail]="userInfo?.email"
-  (UpdateProfile)="onUpdateProfile($event)"></app-edit-profile>
+<app-edit-profile [userid]="userInfo?.id" [firstName]="userInfo?.firstName" [lastName]="userInfo?.lastName" [useremail]="userInfo?.email"
+ (UpdateProfile)="onUpdateProfile($event)"></app-edit-profile>
