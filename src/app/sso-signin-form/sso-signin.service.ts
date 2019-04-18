@@ -17,7 +17,8 @@ export class SsoSigninService {
   }
 
   signInredirect(url) {
-    (window as any).open(url, '_blank');
+    //(window as any).open(url, '_blank');
+    (window as any).open(url, '_self');
   }
 
 private handleError<T>(operation = 'operation', result?: T) {
