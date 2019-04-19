@@ -172,16 +172,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: '', component: SsoSigninFormComponent , pathMatch: 'full', children: [
-      {
-        path: 'sign-in', component: SigninFormComponent
-      }, {
-        path: 'forgot-password', component: ForgotpasswordFormComponent
-      }, {
-        path: 'password-reset', component: EnterNewpasswordComponent
-      }, {
-        path: 'sign-up', component: SignupFormComponent
-      }]
+    path: '', component: SsoSigninFormComponent , pathMatch: 'full'
   }, {
     path: 'user-profile', component: UserProfileComponent, canActivate: [AuthenticationGuard], children: [
       {
@@ -222,10 +213,21 @@ const routes: Routes = [
     path: 'audit', canActivate: [AuthenticationGuard], component: AuditingComponent
   },
   {
-    path: 'sso-sign-in', component: SsoSigninFormComponent
+    path: 'landing' , canActivate: [RedirectGuard], component: RedirectComponent
   },
   {
-    path: 'landing' , canActivate: [RedirectGuard], component: RedirectComponent
+    path: 'sign-in', component: LandingPageComponent, children: [
+      {
+        path: '', component: SigninFormComponent , pathMatch: 'full'
+      },
+      {
+        path: 'forgot-password', component: ForgotpasswordFormComponent
+      }, {
+        path: 'password-reset', component: EnterNewpasswordComponent
+      }, {
+        path: 'sign-up', component: SignupFormComponent
+      }
+    ]
   }
 ];
 
