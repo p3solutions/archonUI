@@ -47,6 +47,11 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
         }
     }
 
+    emptyUser() {
+        this.inviteUsersSubject.next([]);
+
+    }
+
     getUsersByEmailId(emailId) {
         this.manageUserRolesService.getUserByEmailId(emailId).subscribe((result) => {
             result.data.forEach((value, index) => {

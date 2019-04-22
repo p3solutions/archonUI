@@ -38,7 +38,8 @@ export class UserProfileComponent implements OnInit {
             this.userInfo = {
               id: data.data.users[i].id,
               email: data.data.users[i].emailAddress,
-              name: data.data.users[i].name
+              firstName: data.data.users[i].firstName,
+              lastName: data.data.users[i].lastName
             };
 
             this.getWorkspaceList(userData);
@@ -60,7 +61,9 @@ export class UserProfileComponent implements OnInit {
           this.userInfo = {
             id: res.data.user.id,
             email: res.data.user.emailAddress,
-            name: res.data.user.firstName + ' ' + res.data.user.lastName
+            firstName: res.data.user.firstName,
+            lastName: res.data.user.lastName
+            //name: res.data.user.firstName + ' ' + res.data.user.lastName
           };
           this.getWorkspaceList(this.userInfo.id);
           if (res.data.user.globalRoles && res.data.user.globalRoles.length) {
