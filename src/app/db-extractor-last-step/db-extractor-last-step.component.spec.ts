@@ -9,6 +9,10 @@ import { DbExtractorService } from '../db-extractor/db-extractor.service';
 import { ScheduleJobComponent } from '../schedule-job/schedule-job.component';
 import { FormsModule } from '@angular/forms';
 import { BsDatepickerModule, TimepickerModule } from 'ngx-bootstrap';
+import { MatSelectModule,
+  MatOptionModule, MatFormFieldModule, MatInputModule,
+} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DbExtractorLastStepComponent', () => {
   let component: DbExtractorLastStepComponent;
@@ -30,7 +34,7 @@ describe('DbExtractorLastStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorLastStepComponent, ScheduleJobComponent],
-      imports: [RouterTestingModule, HttpClientModule, FormsModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot()],
+      imports: [RouterTestingModule, HttpClientModule, FormsModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(),MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule],
       providers: [UserinfoService, WorkspaceHeaderService]
     })
       .compileComponents();
