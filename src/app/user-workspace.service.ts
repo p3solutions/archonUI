@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 @Injectable()
 export class UserWorkspaceService {
   apiUrl = environment.apiUrl;
-  getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
+  getConfiguredDBurl = `${this.apiUrl}dbs/configured/schemaReadyDbs`;
   createNewWSurl = `${this.apiUrl}workspaces`;
   getAppConfigUrl = `${this.apiUrl}application/config`;
   checkDbConnectionUrl = `${this.apiUrl}dbs/configured/connection`;
