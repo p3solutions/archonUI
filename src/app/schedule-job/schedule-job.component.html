@@ -10,7 +10,7 @@
         <br>
         <mat-form-field class="example-full-width">
             <mat-label>Job Type</mat-label>
-            <select matNativeControl #jobtype (change)="jobType = jobtype.value">
+            <select matNativeControl #jobtype (change)="jobType = jobtype.value;reset(jobtype);">
               <option>Schedule Now</option>
               <option>Schedule Later</option>
             </select>

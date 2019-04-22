@@ -16,7 +16,7 @@ export class ScheduleJobComponent implements OnInit {
   enddate: Date = new Date();
   startdate: Date = new Date();
   jobType;
-  Frequency:any = 0;
+  Frequency: any = 0;
   jobName = '';
   Server;
   Interval = 'Once';
@@ -71,6 +71,14 @@ export class ScheduleJobComponent implements OnInit {
     this.Schedulejobservice.getRdbmsInstances().subscribe((res) => {
       this.jobInstancesList = res;
     });
+  }
+
+  reset(jobtype) {
+  console.log(jobtype.value);
+  if (jobtype.value === 'Schedule Now') {
+  this.Interval = 'Once';
+  this.Frequency = 0;
+  }
   }
 
 }
