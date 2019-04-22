@@ -17,7 +17,7 @@ select {
 
 .time{
   padding-left: 0px;
-  padding-top: 18px;
+  padding-top: 12px;
 }
 
 .input-group-addon {
@@ -46,7 +46,7 @@ select.round {
 }
 .check2 {
   position: absolute;
-  top: 59%;
+  top: 58%;
   left: 0;
   transform: translateY(-50%);
   width: 125px !important;
@@ -55,7 +55,7 @@ select.round {
   padding-top: 12px;
 }
 .modal-header {
-  padding: 4px;
+  padding: 10px;
   padding-left: 15px;
   background-color: #2879ff;
   border-top-left-radius: 4px;
@@ -85,6 +85,21 @@ select.round {
   padding-left: 25px;
   text-transform: capitalize;
 }
+
+.example-full-width {
+  width: 100%;
+}
+
+.info-r {
+  font-size: 19px;
+  padding-left: 7px;
+  display:inline-block;  
+}
+
+.fa-lg  {
+  vertical-align: -7%;
+}
+
 
 
 
