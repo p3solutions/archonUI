@@ -16,7 +16,7 @@ export class ScheduleJobComponent implements OnInit {
   enddate: Date = new Date();
   startdate: Date = new Date();
   jobType;
-  Frequency = '';
+  Frequency:any = 0;
   jobName = '';
   Server;
   Interval = 'Once';
@@ -42,6 +42,9 @@ export class ScheduleJobComponent implements OnInit {
     let scheduleNow = true;
     if (this.jobType === 'Schedule Later') {
     scheduleNow = false;
+    }
+    if (this.Frequency === 0) {
+    this.Frequency = '';
     }
     const date = this.startdate.toDateString();
     const time = this.mytime.toTimeString();

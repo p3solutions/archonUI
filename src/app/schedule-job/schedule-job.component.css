@@ -70,13 +70,19 @@ select.round {
   color: #ffffff;
 }
 .cancelBtn{
-  color: #fff;
+  color: #000000;
   background-color: #64b5f6;
   border-color: #64b5f6;
   padding-right: 25px;
   padding-left: 25px;
   text-transform: capitalize;
+  transition:0.5s;
 }
+
+.cancelBtn:hover , .next:hover {
+  transform:scale(1.1,1.1);
+  }
+
 .next {
   color: #fff;
   background-color: #2879ff;
@@ -84,6 +90,7 @@ select.round {
   padding-right: 25px;
   padding-left: 25px;
   text-transform: capitalize;
+  transition:0.5s;
 }
 
 .example-full-width {
