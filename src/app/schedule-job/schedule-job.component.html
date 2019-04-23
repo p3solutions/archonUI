@@ -24,18 +24,15 @@
             </select>
           </mat-form-field>
         <br>
-        <div class="date input-group" >
-            <span class="input-group-addon" id="basic-addon4">Start Date
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <input type="text" [(ngModel)]="startdate" [disabled]="jobType !== 'Schedule Later'"
-                   placeholder="Start Date"
-                   class="form-control"
-                   bsDatepicker [bsConfig]="bsConfig" required>
+          <mat-form-field class="example-full-width">
+            <input id="datepicker1" matInput [matDatepicker]="picker" placeholder="Start Date" [disabled]="jobType !== 'Schedule Later'" [(ngModel)]="startdate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <div class="time col-md-12 row">
+            <span class="col-md-2 heading">Start Time</span> 
+            <div class="col-md-10 input-group"><timepicker [(ngModel)]="mytime" [disabled]="jobType !== 'Schedule Later'" [showSeconds]="true" required></timepicker></div>
           </div>
-          <div class="time input-group check">
-              <span class="input-group-addon check2" id="basic-addon4">Start Time
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <timepicker [(ngModel)]="mytime" [disabled]="jobType !== 'Schedule Later'" [showSeconds]="true" required></timepicker></div>
           <mat-form-field class="example-full-width">
               <mat-label>Interval</mat-label>
               <select matNativeControl #Int (change)="Interval = Int.value" [disabled]="jobType !== 'Schedule Later'">
@@ -49,14 +46,11 @@
               <input type="number" matInput placeholder="Frequency" [(ngModel)]="Frequency" [disabled]="Interval == 'Once'">
             </mat-form-field>
           <br>
-          <div class="end-date input-group">
-              <span class="input-group-addon" id="basic-addon4">End Date
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-              <input type="text" [(ngModel)]="enddate" [disabled]="Interval == 'Once'"
-                     placeholder="End Date"
-                     class="form-control"
-                     bsDatepicker [bsConfig]="bsConfig" placement="top" required>
-            </div>
+            <mat-form-field class="example-full-width">
+              <input matInput id="datepicker2" [matDatepicker]="picker2" placeholder="End Date" [(ngModel)]="enddate" [disabled]="Interval == 'Once'">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
         </div>  
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">Close</button>
