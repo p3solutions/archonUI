@@ -31,7 +31,7 @@
           </mat-form-field>
           <div class="time col-md-12 row">
             <span class="col-md-2 heading">Start Time</span> 
-            <div class="col-md-10 input-group"><timepicker [(ngModel)]="mytime" [disabled]="jobType !== 'Schedule Later'" [showSeconds]="true" required></timepicker></div>
+            <div class="col-md-10 input-group"><timepicker [(ngModel)]="mytime" [minuteStep]="1" [secondsStep]="1" [disabled]="jobType !== 'Schedule Later'" [showSeconds]="true" required></timepicker></div>
           </div>
           <mat-form-field class="example-full-width">
               <mat-label>Interval</mat-label>
