@@ -9,7 +9,7 @@ import { ScheduleJobComponent } from '../schedule-job/schedule-job.component';
 import { BsDatepickerModule, TimepickerModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule,
-  MatOptionModule, MatFormFieldModule, MatInputModule,
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -21,7 +21,7 @@ describe('ErtJobsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ErtJobsComponent, ScheduleJobComponent],
       providers: [UserinfoService, WorkspaceHeaderService, ErtService],
-      imports: [HttpClientModule, RouterTestingModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), FormsModule,MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule]
+      imports: [HttpClientModule, RouterTestingModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), FormsModule,MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule]
     })
       .compileComponents();
   }));

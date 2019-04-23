@@ -8,7 +8,7 @@ import { TableListService } from '../table-list/table-list.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSelectModule,
-  MatOptionModule, MatFormFieldModule, MatInputModule,
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -18,7 +18,7 @@ describe('ScheduleJobComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule , HttpClientTestingModule, RouterTestingModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule],
+      imports: [FormsModule , HttpClientTestingModule, RouterTestingModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule],
       declarations: [ ScheduleJobComponent ],
       providers: [ UserinfoService, TableListService]
     })
