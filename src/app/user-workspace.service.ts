@@ -29,7 +29,7 @@ export class UserWorkspaceService {
   }
   
   getUserWorkspaceUrl() {
-    return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
+    return this.apiUrl + 'workspaces/approvedWorkspaces?userId=' + this.userinfoService.getUserId();
   }
 
   getWorkspaceByOwnerIdUrl() {
