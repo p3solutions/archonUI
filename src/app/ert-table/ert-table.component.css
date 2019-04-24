@@ -647,3 +647,9 @@ alert1 {
   font-size: 12px;
   /* color: inherit; */
 }
+
+a.disabled {
+  color: gray;
+  cursor: not-allowed;
+  text-decoration: underline;
+}

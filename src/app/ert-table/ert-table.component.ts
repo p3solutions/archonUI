@@ -506,6 +506,13 @@ export class ErtTableComponent implements OnInit {
     }
   }
   openFilteronfig() {
+    if (this.from === 'data-record' || this.from === 'SIP') {
+      if (this.selectedTableList[0].tableId === this.selectedTableId) {
+        document.getElementById('addFilterModelId').click();
+      }
+    } else {
+      document.getElementById('addFilterModelId').click();
+    }
     this.parentChildMap = [];
     this.filterdata = new Tree();
     this.filterConfigColumnNameList = [];
@@ -516,7 +523,8 @@ export class ErtTableComponent implements OnInit {
     const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, []);
     this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
     if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
-      temp.filterAndOrderConfig.filterQuery !== '') {
+      temp.filterAndOrderConfig.filterQuery !== '' && temp.filterAndOrderConfig.filterConfig !== null &&
+      temp.filterAndOrderConfig.filterQuery !== null) {
       this.filterdata = JSON.parse(temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"'));
     }
   }
