@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { MatTableModule } from '@angular/material';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
@@ -48,8 +47,6 @@ import { UserinfoService } from './userinfo.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ManageUserRolesService } from './manage-user-roles/manage-user-roles.service';
 import { ManageUserRolesComponent, CreateUserInviteDialogComponent } from './manage-user-roles/manage-user-roles.component';
-import { ChangeUserRoleComponent } from './change-user-role/change-user-role.component';
-import { ChangeUserRoleService } from './change-user-role/change-user-role.service';
 import { WorkspaceInfoService } from './workspace-info/workspace-info.service';
 import { WorkspaceLandingPageService } from './workspace-landing-page/workspace-landing-page.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -170,7 +167,6 @@ export function tokenGetter() {
                 EqualValidator,
                 ManagementPanelComponent,
                 ManageUserRolesComponent,
-                ChangeUserRoleComponent,
                 UserProfileComponent,
                 EditProfileComponent,
                 WorkspaceListComponent,
@@ -274,7 +270,6 @@ export function tokenGetter() {
                 ManageMasterMetadataService,
                 EnterNewpasswordService,
                 ManageUserRolesService,
-                ChangeUserRoleService,
                 UserinfoService,
                 WorkspaceListService,
                 WorkspaceInfoService,

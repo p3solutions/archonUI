@@ -181,3 +181,21 @@ modal-body .p {
   padding-right: 0px;
   font-size: 15px;
 }
+
+a.disabled {
+  color: gray;
+  cursor: not-allowed;
+  text-decoration: underline;
+}
+
+a.disabled .material-icons {
+  cursor: not-allowed;
+}
+
+#app_desc p {
+  word-break: break-all;
+}
+
+.hide-html {
+  display: none;
+}

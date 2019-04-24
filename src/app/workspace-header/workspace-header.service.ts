@@ -16,7 +16,12 @@ export class WorkspaceHeaderService {
     return this.workspace.workspaceName;
   }
   getSelectedWorkspaceId() {
-    return this.workspace.id;
+    if (this.workspace !== undefined) {
+      return this.workspace.id;
+    } else {
+      return '';
+    }
+
   }
   getSelectedWorkspaceMasterMetadataVersion() {
     return this.workspace.masterMetadataVersion;

@@ -32,6 +32,8 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
     }
 
     getAllUsers(startIndex, invited, accessRevoked, accountLocked) {
+        accessRevoked = accessRevoked === null ? '' : accessRevoked;
+        accountLocked = accountLocked === null ? '' : accountLocked;
         if (invited === false) {
             this.manageUserRolesService.getAllUsers(startIndex, accessRevoked, accountLocked).subscribe((result) => {
                 result.data.users.usersList.forEach((value, index) => {
@@ -43,6 +45,11 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
         } else {
             this.getInviteUsers(startIndex);
         }
+    }
+
+    emptyUser() {
+        this.inviteUsersSubject.next([]);
+
     }
 
     getUsersByEmailId(emailId) {

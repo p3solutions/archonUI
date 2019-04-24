@@ -28,7 +28,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   @ViewChild('click') button: ElementRef;
   startIndex = 1;
   displayedColumns: string[] = ['Job Name', 'Job Origin', 'Scheduled Time', 'Start Time',
-    'End Time', 'Status', 'Details', 'Retry'];
+    'End Time', 'Status', 'Details', 'Retry', 'Download'];
   dataSource: StatusDataSource;
   totalScreen = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -143,4 +143,22 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
       }
     });
   }
+
+  downloadJob(releatedJobId) {
+    this.statusService.downloadZip(releatedJobId).subscribe(result => {
+      this.downloadFile(result);
+    });
+  }
+
+    downloadFile(content) {
+      const fileName = 'Status' + '-data.zip';
+      const type = 'zip';
+      const e = document.createEvent('MouseEvents');
+      const a = document.createElement('a');
+      a.download = fileName;
+      a.href = window.URL.createObjectURL(content);
+      a.dataset.downloadurl = [type, a.download, a.href].join(':');
+      e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      a.dispatchEvent(e);
+    }
 }

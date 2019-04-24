@@ -15,6 +15,7 @@ export class UserinfoService {
   jwtHelper: JwtHelperService = new JwtHelperService();
   token_data: any;
   errorObject: ErrorObject;
+  userRole;
   private loginUrl = 'sign-in';
   constructor(
     private http: HttpClient,
@@ -23,19 +24,19 @@ export class UserinfoService {
     this.http = http;
   }
 
+  getUserRole(role) {
+    this.userRole = role;
+  }
+
   getTokenData() {
     this.accessToken = localStorage.getItem('accessToken');
     this.token_data = this.jwtHelper.decodeToken(this.accessToken);
   }
 
-  getUserRoles() {
-    this.getTokenData();
-    return this.token_data.roles[0];
-  }
-
   getRoleList() {
     this.getTokenData();
     const roleList = this.token_data.roles.map(function (item) { return item['roleName']; });
+    console.log(roleList, 'rolelist');
     return roleList;
   }
 
@@ -82,8 +83,11 @@ export class UserinfoService {
       pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
-  getUpdatedName() {
-    return ((<HTMLInputElement>document.getElementById('userName')).value).trim();
+  getUpdatedFirstName() {
+    return ((<HTMLInputElement>document.getElementById('firstName')).value).trim();
+  }
+  getUpdatedLastName() {
+    return ((<HTMLInputElement>document.getElementById('lastName')).value).trim();
   }
 
   getUpdatedEmail() {
@@ -93,15 +97,20 @@ export class UserinfoService {
   isInvalidEditValues(user) {
     this.errorObject = new ErrorObject;
     this.errorObject.show = true;
-    if (this.getUpdatedName() === '') {
-      this.errorObject.message = 'Name cannot be empty';
+    if (this.getUpdatedFirstName() === '') {
+      this.errorObject.message = 'First Name cannot be empty';
+      return this.errorObject;
+    }
+    if (this.getUpdatedLastName() === '') {
+      this.errorObject.message = 'Last Name cannot be empty';
       return this.errorObject;
     }
     if (this.getUpdatedEmail() === '') {
       this.errorObject.message = 'Email cannot be empty';
       return this.errorObject;
     }
-    if (this.getUpdatedName() === user.username && this.getUpdatedEmail() === user.useremail) {
+    if (this.getUpdatedFirstName() === user.firstName && this.getUpdatedLastName() ===
+    user.lastName && this.getUpdatedEmail() === user.useremail) {
       this.errorObject.message = 'Name is not Updated';
       return this.errorObject;
     }

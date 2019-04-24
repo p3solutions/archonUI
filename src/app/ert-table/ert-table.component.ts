@@ -47,6 +47,7 @@ export class ErtTableComponent implements OnInit {
   disabledUserDefinedColName = false;
   errorMsg = '';
   startIndex = 1;
+  page = 1;
   ErtTablesearchList: ErtTableListObj = new ErtTableListObj();
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {

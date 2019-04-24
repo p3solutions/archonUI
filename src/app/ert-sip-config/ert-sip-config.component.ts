@@ -23,13 +23,14 @@ export class ErtSipConfigComponent implements OnInit {
   data;
   exclude_click = ['rgb(249, 75, 76)', 'rgb(224, 224, 224)'];
   selectedPrimaryTable: any;
-  schemaResultsTableCount: any;
+  schemaResultsTableCount = 0;
   startIndex = 1;
   isRelationNot: boolean;
   enableNextBtn: boolean;
   perPage = 50;
   searchTableName;
   paginationRequired: boolean;
+  page = 1;
 
 
   constructor(public router: Router, private tablelistService: TableListService,

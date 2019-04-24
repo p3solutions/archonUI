@@ -29,13 +29,10 @@
             <a class="dropdown-item dropdown-data" *ngFor="let ws of userWorkspaceArray" (click)="selectWorkspace(ws)"
               id="{{ws.id}}" title="{{ws.workspaceName}}">{{ws.workspaceName}}</a>
           </div>
-          <div class="dropdown-divider" *ngIf="userRole?.roleName == 'ROLE_MEMBER'"></div>
-          <a class="dropdown-item" *ngIf="userRole?.roleName == 'ROLE_MEMBER'" (click)="contactAdmin()">Contact Your
-            Admin</a>
         </div>
       </div>
 
-      <div class="col-md-1 mt-20 pull-left pull-more">
+      <div class="col-md-1 mt-20 pull-left pull-more" *ngIf="enableCreate">
           <span matTooltip="Create New Workspace" (click)="openCreateWSModal()">
             <i class="material-icons plus">
               </i>

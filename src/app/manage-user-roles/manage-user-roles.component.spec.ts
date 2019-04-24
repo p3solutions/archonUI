@@ -3,8 +3,6 @@ import { ManageUserRolesComponent } from './manage-user-roles.component';
 import { By } from '@angular/platform-browser';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 import { RolePipe } from '../role.pipe';
-import { ChangeUserRoleComponent } from '../change-user-role/change-user-role.component';
-import { ChangeUserRoleService } from '../change-user-role/change-user-role.service';
 import { ManageUserRolesService } from './manage-user-roles.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -18,6 +16,7 @@ import {
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { UserinfoService } from '../userinfo.service';
 describe('ManageUserRolesComponent', () => {
   let component: ManageUserRolesComponent;
   let fixture: ComponentFixture<ManageUserRolesComponent>;
@@ -25,13 +24,13 @@ describe('ManageUserRolesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ManageUserRolesComponent, RolePipe, ChangeUserRoleComponent],
+      declarations: [ManageUserRolesComponent, RolePipe],
       imports: [RouterTestingModule, FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule,
         ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
         RouterTestingModule, MatDialogModule, HttpClientTestingModule],
         providers: [
-          ChangeUserRoleService,
-          ManageUserRolesService
+          ManageUserRolesService,
+          UserinfoService
         ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

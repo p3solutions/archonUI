@@ -40,26 +40,20 @@ export class ErtJobsConfigComponent implements OnInit {
       const radios = document.getElementsByName('selectjob');
       const array: any = Array.from(radios);
       for (let i = 0; i < array.length; i++) {
+        if (this.ertService.mmrVersion === '') {
         if (i === 0) {
-          if (this.ertService.mmrVersion !== '') {
-          array[i].disabled = false;
-          }
+         array[i].disabled = false;
+        }
         } else {
           array[i].disabled = false;
         }
-    }
+        }
     } else {
       const radios = document.getElementsByName('selectjob');
       const array: any = Array.from(radios);
       for (let i = 0; i < array.length; i++) {
-        if (i === 0) {
-          if (this.ertService.mmrVersion === '') {
-          array[i].disabled = true;
-          }
-        } else {
-          array[i].disabled = true;
-        }
-    }
+        array[i].disabled = true;
+      }
     }
   }
 

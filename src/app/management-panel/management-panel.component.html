@@ -14,7 +14,7 @@
   </div>
   <div class="pl-20">
   <div class="flex-container" *ngFor="let panel of panelGroupList; let indRow = index">
-    <mat-card class="example-card" (click)=goTo(panel)>
+    <mat-card class="example-card" (click)=goTo(panel) *ngIf="panel.enable; else greyedcard">
       <mat-card-header class="flex-card-header">
         <mat-card-title>{{panel.panelName}}</mat-card-title>
       </mat-card-header>
@@ -24,6 +24,18 @@
       <p class="desc">{{panel.panelDesc}}<p>
       </mat-card-content>
     </mat-card>
+    <ng-template #greyedcard>
+        <mat-card class="example-card grey-card" matTooltip="Access Denied">
+            <mat-card-header class="flex-card-header">
+              <mat-card-title>{{panel.panelName}}</mat-card-title>
+            </mat-card-header>
+            <img class="icon-img" [attr.src]="'assets/' + panel.panelImage">
+            <mat-card-content>
+              <h4 class="descHeading">Description</h4>
+            <p class="desc">{{panel.panelDesc}}<p>
+            </mat-card-content>
+          </mat-card>
+      </ng-template>
 </div>   
 </div>
 
