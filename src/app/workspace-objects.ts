@@ -43,6 +43,7 @@ export class DatabaseObject {
     id: string;
     name: string;
     type: string;
+    dbProfileName: string;
 }
 export class WorkspaceObject {
     id: number;

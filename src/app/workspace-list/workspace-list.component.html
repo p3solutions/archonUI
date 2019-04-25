@@ -88,15 +88,21 @@
                       </span></td>
               </tr>
               <tr>
-                <td class="tdl">Workspace Databases Name</td>
+                <td class="tdl">Workspace Database Name</td>
                 <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
                         {{ws?.name}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>
               <tr>
-                <td class="tdl">Workspace Databases Type</td>
+                <td class="tdl">Workspace Database Type</td>
                 <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
                         {{ws?.type}}{{isLast ? '' : ', '}}
+                      </span></td>
+              </tr>
+              <tr>
+                <td class="tdl">Workspace Database Profile Name</td>
+                <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
+                        {{ws?.dbProfileName}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>
             </tbody>
