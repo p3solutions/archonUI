@@ -10,7 +10,7 @@ import { UserinfoService } from '../userinfo.service';
 })
 export class ManagementPanelComponent implements OnInit {
 
-  checkAdmin = ['ROLE_MANAGE_DB']; // enable database
+  checkAdmin = ['ROLE_MANAGE_DB', 'ROLE_ADMIN']; // enable database
   checkSuper = ['ROLE_SUPER']; // enable configuration
   checkUser = ['ROLE_ADMIN', 'ROLE_SUPER', 'ROLE_MANAGE_DB']; // enable users
   panelList = [
