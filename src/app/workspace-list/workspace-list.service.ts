@@ -47,10 +47,25 @@ export class WorkspaceListService {
     );
   }
 
+  deleteWS(WSdeleteId: string): Observable<WorkspaceObject> {
+     return this.http.delete<WorkspaceObject>(this.getWSInfoUrl + WSdeleteId, { headers: this.userinfoService.getHeaders() })
+    .pipe(
+      map(this.deleteWorkspaces),
+      catchError(this.handleError('deleteWS', []))
+    );
+  }
+
+
   private extractWorkspaces(res: any) {
     const data = res.data.workspaces;
     return data || [];
   }
+
+  private deleteWorkspaces(res: any) {
+    const data = res.data;
+    return data || [];
+  }
+
 
 
   // * Handle HttpClient operation that failed.

@@ -179,6 +179,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
           if (d.data.visible === false) { return 'hidden'; }
         })
         .on('click', clicked)
+        .on('dblclick', null)
         .call(d3.drag()
           .on('start', dragstarted)
           .on('drag', dragged)
@@ -303,7 +304,9 @@ export class ErtDatarecordConfigComponent implements OnInit {
         for (const i of self.primaryTable) {
           self.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, self.secondaryTable));
         }
-        self.selectedValues.push(value.name);
+        if (self.selectedValues[self.selectedValues.length - 1] !== value.name) {
+          self.selectedValues.push(value.name);
+        }
         self.data = JSON.parse(toJson(self.selectedValues, self.joinListMap));
         update(self.data);
       });

@@ -19,15 +19,32 @@
           </i></a>
         </div>
       </div>
+      <div class="col-md-12" style="padding-left: 30px;padding-right: 45px;" *ngIf="success">
+      <div  class="alert alert-success alert-dismissible m-t-6" role="alert">
+          <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Workspace delete in progress please check after 15 seconds.</strong>
+          </div></div>
+         <div class="col-md-12" style="padding-left: 30px;padding-right: 45px;" *ngIf="error">
+        <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>You do not have privileges to access this workspace. Contact Administrator for more info.</strong>
+          </div> 
+     </div>
 
       <div class="pl-20">
       <div class="flex-container" *ngFor="let ws of workspaceActions | searchTable: searchText; let indRow = index; let last = last">
           <mat-card class="example-card">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
-              <mat-card-title class="header">{{ws?.workspaceName}}</mat-card-title>
+              <mat-card-title class="header">{{ws?.workspaceName}} <a (click)="viewWSmodal(ws)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-1x" aria-hidden="true"></i></a></mat-card-title>
               <div class="spacer"></div>
-              <a (click)="viewWSmodal(ws)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
+              <a (click)="WSdelete(ws?.id)" data-toggle="modal" href="#confirm_model" data-tooltip="Delete"><i class="material-icons">
+                delete
+                </i></a>
             </mat-card-header>
             <mat-card-content class="content" *ngFor="let db of ws.databases;">
               <div class='body-left'>Databases(s)</div><div class='body-center'>:</div><div class='body-right'>{{db?.name}}</div>
@@ -71,15 +88,21 @@
                       </span></td>
               </tr>
               <tr>
-                <td class="tdl">Workspace Databases Name</td>
+                <td class="tdl">Workspace Database Name</td>
                 <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
                         {{ws?.name}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>
               <tr>
-                <td class="tdl">Workspace Databases Type</td>
+                <td class="tdl">Workspace Database Type</td>
                 <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
                         {{ws?.type}}{{isLast ? '' : ', '}}
+                      </span></td>
+              </tr>
+              <tr>
+                <td class="tdl">Workspace Database Profile Name</td>
+                <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
+                        {{ws?.dbProfileName}}{{isLast ? '' : ', '}}
                       </span></td>
               </tr>
             </tbody>
@@ -92,3 +115,21 @@
   
     </div>
   </div>
+
+  <div id="confirm_model" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 430px;">
+        <div class="modal-header">
+          <div class='model-title'><div class='info-r'>Confirm Workspaces Delete</div></div>
+      </div>
+        <div class="modal-body">
+         <p style="text-align:left; padding: 25px;">Are you sure ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default cancel" data-dismiss="modal">NO</button>
+          <button type="button" class="btn btn-default cancel" (click)="deleteWS()" data-dismiss="modal">YES</button>          
+        </div>
+      </div>
+    </div>
+  </div>
+  

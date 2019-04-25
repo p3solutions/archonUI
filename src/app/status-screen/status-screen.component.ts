@@ -25,6 +25,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   input: any;
   jobMessage: any;
   jobOutput: any;
+  jobServerConfig: any;
   @ViewChild('click') button: ElementRef;
   startIndex = 1;
   displayedColumns: string[] = ['Job Name', 'Job Origin', 'Scheduled Time', 'Start Time',
@@ -128,6 +129,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
       this.input = result.input;
       this.jobMessage = result.message;
       this.jobOutput = result.output;
+      this.jobServerConfig = result.serverConfiguration;
     });
     el.click();
   }

@@ -13,7 +13,11 @@ export class WorkspaceHeaderService {
     this.workspace = workspace;
   }
   getSelectedWorkspaceName() {
+    if (this.workspace !== undefined) {
     return this.workspace.workspaceName;
+    } else {
+      return '';
+    }
   }
   getSelectedWorkspaceId() {
     if (this.workspace !== undefined) {
@@ -64,7 +68,11 @@ export class WorkspaceHeaderService {
   }
 
   getDatabaseID() {
+    if (this.workspace !== undefined) {
     return this.workspace.databases[0].id;
+    } else {
+      return '';
+    }
   }
 
   changeWSBooleanValue(message) {
