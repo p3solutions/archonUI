@@ -25,6 +25,8 @@ export class AdhocService {
   deleteScreenUrl = this.apiUrl + 'adhocbuilder/screen?screenId=';
   downloadScreenUrl = this.apiUrl + 'adhocbuilder/application/screen/download?screenId=';
   getScreenInfoUrl = this.apiUrl + 'adhocbuilder/application/screen?screenId=';
+  tableListUrl = environment.apiUrl + 'metalyzer/tablesList?workspaceId=';
+
   constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
 
   updateAdhocHeaderInfo(adhocHeaderInfo: AdhocHeaderInfo) {
@@ -106,12 +108,20 @@ export class AdhocService {
   }
 
 
-
   deleteScreen(screenId, userId): Observable<string> {
     return this.http.delete<string>(this.deleteScreenUrl + screenId + '&userId=' + userId,
       { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractData),
         catchError(this.handleError('deleteScreen', []))
+      );
+  }
+
+  getTablesearchList(workspaceId, tablesearchname = '', startIndex): Observable<string[]> {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<string[]>(this.tableListUrl + workspaceId + '&tableName=' + tablesearchname + '&startIndex=' + startIndex, { headers: this.userInfoService.getHeaders() }).
+      pipe(
+        map(this.extractData),
+        catchError(this.handleError('tables-getTableList()', []))
       );
   }
 
