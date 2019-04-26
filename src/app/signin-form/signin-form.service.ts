@@ -1,18 +1,25 @@
-import { environment } from '../../environments/environment';
+// import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Response } from '@angular/http';
 
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { SignIn } from '../sign-in';
+import { EnvironmentService } from '../environment/environment.service';
+// import { environment } from '../api-url.local';
 
 @Injectable()
 export class SigninFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private signinUrl = environment.apiUrl + 'auth/login';
-  constructor(private http: HttpClient) { }
+  private signinUrl;
+  constructor(
+    private http: HttpClient,
+    private environment: EnvironmentService
+  ) {
+    this.signinUrl = environment.config.apiUrl;
+  }
   signIn(signin_info: SignIn): Observable<any> {
     return this.http.post<SignIn>(this.signinUrl, signin_info, { headers: this.headers });
   }
