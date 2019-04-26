@@ -317,7 +317,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
       if (res) {
         this.newWSinfo = res;
-        document.getElementById('populate-db-list').click();
+       // document.getElementById('populate-db-list').click();
         this.postCreation();
       }
     });
