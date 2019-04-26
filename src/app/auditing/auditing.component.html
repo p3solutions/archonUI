@@ -14,7 +14,7 @@
     <div class="col-md-2 heading-item">
         <mat-form-field>
             <mat-select msInfiniteScroll name="e-select"
-               placeholder="Select Event">
+               placeholder="Select Event" [(value)]="selectedEvent">
               <mat-option appScrollServerCall [value]="" (click)="selectEvent('');getAudit()">
                  RESET
               </mat-option>
@@ -27,7 +27,7 @@
     <div class="col-md-2 heading-item">     
         <mat-form-field>
           <mat-select msInfiniteScroll name="service-select"
-             placeholder="Select Service">
+             placeholder="Select Service" [(value)]="selectedService">
             <mat-option appScrollServerCall [value]="" (click)="selectService('');getAudit()">
                 RESET
             </mat-option>
@@ -40,7 +40,7 @@
     <div class="col-md-2 heading-item">
       <mat-form-field>
         <mat-select msInfiniteScroll name="i.workspaceName-select"
-           placeholder="Select WorkSpace">
+           placeholder="Select WorkSpace" [(value)]="selectedWS">
           <mat-option appScrollServerCall [value]="" (click)="selectWorkspace('');getAudit()">
             RESET
           </mat-option>
@@ -56,7 +56,7 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-          <i class="material-icons" mattooltip="Reset" (click)="startdate = '';getAudit();" style="vertical-align: -webkit-baseline-middle;">
+          <i class="material-icons" matTooltip="Reset" (click)="startdate = '';getAudit();" style="vertical-align: -webkit-baseline-middle;">
               indeterminate_check_box
               </i>      
     </div>
@@ -66,14 +66,17 @@
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
-          <i mattooltip="Reset" class="material-icons" (click)="enddate = '';getAudit();" style="vertical-align: -webkit-baseline-middle;">
+          <i matTooltip="Reset" class="material-icons" (click)="enddate = '';getAudit();" style="vertical-align: -webkit-baseline-middle;">
               indeterminate_check_box
               </i>      
     </div>
     <div class="col-md-2 heading-item">
-        <mat-form-field>
+        <mat-form-field style="width: 85%">
             <input matInput #search placeholder="Search">
           </mat-form-field>
+          <i class="material-icons" (click)="enddate = '';startdate = '';selectedEvent = '';selectedWS = '';selectedWSId='';selectedService='';getAudit();" matTooltip="Reset All" style="vertical-align: -webkit-baseline-middle;">
+            indeterminate_check_box
+            </i> 
       </div>
     
   </div>
