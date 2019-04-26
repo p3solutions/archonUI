@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   enableAudit = false;
   notifiactionArray = [];
   count = 0;
+  loadfirst = 0;
 
   constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService) { }
   ngOnInit() {
@@ -78,8 +79,10 @@ export class NavbarComponent implements OnInit {
   }
 
   getNotification() {
-    setInterval(() => {
+    if (this.loadfirst === 0) {
+      this.loadfirst = 1;
       this.navService.getNotification().subscribe(result => {
+        this.notifiactionArray = [];
         this.count = 0;
         this.notifiactionArray = result;
         for (const i of this.notifiactionArray) {
@@ -87,8 +90,22 @@ export class NavbarComponent implements OnInit {
             this.count = this.count + 1;
           }
         }
+        this.getNotification();
       });
-  }, 60000);
+    } else {
+      setInterval(() => {
+        this.navService.getNotification().subscribe(result => {
+          this.notifiactionArray = [];
+          this.count = 0;
+          this.notifiactionArray = result;
+          for (const i of this.notifiactionArray) {
+            if (i.read === false) {
+              this.count = this.count + 1;
+            }
+          }
+        });
+    }, 600000);
+    }
   }
 
   updateNotification(id) {

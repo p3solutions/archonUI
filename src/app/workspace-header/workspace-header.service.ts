@@ -43,7 +43,11 @@ export class WorkspaceHeaderService {
     return this.workspace.updatedAt;
   }
   getSelectedWorkspaceWorkspaceRole() {
-    return this.workspace.workspaceRole;
+    if (this.workspace !== undefined) {
+      return this.workspace.workspaceRole;
+    } else {
+      return '';
+    }
   }
   getSelectedWorkspaceWorkspaceState() {
     return this.workspace.workspaceState;

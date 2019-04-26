@@ -8,6 +8,9 @@ import { UserinfoService } from '../userinfo.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { TableListService } from '../table-list/table-list.service';
 import { CommonUtilityService } from '../common-utility.service';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { UserProfileService } from '../user-profile/user-profile.service';
+import { NavbarService } from '../navbar/navbar.service';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -31,7 +34,10 @@ export class WorkspaceServicesComponent implements OnInit {
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService,
     private tableListService: TableListService,
-    private commonUtilityService: CommonUtilityService
+    private commonUtilityService: CommonUtilityService,
+    private userProfileService: UserProfileService,
+    private navService: NavbarService,
+    private userinfoService: UserinfoService
   ) {
     activatedRouter.params.subscribe(val => {
 
@@ -56,6 +62,8 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   ngOnInit() {
+    const test = new NavbarComponent( this.userProfileService, this.navService, this.userinfoService);
+    test.getNotification();
   }
 
   gotoMetalyzer(service: any) {
