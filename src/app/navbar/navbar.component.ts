@@ -110,6 +110,7 @@ export class NavbarComponent implements OnInit {
 
   updateNotification(id) {
    this.navService.updateNotification(id).subscribe(result => {
+     this.loadfirst = 0;
      this.getNotification();
    });
   }
