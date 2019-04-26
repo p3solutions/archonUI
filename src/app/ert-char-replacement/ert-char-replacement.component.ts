@@ -20,6 +20,7 @@ export class ErtCharReplacementComponent implements OnInit {
   workspaceId = '';
   successMsg = '';
   editCharId = '';
+  isDisabled: boolean;
   constructor(private charReplacementService: CharReplacementService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
 
@@ -37,6 +38,7 @@ export class ErtCharReplacementComponent implements OnInit {
     });
   }
   saveCharReplacement() {
+    this.isDisabled = false;
     if (this.editCharId) {
       this.updateCharRecord();
     } else {
@@ -72,12 +74,14 @@ export class ErtCharReplacementComponent implements OnInit {
   }
 
   editCharRecord(id: string) {
+    this.isDisabled = true;
     this.editCharId = id;
     const temp = this.charReplaceList.find(a => a.id === id);
     this.charReplaceInfo = Object.assign({}, temp);
   }
 
   refreshCharRecord() {
+    this.isDisabled = false;
     this.charReplaceInfo = new Charreplacement();
   }
 

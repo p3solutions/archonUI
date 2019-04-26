@@ -49,6 +49,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
       this.selectedValues = this.ertService.selectedValues;
       this.joinListMap = this.ertService.joinListMap;
       this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
+      this.enableNextBtn = true;
       this.createchart();
     }
   }

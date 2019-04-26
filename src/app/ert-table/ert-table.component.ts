@@ -102,25 +102,31 @@ export class ErtTableComponent implements OnInit {
         this.getERTtableList();
       }
     } else {
-      let tableNameList: string[];
-      tableNameList = this.ertService.selectedValues;
-      this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-      for (let item = 0; item < tableNameList.length; item++) {
-        const temp = this.ertService.joinListMap.get(tableNameList[item]);
-        const tempObj: TableDetailsListObj = new TableDetailsListObj();
-        tempObj.tableId = temp[0].primaryTableId;
-        tempObj.tableName = temp[0].primaryTableName;
-        tempObj.modifiedTableName = temp[0].primaryTableName;
-        tempObj.isSelected = true;
-        const relatedTable = this.ertService.joinListMap.get(tableNameList[item + 1]);
-        if (relatedTable !== undefined) {
-          tempObj.relatedTableDetails.push({ tableId: relatedTable[0].primaryTableId, tableName: relatedTable[0].primaryTableName });
-        }
-        this.getERTcolumnlistForDataRecord(tempObj.tableId);
-        this.selectedTableList.push(tempObj);
+      if (this.ertService.selectedList.length !== 0) {
+        this.selectedTableList = this.ertService.selectedList;
         this.selectedTableId = this.selectedTableList[0].tableId;
-        this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-        this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+        this.getERTcolumnlist(this.selectedTableId, '');
+      } else {
+        let tableNameList: string[];
+        tableNameList = this.ertService.selectedValues;
+        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
+        for (let item = 0; item < tableNameList.length; item++) {
+          const temp = this.ertService.joinListMap.get(tableNameList[item]);
+          const tempObj: TableDetailsListObj = new TableDetailsListObj();
+          tempObj.tableId = temp[0].primaryTableId;
+          tempObj.tableName = temp[0].primaryTableName;
+          tempObj.modifiedTableName = temp[0].primaryTableName;
+          tempObj.isSelected = true;
+          const relatedTable = this.ertService.joinListMap.get(tableNameList[item + 1]);
+          if (relatedTable !== undefined) {
+            tempObj.relatedTableDetails.push({ tableId: relatedTable[0].primaryTableId, tableName: relatedTable[0].primaryTableName });
+          }
+          this.getERTcolumnlistForDataRecord(tempObj.tableId);
+          this.selectedTableList.push(tempObj);
+          this.selectedTableId = this.selectedTableList[0].tableId;
+          this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
+          this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+        }
       }
     }
   }
@@ -136,29 +142,35 @@ export class ErtTableComponent implements OnInit {
         this.getERTtableList();
       }
     } else {
-      let tableNameList: string[];
-      tableNameList = this.ertService.selectedValues;
-      this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-      for (let item = 0; item < tableNameList.length; item++) {
-        const temp = this.ertService.joinListMap.get(tableNameList[item]);
-        const tempObj: TableDetailsListObj = new TableDetailsListObj();
-        tempObj.tableId = temp[0].primaryTableId;
-        tempObj.tableName = temp[0].primaryTableName;
-        tempObj.modifiedTableName = temp[0].primaryTableName;
-        tempObj.isSelected = true;
-        const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
-        if (relatedTable !== undefined) {
-          for (const rel of relatedTable) {
-            if (rel !== undefined) {
-              tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
+      if (this.ertService.selectedList.length !== 0) {
+        this.selectedTableList = this.ertService.selectedList;
+        this.selectedTableId = this.selectedTableList[0].tableId;
+        this.getERTcolumnlist(this.selectedTableId, '');
+      } else {
+        let tableNameList: string[];
+        tableNameList = this.ertService.selectedValues;
+        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
+        for (let item = 0; item < tableNameList.length; item++) {
+          const temp = this.ertService.joinListMap.get(tableNameList[item]);
+          const tempObj: TableDetailsListObj = new TableDetailsListObj();
+          tempObj.tableId = temp[0].primaryTableId;
+          tempObj.tableName = temp[0].primaryTableName;
+          tempObj.modifiedTableName = temp[0].primaryTableName;
+          tempObj.isSelected = true;
+          const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
+          if (relatedTable !== undefined) {
+            for (const rel of relatedTable) {
+              if (rel !== undefined) {
+                tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
+              }
             }
           }
+          this.getERTcolumnlistForDataRecord(tempObj.tableId);
+          this.selectedTableList.push(tempObj);
+          this.selectedTableId = this.selectedTableList[0].tableId;
+          this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
+          this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
         }
-        this.getERTcolumnlistForDataRecord(tempObj.tableId);
-        this.selectedTableList.push(tempObj);
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-        this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
       }
     }
   }
@@ -331,9 +343,6 @@ export class ErtTableComponent implements OnInit {
         this.configColumnQuery = temp.viewQuery;
       }
     }
-    // else if (dataType === 'USERDEFINED') {
-    //   this.openUsrDefinedColumnModel(columnName);
-    // }
   }
 
   saveColumnConfig() {
@@ -506,6 +515,15 @@ export class ErtTableComponent implements OnInit {
     }
   }
   openFilteronfig() {
+    if (this.from === 'data-record' || this.from === 'SIP') {
+      if (this.selectedTableList[0].tableId === this.selectedTableId) {
+        document.getElementById('addFilterModelId').click();
+      } else {
+        document.getElementById('warning-popup-btn').click();
+      }
+    } else {
+      document.getElementById('addFilterModelId').click();
+    }
     this.parentChildMap = [];
     this.filterdata = new Tree();
     this.filterConfigColumnNameList = [];
@@ -516,7 +534,8 @@ export class ErtTableComponent implements OnInit {
     const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, []);
     this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
     if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
-      temp.filterAndOrderConfig.filterQuery !== '') {
+      temp.filterAndOrderConfig.filterQuery !== '' && temp.filterAndOrderConfig.filterConfig !== null &&
+      temp.filterAndOrderConfig.filterQuery !== null) {
       this.filterdata = JSON.parse(temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"'));
     }
   }
