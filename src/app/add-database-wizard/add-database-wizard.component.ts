@@ -260,6 +260,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     thisComponent.addClass('create-btn', 'hide');
     thisComponent.removeClass('ok-btn', 'hide');
     document.getElementById('next-slide').click();
+    document.getElementById('reload').click();
     // if (this.selectedDBtable) {
     //   this.selectedDBtable.destroy();
     // }
