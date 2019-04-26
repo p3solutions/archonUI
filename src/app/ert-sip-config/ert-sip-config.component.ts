@@ -49,6 +49,7 @@ export class ErtSipConfigComponent implements OnInit {
       this.selectedValues = this.ertService.selectedValues;
       this.joinListMap = this.ertService.joinListMap;
       this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
+      this.enableNextBtn = true;
       this.createchart();
       }
   }
@@ -310,7 +311,9 @@ export class ErtSipConfigComponent implements OnInit {
         for (const i of self.primaryTable) {
           self.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, self.secondaryTable));
         }
-        self.selectedValues.push(value.name);
+        if (self.selectedValues[self.selectedValues.length - 1] !== value.name) {
+          self.selectedValues.push(value.name);
+        }
         self.data = JSON.parse(getSIPGraphData(self.selectedValues, self.joinListMap));
         update(self.data);
       });

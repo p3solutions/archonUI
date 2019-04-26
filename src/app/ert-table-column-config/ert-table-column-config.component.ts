@@ -43,7 +43,8 @@ export class ErtTableColumnConfigComponent implements OnInit {
       }
     } else if (value === 'expected') {
       if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
-        return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
+        return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList
+        .filter(a => a.isSelected === true);
       } else {
         return [];
       }
@@ -51,9 +52,15 @@ export class ErtTableColumnConfigComponent implements OnInit {
   }
 
   showColumnsForUserDefined() {
-    if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
-      return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
-        usrDefinedColumnList.filter(a => a.dataType === 'USERDEFINED');
+    const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+    if (tempObj !== undefined) {
+      if (tempObj.usrDefinedColumnList !== undefined) {
+        return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
+          usrDefinedColumnList.filter(a => a.dataType === 'USERDEFINED' && a.isSelected === true);
+      } else if (tempObj.usrDefinedColumnList === undefined) {
+        return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].
+          columnList.filter(a => a.dataType === 'USERDEFINED' && a.isSelected === true);
+      }
     } else {
       return [];
     }

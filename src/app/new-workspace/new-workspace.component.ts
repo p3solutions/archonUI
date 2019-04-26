@@ -25,6 +25,7 @@ export class NewWorkspaceComponent implements OnInit {
   errorDBselect = false;
   DBtable: any;
   selectedDBtable: any;
+  updateNotif: boolean;
 
   constructor(
     private userinfoService: UserinfoService,
@@ -125,6 +126,7 @@ export class NewWorkspaceComponent implements OnInit {
     }
   }
   createWS() {
+    this.updateNotif = false;
     this.wsParam.workspaceName = this.wsName;
     this.wsParam.databaseIds = this.databaseIds;
     this.addClass('progress-bar', 'width-100-pc');
@@ -134,6 +136,8 @@ export class NewWorkspaceComponent implements OnInit {
         this.postCreation();
         // after getting ok response reloading the workspace list
         document.getElementById('reload-ws-list').click();
+      } else {
+        this.updateNotif = true;
       }
     });
   }
@@ -271,4 +275,7 @@ export class NewWorkspaceComponent implements OnInit {
     this.wsDesc = undefined;
     this.newWSinfo = null;
   }
+  closeErrorMsg() {
+    this.updateNotif = false;
+    }
 }

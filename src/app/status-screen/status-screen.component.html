@@ -149,6 +149,8 @@
                   <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
                   <tr><td colspan="2"><h4><b>Output</b></h4></td></tr>
                   <tr><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
+                  <tr><td colspan="2"><h4><b>ServerConfig</b></h4></td></tr>
+                  <tr *ngFor="let i of jobServerConfig"><td>{{i.name}}</td><td>{{i.value}}</td></tr>
                 </tbody>
               </table>
       </div>

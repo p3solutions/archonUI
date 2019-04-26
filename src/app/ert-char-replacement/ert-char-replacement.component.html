@@ -9,7 +9,7 @@
         <form class="example-form" #charreplaceform="ngForm">
           <mat-form-field class="example-full-width">
             <input matInput #codepointSel="ngModel" (change)="createReplacementChar()" (keyup)="checkForNumber()" required [(ngModel)]="charReplaceInfo.codePoint"
-              name="code-point" placeholder="Code Point">
+              name="code-point" placeholder="Code Point" [disabled]="isDisabled">
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <input matInput #replacementcharSel="ngModel" required [(ngModel)]="charReplaceInfo.replacementChar" name="replacement-char"

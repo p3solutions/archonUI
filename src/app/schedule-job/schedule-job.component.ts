@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ScheduleJobService } from './schedule-job.service';
 
@@ -16,11 +16,11 @@ export class ScheduleJobComponent implements OnInit {
   enddate: Date = new Date();
   startdate: Date = new Date();
   jobType;
-  Frequency = '';
+  Frequency: any = 0;
   jobName = '';
   Server;
   Interval = 'Once';
-
+  @ViewChild('Int') input: ElementRef;
   @Output() ObjectEmit = new EventEmitter<any>();
   @Input() insid: any;
   jobInstancesList = [];
@@ -42,6 +42,9 @@ export class ScheduleJobComponent implements OnInit {
     let scheduleNow = true;
     if (this.jobType === 'Schedule Later') {
     scheduleNow = false;
+    }
+    if (this.Frequency === 0) {
+    this.Frequency = '';
     }
     const date = this.startdate.toDateString();
     const time = this.mytime.toTimeString();
@@ -68,6 +71,14 @@ export class ScheduleJobComponent implements OnInit {
     this.Schedulejobservice.getRdbmsInstances().subscribe((res) => {
       this.jobInstancesList = res;
     });
+  }
+
+  reset(jobtype) {
+  if (jobtype.value === 'Schedule Now') {
+  this.input.nativeElement.value = 'Once';
+  this.Interval = 'Once';
+  this.Frequency = 0;
+  }
   }
 
 }
