@@ -6,6 +6,7 @@ import { WorkspaceRolesObject, RoleObject, AnyObject, MemberObject } from '../wo
 import { UserinfoService } from '../userinfo.service';
 import { ManageUserRoles } from '../manage-user-roles';
 import { ErrorObject } from '../error-object';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 // import * as $ from 'jquery';
 
 @Component({
@@ -33,7 +34,8 @@ export class ManageMembersComponent implements OnInit {
     private manageMembersService: ManageMembersService,
     private userinfoService: UserinfoService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private workspaceHeaderService: WorkspaceHeaderService
   ) { }
 
   ngOnInit() {
@@ -42,6 +44,7 @@ export class ManageMembersComponent implements OnInit {
       this.workspaceId = params.id;
       this.getManageMembersData(this.workspaceId);
     });
+    this.workspaceHeaderService.updateCheckActiveTab('Manage Members');
     this.getRoleList();
     this.getPermissionList();
   }

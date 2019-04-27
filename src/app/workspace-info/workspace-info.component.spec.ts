@@ -12,6 +12,7 @@ import { WorkspaceServicesComponent } from '../workspace-services/workspace-serv
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UserinfoService } from '../userinfo.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
@@ -48,7 +49,8 @@ describe('WorkspaceInfoComponent', () => {
         RouterTestingModule,
         WorkspaceInfoService,
         HttpClientModule,
-        UserinfoService
+        UserinfoService,
+        WorkspaceHeaderService
       ],
     })
       .compileComponents();

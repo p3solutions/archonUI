@@ -136,6 +136,7 @@ import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configurat
 import { ScheduleJobService } from './schedule-job/schedule-job.service';
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
@@ -254,7 +255,8 @@ export function tokenGetter() {
                 MatCheckboxModule,
                 MaterialModule,
                 MatSelectInfiniteScrollModule,
-                FlexLayoutModule
+                FlexLayoutModule,
+                NgxSpinnerModule
         ],
         providers: [
                 JwtHelperService,

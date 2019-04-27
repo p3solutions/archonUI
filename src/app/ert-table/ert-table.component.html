@@ -68,8 +68,8 @@
                     (click)="openUsrDefinedColumnModel('addNewColumn')" data-toggle="modal"
                     data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus-circle edit-circle"></i></a>
                 <li>
-                <li matTooltip="Add Filter" style="cursor:pointer" class="icon-list trim-text"><a (click)="openFilteronfig()"><i
-                      class="fa fa-filter"></i></a>
+                <li matTooltip="Add Filter" style="cursor:pointer" class="icon-list trim-text"><a
+                    (click)="openFilteronfig()"><i class="fa fa-filter"></i></a>
                 <li>
                 <li matTooltip="Reset all modification" data-toggle="modal" data-target="#reset_confirm_model"
                   class="icon-list trim-text"><a class="cursor-poniter"><i class="fa fa-undo"></i></a>
@@ -78,6 +78,10 @@
             </div>
           </div>
           <div id="select-tbl-list">
+            <ngx-spinner bdOpacity=0.9 bdColor="#f9f9f9" size="medium" color="#0a85f8" type="ball-beat"
+              [fullScreen]="true">
+              <p style="color: white"> Loading... </p>
+            </ngx-spinner>
             <div class="scroll-div">
               <table class="table table-striped">
                 <thead>

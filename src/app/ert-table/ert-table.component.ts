@@ -9,6 +9,7 @@ import {
 } from '../ert-landing-page/ert';
 import { addFilterNode, FilterConfigNode, Tree, searchTree, getPreorderDFS, deleteNode } from './ert-filter';
 import { from } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
@@ -50,7 +51,8 @@ export class ErtTableComponent implements OnInit {
   page = 1;
   ErtTablesearchList: ErtTableListObj = new ErtTableListObj();
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
-    private ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
+    private ertService: ErtService, private spinner: NgxSpinnerService,
+    private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -259,15 +261,19 @@ export class ErtTableComponent implements OnInit {
   }
 
   getERTcolumnlist(tableId: string, event) {
+    this.spinner.show();
     this.selectedTableId = tableId;
     this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
     this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList.length === 0) {
       this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
+        this.spinner.hide();
         this.ErtTableColumnList = result;
         this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
       });
+    } else {
+      this.spinner.hide();
     }
   }
 

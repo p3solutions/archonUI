@@ -56,6 +56,7 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.workspaceHeaderService.updateCheckActiveTab('Services');
   }
 
   gotoMetalyzer(service: any) {

@@ -28,6 +28,7 @@ export class ErtCharReplacementComponent implements OnInit {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.workspaceHeaderService.updateCheckActiveTab('Character Replacement');
     this.getAllCharRecords();
   }
 
