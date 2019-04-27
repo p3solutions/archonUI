@@ -10,6 +10,7 @@ import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.ser
 import { TableListService } from '../table-list/table-list.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { MatCardModule } from '@angular/material';
+import { UserProfileService } from '../user-profile/user-profile.service';
 
 describe('WorkspaceServicesComponent', () => {
   let component: WorkspaceServicesComponent;
@@ -20,7 +21,7 @@ describe('WorkspaceServicesComponent', () => {
       imports: [RouterTestingModule, HttpClientTestingModule, MatCardModule],
       declarations: [ WorkspaceServicesComponent ],
       providers: [WorkspaceServicesService, UserinfoService,
-        WorkspaceHeaderService, MetalyzerHeaderService, TableListService, CommonUtilityService]
+        WorkspaceHeaderService, MetalyzerHeaderService, TableListService, CommonUtilityService, UserProfileService]
     })
     .compileComponents();
   }));
