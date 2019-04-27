@@ -5,7 +5,7 @@ import { StatusScreenComponent } from './status-screen.component';
 
 export class StatusDataSource implements DataSource<any> {
 
-    // totalScreen = 50;
+    totalScreen = 50;
     private adhocSubject = new BehaviorSubject<any>([]);
     searchArray = [];
     indexValue;
@@ -25,25 +25,23 @@ export class StatusDataSource implements DataSource<any> {
     getTable(selectedJobOrigin, selectedJobStatus, startIndex) {
         this.indexValue = startIndex;
         this.statusService.getJobList(selectedJobOrigin, selectedJobStatus, startIndex).subscribe((result) => {
-            console.log(result);
             result.list.forEach((value, index) => {
                 value.position = index + 1;
             });
-            // if (result.paginationRequired) {
-            //     this.totalScreen = (this.indexValue + 1) * 50;
-            // }
-            this.paginationRequired = result.paginatiomRequired;
+            if (result.paginationRequired) {
+                this.totalScreen = (this.indexValue + 1) * 50;
+            }
             this.adhocSubject.next(result.list);
         });
     }
 
     filter(index, search) {
       this.statusService.getSearchResult(index, search).subscribe(result => {
+          console.log(result, 'filter');
           result.list.forEach((value, index ) => {
             value.position = index + 1;
         });
-        // this.totalScreen = result.totalScreen;
-        this.paginationRequired = result.paginatiomRequired;
+        this.totalScreen = result.totalJobList;
         this.adhocSubject.next(result.list);
       });
     }

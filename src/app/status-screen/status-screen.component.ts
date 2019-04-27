@@ -31,12 +31,9 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   displayedColumns: string[] = ['Job Name', 'Job Origin', 'Scheduled Time', 'Start Time',
     'End Time', 'Status', 'Details', 'Retry', 'Download'];
   dataSource: StatusDataSource;
-  totalScreen: any = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
-  ObjTest;
-  screenInfoList: any;
 
   constructor(
     private router: Router,
@@ -49,7 +46,6 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
     this.getJobStatuses();
     this.paginator.pageIndex = 0;
     this.getStart();
-    this.ObjTest = new StatusDataSource(this.statusService);
   }
 
 
@@ -84,16 +80,6 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
 
   getSearch() {
     this.dataSource.filter(this.paginator.pageIndex + 1, this.search.nativeElement.value);
-    this.totalScreen = (this.paginator.pageIndex + 1) * 50;
-    if (this.dataSource.paginationRequired) {
-      this.totalScreen = this.totalScreen + 50;
-    } else {
-      if (this.paginator.pageIndex === 0) {
-        this.totalScreen = this.screenInfoList.length;
-      } else {
-        this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
-      }
-    }
   }
 
   gotoDashboard() {
@@ -102,19 +88,6 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
 
   getStart() {
   this.dataSource = new StatusDataSource(this.statusService);
-  this.dataSource.connect().subscribe(result => {
-    this.screenInfoList = result;
-    this.totalScreen = (this.paginator.pageIndex + 1) * 50;
-    if (this.dataSource.paginationRequired) {
-      this.totalScreen = this.totalScreen + 50;
-    } else {
-      if (this.paginator.pageIndex === 0) {
-        this.totalScreen = this.screenInfoList.length;
-      } else {
-        this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
-      }
-    }
-  });
   this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
   }
 
