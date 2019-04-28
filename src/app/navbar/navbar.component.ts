@@ -85,6 +85,11 @@ export class NavbarComponent implements OnInit {
         this.notifiactionArray = [];
         this.count = 0;
         this.notifiactionArray = result;
+        for (let index = 0; index < this.notifiactionArray.length; index++) {
+          if (this.notifiactionArray[index].origin === 'DB_APPROVAL') {
+            this.notifiactionArray[index].route = '/management-landing-page/database-list';
+          }
+        }
         for (const i of this.notifiactionArray) {
           if (i.read === false) {
             this.count = this.count + 1;

@@ -33,7 +33,7 @@
             <span class="badge bg-red">{{count}}</span>
           </a>
           <ul id="notifications" class="dropdown-menu msg_list" role="menu">
-            <li *ngFor="let i of notifiactionArray" matTooltip="Marked as Read" (mouseleave)="updateNotification(i.id)" [ngClass]="{'read':i.read}">
+            <li *ngFor="let i of notifiactionArray" matTooltip="Marked as Read" [routerLink]="[i.route, {notification:true}]" (mouseleave)="updateNotification(i.id)" [ngClass]="{'read':i.read}">
               <a>
                 <span>
                   <span>{{i.userId}}</span>
