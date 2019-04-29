@@ -22,7 +22,7 @@ export class EnvironmentService {
     });
   }
 
-  get config() {
-    return this.appConfig;
+  get apiUrl() {
+    return this.appConfig.apiUrl;
   }
 }
