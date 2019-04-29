@@ -39,7 +39,12 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   elementId: any;
   checkAdmin = ['ROLE_MANAGE_DB']; // enable pending approval
   allowToggle = false;
-  
+  success: boolean;
+  error: boolean;
+  DBdeleteId: string;
+  errormsg: any;
+  successmsg: any;
+
   constructor(
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -153,6 +158,33 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.getAllPending();
     }
     });
+  }
+
+  DBdelete(deleteId: string) {
+    this.DBdeleteId = deleteId;
+  }
+
+  deleteDB() {
+    this.configDBListService.deleteDB(this.DBdeleteId).subscribe((result) => {
+          document.getElementById('deletemsg').click();
+          this.successmsg = result;
+            this.success = true;
+           // this.getConfigDBList();
+             setTimeout(() => {
+               this.getConfigDBList();
+             }, 15000);
+  },
+  (error) => {
+    document.getElementById('deletemsg').click();
+    this.error = true;
+    this.errormsg = error.error.errorMessage;
+  }
+  );
+}
+
+closeErrorMsg() {
+    this.success = false;
+    this.error = false;
   }
 
 }
