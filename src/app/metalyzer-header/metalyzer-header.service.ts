@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
-import { ResponseContentType } from '@angular/http';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { catchError, map } from 'rxjs/operators';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
 @Injectable()
 export class MetalyzerHeaderService {
-  workspaceinfoUrl = environment.apiUrl + 'workspaces/';
-  exportxmlUrl = environment.apiUrl + 'metalyzer/exportMetadata/';
-  getAuditUrl = environment.apiUrl + 'metalyzer/auditEvents';
-  exportpdfUrl = environment.apiUrl + 'metalyzer/export/erDiagram?';
+  private apiUrl = this.environment.apiUrl;
+  workspaceinfoUrl = this.apiUrl + 'workspaces/';
+  exportxmlUrl = this.apiUrl + 'metalyzer/exportMetadata/';
+  getAuditUrl = this.apiUrl + 'metalyzer/auditEvents';
+  exportpdfUrl = this.apiUrl + 'metalyzer/export/erDiagram?';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
   cast = this.phase.asObservable();
   constructor(
     private http: HttpClient,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
   ) {
   }
   setPhase(phase: string) {
@@ -64,7 +65,7 @@ export class MetalyzerHeaderService {
   }
 
   getAudit(param) {
-    return this.http.post(this.getAuditUrl, param, {headers: this.userinfoService.getHeaders()}).pipe(
+    return this.http.post(this.getAuditUrl, param, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractAudit),
       catchError(this.handleError<string>('getAudit'))
     );

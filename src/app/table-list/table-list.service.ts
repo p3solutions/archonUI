@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
-import { RelationshipInfoObject } from '../workspace-objects';
-import { environment } from '../../environments/environment';
-import { WorkspaceObject } from '../workspace-objects';
 import { BehaviorSubject } from 'rxjs';
-import {response} from '../table-list/responemmr';
-import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { EnvironmentService } from '../environment/environment.service';
 
 
 @Injectable()
@@ -18,45 +13,42 @@ export class TableListService {
   accessToken: string;
   jwtHelper: JwtHelperService = new JwtHelperService();
   private serviceActionType: string;
-  tableListUrl = environment.apiUrl + 'metalyzer/tablesList?workspaceId=';
-  relationTableListUrl = environment.apiUrl + 'metalyzer/tablesRelationShip?tableId=';
-  deleteRelationsUrl = environment.apiUrl + 'metalyzer/relationship?workspaceId=';
-  columnListUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
-  dataAnalysisUrl = environment.apiUrl + 'dataAnalyzer/tableToTablesDataCrawlAnalysis';
-  // columnUrl = environment.apiUrl + '/tables/meta/info?tableName=';
-  columnUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
-  stateManagementUrl = environment.apiUrl + 'dataAnalyzer/stateManagement';
-  getJobStatusUrl = environment.apiUrl + 'dataAnalyzer/jobStatus?jobId=';
-  exportxmlUrl = environment.apiUrl + 'metalyzer/exportMetadata/';
+  private apiUrl = this.environment.apiUrl;
+  private tableListUrl = this.apiUrl + 'metalyzer/tablesList?workspaceId=';
+  private relationTableListUrl = this.apiUrl + 'metalyzer/tablesRelationShip?tableId=';
+  private deleteRelationsUrl = this.apiUrl + 'metalyzer/relationship?workspaceId=';
+  private columnListUrl = this.apiUrl + 'metalyzer/table/columnList?tableId=';
+  private dataAnalysisUrl = this.apiUrl + 'dataAnalyzer/tableToTablesDataCrawlAnalysis';
+  private stateManagementUrl = this.apiUrl + 'dataAnalyzer/stateManagement';
+  private getJobStatusUrl = this.apiUrl + 'dataAnalyzer/jobStatus?jobId=';
+  private exportxmlUrl = this.apiUrl + 'metalyzer/exportMetadata/';
   private resultantArray = new BehaviorSubject([]);
-  currentResultArray = this.resultantArray.asObservable();
   private changeValue = new BehaviorSubject(false);
-  currentValue = this.changeValue.asObservable();
   private selectTableslist = new BehaviorSubject('');
-  userselectTableslist = this.selectTableslist.asObservable();
-  startIndex = 1;
-  tableListUrlMMR = environment.apiUrl + 'metalyzer/getRelationshipList?workspaceId=';
+  private tableListUrlMMR = this.apiUrl + 'metalyzer/getRelationshipList?workspaceId=';
 
   constructor(private http: HttpClient,
-    private userinfoService: UserinfoService) {
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) {
   }
 
   getTableList(workspaceId, startIndex): Observable<string[]> {
     // tslint:disable-next-line:max-line-length
     return this.http.get<string[]>(this.tableListUrl + workspaceId + '&startIndex=' + startIndex, { headers: this.userinfoService.getHeaders() }).
-    pipe(
-      map(this.extractTables),
-      catchError(this.handleError('tables-getTableList()', []))
-    );
+      pipe(
+        map(this.extractTables),
+        catchError(this.handleError('tables-getTableList()', []))
+      );
   }
 
   getTablesearchList(workspaceId, tablesearchname = ''): Observable<string[]> {
     // tslint:disable-next-line:max-line-length
     return this.http.get<string[]>(this.tableListUrl + workspaceId + '&tableName=' + tablesearchname, { headers: this.userinfoService.getHeaders() }).
-    pipe(
-      map(this.extractTables),
-      catchError(this.handleError('tables-getTableList()', []))
-    );
+      pipe(
+        map(this.extractTables),
+        catchError(this.handleError('tables-getTableList()', []))
+      );
   }
 
   getListOfRelationTable(id, workspaceId): Observable<any[]> {
@@ -86,10 +78,10 @@ export class TableListService {
   }
 
   getColumnsByTableId(tableId): Observable<any[]> {
-    return this.http.get<any[]>(this.columnListUrl + tableId, {headers: this.userinfoService.getHeaders()})
-    .pipe(
-      map(this.extractTable),
-    catchError(this.handleError('getColumnsByTableId()', [])));
+    return this.http.get<any[]>(this.columnListUrl + tableId, { headers: this.userinfoService.getHeaders() })
+      .pipe(
+        map(this.extractTable),
+        catchError(this.handleError('getColumnsByTableId()', [])));
   }
 
 
@@ -99,14 +91,14 @@ export class TableListService {
   }
 
   stateManagement(userId, workspaceID, metalyzerServiceId) {
-    const stateManagementObject = {'userId': userId , 'workspaceId': workspaceID , 'serviceId': metalyzerServiceId };
-    return this.http.post<any>(this.stateManagementUrl, stateManagementObject, {headers: this.userinfoService.getHeaders()})
-    .pipe(catchError(this.handleError('stateManagement' , [])));
+    const stateManagementObject = { 'userId': userId, 'workspaceId': workspaceID, 'serviceId': metalyzerServiceId };
+    return this.http.post<any>(this.stateManagementUrl, stateManagementObject, { headers: this.userinfoService.getHeaders() })
+      .pipe(catchError(this.handleError('stateManagement', [])));
   }
 
   getJobStatus(JobID) {
-  return this.http.get<any>(this.getJobStatusUrl + JobID, {headers: this.userinfoService.getHeaders()})
-  .pipe(catchError(this.handleError('getJobStatusId', [])));
+    return this.http.get<any>(this.getJobStatusUrl + JobID, { headers: this.userinfoService.getHeaders() })
+      .pipe(catchError(this.handleError('getJobStatusId', [])));
   }
 
   private extractTable(res: any) {

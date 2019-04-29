@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { ProgressBarObj, ProcessDetails, ProcessDetailsObj } from '../db-extractor';
-import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
 import { ConfiguredDB } from '../workspace-objects';
+import { EnvironmentService } from '../environment/environment.service';
 @Injectable({
   providedIn: 'root'
 })
 export class DbExtractorService {
   constructor(private http: HttpClient,
-    private userInfoService: UserinfoService) { }
+    private userInfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
 
   private headers = new HttpHeaders({
     // 'Content-Type': 'multipart/form-data',
@@ -21,7 +22,7 @@ export class DbExtractorService {
 
   private processDetailsObj: ProcessDetailsObj;
 
-  private apiUrl = environment.apiUrl;
+  private apiUrl = this.environment.apiUrl;
   private getDBInfoUrl = this.apiUrl + 'dbs/configured/';
 
   private getProcessDetailsUrl = this.apiUrl + 'rdbmsExtraction/processDetail';

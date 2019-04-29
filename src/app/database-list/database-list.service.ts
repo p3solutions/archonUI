@@ -6,8 +6,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserinfoService } from '../userinfo.service';
 import { ConfiguredDB, DatabaseObject } from '../workspace-objects';
-import { environment } from '../../environments/environment';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class DatabaseListService {
@@ -15,13 +15,16 @@ export class DatabaseListService {
   accessToken: string;
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  configDBListUrl = environment.apiUrl + 'dbs/configured';
-  getAllApproval = environment.apiUrl + 'workspaces/approvalPending';
-  postdecision = environment.apiUrl + 'workspaces/approvalEntry';
+  private apiUrl = this.environment.apiUrl;
+  private configDBListUrl = this.apiUrl + 'dbs/configured';
+  private getAllApproval = this.apiUrl + 'workspaces/approvalPending';
+  private postdecision = this.apiUrl + 'workspaces/approvalEntry';
 
-  constructor(private http: HttpClient,
-    private workspaceHeaderService: WorkspaceHeaderService,
-    private userinfoService: UserinfoService) {
+  constructor(
+    private http: HttpClient,
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) {
   }
   getListOfConfigDatabases(): Observable<ConfiguredDB[]> {
     return this.http.get<ConfiguredDB[]>(this.configDBListUrl, { headers: this.userinfoService.getHeaders() })
@@ -33,10 +36,10 @@ export class DatabaseListService {
 
   getDBInfoByID(databaseId: string): Observable<ConfiguredDB> {
     return this.http.get<ConfiguredDB>(this.configDBListUrl + '/' + databaseId, { headers: this.userinfoService.getHeaders() })
-    .pipe(
-      map(this.extractConfigDB),
-      catchError(this.handleError('getDBInfoByID', []))
-    );
+      .pipe(
+        map(this.extractConfigDB),
+        catchError(this.handleError('getDBInfoByID', []))
+      );
   }
 
   private extractConfigDB(res: any) {
@@ -46,10 +49,10 @@ export class DatabaseListService {
 
   getPending(): Observable<any> {
     return this.http.get<any>(this.getAllApproval, { headers: this.userinfoService.getHeaders() })
-    .pipe(
-      map(this.extractApprove),
-      catchError(this.handleError('getPending', []))
-    );
+      .pipe(
+        map(this.extractApprove),
+        catchError(this.handleError('getPending', []))
+      );
   }
 
   private extractApprove(res: any) {
@@ -58,10 +61,10 @@ export class DatabaseListService {
   }
 
   postDecision(body): Observable<any> {
-    return this.http.post<any>(this.postdecision, body , { headers: this.userinfoService.getHeaders() })
-    .pipe(
-      catchError(this.handleError('postDecision', []))
-    );
+    return this.http.post<any>(this.postdecision, body, { headers: this.userinfoService.getHeaders() })
+      .pipe(
+        catchError(this.handleError('postDecision', []))
+      );
   }
 
 

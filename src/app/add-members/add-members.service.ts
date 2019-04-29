@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 
 import { ManageUserRoles } from '../manage-user-roles';
-import { headersToString } from 'selenium-webdriver/http';
-import { Data } from '@angular/router/src/config';
-import { GlobalRoles } from '../global-roles';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 import { AddMembers } from '../add-members';
 
 @Injectable()
@@ -19,11 +15,13 @@ export class AddMembersService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
-  private apiUrl = environment.apiUrl;
+  private apiUrl = this.environment.apiUrl;
   private getAllUsersUrl = this.apiUrl + 'users';
   private addMembersUrl = this.apiUrl + 'workspaces/access';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private environment: EnvironmentService
+  ) { }
 
   private extractData(res: any) {
     const body = res.data.users;

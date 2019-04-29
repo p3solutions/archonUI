@@ -1,23 +1,27 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavbarService {
 
-updateUrl = environment.apiUrl + 'workspaces/markRead?notificationId=';
-getNotificationUrl = environment.apiUrl + 'workspaces/notificationList?userId=';
+  updateUrl = this.environment.apiUrl + 'workspaces/markRead?notificationId=';
+  getNotificationUrl = this.environment.apiUrl + 'workspaces/notificationList?userId=';
 
-  constructor(private userinfoService: UserinfoService, private http: HttpClient) { }
+  constructor(
+    private userinfoService: UserinfoService,
+    private http: HttpClient,
+    private environment: EnvironmentService
+  ) { }
 
   updateNotification(id) {
     const url = this.updateUrl + id;
-    return this.http.post(url, null , { headers: this.userinfoService.getHeaders()}).pipe(
+    return this.http.post(url, null, { headers: this.userinfoService.getHeaders() }).pipe(
       catchError(this.handleError<string>('updateNotification'))
     );
   }
@@ -25,7 +29,7 @@ getNotificationUrl = environment.apiUrl + 'workspaces/notificationList?userId=';
   getNotification() {
     const url = this.getNotificationUrl + this.userinfoService.getUserId();
     return this.http.get(url,
-      { headers: this.userinfoService.getHeaders()}).pipe(
+      { headers: this.userinfoService.getHeaders() }).pipe(
         map(this.extractDetails),
         catchError(this.handleError<string>('getworkspaceName'))
       );

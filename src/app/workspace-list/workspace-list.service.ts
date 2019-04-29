@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { catchError, map } from 'rxjs/operators';
 import { UserinfoService } from '../userinfo.service';
-import { WorkspaceInfo } from '../workspace-info/workspace-info';
 import { WorkspaceObject } from '../workspace-objects';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class WorkspaceListService {
 
-  wSListByUidUrl = environment.apiUrl + 'workspaces?userId=';
-  private getWSInfoUrl = environment.apiUrl + 'workspaces/';
+  wSListByUidUrl = this.environment.apiUrl + 'workspaces?userId=';
+  private getWSInfoUrl = this.environment.apiUrl + 'workspaces/';
   // private headers;
   constructor(private http: HttpClient,
-    private userinfoService: UserinfoService) {
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) {
     // this.headers = new HttpHeaders(
     //   {
     //     'Content-Type': 'application/json',
@@ -28,7 +27,7 @@ export class WorkspaceListService {
     return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractWorkspaces),
       catchError(this.handleError('workspace-getList()', []))
-      );
+    );
   }
 
   getListOfWorkspaceByUserId(id: string): Observable<WorkspaceObject[]> {
@@ -41,10 +40,10 @@ export class WorkspaceListService {
 
   getWSInfoID(workspaceId: string): Observable<WorkspaceObject> {
     return this.http.get<WorkspaceObject>(this.getWSInfoUrl + workspaceId, { headers: this.userinfoService.getHeaders() })
-    .pipe(
-      map(this.extractWorkspaces),
-      catchError(this.handleError('getDBInfoByID', []))
-    );
+      .pipe(
+        map(this.extractWorkspaces),
+        catchError(this.handleError('getDBInfoByID', []))
+      );
   }
 
   private extractWorkspaces(res: any) {

@@ -4,17 +4,15 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { ManageMasterMetadata } from '../master-metadata-data';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 import { UserinfoService } from '../userinfo.service';
-import { RequestOptions, ResponseContentType } from '@angular/http';
-import { pipe } from '@angular/core/src/render3';
 @Injectable({
   providedIn: 'root'
 })
 export class AdhocService {
   adhocHeaderInfo: BehaviorSubject<AdhocHeaderInfo> = new BehaviorSubject<AdhocHeaderInfo>(new AdhocHeaderInfo());
   updatedAdhocHeaderInfo = this.adhocHeaderInfo.asObservable();
-  private apiUrl = environment.apiUrl;
+  private apiUrl = this.environment.apiUrl;
   getMMRVersionListUrl = this.apiUrl + 'metalyzer/getVersionNumberList?workspaceId=';
   createApplicationUrl = this.apiUrl + 'adhocbuilder/application';
   createScreenUrl = this.apiUrl + 'adhocbuilder/screen';
@@ -25,7 +23,11 @@ export class AdhocService {
   deleteScreenUrl = this.apiUrl + 'adhocbuilder/screen?screenId=';
   downloadScreenUrl = this.apiUrl + 'adhocbuilder/application/screen/download?screenId=';
   getScreenInfoUrl = this.apiUrl + 'adhocbuilder/application/screen?screenId=';
-  constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
+  constructor(
+    private http: HttpClient,
+    private userInfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
 
   updateAdhocHeaderInfo(adhocHeaderInfo: AdhocHeaderInfo) {
     this.adhocHeaderInfo.next(adhocHeaderInfo);
