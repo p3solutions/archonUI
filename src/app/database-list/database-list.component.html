@@ -44,9 +44,11 @@
     <mat-card class="example-card">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title class="header">{{db?.profileName}}</mat-card-title>
-        <div class="spacer"></div>
-        <a (click)="viewDBmodal(db)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
+        <mat-card-title class="header">{{db?.profileName}} <a (click)="viewDBmodal(db)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-1x" aria-hidden="true"></i></a></mat-card-title>
+        <div class="spacer"></div>       
+        <a (click)="DBdelete(db?.id)" data-toggle="modal" href="#confirm_model" data-tooltip="Delete"><i class="material-icons">
+            delete
+            </i></a>
       </mat-card-header>
       <mat-card-content class="content">
         <div class='body-left'>Host</div><div class='body-center'>:</div><div class='body-right'>{{db?.host}}</div>
@@ -190,8 +192,45 @@
           <button type="button" class="btn btn-default cancel bgchange" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="submit('REJECTED')" *ngIf="heading == 'Rejection Confirmation'">Reject</button>
           <button type="button" class="btn btn-default cancel" data-dismiss="modal" (click)="submit('APPROVED')" *ngIf="heading == 'Approval Confirmation'">Approve</button>
+          <button type="button" style="display: none" id="reload" (click)="getConfigDBList()"></button>
         </div>
       </div>
   
     </div>
     </div>
+
+    <div id="confirm_model" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width: 430px;">
+            <div class="modal-header">
+              <div class='model-title'><div class='info-r'>Confirm Database Delete</div></div>
+          </div>
+            <div class="modal-body">
+             <p style="text-align:left; padding: 25px;">Are you sure ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default cancel" data-dismiss="modal">NO</button>
+              <button type="button" class="btn btn-default cancel" (click)="deleteDB()" data-dismiss="modal">YES</button>          
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button style="display: none" type="button" id="deletemsg" data-toggle="modal" data-target="#deletemessage">Open Modal</button>
+      <div id="deletemessage" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content" style="width: 430px;">
+            <div class="modal-header">
+              <div class='model-title'><div class='info-r'> Database Delete</div></div>
+          </div>
+            <div class="modal-body">
+             <p *ngIf="success" style="text-align:left; padding: 25px;"> {{successmsg}}. please check after 15 seconds.</p>
+             <p *ngIf="error" style="text-align:left; padding: 25px;"> {{errormsg}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default cancel" (click)="closeErrorMsg()" data-dismiss="modal">CLOSE</button>          
+            </div>
+          </div>
+        </div>
+      </div>
+ 

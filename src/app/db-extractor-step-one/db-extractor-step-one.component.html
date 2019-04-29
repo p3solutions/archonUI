@@ -40,7 +40,7 @@
         <label for="tableIncRule">Table Inclusion Rule</label>
       </div>
       <div class="col-lg-10 col-md-10 ">
-        <input type="text" name="tableIncRule" class="form-control" [(ngModel)]="processDetailsObj.tableIncRule" id="tableIncRule"
+        <input type="text" name="tableIncRule" [disabled]="isDisabled" class="form-control" [(ngModel)]="processDetailsObj.tableIncRule" id="tableIncRule"
           placeholder="Table Inclusion rule">
       </div>
     </div>

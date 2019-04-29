@@ -14,6 +14,7 @@ export class DbExtractorStepOneComponent implements OnInit {
   processList: string[] = [];
   outputFormatList: string[] = [];
   processDetailsObj = new ProcessDetailsObj();
+  isDisabled: boolean;
   constructor(private router: Router, private dbExtractorService: DbExtractorService) { }
 
   ngOnInit() {
@@ -37,8 +38,12 @@ export class DbExtractorStepOneComponent implements OnInit {
   }
 
   getOutputFormatListBySecProcess(process: string) {
+    this.isDisabled = false;
     if (process != null) {
       this.processDetailsObj.process = process;
+      if (process === 'Execute Query') {
+        this.isDisabled = true;
+      }
       this.outputFormatList = this.processDetailsMap.get(process);
       this.processDetailsObj.includeTableRelationship
        = this.processDetailsList.filter(a => a.process === process)[0].includeTableRelationship;
