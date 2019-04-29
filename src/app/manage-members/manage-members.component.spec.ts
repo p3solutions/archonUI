@@ -11,6 +11,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 import { AddMembersComponent } from '../add-members/add-members.component';
 import { UserinfoService } from '../userinfo.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 describe('ManageMembersComponent', () => {
   let component: ManageMembersComponent;
@@ -41,7 +42,8 @@ describe('ManageMembersComponent', () => {
         RouterTestingModule,
         ManageMembersService,
         HttpClientModule,
-        UserinfoService
+        UserinfoService,
+        WorkspaceHeaderService
       ],
     })
       .compileComponents();
