@@ -23,9 +23,12 @@ export class TableListService {
   private getJobStatusUrl = this.apiUrl + 'dataAnalyzer/jobStatus?jobId=';
   private exportxmlUrl = this.apiUrl + 'metalyzer/exportMetadata/';
   private resultantArray = new BehaviorSubject([]);
+  currentResultArray = this.resultantArray.asObservable();
   private changeValue = new BehaviorSubject(false);
+  currentValue = this.changeValue.asObservable();
   private selectTableslist = new BehaviorSubject('');
   private tableListUrlMMR = this.apiUrl + 'metalyzer/getRelationshipList?workspaceId=';
+  userselectTableslist = this.selectTableslist.asObservable();
 
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService,
