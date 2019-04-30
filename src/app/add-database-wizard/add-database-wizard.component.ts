@@ -260,6 +260,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     thisComponent.addClass('create-btn', 'hide');
     thisComponent.removeClass('ok-btn', 'hide');
     document.getElementById('next-slide').click();
+    document.getElementById('reload').click();
     // if (this.selectedDBtable) {
     //   this.selectedDBtable.destroy();
     // }
@@ -317,7 +318,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
       if (res) {
         this.newWSinfo = res;
-        document.getElementById('populate-db-list').click();
+       // document.getElementById('populate-db-list').click();
         this.postCreation();
       }
     });

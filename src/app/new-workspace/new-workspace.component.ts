@@ -264,6 +264,7 @@ export class NewWorkspaceComponent implements OnInit {
       'order': [[0, 'asc']]
     });
     this.workspaceHeaderService.changeWSBooleanValue(true);
+    document.getElementById('reloadws').click();
   }
   resetCarousel() {
     this.addClass('ok-btn', 'hide');

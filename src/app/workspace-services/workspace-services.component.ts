@@ -65,6 +65,7 @@ export class WorkspaceServicesComponent implements OnInit {
     const test = new NavbarComponent( this.userProfileService, this.navService, this.userinfoService);
     test.loadfirst = 0;
     test.getNotification();
+    this.workspaceHeaderService.updateCheckActiveTab('Services');
   }
 
   gotoMetalyzer(service: any) {
