@@ -68,8 +68,8 @@
                     (click)="openUsrDefinedColumnModel('addNewColumn')" data-toggle="modal"
                     data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus-circle edit-circle"></i></a>
                 <li>
-                <li matTooltip="Add Filter" style="cursor:pointer" class="icon-list trim-text"><a (click)="openFilteronfig()"><i
-                      class="fa fa-filter"></i></a>
+                <li matTooltip="Add Filter" style="cursor:pointer" class="icon-list trim-text"><a
+                    (click)="openFilteronfig()"><i class="fa fa-filter"></i></a>
                 <li>
                 <li matTooltip="Reset all modification" data-toggle="modal" data-target="#reset_confirm_model"
                   class="icon-list trim-text"><a class="cursor-poniter"><i class="fa fa-undo"></i></a>
@@ -78,6 +78,10 @@
             </div>
           </div>
           <div id="select-tbl-list">
+            <ngx-spinner bdOpacity=0.9 bdColor="#f9f9f9" size="medium" color="#0a85f8" type="ball-beat"
+              [fullScreen]="true">
+              <p style="color: #000000"> Loading... </p>
+            </ngx-spinner>
             <div class="scroll-div">
               <table class="table table-striped">
                 <thead>
@@ -152,9 +156,9 @@
       </div>
       <div class="modal-body">
         <div id="table-name-heading" class="form-group">
-          <input type="text" class="form-control" [disabled]="disabledUserDefinedColName"
-            [(ngModel)]="usrDefinedColumnName" name="ucolumnname" id="ucolumnname"
-            placeholder="Enter unique column name">
+          <input type="text" class="form-control" (keyup)="setQueryModeUserDefined()"
+            [disabled]="disabledUserDefinedColName" [(ngModel)]="usrDefinedColumnName" name="ucolumnname"
+            id="ucolumnname" placeholder="Enter unique column name">
         </div>
         <div>
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -238,7 +242,8 @@
               </div>
               <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body">
-                  <textarea class="form-control" style="width: 100%;height: 106px;"></textarea>
+                  <textarea class="form-control" (keyup)="setQueryModeUserDefined()"
+                    [(ngModel)]="usrDefinedQueryViewMode" style="width: 100%;height: 106px;"></textarea>
                 </div>
               </div>
             </div>
@@ -246,10 +251,14 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next"
-          [disabled]="userDefinedList.length===0 || usrDefinedColumnName===''" (click)="saveUsrDefinedColumn()"
-          data-dismiss="modal">Save</button>
+        <div style="text-align: -webkit-left" id="query-alert" class="alert-hide alert alert-danger alert-dismissible">
+          <a class="close" (click)="closeUserDefinedAlert()" aria-label="close">&times;</a>
+          <strong>Alert! </strong>{{usrDefinedAlertMessage}}
+        </div>
+        <button type="button" class="btn btn-primary cancelBtnp" id="usr-defined-close"
+          data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary next" [disabled]="enableUserDefined"
+          (click)="saveUsrDefinedColumn()">Save</button>
 
       </div>
     </div>
@@ -406,8 +415,7 @@
           <select class="form-control" #selectValue="ngModel" [ngModel]="configColumnObject.selectedConfigFunction"
             name="configName" (ngModelChange)="setColumnConfigObj(selectValue.value)">
             <option value="null">Select Column</option>
-            <option value="FLOOR">FLOOR</option>
-            <option value="CEIL">CEIL</option>
+            <option *ngFor="let item of columnConfigFunctionList" [value]="item.function">{{item.function}}</option>
           </select>
         </div>
         <div class="form-group">
@@ -426,7 +434,7 @@
             <div class="form-group">#</div>
             <div class="form-group">{{item.selectedConfigFunction}}</div>
             <div class="form-group">{{item.selectedColumnName}}</div>
-            <div class="form-group">Number</div>
+            <div class="form-group">{{item.outputType}}</div>
             <div class="form-group cursor-pointer"><i class="fa fa-trash" (click)="deleteColumnCOnfig(i)"></i></div>
           </div>
         </div>

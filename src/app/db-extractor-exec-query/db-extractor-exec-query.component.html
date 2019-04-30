@@ -1,6 +1,6 @@
 <div id="extractor-landing-card">
 <div class="container">
-  <form  [formGroup]="executeQueryForm" (ngSubmit)="gotoStepTwo()">
+  <form  [formGroup]="executeQueryForm" (ngSubmit)="gotoStepTwo()">     
   <div class="row">
     <div class="col-md-3 label-style required">
       <label class="control-label">Query Name</label>    
@@ -8,6 +8,9 @@
     <div class="col-md-9 col-md-pull-1">
       <input type="text" formControlName="queryTitle" style="margin-left: 36px" (keyup)="enableNextBtnFn()" placeholder="Query Name" class="form-control">
     </div>
+    <div class="col-md-12 text-danger" style="padding-bottom: 0px;
+      margin-top: 0px;" >Note: In multiple query cases, Specify individual query name for each query separated by semicolon ( ; ) </div>     
+ 
   </div>
   <br>
   <div class="row">

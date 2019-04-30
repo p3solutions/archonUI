@@ -50,8 +50,7 @@ export class WorkspaceListService {
   deleteWS(WSdeleteId: string): Observable<WorkspaceObject> {
      return this.http.delete<WorkspaceObject>(this.getWSInfoUrl + WSdeleteId, { headers: this.userinfoService.getHeaders() })
     .pipe(
-      map(this.deleteWorkspaces),
-      catchError(this.handleError('deleteWS', []))
+      map(this.deleteWorkspaces)
     );
   }
 

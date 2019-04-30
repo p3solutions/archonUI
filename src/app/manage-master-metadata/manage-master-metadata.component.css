@@ -88,3 +88,12 @@ textarea {
   font-size: 12px;
   border-radius: 2px;
 }
+
+.required-field b {
+  font-weight: bold;
+}
+.required-field b:after {
+  color: #e32;
+  content: ' *';
+  display:inline;
+}

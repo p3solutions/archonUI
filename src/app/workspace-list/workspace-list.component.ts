@@ -33,6 +33,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     WSdeleteId: string;
     success: boolean;
     error: boolean;
+    successmsg: any;
+    errormsg: any;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -89,8 +91,6 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     viewWSmodal(workspace) {
-        this.success = false;
-        this.error = false;
         this.WSListInfo = workspace;
       }
 
@@ -106,8 +106,6 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         }
     }
     openCreateWSModal() {
-        this.success = false;
-        this.error = false;
         if (this.viewContainerRef.get(0)) {
             // open existing dynamic component
             document.getElementById('openCreateWSmodal').click();
@@ -123,24 +121,25 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     WSdelete(deleteId: string) {
-        this.success = false;
-        this.error = false;
         this.WSdeleteId = deleteId;
       }
 
       deleteWS() {
-        this.workspaceListService.deleteWS(this.WSdeleteId).subscribe(result => {
-            console.log(result);
-            if (result) {
+        this.workspaceListService.deleteWS(this.WSdeleteId).subscribe((result) => {
+            document.getElementById('deletemsg').click();
+              this.successmsg = result;
                 this.success = true;
                 setTimeout(() => {
                     this.getWorkspaceListInfo(this.token_data.user.id);
                 }, 15000);
-            } else {
-             this.error = true;
+            },
+            (error) => {
+              document.getElementById('deletemsg').click();
+              this.error = true;
+              this.errormsg = error.error.errorMessage;
             }
-      });
-    }
+            );
+          }
 
     closeErrorMsg() {
         this.success = false;

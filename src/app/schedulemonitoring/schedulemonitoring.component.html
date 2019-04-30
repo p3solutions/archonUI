@@ -128,7 +128,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <mat-paginator id="screen-table" [length]="totalScreen" [pageSize]="50">
+  <mat-paginator id="screen-table" [length]="dataSource.totalScreen" [pageSize]="50">
   </mat-paginator>
 </div>
 

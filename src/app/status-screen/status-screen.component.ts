@@ -31,7 +31,6 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   displayedColumns: string[] = ['Job Name', 'Job Origin', 'Scheduled Time', 'Start Time',
     'End Time', 'Status', 'Details', 'Retry', 'Download'];
   dataSource: StatusDataSource;
-  totalScreen = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
@@ -39,7 +38,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   constructor(
     private router: Router,
     private statusService: StatusService,
-    private service: AuditService,
+    private service: AuditService
   ) { }
 
   ngOnInit() {
@@ -88,8 +87,8 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getStart() {
-    this.dataSource = new StatusDataSource(this.statusService);
-    this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
+  this.dataSource = new StatusDataSource(this.statusService);
+  this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
   }
 
   getJobOrigins() {
