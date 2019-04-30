@@ -35,7 +35,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   workspaceId: any;
   heading: string;
   element: any;
-  reason: string;
+  reason = '';
   elementId: any;
   checkAdmin = ['ROLE_MANAGE_DB']; // enable pending approval
   allowToggle = false;

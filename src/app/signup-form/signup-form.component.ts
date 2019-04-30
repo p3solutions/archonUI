@@ -60,25 +60,28 @@ export class SignupFormComponent implements OnInit {
       data => {
         this.responseData = data;
         if (this.responseData.httpStatus === 200) {
+          this.inProgress = false;
           this.successMessage = true;
-          setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 6000);
+          setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 3000);
         }
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
       },
       (err: HttpErrorResponse) => {
         this.inProgress = false;
-        if (err.error instanceof Error) {
+        if (err.error) {
           // A client-side or network error occurred. Handle it accordingly.
-          // this.msg = err.error.message;
-        } else {
-          // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong,
-          const stringToSplit = err.error.errors[0].codes;
-          const errMsg = stringToSplit[1];
-          this.errorObject.message = errMsg;
+          this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = true;
-          this.msg = err.status;
         }
+        // else {
+        //   // The backend returned an unsuccessful response code.
+        //   // The response body may contain clues as to what went wrong,
+        //   const stringToSplit = err.error.errors[0].codes;
+        //   const errMsg = stringToSplit[1];
+        //   this.errorObject.message = errMsg;
+        //   this.errorObject.show = true;
+        //   this.msg = err.status;
+        // }
       }
     );
   }
