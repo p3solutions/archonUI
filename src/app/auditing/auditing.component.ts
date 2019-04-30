@@ -39,7 +39,6 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['User Name', 'WorkSpace Name', 'Related Job ID', 'Service Name',
   'Event Name', 'Event Desc', 'Event Details', 'Download'];
 dataSource: AuditDataSource;
-totalScreen = 0;
 @ViewChild(MatPaginator) paginator: MatPaginator;
 @ViewChild(MatSort) sort: MatSort;
 @ViewChild('search') search: ElementRef;

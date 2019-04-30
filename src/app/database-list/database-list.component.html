@@ -15,7 +15,7 @@
     <div class="col-md-12">
       <div class="col-md-4" style="width: 37.495%"></div>
       <div class="col-md-3 one one-width">
-          <div class="button-wrap" (click)="toggle()" [ngClass]="{'button-active' : toggleBoolean}">
+          <div class="button-wrap" (click)="toggle()" [ngClass]="{'button-active' : toggleBoolean}"  #myDiv>
             <div class="button-bg">
               <div class="button-out index">Databases</div>
               <div class="button-in index" *ngIf="allowToggle">Pending Approval</div>
