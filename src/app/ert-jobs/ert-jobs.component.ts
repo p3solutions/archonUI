@@ -21,6 +21,7 @@ export class ErtJobsComponent implements OnInit {
   ERT = 'ERT';
   scheduleNow: boolean;
   instanceId: any;
+  ertJobslist: boolean;
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
@@ -38,6 +39,9 @@ export class ErtJobsComponent implements OnInit {
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
       this.ertJobs = result;
+      if (this.ertJobs.length === 0) {
+        this.ertJobslist = true;
+      }
       for (const item of this.ertJobs) {
         if (item.jobStatus === 'READY' || item.jobStatus === 'COMPLETED' || item.jobStatus === 'FAILED') {
           item.madeDisable = false;

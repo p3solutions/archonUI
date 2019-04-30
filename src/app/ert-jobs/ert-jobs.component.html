@@ -44,6 +44,11 @@
         <div class='foo-iconedit'><span (click)="gotoEditJob(item.jobId)" title="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></div>
       </div>
   </div>
+  <div class="col-md-12" *ngIf="ertJobslist">
+    <h5 style="text-align: center; margin-top: 50px;">
+      Currently no job configurations  (Click on + icon to add job configuration)
+    </h5>
+  </div>
 </div>
 <button type="button" id="opneDetailPopup" style="display:none" class="btn btn-info btn-lg" data-toggle="modal"
   data-target="#job-detailConfig">Open Modal</button>
