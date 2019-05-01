@@ -37,6 +37,7 @@ export class ErtService {
   mmrVersion = '';
   RelationSIP: any[];
   startIndex: 1;
+  storeSelectedTables: TableDetailsListObj[] = [];
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }
@@ -45,9 +46,11 @@ export class ErtService {
     this.ingestionDataConfig = ingestionDataConfig;
   }
 
-  setSelectedList(selectedList: TableDetailsListObj[], schemaResultsTableCount: number) {
+  setSelectedList(selectedList: TableDetailsListObj[], schemaResultsTableCount:
+    number, storeSelectedTables: TableDetailsListObj[]) {
     this.selectedList = selectedList;
     this.schemaResultsTableCount = schemaResultsTableCount;
+    this.storeSelectedTables = storeSelectedTables;
   }
 
   setschemaResultsTableCount(schemaResultsTableCount: number) {
@@ -110,8 +113,8 @@ export class ErtService {
       );
   }
 
-  getErtAvailableTable(ertJobId: string): Observable<ErtTableListObj> {
-    return this.http.get<ErtTableListObj>(this.getErtAvailableTableUrl + ertJobId,
+  getErtAvailableTable(ertJobId: string, startIndex): Observable<ErtTableListObj> {
+    return this.http.get<ErtTableListObj>(this.getErtAvailableTableUrl + ertJobId + '&startIndex=' + startIndex,
       { headers: this.userInfoService.getHeaders() }).pipe(
         map(this.extractData),
         catchError(this.handleError('getERTcolumnlist', []))

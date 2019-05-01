@@ -11,8 +11,9 @@
             (keyup)="searchTablelist()" placeholder="Search Table"></div>
 
         <div class='body-right'>
-          <a (click)="getErtAvailableTable()" matTooltip="Add More Table" *ngIf="from ==='TABLE'" class="cursor-poniter"
-            data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
+          <a (click)="getErtAvailableTable()" matTooltip="Add More Table"
+            *ngIf="ertJobId!=='' && this.ertJobId !== undefined " class="cursor-poniter" data-toggle="modal"
+            data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
 
 
         <div class="card-body" id="ert-tbl-search">
@@ -20,7 +21,7 @@
           <div id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
               <div
-                *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
+                *ngFor="let item of selectedTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)" class="well">
                 <div><input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
                     (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
@@ -457,11 +458,13 @@
       </div>
       <div class="modal-body">
         <div id="avaliable-table-list">
-          <div class="form-control" *ngFor="let item of ertAvillableTableList.ertTableList">
-            <input type="checkbox" [(ngModel)]="item.isSelected">
+          <div class="form-control"
+            *ngFor="let item of ertAvillableTableList.ertTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: avilableTableCount, currentPage: avilablePage } ">
+            <input type="checkbox" (click)="selectAvaliableTable(item.tableId,$event)" [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
         </div>
+        <pagination-controls (pageChange)="getAvilableTablePage(avilablePage = $event)"></pagination-controls>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>
