@@ -31,7 +31,7 @@
                 </div>
               </div>
             </div>
-            <pagination-controls (pageChange)="getPage(page = $event)"></pagination-controls>
+            <pagination-controls *ngIf="this.ertJobId === undefined" (pageChange)="getPage(page = $event)"></pagination-controls>
           </div>
         </div>
       </div>

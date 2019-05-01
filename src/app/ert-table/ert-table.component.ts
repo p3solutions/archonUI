@@ -79,6 +79,7 @@ export class ErtTableComponent implements OnInit {
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
+    console.log(this.ertJobId);
     if (this.from === 'data-record') {
       this.getERTtableListForDataRecord();
     } else if (this.from === 'SIP') {
@@ -286,7 +287,7 @@ export class ErtTableComponent implements OnInit {
   searchTablelist() {
     this.selectedTableList = [];
     const temp: TableDetailsListObj[] = [];
-    this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName, this.ertJobId).subscribe((result) => {
+    this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
       this.ErtTablesearchList = result;
       for (const item of this.ErtTablesearchList.ertTableList) {
         const tempObj: TableDetailsListObj = new TableDetailsListObj();
