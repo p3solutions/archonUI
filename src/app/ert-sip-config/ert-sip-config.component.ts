@@ -305,6 +305,7 @@ export class ErtSipConfigComponent implements OnInit {
 
     function onClickChangeGraph(value) {
       self.tablelistService.getListOfRelationTableMMR(self.workspaceID, self.ertService.mmrVersion , value.name).subscribe(result => {
+        console.log(result);
         self.relationshipInfo = result;
         self.primaryTable = getPrimaryArray(self.relationshipInfo);
         self.secondaryTable = getSecondaryArray(self.relationshipInfo);
