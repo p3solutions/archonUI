@@ -52,6 +52,7 @@ export class ManageMembersComponent implements OnInit {
   getManageMembersData(workspaceId) {
     this.manageMembersService.getWSMembers(workspaceId)
       .subscribe(res => {
+        console.log(res);
         this.isAvailable = true;
         this.manageMembers = res;
         this.manageMemTable({ data: this.manageMembers });

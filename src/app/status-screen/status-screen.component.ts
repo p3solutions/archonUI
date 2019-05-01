@@ -28,7 +28,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   jobServerConfig: any;
   @ViewChild('click') button: ElementRef;
   startIndex = 1;
-  displayedColumns: string[] = ['Job Name', 'Job Origin', 'Scheduled Time', 'Start Time',
+  displayedColumns: string[] = ['jobName', 'Job Origin', 'jobInfo.startTime', 'Start Time',
     'End Time', 'Status', 'Details', 'Retry', 'Download'];
   dataSource: StatusDataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -69,6 +69,8 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
         tap(() => this.loadPage())
       )
       .subscribe();
+
+    // this.dataSource.sort = this.sort;
   }
 
   loadPage() {

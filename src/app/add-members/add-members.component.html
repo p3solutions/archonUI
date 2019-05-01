@@ -7,14 +7,14 @@
       <table *ngIf="userList.length > 0" datatable id="manage-members-table" class="display scroll" cellspacing="0" width="100%">
         <thead>
           <tr style="width: 455px; text-align: left;">
-            <th style="width: 145px;">User name</th>
+            <th style="width: 145px;">User Id</th>
             <th style="width: 160px;">Email</th>
             <th style="width: 155px;">Roles</th>
           </tr>
         </thead>  
         <tbody>
           <tr *ngFor="let item of userList" style="width: 455px; text-align: left;" class="member-row">
-            <td style="width: 160px;"><input class="user-select" type="checkbox" (change)="updateSelectList(item, $event)"/>&nbsp;&nbsp;{{item.name}}</td>
+            <td style="width: 160px;"><input class="user-select" type="checkbox" (change)="updateSelectList(item, $event)"/>&nbsp;&nbsp;{{item.id}}</td>
             <td style="width: 175px;">{{item.emailAddress}}</td>
             <td style="width: 170px;">
               <select class="member-role" (change)="setRole(item, $event)">
