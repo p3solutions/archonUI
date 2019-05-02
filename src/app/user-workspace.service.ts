@@ -8,14 +8,9 @@ import { EnvironmentService } from './environment/environment.service';
 
 @Injectable()
 export class UserWorkspaceService {
-<<<<<<< HEAD
   apiUrl = this.environment.apiUrl;
-  getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
-=======
-  apiUrl = environment.apiUrl;
   getConfiguredDBurl = `${this.apiUrl}dbs/configured/schemaReadyDbs`;
   getConfigDBurl = `${this.apiUrl}dbs/configured`;
->>>>>>> 9261bf4ceebcc4addd4a0b346ada90a09abdaef4
   createNewWSurl = `${this.apiUrl}workspaces`;
   getAppConfigUrl = `${this.apiUrl}application/config`;
   checkDbConnectionUrl = `${this.apiUrl}dbs/configured/connection`;
