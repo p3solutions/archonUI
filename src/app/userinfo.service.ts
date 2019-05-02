@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Info } from './info';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Headers, Response } from '@angular/http';
 import { ErrorObject } from './error-object';
-import { environment } from '../environments/environment';
 import { UserObject } from './workspace-objects';
 import { Router } from '@angular/router';
+import { EnvironmentService } from './environment/environment.service';
 @Injectable()
 export class UserinfoService {
   accessToken: string;
@@ -19,7 +17,8 @@ export class UserinfoService {
   private loginUrl = 'sign-in';
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private environment: EnvironmentService
   ) {
     this.http = http;
   }
@@ -51,10 +50,10 @@ export class UserinfoService {
   }
 
   getUserInfoUrl() {
-    return environment.apiUrl + 'users/' + this.getUserId();
+    return this.environment.apiUrl + 'users/' + this.getUserId();
   }
   getAllUserInfoUrl() {
-    return environment.apiUrl + 'users';
+    return this.environment.apiUrl + 'users';
   }
 
   getAuthKey() {
@@ -110,7 +109,7 @@ export class UserinfoService {
       return this.errorObject;
     }
     if (this.getUpdatedFirstName() === user.firstName && this.getUpdatedLastName() ===
-    user.lastName && this.getUpdatedEmail() === user.useremail) {
+      user.lastName && this.getUpdatedEmail() === user.useremail) {
       this.errorObject.message = 'Name is not Updated';
       return this.errorObject;
     }
