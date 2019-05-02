@@ -129,7 +129,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     }
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
       .subscribe(res => {
-        console.log(res);
         if (res && res.success) {
           this.removeIndexValue = [];
           this.resultantValues = [];

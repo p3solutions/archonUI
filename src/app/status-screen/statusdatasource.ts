@@ -66,7 +66,6 @@ export class StatusDataSource implements DataSource<any> {
 
     filter(index, search) {
       this.statusService.getSearchResult(index, search).subscribe(result => {
-          console.log(result, 'filter');
           result.list.forEach((value, index ) => {
             value.position = index + 1;
         });
