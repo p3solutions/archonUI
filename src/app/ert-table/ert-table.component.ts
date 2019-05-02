@@ -5,7 +5,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { ErtService } from '../ert-landing-page/ert.service';
 import {
   ErtTableListObj, FilterConfigTree, ErtColumnListObj, TableDetailsListObj,
-  ColumnListObj, UsrDefinedColumnListObj, DataOrderConfig, FilterAndOrderConfig, ErtTableObj
+  ColumnListObj, UsrDefinedColumnListObj, DataOrderConfig, FilterAndOrderConfig, ErtTableObj, AvilErtTable
 } from '../ert-landing-page/ert';
 import {
   addFilterNode, FilterConfigNode, Tree, searchTree,
@@ -32,6 +32,7 @@ export class ErtTableComponent implements OnInit {
   modifiedTableName = '';
   tableName = '';
   filterConfigColumnNameList: string[] = [];
+  orderFilterConfigColumnNameList: string[] = [];
   userDefinedList: { 'prefix': string, 'column': string, 'suffix': string }[] = [];
   ertJobId = '';
   configColumnObject: { selectedColumnName: string, selectedConfigFunction: string, outputType: string } =
@@ -40,7 +41,7 @@ export class ErtTableComponent implements OnInit {
   selectedTableId = '';
   configColumnQuery = '';
   maxNode = 3;
-  ertAvillableTableList: ErtTableListObj = new ErtTableListObj();
+  ertAvillableTableList: AvilErtTable = new AvilErtTable();
   expressionStack: string[] = [];
   searchTableName: string;
   parentChildMap: { child: number, parent: number }[] = [];
@@ -220,8 +221,10 @@ export class ErtTableComponent implements OnInit {
   getErtAvailableTable(page) {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.ertService.getErtAvailableTable(this.ertJobId, this.avilableStartIndex).subscribe(result => {
+        console.log(result);
         this.ertAvillableTableList = result;
-        this.avilableTableCount = this.ertAvillableTableList.sourceTableCount;
+        this.avilableTableCount = this.ertAvillableTableList.erttableList.sourceTableCount -
+          this.ertAvillableTableList.erttableList.selectedTableCount;
         //  this.avilableTableCount = (page) * 50;
         // if (this.ertAvillableTableList.isSelectedTableLeft) {
         //   this.avilableTableCount = this.avilableTableCount + 50;
@@ -288,26 +291,28 @@ export class ErtTableComponent implements OnInit {
   }
 
   searchTablelist() {
-    this.selectedTableList = [];
-    const temp: TableDetailsListObj[] = [];
-    this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
-      this.ErtTablesearchList = result;
-      for (const item of this.ErtTablesearchList.ertTableList) {
-        const tempObj: TableDetailsListObj = new TableDetailsListObj();
-        tempObj.tableId = item.tableId;
-        tempObj.tableName = item.tableName;
-        tempObj.modifiedTableName = item.modifiedTableName;
-        if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-          tempObj.isSelected = true;
+    if (this.from !== 'data-record' && this.from !== 'SIP') {
+      this.selectedTableList = [];
+      const temp: TableDetailsListObj[] = [];
+      this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
+        this.ErtTablesearchList = result;
+        for (const item of this.ErtTablesearchList.ertTableList) {
+          const tempObj: TableDetailsListObj = new TableDetailsListObj();
+          tempObj.tableId = item.tableId;
+          tempObj.tableName = item.tableName;
+          tempObj.modifiedTableName = item.modifiedTableName;
+          if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+            tempObj.isSelected = true;
+          }
+          if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
+            temp.push(tempObj);
+          } else {
+            temp.push(this.storeSelectedTables.filter(a => a.tableId === tempObj.tableId)[0]);
+          }
         }
-        if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
-          temp.push(tempObj);
-        } else {
-          temp.push(this.storeSelectedTables.filter(a => a.tableId === tempObj.tableId)[0]);
-        }
-      }
-      this.selectedTableList = temp;
-    });
+        this.selectedTableList = temp;
+      });
+    }
   }
 
   getERTcolumnlist(tableId: string, event) {
@@ -394,6 +399,15 @@ export class ErtTableComponent implements OnInit {
         } else {
           this.usrDefinedQueryView = temp.viewQuery;
         }
+        if (this.userDefinedList.length !== 0) {
+          for (const item of this.userDefinedList) {
+            const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
+              === item.column);
+            if (tempIndex !== -1) {
+              this.ursDefinedColumnNameList.splice(tempIndex, 1);
+            }
+          }
+        }
       }
     } else {
       this.enableUserDefined = true;
@@ -432,8 +446,10 @@ export class ErtTableComponent implements OnInit {
 
   saveColumnConfig() {
     let tempString = '';
-    this.configColumnObject.outputType = this.columnConfigFunctionList.
-      filter(a => a.function === this.configColumnObject.selectedConfigFunction)[0].outputType;
+    if (this.configColumnObject.selectedConfigFunction !== null) {
+      this.configColumnObject.outputType = this.columnConfigFunctionList.
+        filter(a => a.function === this.configColumnObject.selectedConfigFunction)[0].outputType;
+    }
     if (this.configColumnObject.selectedConfigFunction !== null) {
       this.configColumnList.push(this.configColumnObject);
     }
@@ -483,6 +499,11 @@ export class ErtTableComponent implements OnInit {
         prefix: control.controls[i].value.prefix, column: control.controls[i].value.column,
         suffix: control.controls[i].value.suffix
       });
+      const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
+        === control.controls[i].value.column);
+      if (tempIndex !== -1) {
+        this.ursDefinedColumnNameList.splice(tempIndex, 1);
+      }
       control.push(this.initColumn());
       control.removeAt(i);
     }
@@ -520,8 +541,9 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
-  deleteUsrDefinedCol(i: number) {
+  deleteUsrDefinedCol(i: number, columnName) {
     this.userDefinedList.splice(i, 1);
+    this.ursDefinedColumnNameList.push(columnName);
     this.createUsrDefinedCONCATString();
   }
 
@@ -665,6 +687,8 @@ export class ErtTableComponent implements OnInit {
     this.dataOrderList = [];
     this.filterConfigColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
+    this.orderFilterConfigColumnNameList = this.selectedTableList.filter
+      (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
     const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, []);
     this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
@@ -748,6 +772,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   constructExpression(postfix: string[]): string {
+    console.log(postfix);
     for (let i = 0; i < postfix.length; i++) {
       if (postfix[i] !== 'AND' && postfix[i] !== 'OR') {
         this.expressionStack.push(postfix[i]);
@@ -771,6 +796,7 @@ export class ErtTableComponent implements OnInit {
         this.selectedTableList.push(tempObj);
       }
     }
+    this.storeAvaliableTables = [];
   }
 
   deleteFilterConfigTreeNode(id: number) {
@@ -786,7 +812,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   addOrder() {
-    if (this.dataOrderObj.column !== null) {
+    if (this.dataOrderObj.column !== null && this.dataOrderObj.order !== null) {
       this.dataOrderList.push(this.dataOrderObj);
       this.dataOrderObj = new DataOrderConfig();
     }
@@ -796,22 +822,25 @@ export class ErtTableComponent implements OnInit {
   }
 
   getAvilableTablePage(page) {
-    this.ertAvillableTableList.ertTableList = [];
+    this.ertAvillableTableList.erttableList.ertTableList = [];
     this.avilableStartIndex = page;
     this.getErtAvailableTable(page);
   }
 
   selectAvaliableTable(tableId: string, event) {
-    if (event.target.checked === true) {
-      const temp = this.ertAvillableTableList.ertTableList.filter(a => a.tableId === tableId)[0]
-      temp.isSelected = true;
-      this.storeAvaliableTables.push(temp);
-    } else {
-      const temp = this.ertAvillableTableList.ertTableList.filter(a => a.tableId === tableId)[0];
-      temp.isSelected = false;
-      const index = this.storeAvaliableTables.findIndex(a => a.tableId === tableId);
-      if (index === -1) {
-        this.storeAvaliableTables.splice(index, 1);
+    const tempSelected = this.selectedTableList.filter(a => a.tableId === tableId)[0];
+    if (tempSelected === undefined) {
+      if (event.target.checked === true) {
+        const temp = this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tableId)[0]
+        temp.isSelected = true;
+        this.storeAvaliableTables.push(temp);
+      } else {
+        const temp = this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tableId)[0];
+        temp.isSelected = false;
+        const index = this.storeAvaliableTables.findIndex(a => a.tableId === tableId);
+        if (index === -1) {
+          this.storeAvaliableTables.splice(index, 1);
+        }
       }
     }
     event.stopPropagation();

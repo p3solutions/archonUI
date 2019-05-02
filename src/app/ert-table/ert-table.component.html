@@ -11,9 +11,8 @@
             (keyup)="searchTablelist()" placeholder="Search Table"></div>
 
         <div class='body-right'>
-          <a (click)="getErtAvailableTable()" matTooltip="Add More Table"
-            *ngIf="showAvilableBtn" class="cursor-poniter" data-toggle="modal"
-            data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
+          <a (click)="getErtAvailableTable()" matTooltip="Add More Table" *ngIf="showAvilableBtn" class="cursor-poniter"
+            data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
 
 
         <div class="card-body" id="ert-tbl-search">
@@ -22,7 +21,8 @@
             <div class="scroll-div border">
               <div
                 *ngFor="let item of selectedTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
-                (click)="getERTcolumnlist(item.tableId,$event)" class="well">
+                (click)="getERTcolumnlist(item.tableId,$event)"
+                [ngClass]="item.tableId===selectedTableId ?'selectTableCls well':'well'">
                 <div><input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
                     (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
                     type="checkbox"></div>
@@ -31,7 +31,8 @@
                 </div>
               </div>
             </div>
-            <pagination-controls *ngIf="this.ertJobId === undefined" (pageChange)="getPage(page = $event)"></pagination-controls>
+            <pagination-controls *ngIf="this.ertJobId === undefined" (pageChange)="getPage(page = $event)">
+            </pagination-controls>
           </div>
         </div>
       </div>
@@ -219,8 +220,8 @@
                       <div class="clearflex add-edit-form-item form-group">{{item.prefix}}</div>
                       <div class="clearflex add-edit-form-item form-group">{{item.column}}</div>
                       <div class="clearflex add-edit-form-item form-group">{{item.suffix}}</div>
-                      <div class="clearflex add-edit-form-item form-group"><a (click)="deleteUsrDefinedCol(i)"><i
-                            class="fa fa-trash"></i></a></div>
+                      <div class="clearflex add-edit-form-item form-group"><a
+                          (click)="deleteUsrDefinedCol(i,item.column)"><i class="fa fa-trash"></i></a></div>
                     </div>
                   </div>
                   <div id="query-mode-div">
@@ -459,12 +460,12 @@
       <div class="modal-body">
         <div id="avaliable-table-list">
           <div class="form-control"
-            *ngFor="let item of ertAvillableTableList.ertTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: avilableTableCount, currentPage: avilablePage } ">
+            *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: avilableTableCount, currentPage: avilablePage } ">
             <input type="checkbox" (click)="selectAvaliableTable(item.tableId,$event)" [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
         </div>
-        <pagination-controls (pageChange)="getAvilableTablePage(avilablePage = $event)"></pagination-controls>
+        <pagination-controls style="font-size:13px" (pageChange)="getAvilableTablePage(avilablePage = $event)"></pagination-controls>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>
@@ -508,8 +509,8 @@
   </div>
 </div>
 
-<button style="display:none" type="button" id="warning-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
-  data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
+<button style="display:none" type="button" id="warning-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#success">Open Modal</button>
 <div id="success" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">

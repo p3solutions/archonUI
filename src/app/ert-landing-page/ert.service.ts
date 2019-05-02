@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
 import {
   ErtTableListObj, ErtColumnListObj, TableDetailsListObj,
-  ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo, ExtractConfig
+  ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo, ExtractConfig, AvilErtTable
 } from './ert';
 
 @Injectable({
@@ -113,10 +113,10 @@ export class ErtService {
       );
   }
 
-  getErtAvailableTable(ertJobId: string, startIndex): Observable<ErtTableListObj> {
+  getErtAvailableTable(ertJobId: string, startIndex): Observable<AvilErtTable> {
     return this.http.get<ErtTableListObj>(this.getErtAvailableTableUrl + ertJobId + '&startIndex=' + startIndex,
       { headers: this.userInfoService.getHeaders() }).pipe(
-        map(this.extractData),
+        map(this.extractDataForAvail),
         catchError(this.handleError('getERTcolumnlist', []))
       );
   }
@@ -142,6 +142,11 @@ export class ErtService {
 
   private extractData(res: any) {
     const body = res.data.ERTTableList;
+    return body || [];
+  }
+
+  private extractDataForAvail(res: any) {
+    const body = res.data;
     return body || [];
   }
 
