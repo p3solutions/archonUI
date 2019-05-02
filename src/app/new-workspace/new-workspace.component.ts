@@ -54,6 +54,7 @@ export class NewWorkspaceComponent implements OnInit {
   }
 
   prevStep(e) {
+    this.errorDBselect = false;
     if (document.querySelector('.second').classList.contains('active')) {
       this.addClass('prev-btn', 'hide');
       this.removeClass('cancel-btn', 'hide');
@@ -156,7 +157,11 @@ export class NewWorkspaceComponent implements OnInit {
             this.supportedDBs.push(element);
           });
           this.isDBAvailable = true;
-          this.generateDBtable({ data: this.supportedDBs });
+          if (this.supportedDBs.length > 0) {
+            this.generateDBtable({ data: this.supportedDBs});
+          } else {
+            this.generateDBtable({ data: this.supportedDBs = []});
+          }
         }
       });
   }
@@ -283,4 +288,8 @@ export class NewWorkspaceComponent implements OnInit {
   closeErrorMsg() {
     this.updateNotif = false;
     }
+clear() {
+  this.wsDesc = '';
+  this.wsName = '';
+}
 }

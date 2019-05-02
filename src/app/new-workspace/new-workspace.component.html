@@ -4,7 +4,7 @@ data-backdrop="static"></div>
   <div class="modal-dialog {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
     <div class="modal-content text-left">
       <div class="modal-header">
-        <button *ngIf="hideclose" type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
+        <button *ngIf="hideclose" type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg();clear();" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 *ngIf="!newWSinfo" class="modal-title">Create New Workspace</h4>
@@ -149,7 +149,7 @@ data-backdrop="static"></div>
                 </div>  
              </div>    
           <div class="col-md-5">
-        <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal" (click)="clear()">Cancel</button>
         <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event);closeErrorMsg()">Previous</button>
         <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event);closeErrorMsg()">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
         <button type="button" id="create-btn" class="btn btn-primary hide" (click)="createWS()">Create&nbsp;</button>
