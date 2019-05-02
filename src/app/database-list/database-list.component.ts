@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewContainerRef, Inject, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, Inject, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { ConfiguredDB } from '../workspace-objects';
 import { DatabaseListService } from './database-list.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonUtilityService } from '../common-utility.service';
@@ -16,6 +16,7 @@ import { UserinfoService } from '../userinfo.service';
   templateUrl: './database-list.component.html',
   styleUrls: ['./database-list.component.css']
 })
+
 export class DatabaseListComponent implements OnInit, OnDestroy {
   isProgress: boolean;
   configDBListInfo: any;
@@ -35,16 +36,22 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   workspaceId: any;
   heading: string;
   element: any;
-  reason: string;
+  reason = '';
   elementId: any;
   checkAdmin = ['ROLE_MANAGE_DB']; // enable pending approval
   allowToggle = false;
-  
+  @ViewChild('myDiv') myDiv: ElementRef;
+  success: boolean;
+  error: boolean;
+  DBdeleteId: string;
+  errormsg: any;
+  successmsg: any;
+
   constructor(
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
-    private router: Router,
+    private router: Router,private route: ActivatedRoute,
     private workspaceHeaderService: WorkspaceHeaderService,
     private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService
     ) {
@@ -65,6 +72,10 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
        this.allowToggle = true;
        break;
      }
+    }
+    if (this.route.snapshot.paramMap.get('notification')) {
+    const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
+    el.click();
     }
   }
 
@@ -153,6 +164,33 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.getAllPending();
     }
     });
+  }
+
+  DBdelete(deleteId: string) {
+    this.DBdeleteId = deleteId;
+  }
+
+  deleteDB() {
+    this.configDBListService.deleteDB(this.DBdeleteId).subscribe((result) => {
+          document.getElementById('deletemsg').click();
+          this.successmsg = result;
+            this.success = true;
+           // this.getConfigDBList();
+             setTimeout(() => {
+               this.getConfigDBList();
+             }, 15000);
+  },
+  (error) => {
+    document.getElementById('deletemsg').click();
+    this.error = true;
+    this.errormsg = error.error.errorMessage;
+  }
+  );
+}
+
+closeErrorMsg() {
+    this.success = false;
+    this.error = false;
   }
 
 }

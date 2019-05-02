@@ -9,6 +9,8 @@ export class AuditDataSource implements DataSource<any> {
     searchArray = [];
     output;
     indexValue: any;
+    private readonly _filter = new BehaviorSubject<string>('');
+    filteredData = [];
 
     constructor(private service: AuditService) { }
 
@@ -33,15 +35,25 @@ export class AuditDataSource implements DataSource<any> {
         });
     }
 
-    // filter(index, search) {
-    //     this.service.getSearchResult(index, search).subscribe(result => {
-    //         console.log(result, 'filder');
-    //         result.responseModel.forEach((value, index ) => {
-    //           value.position = index + 1;
-    //       });
-    //       this.totalScreen = result.totalResponse;
-    //       this.adhocSubject.next(result.responseModel);
-    //     });
-    //   }
+    filterPredicate: ((data, filter: string) => boolean) = (data, filter: string): boolean => {
+        const accumulator = (currentTerm, key) => currentTerm + data[key];
+        const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+        const transformedFilter = filter.trim().toLowerCase();
+        return dataStr.indexOf(transformedFilter) !== -1;
+    }
+
+    _filterData(dataSource) {
+        this.filteredData =
+            !this.filter ? dataSource : dataSource.filter(obj => this.filterPredicate(obj, this.filter));
+        this.adhocSubject.next(this.filteredData);
+        return this.filteredData;
+    }
+
+
+
+    get filter(): string { return this._filter.value; }
+    set filter(filter: string) {
+        this._filter.next(filter);
+    }
 
 }

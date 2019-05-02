@@ -135,7 +135,7 @@ export class NewWorkspaceComponent implements OnInit {
         this.newWSinfo = res;
         this.postCreation();
         // after getting ok response reloading the workspace list
-        document.getElementById('reload-ws-list').click();
+        // document.getElementById('reload-ws-list').click();
       } else {
         this.updateNotif = true;
       }
@@ -264,6 +264,7 @@ export class NewWorkspaceComponent implements OnInit {
       'order': [[0, 'asc']]
     });
     this.workspaceHeaderService.changeWSBooleanValue(true);
+    document.getElementById('reloadws').click();
   }
   resetCarousel() {
     this.addClass('ok-btn', 'hide');
