@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM alpine:latest
 COPY ./dist/ /dist/
 COPY start-archon-ui.sh nginx.conf /tmp/
 RUN apk update \
