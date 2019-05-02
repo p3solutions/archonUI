@@ -139,6 +139,12 @@ export class ErtExtractDigestComponent implements OnInit {
       this.toEnableIngestBtn();
     }
   }
+  space(event) {
+    if (event.which === 32) {
+    return false;
+    }
+  }
+
   toEnableBtn() {
     if (this.from === 'data-record') {
       if (this.extractDataConfigInfo.titleName !== '') {
