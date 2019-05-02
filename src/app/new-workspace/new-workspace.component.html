@@ -1,9 +1,10 @@
-<div hidden id="openCreateWSmodal" data-toggle="modal" data-target="#createWSModal"></div>
+<div hidden id="openCreateWSmodal" data-toggle="modal" data-target="#createWSModal" data-keyboard="false"
+data-backdrop="static"></div>
 <div class="modal fade" id="createWSModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
     <div class="modal-content text-left">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
+        <button *ngIf="hideclose" type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 *ngIf="!newWSinfo" class="modal-title">Create New Workspace</h4>
