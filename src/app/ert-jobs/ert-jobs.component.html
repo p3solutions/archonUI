@@ -118,14 +118,17 @@
 <button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
 <div id="successModel" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <h1>{{successMsg}}</h1>
-        <p *ngIf="isSuccessMsg">check on Job Status page</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="close()">Close</button>
-      </div>
-    </div>
+      <div class="modal-content" style="width: 430px;">
+          <div class="modal-header">
+            <div class='model-title'><div class='info-r'> Message</div></div>
+        </div>
+          <div class="modal-body">
+           <p style="text-align:left; size: 18px;"> {{successMsg}}.</p>
+           <p *ngIf="isSuccessMsg" style="text-align:left;">check on Job Status page</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default cancel" (click)="close()" data-dismiss="modal">CLOSE</button>          
+          </div>
+        </div>
   </div>
 </div>

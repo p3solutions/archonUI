@@ -207,6 +207,17 @@ a.disabled {
   transform:scale(1.1,1.1);
   } 
 
+.cancel {
+    background-color: #2879ff;
+    border: #2879ff;
+    color: #ffffff;
+    transition:0.5s;
+}
+
+.cancel:hover {
+  transform:scale(1.1,1.1);
+  }
+
 .table {
   width: 100%;
   max-width: 100%;
