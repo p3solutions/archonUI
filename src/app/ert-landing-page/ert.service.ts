@@ -123,9 +123,7 @@ export class ErtService {
 
   saveErtJob(param: any): Observable<any> {
     return this.http.post<any>(this.saveErtJobUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForRunJob),
-        catchError(this.handleError('saveErtJob', []))
-      );
+      pipe(map(this.extractDataForRunJob));
   }
 
   runJob(param: any): Observable<any> {

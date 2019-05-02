@@ -64,6 +64,7 @@ export class ErtTableComponent implements OnInit {
   avilablePage = 1;
   avilableTableCount = 0;
   storeAvaliableTables: ErtTableObj[] = [];
+  showAvilableBtn = false;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -79,7 +80,9 @@ export class ErtTableComponent implements OnInit {
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
-    console.log(this.ertJobId);
+    if (this.from !== 'data-record' && this.from !== 'SIP' && this.ertJobId !== '' && this.ertJobId !== undefined) {
+      this.showAvilableBtn = true;
+    }
     if (this.from === 'data-record') {
       this.getERTtableListForDataRecord();
     } else if (this.from === 'SIP') {
