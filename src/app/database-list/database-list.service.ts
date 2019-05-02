@@ -42,10 +42,23 @@ export class DatabaseListService {
       );
   }
 
+  deleteDB(databaseId: string): Observable<ConfiguredDB> {
+    return this.http.delete<ConfiguredDB>(this.configDBListUrl + '/' + databaseId, { headers: this.userinfoService.getHeaders() })
+    .pipe(
+      map(this.deletedatabase)
+    );
+  }
+
   private extractConfigDB(res: any) {
     const data = res.data.configuredDatabases;
     return data || [];
   }
+
+  private deletedatabase(res: any) {
+    const data = res.data;
+    return data || [];
+  }
+
 
   getPending(): Observable<any> {
     return this.http.get<any>(this.getAllApproval, { headers: this.userinfoService.getHeaders() })

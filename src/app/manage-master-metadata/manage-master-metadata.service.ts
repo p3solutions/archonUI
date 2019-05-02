@@ -46,9 +46,7 @@ export class ManageMasterMetadataService {
   saveMMRVersion(workspaceId: string, mmrVersion: string, desc: string): Observable<any> {
     return this.http.post<any>(this.saveMMRVersionUrl + workspaceId + '&versionNo=' + mmrVersion + '&description=' + desc, null,
       { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForMMRSave),
-        catchError(this.handleError('saveMMRVersion', []))
-      );
+      pipe(map(this.extractDataForMMRSave));
   }
 
 

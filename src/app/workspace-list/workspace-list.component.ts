@@ -30,6 +30,11 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
 
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     WSListInfo: WorkspaceObject;
+    WSdeleteId: string;
+    success: boolean;
+    error: boolean;
+    successmsg: any;
+    errormsg: any;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -64,7 +69,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     getWorkspaceListInfo(id: string) {
-        this.workspaceListService.getList(id).subscribe(result => {
+        this.workspaceListInfo = [];
+            this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
             this.isProgress = false;
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
@@ -113,6 +119,32 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     toggleCard(cardId, toShow, _event) {
         this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
     }
+
+    WSdelete(deleteId: string) {
+        this.WSdeleteId = deleteId;
+      }
+
+      deleteWS() {
+        this.workspaceListService.deleteWS(this.WSdeleteId).subscribe((result) => {
+            document.getElementById('deletemsg').click();
+              this.successmsg = result;
+                this.success = true;
+                setTimeout(() => {
+                    this.getWorkspaceListInfo(this.token_data.user.id);
+                }, 15000);
+            },
+            (error) => {
+              document.getElementById('deletemsg').click();
+              this.error = true;
+              this.errormsg = error.error.errorMessage;
+            }
+            );
+          }
+
+    closeErrorMsg() {
+        this.success = false;
+        this.error = false;
+      }
 }
 
 

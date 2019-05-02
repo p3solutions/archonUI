@@ -6,6 +6,8 @@ export class WorkspaceHeaderService {
 
   private addWSValue = new BehaviorSubject(false);
   currentWSValue = this.addWSValue.asObservable();
+  private checkActive: BehaviorSubject<string> = new BehaviorSubject<string>('Services');
+  updatedCheckActive = this.checkActive.asObservable();
 
   constructor() { }
   private workspace: any;
@@ -13,7 +15,11 @@ export class WorkspaceHeaderService {
     this.workspace = workspace;
   }
   getSelectedWorkspaceName() {
+    if (this.workspace !== undefined) {
     return this.workspace.workspaceName;
+    } else {
+      return '';
+    }
   }
   getSelectedWorkspaceId() {
     if (this.workspace !== undefined) {
@@ -39,7 +45,11 @@ export class WorkspaceHeaderService {
     return this.workspace.updatedAt;
   }
   getSelectedWorkspaceWorkspaceRole() {
-    return this.workspace.workspaceRole;
+    if (this.workspace !== undefined) {
+      return this.workspace.workspaceRole;
+    } else {
+      return '';
+    }
   }
   getSelectedWorkspaceWorkspaceState() {
     return this.workspace.workspaceState;
@@ -64,10 +74,17 @@ export class WorkspaceHeaderService {
   }
 
   getDatabaseID() {
+    if (this.workspace !== undefined) {
     return this.workspace.databases[0].id;
+    } else {
+      return '';
+    }
   }
 
   changeWSBooleanValue(message) {
     this.addWSValue.next(message);
+  }
+  updateCheckActiveTab(checkActive: string) {
+    this.checkActive.next(checkActive);
   }
 }

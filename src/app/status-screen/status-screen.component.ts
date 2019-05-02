@@ -25,12 +25,12 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   input: any;
   jobMessage: any;
   jobOutput: any;
+  jobServerConfig: any;
   @ViewChild('click') button: ElementRef;
   startIndex = 1;
-  displayedColumns: string[] = ['Job Name', 'Job Origin', 'Scheduled Time', 'Start Time',
+  displayedColumns: string[] = ['jobName', 'Job Origin', 'jobInfo.startTime', 'Start Time',
     'End Time', 'Status', 'Details', 'Retry', 'Download'];
   dataSource: StatusDataSource;
-  totalScreen = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
@@ -38,7 +38,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   constructor(
     private router: Router,
     private statusService: StatusService,
-    private service: AuditService,
+    private service: AuditService
   ) { }
 
   ngOnInit() {
@@ -69,6 +69,8 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
         tap(() => this.loadPage())
       )
       .subscribe();
+
+    // this.dataSource.sort = this.sort;
   }
 
   loadPage() {
@@ -87,8 +89,8 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getStart() {
-    this.dataSource = new StatusDataSource(this.statusService);
-    this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
+  this.dataSource = new StatusDataSource(this.statusService);
+  this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
   }
 
   getJobOrigins() {
@@ -128,6 +130,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
       this.input = result.input;
       this.jobMessage = result.message;
       this.jobOutput = result.output;
+      this.jobServerConfig = result.serverConfiguration;
     });
     el.click();
   }

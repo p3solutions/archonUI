@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatSortModule } from '@angular/material';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -138,6 +138,7 @@ import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.compon
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
 import { EnvironmentService } from './environment/environment.service';
 import { appInitializerFactory } from '@angular/platform-browser/src/browser/server-transition';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -253,6 +254,7 @@ const appInitializerFunction = (environment: EnvironmentService) => {
         ReactiveFormsModule,
         DataTablesModule,
         MatTableModule,
+        MatSortModule,
         AppRoutingModule,
         HttpClientModule,
         NgxPaginationModule,
@@ -262,7 +264,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
         MatCheckboxModule,
         MaterialModule,
         MatSelectInfiniteScrollModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        NgxSpinnerModule
     ],
     providers: [
         EnvironmentService,

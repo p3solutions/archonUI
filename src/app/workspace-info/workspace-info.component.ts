@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Headers, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { WorkspaceObject, MemberObject, ServiceActionsObject } from '../workspace-objects';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 @Component({
   selector: 'app-workspace-info',
@@ -23,12 +24,14 @@ export class WorkspaceInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private workspaceinfoservice: WorkspaceInfoService,
-    private userinfoservice: UserinfoService
+    private userinfoservice: UserinfoService,
+    private workspaceHeaderService: WorkspaceHeaderService
   ) {
   }
 
   ngOnInit() {
     this.isAvailable = false;
+    this.workspaceHeaderService.updateCheckActiveTab('Workspace Info.');
     if (!this.workspaceId) {
       this.route.params.subscribe(params => {
         this.workspaceId = params.id;
@@ -48,7 +51,6 @@ export class WorkspaceInfoComponent implements OnInit {
     this.workspaceinfoservice.getWorkSpaceInfo(workspaceId).subscribe(data => {
       this.isAvailable = true;
       this.workspaceInfoData = data;
-      console.log(this.workspaceInfoData);
       this.userinfoservice.getUserRole(data.loggedInUserRole.name);
       this.setLoggedInUserRole(this.workspaceInfoData.members);
     });

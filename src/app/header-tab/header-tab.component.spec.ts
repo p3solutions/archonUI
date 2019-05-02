@@ -8,6 +8,7 @@ import { ManageMembersService } from '../manage-members/manage-members.service';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AddMembersService } from '../add-members/add-members.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 describe('HeaderTabComponent', () => {
   let component: HeaderTabComponent;
@@ -27,7 +28,8 @@ describe('HeaderTabComponent', () => {
       providers: [
         ManageMembersService,
         AddMembersService,
-        UserinfoService
+        UserinfoService,
+        WorkspaceHeaderService
       ],
     })
     .compileComponents();

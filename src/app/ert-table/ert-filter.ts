@@ -216,3 +216,20 @@ export function deleteNode(filterTree: FilterConfigTree, NodeToDelete: FilterCon
     tempfilterTree.remove(NodeToDelete);
     return tempfilterTree;
 }
+
+
+export class ColumnConfigFunction {
+    function = '';
+    dataType = '';
+    outputType = '';
+}
+
+export const columnConfigFunctionList: ColumnConfigFunction[] = [
+    { function: 'CEIL', dataType: 'INT', outputType: 'NUMBER' },
+    { function: 'FLOOR', dataType: 'INT', outputType: 'NUMBER' },
+    { function: 'LENGTH', dataType: 'VARCHAR', outputType: 'NUMBER' },
+    { function: 'UPPER', dataType: 'VARCHAR', outputType: 'STRING' },
+    { function: 'LOWER', dataType: 'VARCHAR', outputType: 'STRING' },
+    { function: 'SUBSTRING', dataType: 'VARCHAR', outputType: 'STRING' },
+    { function: 'REVERSE', dataType: 'VARCHAR', outputType: 'STRING' },
+];

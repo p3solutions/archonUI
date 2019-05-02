@@ -49,6 +49,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
       this.selectedValues = this.ertService.selectedValues;
       this.joinListMap = this.ertService.joinListMap;
       this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
+      this.enableNextBtn = true;
       this.createchart();
     }
   }
@@ -178,6 +179,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
           if (d.data.visible === false) { return 'hidden'; }
         })
         .on('click', clicked)
+        .on('dblclick', null)
         .call(d3.drag()
           .on('start', dragstarted)
           .on('drag', dragged)
@@ -204,8 +206,9 @@ export class ErtDatarecordConfigComponent implements OnInit {
         link.style('visibility', function (d) { if (d.target.data.visible === false) { return 'visible'; } });
         node.style('visibility', function (d) { if (d.data.visible === false) { return 'visible'; } });
         let ifSelected = 'Primary Table';
+        console.log(d);
         if (d.parent !== null) {
-          if (!d.parent.data.enableClick) {
+          if (!d.data.visible) {
             ifSelected = 'Value Already Selected in this Level';
           } else {
             ifSelected = 'Select Value';
@@ -265,7 +268,8 @@ export class ErtDatarecordConfigComponent implements OnInit {
     }
     const self = this;
     function clicked(d) {
-      if (!d3.event.defaultPrevented) {
+      console.log(d);
+      if (!d3.event.defaultPrevented && d.data.visible) {
         // if (d.children) {
         //   d._children = d.children;
         //   d.children = null;
@@ -302,8 +306,11 @@ export class ErtDatarecordConfigComponent implements OnInit {
         for (const i of self.primaryTable) {
           self.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, self.secondaryTable));
         }
-        self.selectedValues.push(value.name);
+        if (self.selectedValues[self.selectedValues.length - 1] !== value.name) {
+          self.selectedValues.push(value.name);
+        }
         self.data = JSON.parse(toJson(self.selectedValues, self.joinListMap));
+        console.log(self.data);
         update(self.data);
       });
     }

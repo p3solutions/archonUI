@@ -11,51 +11,13 @@ select {
   -webkit-appearance: none;
 }
 
-.date {
-  padding-left: 0px;
-}
-
 .time{
-  padding-left: 0px;
-  padding-top: 18px;
+  padding-bottom: 1.25em;
+  width: 104%;
 }
 
-.input-group-addon {
-  background-color: #87c2ef;
-}
-
-select.round {
-  background-image:
-    linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%),
-    radial-gradient(#ddd 70%, transparent 72%);
-  background-position:
-    calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px),
-    calc(100% - .7em) .5em;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1.5em 1.5em;
-  background-repeat: no-repeat;
-}
-
-.check {
-  position: relative;
-  padding-left: 125px;
-}
-.check2 {
-  position: absolute;
-  top: 59%;
-  left: 0;
-  transform: translateY(-50%);
-  width: 125px !important;
-  height: 40px;
-  display: block;
-  padding-top: 12px;
-}
 .modal-header {
-  padding: 4px;
+  padding: 10px;
   padding-left: 15px;
   background-color: #2879ff;
   border-top-left-radius: 4px;
@@ -70,13 +32,19 @@ select.round {
   color: #ffffff;
 }
 .cancelBtn{
-  color: #fff;
+  color: #000000;
   background-color: #64b5f6;
   border-color: #64b5f6;
   padding-right: 25px;
   padding-left: 25px;
   text-transform: capitalize;
+  transition:0.5s;
 }
+
+.cancelBtn:hover , .next:hover {
+  transform:scale(1.1,1.1);
+  }
+
 .next {
   color: #fff;
   background-color: #2879ff;
@@ -84,7 +52,37 @@ select.round {
   padding-right: 25px;
   padding-left: 25px;
   text-transform: capitalize;
+  transition:0.5s;
 }
+
+.example-full-width {
+  width: 100%;
+}
+
+.info-r {
+  font-size: 19px;
+  padding-left: 7px;
+  display:inline-block;  
+}
+
+.fa-lg  {
+  vertical-align: -7%;
+}
+
+  ::ng-deep .cdk-overlay-container{
+    z-index: 1200 !important;
+}
+
+.heading{
+  margin-left: inherit;
+  width: 96px;
+  padding-top: 30px;
+}
+
+::ng-deep table {
+  width: 107%;
+}
+
 
 
 

@@ -2,26 +2,29 @@
   <div class="row">
     <div class="col-md-3">
       <div class="card" style="height:455px; margin-left: 25px;">
-       <div class="table-list">
-        Table List
-       </div>
-       <div class='body-left'><a href="" style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
-        <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch" (keyup)="searchTablelist()"
-          placeholder="Search Table"></div>
-          
-          <div class='body-right'>
-            <a (click)="getErtAvailableTable()" matTooltip="Add More Table" *ngIf="from ==='TABLE'"
-        class="cursor-poniter" data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
+        <div class="table-list">
+          Table List
+        </div>
+        <div class='body-left'><a href="" style="z-index:1"
+            class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+            (keyup)="searchTablelist()" placeholder="Search Table"></div>
+
+        <div class='body-right'>
+          <a (click)="getErtAvailableTable()" matTooltip="Add More Table" *ngIf="from ==='TABLE'" class="cursor-poniter"
+            data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
 
 
         <div class="card-body" id="ert-tbl-search">
-          
+
           <div id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
-              <div *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
+              <div
+                *ngFor="let item of selectedTableList | paginate: { itemsPerPage: 49, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)" class="well">
                 <div><input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
-                    (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected" type="checkbox"></div>
+                    (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
+                    type="checkbox"></div>
                 <div class="first-div">{{item.tableName}}</div>
                 <div>
                 </div>
@@ -36,18 +39,21 @@
       <div class="card" style="height:455px; margin-right: 25px;">
         <div class="table-list">
           Selected Table Columns List
-         </div>
+        </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-5" id="sel-table-name"> <div class='alias-name'>       
-               
-                    <mat-form-field>
-                        <input type="text" matInput name="tablename" id="tablename"  [(ngModel)]="modifiedTableName"  placeholder="Table Alias Name" (keyup)="toModifiedTableName()">
-                      </mat-form-field>
-                  <!-- <input type="" class="form-control" [(ngModel)]="modifiedTableName" (keyup)="toModifiedTableName()"
-                  name="tablename" id="tablename" placeholder="Enter table Name">--></div> 
-      </div>
-            
+            <div class="col-md-5" id="sel-table-name">
+              <div class='alias-name'>
+
+                <mat-form-field>
+                  <input type="text" matInput name="tablename" id="tablename" [(ngModel)]="modifiedTableName"
+                    placeholder="Table Alias Name" (keyup)="toModifiedTableName()">
+                </mat-form-field>
+                <!-- <input type="" class="form-control" [(ngModel)]="modifiedTableName" (keyup)="toModifiedTableName()"
+                  name="tablename" id="tablename" placeholder="Enter table Name">-->
+              </div>
+            </div>
+
             <div id="" class="col-md-4">
               <div *ngIf="errorMsg!==''" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
@@ -58,18 +64,24 @@
 
             <div class="col-md-3">
               <ul class="nav nav-tabs mgmt-panel fl-r" style="margin-right: 12px;">
-                <li matTooltip="Add User Defined Column" class="icon-list trim-text"><a href="#" (click)="openUsrDefinedColumnModel('addNewColumn')"
-                    data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus-circle edit-circle"></i></a>
+                <li matTooltip="Add User Defined Column" class="icon-list trim-text"><a href="#"
+                    (click)="openUsrDefinedColumnModel('addNewColumn')" data-toggle="modal"
+                    data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus-circle edit-circle"></i></a>
                 <li>
-                <li matTooltip="Add Filter"  title="Add Filter" class="icon-list trim-text"><a href="#" data-toggle="modal" (click)="openFilteronfig()"
-                    data-target="#filter-modal"><i class="fa fa-filter"></i></a>
+                <li matTooltip="Add Filter" style="cursor:pointer" class="icon-list trim-text"><a
+                    (click)="openFilteronfig()"><i class="fa fa-filter"></i></a>
                 <li>
-                <li matTooltip="Reset all modification" data-toggle="modal" data-target="#reset_confirm_model" class="icon-list trim-text"><a ><i class="fa fa-undo"></i></a>
+                <li matTooltip="Reset all modification" data-toggle="modal" data-target="#reset_confirm_model"
+                  class="icon-list trim-text"><a class="cursor-poniter"><i class="fa fa-undo"></i></a>
                 <li>
               </ul>
             </div>
-          </div>          
+          </div>
           <div id="select-tbl-list">
+            <ngx-spinner bdOpacity=0.9 bdColor="#f9f9f9" size="medium" color="#0a85f8" type="ball-beat"
+              [fullScreen]="true">
+              <p style="color: #000000"> Loading... </p>
+            </ngx-spinner>
             <div class="scroll-div">
               <table class="table table-striped">
                 <thead>
@@ -85,20 +97,24 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of showColumns()">
-                    <td><input (change)="selectColumns(item?.originalColumnName,item?.isSelected)" [(ngModel)]="item.isSelected"
-                        type="checkbox"></td>
+                    <td><input (change)="selectColumns(item?.originalColumnName,item?.isSelected)"
+                        [(ngModel)]="item.isSelected" type="checkbox"></td>
                     <td>{{item?.originalColumnName}} <i [ngClass]="{'fa fa-key':item?.isPrimaryKey}"></i></td>
                     <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
                         [ngModel]="item?.modifiedColumnName"></td>
                     <td>{{item?.dataType}}</td>
-                    <td><a *ngIf="item.dataType!=='USERDEFINED'" href="" data-toggle="modal" (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
-                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#config-modal' : '#config-modal'"><i class="fa fa-cog"></i></a></td>
-                    <td><a *ngIf="item.dataType==='USERDEFINED'" (click)="openUsrDefinedColumnModel(item?.originalColumnName)"
-                        data-toggle="modal" data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
-                    <td><a (click)="deleteUsrDefinedColumnForEdit(item?.originalColumnName)" *ngIf="item.dataType==='USERDEFINED'"><i class="fa fa-trash"></i></a></td>
+                    <td><a *ngIf="item.dataType!=='USERDEFINED'" href="" data-toggle="modal"
+                        (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
+                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#config-modal' : '#config-modal'"><i
+                          class="fa fa-cog"></i></a></td>
+                    <td><a *ngIf="item.dataType==='USERDEFINED'"
+                        (click)="openUsrDefinedColumnModel(item?.originalColumnName)" data-toggle="modal"
+                        data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
+                    <td><a (click)="deleteUsrDefinedColumnForEdit(item?.originalColumnName)"
+                        *ngIf="item.dataType==='USERDEFINED'"><i class="fa fa-trash"></i></a></td>
                   </tr>
                   <tr *ngFor="let item of showUserDefinedColumn()">
-                   
+
                     <td><input (change)="selectUserDefinedColumns(item?.originalColumnName,item?.isSelected)"
                         [(ngModel)]="item.isSelected" type="checkbox"></td>
                     <td>{{item?.originalColumnName}}</td>
@@ -108,7 +124,8 @@
                     <td></td>
                     <td><a (click)="openUsrDefinedColumnModel(item?.originalColumnName)" data-toggle="modal"
                         data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
-                    <td><a (click)="deleteUsrDefinedColumn(item?.originalColumnName)"><i class="fa fa-trash"></i></a></td>
+                    <td><a (click)="deleteUsrDefinedColumn(item?.originalColumnName)"><i class="fa fa-trash"></i></a>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -119,10 +136,13 @@
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()" style="float: right;margin-right: 24px">Next</button>
-    <button class="btn btn-primary Previous back" id="back-to-job-config" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">&laquo;
+    <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()"
+      style="float: right;margin-right: 24px">Next</button>
+    <button class="btn btn-primary Previous back" id="back-to-job-config" (click)="gotoJobConfiguration()"
+      style="float:right;margin-right:5px;">&laquo;
       Back</button>
-    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
+    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
+      style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>
@@ -136,16 +156,17 @@
       </div>
       <div class="modal-body">
         <div id="table-name-heading" class="form-group">
-          <input type="text" class="form-control" [disabled]="disabledUserDefinedColName" [(ngModel)]="usrDefinedColumnName"
-            name="ucolumnname" id="ucolumnname" placeholder="Enter unique column name">
+          <input type="text" class="form-control" (keyup)="setQueryModeUserDefined()"
+            [disabled]="disabledUserDefinedColName" [(ngModel)]="usrDefinedColumnName" name="ucolumnname"
+            id="ucolumnname" placeholder="Enter unique column name">
         </div>
         <div>
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
               <div class="panel-heading" role="tab" id="headingOne">
                 <h4 style="text-align:left" class="panel-title">
-                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-                    aria-controls="collapseOne">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
                     Combined Column Mode
                   </a>
                   <i style="float:right" class="fa fa-chevron-right"></i>
@@ -197,12 +218,14 @@
                       <div class="clearflex add-edit-form-item form-group">{{item.prefix}}</div>
                       <div class="clearflex add-edit-form-item form-group">{{item.column}}</div>
                       <div class="clearflex add-edit-form-item form-group">{{item.suffix}}</div>
-                      <div class="clearflex add-edit-form-item form-group"><a (click)="deleteUsrDefinedCol(i)"><i class="fa fa-trash"></i></a></div>
+                      <div class="clearflex add-edit-form-item form-group"><a (click)="deleteUsrDefinedCol(i)"><i
+                            class="fa fa-trash"></i></a></div>
                     </div>
                   </div>
                   <div id="query-mode-div">
                     <label id="lbl-id">Query Mode</label>
-                    <textarea class="form-control" [disabled]="true" [(ngModel)]="usrDefinedQueryView" style="width: 100%;height: 106px;"></textarea>
+                    <textarea class="form-control" [disabled]="true" [(ngModel)]="usrDefinedQueryView"
+                      style="width: 100%;height: 106px;"></textarea>
                   </div>
                 </div>
               </div>
@@ -219,7 +242,8 @@
               </div>
               <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body">
-                  <textarea class="form-control" style="width: 100%;height: 106px;"></textarea>
+                  <textarea class="form-control" (keyup)="setQueryModeUserDefined()"
+                    [(ngModel)]="usrDefinedQueryViewMode" style="width: 100%;height: 106px;"></textarea>
                 </div>
               </div>
             </div>
@@ -227,15 +251,20 @@
         </div>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" [disabled]="userDefinedList.length===0 || usrDefinedColumnName===''"
-          (click)="saveUsrDefinedColumn()" data-dismiss="modal">Save</button>
-        
+        <div style="text-align: -webkit-left" id="query-alert" class="alert-hide alert alert-danger alert-dismissible">
+          <a class="close" (click)="closeUserDefinedAlert()" aria-label="close">&times;</a>
+          <strong>Alert! </strong>{{usrDefinedAlertMessage}}
+        </div>
+        <button type="button" class="btn btn-primary cancelBtnp" id="usr-defined-close"
+          data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary next" [disabled]="enableUserDefined"
+          (click)="saveUsrDefinedColumn()">Save</button>
+
       </div>
     </div>
   </div>
 </div>
-
+<button data-toggle="modal" id="addFilterModelId" data-target="#filter-modal" style="display: none"></button>
 <div id="filter-modal" class="modal fade" role="dialog">
   <div class="modal-dialog" style="width:915px">
     <div class="modal-content">
@@ -249,7 +278,8 @@
               <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                   <a class="nav-item nav-link active-tab" (click)="filterOrderConfig($event)" id="nav-filter-tab"
-                    data-toggle="tab" href="#nav-filter" role="tab" aria-controls="nav-filter" aria-selected="true">Filter
+                    data-toggle="tab" href="#nav-filter" role="tab" aria-controls="nav-filter"
+                    aria-selected="true">Filter
                     Config</a>
                   <a class="nav-item nav-link" (click)="filterOrderConfig($event)" id="nav-data-tab" data-toggle="tab"
                     href="#nav-data" role="tab" aria-controls="nav-data" aria-selected="false">Data Order Config</a>
@@ -261,12 +291,19 @@
                   <ng-template #nodeTemplateRef let-node>
                     <div class="node" [class.node--selected]="( node === selectedTreeNode )">
                       <div aria-expanded="false" data-toggle="collapse" [attr.href]="'#' + node.id">
-                        <div class="filter-toogle-div" (click)="showFilterChild($event)" [style.margin-left.px]="node.margin_left"
-                          *ngIf="node.children.length>0"><i class="fa fa-chevron-down"></i>{{node.operation}}</div>
-                        <div *ngIf="node.children.length==0" [style.margin-left.px]="node.margin_left" class="filter-div form-inline">
-                          <span (click)="deleteFilterConfigTreeNode(node.id)" class="cursor-poniter"><i class="fa fa-trash"></i></span>
-                          <div class="form-group filter-well" (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">AND</div>
-                          <div class="form-group filter-well" (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">OR</div>
+                        <div class="filter-toogle-div" (click)="showFilterChild($event)"
+                          [style.margin-left.px]="node.margin_left" *ngIf="node.children.length>0"><i
+                            class="fa fa-chevron-down"></i>{{node.operation}}</div>
+                        <div *ngIf="node.children.length==0" [style.margin-left.px]="node.margin_left"
+                          class="filter-div form-inline">
+                          <span (click)="deleteFilterConfigTreeNode(node.id)" class="cursor-poniter"><i
+                              class="fa fa-trash"></i></span>
+                          <div class="form-group filter-well"
+                            (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">
+                            AND</div>
+                          <div class="form-group filter-well"
+                            (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">
+                            OR</div>
                           <div class="form-group">
                             <select class="form-control" [(ngModel)]="node.column" #selectfiltercolumn>
                               <option [ngValue]="null" selected>Select Column</option>
@@ -278,6 +315,11 @@
                               <option value="null" selected>Select condition</option>
                               <option value="=">=</option>
                               <option value="!=">!=</option>
+                              <option value="<=">
+                                <=</option> <option value="<">
+                                  <</option> <option value=">=">>=
+                              </option>
+                              <option value=">">></option>
                               <option value="between">between</option>
                               <option value="in">in</option>
                               <option value="is null">is null</option>
@@ -297,7 +339,8 @@
                       </div>
                     </div>
                   </ng-template>
-                  <ng-template [ngTemplateOutlet]="nodeTemplateRef" [ngTemplateOutletContext]="{ $implicit: filterdata.root }">
+                  <ng-template [ngTemplateOutlet]="nodeTemplateRef"
+                    [ngTemplateOutletContext]="{ $implicit: filterdata.root }">
                   </ng-template>
                 </div>
                 <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
@@ -317,7 +360,8 @@
                       <div class="form-inline" *ngFor="let item of dataOrderList">
                         <div class="add-edit-heading form-group">{{item.column}}</div>
                         <div class="add-edit-heading form-group">{{item.order}}</div>
-                        <div class="add-edit-heading form-group"><i click="deleteOrderConfig()" class="fa fa-trash"></i></div>
+                        <div class="add-edit-heading form-group"><i click="deleteOrderConfig()" class="fa fa-trash"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -349,8 +393,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default cancelBtnp" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" (click)="createFilterColumnConfig()" data-dismiss="modal">save</button>
-       
+        <button type="button" class="btn btn-primary next" (click)="createFilterColumnConfig()"
+          data-dismiss="modal">save</button>
+
       </div>
     </div>
   </div>
@@ -370,12 +415,12 @@
           <select class="form-control" #selectValue="ngModel" [ngModel]="configColumnObject.selectedConfigFunction"
             name="configName" (ngModelChange)="setColumnConfigObj(selectValue.value)">
             <option value="null">Select Column</option>
-            <option value="FLOOR">FLOOR</option>
-            <option value="CEIL">CEIL</option>
+            <option *ngFor="let item of columnConfigFunctionList" [value]="item.function">{{item.function}}</option>
           </select>
         </div>
         <div class="form-group">
-          <button type="button" [disabled]="selectValue.value===null" (click)="saveColumnConfig()" class="btn btn-primary next">save</button>
+          <button type="button" [disabled]="selectValue.value===null" (click)="saveColumnConfig()"
+            class="btn btn-primary next">save</button>
         </div>
         <div class="config-table">
           <div class="form-inline" id="config-table-header">
@@ -389,7 +434,7 @@
             <div class="form-group">#</div>
             <div class="form-group">{{item.selectedConfigFunction}}</div>
             <div class="form-group">{{item.selectedColumnName}}</div>
-            <div class="form-group">Number</div>
+            <div class="form-group">{{item.outputType}}</div>
             <div class="form-group cursor-pointer"><i class="fa fa-trash" (click)="deleteColumnCOnfig(i)"></i></div>
           </div>
         </div>
@@ -418,9 +463,10 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer">       
+      <div class="modal-footer">
         <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" (click)="addAvailableTable()" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-primary next" (click)="addAvailableTable()"
+          data-dismiss="modal">Save</button>
       </div>
     </div>
   </div>
@@ -435,26 +481,47 @@
         <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
         <button type="button" class="btn btn-primary next" (click)="refreshColumn()" data-dismiss="modal">Yes</button>
-        
+
       </div>
     </div>
   </div>
 </div>
 <div id="confirm_model" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content" style="width: 430px;">
-        <div class="modal-header">
-          <div class="modal-title">Confirm Cancel</div>
-        </div>
-        <div class="modal-body">
-          <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
-        </div>
-        <div class="modal-footer">         
-          <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-primary next" (click)="cancel()" data-dismiss="modal">Yes</button>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 430px;">
+      <div class="modal-header">
+        <div class="modal-title">Confirm Cancel</div>
+      </div>
+      <div class="modal-body">
+        <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary next" (click)="cancel()" data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
+</div>
+
+<button style="display:none" type="button" id="warning-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header adhoc-modal-header">
+        <h4 class="modal-title">Alert!</h4>
+      </div>
+      <div class="modal-body">
+        <p>Filter can only be applied on primary table.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

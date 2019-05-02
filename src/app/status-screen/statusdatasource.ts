@@ -1,6 +1,7 @@
 import { DataSource } from '@angular/cdk/table';
 import { StatusService } from './status.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { StatusScreenComponent } from './status-screen.component';
 
 export class StatusDataSource implements DataSource<any> {
 
@@ -8,8 +9,10 @@ export class StatusDataSource implements DataSource<any> {
     private adhocSubject = new BehaviorSubject<any>([]);
     searchArray = [];
     indexValue;
+    paginationRequired = false;
 
-    constructor(private statusService: StatusService) { }
+    constructor(private statusService: StatusService) { 
+    }
 
     connect(): Observable<any> {
         return this.adhocSubject.asObservable();
@@ -34,10 +37,11 @@ export class StatusDataSource implements DataSource<any> {
 
     filter(index, search) {
       this.statusService.getSearchResult(index, search).subscribe(result => {
+          console.log(result, 'filter');
           result.list.forEach((value, index ) => {
             value.position = index + 1;
         });
-        this.totalScreen = result.totalScreen;
+        this.totalScreen = result.totalJobList;
         this.adhocSubject.next(result.list);
       });
     }

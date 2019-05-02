@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 describe('WorkspaceMgmtPanelComponent', () => {
   let component: WorkspaceMgmtPanelComponent;
@@ -15,10 +16,11 @@ describe('WorkspaceMgmtPanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorkspaceMgmtPanelComponent ],
+      declarations: [WorkspaceMgmtPanelComponent],
+      providers: [WorkspaceHeaderService],
       imports: [HttpClientModule, RouterTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

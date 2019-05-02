@@ -8,8 +8,14 @@ import { EnvironmentService } from './environment/environment.service';
 
 @Injectable()
 export class UserWorkspaceService {
+<<<<<<< HEAD
   apiUrl = this.environment.apiUrl;
   getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
+=======
+  apiUrl = environment.apiUrl;
+  getConfiguredDBurl = `${this.apiUrl}dbs/configured/schemaReadyDbs`;
+  getConfigDBurl = `${this.apiUrl}dbs/configured`;
+>>>>>>> 9261bf4ceebcc4addd4a0b346ada90a09abdaef4
   createNewWSurl = `${this.apiUrl}workspaces`;
   getAppConfigUrl = `${this.apiUrl}application/config`;
   checkDbConnectionUrl = `${this.apiUrl}dbs/configured/connection`;
@@ -30,7 +36,7 @@ export class UserWorkspaceService {
   }
 
   getUserWorkspaceUrl() {
-    return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
+    return this.apiUrl + 'workspaces/approvedWorkspaces?userId=' + this.userinfoService.getUserId();
   }
 
   getWorkspaceByOwnerIdUrl() {
@@ -63,7 +69,7 @@ export class UserWorkspaceService {
   // Create new Database Configuration service api
   createNewDBConfig(dbParam: AnyObject) {
     dbParam.ownerId = this.userinfoService.getUserId();
-    return this.http.post<CreateConfigDBObject>(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() }).pipe(
+    return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, dbParam, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractData),
       catchError(this.handleError<WorkspaceObject>('createNewDBConfig'))
     );

@@ -46,15 +46,10 @@ export class ForgotpasswordFormComponent implements OnInit {
         this.forgotPasswordForm.reset();
       },
       (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-        } else {
-          // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong,
+        if (err.error) {
           this.errorObject = new ErrorObject;
           this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = !err.error.success;
-          // this.router.navigate(['/forgot-password']);
         }
       }
     );

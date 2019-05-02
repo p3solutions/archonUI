@@ -3,7 +3,7 @@
   <div class="modal-dialog {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
     <div class="modal-content text-left">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 *ngIf="!newWSinfo" class="modal-title">Create New Workspace</h4>
@@ -68,7 +68,7 @@
                         <thead>
                           <tr>
                             <th></th>
-                            <th>Workspaces Name</th>
+                            <th>Database Profile Name</th>
                             <th>Database Name</th>
                             <th>Owner</th>
                             <th>Created Date</th>
@@ -137,13 +137,23 @@
           </a>
         </div>
       <!-- / end of Carousel -->
-      </div>
+      </div>      
       <div class="modal-footer {{newWSinfo ? 'msg-footer' : ''}}">
+          <div class="col-md-7">    
+              <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+                  <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <strong>Workspace name  is already used </strong>
+                </div>  
+             </div>    
+          <div class="col-md-5">
         <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
-        <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event)">Previous</button>
-        <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
+        <button type="button" id="prev-btn" class="btn btn-primary hide" (click)="prevStep($event);closeErrorMsg()">Previous</button>
+        <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event);closeErrorMsg()">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
         <button type="button" id="create-btn" class="btn btn-primary hide" (click)="createWS()">Create&nbsp;</button>
         <button type="button" id="ok-btn" class="btn btn-primary hide" data-dismiss="modal" (click)="resetCarousel()">Done</button>
+      </div>
       </div>
 
     </div>
