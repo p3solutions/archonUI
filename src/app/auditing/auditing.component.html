@@ -130,11 +130,10 @@
 <!-- Modal -->
 <div id="detailsModel" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title text-left">Job Details</h4>
-          </div>
+      <div class="modal-content" style="width: 630px;">
+          <div class="modal-header">
+            <div class='model-title'><div class='info-r'>Job Details</div></div>
+        </div>
         <div class="modal-body">
             <table class="table table-bordered">
                 <thead>
@@ -162,7 +161,7 @@
               </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
       </div>
     </div>
   <button #click data-toggle="modal" href="#detailsModel" [hidden]="true"></button>
