@@ -342,7 +342,7 @@ export class ErtSipConfigComponent implements OnInit {
     }
 
     function dragended(d) {
-      if (!d3.event.active) { simulation.alphaTarget(0); }
+      // if (!d3.event.active) { simulation.alphaTarget(0); }
       d.fx = d.x;
       d.fy = d.y;
     }
