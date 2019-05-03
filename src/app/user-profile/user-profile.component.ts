@@ -62,8 +62,9 @@ export class UserProfileComponent implements OnInit {
             id: res.data.user.id,
             email: res.data.user.emailAddress,
             firstName: res.data.user.firstName,
-            lastName: res.data.user.lastName
-            //name: res.data.user.firstName + ' ' + res.data.user.lastName
+            lastName: res.data.user.lastName,
+            globalgroup: res.data.groupName
+            // name: res.data.user.firstName + ' ' + res.data.user.lastName
           };
           this.getWorkspaceList(this.userInfo.id);
           if (res.data.user.globalRoles && res.data.user.globalRoles.length) {

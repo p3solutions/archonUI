@@ -19,6 +19,8 @@ export class ErtTableColumnConfigComponent implements OnInit {
   selectedTableId = '';
   selectedTableName = '';
   ExpectedTableName = '';
+  isDisabled: boolean;
+  issaveDisabled: boolean;
   successMsg = '';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
@@ -89,6 +91,13 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
 
   saveERTJob(ertJobStatus: string) {
+    this.isDisabled = false;
+    this.issaveDisabled = false;
+    if (ertJobStatus === 'READY') {
+    this.isDisabled = true;
+  } else if (ertJobStatus === 'DRAFT') {
+    this.issaveDisabled = true;
+  }
     for (const item of this.ertService.selectedList.filter(a => a.isSelected === true)) {
       if (item.filterAndOrderConfig.filterConfig === '' && item.filterAndOrderConfig.filterQuery === '') {
         delete item['filterAndOrderConfig'];

@@ -30,6 +30,11 @@ export class TableListService {
   private tableListUrlMMR = this.apiUrl + 'metalyzer/getRelationshipList?workspaceId=';
   userselectTableslist = this.selectTableslist.asObservable();
 
+  private selectDropdownlist = new BehaviorSubject('false');
+  Dropdownlist = this.selectDropdownlist.asObservable();
+  startIndex = 1;
+ 
+
   constructor(private http: HttpClient,
     private userinfoService: UserinfoService,
     private environment: EnvironmentService
@@ -162,6 +167,9 @@ export class TableListService {
 
   selectTables(message) {
     this.selectTableslist.next(message);
+  }
+  selectDropdown(message) {
+    this.selectDropdownlist.next(message);
   }
   getExportxml(workspaceId, databaseID, xml, tableID): Observable<Blob> {
     const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml, tableId: [tableID] };

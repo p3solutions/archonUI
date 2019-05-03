@@ -57,6 +57,11 @@
           title="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
     </div>
   </div>
+  <div class="col-md-12" *ngIf="ertJobslist">
+    <h5 style="text-align: center; margin-top: 50px;">
+      Currently no job configurations  (Click on + icon to add job configuration)
+    </h5>
+  </div>
 </div>
 <button type="button" id="opneDetailPopup" style="display:none" class="btn btn-info btn-lg" data-toggle="modal"
   data-target="#job-detailConfig">Open Modal</button>
@@ -130,19 +135,20 @@
 <button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
 <div id="successModel" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-header adhoc-modal-header">
-      <h4 class="modal-title">Alert!</h4>
-    </div>
-    <div class="modal-content">
-      <div class="modal-body">
-        <h1>{{successMsg}}</h1>
-        <p *ngIf="isSuccessMsg">check on Job Status page</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal"
-          (click)="close()">Close</button>
-      </div>
-    </div>
+
+      <div class="modal-content" style="width: 430px;">
+          <div class="modal-header">
+            <div class='model-title'><div class='info-r'> Message</div></div>
+        </div>
+          <div class="modal-body">
+           <p style="text-align:left; size: 18px;"> {{successMsg}}.</p>
+           <p *ngIf="isSuccessMsg" style="text-align:left;">check on Job Status page</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default cancel" (click)="close()" data-dismiss="modal">CLOSE</button>          
+          </div>
+        </div>
+
   </div>
 </div>
 <button style="display:none" type="button" id="warning-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"

@@ -89,6 +89,17 @@
             </td>
           </tr>
           <tr>
+              <td class="col-md-2 col-title">
+                <b>Global Group</b>
+              </td>
+              <td *ngIf="userInfo" class="ws-info-data col-info-data">
+                {{userInfo?.globalgroup}}
+              </td>
+              <td *ngIf="!userInfo" class="text-center">
+                <i class="fa fa-spinner fa-spin loading"></i>
+              </td>
+            </tr>
+          <tr>
             <td class="col-md-2 col-title">
               <b>Workspaces</b>
             </td>
@@ -100,7 +111,7 @@
             <td *ngIf="!userInfo" class="text-center">
               <i class="fa fa-spinner fa-spin loading"></i>
             </td>
-          </tr>
+          </tr>          
         </tbody>
       </table>
     </div>

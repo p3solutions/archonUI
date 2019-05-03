@@ -154,3 +154,41 @@
     border-spacing: 0;
     width: 100%;
 }
+.modal-dialog{
+  overflow-y: initial !important
+}
+.modal-body{
+  /* height: 250px; */
+  overflow-y: auto;
+}
+.modal-header {
+padding: 10px;
+padding-left: 15px;
+background-color: #2879ff;
+border-top-left-radius: 4px;
+border-top-right-radius: 4px;
+}
+.info-r {
+font-size: 18px;
+padding-left: 10px;
+display:inline-block;  
+}
+
+.model-title {
+float: left;
+display:inline-block;
+font-size: 20px;
+padding: -1px 15px 10px 15px;
+text-align: left;
+color: #ffffff;
+}
+.cancel {
+background-color: #2879ff;
+border: #2879ff;
+color: #ffffff;
+transition:0.5s;
+}
+
+.cancel:hover {
+transform:scale(1.1,1.1);
+}

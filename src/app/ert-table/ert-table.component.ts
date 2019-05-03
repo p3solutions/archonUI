@@ -58,6 +58,9 @@ export class ErtTableComponent implements OnInit {
   enableUserDefined = false;
   usrDefinedAlertMessage = '';
   columnConfigFunctionList: ColumnConfigFunction[] = [];
+
+  ertedittable: boolean;
+
   lastPage = 1;
   storeSelectedTables: TableDetailsListObj[] = [];
   itemsPerPage = 49;
@@ -66,6 +69,7 @@ export class ErtTableComponent implements OnInit {
   avilableTableCount = 0;
   storeAvaliableTables: ErtTableObj[] = [];
   showAvilableBtn = false;
+
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -89,6 +93,7 @@ export class ErtTableComponent implements OnInit {
     } else if (this.from === 'SIP') {
       this.getERTtableListForSIP();
     } else {
+      this.ertedittable = true;
       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
         document.getElementById('back-to-job-config').classList.add('hide');
       }
