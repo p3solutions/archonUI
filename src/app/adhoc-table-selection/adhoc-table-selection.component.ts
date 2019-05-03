@@ -297,7 +297,7 @@ export class AdhocTableSelectionComponent implements OnInit {
         node.style('visibility', function (d) { if (d.data.visible === false) { return 'visible'; } });
         let ifSelected = 'Primary Table';
         if (d.parent !== null) {
-          if (!d.parent.data.enableClick) {
+          if (!d.data.visible) {
             ifSelected = 'Value Already Selected in this Level';
           } else {
             ifSelected = 'Select Value';
@@ -357,7 +357,7 @@ export class AdhocTableSelectionComponent implements OnInit {
     }
     const self = this;
     function clicked(d) {
-      if (!d3.event.defaultPrevented) {
+      if (!d3.event.defaultPrevented && d.data.visible) {
         // if (d.children) {
         //   d._children = d.children;
         //   d.children = null;

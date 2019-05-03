@@ -50,6 +50,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
     this.userList = [];
     this.addMembersService.getAllUsers()
     .subscribe((res: any) => {
+      console.log(res);
       res.usersList.forEach((user: any) => {
         this.isLoading = false;
         if (!this.existingUsers.includes(user.id)) {

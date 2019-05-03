@@ -206,8 +206,9 @@ export class ErtDatarecordConfigComponent implements OnInit {
         link.style('visibility', function (d) { if (d.target.data.visible === false) { return 'visible'; } });
         node.style('visibility', function (d) { if (d.data.visible === false) { return 'visible'; } });
         let ifSelected = 'Primary Table';
+        console.log(d);
         if (d.parent !== null) {
-          if (!d.parent.data.enableClick) {
+          if (!d.data.visible) {
             ifSelected = 'Value Already Selected in this Level';
           } else {
             ifSelected = 'Select Value';
@@ -267,7 +268,8 @@ export class ErtDatarecordConfigComponent implements OnInit {
     }
     const self = this;
     function clicked(d) {
-      if (!d3.event.defaultPrevented) {
+      console.log(d);
+      if (!d3.event.defaultPrevented && d.data.visible) {
         // if (d.children) {
         //   d._children = d.children;
         //   d.children = null;
@@ -308,6 +310,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
           self.selectedValues.push(value.name);
         }
         self.data = JSON.parse(toJson(self.selectedValues, self.joinListMap));
+        console.log(self.data);
         update(self.data);
       });
     }
