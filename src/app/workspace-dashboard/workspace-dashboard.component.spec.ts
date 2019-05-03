@@ -13,6 +13,9 @@ import { WorkspaceServicesService } from '../workspace-services/workspace-servic
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { DynamicLoaderService } from '../dynamic-loader.service';
+import { MatFormFieldModule, MatRadioModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '../material-module';
 
 describe('WorkspaceDashboardComponent', () => {
   let component: WorkspaceDashboardComponent;
@@ -23,7 +26,7 @@ describe('WorkspaceDashboardComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientModule,
-        HttpClientTestingModule
+        HttpClientTestingModule, MatFormFieldModule, FormsModule, MatRadioModule, MaterialModule
       ],
       providers: [
         RouterTestingModule,

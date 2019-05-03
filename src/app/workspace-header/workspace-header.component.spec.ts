@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { WorkspaceHeaderComponent } from './workspace-header.component';
 import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,6 +15,9 @@ import { WorkspaceHeaderService } from './workspace-header.service';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { DynamicLoaderService } from '../dynamic-loader.service';
+import { MatFormField, MatFormFieldModule, MatRadioModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '../material-module';
 
 describe('WorkspaceHeaderComponent', () => {
   let component: WorkspaceHeaderComponent;
@@ -65,7 +68,7 @@ describe('WorkspaceHeaderComponent', () => {
       imports: [
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule, MatFormFieldModule, FormsModule, MatRadioModule, MaterialModule
       ],
       declarations: [
         WorkspaceHeaderComponent,
@@ -81,6 +84,7 @@ describe('WorkspaceHeaderComponent', () => {
         UserProfileService,
         DynamicLoaderService
       ],
+      schemas:[NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
