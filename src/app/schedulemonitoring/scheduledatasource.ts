@@ -38,7 +38,7 @@ export class ScheduleDataSource implements DataSource<any> {
             result.scheduleJobList.forEach((value, index ) => {
               value.position = index + 1;
           });
-          this.totalScreen = result.totalScreen;
+          this.totalScreen = result.totalJobList;
           this.adhocSubject.next(result.scheduleJobList);
         });
       }

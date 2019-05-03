@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
 
 import { Observable ,  of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 import { SignUp } from '../sign-up';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class SignupFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private signupUrl = environment.apiUrl + 'auth/signup';
+  private signupUrl = this.environment.apiUrl + 'auth/signup';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private environment: EnvironmentService
+    ) { }
   signUp(signup_info: SignUp): Observable<SignUp> {
     return this.http.post<SignUp>(this.signupUrl, signup_info, { headers: this.headers });
   }

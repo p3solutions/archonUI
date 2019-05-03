@@ -1,18 +1,21 @@
 import { Component, OnInit, Input, Output, SimpleChanges, OnChanges, EventEmitter } from '@angular/core';
 import { AddMembersService } from './add-members.service';
 import { ActivatedRoute } from '@angular/router';
-import { UserWorkspaceService } from '../user-workspace.service';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { ErrorObject } from '../error-object';
+import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
+
+export let lockeduser = [];
 
 @Component({
   selector: 'app-add-members',
   templateUrl: './add-members.component.html',
   styleUrls: ['./add-members.component.css']
 })
+
 export class AddMembersComponent implements OnInit, OnChanges {
   userList = [];
-  @Input() existingUsers: any;
+  @Input() existingUsers = [];
   selectedUserIdList = [];
   workspaceId: string;
   wsRoleList = [];
@@ -36,6 +39,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.getRoleList();
+    this.getUserList();
   }
 
   ngOnChanges(change: SimpleChanges) {
@@ -51,23 +55,11 @@ export class AddMembersComponent implements OnInit, OnChanges {
     this.userList = [];
     this.addMembersService.getAllUsers()
     .subscribe((res: any) => {
-      console.log(res);
       res.usersList.forEach((user: any) => {
         this.isLoading = false;
-        this.userList.push(user);
-        // if (user.globalRoles[0].roleName === 'ROLE_MEMBER' || user.globalRoles[0].roleName === 'ROLE_ADMIN' ||
-        // user.globalRoles[0].roleName === 'ROLE_NOT_ASSIGNED') {
-        //     let existingUserIndex;
-        //     for (let i = 0; i < this.existingUsers.length; i++) {
-        //       if (this.existingUsers[i] === user.id) {
-        //         existingUserIndex = i;
-        //         break;
-        //       }
-        //     }
-        //     if (existingUserIndex === undefined) {
-        //       this.userList.push(user);
-        //     }
-        //   }
+        if (!this.existingUsers.includes(user.id) && !lockeduser.includes(user.id)) {
+          this.userList.push(user);
+        }
       });
     });
   }
@@ -116,9 +108,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
   }
 
   setRole(user, event) {
-    // depends on the html structure order
     const checkbox: HTMLInputElement = event.target.parentNode.parentNode.childNodes[1].childNodes[0];
-    // checkbox.click();
     const index = this.selectedUserIdList.indexOf(user);
     const roleId = event.target.value;
     if (index !== -1) {
@@ -142,6 +132,4 @@ export class AddMembersComponent implements OnInit, OnChanges {
     this.errorObject = null;
   }
 
-  // role selection check before adding members
-  // owner can be selected only once for a WS, if it already exist, disable owner option in dropdown
 }

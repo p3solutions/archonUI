@@ -18,31 +18,44 @@
     </div>
 
     <div class="col-md-3" style="text-align: right; margin-top: -9px;">
-      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert/ert-jobs-config']" matTooltip="Add Job"> <i class="material-icons">
-        add_circle
+      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert/ert-jobs-config']"
+        matTooltip="Add Job"> <i class="material-icons">
+          add_circle
         </i></a>
     </div>
   </div>
   <div *ngFor="let item of ertJobs" class="col-md-3 card">
-      <div class="flex-cards-bar">
-          <div class='title'>{{item.jobTitle===''?'No_title':item.jobTitle | titlecase}}<div class='info'><span (click)="showJobDetails(item.jobId)"  title="Click for more info"><i class="fa fa-info-circle" aria-hidden="true"></i></span></div></div>
-           <!-- <div class='delete'><span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job">X</span></div>  
+    <div class="flex-cards-bar">
+      <div class='title'>{{item.jobTitle===''?'No_title':item.jobTitle | titlecase}}<div class='info'><span
+            (click)="showJobDetails(item.jobId)" title="Click for more info"><i class="fa fa-info-circle"
+              aria-hidden="true"></i></span></div>
+      </div>
+      <!-- <div class='delete'><span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job">X</span></div>  
    -->
-   <div class='delete'>  <button type="button" class="close" data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete" >
-    <span aria-hidden="true">&times;</span>
-</button></div>
+      <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
+          (click)="setJobId(item.jobId)" title="Delete">
+          <span aria-hidden="true">&times;</span>
+        </button></div>
     </div>
     <div class="flex-cards-body">
-        <div class='body-left'>Job Status</div><div class='body-center'>:</div><div class='body-right'> {{item.jobStatus}}</div>
-        <div class='body-left'>Job Mode</div><div class='body-center'>:</div><div class='body-right'>{{item.jobMode}}</div>
-        <div class='body-left'>Created Date</div><div class='body-center'>:</div><div class='body-right'> {{item.createdDate | date}}</div>
+      <div class='body-left'>Job Status</div>
+      <div class='body-center'>:</div>
+      <div class='body-right'> {{item.jobStatus}}</div>
+      <div class='body-left'>Job Mode</div>
+      <div class='body-center'>:</div>
+      <div class='body-right'>{{item.jobMode}}</div>
+      <div class='body-left'>Created Date</div>
+      <div class='body-center'>:</div>
+      <div class='body-right'> {{item.createdDate | date}}</div>
     </div><br>
-   
+
     <div class="flex-cards-footer">
-      <div class='foo-icon'><a [class.disabled]="item.madeDisable" title="Run Job" (click)="!madeDisable && openScheduleModel(item.jobId,item.jobStatus)"
-       class="cursor-poniter fonticonbelow" ><i class="fa fa-play" aria-hidden="true"></i></a></div> 
-        <div class='foo-iconedit'><span (click)="gotoEditJob(item.jobId)" title="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></div>
-      </div>
+      <div class='foo-icon'><a [class.disabled]="item.madeDisable" title="Run Job"
+          (click)="!madeDisable && openScheduleModel(item.jobId,item.jobStatus)" class="cursor-poniter fonticonbelow"><i
+            class="fa fa-play" aria-hidden="true"></i></a></div>
+      <div class='foo-iconedit'><a (click)="!madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
+          title="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
+    </div>
   </div>
   <div class="col-md-12" *ngIf="ertJobslist">
     <h5 style="text-align: center; margin-top: 50px;">
@@ -56,38 +69,40 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-            <div class='model-title'><i class="fa fa-tachometer"></i><div class='info-r'>Job Dashboard</div></div>
-          </div>
-      <table class="table table-hover">    
-          <tbody>
-            <tr>
-              <td class="tdl">Job Name</td>
-              <td class="tdr">{{ertJobDetail.jobTitle | titlecase}}</td>
-            </tr>
-            <tr>
-              <td class="tdl">Job Type</td>
-              <td class="tdr">{{ertJobDetail.jobMode}}</td>
-            </tr>
-            <tr>
-              <td class="tdl">Job Status</td>
-              <td class="tdr">{{ertJobDetail.jobStatus}}</td>
-            </tr>
-       <tr>
-              <td class="tdl">Created By</td>
-              <td class="tdr">{{ertJobDetail.createdBy}}</td>
-            </tr>
-        <tr>
+        <div class='model-title'><i class="fa fa-tachometer"></i>
+          <div class='info-r'>Job Dashboard</div>
+        </div>
+      </div>
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td class="tdl">Job Name</td>
+            <td class="tdr">{{ertJobDetail.jobTitle | titlecase}}</td>
+          </tr>
+          <tr>
+            <td class="tdl">Job Type</td>
+            <td class="tdr">{{ertJobDetail.jobMode}}</td>
+          </tr>
+          <tr>
+            <td class="tdl">Job Status</td>
+            <td class="tdr">{{ertJobDetail.jobStatus}}</td>
+          </tr>
+          <tr>
+            <td class="tdl">Created By</td>
+            <td class="tdr">{{ertJobDetail.createdBy}}</td>
+          </tr>
+          <tr>
             <td class="tdl">Created Date</td>
             <td class="tdr"> {{ertJobDetail.createdDate | date}}</td>
           </tr>
-        <tr>
+          <tr>
             <td class="tdl">Last Accessed By</td>
             <td class="tdr">{{ertJobDetail.lastAccessedBy}}</td>
           </tr>
-        <tr>
+          <tr>
             <td class="tdl">Last Accessed Date</td>
             <td class="tdr">{{ertJobDetail.lastAccessedDate | date }}</td>
-          </tr> 
+          </tr>
         </tbody>
       </table>
       <div class="modal-footer">
@@ -113,11 +128,14 @@
     </div>
   </div>
 </div>
-<app-schedule-job class="modal fade" id="openScheduleJob" [insid]="ERT" role="dialog" (ObjectEmit)="runJob($event)"></app-schedule-job>
-<button  data-toggle="modal" id="openScheduleModel" href="#openScheduleJob" data-keyboard="false" data-backdrop="static" style="display:none">Schedule</button>
+<app-schedule-job class="modal fade" id="openScheduleJob" [insid]="ERT" role="dialog" (ObjectEmit)="runJob($event)">
+</app-schedule-job>
+<button data-toggle="modal" id="openScheduleModel" href="#openScheduleJob" data-keyboard="false" data-backdrop="static"
+  style="display:none">Schedule</button>
 <button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
 <div id="successModel" class="modal fade" role="dialog">
   <div class="modal-dialog">
+
       <div class="modal-content" style="width: 430px;">
           <div class="modal-header">
             <div class='model-title'><div class='info-r'> Message</div></div>
@@ -130,5 +148,26 @@
             <button type="button" class="btn btn-default cancel" (click)="close()" data-dismiss="modal">CLOSE</button>          
           </div>
         </div>
+
+  </div>
+</div>
+<button style="display:none" type="button" id="warning-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header adhoc-modal-header">
+        <h4 class="modal-title">Alert!</h4>
+      </div>
+      <div class="modal-body">
+        <p>In progress and scheduled job can not be edit.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
   </div>
 </div>

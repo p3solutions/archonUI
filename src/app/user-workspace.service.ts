@@ -4,11 +4,11 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { WorkspaceObject, ConfiguredDB, AnyObject, CreateConfigDBObject } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
-import { environment } from '../environments/environment';
+import { EnvironmentService } from './environment/environment.service';
 
 @Injectable()
 export class UserWorkspaceService {
-  apiUrl = environment.apiUrl;
+  apiUrl = this.environment.apiUrl;
   getConfiguredDBurl = `${this.apiUrl}dbs/configured/schemaReadyDbs`;
   getConfigDBurl = `${this.apiUrl}dbs/configured`;
   createNewWSurl = `${this.apiUrl}workspaces`;
@@ -16,7 +16,8 @@ export class UserWorkspaceService {
   checkDbConnectionUrl = `${this.apiUrl}dbs/configured/connection`;
   constructor(
     private http: HttpClient,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
   ) {
     this.http = http;
   }

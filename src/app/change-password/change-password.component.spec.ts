@@ -8,6 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatError, MatFormFieldModule } from '@angular/material';
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
@@ -34,7 +35,7 @@ describe('ChangePasswordComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule, MatFormFieldModule
       ],
       providers: [
         // reference the new instance of formBuilder from above

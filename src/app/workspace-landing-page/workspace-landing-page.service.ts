@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class WorkspaceLandingPageService {
@@ -16,10 +16,11 @@ export class WorkspaceLandingPageService {
 
   constructor(
     private http: HttpClient,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
   ) {
     this.http = http;
-    this.workspacesForUserUrl = environment.apiUrl + 'users/' + this.userinfoService.getUserId();
+    this.workspacesForUserUrl = this.environment.apiUrl + 'users/' + this.userinfoService.getUserId();
     this.headers = this.userinfoService.getHeaders();
   }
 

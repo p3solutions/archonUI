@@ -96,7 +96,6 @@ export class ErtSipConfigComponent implements OnInit {
         this.isRelationNot = true;
         this.enableNextBtn = false;
       }
-      console.log(this.relationshipInfo);
       this.primaryTable = getPrimaryArray(this.relationshipInfo);
       this.secondaryTable = getSecondaryArray(this.relationshipInfo);
       for (const i of this.primaryTable) {

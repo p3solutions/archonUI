@@ -209,6 +209,7 @@
                       <div class="tabular-div col-md-4 dataA-scrollable-div">
                         <div class="col-md-12 p-0 tabular-div-row">
                           <div class="col-md-12 tabular-div-column column-header" title="Primary Column">
+                            <input type="checkbox" (change)="selectAll()">
                             Primary Column
                             <span class="col-loader" [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
                           </div>

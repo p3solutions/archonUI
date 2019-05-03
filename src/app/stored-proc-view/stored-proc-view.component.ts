@@ -76,7 +76,6 @@ export class StoredProcViewComponent implements OnInit {
         }
       }
       this.checkSelectedTables(name); // make checkboxes true if they are already selected for add join
-      console.log(this.selectedSPVJoinList);
     });
   }
 

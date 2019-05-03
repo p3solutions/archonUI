@@ -28,10 +28,9 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   jobServerConfig: any;
   @ViewChild('click') button: ElementRef;
   startIndex = 1;
-  displayedColumns: string[] = ['Job Name', 'Job Origin', 'Scheduled Time', 'Start Time',
+  displayedColumns: string[] = ['jobName', 'Job Origin', 'jobInfo.startTime', 'Start Time',
     'End Time', 'Status', 'Details', 'Retry', 'Download'];
   dataSource: StatusDataSource;
-  totalScreen = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
@@ -39,7 +38,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   constructor(
     private router: Router,
     private statusService: StatusService,
-    private service: AuditService,
+    private service: AuditService
   ) { }
 
   ngOnInit() {
@@ -65,11 +64,15 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadPage())
-      )
-      .subscribe();
+    // merge(this.sort.sortChange, this.paginator.page)
+    //   .pipe(
+    //     tap(() => this.loadPage())
+    //   )
+    //   .subscribe();
+  }
+
+  sortData(sort) {
+  this.dataSource.sortfn(sort);
   }
 
   loadPage() {
@@ -88,8 +91,8 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getStart() {
-    this.dataSource = new StatusDataSource(this.statusService);
-    this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
+  this.dataSource = new StatusDataSource(this.statusService);
+  this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
   }
 
   getJobOrigins() {
@@ -125,6 +128,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   openDetail(id) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
     this.service.getJobDetails(id).subscribe(result => {
+      console.log(result);
       this.common = result.common;
       this.input = result.input;
       this.jobMessage = result.message;

@@ -10,7 +10,6 @@ export function CompleteArray(primaryTableId, primaryTableName, secondaryTableAr
 }
 
 export function getSecondaryArray(data) {
-  console.log(data);
     let secondaryTableArray = [];
     for (const i of data) {
         const secondaryTable = {

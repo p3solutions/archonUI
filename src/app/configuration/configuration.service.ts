@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 import { UserinfoService } from '../userinfo.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -9,13 +9,17 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ConfigurationService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = this.environment.apiUrl;
   saveSMTPConfigurationUrl = this.apiUrl + 'smtp/setup';
   saveRoleGroupConfigurationUrl = this.apiUrl + 'admin/group/global';
   checkExistingSMTPConfigurationUrl = this.apiUrl + 'smtp/config';
   getAllRolesUrl = this.apiUrl + 'roles/global';
 
-  constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
+  constructor(
+    private http: HttpClient,
+    private userInfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
 
   saveSMTPConfiguration(param): Observable<any> {
     return this.http.post<any>(this.saveSMTPConfigurationUrl, param, { headers: this.userInfoService.getHeaders() }).

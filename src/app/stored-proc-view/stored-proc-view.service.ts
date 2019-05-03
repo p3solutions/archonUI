@@ -1,12 +1,11 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { catchError, map } from 'rxjs/operators';
 import { UserinfoService } from '../userinfo.service';
 import { SpvNameList, TableNameAndRelatingTable } from './stored-proc-view';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +15,16 @@ export class StoredProcViewService {
   private addSPVValue = new BehaviorSubject(false);
   currentSPVValue = this.addSPVValue.asObservable();
 
-  private apiUrl = environment.apiUrl;
+  private apiUrl = this.environment.apiUrl;
   getSPVNameListUrl: string = this.apiUrl + 'metalyzer/spvanalysis/spvlist?workspaceId=';
   getRelatingTableNameListUrl = this.apiUrl + 'metalyzer/spvanalysis/spvlist/relatingtablelist?workspaceId=';
   createSPVAddJoinurl = this.apiUrl + 'metalyzer/spvanalysis/relationship';
 
-  constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
+  constructor(
+    private http: HttpClient,
+    private userInfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
 
   getSPVNameList(workspaceId: string, tableName: string): Observable<SpvNameList> {
     return this.http.get<SpvNameList>(this.getSPVNameListUrl + workspaceId + '&tableName=' + tableName,

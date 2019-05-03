@@ -1,21 +1,23 @@
-import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
 
-import { Observable ,  of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 import { SignIn } from '../sign-in';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class SigninFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private signinUrl = environment.apiUrl + 'auth/login';
-  constructor(private http: HttpClient) { }
+  private signinUrl = this.environment.apiUrl + 'auth/login';
+  constructor(
+    private http: HttpClient,
+    private environment: EnvironmentService
+  ) { }
   signIn(signin_info: SignIn): Observable<any> {
     return this.http.post<SignIn>(this.signinUrl, signin_info, { headers: this.headers });
   }
+     // .pipe(catchError(this.handleError('addNewJoin()', [])))
 
   /*
  * Handle HttpClient operation that failed.

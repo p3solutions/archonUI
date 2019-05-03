@@ -7,7 +7,7 @@ import { WorkspaceServicesService } from '../workspace-services/workspace-servic
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { WorkspaceHeaderService } from './workspace-header.service';
 import { archonConfig } from '../config';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { jsonpCallbackContext } from '@angular/common/http/src/module';
 import { MetalyzerComponent } from '../metalyzer/metalyzer.component';
@@ -42,6 +42,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     public workspaceHeaderService: WorkspaceHeaderService,
     private router: Router,
     private userProfileService: UserProfileService,
+    private route : ActivatedRoute,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
   ) {
@@ -139,10 +140,26 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
      serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r' , desc: ''});
     const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
     this.workspaceService.updateServiceActions(_temp);
-    //  setTimeout(() => {
-    //  }, 3000);
-
-    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+    const route = this.route.firstChild.routeConfig.path;
+    if (route === 'manage-master-metadata/:id') {
+    const id = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.router.navigate(['workspace/workspace-dashboard']);
+    setTimeout(() => {
+      this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]);
+    }, 50);
+    } else if (route === 'manage-members/:id') {
+      const id = this.workspaceHeaderService.getSelectedWorkspaceId();
+      this.router.navigate(['workspace/workspace-dashboard']);
+      setTimeout(() => {
+        this.router.navigate(['workspace/workspace-dashboard/manage-members/' + id]);
+      }, 50);
+    } else if (route === 'workspace-info/:id') {
+      const id = this.workspaceHeaderService.getSelectedWorkspaceId();
+      this.router.navigate(['workspace/workspace-dashboard']);
+      setTimeout(() => {
+        this.router.navigate(['workspace/workspace-dashboard/workspace-info/' + id]);
+      }, 50);
+    }
   }
 
   onChange(val) {
