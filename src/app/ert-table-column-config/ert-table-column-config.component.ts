@@ -4,6 +4,7 @@ import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { TableDetailsListObj, IngestionDataConfig } from '../ert-landing-page/ert';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-ert-table-column-config',
@@ -18,6 +19,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
   selectedTableId = '';
   selectedTableName = '';
   ExpectedTableName = '';
+  successMsg = '';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
@@ -44,7 +46,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
     } else if (value === 'expected') {
       if (this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0] !== undefined) {
         return this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList
-        .filter(a => a.isSelected === true);
+          .filter(a => a.isSelected === true);
       } else {
         return [];
       }
@@ -146,10 +148,14 @@ export class ErtTableColumnConfigComponent implements OnInit {
     }
     console.log(param);
     this.ertService.saveErtJob(param).subscribe(result => {
-      if (result.httpStatus !== 200) {
-        alert('Job has not saved successfully');
+      document.getElementById('message-popup-btn').click();
+      this.successMsg = result.errorMessage !== null ? result.errorMessage : 'Job saved successfully';
+    }, (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+      } else {
+        document.getElementById('message-popup-btn').click();
+        this.successMsg = err.error.errorMessage;
       }
-      this.router.navigate(['workspace/ert/ert-jobs']);
     });
   }
 

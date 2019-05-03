@@ -76,6 +76,19 @@
   padding-top: 5px;
   padding-left: 3px;
 }
+
+.fa-pencil-square-o-disabled {
+  text-align: center;
+  font-size: 15px;  
+  color: grey;
+  cursor: not-allowed;
+  background-color: #6daeeb;
+  width: 26px;
+  height: 26px;
+  border-radius: 15px;
+  padding-top: 5px;
+  padding-left: 3px;
+}
 .fa-pencil-square-o:hover {
    background-color: #0A85F8;
  }
