@@ -12,6 +12,7 @@ import { WorkspaceListService } from '../workspace-list/workspace-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserProfileService } from './user-profile.service';
 import { ChangePasswordService } from '../change-password/change-password.service';
+import { MatFormFieldModule } from '@angular/material';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -21,7 +22,7 @@ describe('UserProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserProfileComponent, EditProfileComponent, NavbarComponent, ChangePasswordComponent ],
       providers: [UserinfoService, WorkspaceListService, WorkspaceHeaderService, UserProfileService, ChangePasswordService],
-      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule]
+      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, MatFormFieldModule]
     })
     .compileComponents();
   }));

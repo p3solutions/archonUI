@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { ChangePassword } from '../change-password';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ConfirmPasswordValidator, PasswordValidator, ConfirmPasswordValidator2 } from '../signup-form/confirm-password-validator';
 
 
 @Component({
@@ -34,9 +35,10 @@ export class ChangePasswordComponent implements OnInit {
   createForm() {
     this.changePasswordForm = new FormGroup({
       oldPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required])
-    });
+      newPassword: new FormControl('', [Validators.required, PasswordValidator.strong,
+        Validators.minLength(8)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+    }, ConfirmPasswordValidator2.MatchPassword);
   }
   closeErrorMsg() {
     this.errorObject = null;

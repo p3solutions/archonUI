@@ -3,15 +3,19 @@ import { AddMembersService } from './add-members.service';
 import { ActivatedRoute } from '@angular/router';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { ErrorObject } from '../error-object';
+import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
+
+export let lockeduser = [];
 
 @Component({
   selector: 'app-add-members',
   templateUrl: './add-members.component.html',
   styleUrls: ['./add-members.component.css']
 })
+
 export class AddMembersComponent implements OnInit, OnChanges {
   userList = [];
-  @Input() existingUsers: any;
+  @Input() existingUsers = [];
   selectedUserIdList = [];
   workspaceId: string;
   wsRoleList = [];
@@ -35,6 +39,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.getRoleList();
+    this.getUserList();
   }
 
   ngOnChanges(change: SimpleChanges) {
@@ -50,10 +55,9 @@ export class AddMembersComponent implements OnInit, OnChanges {
     this.userList = [];
     this.addMembersService.getAllUsers()
     .subscribe((res: any) => {
-      console.log(res);
       res.usersList.forEach((user: any) => {
         this.isLoading = false;
-        if (!this.existingUsers.includes(user.id)) {
+        if (!this.existingUsers.includes(user.id) && !lockeduser.includes(user.id)) {
           this.userList.push(user);
         }
       });

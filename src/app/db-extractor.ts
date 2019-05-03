@@ -24,7 +24,7 @@ export class ProcessDetailsObj {
   includeTableRelationship = false;
   xmlSplitFileSize = 100;
   maxParallelProcess = 3;
-  incTable = false;
+  incTable = true;
   incView = false;
   xmlXDBCompability = false;
   extractLOBWithXML = false;
