@@ -2,6 +2,12 @@
 
 # Frontend
 
+# Mandatory fields check
+if [[ -z "$HOSTNAME" -o -z "$PORT" ]]; then
+    echo "ERROR: HOSTNAME and PORT are mandatory environment variables"
+    exit 1
+fi
+
 # Validating Archon Connectivity
 timer=0
 while ! nc -z $HOSTNAME $PORT; do
@@ -21,4 +27,3 @@ echo '{"apiUrl":"http://'$HOSTNAME':'$PORT'/"}' > /dist/assets/app-config.json
 echo "Starting frontend"
 /usr/sbin/nginx -g "daemon off;"
 echo "Started frontend"
-
