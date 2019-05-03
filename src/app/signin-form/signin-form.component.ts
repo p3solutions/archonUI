@@ -35,7 +35,7 @@ export class SigninFormComponent implements OnInit {
 
   createForm() {
     this.signInForm = new FormGroup({
-      emailAddress: new FormControl('', [Validators.required, Validators.email]),
+      userId: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
   }
