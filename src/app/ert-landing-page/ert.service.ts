@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { ProgressBarObj, ProcessDetails, ProcessDetailsObj } from '../db-extractor';
-import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { UserinfoService } from '../userinfo.service';
 import {
   ErtTableListObj, ErtColumnListObj, TableDetailsListObj,
   ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo, ExtractConfig
 } from './ert';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +20,12 @@ export class ErtService {
   selectedValues: string[] = [];
   data: any;
   selectedPrimaryTable: any;
-  constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
-  private apiUrl = environment.apiUrl;
+  constructor(
+    private http: HttpClient,
+    private userInfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
+  private apiUrl = this.environment.apiUrl;
   getERTtableListUrl = this.apiUrl + 'ert/ertTableList?workspaceId=';
   getErtAvailableTableUrl = this.apiUrl + 'ert/ertAvailableTables?ertJobId=';
   getERTcolumnlistUrl = this.apiUrl + 'ert/ertColumnList?ertJobId=';

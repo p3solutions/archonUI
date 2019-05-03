@@ -1,0 +1,19 @@
+version: '3.7'
+services: 
+  archon-ui:
+    container_name: archon_ui
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: p3solutions/archon-ui:1.0
+    expose: 
+        - 80
+    ports:
+        - 80:80
+    networks:
+        - archon-network
+    env_file: archon-ui.env
+
+networks:
+    archon-network:
+        driver: bridge

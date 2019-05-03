@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
-import { Observable ,  of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 
 import { MemberRequestData } from '../member-request-data';
-import { environment } from '../../environments/environment';
 
 @Injectable()
 export class MemberRequestService {
@@ -15,16 +13,16 @@ export class MemberRequestService {
   memberRequestUrl = 'api/memberrequest';
   constructor(private http: HttpClient) { }
   getMemberRequestDetails(): Observable<MemberRequestData[]> {
-      return this.http.get<MemberRequestData[]>(this.memberRequestUrl).pipe(
+    return this.http.get<MemberRequestData[]>(this.memberRequestUrl).pipe(
       catchError(this.handleError('memberrequest', []))
     );
   }
 
-// * Handle HttpClient operation that failed.
-// * Let the app continue.
-// * @param operation - name of the operation that failed
-// * @param result - optional value to return as the observable result
-// */
+  // * Handle HttpClient operation that failed.
+  // * Let the app continue.
+  // * @param operation - name of the operation that failed
+  // * @param result - optional value to return as the observable result
+  // */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
@@ -10,14 +10,15 @@ export class ChangePasswordService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
   });
-  private getUsersUrl = environment.apiUrl + 'users/';
+  private getUsersUrl = this.environment.apiUrl + 'users/';
   accessToken: string;
   token_data: any;
   userId: string;
   passwordParam: object;
   constructor(
     private http: HttpClient,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
   ) {
     this.userId = this.userinfoService.getUserId();
   }

@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { ProgressBarObj, ProcessDetails, ProcessDetailsObj } from '../db-extractor';
-import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { UserinfoService } from '../userinfo.service';
 import { Charreplacement } from './charreplacement';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CharReplacementService {
-  constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
-  private apiUrl = environment.apiUrl;
+  constructor(
+    private http: HttpClient,
+    private userInfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
+  private apiUrl = this.environment.apiUrl;
   saveCharRecordUrl = this.apiUrl + 'dataAnalyzer/charReplacement?workspaceId=';
   getAllCharRecordUrl = this.apiUrl + 'dataAnalyzer/charReplacement?workspaceId=';
   editCharRecordUrl = this.apiUrl + 'dataAnalyzer/charReplacement?id=';

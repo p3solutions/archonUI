@@ -7,12 +7,12 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { ManageMembers } from '../manage-members';
 import { UserinfoService } from '../userinfo.service';
-import { environment } from '../../environments/environment';
 import { AnyObject } from '../workspace-objects';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class ManageMembersService {
-  apiUrl = environment.apiUrl;
+  apiUrl = this.environment.apiUrl;
   wSMembersUrl = 'workspaces/';
   wSroleListUrl = 'roles/workspace';
   serviceActionsUrl = 'public/roles/actions';
@@ -21,7 +21,9 @@ export class ManageMembersService {
   headers: HttpHeaders;
 
   constructor(private http: HttpClient,
-    private userinfoService: UserinfoService) {
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) {
     this.headers = userinfoService.getHeaders();
   }
 
