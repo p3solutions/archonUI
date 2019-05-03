@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { takeLast } from 'rxjs/operators';
 import { AddDirectJoinService } from './add-direct-join.service';
+import { TableListService } from '../table-list/table-list.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { AddDirectJoinService } from './add-direct-join.service';
 })
 export class AddDirectJoinComponent implements OnInit, OnChanges {
   @Input() directJoin: any;
-  @Input() tableList: any[];
+  tableList: string[];
   @Input() workspaceID: any;
   @Output() updateEvent = new EventEmitter<boolean>();
   primaryTableName: any;
@@ -25,11 +26,15 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   updateNotif: boolean;
   errorMsg: any;
   updateSuccess: boolean;
+  searchTableName;
+  startIndex = 1;
+  schemaResultsTableCount = 0;
+  paginationRequired: boolean;
 
-  constructor(private addDirectJoinService: AddDirectJoinService) { }
+  constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService) { }
 
   ngOnInit() {
-
+    this.getTableList();
   }
 
   ngOnChanges(change: SimpleChanges) {
@@ -162,6 +167,21 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.errorMsg = '';
     this.updateNotif = false;
     this.updateSuccess = false;
+  }
+
+  searchTablelist() {
+    this.tableList = [];
+     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
+      this.tableList = res.tableList;
+    });
+  }
+  getTableList() {
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+      this.tableList = res.tableList;
+      if (res.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+    }
+    });
   }
 
 }
