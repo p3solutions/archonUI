@@ -133,6 +133,9 @@ export class TableListComponent implements OnInit {
       this.tableList = res.tableList;
       if (this.tableList.length === 0) {
         this.isTablelistAvailable = true;
+        this.tablelistService.selectDropdown(false);
+      } else {
+      this.tablelistService.selectDropdown(true);
       }
       this.isAvailable = true;
       if (res.paginationRequired) {
