@@ -228,3 +228,22 @@
     background-color: #269AF8;
     color: white;
   }
+  .overflow-text {
+    float: left;
+    width: 96%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+  .overflow-text-arrow {
+    float: left;
+    width: 4%;
+    text-align: right;
+    font-size: 12px;
+  }
+  .overflow-textrelation {
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+  }

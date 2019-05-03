@@ -20,8 +20,8 @@
                       </div>
                       <div class="tablename-list da-table-parent">
                         <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList" [hidden]="table.tableName === primaryTableName">
-                          <button type="button" class="btn btn-default list-group-item da-table" (click)="secTable($event, table)">{{table.tableName}}
-                            <i class="fa fa-angle-right unselected"></i>
+                          <button type="button" class="btn btn-default list-group-item da-table" title="{{table.tableName}}" (click)="secTable($event, table)"><div class="overflow-text">{{table.tableName}}
+                          </div> <div class="overflow-text-arrow"><i class="fa fa-angle-right unselected"></i> </div>
                           </button>
                           </div>
                          
