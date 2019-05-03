@@ -24,6 +24,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   auditArray = [];
   updateNotif: boolean;
   p = 1;
+  dropdown: any;
   constructor(
     private router: Router,
     private tablelistService: TableListService,
@@ -43,6 +44,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     });
     this.tablelistService.userselectTableslist.subscribe(data => {
       this.userselectTableslist = data;
+    });
+    this.tablelistService.Dropdownlist.subscribe(data => {
+      this.dropdown = data;
     });
   }
 

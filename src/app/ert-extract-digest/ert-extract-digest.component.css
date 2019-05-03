@@ -65,6 +65,12 @@ mv-slider::ng-deep .slider-handle {
   float: left;
   padding: 3px 8px 5px 16px;
 }
+.note {
+  font-size: 12px;
+    float: left;
+    padding: 3px 8px 5px 19px;
+    margin-top: -24px;
+}
 
 
 #saveBtnId {
