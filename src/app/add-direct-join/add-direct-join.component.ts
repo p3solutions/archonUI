@@ -183,6 +183,16 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     }
     });
   }
+  getPage(page: number) {
+    this.tableList = [];
+    this.startIndex = page;
+    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+      this.tableList = res.tableList;
+      if (res.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+    }
+    });
+  }
 
 }
 
