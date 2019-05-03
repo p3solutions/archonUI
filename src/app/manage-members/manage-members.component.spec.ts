@@ -3,7 +3,7 @@ import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from './manage-members.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs';
@@ -12,6 +12,10 @@ import { WorkspaceServicesComponent } from '../workspace-services/workspace-serv
 import { AddMembersComponent } from '../add-members/add-members.component';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
+import { MatTableModule, MatSortModule, MatDialogModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.service';
 
 describe('ManageMembersComponent', () => {
   let component: ManageMembersComponent;
@@ -35,16 +39,17 @@ describe('ManageMembersComponent', () => {
       imports: [
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule, MatTableModule, MatSortModule, MatDialogModule , BrowserAnimationsModule
       ],
-      declarations: [ManageMembersComponent, AddMembersComponent],
+      declarations: [ManageMembersComponent, AddMembersComponent, ManageUserRolesComponent],
       providers: [
         RouterTestingModule,
         ManageMembersService,
         HttpClientModule,
         UserinfoService,
-        WorkspaceHeaderService
+        WorkspaceHeaderService, ManageUserRolesService
       ],
+      schemas:[NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));

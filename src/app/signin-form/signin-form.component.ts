@@ -35,7 +35,7 @@ export class SigninFormComponent implements OnInit {
 
   createForm() {
     this.signInForm = new FormGroup({
-      emailAddress: new FormControl('', [Validators.required, Validators.email]),
+      userId: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
   }
@@ -70,7 +70,7 @@ export class SigninFormComponent implements OnInit {
     this.errorObject = null;
   }
   enableSignIn() {
-    if (this.signInForm.value.emailAddress && this.signInForm.value.password) {
+    if (this.signInForm.value.userId && this.signInForm.value.password) {
       this.enableSignInBtn = true;
     } else {
       this.enableSignInBtn = false;
