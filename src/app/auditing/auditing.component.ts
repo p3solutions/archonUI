@@ -82,6 +82,11 @@ dataSource: AuditDataSource;
 
   }
 
+  sortData(sort) {
+    this.dataSource.sortfn(sort);
+    }
+
+
 
   openDetail(releatedJobId) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;

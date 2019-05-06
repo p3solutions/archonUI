@@ -30,6 +30,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   startIndex = 1;
   schemaResultsTableCount = 0;
   paginationRequired: boolean;
+  page: number;
 
   constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService) { }
 

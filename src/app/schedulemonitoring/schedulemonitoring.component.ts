@@ -58,12 +58,16 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadPage())
-      )
-      .subscribe();
+    // merge(this.sort.sortChange, this.paginator.page)
+    //   .pipe(
+    //     tap(() => this.loadPage())
+    //   )
+    //   .subscribe();
   }
+
+  sortData(sort) {
+    this.dataSource.sortfn(sort);
+    }
 
   loadPage() {
     this.dataSource.getTable(
