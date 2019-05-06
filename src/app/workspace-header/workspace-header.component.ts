@@ -6,12 +6,9 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { WorkspaceHeaderService } from './workspace-header.service';
-import { archonConfig } from '../config';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { UserProfileService } from '../user-profile/user-profile.service';
-import { jsonpCallbackContext } from '@angular/common/http/src/module';
-import { MetalyzerComponent } from '../metalyzer/metalyzer.component';
-import { FormControl } from '@angular/forms';
+export let firstload = 0;
 @Component({
   selector: 'app-workspace-header',
   templateUrl: './workspace-header.component.html',
@@ -24,7 +21,6 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   userRole: any;
   enableCreate = false;
   enableCreateRoles = ['ROLE_ADMIN', 'ROLE_SUPER', 'ROLE_MANAGE_DB', 'ROLE_MANAGE_ARCHON'];
-  selectedWorkspaceName: string;
   currentWorkspace: WorkspaceObject;
   fn: any;
   dynamicLoaderService: DynamicLoaderService;
@@ -33,7 +29,6 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   userSelectedWorkspace: string;
   @Output() noWorkspace = new EventEmitter<boolean>();
   newWorkspace: boolean;
-  selected;
 
   constructor(
     private userWorkspaceService: UserWorkspaceService,
@@ -51,12 +46,15 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // if new workspace is added, to refresh the list
     this.workspaceHeaderService.currentWSValue.subscribe(value => {
       this.newWorkspace = value;
       if (this.newWorkspace === true) {
         this.getUserWorkspaceList();
       }
      });
+
+    // if user selects workspace from profile.
     this.userProfileService.userSelectedWorkspace.subscribe(data => {
       this.userSelectedWorkspace = data;
     }
@@ -66,6 +64,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     } else {
       this.getUserWorkspaceList();
     }
+ 
+    // user UI restriction
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
      if (this.enableCreateRoles.includes(i)) {
@@ -79,31 +79,17 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
       this.viewContainerRef.remove(0);
     }
   }
-  bindDropdownClick() {
-    $('#selectedWorkspace').off('click').on('click', function () {
-      $('#selectedWorkspace a.dropdown-item').removeClass('selected');
-      $(this).addClass('selected');
-    });
-  }
 
   getUserWorkspaceList() {
-    const bindCallback = this.bindDropdownClick;
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
-      this.selected = new FormControl(this.userWorkspaceArray[0].workspaceName);
-      if (res && res.length > 0) {
-        const fn = function () {
-          const dropdownItem = (<HTMLAnchorElement>document.querySelector('#selectedWorkspace .dropdown-data'));
-          if (dropdownItem) {
-            bindCallback();
-            dropdownItem.click();
-            clearInterval(k);
-          } else if ((currentTime + this.fetchTimeout) > (new Date().getTime())) {
-            clearInterval(k);
+      if (this.workspaceHeaderService.selected === undefined) {
+        for (let i = 0 ; i <= this.userWorkspaceArray.length; i++) {
+          if (i === 0) {
+          this.workspaceHeaderService.selected = this.userWorkspaceArray[i].workspaceName;
+          this.selectWorkspace(this.userWorkspaceArray[i]);
           }
-        };
-        const currentTime = new Date().getTime();
-        const k = setInterval(fn, 500);
+          }
       }
     });
   }
@@ -113,10 +99,6 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
       this.userWorkspaceArray = res;
     });
     this.selectWorkspace(selectedWorkspace);
-  }
-
-  contactAdmin() {
-    // TODO: Contact admin function pending
   }
 
   openCreateWSModal() {
@@ -131,7 +113,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
-    this.selectedWorkspaceName = selectedWorkspace.workspaceName;
+    this.workspaceHeaderService.selected = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
@@ -140,6 +122,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
      serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r' , desc: ''});
     const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
     this.workspaceService.updateServiceActions(_temp);
+
+    // to route to the same page of workspace
     const route = this.route.firstChild.routeConfig.path;
     if (route === 'manage-master-metadata/:id') {
     const id = this.workspaceHeaderService.getSelectedWorkspaceId();
@@ -159,26 +143,6 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.router.navigate(['workspace/workspace-dashboard/workspace-info/' + id]);
       }, 50);
-    }
-  }
-
-  onChange(val) {
-    // const ws = JSON.stringify(val);
-    switch (val) {
-      case '0':
-        // do nothing
-        break;
-      case '1': {
-        this.openCreateWSModal();
-        break;
-      }
-      case '2': {
-        this.contactAdmin();
-        break;
-      }
-      default:
-        // this.selectWorkspace(JSON.parse(ws));
-        break;
     }
   }
 }
