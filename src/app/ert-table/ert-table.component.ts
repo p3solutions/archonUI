@@ -58,9 +58,7 @@ export class ErtTableComponent implements OnInit {
   enableUserDefined = false;
   usrDefinedAlertMessage = '';
   columnConfigFunctionList: ColumnConfigFunction[] = [];
-
   ertedittable: boolean;
-
   lastPage = 1;
   storeSelectedTables: TableDetailsListObj[] = [];
   itemsPerPage = 49;
@@ -69,6 +67,7 @@ export class ErtTableComponent implements OnInit {
   avilableTableCount = 0;
   storeAvaliableTables: ErtTableObj[] = [];
   showAvilableBtn = false;
+  showNoTablesMsg = false;
 
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
@@ -230,16 +229,6 @@ export class ErtTableComponent implements OnInit {
         this.ertAvillableTableList = result;
         this.avilableTableCount = this.ertAvillableTableList.erttableList.sourceTableCount -
           this.ertAvillableTableList.erttableList.selectedTableCount;
-        //  this.avilableTableCount = (page) * 50;
-        // if (this.ertAvillableTableList.isSelectedTableLeft) {
-        //   this.avilableTableCount = this.avilableTableCount + 50;
-        // } else {
-        //   if (this.page === 1) {
-        //     this.avilableTableCount = this.ertAvillableTableList.ertTableList.length;
-        //   } else {
-        //     this.avilableTableCount = (page) * 50 + this.ertAvillableTableList.ertTableList.length;
-        //   }
-        // }
       });
     }
   }
@@ -254,43 +243,47 @@ export class ErtTableComponent implements OnInit {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getERTtableList(this.workspaceId, this.ertJobId, this.startIndex).subscribe((result) => {
       this.ErtTableList = result;
-      this.schemaResultsTableCount = result.sourceTableCount;
-      if (result.selectedTableCount !== 0) {
-        this.schemaResultsTableCount = result.selectedTableCount;
-      }
-      for (const item of this.ErtTableList.ertTableList) {
-        const tempObj: TableDetailsListObj = new TableDetailsListObj();
-        tempObj.tableId = item.tableId;
-        tempObj.tableName = item.tableName;
-        tempObj.modifiedTableName = item.modifiedTableName;
-        if (item.filterNconfig !== null) {
-          tempObj.filterAndOrderConfig = item.filterNconfig;
+      if (this.ErtTableList.ertTableList !== undefined) {
+        this.schemaResultsTableCount = result.sourceTableCount;
+        if (result.selectedTableCount !== 0) {
+          this.schemaResultsTableCount = result.selectedTableCount;
         }
-        if (item.relatedTableDetails !== null) {
-          tempObj.relatedTableDetails = item.relatedTableDetails;
+        for (const item of this.ErtTableList.ertTableList) {
+          const tempObj: TableDetailsListObj = new TableDetailsListObj();
+          tempObj.tableId = item.tableId;
+          tempObj.tableName = item.tableName;
+          tempObj.modifiedTableName = item.modifiedTableName;
+          if (item.filterNconfig !== null) {
+            tempObj.filterAndOrderConfig = item.filterNconfig;
+          }
+          if (item.relatedTableDetails !== null) {
+            tempObj.relatedTableDetails = item.relatedTableDetails;
+          }
+          if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+            tempObj.isSelected = true;
+          }
+          if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
+            this.selectedTableList.push(tempObj);
+          }
         }
         if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-          tempObj.isSelected = true;
+          for (const item of this.selectedTableList) {
+            this.getERTcolumnlist(item.tableId, '');
+          }
         }
-        if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
-          this.selectedTableList.push(tempObj);
+        this.selectedTableId = this.selectedTableList[0].tableId;
+        this.getERTcolumnlist(this.selectedTableId, '');
+        if (this.selectedTableList.length > 0 && this.startIndex === 1) {
+          this.selectedTableList = this.storeSelectedTables.concat(this.selectedTableList);
+          if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+            this.storeSelectedTables = this.selectedTableList.filter(a => a.isSelected === true);
+          }
+          this.itemsPerPage = this.itemsPerPage + this.storeSelectedTables.length;
+        } else {
+          this.itemsPerPage = 49;
         }
-      }
-      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-        for (const item of this.selectedTableList) {
-          this.getERTcolumnlist(item.tableId, '');
-        }
-      }
-      this.selectedTableId = this.selectedTableList[0].tableId;
-      this.getERTcolumnlist(this.selectedTableId, '');
-      if (this.selectedTableList.length > 0 && this.startIndex === 1) {
-        this.selectedTableList = this.storeSelectedTables.concat(this.selectedTableList);
-        if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-          this.storeSelectedTables = this.selectedTableList.filter(a => a.isSelected === true);
-        }
-        this.itemsPerPage = this.itemsPerPage + this.storeSelectedTables.length;
       } else {
-        this.itemsPerPage = 49;
+        this.showNoTablesMsg = true;
       }
     });
   }
@@ -430,6 +423,12 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
+  queryMode() {
+    if (this.userDefinedList.length !== 0) {
+      this.usrDefinedQueryViewMode = '';
+    }
+  }
+
   setColumnConfigObj(value: string) {
     this.configColumnObject.selectedConfigFunction = value;
   }
@@ -498,21 +497,23 @@ export class ErtTableComponent implements OnInit {
 
 
   addColumns(i: number) {
-    const control = <FormArray>this.myForm.controls['addEditColumn'];
-    if (control.controls[i].value.column !== null && control.controls[i].value.column !== '') {
-      this.userDefinedList.push({
-        prefix: control.controls[i].value.prefix, column: control.controls[i].value.column,
-        suffix: control.controls[i].value.suffix
-      });
-      const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
-        === control.controls[i].value.column);
-      if (tempIndex !== -1) {
-        this.ursDefinedColumnNameList.splice(tempIndex, 1);
+    if (this.usrDefinedQueryViewMode === '') {
+      const control = <FormArray>this.myForm.controls['addEditColumn'];
+      if (control.controls[i].value.column !== null && control.controls[i].value.column !== '') {
+        this.userDefinedList.push({
+          prefix: control.controls[i].value.prefix, column: control.controls[i].value.column,
+          suffix: control.controls[i].value.suffix
+        });
+        const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
+          === control.controls[i].value.column);
+        if (tempIndex !== -1) {
+          this.ursDefinedColumnNameList.splice(tempIndex, 1);
+        }
+        control.push(this.initColumn());
+        control.removeAt(i);
       }
-      control.push(this.initColumn());
-      control.removeAt(i);
+      this.createUsrDefinedCONCATString();
     }
-    this.createUsrDefinedCONCATString();
   }
 
   createUsrDefinedCONCATString() {
@@ -593,8 +594,8 @@ export class ErtTableComponent implements OnInit {
     }
     if (toCreateQuery) {
       const tempUsrDefinedObj = new UsrDefinedColumnListObj();
-      tempUsrDefinedObj.originalColumnName = this.usrDefinedColumnName;
-      tempUsrDefinedObj.modifiedColumnName = this.usrDefinedColumnName;
+      tempUsrDefinedObj.originalColumnName = this.usrDefinedColumnName.toUpperCase().trim();
+      tempUsrDefinedObj.modifiedColumnName = this.usrDefinedColumnName.toUpperCase().trim();
       if (this.usrDefinedQueryViewMode !== '') {
         tempUsrDefinedObj.viewQuery = this.usrDefinedQueryViewMode;
       }

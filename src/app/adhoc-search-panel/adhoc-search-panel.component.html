@@ -24,7 +24,7 @@
       </ng-template>
       <button mat-raised-button class="example-add-tab-button" (click)="addTabInInlinePanel($event)">
         <i class=" fa fa-plus"></i></button>
-      <div style="width:100%">
+      <div>
         <div class="tab">
           <mat-tab-group *ngIf="openPanelIndex===1" #MatInlineTabGroup [(selectedIndex)]="selectedInlineTab"
             (selectedTabChange)="inlinePanelTabChanged($event)">
@@ -57,7 +57,7 @@
           </mat-tab-group>
         </div>
       </div>
-      <div class="rename">
+      <div class="rename" style="width: 26%; margin-left: 3%;">
         <div class="rename-box">
           <mat-form-field appearance="standard">
             <mat-label>Rename Tab</mat-label>
