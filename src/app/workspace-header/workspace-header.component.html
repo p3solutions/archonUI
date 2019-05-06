@@ -5,34 +5,18 @@
     </div>
     <div class="col-md-3 pl-37" style="margin-top: -10px">
      
-      <!-- <div class="btn-group mt-20 pull-left" id="selectedWorkspace">
-        <mat-form-field>
-            <mat-select placeholder="Workspace" [formControl]="selected">
-              <mat-option *ngFor="let ws of userWorkspaceArray" (click)="selectWorkspace(ws)"
-              id="{{ws.id}}" [value]="ws.workspaceName">
-              {{ws.workspaceName}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field> 
-      </div> -->
-
-
       <div class="btn-group mt-20 pull-left" id="selectedWorkspace">
-        
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
-          {{selectedWorkspaceName ? selectedWorkspaceName : 'SELECT WORKSPACE'}}
-        </button>
-
-        <div class="dropdown-menu scrollable" id="workspace-list-dropdown">
-          <div class="" *ngIf="userWorkspaceArray">
-            <a class="dropdown-item dropdown-data" *ngFor="let ws of userWorkspaceArray" (click)="selectWorkspace(ws)"
-              id="{{ws.id}}" title="{{ws.workspaceName}}">{{ws.workspaceName}}</a>
-          </div>
-        </div>
+      <mat-form-field>
+        <!-- <mat-label>Selected Workspace</mat-label> -->
+        <mat-select [(ngModel)]="workspaceHeaderService.selected">
+          <mat-option *ngFor="let ws of userWorkspaceArray; let i of index;" [value]="ws.workspaceName" (click)="selectWorkspace(ws)">
+            {{ws.workspaceName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       </div>
 
-      <div class="col-md-1 mt-20 pull-left pull-more" *ngIf="enableCreate">
+      <div class="col-md-1 mt-29 pull-left pull-more" *ngIf="enableCreate">
           <span matTooltip="Create New Workspace" (click)="openCreateWSModal()">
             <i class="material-icons plus">
               </i>
