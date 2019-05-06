@@ -5,6 +5,7 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { Router } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+
 @Component({
   selector: 'app-new-workspace',
   templateUrl: './new-workspace.component.html',
@@ -26,6 +27,7 @@ export class NewWorkspaceComponent implements OnInit {
   DBtable: any;
   selectedDBtable: any;
   updateNotif: boolean;
+  hideclose = true;
 
   constructor(
     private userinfoService: UserinfoService,
@@ -52,6 +54,7 @@ export class NewWorkspaceComponent implements OnInit {
   }
 
   prevStep(e) {
+    this.errorDBselect = false;
     if (document.querySelector('.second').classList.contains('active')) {
       this.addClass('prev-btn', 'hide');
       this.removeClass('cancel-btn', 'hide');
@@ -140,6 +143,7 @@ export class NewWorkspaceComponent implements OnInit {
         this.updateNotif = true;
       }
     });
+    this.hideclose = false;
   }
 
   getSupportedDBs() {
@@ -153,7 +157,11 @@ export class NewWorkspaceComponent implements OnInit {
             this.supportedDBs.push(element);
           });
           this.isDBAvailable = true;
-          this.generateDBtable({ data: this.supportedDBs });
+          if (this.supportedDBs.length > 0) {
+            this.generateDBtable({ data: this.supportedDBs});
+          } else {
+            this.generateDBtable({ data: this.supportedDBs = []});
+          }
         }
       });
   }
@@ -275,8 +283,13 @@ export class NewWorkspaceComponent implements OnInit {
     this.wsNameEmpty = false;
     this.wsDesc = undefined;
     this.newWSinfo = null;
+    this.hideclose = true;
   }
   closeErrorMsg() {
     this.updateNotif = false;
     }
+clear() {
+  this.wsDesc = '';
+  this.wsName = '';
+}
 }

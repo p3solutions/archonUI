@@ -4,6 +4,9 @@ import { WorkspaceHeaderComponent } from '../workspace-header/workspace-header.c
 import { WorkspaceHeaderInfoComponent } from '../workspace-header-info/workspace-header-info.component';
 import { WorkspaceMgmtPanelComponent } from '../workspace-mgmt-panel/workspace-mgmt-panel.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatFormFieldModule, MatRadioModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '../material-module';
 
 describe('NoWorkspaceComponent', () => {
   let component: NoWorkspaceComponent;
@@ -12,7 +15,7 @@ describe('NoWorkspaceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, MatFormFieldModule, FormsModule , MatRadioModule, MaterialModule
       ],
       declarations: [
         NoWorkspaceComponent,

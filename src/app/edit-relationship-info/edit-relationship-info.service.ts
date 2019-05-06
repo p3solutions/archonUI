@@ -3,16 +3,17 @@ import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { Headers } from '@angular/http';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class EditRelationshipInfoService {
-  columnListUrl = environment.apiUrl + 'metalyzer/table/columnList?tableId=';
-  updateTableListUrl = environment.apiUrl + 'metalyzer/relationship?workspaceId=';
+  columnListUrl = this.environment.apiUrl + 'metalyzer/table/columnList?tableId=';
+  updateTableListUrl = this.environment.apiUrl + 'metalyzer/relationship?workspaceId=';
 
   constructor(private http: HttpClient,
-    private userinfoService: UserinfoService) { }
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
 
   getColumnsByTableId(tableId) {
     return this.http.get<any[]>(this.columnListUrl + tableId, { headers: this.userinfoService.getHeaders() })

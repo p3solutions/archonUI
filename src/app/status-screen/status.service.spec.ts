@@ -1,15 +1,12 @@
-import { TestBed, inject, async, getTestBed, flushMicrotasks, fakeAsync, tick, flush } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { StatusService } from './status.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClientModule, HttpHandler, HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { jobArray, jobOriginArray, jobStatusArray } from '../hardcoded-collection';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BaseRequestOptions, Response, ResponseOptions } from '@angular/http';
-import { environment } from '../../environments/environment';
+import { Response, ResponseOptions } from '@angular/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { environment } from '../../environments/environment';
 
 describe('StatusService', () => {
   const getJobOriginsUrl = environment.apiUrl + 'jobStatus/jobOrigins';
@@ -66,14 +63,14 @@ describe('StatusService', () => {
   //     ]
   //   });
   // }));
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          HttpClientModule, RouterTestingModule
-        ],
-        providers: [StatusService, UserinfoService, MockBackend]
-      });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule, RouterTestingModule
+      ],
+      providers: [StatusService, UserinfoService, MockBackend]
     });
+  });
 
   // afterEach(fakeAsync(() => {
   //   backend.resolveAllConnections();

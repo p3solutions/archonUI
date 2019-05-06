@@ -2,12 +2,11 @@ import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { UserInviteResponse } from '../global-roles';
 import { ManageUserRolesService } from './manage-user-roles.service';
-import { map } from 'rxjs/operators';
 
 export class InviteUserDataSource implements DataSource<UserInviteResponse> {
 
     totalUser: number;
-    private inviteUsersSubject = new BehaviorSubject<UserInviteResponse[]>([]);
+    public inviteUsersSubject = new BehaviorSubject<UserInviteResponse[]>([]);
     public totalUserSubject = new BehaviorSubject<number>(0);
     private readonly _filter = new BehaviorSubject<string>('');
     filteredData: UserInviteResponse[];

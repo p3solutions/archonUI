@@ -63,6 +63,6 @@ header,
   text-align: center;
 }
 
-.ws-info-data {
+a {
   cursor: pointer;
 }

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { UserinfoService } from '../userinfo.service';
-import { Router } from '@angular/router/src/router';
 import { WorkspaceObject } from '../workspace-objects';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 @Injectable()
 export class WorkspaceInfoService {
-  workspaceinfoUrl = environment.apiUrl + 'workspaces/';
+  workspaceinfoUrl = this.environment.apiUrl + 'workspaces/';
   constructor(
     private http: HttpClient,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
   ) { }
   getWorkSpaceInfo(id: string): Observable<WorkspaceObject> {
     const URL = this.workspaceinfoUrl + id;

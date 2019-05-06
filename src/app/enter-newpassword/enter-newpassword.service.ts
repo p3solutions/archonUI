@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
 
-import { Observable ,  of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { NewPasswordSetter } from './new-password-setter';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 @Injectable()
 export class EnterNewpasswordService {
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private forgotPasswordUrl = environment.apiUrl + 'auth/pwd-reset';
+  private forgotPasswordUrl = this.environment.apiUrl + 'auth/pwd-reset';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private environment: EnvironmentService
+  ) { }
 
   passwordReset(newPasswordSetForm: NewPasswordSetter): Observable<any> {
     return this.http.post<NewPasswordSetter>(this.forgotPasswordUrl, newPasswordSetForm, { headers: this.headers });

@@ -96,7 +96,6 @@ export class ErtSipConfigComponent implements OnInit {
         this.isRelationNot = true;
         this.enableNextBtn = false;
       }
-      console.log(this.relationshipInfo);
       this.primaryTable = getPrimaryArray(this.relationshipInfo);
       this.secondaryTable = getSecondaryArray(this.relationshipInfo);
       for (const i of this.primaryTable) {
@@ -305,7 +304,6 @@ export class ErtSipConfigComponent implements OnInit {
 
     function onClickChangeGraph(value) {
       self.tablelistService.getListOfRelationTableMMR(self.workspaceID, self.ertService.mmrVersion , value.name).subscribe(result => {
-        console.log(result);
         self.relationshipInfo = result;
         self.primaryTable = getPrimaryArray(self.relationshipInfo);
         self.secondaryTable = getSecondaryArray(self.relationshipInfo);
@@ -344,7 +342,7 @@ export class ErtSipConfigComponent implements OnInit {
     }
 
     function dragended(d) {
-      if (!d3.event.active) { simulation.alphaTarget(0); }
+      // if (!d3.event.active) { simulation.alphaTarget(0); }
       d.fx = d.x;
       d.fy = d.y;
     }

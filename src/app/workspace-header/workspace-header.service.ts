@@ -8,6 +8,7 @@ export class WorkspaceHeaderService {
   currentWSValue = this.addWSValue.asObservable();
   private checkActive: BehaviorSubject<string> = new BehaviorSubject<string>('Services');
   updatedCheckActive = this.checkActive.asObservable();
+  selected;
 
   constructor() { }
   private workspace: any;

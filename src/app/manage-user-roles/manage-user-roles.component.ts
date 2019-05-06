@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject, ViewChildren, QueryList } from '@angular/core';
 import { ManageUserRolesService } from './manage-user-roles.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { tap } from 'rxjs/operators';
 import { UserInvite, GlobalGroup } from '../global-roles';
@@ -9,6 +9,8 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatPaginator, MatSort } from 
 import { InviteUserDataSource } from './invite-user-data-source';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
+import { lockeduser } from '../add-members/add-members.component';
+
 
 
 @Component({
@@ -59,11 +61,14 @@ export class ManageUserRolesComponent implements OnInit {
   userAction = '';
   cancelInviteAndDeleteUserUrl = '';
   selectedFilterOption = 'Active';
+  userinfoId: any;
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router,
     private userInfoService: UserinfoService
-  ) { }
+  ) {
+    this.userinfoId = this.userInfoService.getUserId();
+  }
 
   ngOnInit() {
     this.checkForEnableBtn();
@@ -149,6 +154,13 @@ export class ManageUserRolesComponent implements OnInit {
 
   getAllUsers(invited, revoked, locked) {
     this.dataSource = new InviteUserDataSource(this.manageUserRolesService);
+    this.dataSource.connect().subscribe(result => {
+      result.forEach((value: any) => {
+      if (value.status === 'Locked') {
+        lockeduser.push(value.id);
+      }
+      });
+    });
     this.loadAllUsers(invited, revoked, locked);
   }
 
@@ -296,7 +308,7 @@ export class ManageUserRolesComponent implements OnInit {
       if (this.roleOfUser === 'superadmin') {
         this.tempChangeGlobalGroupUrl = 'superadmin/' + userId + '/groups/global';
       } else if (this.roleOfUser === 'admin') {
-        this.tempChangeGlobalGroupUrl = 'users/' + userId + '/groups/global';
+        this.tempChangeGlobalGroupUrl = 'users/' + this.userinfoId + '/groups/global';
       }
       this.param = {
         'userId': userId,

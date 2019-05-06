@@ -76,7 +76,7 @@
     margin-left: -20px;
     overflow-x: hidden;
     overflow-y: scroll;
-    height: 260px;
+    height: 240px;
  }
   
   .card {
@@ -228,3 +228,28 @@
     background-color: #269AF8;
     color: white;
   }
+  .overflow-text {
+    float: left;
+    width: 96%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+  .overflow-text-arrow {
+    float: left;
+    width: 4%;
+    text-align: right;
+    font-size: 12px;
+  }
+  .overflow-textrelation {
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;    
+  }
+  .ngx-pagination {
+    margin-left: -40px;
+    font-size: 9px;
+    margin-bottom: 1rem;
+    margin-top: 4px;
+}

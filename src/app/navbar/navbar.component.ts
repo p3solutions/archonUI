@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit {
   notifiactionArray = [];
   count = 0;
   loadfirst = 0;
+  userid;
 
   constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService) { }
   ngOnInit() {
@@ -66,6 +67,7 @@ export class NavbarComponent implements OnInit {
     token_data = jwtHelper.decodeToken(accessToken);
     info = new Info();
     info.id = token_data.user.id;
+    this.userid = token_data.user.id;
     info.roleList = token_data.roles;
     info.username = this.userChangeName;
     return info;

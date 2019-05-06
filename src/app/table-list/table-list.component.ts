@@ -81,6 +81,7 @@ export class TableListComponent implements OnInit {
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('storedprocView', { read: ViewContainerRef }) storedprocViewRef: ViewContainerRef;
 
+
   addDirectjoin: boolean;
   isTablelistAvailable: boolean;
   wsName: string;
@@ -133,6 +134,9 @@ export class TableListComponent implements OnInit {
       this.tableList = res.tableList;
       if (this.tableList.length === 0) {
         this.isTablelistAvailable = true;
+        this.tablelistService.selectDropdown(false);
+      } else {
+      this.tablelistService.selectDropdown(true);
       }
       this.isAvailable = true;
       if (res.paginationRequired) {
@@ -239,6 +243,7 @@ export class TableListComponent implements OnInit {
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
+    console.log('in');
     const isChecked = _event.target.checked ? true : false;
     if (isPrimary) {
       for (let i = 0; i < this.primColArray.length; i++) {
@@ -691,5 +696,9 @@ export class TableListComponent implements OnInit {
       .subscribe(result => {
         this.downloadFilejson(result, result.type);
       });
+  }
+
+  selectAll() {
+      $('input:checkbox:enabled.m-r-10').click();
   }
 }

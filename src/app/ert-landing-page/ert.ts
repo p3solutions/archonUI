@@ -7,6 +7,12 @@ export class ErtTableListObj {
     selectedTableCount = 0;
     isSelectedTableLeft = false;
 }
+
+export class AvilErtTable{
+    paginationRequired = false;
+    erttableList = new ErtTableListObj();
+}
+
 export class FilterAndOrderConfig {
     filterConfig = '';
     filterQuery = '';
@@ -89,6 +95,7 @@ export class ERTJobs {
     createdBy = '';
     lastAccessedBy = '';
     madeDisable = false;
+    madeEditDisable = false;
 }
 
 

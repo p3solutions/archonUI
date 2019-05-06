@@ -21,6 +21,7 @@ export class ErtJobsComponent implements OnInit {
   ERT = 'ERT';
   scheduleNow: boolean;
   instanceId: any;
+  ertJobslist: boolean;
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
@@ -38,26 +39,38 @@ export class ErtJobsComponent implements OnInit {
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
       this.ertJobs = result;
+      if (this.ertJobs.length === 0) {
+        this.ertJobslist = true;
+      }
       for (const item of this.ertJobs) {
         if (item.jobStatus === 'READY' || item.jobStatus === 'COMPLETED' || item.jobStatus === 'FAILED') {
           item.madeDisable = false;
         } else {
           item.madeDisable = true;
         }
+        if (item.jobStatus.trim().toUpperCase() === 'IN_PROGRESS' || item.jobStatus.trim().toUpperCase() === 'SCHEDULED') {
+          item.madeEditDisable = true;
+        } else {
+          item.madeEditDisable = false;
+        }
       }
     });
   }
 
-  gotoEditJob(ertJobId: string) {
-    const ertJobTitle = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobTitle;
-    const ertJobMode = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobMode;
-    this.ertService.setErtJobParams({ ertJobMode: ertJobMode, ertJobTitle: ertJobTitle });
-    if (ertJobMode === 'DATA_RECORD') {
-      this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'data-record' } });
-    } else if (ertJobMode === 'SIP') {
-      this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'SIP' } });
+  gotoEditJob(ertJobId: string, jobStatus: string) {
+    if (jobStatus.trim().toUpperCase() !== 'IN_PROGRESS' && jobStatus.trim().toUpperCase() !== 'SCHEDULED') {
+      const ertJobTitle = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobTitle;
+      const ertJobMode = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobMode;
+      this.ertService.setErtJobParams({ ertJobMode: ertJobMode, ertJobTitle: ertJobTitle });
+      if (ertJobMode === 'DATA_RECORD') {
+        this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'data-record' } });
+      } else if (ertJobMode === 'SIP') {
+        this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'SIP' } });
+      } else {
+        this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'TABLE' } });
+      }
     } else {
-      this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'TABLE' } });
+      document.getElementById('warning-popup-btn').click();
     }
   }
 
@@ -80,8 +93,8 @@ export class ErtJobsComponent implements OnInit {
     if (scheduleObject.ins === 'Local') {
       this.instanceId = '';
     } else {
-    this.instanceId = scheduleObject.ins;
-  }
+      this.instanceId = scheduleObject.ins;
+    }
     const param: any = {
       'ertJobId': this.scheduledeErtJobId,
       'scheduledConfig': scheduleObject,
