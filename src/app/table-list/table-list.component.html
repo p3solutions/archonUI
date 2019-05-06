@@ -432,6 +432,6 @@
   <!-- <app-stored-proc-view class="modal fade" id="modelStoredProcView" data-backdrop="static" data-keyboard="false"></app-stored-proc-view> -->
   <ng-template #storedprocView></ng-template>
   <div *ngIf="addDirectjoin">
-    <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [tableList]="tableList" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
+    <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
   </div> 
 
