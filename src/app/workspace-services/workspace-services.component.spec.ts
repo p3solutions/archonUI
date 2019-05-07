@@ -11,20 +11,32 @@ import { TableListService } from '../table-list/table-list.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { MatCardModule } from '@angular/material';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { APP_INITIALIZER, ApplicationInitStatus } from '@angular/core';
 
 describe('WorkspaceServicesComponent', () => {
   let component: WorkspaceServicesComponent;
   let fixture: ComponentFixture<WorkspaceServicesComponent>;
 
-  beforeEach(async(() => {
+  const appInitializerFunction = (environment: EnvironmentService) => {
+    return () => {
+      return environment.loadAppConfig();
+    };
+  };
+
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule, MatCardModule],
-      declarations: [ WorkspaceServicesComponent ],
-      providers: [WorkspaceServicesService, UserinfoService,
+      declarations: [WorkspaceServicesComponent],
+      providers: [
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
+        ,
+        WorkspaceServicesService, UserinfoService,
         WorkspaceHeaderService, MetalyzerHeaderService, TableListService, CommonUtilityService, UserProfileService]
     })
-    .compileComponents();
-  }));
+      .compileComponents();
+    await TestBed.get(ApplicationInitStatus).donePromise;
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkspaceServicesComponent);
@@ -36,3 +48,8 @@ describe('WorkspaceServicesComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+class MockEnvironmentService {
+  apiUrl = 'http://50.112.166.136:9000/';
+
+}
