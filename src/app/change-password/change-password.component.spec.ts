@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatError, MatFormFieldModule } from '@angular/material';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
@@ -42,7 +44,8 @@ describe('ChangePasswordComponent', () => {
         ChangePasswordService,
         UserinfoService,
         JwtHelperService,
-        { provide: FormBuilder, useValue: formBuilder }
+        { provide: FormBuilder, useValue: formBuilder } , 
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
       ]
     })
       .compileComponents();

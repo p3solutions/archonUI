@@ -11,6 +11,8 @@ import { MatSelectModule,
   MatOptionModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ScheduleJobComponent', () => {
   let component: ScheduleJobComponent;
@@ -20,7 +22,7 @@ describe('ScheduleJobComponent', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule , HttpClientTestingModule, RouterTestingModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule],
       declarations: [ ScheduleJobComponent ],
-      providers: [ UserinfoService, TableListService]
+      providers: [ UserinfoService, TableListService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

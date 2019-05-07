@@ -6,6 +6,8 @@ import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.ser
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { TableListService } from '../table-list/table-list.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('MetalyzerConfigurationComponent', () => {
   let component: MetalyzerConfigurationComponent;
@@ -15,7 +17,7 @@ describe('MetalyzerConfigurationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MetalyzerConfigurationComponent ],
       imports: [RouterTestingModule, HttpClientModule],
-      providers: [MetalyzerHeaderService, UserinfoService, TableListService]
+      providers: [MetalyzerHeaderService, UserinfoService, TableListService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

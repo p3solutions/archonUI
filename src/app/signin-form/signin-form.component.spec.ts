@@ -11,6 +11,8 @@ import { JwtHelperService, JwtModule} from '@auth0/angular-jwt';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
@@ -28,7 +30,7 @@ describe('SigninFormComponent', () => {
           }
   })],
       declarations: [SigninFormComponent],
-      providers: [SigninFormService, HttpClient, HttpHandler, AuthenticationService, JwtHelperService],
+      providers: [SigninFormService, HttpClient, HttpHandler, AuthenticationService, JwtHelperService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
     })
       .compileComponents();
   }));

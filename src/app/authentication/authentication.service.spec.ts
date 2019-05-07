@@ -1,6 +1,8 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { JwtHelperService, JwtModule} from '@auth0/angular-jwt';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
@@ -8,7 +10,7 @@ export function tokenGetter() {
 describe('AuthenticationService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthenticationService, JwtHelperService],
+      providers: [AuthenticationService, JwtHelperService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [JwtModule.forRoot({
         config: {
                 tokenGetter: tokenGetter

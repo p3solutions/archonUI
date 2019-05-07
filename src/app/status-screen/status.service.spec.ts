@@ -7,6 +7,8 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Response, ResponseOptions } from '@angular/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('StatusService', () => {
   const getJobOriginsUrl = environment.apiUrl + 'jobStatus/jobOrigins';
@@ -68,7 +70,7 @@ describe('StatusService', () => {
       imports: [
         HttpClientModule, RouterTestingModule
       ],
-      providers: [StatusService, UserinfoService, MockBackend]
+      providers: [StatusService, UserinfoService, MockBackend, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     });
   });
 

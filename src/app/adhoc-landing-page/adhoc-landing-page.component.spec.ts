@@ -4,6 +4,8 @@ import { AdhocLandingPageComponent } from './adhoc-landing-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('AdhocLandingPageComponent', () => {
   let component: AdhocLandingPageComponent;
@@ -13,7 +15,7 @@ describe('AdhocLandingPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AdhocLandingPageComponent ],
       imports: [RouterTestingModule, HttpClientTestingModule],
-      providers: [UserinfoService]
+      providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

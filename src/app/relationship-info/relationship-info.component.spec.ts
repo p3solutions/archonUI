@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RelationshipInfoComponent } from './relationship-info.component';
 import { RelationshipListComponent } from '../relationship-list/relationship-list.component';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('RelationshipInfoComponent', () => {
   let component: RelationshipInfoComponent;
@@ -9,7 +11,7 @@ describe('RelationshipInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RelationshipInfoComponent, RelationshipListComponent]
+      declarations: [ RelationshipInfoComponent, RelationshipListComponent], providers: [{ provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

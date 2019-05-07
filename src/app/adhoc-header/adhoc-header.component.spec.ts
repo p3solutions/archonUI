@@ -4,6 +4,8 @@ import { AdhocHeaderComponent } from './adhoc-header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserinfoService } from '../userinfo.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('AdhocHeaderComponent', () => {
   let component: AdhocHeaderComponent;
@@ -13,7 +15,7 @@ describe('AdhocHeaderComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AdhocHeaderComponent],
       imports: [RouterTestingModule, HttpClientTestingModule],
-      providers: [UserinfoService]
+      providers: [UserinfoService , { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

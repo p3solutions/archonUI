@@ -13,6 +13,8 @@ import { MatSelectModule,
   MatOptionModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('DbExtractorLastStepComponent', () => {
   let component: DbExtractorLastStepComponent;
@@ -35,7 +37,7 @@ describe('DbExtractorLastStepComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorLastStepComponent, ScheduleJobComponent],
       imports: [RouterTestingModule, HttpClientModule, FormsModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(),MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule],
-      providers: [UserinfoService, WorkspaceHeaderService]
+      providers: [UserinfoService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

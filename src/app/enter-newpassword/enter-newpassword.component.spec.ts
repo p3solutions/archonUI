@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { ErrorObject } from '../error-object';
 import { TestabilityRegistry } from '@angular/core/src/testability/testability';
 import { HttpClient } from 'selenium-webdriver/http';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 // fdescribe used to run single testcase only
 // whenever we using fdescribe u should create it as fit
 describe('EnterNewpasswordComponent', () => {
@@ -48,6 +50,7 @@ describe('EnterNewpasswordComponent', () => {
       providers: [
         EnterNewpasswordService,
         HttpClientModule,
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
       declarations: [ EnterNewpasswordComponent ]
     })

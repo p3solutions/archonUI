@@ -15,6 +15,8 @@ import {
 } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('SchedulemonitoringComponent', () => {
   let component: SchedulemonitoringComponent;
@@ -24,7 +26,7 @@ describe('SchedulemonitoringComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SchedulemonitoringComponent , NavbarComponent],
       imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, DataTablesModule, RouterTestingModule, HttpClientTestingModule, HttpClientModule],
-      providers: [UserinfoService, UserProfileService],
+      providers: [UserinfoService, UserProfileService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();

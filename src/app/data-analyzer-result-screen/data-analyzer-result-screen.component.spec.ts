@@ -7,6 +7,8 @@ import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('DataAnalyzerResultScreenComponent', () => {
   let component: DataAnalyzerResultScreenComponent;
@@ -16,7 +18,7 @@ describe('DataAnalyzerResultScreenComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ DataAnalyzerResultScreenComponent ],
       imports: [NgxPaginationModule, HttpClientModule, RouterTestingModule],
-      providers: [TableListService, AddDirectJoinService, UserinfoService]
+      providers: [TableListService, AddDirectJoinService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

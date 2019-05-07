@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ManageMasterMetadataService } from '../manage-master-metadata/manage-master-metadata.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ErtLandingPageComponent', () => {
   let component: ErtLandingPageComponent;
@@ -16,7 +18,7 @@ describe('ErtLandingPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ErtLandingPageComponent],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
-      providers: [UserinfoService, WorkspaceHeaderService, ManageMasterMetadataService]
+      providers: [UserinfoService, WorkspaceHeaderService, ManageMasterMetadataService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));
