@@ -22,7 +22,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   selectedWS = '';
   Events = [];
   Service = [];
-  selectedEvent = '';
+  selectedEvent = 'LOGIN';
   selectedService = '';
   enddate = '';
   startdate = '';
