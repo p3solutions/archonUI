@@ -3,6 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserWorkspaceService } from './user-workspace.service';
 import { UserinfoService } from './userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from './environment/environment.service';
+import { MockEnvironmentService } from './environment/mock-environment.service';
 
 describe('UserWorkspaceService', () => {
   beforeEach(() => {
@@ -13,7 +15,7 @@ describe('UserWorkspaceService', () => {
       ],
       providers: [
         UserWorkspaceService,
-        UserinfoService
+        UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ]
     });
   });

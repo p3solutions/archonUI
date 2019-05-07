@@ -15,6 +15,8 @@ import { SearchPipe } from '../search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatCardModule, MatInputModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 // Reason: Object Event Error Thrown
 describe('WorkspaceListComponent', () => {
@@ -26,7 +28,7 @@ describe('WorkspaceListComponent', () => {
       declarations: [WorkspaceListComponent, SearchPipe],
       imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, FormsModule],
       providers: [WorkspaceListService, DynamicLoaderService, UserinfoService,
-         WorkspaceHeaderService, CommonUtilityService],
+         WorkspaceHeaderService, CommonUtilityService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

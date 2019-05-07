@@ -103,15 +103,7 @@ export class AdhocAppScreenListComponent implements OnInit {
       )
       .subscribe();
 
-
-
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadLessonsPage())
-      )
-      .subscribe();
   }
 
   getApplication() {
@@ -329,6 +321,9 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.openScreenDialog();
   }
 
+  sortData(sort) {
+    this.dataSource.sortfn(sort);
+  }
 
   gotoScreen(screenId: string, element) {
     if (element.parentScreenInfo.screenName !== '') {
@@ -349,7 +344,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     if (screenInfoObject.parentScreenInfo.screenId !== '') {
       this.adhocService.getScreenInfo(screenInfoObject.parentScreenInfo.screenId).subscribe(result => {
         if (result.AdhocScreen.sessionAdhocModel === null) {
-          this.successMessage = 'Please add screen in Linked screen.';
+          this.successMessage = 'Please edit Linked screen.';
           document.getElementById('success-popup-btn').click();
         } else {
           if (screenInfoObject.sessionAdhocModel.primaryTable !== result.AdhocScreen.sessionAdhocModel.primaryTable) {

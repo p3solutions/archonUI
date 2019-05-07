@@ -12,6 +12,7 @@ import { DataAnalyzerResultScreenComponent } from '../data-analyzer-result-scree
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.service';
+import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
 
 @Component({
   selector: 'app-table-list',
@@ -97,6 +98,7 @@ export class TableListComponent implements OnInit {
     private storedProcViewService: StoredProcViewService,
     private router: Router,
     private route: ActivatedRoute,
+    private addDirectJoinService: AddDirectJoinService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
   ) {
@@ -582,6 +584,10 @@ export class TableListComponent implements OnInit {
         }];
         this.tablelistService.changeArray(this.resultantArray);
         this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+      } else if (this.JobStatus === 'FAILED') {
+        this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
+        this.JobStatus = '';
+        this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
       } else {
         setTimeout(() => {
           (<any>$('#dataAModal-carousel')).carousel(3);
@@ -701,4 +707,8 @@ export class TableListComponent implements OnInit {
   selectAll() {
       $('input:checkbox:enabled.m-r-10').click();
   }
+
+  selectAllSec() {
+    $('input:checkbox:enabled.m-r-10.m-r-sec').click();
+}
 }

@@ -16,6 +16,9 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { MatFormFieldModule, MatRadioModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '../material-module';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('WorkspaceDashboardComponent', () => {
   let component: WorkspaceDashboardComponent;
@@ -25,7 +28,7 @@ describe('WorkspaceDashboardComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientModule,
+        HttpClientModule, BrowserAnimationsModule,
         HttpClientTestingModule, MatFormFieldModule, FormsModule, MatRadioModule, MaterialModule
       ],
       providers: [
@@ -36,7 +39,7 @@ describe('WorkspaceDashboardComponent', () => {
         WorkspaceServicesService,
         WorkspaceHeaderService,
         UserProfileService,
-        DynamicLoaderService
+        DynamicLoaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
       declarations: [
         WorkspaceDashboardComponent,

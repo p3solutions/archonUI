@@ -9,6 +9,8 @@ import { UserinfoService } from '../userinfo.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('MetalyzerComponent', () => {
   let component: MetalyzerComponent;
@@ -18,7 +20,7 @@ describe('MetalyzerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MetalyzerComponent, MetalyzerHeaderComponent ],
       imports: [RouterTestingModule, HttpClientModule, NgxPaginationModule],
-      providers: [TableListService, UserinfoService, MetalyzerHeaderService, WorkspaceHeaderService]
+      providers: [TableListService, UserinfoService, MetalyzerHeaderService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe ('AddDatabaseWizardComponent', () => {
   let component: AddDatabaseWizardComponent;
@@ -14,7 +16,8 @@ describe ('AddDatabaseWizardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AddDatabaseWizardComponent ],
       imports: [FormsModule, HttpClientModule, RouterTestingModule],
-      providers: [UserWorkspaceService, UserinfoService]
+      providers: [UserWorkspaceService, UserinfoService,
+        { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

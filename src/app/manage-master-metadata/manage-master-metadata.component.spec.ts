@@ -14,6 +14,8 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DataTablesModule } from 'angular-datatables';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ManageMasterMetadataComponent', () => {
   let component: ManageMasterMetadataComponent;
@@ -40,7 +42,7 @@ describe('ManageMasterMetadataComponent', () => {
       imports: [HttpClientTestingModule, FormsModule, HttpClientModule, RouterTestingModule, NgxPaginationModule],
       providers: [ManageMasterMetadataService, UserinfoService, WorkspaceHeaderService,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
       declarations: [ManageMasterMetadataComponent]
     })

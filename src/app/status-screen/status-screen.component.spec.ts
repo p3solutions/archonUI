@@ -22,6 +22,8 @@ import {
 } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 
 describe('StatusScreenComponent', () => {
@@ -84,7 +86,7 @@ describe('StatusScreenComponent', () => {
         WorkspaceServicesService,
         UserinfoService,
         CommonUtilityService,
-        UserProfileService
+        UserProfileService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
       declarations: [StatusScreenComponent, KeysPipe, ReverseArrayPipe, NavbarComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
