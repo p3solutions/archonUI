@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErtService } from '../ert-landing-page/ert.service';
 import {
-  ErtTableListObj, FilterConfigTree, ErtColumnListObj, TableDetailsListObj,
-  ColumnListObj, UsrDefinedColumnListObj, DataOrderConfig, FilterAndOrderConfig, ErtTableObj, AvilErtTable
+  ErtTableListObj, FilterConfigTree, ErtColumnListObj, TableDetailsListObj, AvilErtTable,
+  ColumnListObj, UsrDefinedColumnListObj, DataOrderConfig, FilterAndOrderConfig, ErtTableObj
 } from '../ert-landing-page/ert';
 import {
   addFilterNode, FilterConfigNode, Tree, searchTree,
@@ -700,7 +700,22 @@ export class ErtTableComponent implements OnInit {
     if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
       temp.filterAndOrderConfig.filterQuery !== '' && temp.filterAndOrderConfig.filterConfig !== null &&
       temp.filterAndOrderConfig.filterQuery !== null) {
-      this.filterdata = JSON.parse(temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"'));
+      console.log(temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"'));
+      const splitFilterAndOrder = temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"').split('@');
+      this.dataOrderList = JSON.parse(splitFilterAndOrder[1].replace(/'/g, '"'));
+      this.filterdata = JSON.parse(splitFilterAndOrder[0].replace(/'/g, '"'));
+    }
+    this.removeDuplicateColumnForOrder();
+  }
+
+  removeDuplicateColumnForOrder() {
+    if (this.dataOrderList.length !== 0) {
+      for (const item of this.dataOrderList) {
+        const index = this.orderFilterConfigColumnNameList.findIndex(a => a.trim().toLowerCase() === item.column.trim().toLowerCase());
+        if (index !== -1) {
+          this.orderFilterConfigColumnNameList.splice(index, 1);
+        }
+      }
     }
   }
 
@@ -722,8 +737,9 @@ export class ErtTableComponent implements OnInit {
     let tempString = 'order by';
     treeStack = getPreorderDFS(this.filterdata);
     Expression = this.constructExpression(treeStack.reverse());
+    console.log(JSON.stringify(this.dataOrderList).replace(/"/g, '\''));
     this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
-      filterConfig = JSON.stringify(this.filterdata).replace(/"/g, '\'');
+      filterConfig = JSON.stringify(this.filterdata).replace(/"/g, '\'') + '@' + JSON.stringify(this.dataOrderList).replace(/"/g, '\'');
     if (this.dataOrderList.length !== 0) {
       for (const item of this.dataOrderList) {
         tempString = tempString + item.column + ' ';
@@ -777,7 +793,6 @@ export class ErtTableComponent implements OnInit {
   }
 
   constructExpression(postfix: string[]): string {
-    console.log(postfix);
     for (let i = 0; i < postfix.length; i++) {
       if (postfix[i] !== 'AND' && postfix[i] !== 'OR') {
         this.expressionStack.push(postfix[i]);
@@ -820,8 +835,15 @@ export class ErtTableComponent implements OnInit {
     if (this.dataOrderObj.column !== null && this.dataOrderObj.order !== null) {
       this.dataOrderList.push(this.dataOrderObj);
       this.dataOrderObj = new DataOrderConfig();
+      this.removeDuplicateColumnForOrder();
     }
   }
+
+  deleteOrderConfig(column, index) {
+    this.dataOrderList.splice(index, 1);
+    this.orderFilterConfigColumnNameList.push(column);
+  }
+
   cancel() {
     this.router.navigate(['/workspace/ert/ert-jobs']);
   }

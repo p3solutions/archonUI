@@ -361,10 +361,10 @@
                       </div>
                     </div>
                     <div id="add-sel-table">
-                      <div class="form-inline" *ngFor="let item of dataOrderList">
+                      <div class="form-inline" *ngFor="let item of dataOrderList;let i=index">
                         <div class="add-edit-heading form-group">{{item.column}}</div>
                         <div class="add-edit-heading form-group">{{item.order}}</div>
-                        <div class="add-edit-heading form-group"><i click="deleteOrderConfig()" class="fa fa-trash"></i>
+                        <div class="add-edit-heading form-group"><i (click)="deleteOrderConfig(item.column,i)" class="fa fa-trash"></i>
                         </div>
                       </div>
                     </div>
@@ -374,7 +374,7 @@
                       <div class="add-edit-form-item form-group">
                         <select [(ngModel)]="dataOrderObj.column" class="form-control">
                           <option [value]="null" selected>Select Column</option>
-                          <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                          <option [value]="item" *ngFor="let item of orderFilterConfigColumnNameList">{{item}}</option>
                         </select>
                       </div>
                       <div class="add-edit-form-item form-group">

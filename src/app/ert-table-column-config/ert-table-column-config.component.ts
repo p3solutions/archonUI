@@ -94,10 +94,10 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.isDisabled = false;
     this.issaveDisabled = false;
     if (ertJobStatus === 'READY') {
-    this.isDisabled = true;
-  } else if (ertJobStatus === 'DRAFT') {
-    this.issaveDisabled = true;
-  }
+      this.isDisabled = true;
+    } else if (ertJobStatus === 'DRAFT') {
+      this.issaveDisabled = true;
+    }
     for (const item of this.ertService.selectedList.filter(a => a.isSelected === true)) {
       if (item.filterAndOrderConfig.filterConfig === '' && item.filterAndOrderConfig.filterQuery === '') {
         delete item['filterAndOrderConfig'];
@@ -157,8 +157,10 @@ export class ErtTableColumnConfigComponent implements OnInit {
     }
     console.log(param);
     this.ertService.saveErtJob(param).subscribe(result => {
+      const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
+      'Job successfully marked as completed.';
       document.getElementById('message-popup-btn').click();
-      this.successMsg = result.errorMessage !== null ? result.errorMessage : 'Job saved successfully';
+      this.successMsg = result.errorMessage !== null ? result.errorMessage : msg;
     }, (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
       } else {

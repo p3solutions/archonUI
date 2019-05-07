@@ -66,7 +66,7 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
     const columnId = this.resultFields.columnId;
     const tableId = this.resultFields.tableId;
     const label = this.resultFields.label;
-    const tempBoolean = this.checkDuplicateResultFields(this.editResultFieldsForm.get('label').value);
+    const tempBoolean = this.checkDuplicateResultFields(this.editResultFieldsForm.get('label').value, tableId);
     if (tempBoolean) {
       this.resultFields.label = this.editResultFieldsForm.get('label').value;
     }
@@ -101,17 +101,19 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
     this.cancel();
   }
 
-  checkDuplicateResultFields(label) {
+  checkDuplicateResultFields(label, tableId) {
     let temp = true;
     for (const item of this.searchResult.mainPanel) {
-      if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
+      if ((item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) &&
+        (tableId === item.tableId)) {
         temp = false;
         break;
       }
     }
     for (const inlineTab of this.searchResult.inLinePanel.tabs) {
       for (const item of inlineTab.resultFields) {
-        if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
+        if ((item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) &&
+          (tableId === item.tableId)) {
           temp = false;
           break;
         }
@@ -119,7 +121,8 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
     }
     for (const sideTab of this.searchResult.sidePanel.tabs) {
       for (const item of sideTab.resultFields) {
-        if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
+        if ((item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) &&
+          (tableId === item.tableId)) {
           temp = false;
           break;
         }

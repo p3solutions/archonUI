@@ -156,9 +156,9 @@ export class ManageUserRolesComponent implements OnInit {
     this.dataSource = new InviteUserDataSource(this.manageUserRolesService);
     this.dataSource.connect().subscribe(result => {
       result.forEach((value: any) => {
-      if (value.status === 'Locked') {
-        lockeduser.push(value.id);
-      }
+        if (value.status === 'Locked') {
+          lockeduser.push(value.id);
+        }
       });
     });
     this.loadAllUsers(invited, revoked, locked);
@@ -325,7 +325,6 @@ export class ManageUserRolesComponent implements OnInit {
       } else {
         this.successMsg = response.errorMessage;
       }
-      console.log(this.invited, this.revoked, this.locked);
       this.getAllUsers(this.invited, this.revoked, this.locked);
     });
   }
@@ -342,6 +341,9 @@ export class ManageUserRolesComponent implements OnInit {
     });
   }
 
+  noGroupChange() {
+    this.getAllUsers(this.invited, this.revoked, this.locked);
+  }
 
   getUserByEmailId(emailId) {
     let response;
