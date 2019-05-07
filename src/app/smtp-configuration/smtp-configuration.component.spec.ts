@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TableListService } from '../table-list/table-list.service';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('SmtpConfigurationComponent', () => {
   let component: SmtpConfigurationComponent;
@@ -22,7 +24,7 @@ describe('SmtpConfigurationComponent', () => {
         RouterTestingModule, HttpClientTestingModule, MatCardModule],
         providers: [
           TableListService,
-          UserinfoService
+          UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }
         ],
     })
     .compileComponents();

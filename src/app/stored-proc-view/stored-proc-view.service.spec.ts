@@ -4,10 +4,12 @@ import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoredProcViewService } from './stored-proc-view.service';
 import { HttpClient } from '@angular/common/http';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('StoredProcViewService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    providers: [StoredProcViewService, UserinfoService],
+    providers: [StoredProcViewService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
     imports: [HttpClientModule, RouterTestingModule]
   }));
 

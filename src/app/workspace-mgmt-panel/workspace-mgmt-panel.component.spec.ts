@@ -7,6 +7,8 @@ import { DebugElement } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('WorkspaceMgmtPanelComponent', () => {
   let component: WorkspaceMgmtPanelComponent;
@@ -17,7 +19,7 @@ describe('WorkspaceMgmtPanelComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [WorkspaceMgmtPanelComponent],
-      providers: [WorkspaceHeaderService],
+      providers: [WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [HttpClientModule, RouterTestingModule]
     })
       .compileComponents();

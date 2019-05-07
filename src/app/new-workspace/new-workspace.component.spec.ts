@@ -8,6 +8,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('NewWorkspaceComponent', () => {
   let component: NewWorkspaceComponent;
@@ -17,7 +19,7 @@ describe('NewWorkspaceComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ NewWorkspaceComponent ],
       imports: [FormsModule, HttpClientModule, RouterTestingModule],
-      providers: [UserinfoService, UserWorkspaceService, CommonUtilityService, WorkspaceHeaderService]
+      providers: [UserinfoService, UserWorkspaceService, CommonUtilityService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

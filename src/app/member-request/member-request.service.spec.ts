@@ -3,12 +3,14 @@ import { MemberRequestService } from './member-request.service';
 import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { HttpClient, HttpClientModule, HttpHeaders, HttpHandler } from '@angular/common/http';
 import { MockBackend } from '@angular/http/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('MemberRequestService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
-      providers: [MemberRequestService, HttpClient, HttpHandler, { provide: XHRBackend, useClass: MockBackend }]
+      providers: [MemberRequestService, HttpClient, HttpHandler, { provide: XHRBackend, useClass: MockBackend }, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     });
   });
 

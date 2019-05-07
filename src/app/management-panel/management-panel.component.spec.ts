@@ -9,6 +9,8 @@ import { MatFormFieldModule, MatCardModule, MatInputModule } from '@angular/mate
 import { UserinfoService } from '../userinfo.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from 'selenium-webdriver/http';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ManagementPanelComponent', () => {
   let component: ManagementPanelComponent;
@@ -18,7 +20,7 @@ describe('ManagementPanelComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ManagementPanelComponent , SearchPipe],
       imports: [RouterTestingModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, HttpClientTestingModule],
-      providers: [CommonUtilityService, UserinfoService]
+      providers: [CommonUtilityService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

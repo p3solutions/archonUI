@@ -5,6 +5,8 @@ import { UserinfoService } from '../userinfo.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('EditProfileComponent', () => {
   let component: EditProfileComponent;
@@ -14,7 +16,7 @@ describe('EditProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ EditProfileComponent ],
       imports: [HttpClientModule, RouterTestingModule],
-      providers: [UserinfoService, UserProfileService]
+      providers: [UserinfoService, UserProfileService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

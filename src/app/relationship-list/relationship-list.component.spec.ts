@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('RelationshipListComponent', () => {
   let component: RelationshipListComponent;
@@ -15,7 +17,7 @@ describe('RelationshipListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ RelationshipListComponent ],
       imports: [HttpClientModule, RouterTestingModule],
-      providers: [TableListService, UserinfoService, WorkspaceHeaderService]
+      providers: [TableListService, UserinfoService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

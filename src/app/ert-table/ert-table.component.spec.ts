@@ -10,6 +10,8 @@ import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { SearchPipe } from '../search.pipe';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ErtTableComponent', () => {
   let component: ErtTableComponent;
@@ -19,7 +21,7 @@ describe('ErtTableComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ErtTableComponent, SearchPipe],
       imports: [FormsModule, ReactiveFormsModule, NgxPaginationModule, HttpClientModule, RouterTestingModule],
-      providers: [UserinfoService, WorkspaceHeaderService, ErtService],
+      providers: [UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

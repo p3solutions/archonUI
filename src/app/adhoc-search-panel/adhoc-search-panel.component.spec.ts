@@ -11,6 +11,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 describe('AdhocSearchPanelComponent', () => {
   let component: AdhocSearchPanelComponent;
   let fixture: ComponentFixture<AdhocSearchPanelComponent>;
@@ -21,7 +23,7 @@ describe('AdhocSearchPanelComponent', () => {
             imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule
         , MatOptionModule, HttpClientTestingModule, RouterTestingModule,
         MatSelectModule, MatInputModule, DragDropModule, MatTabsModule, BrowserAnimationsModule],
-        providers: [UserinfoService]
+        providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

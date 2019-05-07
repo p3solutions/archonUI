@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DbExtractorService } from './db-extractor.service';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 describe('DbExtractorComponent', () => {
   let component: DbExtractorComponent;
   let fixture: ComponentFixture<DbExtractorComponent>;
@@ -13,7 +15,7 @@ describe('DbExtractorComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorComponent],
       imports: [HttpClientModule, RouterTestingModule],
-      providers: [DbExtractorService, UserinfoService]
+      providers: [DbExtractorService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

@@ -12,6 +12,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 import { UserinfoService } from '../userinfo.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('AdhocAppScreenListComponent', () => {
   let component: AdhocAppScreenListComponent;
@@ -20,7 +22,8 @@ describe('AdhocAppScreenListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AdhocAppScreenListComponent],
-      providers: [WorkspaceHeaderService, AdhocService, UserinfoService],
+      providers: [WorkspaceHeaderService, AdhocService, UserinfoService ,
+        { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [FormsModule, MatTableModule, MatTooltipModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule,
         ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
         RouterTestingModule, MatDialogModule, MatMenuModule],
