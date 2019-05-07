@@ -27,8 +27,8 @@ export class StatusDataSource implements DataSource<any> {
     const sortedData = data.sort((a, b) => {
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
-          case 'jobName': return this.compare(a.jobName, b.jobName, isAsc);
-          case 'Job Origin': return this.compare(a.jobOrigin, b.jobOrigin, isAsc);
+          case 'jobName': return this.compare(a.jobName.toLowerCase(), b.jobName.toLowerCase(), isAsc);
+          case 'Job Origin': return this.compare(a.jobOrigin.toLowerCase(), b.jobOrigin.toLowerCase(), isAsc);
           case 'jobInfo.scheduledTime': return this.compare(a.jobInfo.scheduledTime, b.jobInfo.scheduledTime, isAsc);
           case 'Start Time': return this.compare(a.jobInfo.startTime, b.jobInfo.startTime, isAsc);
           case 'End Time': return this.compare(a.jobInfo.endTime, b.jobInfo.endTimeTime, isAsc);

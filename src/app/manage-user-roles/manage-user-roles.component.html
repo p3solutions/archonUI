@@ -42,7 +42,7 @@
   </div>
   <div id="user-table">
     <div class="example-table-container">
-      <table mat-table [dataSource]="dataSource" #matSort1="matSort" matSort>
+      <table mat-table [dataSource]="dataSource" #matSort1="matSort"  matSort (matSortChange)="sortData($event)" matSortDirection="desc">
         <ng-container matColumnDef="id">
           <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
           <td style="width:8%" mat-cell *matCellDef="let element; let i = index;">{{element.id}}</td>
@@ -61,7 +61,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="globalGroup">
-          <th style="width:11%" mat-header-cell *matHeaderCellDef mat-sort-header> Global Group </th>
+          <th style="width:11%" mat-header-cell *matHeaderCellDef> Global Group </th>
           <td style="width:11%" mat-cell *matCellDef="let element" class="global-select">
             <select [ngModel]="element.globalGroupId"
               (change)="changeGlobalGroup(element.id,$event.target.value)">
@@ -78,14 +78,14 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="status">
-          <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <th style="width:5%" mat-header-cell *matHeaderCellDef> Status </th>
           <td [ngClass]="{'invited': element.status==='Invited', 'active': element.status==='Active',
              'locked': element.status==='Locked','revoked': element.status==='Revoked'}" style="width:5%" mat-cell
             *matCellDef="let element">
             {{element.status}} </td>
         </ng-container>
         <ng-container matColumnDef="action">
-          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <th style="width:10%" mat-header-cell *matHeaderCellDef> Action </th>
           <td class="action-select" style="width:10%" mat-cell *matCellDef="let element">
             <button class="btn-transform" (click)="cancelInvite(element.id)" *ngIf="element.status==='Invited'">Cancel Invite</button>
             <select *ngIf="element.status==='Locked'" [(ngModel)]="element.action"
@@ -109,7 +109,7 @@
           <td style="width:13%" mat-cell *matCellDef="let element"> {{element.businessJustification}} </td>
         </ng-container>
         <ng-container matColumnDef="createdBy">
-          <th style="width:7%" mat-header-cell *matHeaderCellDef> Created By </th>
+          <th style="width:7%" mat-header-cell *matHeaderCellDef mat-sort-header > Created By </th>
           <td style="width:7%" mat-cell *matCellDef="let element"> {{element.invitedByUser}} </td>
         </ng-container>
         <ng-container matColumnDef="createdAt">
@@ -118,7 +118,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="updatedAt">
-          <th style="width:7%" mat-header-cell *matHeaderCellDef> Modified At </th>
+          <th style="width:7%" mat-header-cell *matHeaderCellDef mat-sort-header> Modified At </th>
           <td style="width:7%" mat-cell *matCellDef="let element">
             {{element.updatedAt * 1000 | date:'dd/MM/yyyy'}}
           </td>
