@@ -121,7 +121,7 @@
       </ng-container>
       <ng-container matColumnDef="download">
         <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Download </th>
-        <td [matTooltip]="element.madeDownlaodDisabled?'Add screen to download': 'Download'"
+        <td [matTooltip]="element.madeDownlaodDisabled?'Edit screen to download': 'Download'"
           style="width:9%;text-align: center" mat-cell *matCellDef="let element">
           <a [class.disabled]="element.madeDownlaodDisabled"
             (click)="!element.madeDownlaodDisabled && downloadScreen(element.id,element.screenName)">

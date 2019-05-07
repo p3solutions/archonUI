@@ -10,8 +10,9 @@
                 placeholder="Search Table"></div>
                 
 
-        <div class="card-body" id="ert-tbl-search">          
-          <div id="tbl-list" style="height: 326px;">
+        <div class="card-body" id="ert-tbl-search">
+            <h4 *ngIf="tableList.length===0" style="margin-top: 19%;" >No tables available</h4>
+            <div id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
               <div class="well" *ngFor="let i of tableList | paginate: { itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName">
                 <div><input style="float:left" type="radio" [value]="i.tableName" [checked]="i.tableName == selectedPrimaryTable"  name="x" (click)="populategraph(i, $event)"></div>
