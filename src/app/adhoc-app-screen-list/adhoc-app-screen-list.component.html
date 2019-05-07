@@ -65,14 +65,14 @@
   <div
     class="{{datasourceHasValue()=== true ?'hide-html example-table-container mat-elevation-z8' : 'example-table-container mat-elevation-z8'}}"
     id="screen-table">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortDirection="desc">
       <ng-container matColumnDef="position">
         <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
         <td class="word-breaker" style="width:8%" mat-cell *matCellDef="let element; let i = index;">
           {{element.position}}</td>
       </ng-container>
       <ng-container matColumnDef="link">
-        <th style="width:3%" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+        <th style="width:3%" mat-header-cell *matHeaderCellDef> </th>
         <td class="word-breaker" style="width:3%" mat-cell *matCellDef="let element"> <button
             *ngIf="element.childScreenInfo.length>0" (click)="showChildInfo(element.id)" class="link-btn"
             mat-icon-button [matMenuTriggerFor]="menu">
@@ -86,7 +86,7 @@
           {{element.screenName}} </td>
       </ng-container>
       <ng-container matColumnDef="parentScreenInfo.screenName">
-        <th style="width:12%" mat-header-cell *matHeaderCellDef> Linked Screen </th>
+        <th style="width:12%" mat-header-cell *matHeaderCellDef mat-sort-header> Linked Screen </th>
         <td class="word-breaker" style="width:12%" mat-cell *matCellDef="let element">
           {{element.parentScreenInfo?.screenName}} </td>
       </ng-container>
