@@ -23,14 +23,6 @@
   margin-right: 10px;
 }
 
-.user-menu,
-.user-menu .dropdown-menu {
-  max-width: 108px;
-}
-.user-menu1,
-.user-menu1 .dropdown-menu {
-  max-width: 200px;
-}
 .nav>li>a:focus, .nav>li>a:hover  {
   text-decoration: none !important;
     /* background: #dbe6fa !important; */
