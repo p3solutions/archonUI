@@ -1620,3 +1620,7 @@ mat-checkbox svg {
   height: unset;
 }
 
+mat-step-header .mat-step-label {
+  overflow: visible;
+}
+

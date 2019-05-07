@@ -37,7 +37,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     public workspaceHeaderService: WorkspaceHeaderService,
     private router: Router,
     private userProfileService: UserProfileService,
-    private route : ActivatedRoute,
+    private route: ActivatedRoute,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
   ) {
@@ -52,7 +52,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
       if (this.newWorkspace === true) {
         this.getUserWorkspaceList();
       }
-     });
+    });
 
     // if user selects workspace from profile.
     this.userProfileService.userSelectedWorkspace.subscribe(data => {
@@ -64,14 +64,14 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     } else {
       this.getUserWorkspaceList();
     }
- 
+
     // user UI restriction
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
-     if (this.enableCreateRoles.includes(i)) {
-       this.enableCreate = true;
-       break;
-     }
+      if (this.enableCreateRoles.includes(i)) {
+        this.enableCreate = true;
+        break;
+      }
     }
   }
   ngOnDestroy() {
@@ -84,12 +84,12 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
       if (this.workspaceHeaderService.selected === undefined) {
-        for (let i = 0 ; i <= this.userWorkspaceArray.length; i++) {
+        for (let i = 0; i <= this.userWorkspaceArray.length; i++) {
           if (i === 0) {
-          this.workspaceHeaderService.selected = this.userWorkspaceArray[i].workspaceName;
-          this.selectWorkspace(this.userWorkspaceArray[i]);
+            this.workspaceHeaderService.selected = this.userWorkspaceArray[i].workspaceName;
+            this.selectWorkspace(this.userWorkspaceArray[i]);
           }
-          }
+        }
       }
     });
   }
@@ -118,19 +118,21 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
-    this.serviceActionsList.push({ serviceName: 'ERT', iconName: 'ert.png',
-     serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r' , desc: ''});
+    this.serviceActionsList.push({
+      serviceName: 'ERT', iconName: 'ert.png',
+      serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r', desc: ''
+    });
     const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
     this.workspaceService.updateServiceActions(_temp);
 
     // to route to the same page of workspace
     const route = this.route.firstChild.routeConfig.path;
     if (route === 'manage-master-metadata/:id') {
-    const id = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.router.navigate(['workspace/workspace-dashboard']);
-    setTimeout(() => {
-      this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]);
-    }, 50);
+      const id = this.workspaceHeaderService.getSelectedWorkspaceId();
+      this.router.navigate(['workspace/workspace-dashboard']);
+      setTimeout(() => {
+        this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]);
+      }, 50);
     } else if (route === 'manage-members/:id') {
       const id = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.router.navigate(['workspace/workspace-dashboard']);
@@ -144,5 +146,9 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
         this.router.navigate(['workspace/workspace-dashboard/workspace-info/' + id]);
       }, 50);
     }
+  }
+
+  createWorkspace() {
+    this.router.navigate(['workspace/create-workspace']);
   }
 }
