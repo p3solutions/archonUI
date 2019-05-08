@@ -5,7 +5,7 @@
         <div class="table-list" >
             Table List <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
         </div>
-        <div class='body-left'><a href="" style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
+        <div class='body-left'><a href="" style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
           <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch" (keyup)="searchTablelist()"
             placeholder="Search Table"></div>
       
@@ -436,3 +436,21 @@
     <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues" [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static" data-keyboard="false"></app-add-direct-join>
   </div> 
 
+
+<button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
+<div id="confirmCancelInviteSuccess" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header adhoc-modal-header">
+        <h4 class="modal-title">Alert</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{message}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+    </div>
+  </div>
+</div>
