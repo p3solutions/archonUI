@@ -129,6 +129,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             document.getElementById('deletemsg').click();
               this.successmsg = result;
                 this.success = true;
+                this.workspaceHeaderService.selected = undefined;
                 setTimeout(() => {
                     this.getWorkspaceListInfo(this.token_data.user.id);
                 }, 15000);
