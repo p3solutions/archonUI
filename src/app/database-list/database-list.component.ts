@@ -46,6 +46,8 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   DBdeleteId: string;
   errormsg: any;
   successmsg: any;
+  DBupdateId: any;
+  dbpassword: any;
 
   constructor(
     private configDBListService: DatabaseListService,
@@ -192,5 +194,27 @@ closeErrorMsg() {
     this.success = false;
     this.error = false;
   }
+  editDB(database) {
+    this.configuredDB = database;
+    this.DBupdateId = database.id;
+  }
+  updateDB() {
+    const params = {
+      id: this.DBupdateId,
+      password: this.dbpassword
+    };
+    this.configDBListService.updateDB(this.DBupdateId, params ).subscribe((result) => {
+          document.getElementById('editmsg').click();
+          this.successmsg = 'successfully updated your password';
+            this.success = true;
+            this.getConfigDBList();
+        },
+  (error) => {
+    document.getElementById('editmsg').click();
+    this.error = true;
+    this.errormsg = error.error.errors[0].code;
+  }
+  );
+}
 
 }
