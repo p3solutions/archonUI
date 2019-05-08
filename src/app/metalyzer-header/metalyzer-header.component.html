@@ -1,61 +1,49 @@
 <div id="metalyzer" class="row">
   <div classs="metalyzer-header">
       <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
-          <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <strong> Please select a table</strong>
-        </div> 
-      <div class="col-md-6 text-left">
-         
-          <div class="form-inline">
-              <a (click)="gotoDashboard()" data-tooltip="Back">
-                  <i class="fa fa-arrow-left fa-lg form-group" aria-hidden="true"></i>
-                </a>
-                <div class="form-group">
-                  <b>Metalyzer</b>
-                </div>
-              <div class="form-group">
-                <b>Workspace Name: </b>{{wsName | uppercase}}
-              </div>
-              <div class="form-group">
-                <b>Phase: </b>{{phase | uppercase}}
-              </div>
-            </div>
+        <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong> Please select a table</strong>
+      </div>
+      <div class="head-container">
+          <div class="flex-head">
+            <a class="back-sty" (click)="gotoDashboard()" matTooltip="Back">
+              <i class="fa fa-arrow-left fa-lg form-group" aria-hidden="true"></i>
+            </a>
+            <h3>Metalyzer</h3>
           </div>
-      <div class="dropdown col-md-1 .col-md-offset-3" *ngIf="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="export">Export As
-          <span>
-            <i class="fa fa-angle-down"></i>
-          </span>
-        </button>
-        <ul class="dropdown-menu" id="export-list">
-          <li>
-            <a  (click)="exportxml()">XML</a>
-          </li>
-          <li>           
-            <a  (click)="exportjson()">JSON</a>
-          </li>
-        </ul>
-      </div>
-      <div class="dropdown" *ngIf="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="btn">View Relationship
-          <span>
-            <i class="fa fa-angle-down"></i>
-          </span>
-        </button>
-        <ul class="dropdown-menu">
-          <li>
-            <a (click)="exportSelectedpdf()">Selected Table</a>
-          </li>
-          <li>
-            <a (click)="exportOverallpdf()">Overall</a>
-          </li>
-        </ul>
-      </div>
-      <div class="dropdown" style="margin-right: 37px;" *ngIf="phase == 'Analysis'">
-        <button class="btn btn-default dropdown-toggle" type="button" id="btn" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
-        </button>
+      </div>       
+      <div class="container-head col-md-12">
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-3 heading-item">
+          <b>Workspace Name: </b>{{wsName | uppercase}}
+        </div>
+        <div class="form-group col-md-2 heading-item">
+          <b>Phase: </b>{{phase | uppercase}}
+        </div>
+        <div class="dropdown col-md-2" *ngIf="dropdown">
+          <mat-form-field>
+            <mat-label>Export As</mat-label>
+            <mat-select>
+              <mat-option (click)="exportxml()">XML</mat-option>
+              <mat-option (click)="exportjson()">JSON</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="dropdown col-md-2" *ngIf="dropdown">
+          <mat-form-field>
+            <mat-label>View Relationship</mat-label>
+            <mat-select>
+              <mat-option (click)="exportSelectedpdf()">Selected Table</mat-option>
+              <mat-option (click)="exportOverallpdf()">Overall</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="dropdown col-md-2" *ngIf="phase == 'Analysis'">
+          <button mat-raised-button class="arch-button" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -96,5 +84,23 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
+<div id="confirmCancelInviteSuccess" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header adhoc-modal-header">
+        <h4 class="modal-title">Alert</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{message}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+    </div>
   </div>
 </div>

@@ -25,6 +25,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   updateNotif: boolean;
   p = 1;
   dropdown: any;
+  message: void;
   constructor(
     private router: Router,
     private tablelistService: TableListService,
@@ -99,7 +100,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml)
       .subscribe(result => {
-        this.downloadFile(result, result.type);
+        this.message = result.data
+        document.getElementById('successPopUp').click();
+        // this.downloadFile(result, result.type);
       });
   }
   exportjson() {

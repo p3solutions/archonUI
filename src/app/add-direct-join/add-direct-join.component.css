@@ -1,3 +1,10 @@
+.modal-header{
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #2879ff;
+  color: #fff;
+}
+
 .modal-dialog {
     margin: 100px auto auto;
     width: 1050px;
@@ -22,7 +29,7 @@
   .form-control-feedback {
     position: relative;
     margin-top: -34px;
-    margin-left: 200px;
+    margin-left: 180px;
     height: 32px;
     color: #269af8;
     line-height: 30px;
@@ -175,8 +182,7 @@
   /* overriding css */
   .form-control {
     height: 35px;
-    border-radius: 15px;
-    width: 96%;
+    width: 92%;
     margin-top: 3px;
     margin-left: 4px;
   }
