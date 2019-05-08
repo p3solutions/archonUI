@@ -18,7 +18,7 @@ export class ErtService {
   ingestionDataConfig: IngestionDataConfig = new IngestionDataConfig();
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
   selectedValues: string[] = [];
-  data: any;
+  data;
   selectedPrimaryTable: any;
   constructor(
     private http: HttpClient,

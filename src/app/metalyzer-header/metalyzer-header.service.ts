@@ -39,25 +39,25 @@ export class MetalyzerHeaderService {
       catchError(this.handleError<string>('getworkspaceName'))
     );
   }
-  getExportxml(workspaceId, databaseID, xml): Observable<Blob> {
+  getExportxml(workspaceId, databaseID, xml): Observable<any> {
     const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml };
     return this.http.post(this.exportxmlUrl, params,
-      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+      { headers: this.userinfoService.getHeaders()});
   }
-  getExportjson(workspaceId, databaseID, json): Observable<Blob> {
+  getExportjson(workspaceId, databaseID, json): Observable<any> {
     const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: json };
     return this.http.post(this.exportxmlUrl, params,
-      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+      { headers: this.userinfoService.getHeaders()});
   }
-  getExportOverallpdf(workspaceId): Observable<Blob> {
+  getExportOverallpdf(workspaceId): Observable<any> {
     const url = this.exportpdfUrl + 'workspaceId=' + workspaceId;
     return this.http.get(url,
-      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+      { headers: this.userinfoService.getHeaders()});
   }
-  getExportSelectedpdf(workspaceId, tableID): Observable<Blob> {
+  getExportSelectedpdf(workspaceId, tableID): Observable<any> {
     const url = this.exportpdfUrl + 'workspaceId=' + workspaceId + '&tableId=' + tableID;
     return this.http.get(url,
-      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+      { headers: this.userinfoService.getHeaders()});
   }
   private extractWorkspace(res: any) {
     const data = res.data.workspaces.workspaceName;
