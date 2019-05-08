@@ -16,10 +16,10 @@
       </div>       
       <div class="container-head col-md-12">
         <div class="col-md-1"></div>
-        <div class="form-group col-md-3 heading-item">
+        <div class="form-group col-md-3 heading-item" id="frm-margin">
           <b>Workspace Name: </b>{{wsName | uppercase}}
         </div>
-        <div class="form-group col-md-2 heading-item">
+        <div class="form-group col-md-2 heading-item" id="frm-margin">
           <b>Phase: </b>{{phase | uppercase}}
         </div>
         <div class="dropdown col-md-2" *ngIf="dropdown">
@@ -40,8 +40,8 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="dropdown col-md-2" *ngIf="phase == 'Analysis'">
-          <button mat-raised-button class="arch-button" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
+        <div class="dropdown col-md-2" id="btn-margin" *ngIf="phase == 'Analysis'">
+          <button mat-raised-button class="arch-button" id="btn-mar" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
           </button>
         </div>
       </div>
