@@ -24,15 +24,13 @@ p {
 .dropdown {
   margin-top: 10px;
   float: right;
-  margin-right: 135px;
   cursor: pointer;
 }
 
 #export {
-  width: 180%;
+  width: 70%;
   background-color: #DCDCDC;
   border-radius: 5px;
-  margin-left: -150px;
   text-transform: capitalize;
 }
 
@@ -41,7 +39,7 @@ p {
 }
 
 #btn {
-  width: 110%;
+  width: 60%;
   background-color: #DCDCDC;
   border-radius: 5px;
   text-transform: capitalize;
@@ -54,7 +52,6 @@ span {
     
 .form-inline {
   padding: 2px 2px 2px 0px;
-  
   font-weight: 500;
   font-size: 16px;
   letter-spacing: 0.2;
@@ -62,7 +59,7 @@ span {
 }
 
 .form-group {
-  padding: 5px 0px 7px 29px;
+  padding: 21px 0px 7px 29px;
 }
 #metalyzer {
   border-bottom: 2px solid #E6E9ED;
@@ -70,3 +67,60 @@ span {
   padding-right: 37px;
 }
 
+/* New Header rules for Metalyzer Analysis */
+
+.head-container{
+  margin: 10px 10px 10px 21px; 
+}
+
+.flex-head{
+  display: flex;
+  flex-direction: row;
+}
+
+.back-sty{
+  margin-top: 5px;
+  margin-right: 16px;
+}
+
+.container-head{
+  margin: 0px 0px 5px 20px;
+}
+
+.left-flexer{
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+}
+
+.arch-button{
+  color: #fff;
+  background-color: #2879ff;
+}
+
+.heading-item {
+  padding: 15px;
+  font-size: 16px;
+  font-family: roboto;
+  word-wrap: break-word;
+}
+
+.glyphicon-back {
+  position: relative;
+  top: 22px;
+  margin-right: 12px;
+  float: right;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#btn-margin{
+  margin-top: 14px;
+}
+
+#frm-margin{
+  margin-top: 5px;
+}
