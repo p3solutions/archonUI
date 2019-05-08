@@ -296,6 +296,10 @@ td.tdr {
     font-size: 20px;
     padding: 8px 8px 0px 0px;
   } 
+  .example-full-width {
+    width: 90%;
+    margin-left: inherit;
+  }
   
 
 
