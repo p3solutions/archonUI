@@ -81,8 +81,7 @@ export class TableListComponent implements OnInit {
   page;
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('storedprocView', { read: ViewContainerRef }) storedprocViewRef: ViewContainerRef;
-
-
+  message;
   addDirectjoin: boolean;
   isTablelistAvailable: boolean;
   wsName: string;
@@ -692,7 +691,9 @@ export class TableListComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.tablelistService.getExportxml(this.workspaceID, this.databaseID, this.xml, this.selectedPrimTblID)
       .subscribe(result => {
-        this.downloadFile(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFile(result, result.type);
       });
   }
   exportjson() {
@@ -700,7 +701,9 @@ export class TableListComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.tablelistService.getExportjson(this.workspaceID, this.databaseID, this.json, this.selectedPrimTblID)
       .subscribe(result => {
-        this.downloadFilejson(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFilejson(result, result.type);
       });
   }
 
