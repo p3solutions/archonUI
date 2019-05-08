@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild, Inject, ElementRef } from '@angular/core';
 import {
   ApplicationInfo, AdhocHeaderInfo, Adhoc, ChildScreenInfo,
-  ParentScreenInfo, SessionAdhoc, getUserId
+  ParentScreenInfo, SessionAdhoc, getUserId, SearchResult, SearchCriteria, Tab, ResultFields
 } from '../adhoc-landing-page/adhoc';
 import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort } from '@angular/material';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -13,6 +13,7 @@ import { ScreenDataSource } from './screen-data-source';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { merge, fromEvent } from 'rxjs';
 import { TableSelectionService } from '../adhoc-table-selection/table-selection.service';
+import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
 @Component({
   selector: 'app-create-screen-dialog',
   templateUrl: 'create-screen-dialog.html',
@@ -74,16 +75,18 @@ export class AdhocAppScreenListComponent implements OnInit {
   childScreenInfo: ChildScreenInfo[] = [];
   successMessage = '';
   deleteScreenId = '';
+  screenInfoObject = new Adhoc();
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
+     private adhocScreenService: AdhocScreenService,
     private router: Router, private adhocService: AdhocService,
     private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
 
 
   ngOnInit() {
-
     this.getHeaderInfo();
     this.getApplication();
     this.paginator.pageIndex = 0;
+    this.deleteSearchResult();
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
@@ -392,5 +395,21 @@ export class AdhocAppScreenListComponent implements OnInit {
       isScreenPresent = true;
     }
     return isScreenPresent;
+  }
+
+  deleteSearchResult() {
+    this.adhocScreenService.updateSearchCriteria([]);
+    this.adhocScreenService.updateSearchResult(new SearchResult());
+    this.adhocScreenService.updateSearchCriterion(new SearchCriteria());
+    this.adhocScreenService.updateInlinePanelTabChange(new Tab());
+    this.adhocScreenService.updateSidePanelTabChange(new Tab());
+    this.adhocScreenService.updateResultField(new ResultFields());
+    this.adhocScreenService.updatePanelChanged(0);
+    this.screenInfoObject.sessionAdhocModel.searchCriteria = [];
+    this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel = [];
+    this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = null;
+    this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
+    this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable = '';
+    this.adhocSavedObjectService.screenInfoObject = this.screenInfoObject;
   }
 }
