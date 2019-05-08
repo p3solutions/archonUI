@@ -3,10 +3,12 @@ import { DbExtractorService } from './db-extractor.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('DbExtractorService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    providers: [DbExtractorService, UserinfoService],
+    providers: [DbExtractorService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
     imports: [HttpClientModule, RouterTestingModule]
   }));
 

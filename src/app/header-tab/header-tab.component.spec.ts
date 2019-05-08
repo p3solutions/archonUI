@@ -14,6 +14,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatTableModule, MatSortModule, MatDialogModule } from '@angular/material';
 import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('HeaderTabComponent', () => {
   let component: HeaderTabComponent;
@@ -34,7 +36,7 @@ describe('HeaderTabComponent', () => {
         ManageMembersService,
         AddMembersService,
         UserinfoService,
-        WorkspaceHeaderService, ManageUserRolesService
+        WorkspaceHeaderService, ManageUserRolesService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
       schemas:[NO_ERRORS_SCHEMA]
     })

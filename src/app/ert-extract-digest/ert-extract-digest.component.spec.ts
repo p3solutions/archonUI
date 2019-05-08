@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonUtilityService } from '../common-utility.service';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ErtExtractDigestComponent', () => {
   let component: ErtExtractDigestComponent;
@@ -16,7 +18,7 @@ describe('ErtExtractDigestComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ErtExtractDigestComponent],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
-      providers: [CommonUtilityService, UserinfoService],
+      providers: [CommonUtilityService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

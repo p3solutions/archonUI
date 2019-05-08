@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.service';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('RoleGroupConfigurationComponent', () => {
   let component: RoleGroupConfigurationComponent;
@@ -24,7 +26,7 @@ describe('RoleGroupConfigurationComponent', () => {
       providers: [
         ManageUserRolesService,
         ConfigurationService,
-        UserinfoService
+        UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
       .compileComponents();

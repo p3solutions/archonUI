@@ -5,21 +5,19 @@
         <div class="table-list">
           Table List
         </div>
-        <div class='body-left'><a href="" style="z-index:1"
-            class="glyphicon glyphicon-search inner-addon right-addon"></a>
+        <div class='body-left'><span style="z-index:1"
+            class="glyphicon glyphicon-search inner-addon right-addon"></span>
           <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
             (keyup)="searchTablelist()" placeholder="Search Table"></div>
 
         <div class='body-right'>
 
           <a (click)="getErtAvailableTable()" matTooltip="Add More Table" *ngIf="showAvilableBtn" class="cursor-poniter"
-
             data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
 
 
         <div class="card-body" id="ert-tbl-search">
-
-          <div id="tbl-list" style="height: 326px;">
+          <div *ngIf="!showNoTablesMsg" id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
               <div
                 *ngFor="let item of selectedTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
@@ -36,6 +34,7 @@
             <pagination-controls *ngIf="this.ertJobId === undefined" (pageChange)="getPage(page = $event)">
             </pagination-controls>
           </div>
+          <h4 *ngIf="showNoTablesMsg" style="margin-top: 50%;" >No tables available</h4>
         </div>
       </div>
     </div>
@@ -45,6 +44,7 @@
           Selected Table Columns List
         </div>
         <div class="card-body">
+            <ng-container *ngIf="!showNoTablesMsg">
           <div class="row">
             <div class="col-md-5" id="sel-table-name">
               <div class='alias-name'>
@@ -53,8 +53,6 @@
                   <input type="text" matInput name="tablename" id="tablename" [(ngModel)]="modifiedTableName"
                     placeholder="Table Alias Name" (keyup)="toModifiedTableName()">
                 </mat-form-field>
-                <!-- <input type="" class="form-control" [(ngModel)]="modifiedTableName" (keyup)="toModifiedTableName()"
-                  name="tablename" id="tablename" placeholder="Enter table Name">-->
               </div>
             </div>
 
@@ -86,7 +84,7 @@
               [fullScreen]="true">
               <p style="color: #000000"> Loading... </p>
             </ngx-spinner>
-            <div class="scroll-div">
+            <div *ngIf="!showNoTablesMsg" class="scroll-div">
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -135,7 +133,9 @@
               </table>
             </div>
           </div>
+        </ng-container>
         </div>
+        <h4 *ngIf="showNoTablesMsg" style="margin-top: 19%;" >No Columns available</h4>
       </div>
     </div>
   </div>
@@ -246,7 +246,7 @@
               </div>
               <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body">
-                  <textarea class="form-control" (keyup)="setQueryModeUserDefined()"
+                  <textarea class="form-control" (keyup)="queryMode()"
                     [(ngModel)]="usrDefinedQueryViewMode" style="width: 100%;height: 106px;"></textarea>
                 </div>
               </div>
@@ -361,10 +361,10 @@
                       </div>
                     </div>
                     <div id="add-sel-table">
-                      <div class="form-inline" *ngFor="let item of dataOrderList">
+                      <div class="form-inline" *ngFor="let item of dataOrderList;let i=index">
                         <div class="add-edit-heading form-group">{{item.column}}</div>
                         <div class="add-edit-heading form-group">{{item.order}}</div>
-                        <div class="add-edit-heading form-group"><i click="deleteOrderConfig()" class="fa fa-trash"></i>
+                        <div class="add-edit-heading form-group"><i (click)="deleteOrderConfig(item.column,i)" class="fa fa-trash"></i>
                         </div>
                       </div>
                     </div>
@@ -374,7 +374,7 @@
                       <div class="add-edit-form-item form-group">
                         <select [(ngModel)]="dataOrderObj.column" class="form-control">
                           <option [value]="null" selected>Select Column</option>
-                          <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                          <option [value]="item" *ngFor="let item of orderFilterConfigColumnNameList">{{item}}</option>
                         </select>
                       </div>
                       <div class="add-edit-form-item form-group">
@@ -467,7 +467,8 @@
             {{item.tableName}}
           </div>
         </div>
-        <pagination-controls style="font-size:13px" (pageChange)="getAvilableTablePage(avilablePage = $event)"></pagination-controls>
+        <pagination-controls style="font-size:13px" (pageChange)="getAvilableTablePage(avilablePage = $event)">
+        </pagination-controls>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>

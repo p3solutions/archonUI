@@ -22,7 +22,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   selectedWS = '';
   Events = [];
   Service = [];
-  selectedEvent = '';
+  selectedEvent = 'LOGIN';
   selectedService = '';
   enddate = '';
   startdate = '';
@@ -81,6 +81,11 @@ dataSource: AuditDataSource;
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
   }
+
+  sortData(sort) {
+    this.dataSource.sortfn(sort);
+    }
+
 
 
   openDetail(releatedJobId) {

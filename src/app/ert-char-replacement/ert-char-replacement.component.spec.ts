@@ -8,6 +8,8 @@ import { MatTableModule } from '@angular/material';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ErtCharReplacementComponent', () => {
   let component: ErtCharReplacementComponent;
@@ -16,7 +18,7 @@ describe('ErtCharReplacementComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ErtCharReplacementComponent],
-      providers: [UserinfoService, WorkspaceHeaderService],
+      providers: [UserinfoService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [FormsModule, MatTableModule, HttpClientModule, RouterTestingModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

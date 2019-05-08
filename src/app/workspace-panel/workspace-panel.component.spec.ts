@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkspacePanelComponent } from './workspace-panel.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('WorkspacePanelComponent', () => {
   let component: WorkspacePanelComponent;
@@ -12,7 +14,10 @@ describe('WorkspacePanelComponent', () => {
       imports: [
         RouterTestingModule
       ],
-      declarations: [ WorkspacePanelComponent ]
+      declarations: [ WorkspacePanelComponent ],
+      providers: [
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
+      ]
     })
     .compileComponents();
   }));

@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('AddMembersComponent', () => {
   let component: AddMembersComponent;
@@ -55,7 +57,8 @@ describe('AddMembersComponent', () => {
       ],
       declarations: [ AddMembersComponent ],
       providers: [
-        AddMembersService, ManageMembersService, UserinfoService
+        AddMembersService, ManageMembersService, UserinfoService, 
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
       ]
     })
     .compileComponents();

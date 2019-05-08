@@ -21,6 +21,8 @@ import { ErrorObject } from '../error-object';
 import { Router } from '@angular/router';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
@@ -70,7 +72,8 @@ describe('SignupFormComponent', () => {
         SignupFormService,
         HttpClientModule,
         AuthenticationService,
-        JwtHelperService
+        JwtHelperService, 
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
       declarations: [SignupFormComponent]
     })
