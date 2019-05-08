@@ -35,6 +35,9 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     error: boolean;
     successmsg: any;
     errormsg: any;
+    wsName: any;
+    wsDesc: any;
+    WSeditId: any;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -145,6 +148,31 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.success = false;
         this.error = false;
       }
+      editWS(workspace) {
+        this.WSListInfo = workspace;
+        this.wsName = workspace.workspaceName;
+        this.wsDesc = workspace.requestMessage;
+        this.WSeditId = workspace.id;
+      }
+      updateWS() {
+            const params = {
+            id: this.WSeditId,
+            workspaceName : this.wsName,
+            requestMessage : this.wsDesc
+          };
+        this.workspaceListService.updateWS(this.WSeditId, params).subscribe((result) => {
+             document.getElementById('editmsg').click();
+              this.successmsg = 'successfully updated';
+                this.success = true;
+                    this.getWorkspaceListInfo(this.token_data.user.id);
+            },
+            (error) => {
+              document.getElementById('editmsg').click();
+              this.error = true;
+              this.errormsg = error.error.errorMessage;
+            }
+            );
+          }
 }
 
 

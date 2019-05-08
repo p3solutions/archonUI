@@ -53,6 +53,13 @@ export class WorkspaceListService {
     );
   }
 
+  updateWS(WSeditId: string, params: any): Observable<WorkspaceObject> {
+    return this.http.patch<WorkspaceObject>(this.getWSInfoUrl + WSeditId, params, { headers: this.userinfoService.getHeaders() })
+   .pipe(
+     map(this.deleteWorkspaces)
+   );
+ }
+
 
   private extractWorkspaces(res: any) {
     const data = res.data.workspaces;
