@@ -286,7 +286,6 @@ export class AddDatabaseWizardComponent implements OnInit {
   createDBConfig() {
     this.dbinProgress = true;
     // this.dbParam.dbProfileName = this.dbProfileName;
-    this.dbParam.
       this.dbParam.userName = this.userName;
     this.dbParam.password = this.password;
     // this.dbParam.password = btoa(this.password);
