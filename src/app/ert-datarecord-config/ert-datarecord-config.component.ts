@@ -15,7 +15,7 @@ import { ErtService } from '../ert-landing-page/ert.service';
 })
 export class ErtDatarecordConfigComponent implements OnInit {
   workspaceID: any;
-  tableList: any;
+  tableList = [];
   relationshipInfo: any[];
   selectedValues: string[] = [];
   primaryTable = [];
