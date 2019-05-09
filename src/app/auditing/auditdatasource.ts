@@ -56,6 +56,7 @@ export class AuditDataSource implements DataSource<any> {
     getTable(params, startIndex) {
         this.indexValue = startIndex;
         this.service.getJobStatuses(params).subscribe(result => {
+                console.log(result.responseModel);
                 result.responseModel.forEach((value, index) => {
                 value.position = index + 1;
             });
