@@ -1,18 +1,62 @@
-.modal-dialog {
-    margin: 150px auto auto;
-    width: 850px;
+.modal-header{
+  color: white;
+  background-color: #2879ff;
 }
+
+.modal-dialog {
+  margin: 150px auto auto;
+  width: 850px;
+}
+
 .fa-check-circle {
-    color: #269af8;
+  color: #269af8;
 }
 
 #sec_select {
-    width: max-content;
+  width: max-content;
 }
 .m-t-6 {
-    padding: 8px;
-    margin-bottom: 5px;
+  padding: 8px;
+  margin-bottom: 5px;
 }
 .alert-dismissible {
-    padding-right: 45px;
+  padding-right: 45px;
 }
+
+#cancel-btn{
+  background-color: #64b5f6;
+  color:#fff;
+}
+
+#back-none{
+  background-color: #fff;
+}
+
+.btn-primary:hover{
+  box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
+  -webkit-transform: translatey(-2px);
+  transform: translatey(-2px);
+}
+
+.header-tab{
+  background-color: #64b5f6;
+  color: white;
+  padding: 10px 0px;
+}
+
+::ng-deep .cdk-overlay-container{
+  z-index: 1200 !important;
+}
+
+
+
+/* 
+#back-none{
+  background-color: white;
+}
+
+.header-tab{
+  background-color: #64b5f6;
+  padding: 6px; 
+} */
+

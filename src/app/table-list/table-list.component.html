@@ -2,7 +2,7 @@
   <div class="col-md-3" id="table-list">
     <div class="card">
       <div class="card-body">
-        <div class="table-list" >
+        <div class="table-list">
             Table List <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
         </div>
          
@@ -23,7 +23,7 @@
           </h5>
         </div>        
       </div>
-      <pagination-controls id="tablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
+      <pagination-controls style="float: right; margin-right: 14px;" id="tablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
     </div>
   </div>
   <div class="col-md-8 col-md-offset-2.5">
@@ -137,13 +137,17 @@
               <div class="col col-md-3 join-width" id="item">
                <div  title="{{relation.joinName}}" class="overflow-textrelation"> {{relation.joinName}}</div>
               </div>
-              <div class="col-md-3 action-width" id="item">
-                <a data-toggle="modal" href="#confirmDelMemModal" (click)="deleteRelationship(ind)">
-                  <i class="fa fa-trash" id="trash" *ngIf="serviceActionType === 'WRITE' || serviceActionType === 'ALL'"></i>
-                </a>
-                <a data-toggle="collapse" href="#collapseExample-{{ind}}">
-                  <i class="fa fa-chevron-down" id="down-arrow"></i>
-                </a>
+              <div class="col-md-3 action-width">
+                <div class="col-md-2" id="aligner">
+                  <a data-toggle="modal" href="#confirmDelMemModal" (click)="deleteRelationship(ind)" style="margin-right: 2rem;">
+                    <i class="material-icons" style="font-size: 24px;" *ngIf="serviceActionType === 'WRITE' || serviceActionType === 'ALL'">delete</i>
+                  </a>
+                </div>
+                <div class="col-md-1">
+                  <a data-toggle="collapse" href="#collapseExample-{{ind}}">
+                    <i class="material-icons">keyboard_arrow_down</i>
+                  </a>
+                </div>
               </div>
             </div>
             <div class="panel-collapse collapse" id="collapseExample-{{ind}}">
@@ -162,7 +166,7 @@
                 </div>
                 <div class="col col-md-12">
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#openEditRelationshipModal"
-                    (click)="openEditRelationship(relation)">Edit </button>
+                    (click)="openEditRelationship(relation)" style="margin-right: 2rem;">Edit </button>
                   <button type="button" class="btn btn-primary Close" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
                 </div>
               </div>
