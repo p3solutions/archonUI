@@ -1612,7 +1612,7 @@ mat-checkbox svg {
   text-transform: inherit;
 }
 
-.word-breaker{
+.word-breaker {
   word-break: break-all;
 }
 
@@ -1620,7 +1620,86 @@ mat-checkbox svg {
   height: unset;
 }
 
+/* 
 mat-step-header .mat-step-label {
   overflow: visible;
+  font-size: 21px
 }
 
+mat-step-header {
+  padding-top: 15px;
+  padding-bottom: 16px
+}
+
+
+.mat-horizontal-stepper-header-container {
+  margin-bottom: 20px;
+}
+
+.mat-horizontal-stepper-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: -15px;
+  padding-top: 15px !important;
+  padding-bottom: 16px !important;
+}
+
+.mat-step-label {
+  position: relative;
+  top: 10px;
+}
+
+.mat-stepper-horizontal-line {
+  margin: 0 -30px !important;
+}
+
+.mat-horizontal-stepper-header .mat-step-icon,
+.mat-horizontal-stepper-header .mat-step-icon-not-touched {
+  margin-right: 0 !important;
+}
+
+.mat-horizontal-stepper-header .mat-step-icon {
+  font-size: 34px;
+  width: 32%;
+  height: 68%;
+}
+
+mat-step-header:hover {
+  background-color: transparent !important;
+} */
+.mat-step-header .mat-step-icon-selected,
+.mat-step-header .mat-step-icon-state-edit {
+  background-color: #0a85f8;
+}
+
+.mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header .mat-step-icon {
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+}
+
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header {
+  padding: 6px !important;
+}
+
+.mat-step-label {
+  font-size: 19px !important;
+}
+
+.mat-horizontal-stepper-header:not(:first-child)::before,
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  width: calc(50% - 29px) !important;
+  top: 38px !important;
+}
+
+.mat-stepper-label-position-bottom .mat-stepper-horizontal-line{
+  top: 38px !important;
+}

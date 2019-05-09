@@ -70,16 +70,16 @@ export class ConfiguredDB {
     createdAt: number;
     createdDate: string; // = new Date(this.createdAt).toDateString(); // for formated dates
     updatedAt: number;
-    profileName:string;
+    profileName: string;
     databaseName: string;
     host: string;
     type: string;
     port: number;
-    schemaName:string;
+    schemaName: string;
     userName: string;
     owner: OwnerObject;
     databaseTypeInfo: DatabaseObject;
-
+    isChecked = false;
 }
 
 

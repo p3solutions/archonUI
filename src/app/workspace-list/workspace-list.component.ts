@@ -61,16 +61,16 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.getWSInfoID();
         const check = this.userinfoService.getRoleList();
         for (const i of check) {
-         if (this.enableCreateRoles.includes(i)) {
-           this.enableCreate = true;
-           break;
-         }
+            if (this.enableCreateRoles.includes(i)) {
+                this.enableCreate = true;
+                break;
+            }
         }
     }
 
     getWorkspaceListInfo(id: string) {
         this.workspaceListInfo = [];
-            this.workspaceListService.getList(id).subscribe(result => {
+        this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
             this.isProgress = false;
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
@@ -79,12 +79,12 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     getWSInfoID() {
-            this.workspaceListService.getWSInfoID(this.workspaceHeaderService.getSelectedWorkspaceId()).subscribe(
-                (result) => {
-                  this.WSListInfo = result;
-                }
-              );
-      }
+        this.workspaceListService.getWSInfoID(this.workspaceHeaderService.getSelectedWorkspaceId()).subscribe(
+            (result) => {
+                this.WSListInfo = result;
+            }
+        );
+    }
 
     reloadWSlist() {
         this.getWorkspaceListInfo(this.token_data.user.id);
@@ -92,7 +92,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
 
     viewWSmodal(workspace) {
         this.WSListInfo = workspace;
-      }
+    }
 
     gotoManagementPanel() {
         this.router.navigate(['management-landing-page/management-panel']);
@@ -122,29 +122,33 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
 
     WSdelete(deleteId: string) {
         this.WSdeleteId = deleteId;
-      }
+    }
 
-      deleteWS() {
+    deleteWS() {
         this.workspaceListService.deleteWS(this.WSdeleteId).subscribe((result) => {
             document.getElementById('deletemsg').click();
-              this.successmsg = result;
-                this.success = true;
-                setTimeout(() => {
-                    this.getWorkspaceListInfo(this.token_data.user.id);
-                }, 15000);
-            },
+            this.successmsg = result;
+            this.success = true;
+            setTimeout(() => {
+                this.getWorkspaceListInfo(this.token_data.user.id);
+            }, 15000);
+        },
             (error) => {
-              document.getElementById('deletemsg').click();
-              this.error = true;
-              this.errormsg = error.error.errorMessage;
+                document.getElementById('deletemsg').click();
+                this.error = true;
+                this.errormsg = error.error.errorMessage;
             }
-            );
-          }
+        );
+    }
 
     closeErrorMsg() {
         this.success = false;
         this.error = false;
-      }
+    }
+
+    createWorkspace() {
+        this.router.navigate(['create-workspace'], { queryParams: { r: 'workspace' } });
+    }
 }
 
 

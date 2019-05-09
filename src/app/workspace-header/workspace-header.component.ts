@@ -149,6 +149,6 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   createWorkspace() {
-    this.router.navigate(['workspace/create-workspace']);
+    this.router.navigate(['create-workspace'], { queryParams: { r: 'home' } });
   }
 }

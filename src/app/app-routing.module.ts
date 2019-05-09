@@ -167,9 +167,7 @@ const routes: Routes = [
             ]
           }
         ]
-      }, {
-        path: 'create-workspace', component: CreateWorkspacePageComponent, canActivate: [AuthenticationGuard]
-      },
+      }
     ]
   },
   {
@@ -226,6 +224,9 @@ const routes: Routes = [
   },
   {
     path: 'sso-sign-in', component: SsoSigninFormComponent
+  },
+  {
+    path: 'create-workspace', component: CreateWorkspacePageComponent, canActivate: [AuthenticationGuard]
   }
 ];
 

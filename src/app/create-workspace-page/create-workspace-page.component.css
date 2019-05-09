@@ -1,0 +1,180 @@
+#create-workspace-landing {
+  margin: 0 auto;
+  width: 57%;
+  margin-top: 7%
+}
+
+.mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+::ng-deep #create-workspace-landing .mat-horizontal-content-container {
+  overflow: hidden;
+  padding: 0 0px 0px 1px !important;
+}
+
+
+.workspace-detail-form {
+  padding-top: 3%
+}
+
+.workspace-detail {
+  display: flex;
+}
+
+.form-field-workspace {
+  width: 50%;
+  padding-right: 4%;
+}
+
+.form-field-workspace-owner {
+  width: 49%;
+}
+
+.form-field-workspace-date {
+  padding-top: 2%;
+}
+
+#action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+}
+
+#action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+}
+
+#action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  border-radius: 3px
+}
+
+#action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+#action-btn {
+  margin: 17px;
+  text-align: right;
+  margin-right: 4px
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+  text-align: left;
+}
+
+::ng-deep #create-workspace-landing svg {
+  height: unset;
+}
+
+th {
+  color: #0c0c0c;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.workspace-name-info {
+  border-radius: 2px;
+  background-color: #f3f3f3;
+  font-size: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+  padding-left: 8px;
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.database-search {
+  text-align: right;
+  padding-right: 5px
+}
+
+::ng-deep #database-table .mat-checkbox label {
+  margin-bottom: 2px !important;
+}
+
+#database-table {
+  overflow: auto;
+  max-height: 154px
+}
+
+.database-search .mat-form-field {
+  width: 27%;
+}
+
+mat-card {
+  padding-bottom: 0px !important;
+}
+
+::ng-deep #comment-database .mat-form-field-appearance-legacy .mat-form-field-subscript-wrapper {
+  font-size: 12px !important;
+}
+
+#comment-database {
+  text-align: left;
+}
+
+#comment-database .mat-form-field {
+  width: 37%;
+}
+
+::ng-deep #create-workspace-landing .material-icons {
+  line-height: unset !important;
+  font-size: 37px !important;
+  color: unset !important;
+}
+
+::ng-deep #create-workspace-landing .mat-stepper-label-position-bottom .mat-horizontal-stepper-header .mat-step-icon {
+  font-size: 0px !important;
+}
+
+::ng-deep #create-workspace-landing .mat-horizontal-stepper-header .finished-step {
+  background-color: #ffff !important;
+  color: #2879ff !important;
+  border: solid 2px #2879ff !important;
+}
+
+::ng-deep #create-workspace-landing .mat-horizontal-stepper-header .unfinished-step {
+  border: solid 1px #cbcdd2;
+  background-color: #cbcdd2
+}
+
+.outer-div {
+  display: flex;
+  margin-bottom: 3%;
+}
+
+.inner-div {
+  width: 50%;
+  text-align: left;
+}
+
+.inner-bold-item {
+  color: #121212;
+}
+
+.inner-grey-item {
+  color: #5c5d5e;
+}
+
+.info-div {
+  margin-top: 4%;
+  margin-bottom: 4%
+}
+
+.form-field-desc {
+  width: 100%;
+}

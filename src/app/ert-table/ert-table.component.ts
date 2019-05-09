@@ -58,9 +58,7 @@ export class ErtTableComponent implements OnInit {
   enableUserDefined = false;
   usrDefinedAlertMessage = '';
   columnConfigFunctionList: ColumnConfigFunction[] = [];
-
   ertedittable: boolean;
-
   lastPage = 1;
   storeSelectedTables: TableDetailsListObj[] = [];
   itemsPerPage = 49;

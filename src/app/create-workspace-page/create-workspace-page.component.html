@@ -1,36 +1,121 @@
+<app-navbar></app-navbar>
 <div id="create-workspace-landing">
     <mat-card>
-        <mat-horizontal-stepper #stepper>
-            <mat-step label="Workspace Details">
-                <ng-template matStepperIcon="edit">
-                    <i class="material-icons">
-                        file_copy
-                    </i>
-                </ng-template>
-                <ng-template matStepperIcon="edit">
-                        <i class="material-icons">
-                            plus
-                        </i>
-                    </ng-template>
+        <mat-horizontal-stepper (selectionChange)="stepClick($event)" linear #stepper labelPosition="bottom">
+            <mat-step [stepControl]="firstFormGroup" label="Workspace Details">
+                <form [formGroup]="firstFormGroup" class="workspace-detail-form">
+                    <div class="workspace-detail">
+                        <mat-form-field class="form-field-workspace">
+                            <input required formControlName="workspaceName" matInput placeholder="Workspace Name">
+                        </mat-form-field>
+                        <mat-form-field class="form-field-workspace-owner">
+                            <input required matInput formControlName="owner" placeholder="Owner" [attr.disabled]="true">
+                        </mat-form-field>
+                    </div>
+                    <div class="workspace-detail">
+                        <mat-form-field class="form-field-workspace form-field-workspace-date">
+                            <input matInput required formControlName="creationDate" placeholder="Creation date" [attr.disabled]="true">
+                        </mat-form-field>
+                        <mat-form-field class="form-field-workspace-owner">
+                            <textarea matInput formControlName="description" placeholder="Description"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div id="action-btn" style="margin-top: 10%;">
+                        <button class="btn cancel btn-padding">Cancel</button>
+                        <button (click)="gotoDatabaseSelection(stepper)"
+                            class="btn save btn-primary btn-padding matStepperNext">Next</button>
+                    </div>
+                </form>
             </mat-step>
-            <mat-step label="Step 2" state="chat">
-                <p>Socialize with each other.</p>
-                <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button matStepperNext>Next</button>
+            <mat-step label="Data Source selection">
+                <div class="workspace-name-info">
+                    Select database for <b>{{firstFormGroup.get('workspaceName').value}}</b>
+                </div>
+                <div class="database-search">
+                    <mat-form-field>
+                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                    </mat-form-field>
+                </div>
+                <div id="database-table">
+                    <table mat-table [dataSource]="dataSource" matSort>
+                        <ng-container matColumnDef="select">
+                            <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                            <td style="width:5%" mat-cell *matCellDef="let row">
+                                <mat-checkbox (change)="selectDatabase(row.id,$event)" [checked]="row.isChecked">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="databaseProfileName">
+                            <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header>Database Profile
+                                Name
+                            </th>
+                            <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.profileName}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="databaseName">
+                            <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Database Name </th>
+                            <td style="width:25%" mat-cell *matCellDef="let row"> {{row.databaseName}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="owner">
+                            <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header> Owner </th>
+                            <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.owner.firstName}}
+                                {{row.owner.lastName}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="createdDate">
+                            <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
+                            <td style="width:25%" mat-cell *matCellDef="let row">
+                                {{row.createdAt * 1000 | date:'medium' }} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                </div>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                <div id="comment-database">
+                    <mat-form-field hintLabel="Reason for using database(s)">
+                        <input matInput #input maxlength="256" placeholder="Comment">
+                        <mat-hint align="end">{{input.value?.length || 0}}/256</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div id="action-btn">
+                    <button (click)="gotoWorkspaceDetails(stepper)"
+                        class="btn cancel matStepperPrevious btn-padding">Previous</button>
+                    <button (click)="gotoWorkspaceReview(stepper)"
+                        class="btn save btn-primary btn-padding matStepperNext">Next</button>
                 </div>
             </mat-step>
-            <mat-step label="Step 3">
-                <p>You're welcome.</p>
+            <mat-step label="Review details">
+                <div class="info-div">
+                    <div class="outer-div">
+                        <div class="inner-div">
+                            <div class="inner-bold-item">Workspace Name</div><b>{{firstFormGroup.get('workspaceName').value}}</b>
+                    <div class="inner-grey-item"></div>
+                        </div>
+                        <div class="inner-div">
+                            <div class="inner-bold-item">Creation Date</div>
+                            <div class="inner-grey-item">{{creationDate}}</div>
+                        </div>
+                    </div>
+                    <div class="outer-div">
+                        <div class="inner-div">
+                            <div class="inner-bold-item">Data Source</div>
+                            <div class="inner-grey-item">{{databaseName}}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex">
+                        <mat-form-field class="form-field-desc">
+                            <textarea matInput placeholder="Description"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div id="action-btn" style="margin-top: 6%">
+                        <button class="btn cancel btn-padding"
+                            (click)="gotoDatabaseSelection(stepper)">Previous</button>
+                        <button (click)="CreateDatatbase(stepper)"
+                            class="btn save btn-primary btn-padding">Create</button>
+                    </div>
+                </div>
             </mat-step>
-
-            <!-- Icon overrides. -->
-            <ng-template matStepperIcon="phone">
-                <mat-icon>call_end</mat-icon>
-            </ng-template>
-            <ng-template matStepperIcon="chat">
-                <mat-icon>forum</mat-icon>
-            </ng-template>
         </mat-horizontal-stepper>
     </mat-card>
 </div>
