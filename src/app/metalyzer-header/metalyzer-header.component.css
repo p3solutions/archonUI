@@ -70,7 +70,7 @@ span {
 /* New Header rules for Metalyzer Analysis */
 
 .head-container{
-  margin: 10px 10px 10px 21px; 
+  margin: 0px 0px -20px 21px; 
 }
 
 .flex-head{
@@ -124,3 +124,4 @@ span {
 #frm-margin{
   margin-top: 5px;
 }
+

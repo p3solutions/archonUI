@@ -25,6 +25,7 @@
   line-height: 30px;
 }
 
+
 .inner-addon {
   padding-left: 10%;
   padding-right: 10%;
@@ -215,17 +216,17 @@ input[type='checkbox'] {
 .form-control {
   height: 40px;
   border-radius: 20px;
-  width: 85%;
   margin-left: 20px;
 }
-.form-control-feedback {
+
+/* .form-control-feedback {
   position: relative;
   margin-top: -34px;
   margin-left: 243px;
   height: 32px;
   color: #269af8;
   line-height: 30px;
-}
+} */
 
 .table-headers{
   text-align: left;
@@ -383,6 +384,7 @@ font-size: 14px;
   width: 100%; 
   color: #121212;
 }
+
 .glyphicon {
   position: relative;
   top: 22px;
@@ -395,7 +397,7 @@ font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.inner-addon {
+/* .inner-addon {
   position: relative;
 }
 
@@ -409,10 +411,12 @@ font-size: 14px;
   right: 29px;
   bottom: 53px;
   top: 56px
-}
+} */
+
 .right-addon input {
   padding-right: 30px;
 }
+
 .form-control {
   font-size: 12px;
   height: 30px;
@@ -434,4 +438,24 @@ a:hover {
 
 .btn { 
   font-size: 12px;
- }
+}
+
+.card-header{
+  color: #000;
+  background-color: #64b5f6;
+  padding:8px;
+}
+
+.card-title{
+  font-size: 16px;
+}
+
+.arch-button{
+  color: white;
+  background-color: #2879ff;
+}
+
+#search-box{
+  margin-left: 6%;
+  margin-bottom: 0px;
+}
