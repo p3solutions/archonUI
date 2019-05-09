@@ -25,6 +25,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   updateNotif: boolean;
   p = 1;
   dropdown: any;
+  message: void;
   constructor(
     private router: Router,
     private tablelistService: TableListService,
@@ -99,7 +100,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml)
       .subscribe(result => {
-        this.downloadFile(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFile(result, result.type);
       });
   }
   exportjson() {
@@ -107,7 +110,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportjson(this.workspaceID, this.databaseID, this.json)
       .subscribe(result => {
-        this.downloadFilejson(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFilejson(result, result.type);
       });
   }
 
@@ -128,7 +133,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportOverallpdf(this.workspaceID)
       .subscribe(result => {
-        this.downloadFilepdf(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFilepdf(result, result.type);
       });
   }
   exportSelectedpdf() {
@@ -140,7 +147,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportSelectedpdf(this.workspaceID, this.userselectTableslist.tableId)
       .subscribe(result => {
-        this.downloadFilesecpdf(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFilesecpdf(result, result.type);
       });
   }
 

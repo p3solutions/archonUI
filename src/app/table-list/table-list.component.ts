@@ -12,6 +12,7 @@ import { DataAnalyzerResultScreenComponent } from '../data-analyzer-result-scree
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.service';
+import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
 
 @Component({
   selector: 'app-table-list',
@@ -80,8 +81,7 @@ export class TableListComponent implements OnInit {
   page;
   dynamicLoaderService: DynamicLoaderService;
   @ViewChild('storedprocView', { read: ViewContainerRef }) storedprocViewRef: ViewContainerRef;
-
-
+  message;
   addDirectjoin: boolean;
   isTablelistAvailable: boolean;
   wsName: string;
@@ -97,6 +97,7 @@ export class TableListComponent implements OnInit {
     private storedProcViewService: StoredProcViewService,
     private router: Router,
     private route: ActivatedRoute,
+    private addDirectJoinService: AddDirectJoinService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
   ) {
@@ -582,6 +583,10 @@ export class TableListComponent implements OnInit {
         }];
         this.tablelistService.changeArray(this.resultantArray);
         this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
+      } else if (this.JobStatus === 'FAILED') {
+        this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
+        this.JobStatus = '';
+        this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
       } else {
         setTimeout(() => {
           (<any>$('#dataAModal-carousel')).carousel(3);
@@ -686,7 +691,9 @@ export class TableListComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.tablelistService.getExportxml(this.workspaceID, this.databaseID, this.xml, this.selectedPrimTblID)
       .subscribe(result => {
-        this.downloadFile(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPop').click();
+        // this.downloadFile(result, result.type);
       });
   }
   exportjson() {
@@ -694,11 +701,17 @@ export class TableListComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.tablelistService.getExportjson(this.workspaceID, this.databaseID, this.json, this.selectedPrimTblID)
       .subscribe(result => {
-        this.downloadFilejson(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPop').click();
+        // this.downloadFilejson(result, result.type);
       });
   }
 
   selectAll() {
       $('input:checkbox:enabled.m-r-10').click();
   }
+
+  selectAllSec() {
+    $('input:checkbox:enabled.m-r-10.m-r-sec').click();
+}
 }

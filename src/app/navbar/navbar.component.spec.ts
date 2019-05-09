@@ -11,6 +11,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NavbarService } from './navbar.service';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -42,7 +44,7 @@ describe('NavbarComponent', () => {
       declarations: [NavbarComponent],
       providers: [
         InfoService,
-        HttpClientModule, UserProfileService, NavbarService, UserinfoService
+        HttpClientModule, UserProfileService, NavbarService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
       .compileComponents();

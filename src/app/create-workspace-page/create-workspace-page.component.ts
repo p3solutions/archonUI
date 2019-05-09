@@ -23,6 +23,9 @@ export class CreateWorkspacePageComponent implements OnInit {
   creationDate = '';
   databaseIds: string[] = [];
   private location = '';
+  errorMessage = '';
+  showWorkDuplicateMsg = '';
+  successWorkspaceMessage = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -79,11 +82,12 @@ export class CreateWorkspacePageComponent implements OnInit {
     if (this.configDBList.filter(a => a.isChecked === true).length !== 0) {
       this.stepper.selectedIndex = 2;
     } else {
-      alert('select one atleast');
+      this.errorMessage = 'Please Select a Database.';
     }
   }
 
-  CreateDatatbase(stepper: MatStepper) {
+  createWorkspace(stepper: MatStepper) {
+    this.showWorkDuplicateMsg = '';
     const selectedDBId = this.configDBList.filter(a => a.isChecked === true)[0].id;
     this.databaseIds.push(selectedDBId);
     const param: any = {
@@ -92,11 +96,10 @@ export class CreateWorkspacePageComponent implements OnInit {
     };
     this.userWorkspaceService.createNewWorkspace(param).subscribe(res => {
       if (res) {
-        if (this.location.trim().toLowerCase() === 'home') {
-          this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-        } else if (this.location.trim().toLowerCase() === 'workspace') {
-          this.router.navigate(['management-landing-page/workspace-list']);
-        }
+        document.getElementById('success-popup-btn').click();
+        this.successWorkspaceMessage = 'Workspace Created Successfully.';
+      } else {
+        this.showWorkDuplicateMsg = 'This Workspace Name already is in use.';
       }
     });
   }
@@ -104,6 +107,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   selectDatabase(id, event) {
     this.configDBList.forEach(a => a.isChecked = false);
     if (event.checked) {
+      this.closeErrorMsg();
       const temp = this.configDBList.filter(a => a.id === id)[0];
       temp.isChecked = true;
       this.databaseName = temp.profileName;
@@ -113,7 +117,6 @@ export class CreateWorkspacePageComponent implements OnInit {
   getOwnerName(): string {
     const accessToken = localStorage.getItem('accessToken');
     const token_data = this.jwtHelper.decodeToken(accessToken);
-    console.log(token_data);
     return token_data.user.firstName + ' ' + token_data.user.lastName;;
   }
 
@@ -125,6 +128,18 @@ export class CreateWorkspacePageComponent implements OnInit {
     const todayDate = mm + '/' + dd + '/' + yyyy;
     this.creationDate = todayDate;
     return todayDate;
+  }
+
+  closeErrorMsg() {
+    this.errorMessage = '';
+  }
+
+  navigateToPrevious() {
+    if (this.location.trim().toLowerCase() === 'home') {
+      this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+    } else if (this.location.trim().toLowerCase() === 'workspace') {
+      this.router.navigate(['management-landing-page/workspace-list']);
+    }
   }
 
 }

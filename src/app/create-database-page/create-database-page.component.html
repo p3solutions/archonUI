@@ -1,0 +1,127 @@
+<app-navbar></app-navbar>
+<div id="create-database-landing">
+  <mat-card>
+    <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+      <mat-step [stepControl]="databaseConnectionForm" label="Connection Details">
+        <form [formGroup]="databaseConnectionForm" class="workspace-detail-form">
+          <div class="workspace-detail">
+            <mat-form-field class="form-field-profile">
+              <input required formControlName="profileName" matInput placeholder="Profile Name">
+            </mat-form-field>
+          </div>
+          <div class="workspace-detail">
+            <mat-form-field class="form-field-workspace">
+              <mat-label>Auth Type</mat-label>
+              <mat-select formControlName="authType">
+                <mat-option *ngFor="let authType of authTypeList" [value]="authType">
+                  {{authType}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-field-workspace-owner">
+              <mat-label>Database Server</mat-label>
+              <mat-select formControlName="supportedDBId" (selectionChange)="setPortName($event.value)">
+                <mat-option *ngFor="let servername of dbServerList" [value]="servername.id">
+                  {{servername.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="workspace-detail">
+            <mat-form-field class="form-field-workspace">
+              <input matInput formControlName="host" required placeholder="Host">
+            </mat-form-field>
+            <mat-form-field class="form-field-workspace-owner">
+              <input matInput type='number' formControlName="port" required placeholder="port">
+            </mat-form-field>
+          </div>
+          <div class="workspace-detail">
+            <mat-form-field class="form-field-workspace">
+              <input matInput required formControlName="databaseName" placeholder="Database Name">
+            </mat-form-field>
+            <mat-form-field class="form-field-workspace-owner">
+              <input matInput required formControlName="schemaName" placeholder="Schema Name">
+            </mat-form-field>
+          </div>
+          <div id="action-btn" class="action-btn-connection">
+            <button class="btn cancel btn-padding">Cancel</button>
+            <button (click)="gotoAuthentication(stepper)"
+              class="btn save btn-primary btn-padding matStepperNext">Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="userServerForm" label="Authentication">
+        <form [formGroup]="userServerForm" class="workspace-detail-form">
+          <div class="workspace-detail">
+            <mat-form-field class="form-field-workspace">
+              <input matInput required formControlName="userName" placeholder="User Name">
+            </mat-form-field>
+            <mat-form-field class="form-field-workspace-owner">
+              <input matInput required type="password" formControlName="password" placeholder="Password">
+            </mat-form-field>
+          </div>
+        </form>
+        <div id="action-btn" style="padding-top: 17%">
+          <button (click)="gotoConnectionDetails(stepper)"
+            class="btn cancel matStepperPrevious btn-padding">Previous</button>
+          <button (click)="gotoTestAndCreate(stepper)"
+            class="btn save btn-primary btn-padding matStepperNext">Next</button>
+        </div>
+      </mat-step>
+      <mat-step label="Review details">
+        <div class="info-div">
+          <div class="outer-div">
+            <div class="inner-div">
+              <div class="inner-bold-item">User Name</div>
+              <div class="inner-grey-item">{{databaseConnectionForm.get('profileName').value}}</div>
+            </div>
+            <div class="inner-div">
+              <div class="inner-bold-item">Database Server</div>
+              <div class="inner-grey-item">{{databaseServerName}}</div>
+            </div>
+          </div>
+          <div class="outer-div">
+            <div class="inner-div">
+              <div class="inner-bold-item">Host</div>
+              <div class="inner-grey-item">{{databaseConnectionForm.get('host').value}}</div>
+            </div>
+            <div class="inner-div">
+              <div class="inner-bold-item">Port</div>
+              <div class="inner-grey-item">{{databaseConnectionForm.get('port').value}}</div>
+            </div>
+          </div>
+          <div class="outer-div">
+            <div class="inner-div">
+              <div class="inner-bold-item">Database Name</div>
+              <div class="inner-grey-item">{{databaseConnectionForm.get('databaseName').value}}</div>
+            </div>
+            <div class="inner-div">
+              <div class="inner-bold-item">Default Schema</div>
+              <div class="inner-grey-item">{{databaseConnectionForm.get('schemaName').value}}</div>
+            </div>
+          </div>
+          <div style="text-align:left" *ngIf="dbTestConnectionErrorMsg!==''"
+            class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> {{dbTestConnectionErrorMsg}}
+          </div>
+          <div style="text-align:left" *ngIf="dbTestConnectionSuccessMsg!==''"
+            class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> {{dbTestConnectionSuccessMsg}}
+          </div>
+          <div id="action-btn" style="margin-top: 6%">
+            <button [disabled]="inProgress" class="btn cancel btn-padding" (click)="testConnection()">Test Connection<i
+                *ngIf="inProgress" class="fa fa-spinner fa-spin loader"></i> </button>
+            <button class="btn cancel btn-padding" (click)="gotoAuthentication(stepper)">Previous</button>
+            <button [disabled]="disableCreateBtn" (click)="createDatatbase(stepper)"
+              class="btn save btn-primary btn-padding"> <i *ngIf="dbinProgress"
+                class="fa fa-spinner fa-spin loader"></i> Create</button>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card>
+</div>

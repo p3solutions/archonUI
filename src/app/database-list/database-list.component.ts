@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef, Inject, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { ConfiguredDB } from '../workspace-objects';
 import { DatabaseListService } from './database-list.service';
-import { Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonUtilityService } from '../common-utility.service';
@@ -51,10 +51,10 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
-    private router: Router,private route: ActivatedRoute,
+    private router: Router, private route: ActivatedRoute,
     private workspaceHeaderService: WorkspaceHeaderService,
     private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService
-    ) {
+  ) {
     this.dynamicLoaderService = dynamicLoaderService;
     this.viewContainerRef = viewContainerRef;
   }
@@ -68,14 +68,14 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.getAllPending();
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
-     if (this.checkAdmin.includes(i)) {
-       this.allowToggle = true;
-       break;
-     }
+      if (this.checkAdmin.includes(i)) {
+        this.allowToggle = true;
+        break;
+      }
     }
     if (this.route.snapshot.paramMap.get('notification')) {
-    const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
-    el.click();
+      const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
+      el.click();
     }
   }
 
@@ -125,7 +125,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     }
   }
   toggleCard(cardId, toShow, _event) {
-   this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
+    this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
   }
 
   toggle() {
@@ -140,7 +140,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
 
   openModal(element, method) {
     if (method === 'Approve') {
-     this.heading = 'Approval Confirmation';
+      this.heading = 'Approval Confirmation';
     } else {
       this.heading = 'Rejection Confirmation';
     }
@@ -157,12 +157,12 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     };
     resultArray.push(obj);
     const body = {
-      workspaceAproval : resultArray
+      workspaceAproval: resultArray
     }
     this.configDBListService.postDecision(body).subscribe(result => {
-    if (result) {
-    this.getAllPending();
-    }
+      if (result) {
+        this.getAllPending();
+      }
     });
   }
 
@@ -172,25 +172,29 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
 
   deleteDB() {
     this.configDBListService.deleteDB(this.DBdeleteId).subscribe((result) => {
-          document.getElementById('deletemsg').click();
-          this.successmsg = result;
-            this.success = true;
-           // this.getConfigDBList();
-             setTimeout(() => {
-               this.getConfigDBList();
-             }, 15000);
-  },
-  (error) => {
-    document.getElementById('deletemsg').click();
-    this.error = true;
-    this.errormsg = error.error.errorMessage;
+      document.getElementById('deletemsg').click();
+      this.successmsg = result;
+      this.success = true;
+      // this.getConfigDBList();
+      setTimeout(() => {
+        this.getConfigDBList();
+      }, 15000);
+    },
+      (error) => {
+        document.getElementById('deletemsg').click();
+        this.error = true;
+        this.errormsg = error.error.errorMessage;
+      }
+    );
   }
-  );
-}
 
-closeErrorMsg() {
+  closeErrorMsg() {
     this.success = false;
     this.error = false;
+  }
+
+  createDatabase() {
+    this.router.navigate(['create-database'], { queryParams: { r: 'database' } });
   }
 
 }

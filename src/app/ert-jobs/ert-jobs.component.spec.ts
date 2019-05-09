@@ -12,6 +12,8 @@ import { MatSelectModule,
   MatOptionModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ErtJobsComponent', () => {
   let component: ErtJobsComponent;
@@ -20,7 +22,7 @@ describe('ErtJobsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ErtJobsComponent, ScheduleJobComponent],
-      providers: [UserinfoService, WorkspaceHeaderService, ErtService],
+      providers: [UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [HttpClientModule, RouterTestingModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), FormsModule,MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule]
     })
       .compileComponents();

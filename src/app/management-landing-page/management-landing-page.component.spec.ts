@@ -6,6 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { UserinfoService } from '../userinfo.service';
 import { HttpClientModule } from '@angular/common/http';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ManagementLandingPageComponent', () => {
   let component: ManagementLandingPageComponent;
@@ -15,7 +17,7 @@ describe('ManagementLandingPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ManagementLandingPageComponent, NavbarComponent],
       imports: [RouterTestingModule, HttpClientModule],
-      providers: [ UserProfileService, UserinfoService
+      providers: [ UserProfileService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
     .compileComponents();

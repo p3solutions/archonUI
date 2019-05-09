@@ -16,6 +16,8 @@ import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles
 import { MatTableModule, MatSortModule, MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ManageMembersComponent', () => {
   let component: ManageMembersComponent;
@@ -47,7 +49,7 @@ describe('ManageMembersComponent', () => {
         ManageMembersService,
         HttpClientModule,
         UserinfoService,
-        WorkspaceHeaderService, ManageUserRolesService
+        WorkspaceHeaderService, ManageUserRolesService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
       schemas:[NO_ERRORS_SCHEMA]
     })

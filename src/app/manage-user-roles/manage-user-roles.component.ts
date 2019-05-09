@@ -62,6 +62,7 @@ export class ManageUserRolesComponent implements OnInit {
   cancelInviteAndDeleteUserUrl = '';
   selectedFilterOption = 'Active';
   userinfoId: any;
+  globalGroupIds: string[] = [];
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router,
@@ -72,14 +73,13 @@ export class ManageUserRolesComponent implements OnInit {
 
   ngOnInit() {
     this.checkForEnableBtn();
-    this.getAllUsers(false, false, false);
   }
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(this.paginator.page)
       .pipe(
         tap(() => this.loadAllUsers(this.invited, this.revoked, this.locked))
       )
@@ -93,6 +93,9 @@ export class ManageUserRolesComponent implements OnInit {
       this.totalUser = result;
     });
   }
+  sortData(sort) {
+    this.dataSource.sortfn(sort);
+    }
 
   filter(filterValue) {
     switch (filterValue) {
@@ -137,12 +140,11 @@ export class ManageUserRolesComponent implements OnInit {
         break;
       }
     }
+    this.dataSource.globalGroupIds = this.globalGroupList.map(function (item) { return item['id']; });
     this.getAllUsers(this.invited, this.revoked, this.locked);
   }
 
-
-
-  getGlobalGroup() {
+  getGlobalGroupForInvite() {
     if (this.roleOfUser !== '') {
       this.manageUserRolesService.getGlobalGroup(this.roleOfUser).subscribe(result => {
         this.userInviteInfo.globalGroupList = result.data.globalRoles;
@@ -152,13 +154,25 @@ export class ManageUserRolesComponent implements OnInit {
   }
 
 
+  getGlobalGroup() {
+    if (this.roleOfUser !== '') {
+      this.manageUserRolesService.getGlobalGroup(this.roleOfUser).subscribe(result => {
+        this.userInviteInfo.globalGroupList = result.data.globalRoles;
+        this.globalGroupList = result.data.globalRoles;
+        this.globalGroupIds = this.globalGroupList.map(function (item) { return item['id']; });
+        this.getAllUsers(false, false, false);
+      });
+    }
+  }
+
+
   getAllUsers(invited, revoked, locked) {
-    this.dataSource = new InviteUserDataSource(this.manageUserRolesService);
+this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
     this.dataSource.connect().subscribe(result => {
       result.forEach((value: any) => {
-      if (value.status === 'Locked') {
-        lockeduser.push(value.id);
-      }
+        if (value.status === 'Locked') {
+          lockeduser.push(value.id);
+        }
       });
     });
     this.loadAllUsers(invited, revoked, locked);
@@ -206,7 +220,7 @@ export class ManageUserRolesComponent implements OnInit {
 
   openUserInviteDialog(): void {
     this.userInviteInfo = new UserInvite();
-    this.getGlobalGroup();
+    this.getGlobalGroupForInvite();
     const dialogScreenRef = this.dialog.open(CreateUserInviteDialogComponent, {
       width: '550px',
       data: this.userInviteInfo,
@@ -325,7 +339,6 @@ export class ManageUserRolesComponent implements OnInit {
       } else {
         this.successMsg = response.errorMessage;
       }
-      console.log(this.invited, this.revoked, this.locked);
       this.getAllUsers(this.invited, this.revoked, this.locked);
     });
   }
@@ -342,20 +355,26 @@ export class ManageUserRolesComponent implements OnInit {
     });
   }
 
+  noGroupChange() {
+    this.getAllUsers(this.invited, this.revoked, this.locked);
+  }
 
   getUserByEmailId(emailId) {
     let response;
     this.dataSource.filter = emailId.trim().toLowerCase();
-    this.getGlobalGroup();
     if (this.invited === true && emailId !== '') {
+      console.log(1);
       this.dataSource.connect().subscribe(result => {
         response = result;
       });
       this.dataSource._filterData(response);
     } else if (emailId !== '') {
-      this.dataSource = new InviteUserDataSource(this.manageUserRolesService);
+      console.log(2);
+      this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
       this.dataSource.getUsersByEmailId(emailId);
+      console.log(3);
     } else {
+      console.log(4);
       this.getAllUsers(this.invited, this.revoked, this.locked);
     }
   }

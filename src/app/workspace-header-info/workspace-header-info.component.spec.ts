@@ -7,6 +7,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('WorkspaceHeaderInfoComponent', () => {
   let component: WorkspaceHeaderInfoComponent;
@@ -43,7 +45,7 @@ describe('WorkspaceHeaderInfoComponent', () => {
       providers: [
         UserWorkspaceService,
         HttpClientModule,
-        UserinfoService
+        UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
     .compileComponents();

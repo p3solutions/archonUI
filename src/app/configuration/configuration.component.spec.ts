@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfigurationComponent } from './configuration.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ConfigurationComponent', () => {
   let component: ConfigurationComponent;
@@ -10,7 +12,8 @@ describe('ConfigurationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ConfigurationComponent ],
-      imports:[RouterTestingModule]
+      imports:[RouterTestingModule],
+      providers: [{ provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

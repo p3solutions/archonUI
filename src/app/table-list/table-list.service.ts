@@ -171,15 +171,15 @@ export class TableListService {
   selectDropdown(message) {
     this.selectDropdownlist.next(message);
   }
-  getExportxml(workspaceId, databaseID, xml, tableID): Observable<Blob> {
+  getExportxml(workspaceId, databaseID, xml, tableID): Observable<any> {
     const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml, tableId: [tableID] };
     return this.http.post(this.exportxmlUrl, params,
-      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+      { headers: this.userinfoService.getHeaders()});
   }
-  getExportjson(workspaceId, databaseID, json, tableID): Observable<Blob> {
+  getExportjson(workspaceId, databaseID, json, tableID): Observable<any> {
     const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: json, tableId: [tableID] };
     return this.http.post(this.exportxmlUrl, params,
-      { headers: this.userinfoService.getHeaders(), responseType: 'blob' });
+      { headers: this.userinfoService.getHeaders()});
   }
 
 }

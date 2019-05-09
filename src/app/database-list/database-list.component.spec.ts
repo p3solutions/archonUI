@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatCardModule, MatInputModule, MatTableModule, MatPaginator, MatPaginatorModule } from '@angular/material';
 import { SearchPipe } from '../search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('DatabaseListComponent', () => {
   let component: DatabaseListComponent;
@@ -22,7 +24,7 @@ describe('DatabaseListComponent', () => {
       declarations: [DatabaseListComponent, SearchPipe],
       imports: [HttpClientModule, RouterTestingModule,
         FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, MatTableModule, MatPaginatorModule],
-      providers: [DatabaseListService, UserinfoService, DynamicLoaderService, CommonUtilityService, WorkspaceHeaderService]
+      providers: [DatabaseListService, UserinfoService, DynamicLoaderService, CommonUtilityService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

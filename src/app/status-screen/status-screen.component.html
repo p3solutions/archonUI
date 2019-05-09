@@ -103,9 +103,9 @@
         <ng-container matColumnDef="Download">
             <th style="width:10%;text-align: center" mat-header-cell *matHeaderCellDef> Download  </th>
             <td style="width:10%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-              <i class="material-icons details" matTooltip="Download" *ngIf="(element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION')" (click)="downloadJob(element.id)">cloud_download</i>
-              <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="(element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION')">cloud_download</i>
-              <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="element.jobOrigin !== 'ERT_EXTRACTION' && element.jobOrigin !== 'RDBMS_EXTRACTION'">cloud_download</i>
+              <i class="material-icons details" matTooltip="Download" *ngIf="(element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION' || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'GENERATE_XML_JSON') || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'ER_GENERATION'))" (click)="downloadJob(element.id)">cloud_download</i>
+              <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="(element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'GENERAL_XML_JSON') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'ER_GENERATION')">cloud_download</i>
+              <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="(element.jobOrigin !== 'ERT_EXTRACTION') && (element.jobOrigin !== 'RDBMS_EXTRACTION') && (element.jobOrigin !== 'GENERATE_XML_JSON') && (element.jobOrigin !== 'ER_GENERATION')">cloud_download</i> 
             </td>
           </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -135,9 +135,9 @@
                 </thead>
                 <tbody >
                   <tr *ngFor="let i of common" class="text-left">
-                    <td>{{i.name}}</td>
+                    <td *ngIf="i.value !== ''">{{i.name}}</td>
                     <td *ngIf="i.type !== 'Date'">{{i.value !== '' ? i.value : 'null'}}</td>
-                    <td *ngIf="i.type == 'Date'">{{i.value !== '' ? (i.value | date: 'medium') : 'null'}}</td>
+                    <td *ngIf="i.type == 'Date' && i.value !== ''">{{i.value | date: 'medium'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">

@@ -10,6 +10,8 @@ import { TableListService } from '../table-list/table-list.service';
 import { UserinfoService } from '../userinfo.service';
 import { SearchPipe } from '../search.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ErtSipConfigComponent', () => {
   let component: ErtSipConfigComponent;
@@ -19,7 +21,7 @@ describe('ErtSipConfigComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ErtSipConfigComponent, SearchPipe],
       imports: [FormsModule, RouterTestingModule, HttpClientModule, NgxPaginationModule],
-      providers: [WorkspaceHeaderService, ErtService, TableListService, UserinfoService]
+      providers: [WorkspaceHeaderService, ErtService, TableListService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

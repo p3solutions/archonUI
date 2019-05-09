@@ -8,7 +8,7 @@ import { EnvironmentService } from '../environment/environment.service';
 export class ForgotpasswordFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   // The URL to the API
-  forgotPasswordUrl = this.environment.apiUrl + 'auth/pwd-link';
+  forgotPasswordUrl = this.environment.apiUrl + 'auth/forgot-password';
   constructor(
     private http: HttpClient,
     private environment: EnvironmentService

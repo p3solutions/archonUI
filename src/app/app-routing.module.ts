@@ -61,6 +61,7 @@ import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configurat
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
 import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
+import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -227,6 +228,9 @@ const routes: Routes = [
   },
   {
     path: 'create-workspace', component: CreateWorkspacePageComponent, canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'create-database', component: CreateDatabasePageComponent, canActivate: [AuthenticationGuard]
   }
 ];
 

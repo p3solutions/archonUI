@@ -4,6 +4,7 @@ import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDia
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Router } from '@angular/router';
 import { CharReplacementService } from './char-replacement.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-ert-char-replacement',
@@ -38,7 +39,7 @@ export class ErtCharReplacementComponent implements OnInit {
       this.dataSource.data = this.charReplaceList;
     });
   }
-  saveCharReplacement() {
+  saveCharReplacement(form: NgForm) {
     this.isDisabled = false;
     if (this.editCharId) {
       this.updateCharRecord();
@@ -46,7 +47,7 @@ export class ErtCharReplacementComponent implements OnInit {
       this.addCharReplacement();
     }
     this.editCharId = '';
-    this.charReplaceInfo = new Charreplacement();
+    form.form.reset();
     setTimeout(() => {
       this.getAllCharRecords();
     }, 2000);
@@ -81,9 +82,9 @@ export class ErtCharReplacementComponent implements OnInit {
     this.charReplaceInfo = Object.assign({}, temp);
   }
 
-  refreshCharRecord() {
+  refreshCharRecord(form:NgForm) {
     this.isDisabled = false;
-    this.charReplaceInfo = new Charreplacement();
+    form.form.reset();
   }
 
   deleteCharRecord(id: string) {

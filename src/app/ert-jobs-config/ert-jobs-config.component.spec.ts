@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ErtJobsConfigComponent', () => {
   let component: ErtJobsConfigComponent;
@@ -15,7 +17,7 @@ describe('ErtJobsConfigComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ErtJobsConfigComponent ],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
-      providers: [ErtService, UserinfoService],
+      providers: [ErtService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
     })
     .compileComponents();
   }));

@@ -10,6 +10,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ForgotpasswordFormComponent', () => {
   let component: ForgotpasswordFormComponent;
@@ -34,7 +36,7 @@ describe('ForgotpasswordFormComponent', () => {
       declarations: [ForgotpasswordFormComponent],
       providers: [
         RouterTestingModule,
-        ForgotpasswordFormService
+        ForgotpasswordFormService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
       .compileComponents();
