@@ -66,7 +66,7 @@ export class DatabaseListService {
   }
 
   private updatedatabase(res: any) {
-    const data = res.data;
+    const data = res;
     return data || [];
   }
 

@@ -161,16 +161,20 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             workspaceName : this.wsName,
             requestMessage : this.wsDesc
           };
-        this.workspaceListService.updateWS(this.WSeditId, params).subscribe((result) => {
+        this.workspaceListService.updateWS(this.WSeditId, params).subscribe((result: any) => {
              document.getElementById('editmsg').click();
+             if (result.success) {
               this.successmsg = 'successfully updated';
+             } else {
+              this.successmsg = result.errorMessage;
+             }
                 this.success = true;
                     this.getWorkspaceListInfo(this.token_data.user.id);
             },
             (error) => {
               document.getElementById('editmsg').click();
               this.error = true;
-              this.errormsg = error.error.errorMessage;
+              this.errormsg = error.error.errors[0].code;
             }
             );
           }

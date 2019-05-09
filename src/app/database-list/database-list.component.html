@@ -246,12 +246,13 @@
       </div>
 
       <div id="edit_model" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog">           
           <div class="modal-content" style="width: 500px;">
+              <form #dbForm="ngForm">
             <div class="modal-header">
               <div class='model-title'><div class='info-r'>Edit Database password</div></div>
           </div>
-          <div class="modal-body row">
+          <div class="modal-body row">              
             <div class="col-md-12 row m-10">
                 <mat-form-field class="example-full-width">
                     <input matInput required [(ngModel)]="dbName" name="dbName"
@@ -261,18 +262,19 @@
             <div class="col-md-12 row m-10">
                 <mat-form-field class="example-full-width">
                     <input type="password" matInput required [(ngModel)]="dbpassword" name="dbpassword"
-                      placeholder="Enter Password"  minlength="8" #pass="ngModel">
+                      placeholder="Enter Password"  minlength="6" #pass="ngModel">
                   </mat-form-field>
                   <mat-error *ngIf="pass.errors?.minlength"  style="text-align:center">
-                      *Password must contain atleast 8 characters.
+                      *Password must contain atleast 6 characters.
                      </mat-error>
             </div>
             
           </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-default cancel" (click)="updateDB()" data-dismiss="modal" [disabled]="pass.errors?.minlength">Confirm</button>          
+              <button type="button" class="btn btn-default cancel" (click)="updateDB()" data-dismiss="modal" [disabled]="!dbForm.form.valid">Confirm</button>          
             </div>
+          </form>
           </div>
         </div>
       </div>

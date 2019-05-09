@@ -205,9 +205,13 @@ closeErrorMsg() {
       id: this.DBupdateId,
       password: this.dbpassword
     };
-    this.configDBListService.updateDB(this.DBupdateId, params ).subscribe((result) => {
+    this.configDBListService.updateDB(this.DBupdateId, params ).subscribe((result: any) => {
           document.getElementById('editmsg').click();
-          this.successmsg = 'successfully updated your password';
+          if (result.success) {
+            this.successmsg = 'successfully updated';
+           } else {
+            this.successmsg = result.errorMessage;
+           }
             this.success = true;
             this.getConfigDBList();
         },
