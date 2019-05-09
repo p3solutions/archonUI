@@ -15,7 +15,7 @@
         <mat-form-field>
             <mat-select msInfiniteScroll name="e-select"
                placeholder="Select Event" [(value)]="selectedEvent">
-              <mat-option appScrollServerCall [value]="" (click)="selectEvent('');getAudit()">
+              <mat-option appScrollServerCall [value]="" (click)="selectEvent('LOGIN');getAudit()">
                  RESET
               </mat-option>
               <mat-option appScrollServerCall *ngFor="let e of Events" [value]="e" (click)="selectEvent(e);getAudit()">
@@ -57,7 +57,7 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           <i class="material-icons" matTooltip="Reset" (click)="startdate = '';getAudit();" style="vertical-align: -webkit-baseline-middle;">
-              indeterminate_check_box
+            replay
               </i>      
     </div>
     <div class="col-md-2 heading-item">
@@ -67,7 +67,7 @@
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
           <i matTooltip="Reset" class="material-icons" (click)="enddate = '';getAudit();" style="vertical-align: -webkit-baseline-middle;">
-              indeterminate_check_box
+            replay
               </i>      
     </div>
     <div class="col-md-2 heading-item">
@@ -75,7 +75,7 @@
             <input matInput #search placeholder="Search">
           </mat-form-field>
           <i class="material-icons" (click)="enddate = '';startdate = '';selectedEvent = '';selectedWS = '';selectedWSId='';selectedService='';getAudit();" matTooltip="Reset All" style="vertical-align: -webkit-baseline-middle;">
-            indeterminate_check_box
+            replay
             </i> 
       </div>
     
@@ -89,7 +89,7 @@
       </ng-container>
       <ng-container matColumnDef="WorkSpace Name">
         <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> WorkSpace Name </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.workspaceName}}</td>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.workspaceName !== null ? element.workspaceName : 'N/A'}}</td>
       </ng-container>
       <ng-container matColumnDef="Related Job ID">
         <th style="width:10%" mat-header-cell *matHeaderCellDef> Related Job ID </th>
@@ -100,7 +100,7 @@
       </ng-container>
       <ng-container matColumnDef="Service Name">
         <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Service Name</th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.serviceId}}</td>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.serviceId !== null ? element.serviceId : 'N/A'}}</td>
       </ng-container>
       <ng-container matColumnDef="Event Name">
         <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Event Name </th>
