@@ -1,7 +1,7 @@
 <div class="modal-dialog" role="worskspace">
   <div class="modal-content text-left">
     <div class="modal-header">Add Direct Join 
-      <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
+      <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg();resetselectedValues()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
       </button>
              
@@ -63,21 +63,6 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-                   <!-- <table id="customers">                     
-                        <tr>
-                          <th style="width: 145px;font-weight: normal;">Primary Table Column</th>
-                          <th style="width: 125px;font-weight: normal;">Column Type</th>
-                          <th style="width: 165px;font-weight: normal;">Secondary Table Column</th>                                                    
-                        </tr>                    
-                      <tr [hidden]="selected.length <= 1" *ngFor="let pri of primaryColumns; let ind=index">
-                        <td>{{pri.columnName}}</td>
-                        <td>{{pri.columnDataType}}</td>
-                        <td> <select id="testreset" #selected class="selwidth" (change)="selectedValues(pri,ind,selected.value)">
-                            <option selected="true">Select</option>
-                            <option *ngFor="let sec of secondaryColumns | secondaryColumn:pri.columnDataType">{{sec.columnName}}</option>
-                          </select>                       
-                      </tr>
-                    </table> -->
             </div>
             </div>
           </div>
@@ -106,7 +91,7 @@
       </div> -->
       <div class="col-md-5">
         <div style="text-align: right;">
-          <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn arch-close" (click)="closeErrorMsg()" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn arch-close" (click)="closeErrorMsg();resetselectedValues()" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-padding btn-transform btn-primary adhoc-modal-btn arch-add" (click)="addJoins()">Add Joins</button>
         </div>
       </div>
