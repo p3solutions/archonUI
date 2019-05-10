@@ -140,5 +140,4 @@ export class CreateWorkspacePageComponent implements OnInit {
       this.router.navigate(['management-landing-page/workspace-list']);
     }
   }
-
 }

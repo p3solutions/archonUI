@@ -1,150 +1,157 @@
 <app-navbar></app-navbar>
-<div  id="create-database-header">
-        <div style="display: inherit">
-          <a (click)="gotoDashboard()" class="anchor-header" data-tooltip="Back">
-            <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-          </a>
-          <h3 class="heading-name">Create New database</h3>
-        </div>
-      </div>
 <div id="create-workspace-landing">
-    <mat-card>
-        <mat-horizontal-stepper (selectionChange)="stepClick($event)" linear #stepper labelPosition="bottom">
-            <mat-step [stepControl]="firstFormGroup" label="Workspace Details">
-                <form [formGroup]="firstFormGroup" class="workspace-detail-form">
-                    <div class="workspace-detail">
-                        <mat-form-field class="form-field-workspace">
-                            <input required formControlName="workspaceName" matInput placeholder="Workspace Name">
-                        </mat-form-field>
-                        <mat-form-field class="form-field-workspace-owner">
-                            <input required matInput formControlName="owner" placeholder="Owner" [attr.disabled]="true">
-                        </mat-form-field>
-                    </div>
-                    <div class="workspace-detail">
-                        <mat-form-field class="form-field-workspace form-field-workspace-date">
-                            <input matInput required formControlName="creationDate" placeholder="Creation date"
-                                [attr.disabled]="true">
-                        </mat-form-field>
-                        <mat-form-field class="form-field-workspace-owner">
-                            <textarea matInput formControlName="description" placeholder="Description"></textarea>
-                        </mat-form-field>
-                    </div>
-                    <div id="action-btn" style="margin-top: 10%;">
-                        <button (click)="navigateToPrevious()" class="btn cancel btn-padding">Cancel</button>
-                        <button (click)="gotoDatabaseSelection(stepper)"
-                            class="btn save btn-primary btn-padding matStepperNext">Next</button>
-                    </div>
-                </form>
-            </mat-step>
-            <mat-step label="Data Source selection">
-                <div class="workspace-name-info">
-                    Select database for <b>{{firstFormGroup.get('workspaceName').value}}</b>
-                </div>
-                <div style="display: flex">
-                    <div style="text-align:left;width: 66%">
-                        <div *ngIf="errorMessage!==''" class="alert alert-danger alert-dismissible" role="alert">
-                            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button> {{errorMessage}}
+    <div id="create-database-header">
+        <div style="display: inherit">
+            <a (click)="navigateToPrevious()" class="anchor-header" data-tooltip="Back">
+                <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+            </a>
+            <h3 class="heading-name">Create New Workspace</h3>
+        </div>
+    </div>
+    <div>
+        <mat-card>
+            <mat-horizontal-stepper (selectionChange)="stepClick($event)" linear #stepper labelPosition="bottom">
+                <mat-step [stepControl]="firstFormGroup" label="Workspace Details">
+                    <form [formGroup]="firstFormGroup" class="workspace-detail-form">
+                        <div class="workspace-detail">
+                            <mat-form-field class="form-field-workspace">
+                                <input required formControlName="workspaceName" matInput placeholder="Workspace Name">
+                            </mat-form-field>
+                            <mat-form-field class="form-field-workspace-owner">
+                                <input required matInput formControlName="owner" placeholder="Owner"
+                                    [attr.disabled]="true">
+                            </mat-form-field>
                         </div>
-                    </div>
-                    <div class="database-search">
-                        <mat-form-field>
-                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div id="database-table">
-                    <table mat-table [dataSource]="dataSource" matSort>
-                        <ng-container matColumnDef="select">
-                            <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-                            <td style="width:5%" mat-cell *matCellDef="let row">
-                                <mat-checkbox (change)="selectDatabase(row.id,$event)" [checked]="row.isChecked">
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="databaseProfileName">
-                            <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header>Database Profile
-                                Name
-                            </th>
-                            <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.profileName}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="databaseName">
-                            <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Database Name </th>
-                            <td style="width:25%" mat-cell *matCellDef="let row"> {{row.databaseName}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="owner">
-                            <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header> Owner </th>
-                            <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.owner.firstName}}
-                                {{row.owner.lastName}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="createdDate">
-                            <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
-                            <td style="width:25%" mat-cell *matCellDef="let row">
-                                {{row.createdAt * 1000 | date:'medium' }} </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                        </tr>
-                    </table>
-                </div>
-                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                <div id="comment-database">
-                    <mat-form-field hintLabel="Reason for using database(s)">
-                        <input matInput #input maxlength="256" placeholder="Comment">
-                        <mat-hint align="end">{{input.value?.length || 0}}/256</mat-hint>
-                    </mat-form-field>
-                </div>
-                <div id="action-btn">
-                    <button (click)="gotoWorkspaceDetails(stepper)"
-                        class="btn cancel matStepperPrevious btn-padding">Previous</button>
-                    <button (click)="gotoWorkspaceReview(stepper)"
-                        class="btn save btn-primary btn-padding matStepperNext">Next</button>
-                </div>
-            </mat-step>
-            <mat-step label="Review details">
-                <div class="info-div">
-                    <div class="outer-div">
-                        <div class="inner-div">
-                            <div class="inner-bold-item">Workspace Name</div>
-                            <b>{{firstFormGroup.get('workspaceName').value}}</b>
-                            <div class="inner-grey-item"></div>
+                        <div class="workspace-detail">
+                            <mat-form-field class="form-field-workspace form-field-workspace-date">
+                                <input matInput required formControlName="creationDate" placeholder="Creation date"
+                                    [attr.disabled]="true">
+                            </mat-form-field>
+                            <mat-form-field class="form-field-workspace-owner">
+                                <textarea matInput formControlName="description" placeholder="Description"></textarea>
+                            </mat-form-field>
                         </div>
-                        <div class="inner-div">
-                            <div class="inner-bold-item">Creation Date</div>
-                            <div class="inner-grey-item">{{creationDate}}</div>
+                        <div id="action-btn" style="margin-top: 10%;">
+                            <button (click)="navigateToPrevious()" class="btn cancel btn-padding">Cancel</button>
+                            <button (click)="gotoDatabaseSelection(stepper)"
+                                class="btn save btn-primary btn-padding matStepperNext">Next</button>
                         </div>
-                    </div>
-                    <div class="outer-div">
-                        <div class="inner-div">
-                            <div class="inner-bold-item">Data Source</div>
-                            <div class="inner-grey-item">{{databaseName}}</div>
-                        </div>
+                    </form>
+                </mat-step>
+                <mat-step label="Data Source selection">
+                    <div class="workspace-name-info">
+                        Select database for <b>{{firstFormGroup.get('workspaceName').value}}</b>
                     </div>
                     <div style="display: flex">
-                        <mat-form-field class="form-field-desc">
-                            <textarea matInput placeholder="Description"></textarea>
-                        </mat-form-field>
-                    </div>
-                    <div style="text-align:left">
-                        <div *ngIf="showWorkDuplicateMsg!==''" class="alert alert-danger alert-dismissible"
-                            role="alert">
-                            <button type="button" class="close" (click)="showWorkDuplicateMsg = ''" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button> {{showWorkDuplicateMsg}}
+                        <div style="text-align:left;width: 66%">
+                            <div *ngIf="errorMessage!==''" class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button> {{errorMessage}}
+                            </div>
+                        </div>
+                        <div class="database-search">
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                            </mat-form-field>
                         </div>
                     </div>
-                    <div id="action-btn" style="margin-top: 6%">
-                        <button class="btn cancel btn-padding"
-                            (click)="gotoDatabaseSelection(stepper)">Previous</button>
-                        <button (click)="createWorkspace(stepper)"
-                            class="btn save btn-primary btn-padding">Create</button>
+                    <div id="database-table">
+                        <table mat-table [dataSource]="dataSource" matSort>
+                            <ng-container matColumnDef="select">
+                                <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                                <td style="width:5%" mat-cell *matCellDef="let row">
+                                    <mat-checkbox (change)="selectDatabase(row.id,$event)" [checked]="row.isChecked">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="databaseProfileName">
+                                <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header>Database
+                                    Profile
+                                    Name
+                                </th>
+                                <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.profileName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="databaseName">
+                                <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Database Name
+                                </th>
+                                <td style="width:25%" mat-cell *matCellDef="let row"> {{row.databaseName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="owner">
+                                <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header> Owner </th>
+                                <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.owner.firstName}}
+                                    {{row.owner.lastName}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="createdDate">
+                                <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Created Date
+                                </th>
+                                <td style="width:25%" mat-cell *matCellDef="let row">
+                                    {{row.createdAt * 1000 | date:'medium' }} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                        </table>
                     </div>
-                </div>
-            </mat-step>
-        </mat-horizontal-stepper>
-    </mat-card>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    <div id="comment-database">
+                        <mat-form-field hintLabel="Reason for using database(s)">
+                            <input matInput #input maxlength="256" placeholder="Comment">
+                            <mat-hint align="end">{{input.value?.length || 0}}/256</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div id="action-btn">
+                        <button (click)="gotoWorkspaceDetails(stepper)"
+                            class="btn cancel matStepperPrevious btn-padding">Previous</button>
+                        <button (click)="gotoWorkspaceReview(stepper)"
+                            class="btn save btn-primary btn-padding matStepperNext">Next</button>
+                    </div>
+                </mat-step>
+                <mat-step label="Review details">
+                    <div class="info-div">
+                        <div class="outer-div">
+                            <div class="inner-div">
+                                <div class="inner-bold-item">Workspace Name</div>
+                                <b>{{firstFormGroup.get('workspaceName').value}}</b>
+                                <div class="inner-grey-item"></div>
+                            </div>
+                            <div class="inner-div">
+                                <div class="inner-bold-item">Creation Date</div>
+                                <div class="inner-grey-item">{{creationDate}}</div>
+                            </div>
+                        </div>
+                        <div class="outer-div">
+                            <div class="inner-div">
+                                <div class="inner-bold-item">Data Source</div>
+                                <div class="inner-grey-item">{{databaseName}}</div>
+                            </div>
+                        </div>
+                        <div style="display: flex">
+                            <mat-form-field class="form-field-desc">
+                                <textarea matInput placeholder="Description"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div style="text-align:left">
+                            <div *ngIf="showWorkDuplicateMsg!==''" class="alert alert-danger alert-dismissible"
+                                role="alert">
+                                <button type="button" class="close" (click)="showWorkDuplicateMsg = ''"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button> {{showWorkDuplicateMsg}}
+                            </div>
+                        </div>
+                        <div id="action-btn" style="margin-top: 6%">
+                            <button class="btn cancel btn-padding"
+                                (click)="gotoDatabaseSelection(stepper)">Previous</button>
+                            <button (click)="createWorkspace(stepper)"
+                                class="btn save btn-primary btn-padding">Create</button>
+                        </div>
+                    </div>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </mat-card>
+    </div>
 </div>
 <button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
     data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
@@ -158,10 +165,10 @@
                 <p>{{successWorkspaceMessage}}</p>
             </div>
             <div class="modal-footer">
-                <button (click)="navigateToPrevious()" type="button" class="btn btn-primary adhoc-modal-btn btn-padding btn-transform"
+                <button (click)="navigateToPrevious()" type="button"
+                    class="btn btn-primary adhoc-modal-btn btn-padding btn-transform" data-dismiss="modal">Ok</button>
+                <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
                     data-dismiss="modal">Ok</button>
-                <button type="button btn-padding"  style="display:none"
-                    class="btn btn-default adhoc-modal-btn" data-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>

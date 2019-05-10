@@ -1,7 +1,7 @@
 #create-database-landing {
   margin: 0 auto;
   width: 57%;
-  margin-top: 7%
+  margin-top: 2%
 }
 
 .mat-horizontal-stepper-header {
@@ -198,13 +198,12 @@ mat-card {
 
 #create-database-header{
   display: inline-flex;
-  float: left;
-  padding-left: 25px
+  margin-bottom: 6px
 }
 
 .anchor-header{
   padding-top: 20px;
-  padding-right: 9px
+  padding-right: 20px
 }
 
 .heading-name{
