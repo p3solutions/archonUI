@@ -38,6 +38,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     wsName: any;
     wsDesc: any;
     WSeditId: any;
+  deleteId: string;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -132,10 +133,12 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             document.getElementById('deletemsg').click();
               this.successmsg = result;
                 this.success = true;
+                this.deleteId = this.WSdeleteId;
                 this.workspaceHeaderService.selected = undefined;
-                setTimeout(() => {
                     this.getWorkspaceListInfo(this.token_data.user.id);
-                }, 15000);
+                    setTimeout(() => {
+                      this.getWorkspaceListInfo(this.token_data.user.id);
+                  }, 15000);
             },
             (error) => {
               document.getElementById('deletemsg').click();

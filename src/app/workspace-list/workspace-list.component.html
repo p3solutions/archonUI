@@ -21,12 +21,13 @@
       </div> 
       <div class="pl-20">
       <div class="flex-container" *ngFor="let ws of workspaceActions | searchTable: searchText; let indRow = index; let last = last">
-          <mat-card class="example-card">
+        <div *ngIf="ws?.id === deleteId">
+        <mat-card class="example-card delete">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
             <mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
               <mat-card-title class="header">{{ws?.workspaceName}} </mat-card-title>
-              <div class="spacer"></div>
-              <a (click)="viewWSmodal(ws)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
+              <div class="spacer"></div>              
             </mat-card-header>
             <mat-card-content class="content" *ngFor="let db of ws.databases;">
               <div class='body-left'>Databases(s)</div><div class='body-center'>:</div><div class='body-right'>{{db?.name}}</div>
@@ -34,15 +35,34 @@
               <div class='body-left'>Last Updated Time</div><div class='body-center'>:</div><div class='body-right'>{{ws?.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</div>
               <div class='body-left'>Status</div><div class='body-center'>:</div><div class='body-right'>{{ws?.workspaceState}}</div>
             </mat-card-content>
-            <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
-                <a (click)="editWS(ws)" data-toggle="modal" href="#edit_model" data-tooltip="Edit"><i class="material-icons ws">
-                  edit
-                  </i></a>
-                <a (click)="WSdelete(ws?.id)" data-toggle="modal" href="#confirm_model" data-tooltip="Delete"><i class="material-icons ws">
-                  delete
-                  </i></a>
+            <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">                
               </mat-card-footer>
           </mat-card> 
+        </div>
+        <div *ngIf="ws?.id !== deleteId">
+          <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title class="header">{{ws?.workspaceName}} </mat-card-title>
+                <div class="spacer"></div>
+                <a (click)="viewWSmodal(ws)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
+              </mat-card-header>
+              <mat-card-content class="content" *ngFor="let db of ws.databases;">
+                <div class='body-left'>Databases(s)</div><div class='body-center'>:</div><div class='body-right'>{{db?.name}}</div>
+                <div class='body-left'>Meta Version</div><div class='body-center'>:</div><div class='body-right'>{{ws?.masterMetadataVersion}}</div>
+                <div class='body-left'>Last Updated Time</div><div class='body-center'>:</div><div class='body-right'>{{ws?.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</div>
+                <div class='body-left'>Status</div><div class='body-center'>:</div><div class='body-right'>{{ws?.workspaceState}}</div>
+              </mat-card-content>
+              <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
+                  <a (click)="editWS(ws)" data-toggle="modal" href="#edit_model" data-tooltip="Edit"><i class="material-icons ws">
+                    edit
+                    </i></a>
+                  <a (click)="WSdelete(ws?.id)" data-toggle="modal" href="#confirm_model" data-tooltip="Delete"><i class="material-icons ws">
+                    delete
+                    </i></a>
+                </mat-card-footer>
+            </mat-card> 
+          </div>  
         </div>
         </div>
         <button type="button" style="display: none" id="reloadws" (click)="reloadWSlist()"></button>
