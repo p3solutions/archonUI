@@ -43,9 +43,9 @@
               <input matInput required formControlName="schemaName" placeholder="Schema Name">
             </mat-form-field>
           </div>
-          <div id="action-btn" (click)="navigateToPrevious()"class="action-btn-connection">
-            <button class="btn cancel btn-padding">Cancel</button>
-            <button (click)="gotoAuthentication(stepper)"
+          <div id="action-btn" class="action-btn-connection">
+            <button type="button" (click)="navigateToPrevious()" class="btn cancel btn-padding">Cancel</button>
+            <button type="button" (click)="gotoAuthentication(stepper)"
               class="btn save btn-primary btn-padding matStepperNext">Next</button>
           </div>
         </form>

@@ -146,8 +146,8 @@ mat-card {
 }
 
 ::ng-deep #create-database-landing .mat-horizontal-stepper-header .unfinished-step {
-  border: solid 1px #cbcdd2;
-  background-color: #cbcdd2
+  border: solid 1px #cbcdd2 !important;
+  background-color: #cbcdd2 !important;
 }
 
 .outer-div {

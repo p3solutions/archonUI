@@ -157,8 +157,8 @@ export class CreateDatabasePageComponent implements OnInit {
         for (const db of response) {
           if ((db.host === this.databaseConnectionForm.get('host').value) && (db.port ===
             this.databaseConnectionForm.get('port').value) && (db.databaseName === this.databaseConnectionForm.get('databaseName').value)) {
-              this.duplicateDatabaseMessage = 'Same database Connection exists with different profile name.';
-              break;
+            this.duplicateDatabaseMessage = 'Same database Connection exists with different profile name.';
+            break;
           }
         }
       }

@@ -72,7 +72,6 @@ export class CreateWorkspacePageComponent implements OnInit {
 
   gotoDatabaseSelection(stepper: MatStepper) {
     this.stepper.selectedIndex = 1;
-    console.log(this.firstFormGroup.value);
   }
 
   gotoWorkspaceDetails(stepper: MatStepper) {
