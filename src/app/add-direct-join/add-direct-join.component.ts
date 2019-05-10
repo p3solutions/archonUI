@@ -31,6 +31,10 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   schemaResultsTableCount = 0;
   paginationRequired: boolean;
   page: number;
+  selected = [];
+
+  displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumns'];
+
 
   constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService) { }
 

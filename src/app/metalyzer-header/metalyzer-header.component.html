@@ -54,12 +54,12 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header arch-button">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-left">Metalyzer Audit</h4>
       </div>
       <div class="modal-body">
-        <table class="table table-bordered table-hover">
+        <!-- <table class="table table-bordered table-hover">
           <thead>
             <tr>
               <th>Modified By</th>
@@ -76,11 +76,43 @@
               <td>{{i.modificationDescription[0]}}</td>
             </tr>
           </tbody>
-        </table>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </table> -->
+
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="auditArray | paginate: { id:'paginateControl', itemsPerPage: 10, currentPage: p }">
+    
+            <ng-container matColumnDef="modifiedBy">
+              <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Modified By </th>
+              <td mat-cell *matCellDef="let element"> {{element.modifiedBy}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdAt">
+              <th style="text-align: center; width: 20%"  mat-header-cell *matHeaderCellDef> Modified At </th>
+              <td mat-cell *matCellDef="let element"> {{element.createdAt * 1000 | date:'medium'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="modificationMode">
+              <th style="text-align: center; width: 20%"  mat-header-cell *matHeaderCellDef> Modification Mode </th>
+              <td mat-cell *matCellDef="let element"> {{element.modificationMode}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="modificationDescription">
+              <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Modification Description </th>
+              <td mat-cell *matCellDef="let element"> {{element.modificationDescription[0]}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+
+        <div class="paginate-sty">
+          <pagination-controls id="paginateControl" (pageChange)="p = $event"></pagination-controls>
+        </div>
+          
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button class="arch-btnn" type="button" mat-flat-button data-dismiss="modal">Close</button>
       </div>
     </div>
 

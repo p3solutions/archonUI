@@ -27,7 +27,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   updateNotif: boolean;
   errorMsg: any;
   updateNotifSuccess: boolean;
+  selected = [];
 
+  displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumn'];
 
   constructor(private editRelationshipInfo: EditRelationshipInfoService) { }
 
@@ -77,6 +79,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryValues, index, secondaryColumn) {
+    console.log(primaryValues, index, secondaryColumn );
     const example = {
       columnId: '',
       columnName: '',
@@ -134,10 +137,10 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.resultantValues = [];
           this.updateEvent.emit(true);
           this.errorMsg = res.data;
-          this.updateNotif = true;
+          this.updateNotifSuccess = true;
         } else {
           this.errorMsg = res.errors;
-          this.updateNotifSuccess = true;
+          this.updateNotif = true;
         }
       });
   }
