@@ -49,6 +49,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   DBupdateId: any;
   dbpassword: any;
   dbName: any;
+  deleteId: string;
 
   constructor(
     private configDBListService: DatabaseListService,
@@ -178,7 +179,8 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
           document.getElementById('deletemsg').click();
           this.successmsg = result;
             this.success = true;
-           // this.getConfigDBList();
+            this.deleteId = this.DBdeleteId;
+            this.getConfigDBList();
              setTimeout(() => {
                this.getConfigDBList();
              }, 15000);

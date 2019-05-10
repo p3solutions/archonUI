@@ -41,6 +41,25 @@
     </div>
 <div class="pl-20">
   <div class="flex-container" *ngFor="let db of dbListActions| searchTable: searchText;let indRow = index; let last = last">
+          <div *ngIf="db?.id === deleteId">
+          <mat-card class="example-card delete">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title class="header">{{db?.profileName}} </mat-card-title>
+          <div class="spacer"></div>       
+          </mat-card-header>
+        <mat-card-content class="content">
+          <div class='body-left'>Host</div><div class='body-center'>:</div><div class='body-right'>{{db?.host}}</div>
+          <div class='body-left'>Owner</div><div class='body-center'>:</div><div class='body-right'>{{db?.owner.firstName}} {{db?.owner.lastName}}</div>
+          <div class='body-left'>Server Type</div><div class='body-center'>:</div><div class='body-right'>{{db?.type}}</div>
+          <div class='body-left'>Status</div><div class='body-center'>:</div><div class='body-right'>{{db?.status}}</div>
+        </mat-card-content>
+        <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
+        </mat-card-footer>
+      </mat-card>
+      </div>
+      <div *ngIf="ws?.id !== deleteId">
     <mat-card class="example-card">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>

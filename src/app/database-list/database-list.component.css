@@ -46,6 +46,10 @@ table.table td {
   transition:0.5s;
 }
 
+.delete:hover {
+  opacity: 0.2;
+}
+
 .example-card:hover{
   box-shadow: rgba(0,0,0,0.43) 0px 0px 20px 0px;
   transform:translatey(-10px);
