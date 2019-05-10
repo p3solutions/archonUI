@@ -195,3 +195,21 @@ mat-card {
 .loader {
   margin-left: 3px;
 }
+
+#create-database-header{
+  display: inline-flex;
+  float: left;
+  padding-left: 25px
+}
+
+.anchor-header{
+  padding-top: 20px;
+  padding-right: 9px
+}
+
+.heading-name{
+  font-size: 24px;
+  color: #0c0c0c;
+}
+
+

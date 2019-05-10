@@ -180,3 +180,19 @@ mat-card {
 .form-field-desc {
   width: 100%;
 }
+
+#create-database-header{
+  display: inline-flex;
+  float: left;
+  padding-left: 25px
+}
+
+.anchor-header{
+  padding-top: 20px;
+  padding-right: 9px
+}
+
+.heading-name{
+  font-size: 24px;
+  color: #0c0c0c;
+}

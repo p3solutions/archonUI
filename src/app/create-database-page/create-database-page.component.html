@@ -1,4 +1,12 @@
 <app-navbar></app-navbar>
+<div  id="create-database-header">
+  <div style="display: inherit">
+    <a (click)="gotoDashboard()" class="anchor-header" data-tooltip="Back">
+      <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+    </a>
+    <h3 class="heading-name">Add New database Connection</h3>
+  </div>
+</div>
 <div id="create-database-landing">
   <mat-card>
     <mat-horizontal-stepper linear #stepper labelPosition="bottom">
