@@ -23,7 +23,7 @@
           </h5>
         </div>        
       </div>
-      <pagination-controls style="float: right; margin-right: 14px;" id="tablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
+      <pagination-controls style="float: right; margin-right: 36px;" id="tablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
     </div>
   </div>
   <div class="col-md-8 col-md-offset-2.5">
@@ -167,7 +167,7 @@
                 <div class="col col-md-12">
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#openEditRelationshipModal"
                     (click)="openEditRelationship(relation)" style="margin-right: 2rem;">Edit </button>
-                  <button type="button" class="btn btn-primary Close" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
+                  <button type="button" class="btn btn-primary cancel" id="cancel-btn" data-toggle="collapse" attr.href="#collapseExample-{{ind}}">Close</button>
                 </div>
               </div>
             </div>

@@ -35,7 +35,9 @@
                       
                     </div>
                     <div style="padding-top:15px;"></div>
-                    <pagination-controls style="font-size: 9px" id="jointablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
+                    <div class="page-align">
+                      <pagination-controls style="font-size: 9px; text-align: right;" id="jointablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
+                    </div>
                   </div>
             </div>
             <div class="col-md-8 table-hight" *ngIf="enableRelation">
@@ -91,8 +93,8 @@
       </div> -->
       <div class="col-md-5">
         <div style="text-align: right;">
-          <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn arch-close" (click)="closeErrorMsg();resetselectedValues()" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-padding btn-transform btn-primary adhoc-modal-btn arch-add" (click)="addJoins()">Add Joins</button>
+          <button type="button" class="btn btn-primary" id="cancel-btn" (click)="closeErrorMsg();resetselectedValues()" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary cancel"  (click)="addJoins()">Add Joins</button>
         </div>
       </div>
   </div>

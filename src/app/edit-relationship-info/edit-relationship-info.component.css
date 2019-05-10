@@ -25,11 +25,12 @@
 
 #cancel-btn{
   background-color: #64b5f6;
-  color:#fff;
+  color:#000;
 }
 
 #back-none{
   background-color: #fff;
+  padding:0px 15px;
 }
 
 .btn-primary:hover{
@@ -40,8 +41,13 @@
 
 .header-tab{
   background-color: #64b5f6;
-  color: white;
-  padding: 10px 0px;
+  color: #000;
+  padding: 10px 20px;
+  text-align: left;
+}
+
+#right-align{
+  text-align: center;
 }
 
 ::ng-deep .cdk-overlay-container{
