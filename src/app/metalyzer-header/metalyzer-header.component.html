@@ -22,6 +22,10 @@
         <div class="form-group col-md-2 heading-item" id="frm-margin">
           <b>Phase: </b>{{phase | uppercase}}
         </div>
+        <div class="dropdown col-md-2" id="btn-margin" *ngIf="phase == 'Analysis'">
+          <button mat-raised-button class="arch-button" id="btn-mar" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
+          </button>
+        </div>
         <div class="dropdown col-md-2" *ngIf="dropdown">
           <mat-form-field>
             <mat-label>Export As</mat-label>
@@ -39,10 +43,6 @@
               <mat-option (click)="exportOverallpdf()">Overall</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
-        <div class="dropdown col-md-2" id="btn-margin" *ngIf="phase == 'Analysis'">
-          <button mat-raised-button class="arch-button" id="btn-mar" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
-          </button>
         </div>
       </div>
     </div>

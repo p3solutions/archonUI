@@ -23,7 +23,7 @@
           </h5>
         </div>        
       </div>
-      <pagination-controls style="float: right; margin-right: 36px;" id="tablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
+      <pagination-controls style="float: right; margin-right: 36px; margin-top: 18px" id="tablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
     </div>
   </div>
   <div class="col-md-8 col-md-offset-2.5">
@@ -180,22 +180,26 @@
       <div *ngIf="dataAModal" class="">
         <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
           <div class="text-left">
-            <div class="modal-header">
+            <div class="modal-header" id="arch-hdr" >
               <div class="back-arrowr">
-                <a (click)="gotoBack()" data-tooltip="Back">
+                <a class="arrow" (click)="gotoBack()" mat-tooltip="Back">
                   <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
                 </a>
               </div>
                <div class="col-md-5 analyze-header">Data Analyzer</div>
                <div class="row col col-md-12 primary-table">
+                
+              </div>
+            </div>
+            <div class="modal-body row">
+
+              <div class="bdy-hdr">
                 <h5 class="card-title sub-headerrs">Primary Table:
                   <strong>{{tableName}}</strong>
                 </h5>
               </div>
-            </div>
-            <div class="modal-body row">
               <!-- carousel -->
-              <div id="dataAModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+              <div id="dataAModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false" style="margin-top: 60px;">
                 <!-- Indicators -->
                 <ul *ngIf="!newWSinfo" class="multi-step-bars">
                   <li>
@@ -218,19 +222,17 @@
                   <div step="0" class="item active form-group">
                     <div class="panel-body dataA-panel-body">
                       <div class="tabular-div col-md-12">
-                        <div class="col-md-9 tabular-div-row p-0">
-                          <div class="tabular-div-column column-header">
-                            Percentage of Rows to consider for Analysis
-                            <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
-                          </div>
+                        <div class="col-md-9" style="text-align: center;">
+                          Percentage of Rows to consider for Analysis
+                          <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
                         </div>
                       </div>
-                      <div class="col-md-12">
+                      <div class="col-md-12 mar-1x">
                         {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
                       </div>
                       <div class="tabular-div col-md-4 dataA-scrollable-div">
                         <div class="col-md-12 p-0 tabular-div-row">
-                          <div class="col-md-12 tabular-div-column column-header" title="Primary Column">
+                          <div class="col-md-12  tabular-div-column column-header" title="Primary Column">
                             <input type="checkbox" (change)="selectAll()">
                             Primary Column
                             <span class="col-loader" [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
@@ -240,15 +242,15 @@
                           </div> -->
                         </div>
                         <div class="col-md-12 p-0 tabular-div-row" *ngFor="let pColumn of primColArray">
-                          <div class="col-md-12 tabular-div-column trim-text" title="{{pColumn.column_name}}">
-                            <input id="{{pColumn}}" type="checkbox" (change)="toggleColSelection($event, true, pColumn)"
-                              class="m-r-10">
-                            {{pColumn.columnName}}
+                            <div class="col-md-12 tabular-div-column trim-text" title="{{pColumn.column_name}}">
+                              <input id="{{pColumn}}" type="checkbox" (change)="toggleColSelection($event, true, pColumn)"
+                                class="m-r-10">
+                              {{pColumn.columnName}}
+                            </div>
+                            <!-- <div class="col-md-4 tabular-div-column" title="">
+                              {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
+                            </div> -->
                           </div>
-                          <!-- <div class="col-md-4 tabular-div-column" title="">
-                            {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
-                          </div> -->
-                        </div>
                       </div>
 
                     </div>
@@ -256,9 +258,9 @@
 
                   <div step="1" class="item form-group second second-last">
                     <div class="panel-body dataA-panel-body">
-                      <div class="tabular-div col-md-12">
-                        <div class="col-md-9 tabular-div-row p-0">
-                          <div class="tabular-div-column column-header">
+                      <div class="col-md-12 mar-1x">
+                        <div class="col-md-9 p-0">
+                          <div class="">
                             Percentage of Rows to consider for Analysis
                             <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
