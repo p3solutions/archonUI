@@ -43,7 +43,7 @@
               <input matInput required formControlName="schemaName" placeholder="Schema Name">
             </mat-form-field>
           </div>
-          <div id="action-btn" class="action-btn-connection">
+          <div id="action-btn" (click)="navigateToPrevious()"class="action-btn-connection">
             <button class="btn cancel btn-padding">Cancel</button>
             <button (click)="gotoAuthentication(stepper)"
               class="btn save btn-primary btn-padding matStepperNext">Next</button>
@@ -112,6 +112,12 @@
               <span aria-hidden="true">&times;</span>
             </button> {{dbTestConnectionSuccessMsg}}
           </div>
+          <div style="text-align:left" *ngIf="duplicateDatabaseMessage!==''"
+            class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" (click)="duplicateDatabaseMessage=''" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> {{duplicateDatabaseMessage}}
+          </div>
           <div id="action-btn" style="margin-top: 6%">
             <button [disabled]="inProgress" class="btn cancel btn-padding" (click)="testConnection()">Test Connection<i
                 *ngIf="inProgress" class="fa fa-spinner fa-spin loader"></i> </button>
@@ -124,4 +130,24 @@
       </mat-step>
     </mat-horizontal-stepper>
   </mat-card>
+</div>
+<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header adhoc-modal-header">
+        <h4 class="modal-title">Alert</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{successDatabaseMessage}}</p>
+      </div>
+      <div class="modal-footer">
+        <button (click)="navigateToPrevious()" type="button"
+          class="btn btn-primary adhoc-modal-btn btn-padding btn-transform" data-dismiss="modal">Ok</button>
+        <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
 </div>

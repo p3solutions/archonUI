@@ -62,12 +62,13 @@ export class UserWorkspaceService {
       catchError(this.handleError<ConfiguredDB[]>('getSupportedDBList'))
     );
   }
-  
+
   // Create new Database Configuration service api
   createNewDBConfig(dbParam: AnyObject, testServerParam: AnyObject) {
     dbParam.ownerId = this.userinfoService.getUserId();
     dbParam.userName = testServerParam.userName;
-    dbParam.password = testServerParam.password;
+    dbParam.password = btoa(testServerParam.password);
+    dbParam.isEncoded = true;
     return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, dbParam, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractData),
       catchError(this.handleError<WorkspaceObject>('createNewDBConfig'))

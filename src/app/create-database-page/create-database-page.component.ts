@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material';
 import { UserWorkspaceService } from '../user-workspace.service';
+import { Router } from '@angular/router';
+import { DatabaseListService } from '../database-list/database-list.service';
+import { ConfiguredDB } from '../workspace-objects';
 
 @Component({
   selector: 'app-create-database-page',
@@ -21,7 +24,11 @@ export class CreateDatabasePageComponent implements OnInit {
   dbTestConnectionErrorMsg = '';
   disableCreateBtn = true;
   dbinProgress = false;
-  constructor(private _formBuilder: FormBuilder, private userWorkspaceService: UserWorkspaceService) { }
+  successDatabaseMessage = '';
+  duplicateDatabaseMessage = '';
+  databaseList: ConfiguredDB[] = [];
+  constructor(private _formBuilder: FormBuilder, private userWorkspaceService: UserWorkspaceService
+    , private router: Router, private databaseListService: DatabaseListService) { }
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
@@ -69,16 +76,14 @@ export class CreateDatabasePageComponent implements OnInit {
 
   gotoAuthentication(stepper: MatStepper) {
     this.stepper.selectedIndex = 1;
-    console.log(this.databaseConnectionForm.value);
   }
 
   gotoTestAndCreate(stepper: MatStepper) {
+    this.checkForDuplicate();
     this.stepper.selectedIndex = 2;
-    console.log(this.databaseConnectionForm.value);
   }
   gotoConnectionDetails(stepper: MatStepper) {
     this.stepper.selectedIndex = 0;
-    console.log(this.databaseConnectionForm.value);
   }
 
   testConnection() {
@@ -86,22 +91,20 @@ export class CreateDatabasePageComponent implements OnInit {
     this.userWorkspaceService.checkDBConnection(this.databaseConnectionForm.value, this.userServerForm.value).subscribe((res: any) => {
       if (res) {
         this.inProgress = false;
-        this.dbTestConnectionErrorMsg = res.connection.errorMessage;
+        this.dbTestConnectionErrorMsg = '';
         this.dbTestConnectionSuccessMsg = res.connection.message;
         if (res.connection.isConnected) {
           this.disableCreateBtn = false;
         }
       } else {
         this.inProgress = false;
+        this.disableCreateBtn = true;
         this.dbTestConnectionSuccessMsg = '';
         this.dbTestConnectionErrorMsg = 'Failed! Try again with correct DB configuration.';
       }
     });
   }
-  createDatatbase(stepper: MatStepper) {
-    this.stepper.selectedIndex = 0;
-    console.log(this.databaseConnectionForm.value);
-  }
+
   setPortName(id: string) {
     const temp = this.dbServerList.filter(a => a.id === id)[0];
     this.databaseConnectionForm.controls['port'].setValue(temp.defaultPort);
@@ -112,7 +115,7 @@ export class CreateDatabasePageComponent implements OnInit {
     this.dbTestConnectionErrorMsg = '';
   }
 
-  createDBConfig() {
+  createDatatbase() {
     this.dbinProgress = true;
     this.userWorkspaceService.checkDBConnection(this.databaseConnectionForm.value, this.userServerForm.value).subscribe((res: any) => {
       if (res) {
@@ -121,22 +124,43 @@ export class CreateDatabasePageComponent implements OnInit {
           this.disableCreateBtn = true;
           this.createNewdb();
         } else {
+          this.disableCreateBtn = false;
           this.dbinProgress = false;
           this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
         }
       } else {
         this.dbinProgress = false;
+        this.disableCreateBtn = false;
         this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
       }
     });
-    // window.location.reload();
-    // this.router.navigate(['/workspace/database-list']);
   }
 
   createNewdb() {
     this.userWorkspaceService.createNewDBConfig(this.databaseConnectionForm.value, this.userServerForm.value).subscribe(res => {
       if (res) {
+        console.log(res);
+        document.getElementById('success-popup-btn').click();
+        this.successDatabaseMessage = 'Database Created Successfully';
+      }
+    });
+  }
 
+  navigateToPrevious() {
+    this.router.navigate(['/management-landing-page/database-list']);
+  }
+
+  checkForDuplicate() {
+    this.databaseListService.getListOfConfigDatabases().subscribe(response => {
+      if (response) {
+        console.log(response);
+        for (const db of response) {
+          if ((db.host === this.databaseConnectionForm.get('host').value) && (db.port ===
+            this.databaseConnectionForm.get('port').value) && (db.databaseName === this.databaseConnectionForm.get('databaseName').value)) {
+              this.duplicateDatabaseMessage = 'Same database Connection exists with different profile name.';
+              break;
+          }
+        }
       }
     });
   }
