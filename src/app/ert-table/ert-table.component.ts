@@ -426,6 +426,12 @@ export class ErtTableComponent implements OnInit {
   queryMode() {
     if (this.userDefinedList.length !== 0) {
       this.usrDefinedQueryViewMode = '';
+    } else if (this.usrDefinedColumnName !== '' && this.usrDefinedQueryViewMode !== '') {
+      this.enableUserDefined = false;
+    } else if (this.usrDefinedColumnName !== '' && this.userDefinedList.length !== 0) {
+      this.enableUserDefined = false;
+    } else {
+      this.enableUserDefined = true;
     }
   }
 
@@ -587,7 +593,7 @@ export class ErtTableComponent implements OnInit {
   saveUsrDefinedColumn() {
     let toCreateQuery: boolean;
     if (this.usrDefinedQueryViewMode !== '') {
-      toCreateQuery = this.validateQueryMode();
+      this.validateQueryMode();
     }
     if (!toCreateQuery && this.usrDefinedQueryView !== '') {
       toCreateQuery = this.validateColumnQueryMode();
@@ -625,14 +631,22 @@ export class ErtTableComponent implements OnInit {
   }
 
   validateQueryMode() {
-    const tempQuery = this.usrDefinedQueryViewMode.trim();
-    if (tempQuery.substring(0, 7).toUpperCase() !== 'CONCAT(' ||
-      tempQuery.substring(tempQuery.length - 1, tempQuery.length) !== ')') {
-      this.usrDefinedAlertMessage = ' Invalid Query, please check.';
-      return false;
-    } else {
-      return true;
-    }
+    const param: any = {
+      'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
+      'query': this.usrDefinedQueryViewMode,
+      'tableId': this.selectedTableId
+    };
+    this.ertService.validateQuery(param).subscribe(res => {
+      console.log(res);
+    });
+    // const tempQuery = this.usrDefinedQueryViewMode.trim();
+    // if (tempQuery.substring(0, 7).toUpperCase() !== 'CONCAT(' ||
+    //   tempQuery.substring(tempQuery.length - 1, tempQuery.length) !== ')') {
+    //   this.usrDefinedAlertMessage = ' Invalid Query, please check.';
+    //   return false;
+    // } else {
+    //   return true;
+    // }
   }
 
 

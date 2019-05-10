@@ -66,7 +66,7 @@
           </mat-expansion-panel>
         </mat-accordion>
       </div>
-      <div *ngIf="searchCriteriaLength!==0">
+      <div>
         <mat-accordion>
           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header class="graph-heading-div" [collapsedHeight]="'53px'" [expandedHeight]="'53px'"
@@ -90,7 +90,7 @@
 </div>
 <div class="row" id="nextbtn">
   <button type="button" class="btn-transform btn btn-primary next btn-sm"
-    [disabled]="searchResultLength===0||searchCriteriaLength===0" (click)="gotoNestedScreen()"
+    [disabled]="searchResultLength===0" (click)="gotoNestedScreen()"
     style="float: right;margin-right: 12px">save</button>
   <button class="btn-transform btn btn-primary Previous btn-sm" (click)="gotoGraph()" style="float:right;margin-right:5px;">
     Back</button>

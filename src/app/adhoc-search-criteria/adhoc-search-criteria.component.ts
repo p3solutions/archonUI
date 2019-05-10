@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   TableColumnNode, SearchCriteria, ResultFields, SearchResult, Tab, NestedLinks, SelectedTables,
-  AdhocHeaderInfo,
-  Adhoc,
-  SidePanel,
-  InlinePanel,
-  getUserId
+  AdhocHeaderInfo, Adhoc, SidePanel, InlinePanel, getUserId
 } from '../adhoc-landing-page/adhoc';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -42,6 +38,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   tempHeader = new AdhocHeaderInfo();
   successMsg = '';
   searchType = 'Table';
+  searchResult = new SearchResult();
   treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
   transformer = (node: TableColumnNode, level: number) => {
     return {
@@ -161,7 +158,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
           if (temp.length > 0) {
             tempTableColumnNode.columns = temp;
             tempTableColumnNode.id = node.id;
-            tempTableColumnNode.name =  node.name;
+            tempTableColumnNode.name = node.name;
             tempTableColumnNode.type = node.type;
             tempTableColumnNodeList.push(tempTableColumnNode);
           }
@@ -307,5 +304,34 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   clear() {
     this.adhocScreenService.updateResultField(new ResultFields());
     this.adhocScreenService.updateSearchCriteria([]);
+    this.adhocScreenService.updateSearchResult(new SearchResult());
+    this.checkSearchResultLength();
+  }
+
+  checkSearchResultLength() {
+    this.adhocScreenService.searchResult.subscribe(result => {
+      this.searchResult = JSON.parse(JSON.stringify(result));
+      if (this.searchResult.inLinePanel === null) {
+        this.searchResult.inLinePanel = new InlinePanel();
+      }
+      if (this.searchResult.sidePanel === null) {
+        this.searchResult.sidePanel = new SidePanel();
+      }
+    });
+    let searchResultLength = 0;
+    for (const item of this.searchResult.mainPanel) {
+      searchResultLength = searchResultLength + 1;
+    }
+    for (const inlineTab of this.searchResult.inLinePanel.tabs) {
+      for (const item of inlineTab.resultFields) {
+        searchResultLength = searchResultLength + 1;
+      }
+    }
+    for (const sideTab of this.searchResult.sidePanel.tabs) {
+      for (const item of sideTab.resultFields) {
+        searchResultLength = searchResultLength + 1;
+      }
+    }
+    this.searchResultLength = searchResultLength;
   }
 }
