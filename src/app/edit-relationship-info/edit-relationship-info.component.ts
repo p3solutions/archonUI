@@ -137,10 +137,10 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.resultantValues = [];
           this.updateEvent.emit(true);
           this.errorMsg = res.data;
-          this.updateNotif = true;
+          this.updateNotifSuccess = true;
         } else {
           this.errorMsg = res.errors;
-          this.updateNotifSuccess = true;
+          this.updateNotif = true;
         }
       });
   }
