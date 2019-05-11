@@ -692,7 +692,7 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getExportxml(this.workspaceID, this.databaseID, this.xml, this.selectedPrimTblID)
       .subscribe(result => {
         this.message = result.data;
-        document.getElementById('successPopUp').click();
+        document.getElementById('successPop').click();
         // this.downloadFile(result, result.type);
       });
   }
@@ -702,7 +702,7 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getExportjson(this.workspaceID, this.databaseID, this.json, this.selectedPrimTblID)
       .subscribe(result => {
         this.message = result.data;
-        document.getElementById('successPopUp').click();
+        document.getElementById('successPop').click();
         // this.downloadFilejson(result, result.type);
       });
   }

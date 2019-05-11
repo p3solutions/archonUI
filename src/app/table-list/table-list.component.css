@@ -48,12 +48,14 @@
   /* margin-bottom: -15px; */
   text-align: left;
 }
+
 .overflow-text {
   float: left;
   width: 96%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .overflow-text-arrow {
   float: left;
   width: 4%;
@@ -69,6 +71,7 @@ a {
 h4 {
   display: inline;
 }
+
 .table-header {
   float: left;
 }
@@ -89,8 +92,12 @@ h4 {
 .items-list {
   overflow-x: hidden;
   overflow-y: scroll;
+<<<<<<< HEAD
   height: 360px;
   padding-left: 20px;
+=======
+  height: 280px;
+>>>>>>> 5a1e3844184052577abcefd534d2a73eafe3cd73
 }
 
 .tablename-list {
@@ -124,13 +131,16 @@ h4 {
   /* float: left; */
   margin-left: 20px;
 }
+
 .headerr {
   /* float: left; */
   margin-left: -10px;
 }
+
 .sub-headerr {
   margin-left: 4px;
 }
+
 .sub-headerrs {
   margin-left: -1px;
   margin-top: -2px;
@@ -161,6 +171,7 @@ h4 {
   display: inline-block;
   margin-left: -50px;
 }
+
 .dataA-panel-body {
   height: 452px;
   margin-left: 150px;
@@ -171,42 +182,53 @@ h4 {
   overflow: scroll;
   max-height: 330px;
 }
+
 .dataA-scrollable-div-A {
   overflow: auto;
   max-height: 318px;
 }
+
 .primary-col-chkbx {
   margin: 4px 5px;
 }
+
 #analysis-view .card {
   height: 678px;
 }
+
 #analysis-view .tablename-list {
   height: 370px;
 }
+
 #analysis-view .search-input {
   margin-left: 20px;
   width: 85%;
 }
+
 #analysis-view .form-control-feedback {
   margin-left: 240px;
 }
+
 .col-loader {
   padding: 2px 15px;
   float: right;
 }
+
 .da-table.selected {
   border: 1px solid #269AF8;
 }
+
 input[type='checkbox'] {
   cursor: pointer;
 }
+
 .unselected {
   display: none;
   float: right;
   padding: 3px 0;
   color: #269AF8;
 }
+
 .selected .unselected {
   display: block;
 }
@@ -227,22 +249,22 @@ input[type='checkbox'] {
   line-height: 30px;
 } */
 
-.table-headers{
+.table-headers {
   text-align: left;
 }
 
-.panel-header{
+.panel-header {
   margin-left: 40px;
   width: 90%;
   margin-top: 5px;
 }
 
-.panel-footer{
+.panel-footer {
   height: auto;
   overflow: auto;
 }
 
-#hrtab{
+#hrtab {
   margin-top: 20px;
   margin-bottom: 10px;
   border: 1px solid #e8e2e2;
@@ -254,55 +276,62 @@ input[type='checkbox'] {
 }
 
 
-#dropdown > li {
-  display:inline-block;     
-} 
+#dropdown>li {
+  display: inline-block;
+}
 
 #dropdown {
-  text-align:center;
+  text-align: center;
   width: 202px;
-  margin-left: 13px;  
+  margin-left: 13px;
 }
+
 #dropdown1 {
-  text-align:center;
+  text-align: center;
   width: 180px;
   margin-left: 16px;
-  cursor: pointer;  
-}  
+  cursor: pointer;
+}
 
 
 #sec-tab {
-margin-left: 11px;
+  margin-left: 32px;
 }
 
 .sec-width {
-width: 26%;
-text-align: left;
-margin-left: 10px;
-font-size: 14px;
+  width: 26%;
+  text-align: left;
+  /* margin-left: 10px; */
+  font-size: 14px;
 }
 
 .def-width {
   width: 15%;
   text-align: left;
   font-size: 14px;
+  padding-left: 21px;
 }
 
-.conf-width{
-  width: 15%;
+.conf-width {
+  width: 13.7%;
   text-align: left;
   font-size: 14px;
+  padding-left: 5px;
+  padding-right: 0px;
 }
+
 .join-width {
   width: 26%;
   text-align: left;
   font-size: 14px;
-  }
-  .action-width {
-    width: 15%;
-    text-align: left;
-    
-    }
+  padding-left: 0px
+}
+
+.action-width {
+  width: 15%;
+  text-align: left;
+
+}
 
 .analyze-header {
   margin-top: 2px;
@@ -313,8 +342,8 @@ font-size: 14px;
   cursor: pointer;
 }
 
-#finalSecTab > tbody > tr.active > td {
-  background-color:#f1efef;
+#finalSecTab>tbody>tr.active>td {
+  background-color: #f1efef;
 }
 
 .centered {
@@ -333,37 +362,42 @@ font-size: 14px;
 
 .move-progress2 {
   margin-left: -27px;
-  font-size:20px;
+  font-size: 20px;
 }
 
 .move-progress3 {
   margin-left: -37px;
-  font-size:20px;
-  color:darkred;
+  font-size: 20px;
+  color: darkred;
 }
+
 .overflow-text {
   float: left;
   width: 96%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .overflow-text-arrow {
   float: left;
   width: 4%;
   text-align: right;
 }
+
 .overflow-textrelation {
   float: left;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .back-arrowr {
   margin-top: 2px;
   margin-bottom: 5px;
   margin-left: 16px;
   float: left;
 }
+
 .table-list {
   background-color: #64b5f6;
   text-align: left;
@@ -373,12 +407,13 @@ font-size: 14px;
   border-top-right-radius: 3px;
   padding-left: 14px;
 }
+
 .body-left {
-  display:inline-block;  
+  display: inline-block;
   padding: -1px 0px 0px 10px;
   margin-left: 0px;
   font-size: 12px;
-  width: 100%; 
+  width: 100%;
   color: #121212;
 }
 
@@ -387,7 +422,7 @@ font-size: 14px;
   top: 22px;
   margin-right: 35px;
   float: right;
-  display: inline-block;    
+  display: inline-block;
   font-style: normal;
   font-weight: 400;
   line-height: 1;
@@ -419,6 +454,7 @@ font-size: 14px;
   height: 30px;
   border-radius: 2px;
 }
+
 a {
   color: #80adf8;
 }
@@ -433,10 +469,94 @@ a:hover {
   text-decoration: underline;
 }
 
-.btn { 
+.btn {
   font-size: 12px;
 }
 
+.expansion-outer {
+  display: inline-flex;
+  width: 100%;
+  text-align: left
+}
+
+
+.expansion-item-sec {
+  width: 25%;
+  font-size: 14px;
+}
+
+
+.expansion-item-def {
+  width: 15%;
+  padding: 0px 15px 0px 15px
+}
+
+
+.expansion-item-join {
+  width: 25%;
+  padding: 0px 15px 0px 15px
+}
+
+.exp-content-outer {
+  width: 100%;
+  display: inline-flex;
+  height: 39px;
+  padding: 8px 2px 7px 0px;
+  border-bottom: 1px solid #8c8c8c
+}
+
+.exp-mat-item {
+  width: 50%;
+  text-align: center
+}
+
+
+.action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 6px;
+  transition: 0.5s;
+}
+
+.action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  transition: 0.5s;
+}
+
+.action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
+.action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+
+
+::ng-deep #analysis-view .mat-expansion-panel {
+  margin-bottom: 8px;
+  margin-right: 10px;
+  margin-left: 10px
+}
+
+.action-btn {
+  margin-top: 14px
+}
+
+.border-top-line {
+  border-top: 1px solid #8c8c8c
+}
+
+.exp-trash-item {
+  width: 17%;
+  text-align: right;
+  padding: 0px 15px 0px 15px;
+}
 .card-header{
   color: #000;
   background-color: #64b5f6;
