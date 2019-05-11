@@ -7,7 +7,7 @@
         </div>
          
         <div class='body-left'>
-          <a href="" style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
           <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch" (keyup)="searchTablelist()"
             placeholder="Search Table">
         </div>
@@ -219,9 +219,10 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" role="listbox">
 
+                  <!-- DA UI 1 -->
                   <div step="0" class="item active form-group">
                     <div class="panel-body dataA-panel-body">
-                      <div class="tabular-div col-md-12">
+                      <div class="col-md-12">
                         <div class="col-md-9" style="text-align: center;">
                           Percentage of Rows to consider for Analysis
                           <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
@@ -230,9 +231,9 @@
                       <div class="col-md-12 mar-1x">
                         {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
                       </div>
-                      <div class="tabular-div col-md-4 dataA-scrollable-div">
-                        <div class="col-md-12 p-0 tabular-div-row">
-                          <div class="col-md-12  tabular-div-column column-header" title="Primary Column">
+                      <div class="col-md-4 dataA-scrollable-div">
+                        <div class="col-md-12">
+                          <div class="col-md-12 ana-br" title="Primary Column">
                             <input type="checkbox" (change)="selectAll()">
                             Primary Column
                             <span class="col-loader" [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
@@ -241,8 +242,9 @@
                             Suggestion
                           </div> -->
                         </div>
-                        <div class="col-md-12 p-0 tabular-div-row" *ngFor="let pColumn of primColArray">
-                            <div class="col-md-12 tabular-div-column trim-text" title="{{pColumn.column_name}}">
+                        <div class="col-md-12 list-block">
+                          <div class="col-md-12" *ngFor="let pColumn of primColArray | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }">
+                            <div class="col-md-12 trim-text ana-br" id= "list-br" title="{{pColumn.column_name}}">
                               <input id="{{pColumn}}" type="checkbox" (change)="toggleColSelection($event, true, pColumn)"
                                 class="m-r-10">
                               {{pColumn.columnName}}
@@ -251,9 +253,13 @@
                               {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
                             </div> -->
                           </div>
-                      </div>
-
+                        </div>
+                      </div>      
                     </div>
+                    <div class="col-md-12" style="margin-left: 150px;margin-top: 18px;">
+                        <pagination-controls id="dalist0" (pageChange)="getPage(page = $event)"></pagination-controls>
+                    </div>
+                    
                   </div>
 
                   <div step="1" class="item form-group second second-last">
@@ -270,16 +276,16 @@
                         <div class="col-md-12">
                           {{selectedSecTbl.size}} out of {{secTblArray.length - 1}} selected
                         </div>
-                        <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
-                          <div class="col-md-12 p-0 tabular-div-row">
-                            <div class="col-md-12 tabular-div-column column-header" title="Secondary Column">
+                        <div class="col-md-8 p-0 dataA-scrollable-div">
+                          <div class="col-md-12 p-0">
+                            <div class="col-md-12 ana-br" title="Secondary Column">
                               Secondary Table
                             </div>
                           </div>
                           <div class="da-table-parent">
-                            <div class="col-md-12 p-0 tabular-div-row" *ngFor="let secTbl of secTblArray;let i=index"
+                            <div class="col-md-12 p-0 " *ngFor="let secTbl of secTblArray | paginate: {id: 'dalist1', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }; let i=index"
                               [hidden]="secTbl.tableName === selectedPrimTbl">
-                              <div class="col-md-12 tabular-div-column cur-p da-table trim-text" title="{{secTbl.tableName}}"
+                              <div class="col-md-12 cur-p da-table trim-text ana-br" id="list-br" title="{{secTbl.tableName}}"
                                 (click)="highlightTable($event, false, secTbl)">
                                 <input id="{{prefixSecTblId + (secTbl.tableName)}}" class="cb-{{i}}" type="checkbox"
                                   (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
@@ -289,15 +295,18 @@
                             </div>
                           </div>
                         </div>
+                        <div class="col-md-12" style="margin-left: 48px;margin-top: 18px;">
+                          <pagination-controls id="dalist1" (pageChange)="getPage(page = $event)"></pagination-controls>
+                        </div>
                       </div>
 
-                      <div *ngIf="secColArray.length > 0" class="col-md-6" style="height: 295px;">
+                      <div *ngIf="secColArray.length > 0" class="col-md-6">
                         <div class="col-md-12">
                           {{selectedSecColMap.size}} out of {{secColArray.length}} selected
                         </div>
-                        <div class="tabular-div col-md-8 p-0 dataA-scrollable-div">
-                          <div class="col-md-12 p-0 tabular-div-row">
-                            <div class="col-md-12 tabular-div-column column-header" title="Secondary Column">
+                        <div class="col-md-8 p-0 dataA-scrollable-div">
+                          <div class="col-md-12 p-0">
+                            <div class="col-md-12 column-header ana-br" title="Secondary Column">
                                 <input type="checkbox" (change)="selectAllSec()">
                               Secondary Columns
                               <span class="col-loader" [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
@@ -306,9 +315,9 @@
                                 Suggestion
                               </div> -->
                           </div>
-                          <div class="col-md-12 p-0 tabular-div-row" *ngFor="let sColumn of secColArray; let i=index"
+                          <div class="col-md-12 p-0" *ngFor="let sColumn of secColArray | paginate: {id: 'dalist2', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }; let i=index"
                             id="secondaryColums">
-                            <div class="col-md-12 tabular-div-column trim-text" title="{{sColumn.columnName}}">
+                            <div class="col-md-12  trim-text ana-br" id= "list-br" title="{{sColumn.columnName}}">
                               <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb" type="checkbox"
                                 (change)="toggleColSelection($event, false, sColumn)" checked="{{sColumn.selected ? 'checked' : null}}"
                                 class="m-r-10 m-r-sec">
@@ -319,6 +328,9 @@
                               </div> -->
                           </div>
                         </div>
+                        <div class="col-md-12" style="margin-left: 48px;margin-top: 18px;">
+                          <pagination-controls id="dalist2" (pageChange)="getPage(page = $event)"></pagination-controls>
+                        </div>
                         <!-- <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> -->
                       </div>
                     </div>
@@ -328,7 +340,7 @@
                     <div class="panel-body dataA-panel-body">
                       <div class="col-md-4 dataA-scrollable-div-A">
                         <table class="table table-bordered">
-                          <thead>
+                          <thead style="background-color: #63b4f6;">
                             <tr>
                               <th>Primary Table Columns</th>
                             </tr>
@@ -342,7 +354,7 @@
                       </div>
                       <div class="col-md-4 dataA-scrollable-div-A">
                         <table class="table table-bordered" id="finalSecTab">
-                          <thead>
+                          <thead style="background-color: #63b4f6;">
                             <tr>
                               <th>Secondary Tables</th>
                             </tr>
@@ -357,7 +369,7 @@
                       </div>
                       <div class="col-md-4 dataA-scrollable-div-A">
                         <table class="table table-bordered">
-                          <thead>
+                          <thead style="background-color: #63b4f6;">
                             <tr>
                               <th>Secondary Column Names</th>
                             </tr>

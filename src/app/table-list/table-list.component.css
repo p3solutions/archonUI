@@ -89,7 +89,7 @@ h4 {
 .items-list {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 280px;
+  height: 360px;
   padding-left: 20px;
 }
 
@@ -162,14 +162,14 @@ h4 {
   margin-left: -50px;
 }
 .dataA-panel-body {
-  height: 325px;
+  height: 452px;
   margin-left: 150px;
   margin-right: 150px;
 }
 
 .dataA-scrollable-div {
-  overflow: auto;
-  max-height: 277px;
+  overflow: scroll;
+  max-height: 330px;
 }
 .dataA-scrollable-div-A {
   overflow: auto;
@@ -179,7 +179,7 @@ h4 {
   margin: 4px 5px;
 }
 #analysis-view .card {
-  height: 534px;
+  height: 678px;
 }
 #analysis-view .tablename-list {
   height: 370px;
@@ -501,4 +501,17 @@ a:hover {
 
 .mar-1x{
   padding: 10px;
+}
+
+.ana-br{
+  border: 1px solid #dddddd;
+  padding: 10px 10px;
+  border-radius: 6px;
+  background-color: aliceblue;
+  margin-bottom: 6px;
+}
+
+#list-br{
+  background-color: #fff;
+  margin-bottom: 3px;
 }

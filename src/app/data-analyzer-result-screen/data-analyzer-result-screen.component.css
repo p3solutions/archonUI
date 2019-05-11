@@ -24,7 +24,7 @@
   }
 
   .marginClass {
-    margin-top: 3%;
+    margin-top: 15%;
   }
 
   .pointer {
@@ -32,7 +32,7 @@
     margin-top: -20px;    
   }
   .sub-headerrs {
-    margin-left: 29px;
+    margin-left: 20px;
     margin-top: 10px;
     float: left;
   }
@@ -46,3 +46,8 @@
     .prebutton {
       margin-right: -22px;
     }
+
+#cancel-btn{
+  margin-right: 15px;
+  background-color: #64b5f6;
+}
