@@ -20,6 +20,7 @@ import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service
   styleUrls: ['./table-list.component.css'],
 })
 export class TableListComponent implements OnInit {
+  indexExpanded = -1;
   query: string;
   search: any = '';
   homeStage = false;
@@ -108,17 +109,17 @@ export class TableListComponent implements OnInit {
   }
   ngOnInit() {
     this.tablelistService.currentValue.subscribe(value => {
-       this.homeStage = value;
-       if (this.homeStage === true) {
+      this.homeStage = value;
+      if (this.homeStage === true) {
         this.loadRelationTable(this.tableCopy);
-       }
-      });
-      this.storedProcViewService.currentSPVValue.subscribe(value => {
-        this.homeStage = value;
-        if (this.homeStage === true) {
-         this.loadRelationTable(this.tableCopy);
-        }
-       });
+      }
+    });
+    this.storedProcViewService.currentSPVValue.subscribe(value => {
+      this.homeStage = value;
+      if (this.homeStage === true) {
+        this.loadRelationTable(this.tableCopy);
+      }
+    });
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
     this.getTableList();
@@ -137,12 +138,12 @@ export class TableListComponent implements OnInit {
         this.isTablelistAvailable = true;
         this.tablelistService.selectDropdown(false);
       } else {
-      this.tablelistService.selectDropdown(true);
+        this.tablelistService.selectDropdown(true);
       }
       this.isAvailable = true;
       if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      }
     });
   }
 
@@ -153,13 +154,13 @@ export class TableListComponent implements OnInit {
       this.tableList = res.tableList;
       if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      }
     });
   }
 
   searchTablelist() {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
+    this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
       this.tableList = res.tableList;
     });
   }
@@ -370,7 +371,7 @@ export class TableListComponent implements OnInit {
         this.enableNextBtn = this.selectedPrimColMap.size > 0;
         break;
       case '1':
-          this.enableNextBtn = this.finalSecColMap.size > 0;
+        this.enableNextBtn = this.finalSecColMap.size > 0;
         break;
       // case '2':
       //   this.enableNextBtn
@@ -479,11 +480,11 @@ export class TableListComponent implements OnInit {
     const progressSelector = 'progress-bar';
     switch (slideNo) {
       case '0':
-      // if (this.finalSecColMap.size === 0) {
-      //   this.enableNextBtn = this.selectedPrimColMap.size > 0;
-      // } else {
-      //   this.enableNextBtn = this.finalSecColMap.size > 0;
-      // }
+        // if (this.finalSecColMap.size === 0) {
+        //   this.enableNextBtn = this.selectedPrimColMap.size > 0;
+        // } else {
+        //   this.enableNextBtn = this.finalSecColMap.size > 0;
+        // }
         if (this.selectedSecTbl.size === 0) {
           this.enableNextBtn = false;
         }
@@ -708,10 +709,14 @@ export class TableListComponent implements OnInit {
   }
 
   selectAll() {
-      $('input:checkbox:enabled.m-r-10').click();
+    $('input:checkbox:enabled.m-r-10').click();
   }
 
   selectAllSec() {
     $('input:checkbox:enabled.m-r-10.m-r-sec').click();
-}
+  }
+
+  togglePanels(index: number) {
+    this.indexExpanded = index === this.indexExpanded ? -1 : index;
+  }
 }

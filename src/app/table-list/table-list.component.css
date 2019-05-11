@@ -302,17 +302,17 @@ input[type='checkbox'] {
 }
 
 .def-width {
-  width: 15%;
+  width: 14.6%;
   text-align: left;
   font-size: 14px;
-  padding-left: 21px;
+  padding-left: 17px;
 }
 
 .conf-width {
-  width: 13.7%;
+  width: 13.2%;
   text-align: left;
   font-size: 14px;
-  padding-left: 5px;
+  padding-left: 0px;
   padding-right: 0px;
 }
 
@@ -425,6 +425,7 @@ input[type='checkbox'] {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 /* .inner-addon {
   position: relative;
 }
@@ -498,7 +499,8 @@ a:hover {
   display: inline-flex;
   height: 39px;
   padding: 8px 2px 7px 0px;
-  border-bottom: 1px solid #8c8c8c
+  border-bottom: 1px solid #8c8c8c;
+  background-color: #fafafa;
 }
 
 .exp-mat-item {
@@ -553,73 +555,74 @@ a:hover {
   text-align: right;
   padding: 0px 15px 0px 15px;
 }
-.card-header{
+
+.card-header {
   color: #000;
   background-color: #64b5f6;
-  padding:8px;
+  padding: 8px;
 }
 
-.card-title{
+.card-title {
   font-size: 16px;
 }
 
-.arch-button{
+.arch-button {
   color: white;
   background-color: #2879ff;
 }
 
 .arch-button:hover {
-  box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
+  box-shadow: rgba(0, 0, 0, 0.43) 0px 0px 9px 0px;
   -webkit-transform: translatey(-2px);
   transform: translatey(-2px);
 }
 
-#search-box{
+#search-box {
   margin-left: 6%;
   margin-bottom: 0px;
 }
 
-#aligner{
+#aligner {
   margin-right: 3rem;
   padding-top: 4px;
 }
 
-#cancel-btn{
+#cancel-btn {
   background-color: #64b5f6;
-  color:#000;
+  color: #000;
   border: none;
 }
 
-.btn-primary:hover{
-  box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
+.btn-primary:hover {
+  box-shadow: rgba(0, 0, 0, 0.43) 0px 0px 9px 0px;
   -webkit-transform: translatey(-2px);
   transform: translatey(-2px);
 }
 
-#arch-hdr{
-  padding:6px;
-  background-color:#64b5f6;
+#arch-hdr {
+  padding: 6px;
+  background-color: #64b5f6;
 }
 
-.bdy-hdr{
+.bdy-hdr {
   margin: 4px 32px;
 }
 
-.arrow{
+.arrow {
   opacity: 0.5;
   color: #000;
 }
 
-.arrow:hover{
+.arrow:hover {
   opacity: 1;
   color: #000;
 }
 
-.mar-1x{
+.mar-1x {
   padding: 10px;
 }
 
-.ana-br{
+.ana-br {
   border: 1px solid #dddddd;
   padding: 10px 10px;
   border-radius: 6px;
@@ -627,7 +630,15 @@ a:hover {
   margin-bottom: 6px;
 }
 
-#list-br{
+#list-br {
   background-color: #fff;
   margin-bottom: 3px;
+}
+
+.exp-content-outer:hover {
+  background-color: transparent;
+}
+
+.exp-content-outer.border-top-line{
+  background-color: transparent;
 }
