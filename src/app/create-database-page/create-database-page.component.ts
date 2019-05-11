@@ -5,6 +5,7 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { Router } from '@angular/router';
 import { DatabaseListService } from '../database-list/database-list.service';
 import { ConfiguredDB } from '../workspace-objects';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-create-database-page',
@@ -36,6 +37,8 @@ export class CreateDatabasePageComponent implements OnInit {
     this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">settings_input_component</i>';
     this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
     this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">playlist_add_check</i>';
+    this.value[2].children[1].classList.add('unfinished-step');
+    this.value[1].children[1].classList.add('unfinished-step');
   }
 
   ngOnInit() {
@@ -75,14 +78,56 @@ export class CreateDatabasePageComponent implements OnInit {
   }
 
   gotoAuthentication(stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[0].classList.add('mat-psedu');
+      a[1].classList.add('mat-k-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[1].classList.add('mat-horizental-line');
+      document.getElementById('remove-square-hover').click();
+      const a1 = document.getElementsByClassName('mat-horizontal-stepper-header');
+      if (a1[1].classList.contains('mat-auth-psedu')) {
+        a1[1].classList.remove('mat-auth-psedu');
+        a1[2].classList.remove('mat-review-psedu');
+        const b1 = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+        b1[0].children[3].classList.remove('mat-horizental-line');
+      }
+      this.value[2].children[1].classList.add('unfinished-step');
+      this.value[0].children[1].classList.add('finished-step');
+      this.value[1].children[1].classList.add('active-step');
+    }, 300);
     this.stepper.selectedIndex = 1;
   }
 
   gotoTestAndCreate(stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[1].classList.add('mat-auth-psedu');
+      a[2].classList.add('mat-review-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[3].classList.add('mat-horizental-line');
+      document.getElementById('remove-square-hover').click();
+      this.value[1].children[1].classList.add('finished-step');
+      this.value[2].children[1].classList.add('active-step');
+    }, 300);
     this.checkForDuplicate();
     this.stepper.selectedIndex = 2;
   }
   gotoConnectionDetails(stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[0].classList.remove('mat-psedu');
+      a[1].classList.remove('mat-k-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[1].classList.remove('mat-horizental-line');
+      document.getElementById('remove-square-hover').click();
+      this.value[0].children[1].classList.add('active-step');
+      if (this.value[1].children[1].classList.contains('active-step')) {
+        this.value[1].children[1].classList.remove('active-step');
+      }
+      this.value[2].children[1].classList.add('unfinished-step');
+      this.value[1].children[1].classList.add('unfinished-step');
+    }, 300);
     this.stepper.selectedIndex = 0;
   }
 

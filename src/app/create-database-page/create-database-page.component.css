@@ -150,6 +150,35 @@ mat-card {
   background-color: #cbcdd2 !important;
 }
 
+::ng-deep #create-database-landing .mat-horizontal-stepper-header .active-step {
+  background-color: #2697ff !important;
+  color: #ffffff !important;
+}
+
+::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-k-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
+ [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
+  background-color:  #2697ff !important
+}
+
 .outer-div {
   display: flex;
   margin-bottom: 3%;
@@ -196,19 +225,17 @@ mat-card {
   margin-left: 3px;
 }
 
-#create-database-header{
+#create-database-header {
   display: inline-flex;
   margin-bottom: 6px
 }
 
-.anchor-header{
+.anchor-header {
   padding-top: 20px;
   padding-right: 20px
 }
 
-.heading-name{
+.heading-name {
   font-size: 24px;
   color: #0c0c0c;
 }
-
-
