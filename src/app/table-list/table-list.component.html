@@ -127,9 +127,9 @@
         <h5 *ngIf="!isRelationShipAvailable">
           Currently no relationship information available
         </h5>
-        <mat-accordion>
-          <div class="items-list">
-          <mat-expansion-panel *ngFor="let relation of relationshipInfo;let ind=index;">
+        <mat-accordion [multi]="true">
+          <div class="items-list" style="padding-left: 0px">
+          <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of relationshipInfo;let ind=index;">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="expansion-outer">
@@ -163,7 +163,7 @@
               <div class="action-btn">
                 <button class="save mat-raised-button btn-padding"  data-toggle="modal"
                 data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)" >Edit</button>
-                <button class="mat-raised-button cancel btn-primary btn-padding">Close</button>
+                <button class="mat-raised-button cancel btn-primary btn-padding" (click)="mep.expanded = !mep.expanded">Close</button>
               </div>
             </div>
           </mat-expansion-panel>
