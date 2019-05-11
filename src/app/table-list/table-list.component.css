@@ -163,7 +163,10 @@ h4 {
 }
 .dataA-panel-body {
   height: 325px;
+  margin-left: 150px;
+  margin-right: 150px;
 }
+
 .dataA-scrollable-div {
   overflow: auto;
   max-height: 277px;
@@ -176,7 +179,7 @@ h4 {
   margin: 4px 5px;
 }
 #analysis-view .card {
-  height: 500px;
+  height: 534px;
 }
 #analysis-view .tablename-list {
   height: 370px;
@@ -302,10 +305,8 @@ font-size: 14px;
     }
 
 .analyze-header {
-  margin-top: -3px;
-  margin-bottom: 5px;
-  float: left;
-  font-size: 20px;
+  margin-top: 2px;
+  font-size: 16px;
 }
 
 .pointer {
@@ -358,7 +359,7 @@ font-size: 14px;
   text-overflow: ellipsis;
 }
 .back-arrowr {
-  margin-top: 0px;
+  margin-top: 2px;
   margin-bottom: 5px;
   margin-left: 16px;
   float: left;
@@ -477,4 +478,27 @@ a:hover {
   box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
   -webkit-transform: translatey(-2px);
   transform: translatey(-2px);
+}
+
+#arch-hdr{
+  padding:6px;
+  background-color:#64b5f6;
+}
+
+.bdy-hdr{
+  margin: 4px 32px;
+}
+
+.arrow{
+  opacity: 0.5;
+  color: #000;
+}
+
+.arrow:hover{
+  opacity: 1;
+  color: #000;
+}
+
+.mar-1x{
+  padding: 10px;
 }
