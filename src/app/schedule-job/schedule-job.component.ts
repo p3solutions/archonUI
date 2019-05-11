@@ -15,6 +15,7 @@ export class ScheduleJobComponent implements OnInit {
   mytime: Date = new Date();
   enddate: Date = new Date();
   startdate: Date = new Date();
+  restrict: Date = new Date();
   jobType;
   Frequency: any = 0;
   jobName = '';
@@ -25,6 +26,7 @@ export class ScheduleJobComponent implements OnInit {
   @Input() insid: any;
   jobInstancesList = [];
   instances = '';
+  eventTemp;
 
   constructor(
     private Schedulejobservice: ScheduleJobService,
@@ -79,6 +81,23 @@ export class ScheduleJobComponent implements OnInit {
   this.Interval = 'Once';
   this.Frequency = 0;
   }
+  }
+
+  calculateRestriction(event) {
+    this.eventTemp = event;
+    if (event === 0) {
+    this.restrict = new Date();
+    } else if (this.Interval === 'Days') {
+    this.restrict = new Date (new Date().getTime() + (event * 24 * 60 * 60 * 1000));
+    } else if (this.Interval === 'Weeks') {
+      event = 7 * event;
+      this.restrict = new Date (new Date().getTime() + (event * 24 * 60 * 60 * 1000));
+    } else if (this.Interval === 'Months') {
+        const now = new Date();
+        const days = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+        event = days * event;
+        this.restrict = new Date (new Date().getTime() + (event * 24 * 60 * 60 * 1000));
+      }
   }
 
 }
