@@ -92,12 +92,8 @@ h4 {
 .items-list {
   overflow-x: hidden;
   overflow-y: scroll;
-<<<<<<< HEAD
   height: 360px;
   padding-left: 20px;
-=======
-  height: 280px;
->>>>>>> 5a1e3844184052577abcefd534d2a73eafe3cd73
 }
 
 .tablename-list {
