@@ -63,6 +63,7 @@ export class ManageUserRolesComponent implements OnInit {
   selectedFilterOption = 'Active';
   userinfoId: any;
   globalGroupIds: string[] = [];
+  screenfilter = '';
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router,
@@ -98,6 +99,7 @@ export class ManageUserRolesComponent implements OnInit {
     }
 
   filter(filterValue) {
+    this.screenfilter = '';
     switch (filterValue) {
       case 'Invited': {
         this.invited = true;
@@ -360,21 +362,19 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
   }
 
   getUserByEmailId(emailId) {
-    let response;
+   // let response;
     this.dataSource.filter = emailId.trim().toLowerCase();
-    if (this.invited === true && emailId !== '') {
-      console.log(1);
-      this.dataSource.connect().subscribe(result => {
-        response = result;
-      });
-      this.dataSource._filterData(response);
-    } else if (emailId !== '') {
-      console.log(2);
+    // this.getGlobalGroup();
+    // if (this.invited === true && emailId !== '') {
+    //   this.dataSource.connect().subscribe(result => {
+    //     response = result;
+    //   });
+    //   this.dataSource._filterData(response);
+    // } else
+    if (emailId !== '') {
       this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
       this.dataSource.getUsersByEmailId(emailId);
-      console.log(3);
     } else {
-      console.log(4);
       this.getAllUsers(this.invited, this.revoked, this.locked);
     }
   }

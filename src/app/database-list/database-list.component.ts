@@ -46,6 +46,10 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   DBdeleteId: string;
   errormsg: any;
   successmsg: any;
+  DBupdateId: any;
+  dbpassword: any;
+  dbName: any;
+  deleteId: string;
 
   constructor(
     private configDBListService: DatabaseListService,
@@ -172,26 +176,54 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
 
   deleteDB() {
     this.configDBListService.deleteDB(this.DBdeleteId).subscribe((result) => {
-      document.getElementById('deletemsg').click();
-      this.successmsg = result;
-      this.success = true;
-      // this.getConfigDBList();
-      setTimeout(() => {
-        this.getConfigDBList();
-      }, 15000);
-    },
-      (error) => {
-        document.getElementById('deletemsg').click();
-        this.error = true;
-        this.errormsg = error.error.errorMessage;
-      }
-    );
+          document.getElementById('deletemsg').click();
+          this.successmsg = result;
+            this.success = true;
+            this.deleteId = this.DBdeleteId;
+            this.getConfigDBList();
+             setTimeout(() => {
+               this.getConfigDBList();
+             }, 15000);
+  },
+  (error) => {
+    document.getElementById('deletemsg').click();
+    this.error = true;
+    this.errormsg = error.error.errorMessage;
   }
+  );
+}
 
   closeErrorMsg() {
     this.success = false;
     this.error = false;
   }
+  editDB(database) {
+    this.configuredDB = database;
+    this.dbName = database.databaseName;
+    this.DBupdateId = database.id;
+  }
+  updateDB() {
+    const params = {
+      id: this.DBupdateId,
+      password: this.dbpassword
+    };
+    this.configDBListService.updateDB(this.DBupdateId, params ).subscribe((result: any) => {
+          document.getElementById('editmsg').click();
+          if (result.success) {
+            this.successmsg = 'successfully updated';
+           } else {
+            this.successmsg = result.errorMessage;
+           }
+            this.success = true;
+            this.getConfigDBList();
+        },
+  (error) => {
+    document.getElementById('editmsg').click();
+    this.error = true;
+    this.errormsg = error.error.errors[0].code;
+  }
+  );
+}
 
   createDatabase() {
     this.router.navigate(['create-database'], { queryParams: { r: 'database' } });

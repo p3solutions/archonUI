@@ -12,6 +12,8 @@ import { UserinfoService } from '../userinfo.service';
 })
 export class MetalyzerHeaderComponent implements OnInit {
 
+  displayedColumns: string[] = ['modifiedBy', 'createdAt', 'modificationMode', 'modificationDescription'];
+
   wsName: string;
   phase: string;
   workspaceID: any;

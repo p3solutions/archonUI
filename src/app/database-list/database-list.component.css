@@ -36,7 +36,7 @@ table.table td {
   margin: 15px 15px 10px 10px;
   float: left;
   width: 440px;
-  height: 190px;
+  height: 240px;
 }
 
 .example-card {
@@ -44,6 +44,10 @@ table.table td {
   height: 100%;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.43);
   transition:0.5s;
+}
+
+.delete:hover {
+  opacity: 0.2;
 }
 
 .example-card:hover{
@@ -84,6 +88,9 @@ table.table td {
   font-size: 14px;
   width: 67%; 
   color: #3d3d3e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header {
@@ -285,6 +292,19 @@ td.tdr {
   .col {
     color: #2879ff;
   }
+  .footer { 
+    text-align: right;
+    padding-right: 7px;
+  }
+   .ws {
+    font-size: 20px;
+    padding: 8px 8px 0px 0px;
+  } 
+  .example-full-width {
+    width: 90%;
+    margin-left: inherit;
+  }
+  
 
 
  

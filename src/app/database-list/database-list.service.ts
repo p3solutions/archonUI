@@ -49,6 +49,12 @@ export class DatabaseListService {
     );
   }
 
+ updateDB(DBupdateId: string, params: any): Observable<ConfiguredDB> {
+    return this.http.patch<ConfiguredDB>(this.configDBListUrl + '/' + DBupdateId, params, { headers: this.userinfoService.getHeaders() })
+    .pipe(
+      map(this.updatedatabase)
+    );
+  }
   private extractConfigDB(res: any) {
     const data = res.data.configuredDatabases;
     return data || [];
@@ -56,6 +62,11 @@ export class DatabaseListService {
 
   private deletedatabase(res: any) {
     const data = res.data;
+    return data || [];
+  }
+
+  private updatedatabase(res: any) {
+    const data = res;
     return data || [];
   }
 

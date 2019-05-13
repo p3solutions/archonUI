@@ -79,6 +79,7 @@ export class ConfiguredDB {
     userName: string;
     owner: OwnerObject;
     databaseTypeInfo: DatabaseObject;
+    status: string;
     isChecked = false;
 }
 

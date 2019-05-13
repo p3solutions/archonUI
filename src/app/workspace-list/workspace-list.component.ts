@@ -35,6 +35,10 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     error: boolean;
     successmsg: any;
     errormsg: any;
+    wsName: any;
+    wsDesc: any;
+    WSeditId: any;
+    deleteId: string;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -129,15 +133,18 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             document.getElementById('deletemsg').click();
             this.successmsg = result;
             this.success = true;
+            this.deleteId = this.WSdeleteId;
             this.workspaceHeaderService.selected = undefined;
+            this.getWorkspaceListInfo(this.token_data.user.id);
             setTimeout(() => {
                 this.getWorkspaceListInfo(this.token_data.user.id);
             }, 15000);
-        }, (error) => {
-            document.getElementById('deletemsg').click();
-            this.error = true;
-            this.errormsg = error.error.errorMessage;
-        }
+        },
+            (error) => {
+                document.getElementById('deletemsg').click();
+                this.error = true;
+                this.errormsg = error.error.errorMessage;
+            }
         );
     }
 
@@ -148,6 +155,36 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
 
     createWorkspace() {
         this.router.navigate(['create-workspace'], { queryParams: { r: 'workspace' } });
+    }
+
+    editWS(workspace) {
+        this.WSListInfo = workspace;
+        this.wsName = workspace.workspaceName;
+        this.wsDesc = workspace.requestMessage;
+        this.WSeditId = workspace.id;
+    }
+    updateWS() {
+        const params = {
+            id: this.WSeditId,
+            workspaceName: this.wsName,
+            requestMessage: this.wsDesc
+        };
+        this.workspaceListService.updateWS(this.WSeditId, params).subscribe((result: any) => {
+            document.getElementById('editmsg').click();
+            if (result.success) {
+                this.successmsg = 'successfully updated';
+            } else {
+                this.successmsg = result.errorMessage;
+            }
+            this.success = true;
+            this.getWorkspaceListInfo(this.token_data.user.id);
+        },
+            (error) => {
+                document.getElementById('editmsg').click();
+                this.error = true;
+                this.errormsg = error.error.errors[0].code;
+            }
+        );
     }
 }
 

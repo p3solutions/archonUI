@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatTableModule, MatSortModule } from '@angular/material';
+import { MatTableModule, MatSortModule, MatInputModule } from '@angular/material';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -269,8 +269,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
         MaterialModule,
         MatSelectInfiniteScrollModule,
         FlexLayoutModule,
-        NgxSpinnerModule
-        ],
+        NgxSpinnerModule, MatInputModule
+    ],
     providers: [
         EnvironmentService,
         {
