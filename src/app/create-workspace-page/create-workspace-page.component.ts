@@ -26,6 +26,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   errorMessage = '';
   showWorkDuplicateMsg = '';
   successWorkspaceMessage = '';
+  selectDatabaseMessage = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -38,6 +39,8 @@ export class CreateWorkspacePageComponent implements OnInit {
     this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">library_books</i>';
     this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
     this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">playlist_add_check</i>';
+    this.value[2].children[1].classList.add('unfinished-step');
+    this.value[1].children[1].classList.add('unfinished-step');
   }
   ngOnInit() {
     this.location = this.activatedRoute.snapshot.queryParamMap.get('r');
@@ -71,17 +74,59 @@ export class CreateWorkspacePageComponent implements OnInit {
   }
 
   gotoDatabaseSelection(stepper: MatStepper) {
+    if (this.firstFormGroup.valid) {
+      setTimeout(() => {
+        const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+        a[0].classList.add('mat-psedu');
+        a[1].classList.add('mat-k-psedu');
+        const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+        b[0].children[1].classList.add('mat-horizental-line');
+        const a1 = document.getElementsByClassName('mat-horizontal-stepper-header');
+        if (a1[1].classList.contains('mat-auth-psedu')) {
+          a1[1].classList.remove('mat-auth-psedu');
+          a1[2].classList.remove('mat-review-psedu');
+          const b1 = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+          b1[0].children[3].classList.remove('mat-horizental-line');
+        }
+        this.value[2].children[1].classList.add('unfinished-step');
+        this.value[0].children[1].classList.add('finished-step');
+        this.value[1].children[1].classList.add('active-step');
+      }, 300);
+    }
     this.stepper.selectedIndex = 1;
   }
 
   gotoWorkspaceDetails(stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[0].classList.remove('mat-psedu');
+      a[1].classList.remove('mat-k-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[1].classList.remove('mat-horizental-line');
+      this.value[0].children[1].classList.add('active-step');
+      if (this.value[1].children[1].classList.contains('active-step')) {
+        this.value[1].children[1].classList.remove('active-step');
+      }
+      this.value[2].children[1].classList.add('unfinished-step');
+      this.value[1].children[1].classList.add('unfinished-step');
+    }, 300);
     this.stepper.selectedIndex = 0;
   }
   gotoWorkspaceReview(stepper: MatStepper) {
     if (this.configDBList.filter(a => a.isChecked === true).length !== 0) {
+      setTimeout(() => {
+        const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+        a[1].classList.add('mat-auth-psedu');
+        a[2].classList.add('mat-review-psedu');
+        const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+        b[0].children[3].classList.add('mat-horizental-line');
+        this.value[1].children[1].classList.add('finished-step');
+        this.value[2].children[1].classList.add('active-step');
+      }, 300);
       this.stepper.selectedIndex = 2;
     } else {
-      this.errorMessage = 'Please Select a Database.';
+      document.getElementById('select-db-btn').click();
+      this.errorMessage = 'Please select a database.';
     }
   }
 

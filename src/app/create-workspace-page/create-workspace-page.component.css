@@ -45,6 +45,7 @@
   color: #ffffff;
   text-transform: inherit;
   border-radius: 3px;
+  transition:0.5s;
 }
 
 #action-btn button.cancel {
@@ -52,7 +53,8 @@
   color: #1b1b1b;
   margin-right: 10px;
   text-transform: inherit;
-  border-radius: 3px
+  border-radius: 3px;
+  transition:0.5s;
 }
 
 #action-btn button.cancel:hover {
@@ -110,7 +112,7 @@ th {
 
 #database-table {
   overflow: auto;
-  max-height: 154px
+  max-height: 300px
 }
 
 .database-search .mat-form-field {
@@ -154,6 +156,59 @@ mat-card {
   background-color: #cbcdd2 !important;
 }
 
+::ng-deep #create-workspace-landing .mat-horizontal-stepper-header .active-step {
+  background-color: #2697ff !important;
+  color: #ffffff !important;
+}
+
+::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-k-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
+ [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
+  background-color:  #2697ff !important
+}
+
+::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
+  border-top-width:2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
+ [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  border-top-width:2px !important ;
+} 
+
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
+  border-top-width:2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, 
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
+  border-top-width:2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
+  border-top-width:2px !important;
+}
+
 .outer-div {
   display: flex;
   margin-bottom: 3%;
@@ -187,7 +242,7 @@ mat-card {
 }
 
 .anchor-header{
-  padding-top: 20px;
+  padding-top: 22px;
   padding-right: 20px
 }
 

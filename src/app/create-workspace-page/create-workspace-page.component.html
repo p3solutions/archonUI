@@ -42,14 +42,7 @@
                     <div class="workspace-name-info">
                         Select database for <b>{{firstFormGroup.get('workspaceName').value}}</b>
                     </div>
-                    <div style="display: flex">
-                        <div style="text-align:left;width: 66%">
-                            <div *ngIf="errorMessage!==''" class="alert alert-danger alert-dismissible" role="alert">
-                                <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button> {{errorMessage}}
-                            </div>
-                        </div>
+                    <div style="display: flex;justify-content: flex-end">
                         <div class="database-search">
                             <mat-form-field>
                                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
@@ -167,6 +160,26 @@
             <div class="modal-footer">
                 <button (click)="navigateToPrevious()" type="button"
                     class="btn btn-primary adhoc-modal-btn btn-padding btn-transform" data-dismiss="modal">Ok</button>
+                <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
+                    data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button style="display:none" type="button" id="select-db-btn" class="btn btn-info btn-lg" data-keyboard="false"
+    data-backdrop="static" data-toggle="modal" data-target="#select-success">Open Modal</button>
+<div id="select-success" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header adhoc-modal-header">
+                <h4 class="modal-title">Alert</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{errorMessage}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary adhoc-modal-btn btn-padding btn-transform"
+                    data-dismiss="modal">Ok</button>
                 <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
                     data-dismiss="modal">Ok</button>
             </div>
