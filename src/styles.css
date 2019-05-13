@@ -282,12 +282,12 @@ body {
   padding-right: 42px;
   padding-left: 42px;
 }
-
+/* 
 .btn-primary:hover {
   color: #fff;
   background-color: #037ad8;
   border-color: #023e6d;
-}
+} */
 
 .btn-control {
   position: relative;

@@ -62,7 +62,6 @@ span {
   padding: 21px 0px 7px 29px;
 }
 #metalyzer {
-  border-bottom: 2px solid #E6E9ED;
   margin-bottom: 10px;
   padding-right: 37px;
 }
@@ -70,7 +69,7 @@ span {
 /* New Header rules for Metalyzer Analysis */
 
 .head-container{
-  margin: 10px 10px 10px 21px; 
+  margin: 0px 0px -20px 21px; 
 }
 
 .flex-head{
@@ -98,6 +97,12 @@ span {
   background-color: #2879ff;
 }
 
+.arch-button:hover {
+  box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
+  -webkit-transform: translatey(-2px);
+  transform: translatey(-2px);
+}
+
 .heading-item {
   padding: 15px;
   font-size: 16px;
@@ -123,4 +128,19 @@ span {
 
 #frm-margin{
   margin-top: 5px;
+}
+
+.arch-btnn{
+  background-color: #2879ff;
+  color: #fff;
+}
+
+.arch-btnn:hover {
+  box-shadow: rgba(0,0,0,0.43) 0px 0px 4px 0px;
+  -webkit-transform: translatey(-2px);
+  transform: translatey(-2px);
+}
+
+.paginate-sty{
+  margin-top: 3rem;
 }

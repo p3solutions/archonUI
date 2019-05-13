@@ -25,6 +25,7 @@
   line-height: 30px;
 }
 
+
 .inner-addon {
   padding-left: 10%;
   padding-right: 10%;
@@ -107,10 +108,6 @@ h4 {
   height: 410px;
 }
 
-button {
-  border-color: grey;
-}
-
 .default-load {
   margin-top: -20px;
 }
@@ -166,7 +163,10 @@ button {
 }
 .dataA-panel-body {
   height: 325px;
+  margin-left: 150px;
+  margin-right: 150px;
 }
+
 .dataA-scrollable-div {
   overflow: auto;
   max-height: 277px;
@@ -179,7 +179,7 @@ button {
   margin: 4px 5px;
 }
 #analysis-view .card {
-  height: 500px;
+  height: 534px;
 }
 #analysis-view .tablename-list {
   height: 370px;
@@ -215,17 +215,17 @@ input[type='checkbox'] {
 .form-control {
   height: 40px;
   border-radius: 20px;
-  width: 85%;
   margin-left: 20px;
 }
-.form-control-feedback {
+
+/* .form-control-feedback {
   position: relative;
   margin-top: -34px;
   margin-left: 243px;
   height: 32px;
   color: #269af8;
   line-height: 30px;
-}
+} */
 
 .table-headers{
   text-align: left;
@@ -305,10 +305,8 @@ font-size: 14px;
     }
 
 .analyze-header {
-  margin-top: -3px;
-  margin-bottom: 5px;
-  float: left;
-  font-size: 20px;
+  margin-top: 2px;
+  font-size: 16px;
 }
 
 .pointer {
@@ -361,7 +359,7 @@ font-size: 14px;
   text-overflow: ellipsis;
 }
 .back-arrowr {
-  margin-top: 0px;
+  margin-top: 2px;
   margin-bottom: 5px;
   margin-left: 16px;
   float: left;
@@ -383,6 +381,7 @@ font-size: 14px;
   width: 100%; 
   color: #121212;
 }
+
 .glyphicon {
   position: relative;
   top: 22px;
@@ -395,7 +394,7 @@ font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.inner-addon {
+/* .inner-addon {
   position: relative;
 }
 
@@ -409,10 +408,12 @@ font-size: 14px;
   right: 29px;
   bottom: 53px;
   top: 56px
-}
+} */
+
 .right-addon input {
   padding-right: 30px;
 }
+
 .form-control {
   font-size: 12px;
   height: 30px;
@@ -434,4 +435,70 @@ a:hover {
 
 .btn { 
   font-size: 12px;
- }
+}
+
+.card-header{
+  color: #000;
+  background-color: #64b5f6;
+  padding:8px;
+}
+
+.card-title{
+  font-size: 16px;
+}
+
+.arch-button{
+  color: white;
+  background-color: #2879ff;
+}
+
+.arch-button:hover {
+  box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
+  -webkit-transform: translatey(-2px);
+  transform: translatey(-2px);
+}
+
+#search-box{
+  margin-left: 6%;
+  margin-bottom: 0px;
+}
+
+#aligner{
+  margin-right: 3rem;
+  padding-top: 4px;
+}
+
+#cancel-btn{
+  background-color: #64b5f6;
+  color:#000;
+  border: none;
+}
+
+.btn-primary:hover{
+  box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
+  -webkit-transform: translatey(-2px);
+  transform: translatey(-2px);
+}
+
+#arch-hdr{
+  padding:6px;
+  background-color:#64b5f6;
+}
+
+.bdy-hdr{
+  margin: 4px 32px;
+}
+
+.arrow{
+  opacity: 0.5;
+  color: #000;
+}
+
+.arrow:hover{
+  opacity: 1;
+  color: #000;
+}
+
+.mar-1x{
+  padding: 10px;
+}
