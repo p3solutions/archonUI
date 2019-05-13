@@ -220,15 +220,15 @@
                   <div step="0" class="item active form-group">
                     <div class="panel-body dataA-panel-body">
                       <div class="col-md-12">
-                        <div class="col-md-9" style="text-align: center;">
+                        <div class="col-md-6">
                           Percentage of Rows to consider for Analysis
-                          <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
+                          <input mat-input type="number" [(ngModel)]="analysisRowCount" min="1" max="100">
                         </div>
                       </div>
-                      <div class="col-md-12 mar-1x">
+                      <div class="col-md-12 mar-1x" style="margin-left: 18px;">
                         {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
                       </div>
-                      <div class="col-md-6 dataA-scrollable-div">
+                      <div class="col-md-6 dataA-scrollable-div" id="panel-0">
                         <div class="col-md-12">
                           <div class="col-md-12 ana-br" title="Primary Column">
                             <input type="checkbox" (change)="selectAll()">
@@ -241,7 +241,7 @@
                           </div> -->
                         </div>
                         <div class="col-md-12 list-block">
-                          <div class="col-md-12" *ngFor="let pColumn of primColArray | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }">
+                          <div class="col-md-12 plr-0" *ngFor="let pColumn of primColArray | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }">
                             <div class="col-md-12 trim-text ana-br" id= "list-br" title="{{pColumn.column_name}}">
                               <input id="{{pColumn}}" type="checkbox" (change)="toggleColSelection($event, true, pColumn)"
                                 class="m-r-10">
@@ -254,24 +254,24 @@
                         </div>
                       </div>      
                     </div>
-                    <div class="col-md-12" style="margin-left: 150px;margin-top: 18px;">
-                        <pagination-controls id="dalist0" (pageChange)="getPage(page = $event)"></pagination-controls>
+                    <div class="col-md-6" style="text-align: right; margin-left: -80px;">
+                      <pagination-controls id="dalist0" (pageChange)="getPage(page = $event)"></pagination-controls>
                     </div>
                     
                   </div>
 
                   <div step="1" class="item form-group second second-last">
-                    <div class="panel-body dataA-panel-body">
+                    <div class="panel-body dataA-panel-body" id="panel-1">
                       <div class="col-md-12 mar-1x">
                         <div class="col-md-9 p-0">
                           <div class="">
                             Percentage of Rows to consider for Analysis
-                            <input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
+                            <input mat-input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6" style="height: 295px;">
-                        <div class="col-md-12">
+                        <div class="col-md-12 mar-1x">
                           {{selectedSecTbl.size}} out of {{secTblArray.length - 1}} selected
                         </div>
                         <div class="col-md-8 p-0 dataA-scrollable-div">
@@ -293,16 +293,16 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-12" style="margin-left: 48px;margin-top: 18px;">
+                        <div class="col-md-12" style="margin-left: 94px;margin-top: 18px;">
                           <pagination-controls id="dalist1" (pageChange)="getPage(page = $event)"></pagination-controls>
                         </div>
                       </div>
 
                       <div *ngIf="secColArray.length > 0" class="col-md-6">
-                        <div class="col-md-12">
+                        <div class="col-md-12 mar-1x">
                           {{selectedSecColMap.size}} out of {{secColArray.length}} selected
                         </div>
-                        <div class="col-md-8 p-0 dataA-scrollable-div">
+                        <div class="col-md-8 p-0 dataA-scrollable-div" id="panel-1">
                           <div class="col-md-12 p-0">
                             <div class="col-md-12 column-header ana-br" title="Secondary Column">
                                 <input type="checkbox" (change)="selectAllSec()">
@@ -327,7 +327,7 @@
                               </div> -->
                           </div>
                         </div>
-                        <div class="col-md-12" style="margin-left: 48px;margin-top: 18px;">
+                        <div class="col-md-12" style="margin-left: 94px;margin-top: 18px;">
                           <pagination-controls id="dalist2" (pageChange)="getPage(page = $event)"></pagination-controls>
                         </div>
                         <!-- <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> -->
@@ -336,10 +336,10 @@
                   </div>
 
                   <div step="2" class="item form-group third">
-                    <div class="panel-body dataA-panel-body">
-                      <div class="col-md-4 dataA-scrollable-div-A">
+                    <div class="panel-body dataA-panel-body" id="panel-1">
+                      <div class="col-md-4 dataA-scrollable-div-A" >
                         <table class="table table-bordered">
-                          <thead style="background-color: #63b4f6;">
+                          <thead>
                             <tr>
                               <th>Primary Table Columns</th>
                             </tr>
@@ -351,9 +351,9 @@
                           </tbody>
                         </table>
                       </div>
-                      <div class="col-md-4 dataA-scrollable-div-A">
+                      <div class="col-md-4 dataA-scrollable-div-A" >
                         <table class="table table-bordered" id="finalSecTab">
-                          <thead style="background-color: #63b4f6;">
+                          <thead>
                             <tr>
                               <th>Secondary Tables</th>
                             </tr>
@@ -368,7 +368,7 @@
                       </div>
                       <div class="col-md-4 dataA-scrollable-div-A">
                         <table class="table table-bordered">
-                          <thead style="background-color: #63b4f6;">
+                          <thead>
                             <tr>
                               <th>Secondary Column Names</th>
                             </tr>
@@ -384,15 +384,17 @@
                   </div>
 
                   <div step="3" class="item form-group final">
-                    <div class="panel-body dataA-panel-body">
+                    <div class="panel-body dataA-panel-body" id="panel-1">
                       <div class="col-md-12 center-dev">
-                        <div class="col-md-2"><strong>Analysis Status:</strong>
+                        <div class="col-md-6"><strong>Analysis Status:</strong>
+                          {{JobStatus}}
                         </div>
-                        <div class="col-md-6 move-progress1">
-                          <div class="col-md-4">{{JobStatus}}</div>
-                          <div class="col-md-2 move-progress2"><a (click)="getJobStatus()" data-tooltip="refresh"><i
-                                class="fa fa-refresh"></i></a></div>
-                          <div class="col-md-2 move-progress3"><i class="fa fa-stop"></i></div>
+                        <div class="col-md-6 ">
+                          <div class="col-md-3 "></div>
+                          <div class="col-md-3 ">
+                              <a (click)="getJobStatus()" data-tooltip="refresh"><i class="fa fa-refresh"></i></a>
+                            <i class="fa fa-stop" style="color: darkred;margin-left: 24px"></i>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-12 centered">

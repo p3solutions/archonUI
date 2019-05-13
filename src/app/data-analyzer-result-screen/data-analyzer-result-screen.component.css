@@ -19,8 +19,7 @@
     padding-top: 8px;
     padding-bottom: 8px;   
     text-align: center;
-    background-color: #269AF8;
-    color: white;
+    color:black;
   }
 
   .marginClass {
@@ -50,4 +49,9 @@
 #cancel-btn{
   margin-right: 15px;
   background-color: #64b5f6;
+}
+
+.alert-sty{
+  text-align: left;
+  margin-top: -24px;
 }

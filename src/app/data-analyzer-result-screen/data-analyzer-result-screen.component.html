@@ -11,7 +11,7 @@
 
 <div class="col-md-12" style="margin-top: 22px;">
   <div class="col-md-5 ana-result" style="font-size:16px;">Data Analysis Status : Completed</div>
-  <div class="col-md-7 pointer">
+  <div class="col-md-7 pointer" style="text-align: right;margin-left: -24px;">
     <button type="button" class="btn btn-primary secbutton" (click)="activateSecondaryFn()" id="Select">Secondary Tables</button> 
     <button type="button" class="btn btn-primary prebutton" (click)="activatePrimaryFn();selectRow()">Primary Columns</button>
   </div>
@@ -49,12 +49,12 @@
           </tr>
         </tbody>
       </table>
-      <pagination-controls id="primaryPopulate" (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls style="text-align: right;" id="primaryPopulate" (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>
 <div *ngIf="activateSecondary">
-  <div class="col-md-12">
+  <div class="col-md-12" style="margin-top: 17px;">
     <div class="col-md-3">
       <table id="customers" class="sec-table">
         <tr>
@@ -86,7 +86,7 @@
           </tr>
         </tbody>
       </table>
-      <pagination-controls id="secondaryPopulate" (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls style="text-align: right;" id="secondaryPopulate" (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>
@@ -106,10 +106,10 @@
     </div>
   </div>
   <div class="col-md-5" style="margin-top:16px; text-align: right;">
-    <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-toggle="modal" href="#confirmClose">Close</button>
-    <button type="button" class="btn btn-primary" href="#addJoins" data-toggle="modal">Add Selected Joins</button>
+    <button mat-button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-toggle="modal" href="#confirmClose">Close</button>
+    <button mat-raised-button type="button" class="btn btn-primary" href="#addJoins" data-toggle="modal">Add Selected Joins</button>
   </div>
-  <div class="col-md-12 text-danger">Note: Kindly click close button to clear the Analysis result. </div>
+  <div class="col-md-12 alert-sty text-danger">Note: Kindly click close button to clear the Analysis result. </div>
   </div>
 <!-- Close -->
 <div class="modal fade" id="confirmClose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -170,8 +170,16 @@ h4 {
 
 .dataA-panel-body {
   height: 452px;
-  margin-left: 150px;
+  margin-left: 5px;
   margin-right: 150px;
+}
+
+#panel-0{
+  height: 464px;
+}
+
+#panel-1{
+  height: 484px;
 }
 
 .dataA-scrollable-div {
@@ -352,7 +360,7 @@ input[type='checkbox'] {
   top: 40%;
 }
 
-.move-progress1 {
+/* .move-progress1 {
   margin-left: -44px;
 }
 
@@ -365,7 +373,7 @@ input[type='checkbox'] {
   margin-left: -37px;
   font-size: 20px;
   color: darkred;
-}
+} */
 
 .overflow-text {
   float: left;
@@ -622,11 +630,16 @@ a:hover {
   padding: 10px;
 }
 
+.plr-0{
+  padding-left: 0px;
+  padding-right: 0px 
+}
+
 .ana-br {
   border: 1px solid #dddddd;
   padding: 10px 10px;
   border-radius: 6px;
-  background-color: aliceblue;
+  background-color: #fff;
   margin-bottom: 6px;
 }
 
