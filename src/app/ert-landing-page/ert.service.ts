@@ -143,14 +143,13 @@ export class ErtService {
       );
   }
 
-  validateQuery(param: any): Observable<any> {
+  validQuery(param: any): Observable<any> {
     param.userId = this.userInfoService.getUserId();
     return this.http.post<any>(this.queryValidationUrl, param, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractDataForRunJob),
         catchError(this.handleError('deleteErtJob', []))
       );
   }
-
 
   private extractData(res: any) {
     const body = res.data.ERTTableList;

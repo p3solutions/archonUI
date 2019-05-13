@@ -77,7 +77,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   deleteScreenId = '';
   screenInfoObject = new Adhoc();
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
-     private adhocScreenService: AdhocScreenService,
+    private adhocScreenService: AdhocScreenService,
     private router: Router, private adhocService: AdhocService,
     private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
 
@@ -253,6 +253,9 @@ export class AdhocAppScreenListComponent implements OnInit {
       if (response.httpStatus === 200) {
         this.successMessage = 'Application Added Successfully';
         this.applicationInfoList = this.applicationInfoList.concat(response.data);
+        if (this.applicationInfoList.length === 1) {
+          this.selectedApp(this.applicationInfoList[0].id);
+        }
       } else {
         this.successMessage = 'Application not Added Successfully';
       }

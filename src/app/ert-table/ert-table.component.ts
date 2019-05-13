@@ -68,6 +68,7 @@ export class ErtTableComponent implements OnInit {
   storeAvaliableTables: ErtTableObj[] = [];
   showAvilableBtn = false;
   showNoTablesMsg = false;
+  toCreateQuery = false;
 
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
@@ -591,14 +592,15 @@ export class ErtTableComponent implements OnInit {
       }
   }
   saveUsrDefinedColumn() {
-    let toCreateQuery: boolean;
     if (this.usrDefinedQueryViewMode !== '') {
       this.validateQueryMode();
+    } else if (this.usrDefinedQueryView !== '') {
+      this.validateColumnQueryMode();
     }
-    if (!toCreateQuery && this.usrDefinedQueryView !== '') {
-      toCreateQuery = this.validateColumnQueryMode();
-    }
-    if (toCreateQuery) {
+  }
+
+  saveUserDefinedAfterValidate() {
+    if (this.toCreateQuery) {
       const tempUsrDefinedObj = new UsrDefinedColumnListObj();
       tempUsrDefinedObj.originalColumnName = this.usrDefinedColumnName.toUpperCase().trim();
       tempUsrDefinedObj.modifiedColumnName = this.usrDefinedColumnName.toUpperCase().trim();
@@ -636,26 +638,31 @@ export class ErtTableComponent implements OnInit {
       'query': this.usrDefinedQueryViewMode,
       'tableId': this.selectedTableId
     };
-    this.ertService.validateQuery(param).subscribe(res => {
-      console.log(res);
+    this.ertService.validQuery(param).subscribe(res => {
+      console.log((res.data.trim().toLowerCase() !== 'valid query'));
+      console.log(res.data.trim().toLowerCase());
+      if (res.data.trim().toLowerCase() !== 'valid query') {
+        this.usrDefinedAlertMessage = 'Invalid Query, please check.';
+        this.toCreateQuery = false;
+        document.getElementById('query-alert').classList.remove('alert-hide');
+      } else {
+        this.usrDefinedAlertMessage = '';
+        this.toCreateQuery = true;
+        this.saveUserDefinedAfterValidate();
+      }
     });
-    // const tempQuery = this.usrDefinedQueryViewMode.trim();
-    // if (tempQuery.substring(0, 7).toUpperCase() !== 'CONCAT(' ||
-    //   tempQuery.substring(tempQuery.length - 1, tempQuery.length) !== ')') {
-    //   this.usrDefinedAlertMessage = ' Invalid Query, please check.';
-    //   return false;
-    // } else {
-    //   return true;
-    // }
   }
 
 
-  validateColumnQueryMode(): boolean {
+  validateColumnQueryMode() {
     if (this.userDefinedList.length < 2) {
       this.usrDefinedAlertMessage = 'Invalid Query, please add two columns to create combined column query.';
-      return false;
+      this.toCreateQuery = false;
+      document.getElementById('query-alert').classList.remove('alert-hide');
     } else {
-      return true;
+      this.usrDefinedAlertMessage = '';
+      this.toCreateQuery = true;
+      this.saveUserDefinedAfterValidate();
     }
   }
 

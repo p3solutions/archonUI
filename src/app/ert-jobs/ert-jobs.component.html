@@ -32,10 +32,10 @@
       </div>
       <!-- <div class='delete'><span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job">X</span></div>  
    -->
-      <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
+      <div class='delete'> <a type="button" data-toggle="modal" data-target="#confirm_model"
           (click)="setJobId(item.jobId)" title="Delete">
-          <span aria-hidden="true">&times;</span>
-        </button></div>
+          <i class="material-icons">delete</i>
+        </a></div>
     </div>
     <div class="flex-cards-body">
       <div class='body-left'>Job Status</div>
@@ -59,7 +59,7 @@
   </div>
   <div class="col-md-12" *ngIf="ertJobslist">
     <h5 style="text-align: center; margin-top: 50px;">
-      Currently no job configurations  (Click on + icon to add job configuration)
+      Currently no job configurations (Click on + icon to add job configuration)
     </h5>
   </div>
 </div>
@@ -136,18 +136,20 @@
 <div id="successModel" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-      <div class="modal-content" style="width: 430px;">
-          <div class="modal-header">
-            <div class='model-title'><div class='info-r'> Message</div></div>
+    <div class="modal-content" style="width: 430px;">
+      <div class="modal-header">
+        <div class='model-title'>
+          <div class='info-r'> Message</div>
         </div>
-          <div class="modal-body">
-           <p style="text-align:left; size: 18px;"> {{successMsg}}.</p>
-           <p *ngIf="isSuccessMsg" style="text-align:left;">check on Job Status page</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default cancel" (click)="close()" data-dismiss="modal">CLOSE</button>          
-          </div>
-        </div>
+      </div>
+      <div class="modal-body">
+        <p style="text-align:left; size: 18px;"> {{successMsg}}.</p>
+        <p *ngIf="isSuccessMsg" style="text-align:left;">check on Job Status page</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default cancel" (click)="close()" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
 
   </div>
 </div>

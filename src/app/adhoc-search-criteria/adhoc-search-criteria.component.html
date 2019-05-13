@@ -7,7 +7,7 @@
         </mat-card-header>
         <mat-card-content>
           <p>
-            <mat-radio-group [(ngModel)]="searchType">
+            <mat-radio-group [(ngModel)]="searchType"(change)="filterTableAndColumn(search.value)" >
               <mat-radio-button value="Table">Table Search</mat-radio-button>
               <mat-radio-button value="Column">Column Search</mat-radio-button>
             </mat-radio-group>

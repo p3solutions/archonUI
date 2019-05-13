@@ -46,6 +46,7 @@ export class SearchCriteria {
     isBetween = false;
     isBetweenInclusive = false;
     src = '';
+    notSelected = false;
 }
 
 export class AdhocHeaderInfo {
@@ -102,6 +103,7 @@ export class ResultFields {
     blob = false;
     encrypted = false;
     todecrypt = true;
+    notSelected = false;
 }
 
 export class SearchResult {
