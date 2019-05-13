@@ -77,8 +77,12 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   }
 
   filterOnlySelectedTable() {
-    const selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
-    const joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    let selectedValues = '';
+    let joinListMap: any = '';
+    if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues !== '') {
+      selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+      joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    }
     const tableNames = selectedValues;
     const selectedTables: SelectedTables[] = [];
     for (const table of tableNames) {
@@ -338,8 +342,12 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   }
 
   removePreviousSearchResultAndCriteria() {
-    const selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
-    const joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    let selectedValues = '';
+    let joinListMap: any = '';
+    if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues !== '') {
+      selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+      joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    }
     const tableNames = selectedValues;
     const selectedTables: string[] = [];
     for (const table of tableNames) {
@@ -352,10 +360,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     this.adhocScreenService.updatedSearchCriteria.subscribe(result => {
       this.searchCriteria = JSON.parse(JSON.stringify(result));
     });
-    console.log(this.searchCriteria.length);
-    console.log(this.searchCriteria.length);
     for (let item = 0; item < this.searchCriteria.length; item++) {
-      console.log(item);
       if (!selectedTables.includes(this.searchCriteria[item].tableId)) {
         this.searchCriteria[item].notSelected = true;
       } else {
@@ -395,7 +400,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       }
       sideTab.resultFields = sideTab.resultFields.filter(a => a.notSelected === false);
     }
-      this.adhocScreenService.updateSearchResult(this.searchResult);
-      this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
+    this.adhocScreenService.updateSearchResult(this.searchResult);
+    this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
   }
 }
