@@ -2,14 +2,17 @@
 <div mat-dialog-content>
   <form #createAppForm="ngForm" class="flex-container">
     <mat-form-field>
-      <input name="appName" #appName="ngModel" required matInput placeholder="Application Name" [(ngModel)]="appInfo.appName">
+      <input name="appName" #appName="ngModel" required matInput placeholder="Application Name"
+        [(ngModel)]="appInfo.appName">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput name="appDesc" required placeholder="Description" #appDesc="ngModel" [(ngModel)]="appInfo.appDesc"></textarea>
+      <textarea matInput name="appDesc" required placeholder="Description" #appDesc="ngModel"
+        [(ngModel)]="appInfo.appDesc"></textarea>
     </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [disabled]="!createAppForm.form.valid" [mat-dialog-close]="appInfo">Create App</button>
+  <button mat-button class="cancel" (click)="onNoClick()">Cancel</button>
+  <button mat-button class="invite" [disabled]="!createAppForm.form.valid" [mat-dialog-close]="appInfo">Create
+    App</button>
 </div>

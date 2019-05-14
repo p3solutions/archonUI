@@ -207,6 +207,7 @@ export class Adhoc {
     sessionAdhoc = new SessionAdhoc();
     sessionAdhocModel = new SessionAdhoc();
     userId = '';
+    updatedAt = '';
 }
 
 
