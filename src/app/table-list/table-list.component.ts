@@ -13,6 +13,7 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-table-list',
@@ -89,6 +90,8 @@ export class TableListComponent implements OnInit {
   startIndex = 1;
   schemaResultsTableCount = 0;
   paginationRequired: boolean;
+  currentStepNo = null;
+  @ViewChild('stepper') stepper: MatStepper;
 
   constructor(
     private tablelistService: TableListService,
@@ -398,11 +401,43 @@ export class TableListComponent implements OnInit {
     this.enableNextBtn = this.selectedPrimColMap.size > 0;
   }
 
-  nextStep(e) {
-    document.getElementById('next-slide').click();
+  nextStep(e, stepper: MatStepper) {
+    console.log(e);
+    console.log(stepper);
+    this.currentStepNo = stepper.selectedIndex;
+    this.stepper.selectedIndex = 1;
+    // document.getElementById('next-slide').click();
     this.handleStepIindicator(true);
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
+  gotoSecTableAndColSelection(e, stepper: MatStepper) {
+    console.log(e);
+    console.log(stepper);
+    this.currentStepNo = stepper.selectedIndex;
+    this.stepper.selectedIndex = 1;
+    // document.getElementById('next-slide').click();
+    this.handleStepIindicator(true);
+    this.enableNextBtn = this.finalSecColMap.size > 0;
+  }
+  gotoPrimarySel(e, stepper: MatStepper) {
+    // document.getElementById('prev-slide').click();
+    this.finalSecColArray = [];
+    this.handleStepIindicator(false);
+    this.enableNextBtn = this.selectedPrimColMap.size > 0;
+    this.currentStepNo = stepper.selectedIndex;
+    this.stepper.selectedIndex = 0;
+  }
+
+  gotoAnalyze(e, stepper: MatStepper) {
+    console.log(e);
+    console.log(stepper);
+    this.currentStepNo = stepper.selectedIndex;
+    this.stepper.selectedIndex = 2;
+    // document.getElementById('next-slide').click();
+    this.handleStepIindicator(true);
+    this.enableNextBtn = this.finalSecColMap.size > 0;
+  }
+
 
   getAllSelectedTblsCols() {
     this.finalPrimColArray = [];
@@ -476,10 +511,11 @@ export class TableListComponent implements OnInit {
     this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
   }
   handleStepIindicator(isNext) {
-    const slideNo = this.getCurrentStep();
-    const progressSelector = 'progress-bar';
+    // const slideNo = this.getCurrentStep();
+    const slideNo = this.currentStepNo;
+   // const progressSelector = 'progress-bar';
     switch (slideNo) {
-      case '0':
+      case 0:
         // if (this.finalSecColMap.size === 0) {
         //   this.enableNextBtn = this.selectedPrimColMap.size > 0;
         // } else {
@@ -492,38 +528,38 @@ export class TableListComponent implements OnInit {
         // this.removeClass(progressSelector, 'width-5-25-pc-rev');
         // this.addClass(progressSelector, 'width-5-25-pc');
         // // this.addClass('cancel-btn', 'hide');
-        this.removeClass(progressSelector, 'width-5-pc');
-        this.removeClass(progressSelector, 'width-33-pc-rev');
-        this.addClass(progressSelector, 'width-33-pc');
-        this.removeClass('prev-btn', 'hide');
+        // this.removeClass(progressSelector, 'width-5-pc');
+        // this.removeClass(progressSelector, 'width-33-pc-rev');
+        // this.addClass(progressSelector, 'width-33-pc');
+        // this.removeClass('prev-btn', 'hide');
         this.generateSecTblArray();
         break;
-      case '1':
+      case 1:
         // this.removeClass(progressSelector, 'width-5-25-pc');
-        this.removeClass(progressSelector, 'width-33-pc');
+      //  this.removeClass(progressSelector, 'width-33-pc');
         if (isNext) {
           // this.addClass(progressSelector, 'width-25-50-pc');
           // this.removeClass(progressSelector, 'width-25-50-pc-rev');
-          this.addClass(progressSelector, 'width-66-pc');
-          this.removeClass(progressSelector, 'width-66-pc-rev');
-          this.removeClass('analyse-btn', 'hide');
-          this.addClass('next-btn', 'hide');
+          // this.addClass(progressSelector, 'width-66-pc');
+          // this.removeClass(progressSelector, 'width-66-pc-rev');
+          // this.removeClass('analyse-btn', 'hide');
+          // this.addClass('next-btn', 'hide');
         } else {
           // this.removeClass(progressSelector, 'width-25-50-pc-rev');
           // this.addClass(progressSelector, 'width-5-25-pc-rev');
-          this.removeClass(progressSelector, 'width-66-pc-rev');
-          this.addClass(progressSelector, 'width-33-pc-rev');
-          // this.removeClass('cancel-btn', 'hide');
-          this.removeClass('next-btn', 'hide');
-          this.addClass('prev-btn', 'hide');
+          // this.removeClass(progressSelector, 'width-66-pc-rev');
+          // this.addClass(progressSelector, 'width-33-pc-rev');
+          // // this.removeClass('cancel-btn', 'hide');
+          // this.removeClass('next-btn', 'hide');
+          // this.addClass('prev-btn', 'hide');
         }
         this.getAllSelectedTblsCols();
         this.enableDisableNextBtn();
         break;
-      case '2':
+      case 2:
         // this.removeClass(progressSelector, 'width-25-50-pc');
         // this.removeClass(progressSelector, 'width-50-75-pc-rev');
-        this.removeClass(progressSelector, 'width-66-pc');
+        // this.removeClass(progressSelector, 'width-66-pc');
         // this.removeClass(progressSelector, 'width-100-pc-rev');
         if (isNext) {
           // this.removeClass(progressSelector, 'width-5-25-pc-rev');
@@ -533,9 +569,9 @@ export class TableListComponent implements OnInit {
           // this.removeClass(progressSelector, 'width-75-100-pc-rev');
           // this.addClass(progressSelector, 'width-25-50-pc-rev');
           // this.addClass(progressSelector, 'width-100-pc-rev');
-          this.addClass(progressSelector, 'width-66-pc-rev');
-          this.addClass('analyse-btn', 'hide');
-          this.removeClass('next-btn', 'hide');
+        //  this.addClass(progressSelector, 'width-66-pc-rev');
+         // this.addClass('analyse-btn', 'hide');
+         // this.removeClass('next-btn', 'hide');
         }
         break;
       // case '3':
@@ -556,11 +592,12 @@ export class TableListComponent implements OnInit {
     }
   }
   dataAnalyse() {
-    const progressSelector = 'progress-bar';
-    this.addClass(progressSelector, 'width-100-pc');
-    this.addClass('prev-btn', 'hide');
-    this.addClass('analyse-btn', 'hide');
-    this.removeClass('close-btn', 'hide');
+    this.stepper.selectedIndex = 3;
+    // const progressSelector = 'progress-bar';
+    // this.addClass(progressSelector, 'width-100-pc');
+    // this.addClass('prev-btn', 'hide');
+    // this.addClass('analyse-btn', 'hide');
+    // this.removeClass('close-btn', 'hide');
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
       if (res && res.success) {
         this.dataAnalysisjobID = res.data.jobId;
