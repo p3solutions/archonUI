@@ -98,10 +98,12 @@
             <button mat-raised-button class="arch-button" (click)="openDataAModal()">Data Analyzer</button>
           </div>
         </div>
-        <div class="row col col-md-12 primary-table">
-          <h5 class="card-title sub-headerr">Primary Table:
-            <strong>{{tableName}}</strong>
-          </h5>
+        <div class="container-tab">
+          <div class="col-md-12 primary-table">
+            <h5 class="card-title sub-headerr">Primary Table:
+              <strong>{{tableName}}</strong>
+            </h5>
+          </div>
         </div>
         <!-- <hr> -->
         <div class="row table-headers" *ngIf="isRelationShipAvailable">
@@ -186,10 +188,8 @@
                   <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
                 </a>
               </div>
-              <div class="col-md-5 analyze-header">Data Analyzer</div>
-              <div class="row col col-md-12 primary-table">
-
-              </div>
+               <div class="col-md-5 analyze-header">Data Analyzer</div>
+               
             </div>
             <div class="modal-body row">
 
@@ -198,7 +198,7 @@
                   <strong>{{tableName}}</strong>
                 </h5>
               </div>
-              <div *ngIf="!newWSinfo">
+              <div class="mat-step-data-analyzer" *ngIf="!newWSinfo">
                 <mat-horizontal-stepper linear #stepper labelPosition="bottom">
                   <mat-step label="Connection Details">
                     <div class="panel-body dataA-panel-body">
@@ -408,9 +408,9 @@
                 <ul *ngIf="newWSinfo" class="multi-step-bars">
                   <li>
                     <span id="progress-bar" class="bar-expand width-5-pc"></span>
-                    <em class="col-md-4 text-center">Primary Column</em>
-                    <em class="col-md-4 text-center">Secondary Table &#38; Column selection</em>
-                    <em class="col-md-4 text-center">Data Analysis</em>
+                    <div class="col-md-4 text-center">Primary Column</div>
+                    <div class="col-md-4 text-center">Secondary Table &#38; Column selection</div>
+                    <div class="col-md-4 text-center">Data Analysis</div>
                   </li>
                 </ul>
 
@@ -425,13 +425,13 @@
 
                  DA UI 1 
                   <div step="0" class="item active form-group">
-                    <div class="panel-body dataA-panel-body">
-                      <div class="col-md-12">
-                        <div class="col-md-6">
-                          Percentage of Rows to consider for Analysis
-                          <input mat-input type="number" [(ngModel)]="analysisRowCount" min="1" max="100">
-                        </div>
+                    <div class="col-md-12">
+                      <div class="col-md-12" style="float: right;">
+                        Percentage of Rows to consider for Analysis
+                        <input mat-input type="number" [(ngModel)]="analysisRowCount" min="1" max="100">
                       </div>
+                    </div>
+                    <div class="panel-body dataA-panel-body">
                       <div class="col-md-12 mar-1x" style="margin-left: 18px;">
                         {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
                       </div>

@@ -1,3 +1,10 @@
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 #table-list {
   margin-left: 35px;
   font-size: 12px;
@@ -106,6 +113,10 @@ h4 {
   /* margin-top: 0px; */
 }
 
+.expansion-outer{
+  margin-top: 12px;
+}
+
 .card {
   width: 105%;
   height: 410px;
@@ -122,6 +133,8 @@ h4 {
 .card-title {
   float: left;
 }
+
+
 
 .header {
   /* float: left; */
@@ -197,6 +210,7 @@ h4 {
 }
 
 #analysis-view .card {
+  background-color: #fff;
   height: 678px;
 }
 
@@ -219,6 +233,7 @@ h4 {
 }
 
 .da-table.selected {
+  background-color: #e8f0f6;
   border: 1px solid #269AF8;
 }
 
@@ -275,10 +290,14 @@ input[type='checkbox'] {
 }
 
 .primary-table {
-  padding-left: 32px;
-  padding-bottom: 0px;
+  background-color: #edf3f8;
+  margin-bottom: 28px;
 }
 
+.container-tab{
+  margin-left: 22px;
+  margin-right: 31px;
+}
 
 #dropdown>li {
   display: inline-block;
@@ -546,8 +565,8 @@ a:hover {
 
 ::ng-deep #analysis-view .mat-expansion-panel {
   margin-bottom: 8px;
-  margin-right: 10px;
-  margin-left: 10px
+  margin-right: 31px;
+  margin-left: 24px
 }
 
 .action-btn {
@@ -601,10 +620,14 @@ a:hover {
   border: none;
 }
 
+.btn-primary{
+  background-color: #2879ff;
+}
+
 .btn-primary:hover {
   box-shadow: rgba(0, 0, 0, 0.43) 0px 0px 9px 0px;
-  -webkit-transform: translatey(-2px);
-  transform: translatey(-2px);
+  -webkit-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
 }
 
 #arch-hdr {
@@ -655,3 +678,101 @@ a:hover {
 .exp-content-outer.border-top-line{
   background-color: transparent;
 }
+
+::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header-container{
+  width: 100% !important;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}
+
+
+::ng-deep .mat-step-data-analyzer .material-icons {
+  line-height: unset !important;
+  font-size: 37px !important;
+  color: unset !important;
+}
+
+::ng-deep .mat-step-data-analyzer.mat-stepper-label-position-bottom .mat-horizontal-stepper-header .mat-step-icon {
+  font-size: 0px !important;
+}
+
+::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header .finished-step {
+  background-color: #ffff !important;
+  color: #2879ff !important;
+  border: solid 2px #2879ff !important;
+}
+
+::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header .unfinished-step {
+  border: solid 1px #cbcdd2 !important;
+  background-color: #cbcdd2 !important;
+}
+
+::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header .active-step {
+  background-color: #2697ff !important;
+  color: #ffffff !important;
+}
+
+::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-k-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
+ [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu-before.mat-horizontal-stepper-header:not(:first-child)::before, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
+  background-color:  #2697ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
+  background-color:  #2697ff !important
+}
+
+::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
+  border-top-width:2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
+ [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  border-top-width:2px !important ;
+} 
+
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
+  border-top-width:2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, 
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
+  border-top-width:2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
+  border-top-width:2px !important;
+}
+
+

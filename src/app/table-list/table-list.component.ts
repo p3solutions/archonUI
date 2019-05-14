@@ -92,6 +92,7 @@ export class TableListComponent implements OnInit {
   paginationRequired: boolean;
   currentStepNo = null;
   @ViewChild('stepper') stepper: MatStepper;
+  value: any;
 
   constructor(
     private tablelistService: TableListService,
@@ -187,6 +188,9 @@ export class TableListComponent implements OnInit {
   }
 
   openDataAModal() {
+    setTimeout(() => {
+      this.changeMatStepIcon();
+    }, 1000);
     this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId).subscribe(res => {
       if (res.data.jobIds.length > 0) {
         this.homeStage = false;
@@ -411,6 +415,23 @@ export class TableListComponent implements OnInit {
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
   gotoSecTableAndColSelection(e, stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[0].classList.add('mat-psedu');
+      a[1].classList.add('mat-k-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[1].classList.add('mat-horizental-line');
+      const a1 = document.getElementsByClassName('mat-horizontal-stepper-header');
+      if (a1[1].classList.contains('mat-auth-psedu')) {
+        a1[1].classList.remove('mat-auth-psedu');
+        a1[2].classList.remove('mat-review-psedu');
+        const b1 = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+        b1[0].children[3].classList.remove('mat-horizental-line');
+      }
+      this.value[2].children[1].classList.add('unfinished-step');
+      this.value[0].children[1].classList.add('finished-step');
+      this.value[1].children[1].classList.add('active-step');
+    }, 300);
     console.log(e);
     console.log(stepper);
     this.currentStepNo = stepper.selectedIndex;
@@ -420,6 +441,19 @@ export class TableListComponent implements OnInit {
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
   gotoPrimarySel(e, stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[0].classList.remove('mat-psedu');
+      a[1].classList.remove('mat-k-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[1].classList.remove('mat-horizental-line');
+      this.value[0].children[1].classList.add('active-step');
+      if (this.value[1].children[1].classList.contains('active-step')) {
+        this.value[1].children[1].classList.remove('active-step');
+      }
+      this.value[2].children[1].classList.add('unfinished-step');
+      this.value[1].children[1].classList.add('unfinished-step');
+    }, 300);
     // document.getElementById('prev-slide').click();
     this.finalSecColArray = [];
     this.handleStepIindicator(false);
@@ -429,6 +463,15 @@ export class TableListComponent implements OnInit {
   }
 
   gotoAnalyze(e, stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[1].classList.add('mat-auth-psedu');
+      a[2].classList.add('mat-review-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[3].classList.add('mat-horizental-line');
+      this.value[1].children[1].classList.add('finished-step');
+      this.value[2].children[1].classList.add('active-step');
+    }, 300);
     console.log(e);
     console.log(stepper);
     this.currentStepNo = stepper.selectedIndex;
@@ -513,7 +556,7 @@ export class TableListComponent implements OnInit {
   handleStepIindicator(isNext) {
     // const slideNo = this.getCurrentStep();
     const slideNo = this.currentStepNo;
-   // const progressSelector = 'progress-bar';
+    // const progressSelector = 'progress-bar';
     switch (slideNo) {
       case 0:
         // if (this.finalSecColMap.size === 0) {
@@ -536,7 +579,7 @@ export class TableListComponent implements OnInit {
         break;
       case 1:
         // this.removeClass(progressSelector, 'width-5-25-pc');
-      //  this.removeClass(progressSelector, 'width-33-pc');
+        //  this.removeClass(progressSelector, 'width-33-pc');
         if (isNext) {
           // this.addClass(progressSelector, 'width-25-50-pc');
           // this.removeClass(progressSelector, 'width-25-50-pc-rev');
@@ -569,9 +612,9 @@ export class TableListComponent implements OnInit {
           // this.removeClass(progressSelector, 'width-75-100-pc-rev');
           // this.addClass(progressSelector, 'width-25-50-pc-rev');
           // this.addClass(progressSelector, 'width-100-pc-rev');
-        //  this.addClass(progressSelector, 'width-66-pc-rev');
-         // this.addClass('analyse-btn', 'hide');
-         // this.removeClass('next-btn', 'hide');
+          //  this.addClass(progressSelector, 'width-66-pc-rev');
+          // this.addClass('analyse-btn', 'hide');
+          // this.removeClass('next-btn', 'hide');
         }
         break;
       // case '3':
@@ -592,6 +635,15 @@ export class TableListComponent implements OnInit {
     }
   }
   dataAnalyse() {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[3].classList.add('mat-analyze-psedu-before');
+      a[2].classList.add('mat-analyze-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[5].classList.add('mat-horizental-line');
+      this.value[2].children[1].classList.add('finished-step');
+      this.value[3].children[1].classList.add('active-step');
+    }, 300);
     this.stepper.selectedIndex = 3;
     // const progressSelector = 'progress-bar';
     // this.addClass(progressSelector, 'width-100-pc');
@@ -634,6 +686,18 @@ export class TableListComponent implements OnInit {
       }
     });
   }
+
+  changeMatStepIcon() {
+    this.value = document.querySelectorAll('.mat-horizontal-stepper-header');
+    this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">settings_input_component</i>';
+    this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
+    this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
+    this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">playlist_add_check</i>';
+    this.value[2].children[1].classList.add('unfinished-step');
+    this.value[1].children[1].classList.add('unfinished-step');
+    this.value[3].children[1].classList.add('unfinished-step');
+  }
+
   deleteRelationship(indexOfDelete) {
     this.index = indexOfDelete;
     this.editrelationshipInfo = JSON.parse(JSON.stringify(this.relationshipInfo[this.index]));
