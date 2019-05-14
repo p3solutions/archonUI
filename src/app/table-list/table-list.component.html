@@ -96,10 +96,12 @@
             <button mat-raised-button class="arch-button" (click)="openDataAModal()">Data Analyzer</button>
           </div>
         </div>
-        <div class="row col col-md-12 primary-table">
-          <h5 class="card-title sub-headerr">Primary Table:
-            <strong>{{tableName}}</strong>
-          </h5>
+        <div class="container-tab">
+          <div class="col-md-12 primary-table">
+            <h5 class="card-title sub-headerr">Primary Table:
+              <strong>{{tableName}}</strong>
+            </h5>
+          </div>
         </div>
         <!-- <hr> -->
         <div class="row table-headers" *ngIf="isRelationShipAvailable">
@@ -129,7 +131,7 @@
         </h5>
         <mat-accordion [multi]="true">
           <div class="items-list" style="padding-left: 0px">
-          <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of relationshipInfo;let ind=index;">
+          <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of relationshipInfo;let ind=index;" >
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="expansion-outer">
@@ -161,9 +163,9 @@
                 <div class="exp-mat-item">{{x.secondaryColumn.columnName}}</div>
               </div>
               <div class="action-btn">
-                <button class="save mat-raised-button btn-padding"  data-toggle="modal"
+                <button mat-raised-button class="btn-primary btn-padding" style="margin-right: 14px;" id="cancel-btn" (click)="mep.expanded = !mep.expanded">Close</button>
+                <button mat-raised-button class="btn-primary btn-padding"  data-toggle="modal"
                 data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)" >Edit</button>
-                <button class="mat-raised-button cancel btn-primary btn-padding" (click)="mep.expanded = !mep.expanded">Close</button>
               </div>
             </div>
           </mat-expansion-panel>
@@ -184,9 +186,7 @@
                 </a>
               </div>
                <div class="col-md-5 analyze-header">Data Analyzer</div>
-               <div class="row col col-md-12 primary-table">
-                
-              </div>
+               
             </div>
             <div class="modal-body row">
 
@@ -201,9 +201,9 @@
                 <ul *ngIf="!newWSinfo" class="multi-step-bars">
                   <li>
                     <span id="progress-bar" class="bar-expand width-5-pc"></span>
-                    <em class="col-md-4 text-center">Primary Column</em>
-                    <em class="col-md-4 text-center">Secondary Table &#38; Column selection</em>
-                    <em class="col-md-4 text-center">Data Analysis</em>
+                    <div class="col-md-4 text-center">Primary Column</div>
+                    <div class="col-md-4 text-center">Secondary Table &#38; Column selection</div>
+                    <div class="col-md-4 text-center">Data Analysis</div>
                   </li>
                 </ul>
 
@@ -218,13 +218,13 @@
 
                   <!-- DA UI 1 -->
                   <div step="0" class="item active form-group">
-                    <div class="panel-body dataA-panel-body">
-                      <div class="col-md-12">
-                        <div class="col-md-6">
-                          Percentage of Rows to consider for Analysis
-                          <input mat-input type="number" [(ngModel)]="analysisRowCount" min="1" max="100">
-                        </div>
+                    <div class="col-md-12">
+                      <div class="col-md-12" style="float: right;">
+                        Percentage of Rows to consider for Analysis
+                        <input mat-input type="number" [(ngModel)]="analysisRowCount" min="1" max="100">
                       </div>
+                    </div>
+                    <div class="panel-body dataA-panel-body">
                       <div class="col-md-12 mar-1x" style="margin-left: 18px;">
                         {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
                       </div>

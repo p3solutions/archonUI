@@ -1,3 +1,10 @@
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 #table-list {
   margin-left: 35px;
   font-size: 12px;
@@ -106,6 +113,10 @@ h4 {
   /* margin-top: 0px; */
 }
 
+.expansion-outer{
+  margin-top: 12px;
+}
+
 .card {
   width: 105%;
   height: 410px;
@@ -122,6 +133,8 @@ h4 {
 .card-title {
   float: left;
 }
+
+
 
 .header {
   /* float: left; */
@@ -197,6 +210,7 @@ h4 {
 }
 
 #analysis-view .card {
+  background-color: #fff;
   height: 678px;
 }
 
@@ -219,6 +233,7 @@ h4 {
 }
 
 .da-table.selected {
+  background-color: #e8f0f6;
   border: 1px solid #269AF8;
 }
 
@@ -275,10 +290,14 @@ input[type='checkbox'] {
 }
 
 .primary-table {
-  padding-left: 32px;
-  padding-bottom: 0px;
+  background-color: #edf3f8;
+  margin-bottom: 28px;
 }
 
+.container-tab{
+  margin-left: 22px;
+  margin-right: 31px;
+}
 
 #dropdown>li {
   display: inline-block;
@@ -546,8 +565,8 @@ a:hover {
 
 ::ng-deep #analysis-view .mat-expansion-panel {
   margin-bottom: 8px;
-  margin-right: 10px;
-  margin-left: 10px
+  margin-right: 31px;
+  margin-left: 24px
 }
 
 .action-btn {
@@ -601,10 +620,14 @@ a:hover {
   border: none;
 }
 
+.btn-primary{
+  background-color: #2879ff;
+}
+
 .btn-primary:hover {
   box-shadow: rgba(0, 0, 0, 0.43) 0px 0px 9px 0px;
-  -webkit-transform: translatey(-2px);
-  transform: translatey(-2px);
+  -webkit-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
 }
 
 #arch-hdr {
