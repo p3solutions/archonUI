@@ -20,6 +20,7 @@ export class WorkspaceInfoComponent implements OnInit {
   loggedUserId: string;
   showNavBar = false;
   wsIndiPageUrl: string;
+  role: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -42,6 +43,7 @@ export class WorkspaceInfoComponent implements OnInit {
     } else {
       this.getWorkspaceInfo(this.workspaceId);
     }
+    this.role = this.workspaceHeaderService.getSelectedWorkspaceWorkspaceRole();
   }
   showNavBarComp() {
     this.wsIndiPageUrl = '/workspace-info/' + this.workspaceId;

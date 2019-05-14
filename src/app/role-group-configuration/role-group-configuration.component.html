@@ -54,7 +54,7 @@
   </div>
   <div id="action-btn">
     <button (click)="reset()" class="btn btn-padding cancel btn-transform">Reset</button>
-    <button (click)="saveGroupRoleConfig()" class="btn btn-transform save btn-padding">Save</button>
+    <button (click)="saveGroupRoleConfig()" [disabled]="true" class="btn btn-transform save btn-padding">Save</button>
   </div>
 </div>
 <button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"

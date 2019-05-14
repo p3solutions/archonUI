@@ -56,6 +56,7 @@ export class AdhocHeaderInfo {
     metadataVersion: string;
     appMetadataVersion: string;
     workspaceId: string;
+    appId = '';
 }
 
 export class InputFunctionsInfo {
@@ -102,7 +103,7 @@ export class ResultFields {
     isHidden = false;
     blob = false;
     encrypted = false;
-    todecrypt = true;
+    todecrypt = false;
     notSelected = false;
 }
 

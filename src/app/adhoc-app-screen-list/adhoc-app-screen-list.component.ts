@@ -107,12 +107,20 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   getApplication() {
+    let tempResponse = new AdhocHeaderInfo();
+    this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
+      tempResponse = response;
+    });
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.adhocService.getApplication(this.workspaceId, this.startIndex).subscribe(result => {
       this.applicationInfoList = result.list;
       this.isApplicationLeft = result.paginationRequired;
       if (this.applicationInfoList.length !== 0) {
-        this.selectedApp(this.applicationInfoList[0].id);
+        if (tempResponse.appId !== '') {
+          this.selectedApp(tempResponse.appId);
+        } else {
+          this.selectedApp(this.applicationInfoList[0].id);
+        }
       }
     });
   }
@@ -341,6 +349,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     adhocHeaderInfo.appName = this.selectedAppObject.appName;
     adhocHeaderInfo.appMetadataVersion = this.selectedAppObject.metadataVersion;
     adhocHeaderInfo.workspaceId = this.workspaceId;
+    adhocHeaderInfo.appId = this.selectedAppObject.id;
     this.adhocService.updateAdhocHeaderInfo(adhocHeaderInfo);
     let screenInfoObject = new Adhoc();
     screenInfoObject = this.screenInfoList.filter(a => a.id === screenId)[0];
