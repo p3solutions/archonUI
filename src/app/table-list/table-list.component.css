@@ -318,25 +318,25 @@ input[type='checkbox'] {
 
 
 #sec-tab {
-  margin-left: 32px;
+  margin-left: 48px;
 }
 
 .sec-width {
-  width: 26%;
+  width: 25%;
   text-align: left;
   /* margin-left: 10px; */
   font-size: 14px;
 }
 
 .def-width {
-  width: 14.6%;
+  width: 19%;
   text-align: left;
   font-size: 14px;
   padding-left: 17px;
 }
 
 .conf-width {
-  width: 13.2%;
+  width: 18%;
   text-align: left;
   font-size: 14px;
   padding-left: 0px;
@@ -505,19 +505,19 @@ a:hover {
 
 
 .expansion-item-sec {
-  width: 25%;
+  width: 30%;
   font-size: 14px;
 }
 
 
 .expansion-item-def {
-  width: 15%;
+  width: 26%;
   padding: 0px 15px 0px 15px
 }
 
 
 .expansion-item-join {
-  width: 25%;
+  width: 28%;
   padding: 0px 15px 0px 15px
 }
 
@@ -527,7 +527,7 @@ a:hover {
   height: 39px;
   padding: 8px 2px 7px 0px;
   border-bottom: 1px solid #8c8c8c;
-  background-color: #fafafa;
+  background-color: #f3f3f3;
 }
 
 .exp-mat-item {
@@ -561,8 +561,6 @@ a:hover {
   transform: scale(1.1, 1.1);
 }
 
-
-
 ::ng-deep #analysis-view .mat-expansion-panel {
   margin-bottom: 8px;
   margin-right: 31px;
@@ -580,7 +578,6 @@ a:hover {
 .exp-trash-item {
   width: 17%;
   text-align: right;
-  padding: 0px 15px 0px 15px;
 }
 
 .card-header {
@@ -672,11 +669,11 @@ a:hover {
 }
 
 .exp-content-outer:hover {
-  background-color: transparent;
+  background-color: #e4eef7;
 }
 
 .exp-content-outer.border-top-line{
-  background-color: transparent;
+  background-color: #f3f3f3;
 }
 
 ::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header-container{

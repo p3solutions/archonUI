@@ -369,7 +369,7 @@ export class TableListComponent implements OnInit {
     // this.enableNextBtn = this.selectedSecTbl.size > 0;
   }
   getCurrentStep() {
-    return document.querySelector('#dataAModal-carousel .item.active').getAttribute('step');
+    // return document.querySelector('#dataAModal-carousel .item.active').getAttribute('step');
   }
   enableDisableNextBtn() {
     const currentStep = this.getCurrentStep();
@@ -392,7 +392,7 @@ export class TableListComponent implements OnInit {
   }
   // carousel handling codes
   addClass(elementId, classSelector) {
-    document.getElementById(elementId).classList.add(classSelector);
+   // document.getElementById(elementId).classList.add(classSelector);
   }
   removeClass(elementId, classSelector) {
     document.getElementById(elementId).classList.remove(classSelector);
