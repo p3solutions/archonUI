@@ -27,7 +27,7 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   input;
   jobMessage;
   jobOutput: any;
-  displayedColumns: string[] = ['Job Type', 'Tool', 'User', 'Job Name',
+  displayedColumns: string[] = ['Job Name', 'User', 'Job Origin', 'Job Type', 
     'Job Runs', 'Schedule Time', 'Start Time', 'End Time', 'Last Run Time', 'Next Start Time', 'Status', 'Details', 'Stop'];
   dataSource: ScheduleDataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
