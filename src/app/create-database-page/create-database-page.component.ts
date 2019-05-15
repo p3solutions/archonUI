@@ -108,7 +108,6 @@ export class CreateDatabasePageComponent implements OnInit {
   }
 
   gotoTestAndCreate(stepper: MatStepper) {
-    console.log(stepper._stepHeader.toArray());
     const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     if (this.userServerForm.valid) {
       setTimeout(() => {
@@ -127,12 +126,13 @@ export class CreateDatabasePageComponent implements OnInit {
         // this.value[1].children[1].classList.add('finished-step');
         this.value[2].children[1].classList.add('active-step');
       }, 300);
-      this.checkForDuplicate();
+      if (steps[2].state !== 'edit') {
+        this.checkForDuplicate();
+      }
     }
     this.stepper.selectedIndex = 2;
   }
   gotoConnectionDetails(stepper: MatStepper) {
-    console.log(stepper._stepHeader.toArray());
     const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     setTimeout(() => {
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
@@ -142,7 +142,6 @@ export class CreateDatabasePageComponent implements OnInit {
       b[0].children[1].classList.remove('mat-horizental-line');
       document.getElementById('remove-square-hover').click();
       this.value[0].children[1].classList.add('active-step');
-      console.log(steps[1].state);
       if (steps[1].state === 'number') {
         if (this.value[1].children[1].classList.contains('active-step')) {
           this.value[1].children[1].classList.remove('active-step');
@@ -155,13 +154,6 @@ export class CreateDatabasePageComponent implements OnInit {
       if (steps[2].state === 'edit') {
         this.value[2].children[1].classList.add('finished-step');
       }
-      // if (this.value[1].children[1].classList.contains('active-step')) {
-      //   this.value[1].children[1].classList.remove('active-step');
-      // }
-      // if (this.value[1].children[1].classList.contains('unfinished-step')) {
-      //   this.value[1].children[1].classList.remove('unfinished-step');
-      // }
-      // this.value[1].children[1].classList.add('finished-step');
     }, 300);
     this.stepper.selectedIndex = 0;
   }
@@ -172,7 +164,8 @@ export class CreateDatabasePageComponent implements OnInit {
       if (res) {
         this.inProgress = false;
         this.dbTestConnectionErrorMsg = '';
-        this.dbTestConnectionSuccessMsg = res.connection.message;
+        this.errorMessage = res.connection.message;
+        document.getElementById('select-db-btn').click();
         if (res.connection.isConnected) {
           this.disableCreateBtn = false;
         }
@@ -181,8 +174,7 @@ export class CreateDatabasePageComponent implements OnInit {
         this.disableCreateBtn = true;
         this.dbTestConnectionSuccessMsg = '';
         this.errorMessage = 'Failed! Try again with correct DB configuration.';
-         document.getElementById('select-db-btn').click();
-
+        document.getElementById('select-db-btn').click();
       }
     });
   }

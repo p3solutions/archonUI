@@ -63,9 +63,6 @@ export class CreateWorkspacePageComponent implements OnInit {
       });
   }
 
-  stepClick($event) {
-    console.log($event);
-  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -112,7 +109,6 @@ export class CreateWorkspacePageComponent implements OnInit {
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       b[0].children[1].classList.remove('mat-horizental-line');
       this.value[0].children[1].classList.add('active-step');
-      console.log(steps[1].state);
       if (steps[1].state === 'number') {
         if (this.value[1].children[1].classList.contains('active-step')) {
           this.value[1].children[1].classList.remove('active-step');
@@ -153,13 +149,16 @@ export class CreateWorkspacePageComponent implements OnInit {
   }
 
   createWorkspace(stepper: MatStepper) {
+    this.databaseIds = [];
     this.showWorkDuplicateMsg = '';
     const selectedDBId = this.configDBList.filter(a => a.isChecked === true)[0].id;
     this.databaseIds.push(selectedDBId);
     this.workspaceInProgress = true;
     const param: any = {
       'workspaceName': this.firstFormGroup.get('workspaceName').value,
-      'databaseIds': this.databaseIds
+      'databaseIds': this.databaseIds,
+      'description': this.firstFormGroup.get('description').value,
+      'comment': this.comment
     };
     this.userWorkspaceService.createNewWorkspace(param).subscribe(res => {
       this.workspaceInProgress = false;
@@ -181,6 +180,7 @@ export class CreateWorkspacePageComponent implements OnInit {
       temp.isChecked = true;
       this.databaseName = temp.profileName;
     }
+    const selectedDBId = this.configDBList.filter(a => a.isChecked === true)[0].id;
   }
 
   getOwnerName(): string {

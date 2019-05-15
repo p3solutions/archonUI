@@ -10,7 +10,7 @@
     </div>
     <div>
         <mat-card>
-            <mat-horizontal-stepper (selectionChange)="stepClick($event)" linear #stepper labelPosition="bottom">
+            <mat-horizontal-stepper linear #stepper labelPosition="bottom">
                 <mat-step [stepControl]="firstFormGroup" label="Workspace Details">
                     <form [formGroup]="firstFormGroup" class="workspace-detail-form">
                         <div class="workspace-detail">
