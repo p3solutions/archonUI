@@ -298,3 +298,7 @@ td.mat-cell:first-of-type {
   color: white;
   text-align: left
 }
+
+.loader {
+  margin-left: 3px;
+}

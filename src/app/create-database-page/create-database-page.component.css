@@ -68,6 +68,16 @@
   transition:0.5s;
 }
 
+#action-btn button.cancel-disabled {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  border-radius: 3px;
+}
+
+
+
 #action-btn button.cancel:hover {
   transform: scale(1.1, 1.1);
 }

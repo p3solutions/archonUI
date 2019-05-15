@@ -28,6 +28,7 @@ export class CreateDatabasePageComponent implements OnInit {
   successDatabaseMessage = '';
   duplicateDatabaseMessage = '';
   databaseList: ConfiguredDB[] = [];
+  errorMessage = '';
   constructor(private _formBuilder: FormBuilder, private userWorkspaceService: UserWorkspaceService
     , private router: Router, private databaseListService: DatabaseListService) { }
 
@@ -179,7 +180,9 @@ export class CreateDatabasePageComponent implements OnInit {
         this.inProgress = false;
         this.disableCreateBtn = true;
         this.dbTestConnectionSuccessMsg = '';
-        this.dbTestConnectionErrorMsg = 'Failed! Try again with correct DB configuration.';
+        this.errorMessage = 'Failed! Try again with correct DB configuration.';
+         document.getElementById('select-db-btn').click();
+
       }
     });
   }
@@ -205,12 +208,15 @@ export class CreateDatabasePageComponent implements OnInit {
         } else {
           this.disableCreateBtn = false;
           this.dbinProgress = false;
-          this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
+          this.errorMessage = 'Unable to Create Database. Please Test Connection.';
+          document.getElementById('select-db-btn').click();
         }
       } else {
         this.dbinProgress = false;
         this.disableCreateBtn = false;
-        this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
+        this.errorMessage = 'Unable to Create Database. Please Test Connection.';
+        document.getElementById('select-db-btn').click();
+
       }
     });
   }
@@ -218,7 +224,6 @@ export class CreateDatabasePageComponent implements OnInit {
   createNewdb() {
     this.userWorkspaceService.createNewDBConfig(this.databaseConnectionForm.value, this.userServerForm.value).subscribe(res => {
       if (res) {
-        console.log(res);
         document.getElementById('success-popup-btn').click();
         this.successDatabaseMessage = 'Database Created Successfully';
       }
@@ -232,11 +237,11 @@ export class CreateDatabasePageComponent implements OnInit {
   checkForDuplicate() {
     this.databaseListService.getListOfConfigDatabases().subscribe(response => {
       if (response) {
-        console.log(response);
         for (const db of response) {
           if ((db.host === this.databaseConnectionForm.get('host').value) && (db.port ===
             this.databaseConnectionForm.get('port').value) && (db.databaseName === this.databaseConnectionForm.get('databaseName').value)) {
-            this.duplicateDatabaseMessage = 'Same database Connection exists with different profile name.';
+            this.errorMessage = 'Same database Connection exists with different profile name.';
+            document.getElementById('select-db-btn').click();
             break;
           }
         }

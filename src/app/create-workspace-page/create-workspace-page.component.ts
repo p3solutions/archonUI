@@ -29,7 +29,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   successWorkspaceMessage = '';
   selectDatabaseMessage = '';
   enableStepTwoBtn = true;
-
+  workspaceInProgress = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(private _formBuilder: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
@@ -156,16 +156,19 @@ export class CreateWorkspacePageComponent implements OnInit {
     this.showWorkDuplicateMsg = '';
     const selectedDBId = this.configDBList.filter(a => a.isChecked === true)[0].id;
     this.databaseIds.push(selectedDBId);
+    this.workspaceInProgress = true;
     const param: any = {
       'workspaceName': this.firstFormGroup.get('workspaceName').value,
       'databaseIds': this.databaseIds
     };
     this.userWorkspaceService.createNewWorkspace(param).subscribe(res => {
+      this.workspaceInProgress = false;
       if (res) {
         document.getElementById('success-popup-btn').click();
         this.successWorkspaceMessage = 'Workspace Created Successfully.';
       } else {
-        this.showWorkDuplicateMsg = 'This Workspace Name already is in use.';
+        document.getElementById('select-db-btn').click();
+        this.errorMessage = 'This Workspace Name already is in use.';
       }
     });
   }
