@@ -44,6 +44,13 @@
   transform: scale(1.1, 1.1);
 }
 
+#action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+}
+
 #action-btn button.save {
   background-color: #2879ff;
   color: #ffffff;
@@ -157,32 +164,32 @@ mat-card {
 }
 
 ::ng-deep #create-database-landing .mat-horizontal-stepper-header .active-step {
-  background-color: #2697ff !important;
+  background-color: #2879ff !important;
   color: #ffffff !important;
 }
 
 ::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-k-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
  [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 

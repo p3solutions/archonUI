@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatStepper } from '@angular/material';
+import { MatStepper, MatStepHeader } from '@angular/material';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { Router } from '@angular/router';
 import { DatabaseListService } from '../database-list/database-list.service';
@@ -78,6 +78,9 @@ export class CreateDatabasePageComponent implements OnInit {
   }
 
   gotoAuthentication(stepper: MatStepper) {
+    console.log(stepper._stepHeader.toArray());
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
+    console.log(steps);
     if (this.databaseConnectionForm.valid) {
       setTimeout(() => {
         const a = document.getElementsByClassName('mat-horizontal-stepper-header');
@@ -93,8 +96,18 @@ export class CreateDatabasePageComponent implements OnInit {
           const b1 = document.querySelectorAll('.mat-horizontal-stepper-header-container');
           b1[0].children[3].classList.remove('mat-horizental-line');
         }
-        this.value[2].children[1].classList.add('unfinished-step');
-        this.value[0].children[1].classList.add('finished-step');
+        if (steps[0].state === 'edit') {
+          this.value[0].children[1].classList.add('finished-step');
+        }
+        if (steps[2].state === 'edit') {
+          this.value[2].children[1].classList.add('finished-step');
+        }
+
+        // if (this.value[2].children[1].classList.contains('active-step')) {
+        //   this.value[2].children[1].classList.remove('active-step');
+        //   this.value[2].children[1].classList.add('finished-step');
+        // }
+        // this.value[0].children[1].classList.add('finished-step');
         this.value[1].children[1].classList.add('active-step');
       }, 300);
     }
@@ -102,6 +115,8 @@ export class CreateDatabasePageComponent implements OnInit {
   }
 
   gotoTestAndCreate(stepper: MatStepper) {
+    console.log(stepper._stepHeader.toArray());
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     if (this.userServerForm.valid) {
       setTimeout(() => {
         const a = document.getElementsByClassName('mat-horizontal-stepper-header');
@@ -110,7 +125,13 @@ export class CreateDatabasePageComponent implements OnInit {
         const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
         b[0].children[3].classList.add('mat-horizental-line');
         document.getElementById('remove-square-hover').click();
-        this.value[1].children[1].classList.add('finished-step');
+        if (steps[1].state === 'edit') {
+          this.value[1].children[1].classList.add('finished-step');
+        }
+        if (steps[0].state === 'edit') {
+          this.value[0].children[1].classList.add('finished-step');
+        }
+        // this.value[1].children[1].classList.add('finished-step');
         this.value[2].children[1].classList.add('active-step');
       }, 300);
       this.checkForDuplicate();
@@ -118,6 +139,8 @@ export class CreateDatabasePageComponent implements OnInit {
     this.stepper.selectedIndex = 2;
   }
   gotoConnectionDetails(stepper: MatStepper) {
+    console.log(stepper._stepHeader.toArray());
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     setTimeout(() => {
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       a[0].classList.remove('mat-psedu');
@@ -126,11 +149,26 @@ export class CreateDatabasePageComponent implements OnInit {
       b[0].children[1].classList.remove('mat-horizental-line');
       document.getElementById('remove-square-hover').click();
       this.value[0].children[1].classList.add('active-step');
-      if (this.value[1].children[1].classList.contains('active-step')) {
-        this.value[1].children[1].classList.remove('active-step');
+      console.log(steps[1].state);
+      if (steps[1].state === 'number') {
+        if (this.value[1].children[1].classList.contains('active-step')) {
+          this.value[1].children[1].classList.remove('active-step');
+        }
+        this.value[1].children[1].classList.add('unfinished-step');
       }
-      this.value[2].children[1].classList.add('unfinished-step');
-      this.value[1].children[1].classList.add('unfinished-step');
+      if (steps[1].state === 'edit') {
+        this.value[1].children[1].classList.add('finished-step');
+      }
+      if (steps[2].state === 'edit') {
+        this.value[2].children[1].classList.add('finished-step');
+      }
+      // if (this.value[1].children[1].classList.contains('active-step')) {
+      //   this.value[1].children[1].classList.remove('active-step');
+      // }
+      // if (this.value[1].children[1].classList.contains('unfinished-step')) {
+      //   this.value[1].children[1].classList.remove('unfinished-step');
+      // }
+      // this.value[1].children[1].classList.add('finished-step');
     }, 300);
     this.stepper.selectedIndex = 0;
   }

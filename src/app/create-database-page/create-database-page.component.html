@@ -55,7 +55,7 @@
             <div id="action-btn" class="action-btn-connection">
               <button type="button" (click)="navigateToPrevious()" class="btn cancel btn-padding">Cancel</button>
               <button type="button" (click)="gotoAuthentication(stepper)"
-                class="btn save btn-primary btn-padding matStepperNext">Next</button>
+                class="btn save btn-padding matStepperNext">Next</button>
             </div>
           </form>
         </mat-step>
@@ -74,7 +74,7 @@
             <button (click)="gotoConnectionDetails(stepper)"
               class="btn cancel matStepperPrevious btn-padding">Previous</button>
             <button (click)="gotoTestAndCreate(stepper)"
-              class="btn save btn-primary btn-padding matStepperNext">Next</button>
+              class="btn save btn-padding matStepperNext">Next</button>
           </div>
         </mat-step>
         <mat-step label="Review details">
@@ -132,7 +132,7 @@
                 Connection<i *ngIf="inProgress" class="fa fa-spinner fa-spin loader"></i> </button>
               <button class="btn cancel btn-padding" (click)="gotoAuthentication(stepper)">Previous</button>
               <button [disabled]="disableCreateBtn" (click)="createDatatbase(stepper)"
-                class="btn save btn-primary btn-padding"> <i *ngIf="dbinProgress"
+                class="btn btn-padding {{disableCreateBtn ? 'save-disabled': 'save'}}"> <i *ngIf="dbinProgress"
                   class="fa fa-spinner fa-spin loader"></i> Create</button>
             </div>
           </div>

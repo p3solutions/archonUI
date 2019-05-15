@@ -157,32 +157,32 @@ mat-card {
 }
 
 ::ng-deep #create-workspace-landing .mat-horizontal-stepper-header .active-step {
-  background-color: #2697ff !important;
+  background-color: #2879ff !important;
   color: #ffffff !important;
 }
 
 ::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-k-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
  [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
@@ -249,4 +249,8 @@ mat-card {
 .heading-name{
   font-size: 24px;
   color: #0c0c0c;
+}
+
+td.mat-cell:first-of-type{
+  padding-left: 14px !important;
 }
