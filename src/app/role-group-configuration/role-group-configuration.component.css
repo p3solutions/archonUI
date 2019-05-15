@@ -72,3 +72,7 @@ table::ng-deep th {
 mat-form-field {
   width: 23%;
 }
+
+::ng-deep #role-group-table .mat-checkbox-checked.mat-accent .mat-checkbox-background{
+  background-color: #80adf8!important;
+}
