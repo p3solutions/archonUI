@@ -13,6 +13,7 @@ import { Router, Route, ActivatedRoute } from '@angular/router';
 })
 export class CreateWorkspacePageComponent implements OnInit {
   firstFormGroup: FormGroup;
+  comment = '';
   @ViewChild('stepper') stepper: MatStepper;
   displayedColumns: string[] = ['select', 'databaseProfileName', 'databaseName', 'owner', 'createdDate'];
   dataSource: MatTableDataSource<ConfiguredDB>;
@@ -27,6 +28,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   showWorkDuplicateMsg = '';
   successWorkspaceMessage = '';
   selectDatabaseMessage = '';
+  enableStepTwoBtn = true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -48,7 +50,7 @@ export class CreateWorkspacePageComponent implements OnInit {
       workspaceName: ['', Validators.required],
       owner: [{ value: this.getOwnerName(), disabled: true }, Validators.required],
       creationDate: [{ value: this.getTodayDate(), disabled: true }, Validators.required],
-      description: [''],
+      description: ['', Validators.required]
     });
     this.userWorkspaceService.getSupportedDBList()
       .subscribe(res => {
