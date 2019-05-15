@@ -277,12 +277,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   selectAll(_event) {
-    const bool = _event.target.checked;
-    if (bool) {
-      $('input:checkbox:enabled').prop('checked', true);
-    } else {
-      $('input:checkbox:enabled').prop('checked', false);
-    }
+    $('input:checkbox:enabled.m-r').click();
   }
 
   selectRow() {

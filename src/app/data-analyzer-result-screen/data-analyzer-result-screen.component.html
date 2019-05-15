@@ -45,7 +45,7 @@
             <td>{{x.dataType}}</td>
             <td>{{x.secondaryColumnName}}</td>
             <td>{{x.matchPercentage}}</td>
-            <td><input type="checkbox" [disabled]="x.matchPercentage == 0" (change)="checkedPriValues(x,$event,i)"></td>
+            <td><input type="checkbox" class="m-r" [disabled]="x.matchPercentage == 0" (change)="checkedPriValues(x,$event,i)"></td>
           </tr>
         </tbody>
       </table>
