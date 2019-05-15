@@ -372,12 +372,13 @@ export class TableListComponent implements OnInit {
     // return document.querySelector('#dataAModal-carousel .item.active').getAttribute('step');
   }
   enableDisableNextBtn() {
-    const currentStep = this.getCurrentStep();
+   // const currentStep = this.getCurrentStep();
+    const currentStep = this.currentStepNo;
     switch (currentStep) {
-      case '0':
+      case 0:
         this.enableNextBtn = this.selectedPrimColMap.size > 0;
         break;
-      case '1':
+      case 1:
         this.enableNextBtn = this.finalSecColMap.size > 0;
         break;
       // case '2':
