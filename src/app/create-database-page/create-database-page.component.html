@@ -54,8 +54,8 @@
             </div>
             <div id="action-btn" class="action-btn-connection">
               <button type="button" (click)="navigateToPrevious()" class="btn cancel btn-padding">Cancel</button>
-              <button type="button" (click)="gotoAuthentication(stepper)"
-                class="btn save btn-padding matStepperNext">Next</button>
+              <button type="button" [disabled]="!databaseConnectionForm.valid" (click)="gotoAuthentication(stepper)"
+                class="btn {{!databaseConnectionForm.valid ? 'save-disabled': 'save'}} btn-padding matStepperNext">Next</button>
             </div>
           </form>
         </mat-step>
@@ -73,8 +73,8 @@
           <div id="action-btn" style="padding-top: 17%">
             <button (click)="gotoConnectionDetails(stepper)"
               class="btn cancel matStepperPrevious btn-padding">Previous</button>
-            <button (click)="gotoTestAndCreate(stepper)"
-              class="btn save btn-padding matStepperNext">Next</button>
+            <button [disabled]="!userServerForm.valid" (click)="gotoTestAndCreate(stepper)"
+              class="btn {{!userServerForm.valid ? 'save-disabled': 'save'}}  btn-padding matStepperNext">Next</button>
           </div>
         </mat-step>
         <mat-step label="Review details">

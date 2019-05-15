@@ -33,8 +33,8 @@
                         </div>
                         <div id="action-btn" style="margin-top: 10%;">
                             <button (click)="navigateToPrevious()" class="btn cancel btn-padding">Cancel</button>
-                            <button (click)="gotoDatabaseSelection(stepper)"
-                                class="btn save btn-padding matStepperNext">Next</button>
+                            <button [disabled]="!firstFormGroup.valid" (click)="gotoDatabaseSelection(stepper)"
+                                class="btn {{!firstFormGroup.valid ? 'save-disabled': 'save'}} btn-padding matStepperNext">Next</button>
                         </div>
                     </form>
                 </mat-step>

@@ -1,6 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatStepper, MatTableDataSource, MatPaginator, MatSort, MatStepHeader } from '@angular/material';
 import { ConfiguredDB } from '../workspace-objects';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -74,6 +74,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   }
 
   gotoDatabaseSelection(stepper: MatStepper) {
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     if (this.firstFormGroup.valid) {
       setTimeout(() => {
         const a = document.getElementsByClassName('mat-horizontal-stepper-header');
@@ -88,8 +89,12 @@ export class CreateWorkspacePageComponent implements OnInit {
           const b1 = document.querySelectorAll('.mat-horizontal-stepper-header-container');
           b1[0].children[3].classList.remove('mat-horizental-line');
         }
-        this.value[2].children[1].classList.add('unfinished-step');
-        this.value[0].children[1].classList.add('finished-step');
+        if (steps[0].state === 'edit') {
+          this.value[0].children[1].classList.add('finished-step');
+        }
+        if (steps[2].state === 'edit') {
+          this.value[2].children[1].classList.add('finished-step');
+        }
         this.value[1].children[1].classList.add('active-step');
       }, 300);
     }
@@ -97,6 +102,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   }
 
   gotoWorkspaceDetails(stepper: MatStepper) {
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     setTimeout(() => {
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       a[0].classList.remove('mat-psedu');
@@ -104,15 +110,24 @@ export class CreateWorkspacePageComponent implements OnInit {
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       b[0].children[1].classList.remove('mat-horizental-line');
       this.value[0].children[1].classList.add('active-step');
-      if (this.value[1].children[1].classList.contains('active-step')) {
-        this.value[1].children[1].classList.remove('active-step');
+      console.log(steps[1].state);
+      if (steps[1].state === 'number') {
+        if (this.value[1].children[1].classList.contains('active-step')) {
+          this.value[1].children[1].classList.remove('active-step');
+        }
+        this.value[1].children[1].classList.add('unfinished-step');
       }
-      this.value[2].children[1].classList.add('unfinished-step');
-      this.value[1].children[1].classList.add('unfinished-step');
+      if (steps[1].state === 'edit') {
+        this.value[1].children[1].classList.add('finished-step');
+      }
+      if (steps[2].state === 'edit') {
+        this.value[2].children[1].classList.add('finished-step');
+      }
     }, 300);
     this.stepper.selectedIndex = 0;
   }
   gotoWorkspaceReview(stepper: MatStepper) {
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     if (this.configDBList.filter(a => a.isChecked === true).length !== 0) {
       setTimeout(() => {
         const a = document.getElementsByClassName('mat-horizontal-stepper-header');
@@ -120,7 +135,12 @@ export class CreateWorkspacePageComponent implements OnInit {
         a[2].classList.add('mat-review-psedu');
         const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
         b[0].children[3].classList.add('mat-horizental-line');
-        this.value[1].children[1].classList.add('finished-step');
+        if (steps[1].state === 'edit') {
+          this.value[1].children[1].classList.add('finished-step');
+        }
+        if (steps[0].state === 'edit') {
+          this.value[0].children[1].classList.add('finished-step');
+        }
         this.value[2].children[1].classList.add('active-step');
       }, 300);
       this.stepper.selectedIndex = 2;

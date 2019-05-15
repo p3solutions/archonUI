@@ -78,9 +78,7 @@ export class CreateDatabasePageComponent implements OnInit {
   }
 
   gotoAuthentication(stepper: MatStepper) {
-    console.log(stepper._stepHeader.toArray());
     const steps: MatStepHeader[] = stepper._stepHeader.toArray();
-    console.log(steps);
     if (this.databaseConnectionForm.valid) {
       setTimeout(() => {
         const a = document.getElementsByClassName('mat-horizontal-stepper-header');
@@ -102,12 +100,6 @@ export class CreateDatabasePageComponent implements OnInit {
         if (steps[2].state === 'edit') {
           this.value[2].children[1].classList.add('finished-step');
         }
-
-        // if (this.value[2].children[1].classList.contains('active-step')) {
-        //   this.value[2].children[1].classList.remove('active-step');
-        //   this.value[2].children[1].classList.add('finished-step');
-        // }
-        // this.value[0].children[1].classList.add('finished-step');
         this.value[1].children[1].classList.add('active-step');
       }, 300);
     }

@@ -48,6 +48,13 @@
   transition:0.5s;
 }
 
+#action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+}
+
 #action-btn button.cancel {
   background-color: #64b5f6;
   color: #1b1b1b;
