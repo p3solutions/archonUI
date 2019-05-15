@@ -58,22 +58,23 @@
       <div class="modal-footer">
         <div class="col-md-4">
           <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
-              <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <strong>Error!</strong>:{{errorMsg}}
-            </div>
-            <div *ngIf="updateNotifSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
-              <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <strong>Success</strong>:{{errorMsg}}
-            </div>
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Error!</strong>:{{errorMsg}}
           </div>
-          <div class="col-md-8"> 
-        <button type="button" class="btn btn-primary cancel" id="cancel-btn" (click)="closeErrorMsg();resetSelection()"  data-dismiss="modal">Close</button>
-       <button type="button" class="btn btn-primary" (click)="resetSelection(); closeErrorMsg();">Reset</button>
-        <button type="button" class="btn btn-primary" (click)="updateRelation(); closeErrorMsg();">update</button>
+          <div *ngIf="updateNotifSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Success</strong>:{{errorMsg}}
+          </div>
+        </div>
+        <div class="col-md-12"> 
+          <button type="button" class="btn btn-primary">Automatch Column</button>
+          <button type="button" class="btn btn-primary cancel" id="cancel-btn" (click)="closeErrorMsg();resetSelection()"  data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="resetSelection(); closeErrorMsg();">Reset</button>
+          <button type="button" class="btn btn-primary" (click)="updateRelation(); closeErrorMsg();">update</button>
       </div>
       </div>
     </div>

@@ -167,7 +167,7 @@
                 <div class="action-btn">
                   <button class="mat-raised-button cancel btn-primary btn-padding"
                     (click)="mep.expanded = !mep.expanded">Close</button>
-                  <button class="save mat-raised-button btn-padding" data-toggle="modal"
+                  <button class="save mat-raised-button btn-padding" data-toggle="modal" data-keyboard="false" data-backdrop="static"
                     data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)">Edit</button>
                 </div>
               </div>
@@ -691,7 +691,7 @@
   </div>
 
 
-  <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="false"
+  <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="true"
     data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInvite">Open Modal</button>
   <div id="confirmCancelInvite" class="modal fade" role="dialog">
     <div class="modal-dialog">

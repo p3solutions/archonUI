@@ -23,7 +23,7 @@
           <b>Phase: </b>{{phase | uppercase}}
         </div>
         <div class="dropdown col-md-2" id="btn-margin" *ngIf="phase == 'Analysis'">
-          <button mat-raised-button class="arch-button" id="btn-mar" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
+          <button mat-raised-button class="arch-button" id="btn-mar" data-toggle="modal" data-keyboard="true"  data-target="#myModal" (click)="getAudit()">View Modifications
           </button>
         </div>
         <div class="dropdown col-md-2" *ngIf="dropdown">
@@ -49,7 +49,7 @@
   </div>
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal fade" role="dialog" tabindex='-1'>
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -119,9 +119,8 @@
   </div>
 </div>
 
-<button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="false"
-  data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
-<div id="confirmCancelInviteSuccess" class="modal fade" role="dialog">
+<button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="true" data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
+<div id="confirmCancelInviteSuccess" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header adhoc-modal-header">

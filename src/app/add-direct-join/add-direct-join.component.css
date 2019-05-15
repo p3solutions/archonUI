@@ -303,8 +303,8 @@ input[type='checkbox'] {
 
 .btn-primary:hover{
   box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
-  -webkit-transform: translatey(-2px);
-  transform: translatey(-2px);
+  -webkit-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
 }
 
 ::ng-deep .cdk-overlay-container{
