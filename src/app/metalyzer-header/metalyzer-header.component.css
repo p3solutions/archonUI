@@ -95,6 +95,7 @@ span {
 .arch-button{
   color: #fff;
   background-color: #2879ff;
+  transition: .5s;
 }
 
 .arch-hdr{
@@ -138,6 +139,7 @@ span {
 .arch-btnn{
   background-color: #2879ff;
   color: #fff;
+  transition: .5s;
 }
 
 .arch-btnn:hover {

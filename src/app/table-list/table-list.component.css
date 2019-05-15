@@ -593,6 +593,7 @@ a:hover {
 .arch-button {
   color: white;
   background-color: #2879ff;
+  transition: 0.5s;
 }
 
 .arch-button:hover {
@@ -619,6 +620,7 @@ a:hover {
 
 .btn-primary{
   background-color: #2879ff;
+  transition: 0.5s;
 }
 
 .btn-primary:hover {
