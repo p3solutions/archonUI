@@ -58,8 +58,12 @@
     <div class="example-table-container mat-elevation-z4" id="screen-table">
       <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="jobInfo.startTime" matSortDirection="desc">
         <ng-container matColumnDef="jobName">
-          <th style="width:20%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
-          <td style="width:20%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="userid">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.userId}}</td>
         </ng-container>
         <ng-container matColumnDef="Job Origin">
           <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Origin </th>
@@ -101,8 +105,8 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="Download">
-            <th style="width:10%;text-align: center" mat-header-cell *matHeaderCellDef> Download  </th>
-            <td style="width:10%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+            <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Download  </th>
+            <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
               <i class="material-icons details" matTooltip="Download" *ngIf="(element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION' || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'GENERATE_XML_JSON') || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'ER_GENERATION'))" (click)="downloadJob(element.id)">cloud_download</i>
               <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="(element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'GENERAL_XML_JSON') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'ER_GENERATION')">cloud_download</i>
               <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="(element.jobOrigin !== 'ERT_EXTRACTION') && (element.jobOrigin !== 'RDBMS_EXTRACTION') && (element.jobOrigin !== 'GENERATE_XML_JSON') && (element.jobOrigin !== 'ER_GENERATION')">cloud_download</i> 
