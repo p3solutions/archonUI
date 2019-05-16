@@ -80,6 +80,12 @@ dataSource: AuditDataSource;
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+    merge(this.paginator.page)
+      .pipe(
+        tap(() => this.getAudit())
+      )
+      .subscribe();
+
   }
 
   sortData(sort) {

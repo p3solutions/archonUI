@@ -28,6 +28,9 @@ export class MetalyzerHeaderComponent implements OnInit {
   p = 1;
   dropdown: any;
   message: void;
+  startIndex = 1;
+  schemaResultsTableCount = 0;
+
   constructor(
     private router: Router,
     private tablelistService: TableListService,
@@ -126,7 +129,10 @@ export class MetalyzerHeaderComponent implements OnInit {
       'userId': this.userid
     };
     this.metalyzerHeaderService.getAudit(param).subscribe(result => {
-      this.auditArray = result;
+      this.auditArray = result.model;
+      if (result.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      }
     });
     console.log(this.auditArray);
   }
@@ -161,5 +167,22 @@ export class MetalyzerHeaderComponent implements OnInit {
   }
   gotoDashboard() {
     this.router.navigate(['/workspace/workspace-dashboard']);
+  }
+
+  getPage(page: number) {
+    this.auditArray = [];
+    this.startIndex = page;
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.userid = this.userInfoService.getUserId();
+    const param = {
+      'workspaceId': this.workspaceID,
+      'userId': this.userid
+    };
+    this.metalyzerHeaderService.getAudit(param).subscribe(result => {
+      this.auditArray = result.model;
+      if (result.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      }
+    });
   }
 }

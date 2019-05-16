@@ -79,7 +79,7 @@
         </table> -->
 
         <div class="mat-elevation-z2">
-          <table mat-table [dataSource]="auditArray | paginate: { id:'paginateControl', itemsPerPage: 10, currentPage: p }">
+          <table mat-table [dataSource]="auditArray | paginate: { id:'paginateControl', itemsPerPage: 50, currentPage: p, totalItems: schemaResultsTableCount }">
     
             <ng-container matColumnDef="modifiedBy">
               <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Modified By </th>
@@ -107,7 +107,7 @@
         </div>
 
         <div class="paginate-sty">
-          <pagination-controls id="paginateControl" (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls id="paginateControl" (pageChange)="getPage(p = $event)"></pagination-controls>
         </div>
           
       </div>
