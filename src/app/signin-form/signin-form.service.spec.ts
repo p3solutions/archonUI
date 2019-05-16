@@ -3,6 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SigninFormService } from './signin-form.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('SigninFormService', () => {
   beforeEach(() => {
@@ -10,7 +12,7 @@ describe('SigninFormService', () => {
       imports: [HttpClientModule, HttpClientTestingModule],
       providers: [
         SigninFormService,
-        HttpClientTestingModule
+        HttpClientTestingModule, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ]
     });
   });

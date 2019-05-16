@@ -17,14 +17,16 @@
             </div>
             <div *ngIf="from =='SIP'" class="row">
               <div class="col-md-12 col-lg-12">
-                <input type="text" [(ngModel)]="extractDataConfigInfo.applicationName" (keyup)="checkToEnableBtn()" id="extract-application-name"
+                <input type="text" [(ngModel)]="extractDataConfigInfo.applicationName" (keypress)="space($event)" (keyup)="checkToEnableBtn()" id="extract-application-name"
                   name="title-name" class="form-control" placeholder="Application Name">
+                  <div class="note">Note: Appliaction name is space not allowed</div>
               </div>
             </div>
             <div *ngIf="from =='SIP'" class="row">
               <div class="col-md-12 col-lg-12">
-                <input type="text" [(ngModel)]="extractDataConfigInfo.holdingName" (keyup)="checkToEnableBtn()" id="extract-holding-name"
+                <input type="text" [(ngModel)]="extractDataConfigInfo.holdingName" (keypress)="space($event)" (keyup)="checkToEnableBtn()" id="extract-holding-name"
                   name="title-name" class="form-control" placeholder="Holding Name">
+                  <div class="note">Note: Holding name is space not allowed</div>
               </div>
             </div>
             <div class="row">

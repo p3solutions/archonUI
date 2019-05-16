@@ -26,7 +26,10 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   removeIndexValue = [];
   updateNotif: boolean;
   errorMsg: any;
+  updateNotifSuccess: boolean;
+  selected = [];
 
+  displayedColumns: string[] = ['isKey', 'columnName', 'columnDataType', 'secondaryColumn'];
 
   constructor(private editRelationshipInfo: EditRelationshipInfoService) { }
 
@@ -35,6 +38,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges) {
+    console.log(change);
     const value: SimpleChange = change.relation;
     this.userValues = value.currentValue;
     this.populateValues();
@@ -71,11 +75,13 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           }
         }
         this.joinDetailsArray.push(joinValue);
+        console.log(this.joinDetailsArray);
       }
     });
   }
 
   selectedValues(primaryValues, index, secondaryColumn) {
+    console.log(primaryValues, index, secondaryColumn );
     const example = {
       columnId: '',
       columnName: '',
@@ -132,8 +138,8 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.removeIndexValue = [];
           this.resultantValues = [];
           this.updateEvent.emit(true);
-          const close: HTMLButtonElement = document.querySelector('.modal-header .close');
-          close.click();
+          this.errorMsg = res.data;
+          this.updateNotifSuccess = true;
         } else {
           this.errorMsg = res.errors;
           this.updateNotif = true;
@@ -143,6 +149,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   closeErrorMsg() {
     this.errorMsg = '';
     this.updateNotif = false;
+    this.updateNotifSuccess = false;
   }
 
   resetSelection() {

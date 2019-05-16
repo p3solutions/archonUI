@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkspaceServicesComponent } from './workspace-services.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -10,20 +10,28 @@ import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.ser
 import { TableListService } from '../table-list/table-list.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { MatCardModule } from '@angular/material';
+import { UserProfileService } from '../user-profile/user-profile.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { ApplicationInitStatus } from '@angular/core';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('WorkspaceServicesComponent', () => {
   let component: WorkspaceServicesComponent;
   let fixture: ComponentFixture<WorkspaceServicesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule, MatCardModule],
-      declarations: [ WorkspaceServicesComponent ],
-      providers: [WorkspaceServicesService, UserinfoService,
-        WorkspaceHeaderService, MetalyzerHeaderService, TableListService, CommonUtilityService]
+      declarations: [WorkspaceServicesComponent],
+      providers: [
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
+        ,
+        WorkspaceServicesService, UserinfoService,
+        WorkspaceHeaderService, MetalyzerHeaderService, TableListService, CommonUtilityService, UserProfileService]
     })
-    .compileComponents();
-  }));
+      .compileComponents();
+    await TestBed.get(ApplicationInitStatus).donePromise;
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WorkspaceServicesComponent);

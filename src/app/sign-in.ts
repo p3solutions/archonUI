@@ -1,4 +1,5 @@
 export class SignIn {
-    emailAddress = '';
+    userId = '';
     password = '';
 }
+// Test comment

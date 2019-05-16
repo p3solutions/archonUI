@@ -27,10 +27,9 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   input;
   jobMessage;
   jobOutput: any;
-  displayedColumns: string[] = ['Job Type', 'Tool', 'User', 'Job Name',
+  displayedColumns: string[] = ['Job Name', 'User', 'Job Origin', 'Job Type', 
     'Job Runs', 'Schedule Time', 'Start Time', 'End Time', 'Last Run Time', 'Next Start Time', 'Status', 'Details', 'Stop'];
   dataSource: ScheduleDataSource;
-  totalScreen = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
@@ -59,12 +58,16 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(this.paginator.page)
       .pipe(
         tap(() => this.loadPage())
       )
       .subscribe();
   }
+
+  sortData(sort) {
+    this.dataSource.sortfn(sort);
+    }
 
   loadPage() {
     this.dataSource.getTable(

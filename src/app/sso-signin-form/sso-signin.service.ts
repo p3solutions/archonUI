@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SsoSigninService {
 
-  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private signinUrl = 'http://localhost:9000/' + 'auth/sso/login/url';
+  constructor(private environment: EnvironmentService, private http: HttpClient) {
+  }
 
-  constructor(private http: HttpClient) { }
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  private signinUrl = this.environment.apiUrl + 'auth/sso/login/url';
+
 
   signIn(): Observable<any> {
       return this.http.get<any>(this.signinUrl, { headers: this.headers });

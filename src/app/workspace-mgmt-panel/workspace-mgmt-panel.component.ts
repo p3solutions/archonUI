@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 
 @Component({
@@ -9,14 +10,14 @@ import { Component, OnInit, Input } from '@angular/core';
 export class WorkspaceMgmtPanelComponent implements OnInit {
   @Input() workspaceId: string;
   @Input() role;
-  checkActive = 'Services';
+  checkActive = '';
 
-  constructor() {
+  constructor(private workspaceHeaderService: WorkspaceHeaderService) {
   }
 
   ngOnInit() {
+    this.workspaceHeaderService.updatedCheckActive.subscribe(result => {
+      this.checkActive = result;
+    });
   }
-
-
-
 }

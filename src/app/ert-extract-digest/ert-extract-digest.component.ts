@@ -20,6 +20,7 @@ export class ErtExtractDigestComponent implements OnInit {
   from = '';
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
   ngOnInit() {
+    console.log(this.ertService.selectedList.filter(a => a.isSelected === true));
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
     if (this.from === 'data-record' || this.from === 'SIP') {
       this.isDisabledSaveBtn = true;
@@ -139,6 +140,12 @@ export class ErtExtractDigestComponent implements OnInit {
       this.toEnableIngestBtn();
     }
   }
+  space(event) {
+    if (event.which === 32) {
+    return false;
+    }
+  }
+
   toEnableBtn() {
     if (this.from === 'data-record') {
       if (this.extractDataConfigInfo.titleName !== '') {

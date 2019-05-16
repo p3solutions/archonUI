@@ -264,6 +264,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   }
 
   gotoAppScreen() {
+    this.clear();
     this.adhocScreenService.updateSearchCriteria([]);
     this.adhocScreenService.updateSearchResult(new SearchResult());
     this.adhocScreenService.updateSearchCriterion(new SearchCriteria());

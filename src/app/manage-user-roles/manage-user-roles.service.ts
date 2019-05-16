@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { GlobalRoles } from '../global-roles';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class ManageUserRolesService {
-  apiUrl = environment.apiUrl;
+  apiUrl = this.environment.apiUrl;
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
@@ -22,8 +22,9 @@ export class ManageUserRolesService {
   private changeUserStatusUrl = this.apiUrl + 'users/accessRevoke?userId=';
   private getUserByEmailIdUrl = this.apiUrl + 'users/manage/role?emailAddress=';
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private environment: EnvironmentService
+  ) { }
 
   private extractGlobalRolesData(res: any) {
     const body = res.data.globalRoles;
@@ -51,9 +52,7 @@ export class ManageUserRolesService {
 
   inviteUser(param): Observable<any> {
     return this.http.post<any>(this.inviteUserUrl, param, { headers: this.headers }).
-      pipe(map(this.extractDataForAllRequest),
-        catchError(this.handleError('inviteUser', []))
-      );
+      pipe(map(this.extractDataForAllRequest));
   }
 
   getInviteUsers(startIndex): Observable<any> {
@@ -98,6 +97,13 @@ export class ManageUserRolesService {
         catchError(this.handleError('changeGlobalGroup', []))
       );
   }
+
+  cancelInvite(url): Observable<any> {
+    return this.http.delete<any>(this.apiUrl + url, { headers: this.headers }).
+      pipe(map(this.extractDataForAllRequest));
+  }
+
+
 
 
   private extractDataForAllRequest(res: any) {

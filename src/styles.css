@@ -5,6 +5,7 @@ body {
   font-family: "Roboto", sans-serif;
   background: #FAFAFA;
   overflow-x: hidden;
+  padding-right: 0 !important;
 }
 
 h1,
@@ -281,12 +282,12 @@ body {
   padding-right: 42px;
   padding-left: 42px;
 }
-
+/* 
 .btn-primary:hover {
   color: #fff;
   background-color: #037ad8;
   border-color: #023e6d;
-}
+} */
 
 .btn-control {
   position: relative;
@@ -1199,6 +1200,10 @@ label {
   margin-top: 20px !important;
 }
 
+.mt-29 {
+  margin-top: 29px !important;
+}
+
 .margin-10 {
   margin: 10px !important;
 }
@@ -1241,8 +1246,8 @@ div.tooltipd3 {
 }
 
 svg {
-  width: 100vw;
-  height: 100vh;
+  width: 73vw;
+  height: 395px;
 }
 
 .hide-div {
@@ -1461,27 +1466,27 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 
 .success {
   color: #1CCE00;
-} 
+}
 
 .failure {
   color: #FD3000;
-} 
+}
 
 .inpro {
   color: #FECD00;
-} 
+}
 
 .sche {
   color: #1BBCD4;
-} 
+}
 
 .details {
   color: #1485F8;
-} 
+}
 
 .replay {
-  color:  #ff6702;
-} 
+  color: #ff6702;
+}
 
 
 
@@ -1579,6 +1584,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 .btn-padding {
   font-size: 16px;
   padding: 6px 12px;
+  text-transform: inherit;
 }
 
 .btn-transform:hover {
@@ -1596,9 +1602,57 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 }
 
 mat-checkbox svg {
-  height:unset;
+  height: unset;
+}
+
+.btn-to-cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
 }
 
 .word-breaker{
   word-break: break-all;
+}
+
+.mat-datepicker-toggle-default-icon {
+  height: unset;
+}
+
+.mat-step-header .mat-step-icon-selected,
+.mat-step-header .mat-step-icon-state-edit {
+  background-color: #0a85f8;
+}
+
+.mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header .mat-step-icon {
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+}
+
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header {
+  padding: 6px !important;
+}
+
+.mat-step-label {
+  font-size: 19px !important;
+}
+
+.mat-horizontal-stepper-header:not(:first-child)::before,
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  width: calc(50% - 29px) !important;
+  top: 38px !important;
+  border-top-width:2px !important;
+}
+
+.mat-stepper-label-position-bottom .mat-stepper-horizontal-line{
+  top: 38px !important;
+  border-top-width:2px !important;
 }

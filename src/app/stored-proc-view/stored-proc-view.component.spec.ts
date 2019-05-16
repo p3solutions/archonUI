@@ -6,6 +6,8 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { StoredProcViewService } from './stored-proc-view.service';
 import { FormsModule } from '@angular/forms';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('StoredProcViewComponent', () => {
   let component: StoredProcViewComponent;
@@ -17,7 +19,7 @@ describe('StoredProcViewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [StoredProcViewComponent],
       imports: [HttpClientModule, RouterTestingModule, FormsModule],
-      providers: [WorkspaceHeaderService, UserinfoService, StoredProcViewService]
+      providers: [WorkspaceHeaderService, UserinfoService, StoredProcViewService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

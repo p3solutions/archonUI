@@ -6,8 +6,10 @@ import * as d3 from 'd3';
 import { toJson } from '../ert-datarecord-config/tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datarecord-config/class';
 import { AdhocSavedObjectService } from '../adhoc-header/adhoc-saved-object.service';
-import { GraphDetails, Adhoc, LinearTableMapOrder,
-  SearchResult, SearchCriteria, Tab, ResultFields, AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
+import {
+  GraphDetails, Adhoc, LinearTableMapOrder,
+  SearchResult, SearchCriteria, Tab, ResultFields, AdhocHeaderInfo
+} from '../adhoc-landing-page/adhoc';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
@@ -37,7 +39,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   tempValue = '';
   startIndex = 1;
   searchTableName = '';
-  page;
+  page = 1;
   tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
   constructor(public router: Router, private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
@@ -89,21 +91,31 @@ export class AdhocTableSelectionComponent implements OnInit {
 
   searchTablelist() {
     this.tableList = [];
-    this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName.toLocaleUpperCase()).subscribe((res: any) => {
+    this.adhocService.getTablesearchList(this.workspaceID,
+       this.searchTableName.toLocaleUpperCase(), this.startIndex).subscribe((res: any) => {
       this.tableList = res.tableList;
+      if (res.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      } else {
+        this.schemaResultsTableCount = 0;
+      }
     });
   }
 
   getPage(page: number) {
-    this.tableList = [];
-    const perPage = 50;
-    this.startIndex = (page - 1) * perPage;
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-      this.tableList = res.tableList;
-      if (res.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-      }
-    });
+    if (this.searchTableName !== '') {
+      this.startIndex = page;
+      this.searchTablelist();
+    } else {
+      this.tableList = [];
+      this.startIndex = page;
+      this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+        this.tableList = res.tableList;
+        if (res.paginationRequired) {
+          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+        }
+      });
+    }
   }
 
   createLinearTableMapOrder(selectedValues: string[] = [], joinListMap = new Map): LinearTableMapOrder[] {
@@ -134,25 +146,25 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.selectedValues = [];
       this.relationshipInfo = [];
       this.tablelistService.getListOfRelationTableMMR(this.workspaceID,
-         tempHeader.appMetadataVersion, value.tableName).subscribe(result => {
-        if (this.tableService.booleanNested) {
-          for (const i of result) {
-            if (this.includesArray.includes(i.secondaryTable.tableName)) {
-              this.relationshipInfo.push(i);
+        tempHeader.appMetadataVersion, value.tableName).subscribe(result => {
+          if (this.tableService.booleanNested) {
+            for (const i of result) {
+              if (this.includesArray.includes(i.secondaryTable.tableName)) {
+                this.relationshipInfo.push(i);
+              }
             }
+          } else {
+            this.relationshipInfo = result;
           }
-        } else {
-          this.relationshipInfo = result;
-        }
-        this.primaryTable = getPrimaryArray(this.relationshipInfo);
-        this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-        for (const i of this.primaryTable) {
-          this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
-        }
-        this.selectedValues.push(value.tableName);
-        this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
-        this.createchart();
-      });
+          this.primaryTable = getPrimaryArray(this.relationshipInfo);
+          this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+          for (const i of this.primaryTable) {
+            this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+          }
+          this.selectedValues.push(value.tableName);
+          this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+          this.createchart();
+        });
     }
   }
 
@@ -285,7 +297,7 @@ export class AdhocTableSelectionComponent implements OnInit {
         node.style('visibility', function (d) { if (d.data.visible === false) { return 'visible'; } });
         let ifSelected = 'Primary Table';
         if (d.parent !== null) {
-          if (!d.parent.data.enableClick) {
+          if (!d.data.visible) {
             ifSelected = 'Value Already Selected in this Level';
           } else {
             ifSelected = 'Select Value';
@@ -345,7 +357,7 @@ export class AdhocTableSelectionComponent implements OnInit {
     }
     const self = this;
     function clicked(d) {
-      if (!d3.event.defaultPrevented) {
+      if (!d3.event.defaultPrevented && d.data.visible) {
         // if (d.children) {
         //   d._children = d.children;
         //   d.children = null;
@@ -395,7 +407,9 @@ export class AdhocTableSelectionComponent implements OnInit {
         for (const i of self.primaryTable) {
           self.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, self.secondaryTable));
         }
-        self.selectedValues.push(value.name);
+        if (self.selectedValues[self.selectedValues.length - 1] !== value.name) {
+          self.selectedValues.push(value.name);
+        }
         self.data = JSON.parse(toJson(self.selectedValues, self.joinListMap));
         update(self.data);
       });
@@ -425,7 +439,7 @@ export class AdhocTableSelectionComponent implements OnInit {
     }
 
     function dragended(d) {
-      if (!d3.event.active) { simulation.alphaTarget(0); }
+      // if (!d3.event.active) { simulation.alphaTarget(0); }
       d.fx = d.x;
       d.fy = d.y;
     }

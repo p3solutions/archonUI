@@ -30,6 +30,15 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
 
     @ViewChild('createNewWorkspace', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     WSListInfo: WorkspaceObject;
+    WSdeleteId: string;
+    success: boolean;
+    error: boolean;
+    successmsg: any;
+    errormsg: any;
+    wsName: any;
+    wsDesc: any;
+    WSeditId: any;
+  deleteId: string;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -64,7 +73,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     getWorkspaceListInfo(id: string) {
-        this.workspaceListService.getList(id).subscribe(result => {
+        this.workspaceListInfo = [];
+            this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
             this.isProgress = false;
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
@@ -113,6 +123,64 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     toggleCard(cardId, toShow, _event) {
         this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
     }
+
+    WSdelete(deleteId: string) {
+        this.WSdeleteId = deleteId;
+      }
+
+      deleteWS() {
+        this.workspaceListService.deleteWS(this.WSdeleteId).subscribe((result) => {
+            document.getElementById('deletemsg').click();
+              this.successmsg = result;
+                this.success = true;
+                this.deleteId = this.WSdeleteId;
+                this.workspaceHeaderService.selected = undefined;
+                    this.getWorkspaceListInfo(this.token_data.user.id);
+                    setTimeout(() => {
+                      this.getWorkspaceListInfo(this.token_data.user.id);
+                  }, 15000);
+            },
+            (error) => {
+              document.getElementById('deletemsg').click();
+              this.error = true;
+              this.errormsg = error.error.errorMessage;
+            }
+            );
+          }
+
+    closeErrorMsg() {
+        this.success = false;
+        this.error = false;
+      }
+      editWS(workspace) {
+        this.WSListInfo = workspace;
+        this.wsName = workspace.workspaceName;
+        this.wsDesc = workspace.requestMessage;
+        this.WSeditId = workspace.id;
+      }
+      updateWS() {
+            const params = {
+            id: this.WSeditId,
+            workspaceName : this.wsName,
+            requestMessage : this.wsDesc
+          };
+        this.workspaceListService.updateWS(this.WSeditId, params).subscribe((result: any) => {
+             document.getElementById('editmsg').click();
+             if (result.success) {
+              this.successmsg = 'successfully updated';
+             } else {
+              this.successmsg = result.errorMessage;
+             }
+                this.success = true;
+                    this.getWorkspaceListInfo(this.token_data.user.id);
+            },
+            (error) => {
+              document.getElementById('editmsg').click();
+              this.error = true;
+              this.errormsg = error.error.errors[0].code;
+            }
+            );
+          }
 }
 
 

@@ -13,10 +13,12 @@ import { UserinfoService } from '../userinfo.service';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import {
   MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
-  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('AuditingComponent', () => {
   let component: AuditingComponent;
@@ -24,9 +26,9 @@ describe('AuditingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule , BsDatepickerModule.forRoot(), MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, DataTablesModule, RouterTestingModule, HttpClientTestingModule],
+      imports: [FormsModule , MatDatepickerModule, MatNativeDateModule, BsDatepickerModule.forRoot(), MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, DataTablesModule, RouterTestingModule, HttpClientTestingModule],
       declarations: [ AuditingComponent, NavbarComponent ] ,
-      providers: [UserWorkspaceService, AuditService, UserinfoService, UserProfileService],
+      providers: [UserWorkspaceService, AuditService, UserinfoService, UserProfileService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();

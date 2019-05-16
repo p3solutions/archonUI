@@ -16,6 +16,9 @@ import {
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 describe('ManageUserRolesComponent', () => {
   let component: ManageUserRolesComponent;
   let fixture: ComponentFixture<ManageUserRolesComponent>;
@@ -28,7 +31,8 @@ describe('ManageUserRolesComponent', () => {
         ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
         RouterTestingModule, MatDialogModule, HttpClientTestingModule],
         providers: [
-          ManageUserRolesService
+          ManageUserRolesService,
+          UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }
         ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

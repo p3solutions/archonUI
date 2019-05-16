@@ -5,6 +5,7 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { Router } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+
 @Component({
   selector: 'app-new-workspace',
   templateUrl: './new-workspace.component.html',
@@ -25,6 +26,8 @@ export class NewWorkspaceComponent implements OnInit {
   errorDBselect = false;
   DBtable: any;
   selectedDBtable: any;
+  updateNotif: boolean;
+  hideclose = true;
 
   constructor(
     private userinfoService: UserinfoService,
@@ -51,6 +54,7 @@ export class NewWorkspaceComponent implements OnInit {
   }
 
   prevStep(e) {
+    this.errorDBselect = false;
     if (document.querySelector('.second').classList.contains('active')) {
       this.addClass('prev-btn', 'hide');
       this.removeClass('cancel-btn', 'hide');
@@ -125,6 +129,7 @@ export class NewWorkspaceComponent implements OnInit {
     }
   }
   createWS() {
+    this.updateNotif = false;
     this.wsParam.workspaceName = this.wsName;
     this.wsParam.databaseIds = this.databaseIds;
     this.addClass('progress-bar', 'width-100-pc');
@@ -133,9 +138,12 @@ export class NewWorkspaceComponent implements OnInit {
         this.newWSinfo = res;
         this.postCreation();
         // after getting ok response reloading the workspace list
-        document.getElementById('reload-ws-list').click();
+        // document.getElementById('reload-ws-list').click();
+      } else {
+        this.updateNotif = true;
       }
     });
+    this.hideclose = false;
   }
 
   getSupportedDBs() {
@@ -149,7 +157,11 @@ export class NewWorkspaceComponent implements OnInit {
             this.supportedDBs.push(element);
           });
           this.isDBAvailable = true;
-          this.generateDBtable({ data: this.supportedDBs });
+          if (this.supportedDBs.length > 0) {
+            this.generateDBtable({ data: this.supportedDBs});
+          } else {
+            this.generateDBtable({ data: this.supportedDBs = []});
+          }
         }
       });
   }
@@ -260,6 +272,7 @@ export class NewWorkspaceComponent implements OnInit {
       'order': [[0, 'asc']]
     });
     this.workspaceHeaderService.changeWSBooleanValue(true);
+    document.getElementById('reloadws').click();
   }
   resetCarousel() {
     this.addClass('ok-btn', 'hide');
@@ -270,5 +283,13 @@ export class NewWorkspaceComponent implements OnInit {
     this.wsNameEmpty = false;
     this.wsDesc = undefined;
     this.newWSinfo = null;
+    this.hideclose = true;
   }
+  closeErrorMsg() {
+    this.updateNotif = false;
+    }
+clear() {
+  this.wsDesc = '';
+  this.wsName = '';
+}
 }

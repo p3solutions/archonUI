@@ -14,7 +14,7 @@ import { ErtService } from '../ert-landing-page/ert.service';
 })
 export class ErtSipConfigComponent implements OnInit {
   workspaceID: any;
-  tableList: any;
+  tableList = [];
   relationshipInfo: any[];
   selectedValues: string[] = [];
   primaryTable = [];
@@ -49,6 +49,7 @@ export class ErtSipConfigComponent implements OnInit {
       this.selectedValues = this.ertService.selectedValues;
       this.joinListMap = this.ertService.joinListMap;
       this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
+      this.enableNextBtn = true;
       this.createchart();
       }
   }
@@ -95,7 +96,6 @@ export class ErtSipConfigComponent implements OnInit {
         this.isRelationNot = true;
         this.enableNextBtn = false;
       }
-      console.log(this.relationshipInfo);
       this.primaryTable = getPrimaryArray(this.relationshipInfo);
       this.secondaryTable = getSecondaryArray(this.relationshipInfo);
       for (const i of this.primaryTable) {
@@ -310,7 +310,9 @@ export class ErtSipConfigComponent implements OnInit {
         for (const i of self.primaryTable) {
           self.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, self.secondaryTable));
         }
-        self.selectedValues.push(value.name);
+        if (self.selectedValues[self.selectedValues.length - 1] !== value.name) {
+          self.selectedValues.push(value.name);
+        }
         self.data = JSON.parse(getSIPGraphData(self.selectedValues, self.joinListMap));
         update(self.data);
       });
@@ -340,7 +342,7 @@ export class ErtSipConfigComponent implements OnInit {
     }
 
     function dragended(d) {
-      if (!d3.event.active) { simulation.alphaTarget(0); }
+      // if (!d3.event.active) { simulation.alphaTarget(0); }
       d.fx = d.x;
       d.fy = d.y;
     }

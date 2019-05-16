@@ -1,112 +1,95 @@
 <app-navbar></app-navbar>
 
 <div class="workspacelist-container">
-
-  <div class="col-md-4">
-    <div class="col-md-1 back-arrow">
+  <div class="row">
+    <div id="create-screen-header">
       <a (click)="gotoDashboard()" data-tooltip="Back">
         <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
       </a>
-    </div>
-
-    <div class="col-md-8">
-      <h3 class="workspace-panel-heading">
-        Auditing <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span>
-      </h3>
+      <h3>Auditing <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span> </h3>
     </div>
   </div>
 
-  <div class="col-md-12 m-l-45" style="padding-top: 10px;" *ngIf="loadStatus">
-
-    <div class="btn-group col-md-2 p-0">
-      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false">
-        {{selectedEvent ? selectedEvent : 'Select Event' }}
-      </button>
-      <div class="dropdown-menu">
-        <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectEvent('');getAudit()">RESET</a>
-            <div class="dropdown-divider"></div>
-          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let e of Events" (click)="selectEvent(e);getAudit()">
-            {{e}}</a>
-        </div>
-      </div>
+  <div class="row-group">
+    <div class="col-md-2 heading-item">
+        <mat-form-field>
+            <mat-select msInfiniteScroll name="e-select"
+               placeholder="Select Event" [(value)]="selectedEvent">
+              <mat-option appScrollServerCall [value]="" (click)="selectEvent('LOGIN');getAudit()">
+                 RESET
+              </mat-option>
+              <mat-option appScrollServerCall *ngFor="let e of Events" [value]="e" (click)="selectEvent(e);getAudit()">
+                  {{e}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>   
     </div>
-
-    <div class="btn-group col-md-2 p-0">
-      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false">
-        {{selectedService ? selectedService : 'Select Service' }}
-      </button>
-      <div class="dropdown-menu">
-        <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectService('');getAudit()">RESET</a>
-            <div class="dropdown-divider"></div>
-          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" *ngFor="let service of uniqueService" (click)="selectService(service);getAudit()">
-            {{service}}</a>
-        </div>
-      </div>
+    <div class="col-md-2 heading-item">     
+        <mat-form-field>
+          <mat-select msInfiniteScroll name="service-select"
+             placeholder="Select Service" [(value)]="selectedService">
+            <mat-option appScrollServerCall [value]="" (click)="selectService('');getAudit()">
+                RESET
+            </mat-option>
+            <mat-option appScrollServerCall *ngFor="let service of uniqueService" [value]="service" (click)="selectService(service);getAudit()">
+                {{service}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>      
     </div>
-
-    <div class="btn-group col-md-2 p-0">
-      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false">
-        {{selectedWS? selectedWS : 'Select WorkSpace'}}
-      </button>
-      <div class="dropdown-menu">
-        <div class="scrollable">
-            <a id="job-status-all" class="dropdown-item dropdown-data trim-text" (click)="selectWorkspace('');getAudit()">RESET</a>
-            <div class="dropdown-divider"></div>
-          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" *ngFor="let i of userWorkspaceArray"  (click)="selectWorkspace(i);getAudit()">
-          {{i.workspaceName}} </a>
-      </div>
+    <div class="col-md-2 heading-item">
+      <mat-form-field>
+        <mat-select msInfiniteScroll name="i.workspaceName-select"
+           placeholder="Select WorkSpace" [(value)]="selectedWS">
+          <mat-option appScrollServerCall [value]="" (click)="selectWorkspace('');getAudit()">
+            RESET
+          </mat-option>
+          <mat-option appScrollServerCall *ngFor="let i of userWorkspaceArray" [value]="i.workspaceName" (click)="selectWorkspace(i);getAudit()">
+              {{i.workspaceName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>   
     </div>
-</div>
-
-<div class="btn-group col-md-2 p-0">
-<input type="text" [(ngModel)]="startdate"
-                     placeholder="From Date" (ngModelChange)="getAudit()"
-                     class="form-control" style="height: 34px"
-                     bsDatepicker [bsConfig]="bsConfig" placement="bottom" required>                   
-</div>
-
-<div class="btn-group col-md-1" style="width: 48px;padding-left: 0px;cursor: pointer;" (click)="startdate = '';getAudit();">
-    <a data-tooltip="Reset"><i class="fa fa-minus-square" style="font-size: 2.4em"></i></a>
-</div>
-
-<div class="btn-group col-md-2 p-0">
-  <input type="text" [(ngModel)]="enddate"
-                       placeholder="To Date" (ngModelChange)="getAudit()"
-                       class="form-control" style="height: 34px"
-                       bsDatepicker [bsConfig]="bsConfig" placement="bottom" required>
+    <div class="col-md-2 heading-item">
+        <mat-form-field style="width: 85%">
+            <input matInput [matDatepicker]="picker" [(ngModel)]="startdate" (ngModelChange)="getAudit()" placeholder="From Date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <i class="material-icons" matTooltip="Reset" (click)="startdate = '';getAudit();" style="vertical-align: -webkit-baseline-middle;">
+            replay
+              </i>      
+    </div>
+    <div class="col-md-2 heading-item">
+        <mat-form-field style="width: 85%">
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="enddate" (ngModelChange)="getAudit()" placeholder="To Date">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          <i matTooltip="Reset" class="material-icons" (click)="enddate = '';getAudit();" style="vertical-align: -webkit-baseline-middle;">
+            replay
+              </i>      
+    </div>
+    <div class="col-md-2 heading-item">
+        <mat-form-field style="width: 85%">
+            <input matInput #search placeholder="Search">
+          </mat-form-field>
+          <i class="material-icons" (click)="enddate = '';startdate = '';selectedEvent = '';selectedWS = '';selectedWSId='';selectedService='';getAudit();" matTooltip="Reset All" style="vertical-align: -webkit-baseline-middle;">
+            replay
+            </i> 
+      </div>
+    
   </div>
-
-<div class="btn-group col-md-1" style="width: 48px;padding-left: 0px;cursor: pointer;" (click)="enddate = '';getAudit();">
-    <a data-tooltip="Reset"><i class="fa fa-minus-square" style="font-size: 2.4em"></i></a>
-</div>
-
-</div>
-
-<div class="col-md-6"></div>
-    <div class="col-md-6">
-        <div class="col-md-6"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-            <mat-form-field class="search-wid">
-              <input matInput #search placeholder="Search">
-            </mat-form-field>
-          </div>
-</div>
-<div class="row" style="padding-top: 170px;">
+<div class="row" style="padding-top: 70px;">
   <div class="example-table-container mat-elevation-z4" id="screen-table">
-    <table mat-table matSort [dataSource]="dataSource">
+    <table mat-table matSort [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="jobInfo.startTime" matSortDirection="desc">
       <ng-container matColumnDef="User Name">
         <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
         <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.userName}}</td>
       </ng-container>
       <ng-container matColumnDef="WorkSpace Name">
         <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> WorkSpace Name </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.workspaceName}}</td>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.workspaceName !== null ? element.workspaceName : 'N/A'}}</td>
       </ng-container>
       <ng-container matColumnDef="Related Job ID">
         <th style="width:10%" mat-header-cell *matHeaderCellDef> Related Job ID </th>
@@ -117,7 +100,7 @@
       </ng-container>
       <ng-container matColumnDef="Service Name">
         <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Service Name</th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.serviceId}}</td>
+        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.serviceId !== null ? element.serviceId : 'N/A'}}</td>
       </ng-container>
       <ng-container matColumnDef="Event Name">
         <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Event Name </th>
@@ -142,7 +125,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <mat-paginator id="screen-table"  [length]="totalScreen" [pageSize]="50">
+  <mat-paginator id="screen-table"  [length]="dataSource.totalScreen" [pageSize]="50">
   </mat-paginator>
 </div>
 
@@ -150,11 +133,10 @@
 <!-- Modal -->
 <div id="detailsModel" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title text-left">Job Details</h4>
-          </div>
+      <div class="modal-content" style="width: 630px;">
+          <div class="modal-header">
+            <div class='model-title'><div class='info-r'>Job Details</div></div>
+        </div>
         <div class="modal-body">
             <table class="table table-bordered">
                 <thead>
@@ -165,24 +147,24 @@
                 </thead>
                 <tbody >
                   <tr *ngFor="let i of common" class="text-left">
-                    <td>{{i.name}}</td>
-                    <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
-                    <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium'}}</td>
+                      <td *ngIf="i.value !== ''">{{i.name}}</td>
+                      <td *ngIf="i.type !== 'Date'">{{i.value !== '' ? i.value : 'null'}}</td>
+                      <td *ngIf="i.type == 'Date' && i.value !== ''">{{i.value | date: 'medium'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">
                     <td>{{i.name}}</td>
-                    <td>{{i.value}}</td>
+                    <td>{{i.value !== '' ? i.value : 'null'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
-                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
-                  <tr><td colspan="2"><h4><b>Output</b></h4></td></tr>
-                  <tr><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
+                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}</td></tr>
+                  <tr *ngIf="jobOutput !== null"><td colspan="2"><h4><b>Output</b></h4></td></tr>
+                  <tr *ngIf="jobOutput !== null"><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
                 </tbody>
               </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
       </div>
     </div>
   <button #click data-toggle="modal" href="#detailsModel" [hidden]="true"></button>

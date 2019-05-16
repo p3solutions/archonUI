@@ -461,5 +461,10 @@
   padding-left: 25px;
   text-transform: capitalize;
 }
+.inline-loader {
+  position: unset;
+  /* right: 25px; */
+  margin: 1px;
+}
 
   

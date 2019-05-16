@@ -22,7 +22,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   selectedWS = '';
   Events = [];
   Service = [];
-  selectedEvent = '';
+  selectedEvent = 'LOGIN';
   selectedService = '';
   enddate = '';
   startdate = '';
@@ -39,7 +39,6 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['User Name', 'WorkSpace Name', 'Related Job ID', 'Service Name',
   'Event Name', 'Event Desc', 'Event Details', 'Download'];
 dataSource: AuditDataSource;
-totalScreen = 0;
 @ViewChild(MatPaginator) paginator: MatPaginator;
 @ViewChild(MatSort) sort: MatSort;
 @ViewChild('search') search: ElementRef;
@@ -81,7 +80,18 @@ totalScreen = 0;
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+    merge(this.paginator.page)
+      .pipe(
+        tap(() => this.getAudit())
+      )
+      .subscribe();
+
   }
+
+  sortData(sort) {
+    this.dataSource.sortfn(sort);
+    }
+
 
 
   openDetail(releatedJobId) {

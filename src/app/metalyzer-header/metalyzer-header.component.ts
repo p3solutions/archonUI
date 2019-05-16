@@ -12,6 +12,8 @@ import { UserinfoService } from '../userinfo.service';
 })
 export class MetalyzerHeaderComponent implements OnInit {
 
+  displayedColumns: string[] = ['modifiedBy', 'createdAt', 'modificationMode', 'modificationDescription'];
+
   wsName: string;
   phase: string;
   workspaceID: any;
@@ -24,6 +26,11 @@ export class MetalyzerHeaderComponent implements OnInit {
   auditArray = [];
   updateNotif: boolean;
   p = 1;
+  dropdown: any;
+  message: void;
+  startIndex = 1;
+  schemaResultsTableCount = 0;
+
   constructor(
     private router: Router,
     private tablelistService: TableListService,
@@ -43,6 +50,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     });
     this.tablelistService.userselectTableslist.subscribe(data => {
       this.userselectTableslist = data;
+    });
+    this.tablelistService.Dropdownlist.subscribe(data => {
+      this.dropdown = data;
     });
   }
 
@@ -95,7 +105,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml)
       .subscribe(result => {
-        this.downloadFile(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFile(result, result.type);
       });
   }
   exportjson() {
@@ -103,7 +115,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportjson(this.workspaceID, this.databaseID, this.json)
       .subscribe(result => {
-        this.downloadFilejson(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFilejson(result, result.type);
       });
   }
 
@@ -115,8 +129,12 @@ export class MetalyzerHeaderComponent implements OnInit {
       'userId': this.userid
     };
     this.metalyzerHeaderService.getAudit(param).subscribe(result => {
-      this.auditArray = result;
+      this.auditArray = result.model;
+      if (result.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      }
     });
+    console.log(this.auditArray);
   }
 
   exportOverallpdf() {
@@ -124,7 +142,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportOverallpdf(this.workspaceID)
       .subscribe(result => {
-        this.downloadFilepdf(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFilepdf(result, result.type);
       });
   }
   exportSelectedpdf() {
@@ -136,7 +156,9 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportSelectedpdf(this.workspaceID, this.userselectTableslist.tableId)
       .subscribe(result => {
-        this.downloadFilesecpdf(result, result.type);
+        this.message = result.data;
+        document.getElementById('successPopUp').click();
+        // this.downloadFilesecpdf(result, result.type);
       });
   }
 
@@ -145,5 +167,22 @@ export class MetalyzerHeaderComponent implements OnInit {
   }
   gotoDashboard() {
     this.router.navigate(['/workspace/workspace-dashboard']);
+  }
+
+  getPage(page: number) {
+    this.auditArray = [];
+    this.startIndex = page;
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.userid = this.userInfoService.getUserId();
+    const param = {
+      'workspaceId': this.workspaceID,
+      'userId': this.userid
+    };
+    this.metalyzerHeaderService.getAudit(param).subscribe(result => {
+      this.auditArray = result.model;
+      if (result.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      }
+    });
   }
 }

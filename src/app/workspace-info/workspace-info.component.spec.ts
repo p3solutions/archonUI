@@ -12,6 +12,9 @@ import { WorkspaceServicesComponent } from '../workspace-services/workspace-serv
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UserinfoService } from '../userinfo.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
@@ -48,7 +51,8 @@ describe('WorkspaceInfoComponent', () => {
         RouterTestingModule,
         WorkspaceInfoService,
         HttpClientModule,
-        UserinfoService
+        UserinfoService,
+        WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
       .compileComponents();

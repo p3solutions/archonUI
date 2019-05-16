@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('AdhocEditPanelColumnPopupComponent', () => {
   let component: AdhocEditPanelColumnPopupComponent;
@@ -14,7 +16,8 @@ describe('AdhocEditPanelColumnPopupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AdhocEditPanelColumnPopupComponent],
       imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule,
-        MatOptionModule, MatSelectModule, MatInputModule, MatRadioModule, MatCheckboxModule, BrowserAnimationsModule]
+        MatOptionModule, MatSelectModule, MatInputModule, MatRadioModule, MatCheckboxModule, BrowserAnimationsModule] ,
+        providers: [{ provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

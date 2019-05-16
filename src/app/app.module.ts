@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatSortModule, MatInputModule } from '@angular/material';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -113,8 +113,8 @@ import { MaterialModule } from './material-module';
 import { AdhocLandingPageComponent } from './adhoc-landing-page/adhoc-landing-page.component';
 import { AdhocHeaderComponent } from './adhoc-header/adhoc-header.component';
 import {
-        AdhocAppScreenListComponent, CreateScreenDialogComponent,
-        CreateAppDialogComponent
+    AdhocAppScreenListComponent, CreateScreenDialogComponent,
+    CreateAppDialogComponent
 } from './adhoc-app-screen-list/adhoc-app-screen-list.component';
 import { AdhocTableSelectionComponent } from './adhoc-table-selection/adhoc-table-selection.component';
 import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-search-criteria.component';
@@ -137,10 +137,18 @@ import { ScheduleJobService } from './schedule-job/schedule-job.service';
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
 import { RedirectComponent } from './redirect/redirect.component';
+import { EnvironmentService } from './environment/environment.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export function tokenGetter() {
-        return localStorage.getItem('accessToken');
+    return localStorage.getItem('accessToken');
 }
+const appInitializerFunction = (environment: EnvironmentService) => {
+    return () => {
+        return environment.loadAppConfig();
+    };
+};
+
 @NgModule({
         declarations: [
                 AppComponent,
@@ -256,9 +264,17 @@ export function tokenGetter() {
                 MatCheckboxModule,
                 MaterialModule,
                 MatSelectInfiniteScrollModule,
-                FlexLayoutModule
+                FlexLayoutModule,
+                NgxSpinnerModule, MatInputModule, MatSortModule
         ],
         providers: [
+                  EnvironmentService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appInitializerFunction,
+            multi: true,
+            deps: [EnvironmentService]
+        },
                 JwtHelperService,
                 InfoService,
                 SigninFormService,

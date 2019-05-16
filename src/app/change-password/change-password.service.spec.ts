@@ -8,6 +8,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ChangePasswordService', () => {
   let backend: MockBackend;
@@ -25,7 +27,7 @@ describe('ChangePasswordService', () => {
         ChangePasswordService,
         JwtHelperService,
         HttpClientModule,
-        UserinfoService
+        UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ]
     });
     backend = TestBed.get(MockBackend);

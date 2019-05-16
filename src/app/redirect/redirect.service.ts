@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RedirectService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  Url = 'http://localhost:9000/' + 'auth/sso/auth/token?jwtuser=';
+  Url = this.enviroment.apiUrl + 'auth/sso/auth/token?jwtuser=';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private enviroment: EnvironmentService) { }
 
   signIn(token): Observable<any> {
     return this.http.get<any>(this.Url + token, { headers: this.headers });

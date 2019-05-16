@@ -6,7 +6,7 @@
 
 #ert-table-id {
   position: relative;
-  
+
   font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.2
@@ -24,13 +24,14 @@
   float: left;
   margin: 5px 0px 0px 24px;
 }
+
 .glyphicon {
   position: relative;
   top: 21px;
   margin-right: 10px;
   float: right;
   display: inline-block;
-  
+
   font-style: normal;
   font-weight: 400;
   line-height: 1;
@@ -63,6 +64,7 @@
   font-size: 25px;
   color: #269af8;
 }
+
 .icon-list:hover {
   margin: -2px -21px 0px 0px;
   font-size: 25px;
@@ -76,7 +78,7 @@
 
 input#tablename {
   border: none;
- /* border-bottom: 1px solid #2196F3;
+  /* border-bottom: 1px solid #2196F3;
    margin-left: 13px; */
 }
 
@@ -167,10 +169,11 @@ div.sticky {
 
 .well:hover {
   background-color: #f5f5f5;
-  border: 1px solid white;
+  border: 1px solid #2879ff;
 }
 
-input[type=checkbox], input[type=radio] {
+input[type=checkbox],
+input[type=radio] {
   margin: 1px 0 0;
   margin-top: 1px\9;
   line-height: normal;
@@ -202,7 +205,7 @@ input#ucolumnname {
 }
 
 #add-edit-column {
-  
+
   font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.2;
@@ -385,7 +388,7 @@ table tr td:nth-child(6) {
 }
 
 #add-edit-column {
-  
+
   font-weight: 300;
   font-size: 12px;
   letter-spacing: 0.2;
@@ -474,10 +477,12 @@ table tr td:nth-child(6) {
   float: left;
   margin: 6px 2px 2px 4px;
 }
+
 alert1 {
   padding: 15px;
   border: 1px solid transparent
 }
+
 .table-list {
   background-color: #64b5f6;
   text-align: left;
@@ -489,11 +494,11 @@ alert1 {
 }
 
 .body-left {
-  display:inline-block;  
+  display: inline-block;
   padding: -1px 0px 0px 10px;
   margin-left: 10px;
   font-size: 12px;
-  width: 80%; 
+  width: 80%;
   color: #121212;
 }
 
@@ -505,18 +510,19 @@ alert1 {
   width: 15%;
   color: #2b2b2b;
 }
+
 .alias-name {
-  display:inline-block;  
+  display: inline-block;
   padding: -1px 0px 0px 10px;
   margin-left: 10px;
   font-size: 12px;
-  width: 93%; 
+  width: 93%;
   color: #121212;
 }
 
 .alias {
   display: inline-block;
-   /* float: right;
+  /* float: right;
   padding: 13px 10px 0px 0px; */
   font-size: 26px;
   width: 63%;
@@ -526,14 +532,21 @@ alert1 {
 .form-control {
   font-size: 12px;
   height: 30px;
-    border-radius: 2px;
+  border-radius: 2px;
 }
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
   padding: 4px;
   line-height: 1.42857143;
   vertical-align: middle;
   border-top: 1px solid #ddd;
 }
+
 /* .edit-circle {
   text-align: center;
   font-size: 15px;  
@@ -550,47 +563,59 @@ alert1 {
    background-color: #0A85F8;
  } */
 
- .a {
+.a {
   color: #80adf8;
 }
-.a:focus, a:hover {
+
+.a:focus,
+a:hover {
   color: #2879ff;
 }
+
 .fa-cog {
   font-size: 22px;
-  color: #80adf8;  
+  color: #80adf8;
 }
+
 .fa-cog:hover {
   font-size: 22px;
-  color: #2879ff;  
+  color: #2879ff;
 }
+
 .fa-edit {
   font-size: 22px;
   color: #80adf8;
 }
+
 .fa-edit:hover {
   font-size: 22px;
   color: #2879ff;
 }
+
 .fa-trash {
   font-size: 22px;
   color: #80adf8;
 }
+
 .fa-trash:hover {
   font-size: 22px;
   color: #2879ff;
 }
+
 .nav-tabs>li>a {
   background: transparent;
-  
+
 }
+
 .nav-tabs>li>a:hover {
-  background: transparent; 
-  border:1px solid transparent;
+  background: transparent;
+  border: 1px solid transparent;
 }
+
 .nav-tabs {
   border-bottom: 0px solid #ddd;
 }
+
 .cancelBtn {
   color: #fff;
   background-color: #64b5f6;
@@ -600,6 +625,7 @@ alert1 {
   margin-bottom: 10px;
   text-transform: capitalize;
 }
+
 .cancelBtnp {
   color: #fff;
   background-color: #64b5f6;
@@ -608,6 +634,7 @@ alert1 {
   padding-left: 25px;
   text-transform: capitalize;
 }
+
 .next {
   color: #fff;
   background-color: #2879ff;
@@ -617,6 +644,7 @@ alert1 {
   margin-bottom: 10px;
   text-transform: capitalize;
 }
+
 .back {
   color: #fff;
   background-color: #2879ff;
@@ -626,24 +654,47 @@ alert1 {
   margin-bottom: 10px;
   text-transform: capitalize;
 }
+
 .modal-header {
   padding: 4px;
   padding-left: 15px;
   background-color: #2879ff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
- }
- .modal-title {
+}
+
+.modal-title {
   float: left;
-  display:inline-block;
+  display: inline-block;
   font-size: 18px;
   padding: -1px 15px 10px 15px;
   text-align: left;
   color: #ffffff;
 }
+
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 12px;
   /* color: inherit; */
 }
+
+a.disabled {
+  color: gray;
+  cursor: not-allowed;
+  text-decoration: underline;
+}
+
+.alert-hide {
+  display: none;
+}
+
+.alert-show {
+  display: block;
+}
+
+.selectTableCls{
+  border: 1px solid #2879ff;
+}
+
+

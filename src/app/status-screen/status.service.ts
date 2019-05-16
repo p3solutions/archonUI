@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
 import { UserinfoService } from '../userinfo.service';
 import { Observable, of } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class StatusService {
-
-  getJobOriginsUrl = environment.apiUrl + 'jobStatus/jobOrigins';
-  getJobStatusesUrl = environment.apiUrl + 'jobStatus/jobStatuses';
-  getStatusListUrl = environment.apiUrl + 'jobStatus/jobList?userId=';
-  getRetryStatusUrl = environment.apiUrl + 'jobStatus/jobRetry';
+  private apiUrl = this.environment.apiUrl;
+  getJobOriginsUrl = this.apiUrl + 'jobStatus/jobOrigins';
+  getJobStatusesUrl = this.apiUrl + 'jobStatus/jobStatuses';
+  getStatusListUrl = this.apiUrl + 'jobStatus/jobList?userId=';
+  getRetryStatusUrl = this.apiUrl + 'jobStatus/jobRetry';
   startIndex = 1;
-  getSearchStatus = environment.apiUrl + 'jobStatus/jobList/search?userId=';
+  getSearchStatus = this.apiUrl + 'jobStatus/jobList/search?userId=';
+  downloadUrl = this.apiUrl + 'audits/download?jobId=';
 
   constructor(
     private http: HttpClient,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
   ) { }
 
   getHeaders() {
@@ -49,11 +51,16 @@ export class StatusService {
       .pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
-  getSearchResult(startIndex , search) {
+  getSearchResult(startIndex, search) {
     const url = this.getSearchStatus + this.userinfoService.getUserId() + '&startIndex=' + startIndex + '&jobName=' + search;
     return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
       map(this.extractJobSearch),
       catchError(this.handleError<any>('getUserInfo')));
+  }
+
+  downloadZip(jobId): Observable<Blob> {
+    return this.http.get(this.downloadUrl + jobId, { headers: this.getHeaders(), responseType: 'blob' })
+      .pipe(catchError(this.handleError<any>('download')));
   }
 
   private extractJobSearch(res) {

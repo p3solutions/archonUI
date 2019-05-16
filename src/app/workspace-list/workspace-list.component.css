@@ -32,7 +32,7 @@
   margin: 15px 15px 10px 10px;
   float: left;
   width: 440px;
-  height: 200px;
+  height: 240px;
 }
 
 .example-card {
@@ -40,6 +40,9 @@
   height: 100%;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.43);
   transition:0.5s;
+}
+.delete:hover {
+  opacity: 0.2;
 }
 
 .example-card:hover{
@@ -160,7 +163,18 @@ transform:scale(1.1,1.1);
 .col {
   color: #2879ff;
 }
-
+.footer { 
+  text-align: right;
+  padding-right: 7px;
+}
+ .ws {
+  font-size: 20px;
+  padding: 8px 8px 0px 0px;
+} 
+.example-full-width {
+  width: 90%;
+  margin-left: inherit;
+}
 
 
 

@@ -25,12 +25,12 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   input: any;
   jobMessage: any;
   jobOutput: any;
+  jobServerConfig: any;
   @ViewChild('click') button: ElementRef;
   startIndex = 1;
-  displayedColumns: string[] = ['Job Name', 'Job Origin', 'Scheduled Time', 'Start Time',
-    'End Time', 'Status', 'Details', 'Retry'];
+  displayedColumns: string[] = ['jobName', 'userid', 'Job Origin', 'jobInfo.startTime', 'Start Time',
+    'End Time', 'Status', 'Details', 'Retry', 'Download'];
   dataSource: StatusDataSource;
-  totalScreen = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
@@ -38,7 +38,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   constructor(
     private router: Router,
     private statusService: StatusService,
-    private service: AuditService,
+    private service: AuditService
   ) { }
 
   ngOnInit() {
@@ -64,11 +64,15 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(this.paginator.page)
       .pipe(
         tap(() => this.loadPage())
       )
       .subscribe();
+  }
+
+  sortData(sort) {
+  this.dataSource.sortfn(sort);
   }
 
   loadPage() {
@@ -87,8 +91,8 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getStart() {
-    this.dataSource = new StatusDataSource(this.statusService);
-    this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
+  this.dataSource = new StatusDataSource(this.statusService);
+  this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
   }
 
   getJobOrigins() {
@@ -124,10 +128,12 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   openDetail(id) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
     this.service.getJobDetails(id).subscribe(result => {
+      console.log(result);
       this.common = result.common;
       this.input = result.input;
       this.jobMessage = result.message;
       this.jobOutput = result.output;
+      this.jobServerConfig = result.serverConfiguration;
     });
     el.click();
   }
@@ -143,4 +149,22 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
       }
     });
   }
+
+  downloadJob(releatedJobId) {
+    this.statusService.downloadZip(releatedJobId).subscribe(result => {
+      this.downloadFile(result);
+    });
+  }
+
+    downloadFile(content) {
+      const fileName = 'Status' + '-data.zip';
+      const type = 'zip';
+      const e = document.createEvent('MouseEvents');
+      const a = document.createElement('a');
+      a.download = fileName;
+      a.href = window.URL.createObjectURL(content);
+      a.dataset.downloadurl = [type, a.download, a.href].join(':');
+      e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      a.dispatchEvent(e);
+    }
 }

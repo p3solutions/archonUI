@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Info } from './info';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Headers, Response } from '@angular/http';
 import { ErrorObject } from './error-object';
-import { environment } from '../environments/environment';
 import { UserObject } from './workspace-objects';
 import { Router } from '@angular/router';
+import { EnvironmentService } from './environment/environment.service';
 @Injectable()
 export class UserinfoService {
   accessToken: string;
@@ -19,7 +17,8 @@ export class UserinfoService {
   private loginUrl = 'sign-in';
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private environment: EnvironmentService
   ) {
     this.http = http;
   }
@@ -36,7 +35,6 @@ export class UserinfoService {
   getRoleList() {
     this.getTokenData();
     const roleList = this.token_data.roles.map(function (item) { return item['roleName']; });
-    console.log(roleList, 'rolelist');
     return roleList;
   }
 
@@ -51,10 +49,10 @@ export class UserinfoService {
   }
 
   getUserInfoUrl() {
-    return environment.apiUrl + 'users/' + this.getUserId();
+    return this.environment.apiUrl + 'users/' + this.getUserId();
   }
   getAllUserInfoUrl() {
-    return environment.apiUrl + 'users';
+    return this.environment.apiUrl + 'users';
   }
 
   getAuthKey() {
@@ -83,8 +81,11 @@ export class UserinfoService {
       pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
-  getUpdatedName() {
-    return ((<HTMLInputElement>document.getElementById('userName')).value).trim();
+  getUpdatedFirstName() {
+    return ((<HTMLInputElement>document.getElementById('firstName')).value).trim();
+  }
+  getUpdatedLastName() {
+    return ((<HTMLInputElement>document.getElementById('lastName')).value).trim();
   }
 
   getUpdatedEmail() {
@@ -94,15 +95,20 @@ export class UserinfoService {
   isInvalidEditValues(user) {
     this.errorObject = new ErrorObject;
     this.errorObject.show = true;
-    if (this.getUpdatedName() === '') {
-      this.errorObject.message = 'Name cannot be empty';
+    if (this.getUpdatedFirstName() === '') {
+      this.errorObject.message = 'First Name cannot be empty';
+      return this.errorObject;
+    }
+    if (this.getUpdatedLastName() === '') {
+      this.errorObject.message = 'Last Name cannot be empty';
       return this.errorObject;
     }
     if (this.getUpdatedEmail() === '') {
       this.errorObject.message = 'Email cannot be empty';
       return this.errorObject;
     }
-    if (this.getUpdatedName() === user.username && this.getUpdatedEmail() === user.useremail) {
+    if (this.getUpdatedFirstName() === user.firstName && this.getUpdatedLastName() ===
+      user.lastName && this.getUpdatedEmail() === user.useremail) {
       this.errorObject.message = 'Name is not Updated';
       return this.errorObject;
     }

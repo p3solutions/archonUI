@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LandingPageComponent } from './landing-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -11,7 +13,8 @@ describe('LandingPageComponent', () => {
       imports: [
         RouterTestingModule
       ],
-      declarations: [ LandingPageComponent ]
+      declarations: [ LandingPageComponent ], 
+      providers: [{ provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
   }));

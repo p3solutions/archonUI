@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScheduleJobService {
 
-  getErtUrl = environment.apiUrl + 'ert/availableInstances';
-  getRdbmsUrl = environment.apiUrl + 'rdbmsExtraction/availableInstances';
+  getErtUrl = this.environment.apiUrl + 'ert/availableInstances';
+  getRdbmsUrl = this.environment.apiUrl + 'rdbmsExtraction/availableInstances';
 
-  constructor(private http: HttpClient, private userinfoService: UserinfoService) { }
+  constructor(
+    private http: HttpClient,
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
 
   getHeaders() {
     return this.userinfoService.getHeaders();
@@ -22,16 +26,16 @@ export class ScheduleJobService {
 
   getErtInstances(): Observable<any> {
     return this.http.get<any>(this.getErtUrl,
-    { headers: this.getHeaders() }).pipe(
-      map(this.extractJobOrigins),
-      catchError(this.handleError<any>('getErtInstances')));
+      { headers: this.getHeaders() }).pipe(
+        map(this.extractJobOrigins),
+        catchError(this.handleError<any>('getErtInstances')));
   }
 
   getRdbmsInstances(): Observable<any> {
     return this.http.get<any>(this.getRdbmsUrl,
-    { headers: this.getHeaders() }).pipe(
-      map(this.extractJobOrigins),
-      catchError(this.handleError<any>('getRdbmsInstances')));
+      { headers: this.getHeaders() }).pipe(
+        map(this.extractJobOrigins),
+        catchError(this.handleError<any>('getRdbmsInstances')));
   }
 
   private extractJobOrigins(res: any) {

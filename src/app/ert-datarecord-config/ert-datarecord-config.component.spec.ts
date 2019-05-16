@@ -9,6 +9,8 @@ import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { SearchPipe } from '../search.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ErtDatarecordConfigComponent', () => {
   let component: ErtDatarecordConfigComponent;
@@ -17,7 +19,7 @@ describe('ErtDatarecordConfigComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ErtDatarecordConfigComponent, SearchPipe],
-      providers: [TableListService, UserinfoService, WorkspaceHeaderService, ErtService],
+      providers: [TableListService, UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [FormsModule, HttpClientModule, RouterTestingModule, NgxPaginationModule]
     })
     .compileComponents();

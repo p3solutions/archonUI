@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('DbExtractorStepOneComponent', () => {
   let component: DbExtractorStepOneComponent;
@@ -14,7 +16,7 @@ describe('DbExtractorStepOneComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorStepOneComponent],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
-      providers: [UserinfoService]
+      providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

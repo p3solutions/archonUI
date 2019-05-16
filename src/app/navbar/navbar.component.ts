@@ -23,6 +23,8 @@ export class NavbarComponent implements OnInit {
   enableAudit = false;
   notifiactionArray = [];
   count = 0;
+  loadfirst = 0;
+  userid;
 
   constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService) { }
   ngOnInit() {
@@ -65,6 +67,7 @@ export class NavbarComponent implements OnInit {
     token_data = jwtHelper.decodeToken(accessToken);
     info = new Info();
     info.id = token_data.user.id;
+    this.userid = token_data.user.id;
     info.roleList = token_data.roles;
     info.username = this.userChangeName;
     return info;
@@ -78,21 +81,43 @@ export class NavbarComponent implements OnInit {
   }
 
   getNotification() {
-    setInterval(() => {
+    if (this.loadfirst === 0) {
+      this.loadfirst = 1;
       this.navService.getNotification().subscribe(result => {
+        this.notifiactionArray = [];
         this.count = 0;
         this.notifiactionArray = result;
+        for (let index = 0; index < this.notifiactionArray.length; index++) {
+          if (this.notifiactionArray[index].origin === 'DB_APPROVAL') {
+            this.notifiactionArray[index].route = '/management-landing-page/database-list';
+          }
+        }
         for (const i of this.notifiactionArray) {
           if (i.read === false) {
             this.count = this.count + 1;
           }
         }
+        this.getNotification();
       });
-  }, 60000);
+    } else {
+      setInterval(() => {
+        this.navService.getNotification().subscribe(result => {
+          this.notifiactionArray = [];
+          this.count = 0;
+          this.notifiactionArray = result;
+          for (const i of this.notifiactionArray) {
+            if (i.read === false) {
+              this.count = this.count + 1;
+            }
+          }
+        });
+    }, 600000);
+    }
   }
 
   updateNotification(id) {
    this.navService.updateNotification(id).subscribe(result => {
+     this.loadfirst = 0;
      this.getNotification();
    });
   }

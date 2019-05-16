@@ -4,6 +4,7 @@ import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDia
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Router } from '@angular/router';
 import { CharReplacementService } from './char-replacement.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-ert-char-replacement',
@@ -20,6 +21,7 @@ export class ErtCharReplacementComponent implements OnInit {
   workspaceId = '';
   successMsg = '';
   editCharId = '';
+  isDisabled: boolean;
   constructor(private charReplacementService: CharReplacementService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
 
@@ -27,6 +29,7 @@ export class ErtCharReplacementComponent implements OnInit {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.workspaceHeaderService.updateCheckActiveTab('Character Replacement');
     this.getAllCharRecords();
   }
 
@@ -36,14 +39,15 @@ export class ErtCharReplacementComponent implements OnInit {
       this.dataSource.data = this.charReplaceList;
     });
   }
-  saveCharReplacement() {
+  saveCharReplacement(form: NgForm) {
+    this.isDisabled = false;
     if (this.editCharId) {
       this.updateCharRecord();
     } else {
       this.addCharReplacement();
     }
     this.editCharId = '';
-    this.charReplaceInfo = new Charreplacement();
+    form.form.reset();
     setTimeout(() => {
       this.getAllCharRecords();
     }, 2000);
@@ -72,13 +76,15 @@ export class ErtCharReplacementComponent implements OnInit {
   }
 
   editCharRecord(id: string) {
+    this.isDisabled = true;
     this.editCharId = id;
     const temp = this.charReplaceList.find(a => a.id === id);
     this.charReplaceInfo = Object.assign({}, temp);
   }
 
-  refreshCharRecord() {
-    this.charReplaceInfo = new Charreplacement();
+  refreshCharRecord(form:NgForm) {
+    this.isDisabled = false;
+    form.form.reset();
   }
 
   deleteCharRecord(id: string) {

@@ -1,87 +1,88 @@
 <nav id="custom-nav" class="navbar navbar-default">
-  <div class="container-fluid" style="padding-left: 12px;">
-    <div class="navbar-header">
-      <a href="#">
-        <img alt="Brand" src="assets/archonWhite.png" class="org-logo"> 
-         
-      </a>
+    <div class="container-fluid" style="padding-left: 12px;">
+      <div class="navbar-header" style="text-align: right;">
+        <a [routerLink]="['/workspace/workspace-dashboard']">
+          <img alt="Brand" src="assets/archonWhite.png" class="org-logo">
+        </a>
+      </div>
+      <div>
+        <ul class="nav navbar-nav navbar-right" style="margin-top: 5px;">
+          <li class="active">
+            <a [routerLink]="['/workspace/workspace-dashboard']" (click)="getNotification();loadfirst=0;"><i class="fa fa-home" matTooltip="Home"></i>
+            </a>
+          </li>
+          <li class="dropdown user-menu1" >
+            <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
+              aria-expanded="false"> <i class="fa fa-list-alt" matTooltip="My Activities"></i> </a>
+            <ul class="dropdown-menu" style="max-width: 200px">
+              <li title="Status Monitor">
+                <a [routerLink]="['/status']" class="trim-text">Status Monitoring</a>
+              </li>
+              <li title="Status Monitor">
+                <a class="trim-text" [routerLink]="['/schedule-monitoring']">Schedule Monitoring</a>
+              </li>
+              <li title="Status Monitor" *ngIf="enableAudit">
+                <a  class="trim-text" [routerLink]="['/audit']">Auditing</a>
+              </li>
+            </ul>
+          </li>
+          <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" (click)="getNotification()">
+              <i class="fa fa-bell" data-toggle="tooltip" data-placement="bottom" matTooltip="Notifications" ></i>
+              <span class="badge bg-red">{{count}}</span>
+            </a>
+            <ul id="notifications" class="dropdown-menu msg_list" role="menu">
+              <li *ngFor="let i of notifiactionArray" matTooltip="Marked as Read" [routerLink]="[i.route, {notification:true}]" (mouseleave)="updateNotification(i.id)" [ngClass]="{'read':i.read}">
+                <a>
+                  <span>
+                    <span>{{i.userId}}</span>
+                    <span class="time">{{i.createdAt * 1000 | date:'medium'}}</span>
+                  </span>
+                  <span class="message">
+                    {{i.message}}
+                  </span>
+                </a>
+              </li>
+              <li class="all-notification">
+                <div class="text-center">
+                    <div id="see-all-notif">Notifications</div>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown user-menu">
+            <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
+              aria-expanded="false"><img class="userImg" src="../../assets/loginAvatar.jpg"  />
+             <span class="user-role"> {{userid}} </span>
+  
+            </a>
+            <ul class="dropdown-menu" style="max-width: 108px">
+              <li title="Profile">
+                <a [routerLink]="['/user-profile']" (click)='callUserProfile()' class="trim-text">Profile</a>
+              </li>
+              <!-- removed *ngIf="info?.show" in the below two li-->
+              <li role="separator" class="divider"></li>
+              <li title="Manage">
+                <a [routerLink]="['/management-landing-page/management-panel']" class="trim-text">Manage</a>
+              </li>
+              <li role="separator" class="divider"></li>
+              <li title="Logout">
+                <a href="" (click)="logout()" class="info-number">
+                  Logout
+                  <!-- <i class="fa fa-sign-out fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Logout"></i> -->
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li  role="presentation">
+             
+          </li>
+        </ul>
+  
+  
+      </div>
     </div>
-    <div>
-      <ul class="nav navbar-nav navbar-right" style="margin-top: 5px;">
-        <li class="active">
-          <a [routerLink]="['/workspace/workspace-dashboard']"><i class="fa fa-home" matTooltip="Home"></i>
-          </a>
-        </li>
-        <li class="dropdown user-menu1">
-          <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false"> <i class="fa fa-list-alt" matTooltip="My Activities"></i> </a>
-          <ul class="dropdown-menu">
-            <li title="Status Monitor">
-              <a [routerLink]="['/status']" class="trim-text">Status Monitoring</a>
-            </li>
-            <li title="Status Monitor">
-              <a class="trim-text" [routerLink]="['/schedule-monitoring']">Schedule Monitoring</a>
-            </li>
-            <li title="Status Monitor" *ngIf="enableAudit">
-              <a  class="trim-text" [routerLink]="['/audit']">Auditing</a>
-            </li>
-          </ul>
-        </li>
-        <li role="presentation" class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-bell" data-toggle="tooltip" data-placement="bottom" matTooltip="Notifications" ></i>
-            <span class="badge bg-red">{{count}}</span>
-          </a>
-          <ul id="notifications" class="dropdown-menu msg_list" role="menu">
-            <li *ngFor="let i of notifiactionArray" matTooltip="Marked as Read" (mouseleave)="updateNotification(i.id)">
-              <a>
-                <span>
-                  <span>{{i.userId}}</span>
-                  <span class="time">{{i.createdAt * 1000 | date:'medium'}}</span>
-                </span>
-                <span class="message">
-                  {{i.message}}
-                </span>
-              </a>
-            </li>
-            <li class="all-notification">
-              <div class="text-center">
-                  <div id="see-all-notif">Notifications</div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li class="dropdown user-menu">
-          <a href="#" class="dropdown-toggle trim-text" data-toggle="dropdown" role="button" aria-haspopup="true"
-            aria-expanded="false"><img class="userImg" src="../../assets/loginAvatar.jpg"  />
-           <span class="user-role"> {{userChangeName}} </span>
-
-          </a>
-          <ul class="dropdown-menu">
-            <li title="Profile">
-              <a [routerLink]="['/user-profile']" (click)='callUserProfile()' class="trim-text">Profile</a>
-            </li>
-            <!-- removed *ngIf="info?.show" in the below two li-->
-            <li role="separator" class="divider"></li>
-            <li title="Manage">
-              <a [routerLink]="['/management-landing-page/management-panel']" class="trim-text">Manage</a>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li title="Logout">
-              <a href="" (click)="logout()" class="info-number">
-                Logout
-                <!-- <i class="fa fa-sign-out fa-lg" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Logout"></i> -->
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li  role="presentation">
-           
-        </li>
-      </ul>
-
-
-    </div>
-  </div>
-
-</nav>
+  
+  </nav>
+  
+  

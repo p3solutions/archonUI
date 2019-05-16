@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EnvironmentService } from '../environment/environment.service';
+import { HttpClient } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -10,12 +10,18 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class AuditService {
 
-  getAuditUrl = environment.apiUrl + 'audits/auditing?userId=';
-  getEventsUrl = environment.apiUrl + 'audits/events';
-  downloadUrl = environment.apiUrl + 'audits/download?jobId=';
-  jobDetails = environment.apiUrl + 'jobStatus/jobDetails?jobId=';
+  private apiUrl = this.environment.apiUrl;
+
+  getAuditUrl = this.apiUrl + 'audits/auditing?userId=';
+  getEventsUrl = this.apiUrl + 'audits/events';
+  downloadUrl = this.apiUrl + 'audits/download?jobId=';
+  jobDetails = this.apiUrl + 'jobStatus/jobDetails?jobId=';
   startIndex = 1;
-  constructor(private http: HttpClient, private userinfoService: UserinfoService) { }
+  constructor(
+    private http: HttpClient,
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
 
   getHeaders() {
     return this.userinfoService.getHeaders();
@@ -58,8 +64,8 @@ export class AuditService {
   }
 
   downloadZip(jobId): Observable<Blob> {
-    return this.http.get(this.downloadUrl + jobId, { headers: this.getHeaders() , responseType: 'blob'} )
-    .pipe(catchError(this.handleError<any>('download')));
+    return this.http.get(this.downloadUrl + jobId, { headers: this.getHeaders(), responseType: 'blob' })
+      .pipe(catchError(this.handleError<any>('download')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

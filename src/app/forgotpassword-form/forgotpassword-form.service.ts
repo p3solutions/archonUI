@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
-import { Observable ,  of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { ForgotPassword } from '../forgot-password';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class ForgotpasswordFormService {
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   // The URL to the API
-  forgotPasswordUrl = environment.apiUrl + 'auth/pwd-link';
-  constructor(private http: HttpClient) { }
+  forgotPasswordUrl = this.environment.apiUrl + 'auth/forgot-password';
+  constructor(
+    private http: HttpClient,
+    private environment: EnvironmentService
+  ) { }
 
   forgotPassword(forgotpassword_info: ForgotPassword): Observable<any> {
     return this.http.post<ForgotPassword>(this.forgotPasswordUrl, forgotpassword_info, { headers: this.headers });

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { ChangePassword } from '../change-password';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ConfirmPasswordValidator, PasswordValidator, ConfirmPasswordValidator2 } from '../signup-form/confirm-password-validator';
 
 
 @Component({
@@ -34,35 +35,17 @@ export class ChangePasswordComponent implements OnInit {
   createForm() {
     this.changePasswordForm = new FormGroup({
       oldPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required])
-    });
+      newPassword: new FormControl('', [Validators.required, PasswordValidator.strong,
+        Validators.minLength(8)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+    }, ConfirmPasswordValidator2.MatchPassword);
   }
   closeErrorMsg() {
     this.errorObject = null;
   }
 
-  isPasswordNotValidated() {
-    this.newPassword = this.changePasswordForm.value.newPassword;
-    this.confirmPassword = this.changePasswordForm.value.confirmPassword;
-    if (this.newPassword.length < 6) {
-      this.errorObject = new ErrorObject;
-      this.errorObject.message = 'Password length must be atleast 6 character';
-      this.errorObject.show = true;
-    }
-    if (this.newPassword !== this.confirmPassword) {
-      this.errorObject = new ErrorObject;
-      this.errorObject.message = 'New Password and Confirm Password mismatched';
-      this.errorObject.show = true;
-    }
-    this.inProgress = false;
-    return this.errorObject;
-  }
   changeUserPassword() {
     this.inProgress = true;
-    if (this.isPasswordNotValidated()) {
-      return false;
-    }
     const param = {
       userId: this.userId,
       newPassword: this.newPassword,
@@ -78,20 +61,14 @@ export class ChangePasswordComponent implements OnInit {
     },
       (err: HttpErrorResponse) => {
         this.inProgress = false;
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-        } else {
-          // The backend returned an unsuccessful response code.
-          // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
-          this.errorObject.message = 'Invalid current password';
+          this.errorObject.message = err.error.message;
           this.errorObject.show = !err.error.success;
-        }
       });
   }
   enablePassword() {
     if (this.changePasswordForm.value.oldPassword && this.changePasswordForm.value.newPassword
-      && this.changePasswordForm.value.confirmPassword) {
+      && this.changePasswordForm.value.confirmPassword && this.changePasswordForm.get('newPassword').valid) {
       this.enableChangePassBtn = true;
     } else {
       this.enableChangePassBtn = false;

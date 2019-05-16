@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 import { Info } from '../info';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('WorkspaceLandingPageComponent', () => {
   let component: WorkspaceLandingPageComponent;
@@ -30,7 +32,7 @@ describe('WorkspaceLandingPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule],
-      providers: [RouterTestingModule, InfoService, HttpClientTestingModule, UserProfileService , UserinfoService],
+      providers: [RouterTestingModule, InfoService, HttpClientTestingModule, UserProfileService , UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       declarations: [WorkspaceLandingPageComponent, NavbarComponent]
     })
     .compileComponents();

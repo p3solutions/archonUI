@@ -9,6 +9,8 @@ import { UserinfoService } from '../userinfo.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ProcessDetailsObj } from '../db-extractor';
 import { DbExtractorService } from '../db-extractor/db-extractor.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('DbExtractorStepTwoComponent', () => {
   let component: DbExtractorStepTwoComponent;
@@ -18,7 +20,7 @@ describe('DbExtractorStepTwoComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorStepTwoComponent],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
-      providers: [UserinfoService, DbExtractorService],
+      providers: [UserinfoService, DbExtractorService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

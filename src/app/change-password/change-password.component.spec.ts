@@ -8,6 +8,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatError, MatFormFieldModule } from '@angular/material';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
@@ -34,14 +37,15 @@ describe('ChangePasswordComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule, MatFormFieldModule
       ],
       providers: [
         // reference the new instance of formBuilder from above
         ChangePasswordService,
         UserinfoService,
         JwtHelperService,
-        { provide: FormBuilder, useValue: formBuilder }
+        { provide: FormBuilder, useValue: formBuilder } , 
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
       ]
     })
       .compileComponents();

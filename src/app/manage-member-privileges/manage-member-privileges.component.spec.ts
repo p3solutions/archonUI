@@ -7,6 +7,8 @@ import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ManageMembers } from '../manage-members';
 import { UserObject, RoleObject } from '../workspace-objects';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ManageMemberPrivilegesComponent', () => {
   let component: ManageMemberPrivilegesComponent;
@@ -15,7 +17,7 @@ describe('ManageMemberPrivilegesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ManageMemberPrivilegesComponent ],
-      providers: [ManageMembersService, UserinfoService],
+      providers: [ManageMembersService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [HttpClientModule, RouterTestingModule]
     })
     .compileComponents();

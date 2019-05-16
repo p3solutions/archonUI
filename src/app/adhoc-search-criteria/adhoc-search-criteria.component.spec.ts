@@ -17,6 +17,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserinfoService } from '../userinfo.service';
 import { AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 describe('AdhocSearchCriteriaComponent', () => {
   let component: AdhocSearchCriteriaComponent;
   let fixture: ComponentFixture<AdhocSearchCriteriaComponent>;
@@ -35,7 +37,7 @@ describe('AdhocSearchCriteriaComponent', () => {
       imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule
         , MatOptionModule, RouterTestingModule, HttpClientTestingModule,
         MatSelectModule, MatInputModule, DragDropModule, MatCheckboxModule, MatTabsModule, BrowserAnimationsModule],
-      providers: [UserinfoService]
+      providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }] 
 
     })
       .compileComponents();

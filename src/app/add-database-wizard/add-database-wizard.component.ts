@@ -82,7 +82,7 @@ export class AddDatabaseWizardComponent implements OnInit {
         this.dbTestConnectionErrorMsg = res.connection.errorMessage;
         this.dbTestConnectionSuccessMsg = res.connection.message;
         if (res.connection.isConnected) {
-           this.enableCreateBtn = true;
+          this.enableCreateBtn = true;
         }
       } else {
         this.inProgress = false;
@@ -260,6 +260,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     thisComponent.addClass('create-btn', 'hide');
     thisComponent.removeClass('ok-btn', 'hide');
     document.getElementById('next-slide').click();
+    document.getElementById('reload').click();
     // if (this.selectedDBtable) {
     //   this.selectedDBtable.destroy();
     // }
@@ -285,8 +286,9 @@ export class AddDatabaseWizardComponent implements OnInit {
   createDBConfig() {
     this.dbinProgress = true;
     // this.dbParam.dbProfileName = this.dbProfileName;
-    this.dbParam.userName = this.userName;
+      this.dbParam.userName = this.userName;
     this.dbParam.password = this.password;
+    // this.dbParam.password = btoa(this.password);
     this.dbParam.port = this.port;
     this.dbParam.host = this.host;
     this.dbParam.databaseName = this.databaseName;
@@ -299,8 +301,8 @@ export class AddDatabaseWizardComponent implements OnInit {
       if (res) {
         if (res.connection.isConnected) {
           this.dbinProgress = false;
-           this.createNewdb();
-           this.createdb = true;
+          this.createNewdb();
+          this.createdb = true;
         } else {
           this.dbinProgress = false;
           this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
@@ -317,7 +319,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
       if (res) {
         this.newWSinfo = res;
-        document.getElementById('populate-db-list').click();
+        // document.getElementById('populate-db-list').click();
         this.postCreation();
       }
     });

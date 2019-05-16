@@ -4,6 +4,7 @@ import { ManageMasterMetadata } from '../master-metadata-data';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { DataTableDirective } from 'angular-datatables';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-manage-master-metadata',
   templateUrl: './manage-master-metadata.component.html',
@@ -24,7 +25,8 @@ export class ManageMasterMetadataComponent implements OnInit {
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   role: any;
-  page =1;
+  page = 1;
+  successMessage = '';
   constructor(
     private manage_Master_MetadataService: ManageMasterMetadataService,
     private router: Router,
@@ -42,6 +44,7 @@ export class ManageMasterMetadataComponent implements OnInit {
     };
     this.getMMRVersionList();
     this.role = this.workspaceHeaderService.getSelectedWorkspaceWorkspaceRole();
+    this.workspaceHeaderService.updateCheckActiveTab('Manage Metadata Version');
   }
   getManage_Master_MetaData() {
     this.manage_Master_MetadataService.getManageMasterMetaData()
@@ -61,8 +64,15 @@ export class ManageMasterMetadataComponent implements OnInit {
   saveMMRVersion() {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.manage_Master_MetadataService.saveMMRVersion(this.workspaceId, this.versionNo, btoa(this.desc)).subscribe(result => {
-      alert(result.data);
+      this.successMessage = result.data;
+      document.getElementById('successPopUp').click();
       this.getMMRVersionList();
+    }, (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+      } else {
+        document.getElementById('successPopUp').click();
+        this.successMessage = err.error.errorMessage;
+      }
     });
   }
 

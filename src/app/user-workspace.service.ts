@@ -4,18 +4,20 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { WorkspaceObject, ConfiguredDB, AnyObject, CreateConfigDBObject } from './workspace-objects';
 import { UserinfoService } from './userinfo.service';
-import { environment } from '../environments/environment';
+import { EnvironmentService } from './environment/environment.service';
 
 @Injectable()
 export class UserWorkspaceService {
-  apiUrl = environment.apiUrl;
-  getConfiguredDBurl = `${this.apiUrl}dbs/configured`;
+  apiUrl = this.environment.apiUrl;
+  getConfiguredDBurl = `${this.apiUrl}dbs/configured/schemaReadyDbs`;
+  getConfigDBurl = `${this.apiUrl}dbs/configured`;
   createNewWSurl = `${this.apiUrl}workspaces`;
   getAppConfigUrl = `${this.apiUrl}application/config`;
   checkDbConnectionUrl = `${this.apiUrl}dbs/configured/connection`;
   constructor(
     private http: HttpClient,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private environment: EnvironmentService
   ) {
     this.http = http;
   }
@@ -27,9 +29,9 @@ export class UserWorkspaceService {
       catchError(this.handleError<any>('test-db-connection'))
     );
   }
-  
+
   getUserWorkspaceUrl() {
-    return this.apiUrl + 'workspaces?userId=' + this.userinfoService.getUserId();
+    return this.apiUrl + 'workspaces/approvedWorkspaces?userId=' + this.userinfoService.getUserId();
   }
 
   getWorkspaceByOwnerIdUrl() {
@@ -62,7 +64,7 @@ export class UserWorkspaceService {
   // Create new Database Configuration service api
   createNewDBConfig(dbParam: AnyObject) {
     dbParam.ownerId = this.userinfoService.getUserId();
-    return this.http.post<CreateConfigDBObject>(this.getConfiguredDBurl, dbParam, { headers: this.userinfoService.getHeaders() }).pipe(
+    return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, dbParam, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractData),
       catchError(this.handleError<WorkspaceObject>('createNewDBConfig'))
     );

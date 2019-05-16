@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Headers, Response } from '@angular/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 
 import { ManageMasterMetadata } from '../master-metadata-data';
-import { environment } from '../../environments/environment';
 import { UserinfoService } from '../userinfo.service';
+import { EnvironmentService } from '../environment/environment.service';
 
 @Injectable()
 export class ManageMasterMetadataService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = this.environment.apiUrl;
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  saveMMRVersionUrl  = this.apiUrl + 'metalyzer/generateMMR?workspaceId=';
+  saveMMRVersionUrl = this.apiUrl + 'metalyzer/generateMMR?workspaceId=';
   getMMRVersionListUrl = this.apiUrl + 'metalyzer/getVersionNumberList?workspaceId=';
   manage_master_metadataUrl = 'api/master_metadata';
 
-  constructor(private http: HttpClient, private userInfoService: UserinfoService) { }
+  constructor(
+    private http: HttpClient,
+    private userInfoService: UserinfoService,
+    private environment: EnvironmentService
+  ) { }
 
 
   getManageMasterMetaData(): Observable<ManageMasterMetadata[]> {
@@ -43,9 +46,7 @@ export class ManageMasterMetadataService {
   saveMMRVersion(workspaceId: string, mmrVersion: string, desc: string): Observable<any> {
     return this.http.post<any>(this.saveMMRVersionUrl + workspaceId + '&versionNo=' + mmrVersion + '&description=' + desc, null,
       { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForMMRSave),
-        catchError(this.handleError('saveMMRVersion', []))
-      );
+      pipe(map(this.extractDataForMMRSave));
   }
 
 

@@ -8,6 +8,14 @@ import { ManageMembersService } from '../manage-members/manage-members.service';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AddMembersService } from '../add-members/add-members.service';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatTableModule, MatSortModule, MatDialogModule } from '@angular/material';
+import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('HeaderTabComponent', () => {
   let component: HeaderTabComponent;
@@ -17,18 +25,20 @@ describe('HeaderTabComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule, MatTableModule, MatSortModule, MatDialogModule, BrowserAnimationsModule
       ],
       declarations: [
         HeaderTabComponent,
         ManageMembersComponent,
-        AddMembersComponent
+        AddMembersComponent, ManageUserRolesComponent
       ],
       providers: [
         ManageMembersService,
         AddMembersService,
-        UserinfoService
+        UserinfoService,
+        WorkspaceHeaderService, ManageUserRolesService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
+      schemas:[NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

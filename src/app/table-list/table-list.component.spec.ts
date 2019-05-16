@@ -17,6 +17,9 @@ import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DynamicLoaderService } from '../dynamic-loader.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { MatExpansionModule } from '@angular/material';
 
 // Reason: Undefined Property
 describe('TableListComponent', () => {
@@ -29,9 +32,10 @@ describe('TableListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TableListComponent, SearchPipe,
       SecondaryColumnPipe],
-      imports: [RouterTestingModule, FormsModule, HttpClientModule, NgxPaginationModule],
+      imports: [RouterTestingModule, FormsModule, HttpClientModule, NgxPaginationModule, MatExpansionModule],
       providers: [TableListService, UserinfoService, WorkspaceHeaderService,
-        DynamicLoaderService, EditRelationshipInfoService, AddDirectJoinService, MetalyzerHeaderService],
+        DynamicLoaderService, EditRelationshipInfoService,
+         AddDirectJoinService, MetalyzerHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();

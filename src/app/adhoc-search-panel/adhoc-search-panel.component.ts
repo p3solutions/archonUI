@@ -181,7 +181,7 @@ export class AdhocSearchPanelComponent implements OnInit {
       this.searchResult = result;
     });
 
-    if (this.checkDuplicateResultFields(tempResultFields.label)) {
+    if (this.checkDuplicateResultFields(tempResultFields.label, tableId)) {
       if (this.openPanelIndex === 0) {
         this.searchResult.mainPanel.push(tempResultFields);
 
@@ -200,20 +200,19 @@ export class AdhocSearchPanelComponent implements OnInit {
     this.checkSearchResultLength();
     this.adhocScreenService.updateSearchResult(this.searchResult);
   }
-  checkDuplicateResultFields(label) {
+  checkDuplicateResultFields(label, tableId) {
     let temp = true;
-    let searchResultLength = 0;
     for (const item of this.searchResult.mainPanel) {
-      searchResultLength = searchResultLength + 1;
-      if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
+      if ((item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) &&
+        (tableId === item.tableId)) {
         temp = false;
         break;
       }
     }
     for (const inlineTab of this.searchResult.inLinePanel.tabs) {
       for (const item of inlineTab.resultFields) {
-        searchResultLength = searchResultLength + 1;
-        if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
+        if ((item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) &&
+          (tableId === item.tableId)) {
           temp = false;
           break;
         }
@@ -221,8 +220,8 @@ export class AdhocSearchPanelComponent implements OnInit {
     }
     for (const sideTab of this.searchResult.sidePanel.tabs) {
       for (const item of sideTab.resultFields) {
-        searchResultLength = searchResultLength + 1;
-        if (item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) {
+        if ((item.label.replace(/ /g, '').toLocaleLowerCase() === label.replace(/ /g, '').toLocaleLowerCase()) &&
+          (tableId === item.tableId)) {
           temp = false;
           break;
         }

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SignIn } from '../sign-in';
 import { SigninFormService } from './signin-form.service';
 import { ErrorObject } from '../error-object';
-import { AuthenticationService } from '../authentication/authentication.service';
-import { jsonpCallbackContext } from '@angular/common/http/src/module';
 
 @Component({
   selector: 'app-signin-form',
@@ -23,7 +21,6 @@ export class SigninFormComponent implements OnInit {
   workspaceUrl = '/workspace';
   constructor(
     private signinService: SigninFormService,
-    private authenticationService: AuthenticationService,
     private router: Router
   ) {
   }
@@ -35,7 +32,7 @@ export class SigninFormComponent implements OnInit {
 
   createForm() {
     this.signInForm = new FormGroup({
-      emailAddress: new FormControl('', [Validators.required, Validators.email]),
+      userId: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
   }
@@ -62,7 +59,7 @@ export class SigninFormComponent implements OnInit {
           this.errorObject = new ErrorObject;
           this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = !err.error.success;
-          }
+        }
       }
     );
   }
@@ -70,7 +67,7 @@ export class SigninFormComponent implements OnInit {
     this.errorObject = null;
   }
   enableSignIn() {
-    if (this.signInForm.value.emailAddress && this.signInForm.value.password) {
+    if (this.signInForm.value.userId && this.signInForm.value.password) {
       this.enableSignInBtn = true;
     } else {
       this.enableSignInBtn = false;

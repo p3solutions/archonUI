@@ -1,85 +1,75 @@
 <app-navbar></app-navbar>
 <div class="workspacelist-container">
-
-  <div class="col-md-4">
-    <div class="col-md-1 back-arrow">
+  <div class="row">
+    <div id="create-screen-header">
       <a (click)="gotoDashboard()" data-tooltip="Back">
         <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
       </a>
-    </div>
-
-    <div class="col-md-8">
-      <h3 class="workspace-panel-heading">
-        Status Monitor <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span>
-      </h3>
+      <h3>  Status Monitor  <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span> </h3>
     </div>
   </div>
 
-  <div class="col-md-12 m-l-45" *ngIf="loadStatus">
-    <div class="btn-group col-md-2 p-0">
-      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false" title="{{selectedJobOrigin? selectedJobOrigin : 'JOB ORIGIN: All'}}">
-        {{selectedJobOrigin? selectedJobOrigin : ('JOB ORIGIN: All')}}
-      </button>
-      <div class="dropdown-menu">
-        <div class="scrollable">
-          <a id="job-origin-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobOrigin('');getStart()">JOB
-            ORIGIN: ALL</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item dropdown-data trim-text j-origin" *ngFor="let jOrigin of jobOriginList" title="{{jOrigin}}"
-            (click)="selectJobOrigin(jOrigin);getStart()">{{jOrigin}}</a>
-        </div>
+  <div class="row-group" *ngIf="loadStatus">
+    <div class="col-md-5 heading-item">
+      <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+        <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>{{errorObject?.message}}</strong>
       </div>
     </div>
-    <div class="btn-group col-md-2 p-0" style="margin-left: -30px;">
-      <button type="button" class="trim-text btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false" title="{{selectedJobStatus? selectedJobStatus : 'JOB STATUS: ALL'}}">
-        {{selectedJobStatus? selectedJobStatus : 'JOB STATUS: All'}}
-      </button>
-      <div class="dropdown-menu">
-        <div class="scrollable">
-          <a id="job-status-all" class="dropdown-item dropdown-data trim-text" title="JOB ORIGIN: ALL" (click)="selectJobStatus('');getStart()">JOB
-            STATUS: All</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item dropdown-data trim-text j-status" *ngFor="let jStatus of jobStatusList" title="{{jStatus}}"
-            (click)="selectJobStatus(jStatus);getStart()">{{jStatus}}</a>
-        </div>
-      </div>
+    <div class="col-md-2 heading-item">     
+        <mat-form-field>
+          <mat-select [(ngModel)]="selectedJobOrigin" msInfiniteScroll name="jOrigin-select"
+             placeholder="JOB ORIGIN: All">
+            <mat-option appScrollServerCall [value]="" (click)="selectJobOrigin('');getStart()">
+              JOB ORIGIN : All
+            </mat-option>
+            <mat-option appScrollServerCall *ngFor="let jOrigin of jobOriginList" [value]="jOrigin" (click)="selectJobOrigin(jOrigin);getStart()">
+                {{jOrigin}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>      
     </div>
-    <div class="col-md-5">
-    <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible m-t-6" role="alert">
-      <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <strong>{{errorObject?.message}}</strong>
-    </div> 
+    <div class="col-md-2 heading-item">
+      <mat-form-field>
+        <mat-select [(ngModel)]="selectedJobStatus" msInfiniteScroll name="jOrigin-select"
+           placeholder="JOB STATUS: All">
+          <mat-option appScrollServerCall [value]="" (click)="selectJobStatus('');getStart()">
+            JOB STATUS : All
+          </mat-option>
+          <mat-option appScrollServerCall *ngFor="let jStatus of jobStatusList" [value]="jStatus" (click)="selectJobStatus(jStatus);getStart()">
+              {{jStatus}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>   
     </div>
-    <div class="btn-group col-md-3 p-0 align-refresh">
+    <div class="col-md-2 heading-item">
+      <mat-form-field>
+       <input matInput #search placeholder="Search" (keyup)="getSearch()">
+      </mat-form-field>
+    </div>
+    <div class="col-md-1 heading-item" style="margin-top: 12px;">
       <i (click)="refreshStatusTable()" class="fa fa-refresh col-archon-blue fa-2x cur-p" aria-hidden="true"></i>
-    </div>
+    </div>    
   </div>
-  <div class="col-md-6"></div>
-    <div class="col-md-6">
-        <div class="col-md-6"></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-            <mat-form-field class="search-wid">
-              <input matInput #search placeholder="Search" (keyup)="getSearch()">
-            </mat-form-field>
-          </div>
-          </div>
-  <div class="row" style="padding-top: 170px;">
+
+  <div class="row" style="padding-top: 70px;">
     <div class="example-table-container mat-elevation-z4" id="screen-table">
-      <table mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="Job Name">
-          <th style="width:30%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
-          <td style="width:30%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
+      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="jobInfo.startTime" matSortDirection="desc">
+        <ng-container matColumnDef="jobName">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="userid">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.userId}}</td>
         </ng-container>
         <ng-container matColumnDef="Job Origin">
-          <th style="width:12%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Origin </th>
-          <td style="width:12%" mat-cell *matCellDef="let element; let i = index;">{{element.jobOrigin}}</td>
+          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Origin </th>
+          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobOrigin}}</td>
         </ng-container>
-        <ng-container matColumnDef="Scheduled Time">
+        <ng-container matColumnDef="jobInfo.startTime">
           <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Scheduled Time </th>
           <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.scheduledTime | date:'medium'}}</td>
         </ng-container>
@@ -114,11 +104,19 @@
             <i class="material-icons replay" style="color: grey" matTooltip="Nope" *ngIf="element.jobInfo.jobStatus !== 'FAILED'">replay</i>
           </td>
         </ng-container>
+        <ng-container matColumnDef="Download">
+            <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Download  </th>
+            <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+              <i class="material-icons details" matTooltip="Download" *ngIf="(element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION' || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'GENERATE_XML_JSON') || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'ER_GENERATION'))" (click)="downloadJob(element.id)">cloud_download</i>
+              <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="(element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'GENERAL_XML_JSON') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'ER_GENERATION')">cloud_download</i>
+              <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="(element.jobOrigin !== 'ERT_EXTRACTION') && (element.jobOrigin !== 'RDBMS_EXTRACTION') && (element.jobOrigin !== 'GENERATE_XML_JSON') && (element.jobOrigin !== 'ER_GENERATION')">cloud_download</i> 
+            </td>
+          </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator id="screen-table" [length]="totalScreen" [pageSize]="50">
+    <mat-paginator id="screen-table" [length]="dataSource.totalScreen" [pageSize]="50">
     </mat-paginator>
   </div>
 
@@ -127,11 +125,10 @@
 <!-- Modal -->
 <div id="jobDetailsModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title text-left">Job Details</h4>
-          </div>
+      <div class="modal-content" style="width: 630px;">
+          <div class="modal-header">
+            <div class='model-title'><div class='info-r'>Job Details</div></div>
+        </div>
         <div class="modal-body">
             <table class="table table-bordered">
                 <thead>
@@ -142,23 +139,25 @@
                 </thead>
                 <tbody >
                   <tr *ngFor="let i of common" class="text-left">
-                    <td>{{i.name}}</td>
-                    <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
-                    <td *ngIf="i.type == 'Date'">{{i.value | date: 'medium'}}</td>
+                    <td *ngIf="i.value !== ''">{{i.name}}</td>
+                    <td *ngIf="i.type !== 'Date'">{{i.value !== '' ? i.value : 'null'}}</td>
+                    <td *ngIf="i.type == 'Date' && i.value !== ''">{{i.value | date: 'medium'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">
                     <td>{{i.name}}</td>
-                    <td>{{i.value}}</td>
+                    <td>{{i.value !== '' ? i.value : 'NA'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
-                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
-                  <tr><td colspan="2"><h4><b>Output</b></h4></td></tr>
-                  <tr><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
+                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}</td></tr>
+                  <tr *ngIf="jobOutput !== null"><td colspan="2"><h4><b>Output</b></h4></td></tr>
+                  <tr *ngIf="jobOutput !== null"><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
+                  <tr><td colspan="2"><h4><b>ServerConfig</b></h4></td></tr>
+                  <tr *ngFor="let i of jobServerConfig"><td>{{i.name}}</td><td>{{i.value !== null ? i.value : 'NA'}}</td></tr>
                 </tbody>
               </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
       </div>
     </div>
