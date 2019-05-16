@@ -83,7 +83,7 @@ span {
 }
 
 .container-head{
-  margin: 0px 0px 5px 20px;
+  margin: 0px 0px -15px 20px;
 }
 
 .left-flexer{
@@ -95,12 +95,18 @@ span {
 .arch-button{
   color: #fff;
   background-color: #2879ff;
+  transition: .5s;
+}
+
+.arch-hdr{
+  color: #fff;
+  background-color: #2879ff;
 }
 
 .arch-button:hover {
   box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
-  -webkit-transform: translatey(-2px);
-  transform: translatey(-2px);
+  -webkit-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
 }
 
 .heading-item {
@@ -133,12 +139,13 @@ span {
 .arch-btnn{
   background-color: #2879ff;
   color: #fff;
+  transition: .5s;
 }
 
 .arch-btnn:hover {
   box-shadow: rgba(0,0,0,0.43) 0px 0px 4px 0px;
-  -webkit-transform: translatey(-2px);
-  transform: translatey(-2px);
+  -webkit-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
 }
 
 .paginate-sty{

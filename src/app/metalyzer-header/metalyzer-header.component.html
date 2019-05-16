@@ -23,7 +23,7 @@
           <b>Phase: </b>{{phase | uppercase}}
         </div>
         <div class="dropdown col-md-2" id="btn-margin" *ngIf="phase == 'Analysis'">
-          <button mat-raised-button class="arch-button" id="btn-mar" data-toggle="modal" data-target="#myModal" (click)="getAudit()">View Modifications
+          <button mat-raised-button class="arch-button" id="btn-mar" data-toggle="modal" data-keyboard="true"  data-target="#myModal" (click)="getAudit()">View Modifications
           </button>
         </div>
         <div class="dropdown col-md-2" *ngIf="dropdown">
@@ -49,12 +49,12 @@
   </div>
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal fade" role="dialog" tabindex='-1'>
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header arch-button">
+      <div class="modal-header arch-hdr">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-left">Metalyzer Audit</h4>
       </div>
@@ -79,7 +79,7 @@
         </table> -->
 
         <div class="mat-elevation-z2">
-          <table mat-table [dataSource]="auditArray | paginate: { id:'paginateControl', itemsPerPage: 10, currentPage: p }">
+          <table mat-table [dataSource]="auditArray | paginate: { id:'paginateControl', itemsPerPage: 50, currentPage: p, totalItems: schemaResultsTableCount }">
     
             <ng-container matColumnDef="modifiedBy">
               <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Modified By </th>
@@ -107,7 +107,7 @@
         </div>
 
         <div class="paginate-sty">
-          <pagination-controls id="paginateControl" (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls id="paginateControl" (pageChange)="getPage(p = $event)"></pagination-controls>
         </div>
           
       </div>
@@ -119,9 +119,8 @@
   </div>
 </div>
 
-<button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="false"
-  data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
-<div id="confirmCancelInviteSuccess" class="modal fade" role="dialog">
+<button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="true" data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
+<div id="confirmCancelInviteSuccess" class="modal fade" role="dialog" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header adhoc-modal-header">
