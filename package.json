@@ -45,6 +45,7 @@
     "ng-mat-select-infinite-scroll": "^1.0.1",
     "ngx-bootstrap": "^3.2.0",
     "ngx-bootstrap-slider": "^1.7.0",
+    "ngx-cookie-service": "^2.1.0",
     "ngx-pagination": "^3.2.1",
     "ngx-spinner": "^7.1.4",
     "popper.js": "^1.14.6",

@@ -11,6 +11,7 @@ import { CommonUtilityService } from '../common-utility.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NavbarService } from '../navbar/navbar.service';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -37,7 +38,8 @@ export class WorkspaceServicesComponent implements OnInit {
     private commonUtilityService: CommonUtilityService,
     private userProfileService: UserProfileService,
     private navService: NavbarService,
-    private userinfoService: UserinfoService
+    private userinfoService: UserinfoService,
+    private cookieService: CookieService
   ) {
     activatedRouter.params.subscribe(val => {
 
@@ -62,7 +64,7 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    const test = new NavbarComponent( this.userProfileService, this.navService, this.userinfoService);
+    const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService);
     test.loadfirst = 0;
     test.getNotification();
     this.workspaceHeaderService.updateCheckActiveTab('Services');
@@ -92,6 +94,8 @@ export class WorkspaceServicesComponent implements OnInit {
     } else if (service.serviceName === 'ERT') {
       this.router.navigate(['/workspace/ert']);
     } else if (service.serviceName === 'IA Adhoc Query Builder') {
+      this.cookieService.set('workspaceId', this.workspaceHeaderService.getSelectedWorkspaceId());
+      this.cookieService.set('workspaceName', this.workspaceHeaderService.getSelectedWorkspaceName());
       this.router.navigate(['/workspace/adhoc']);
     }
   }

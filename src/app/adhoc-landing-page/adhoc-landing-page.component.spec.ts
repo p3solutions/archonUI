@@ -13,16 +13,17 @@ describe('AdhocLandingPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdhocLandingPageComponent ],
+      declarations: [AdhocLandingPageComponent],
       imports: [RouterTestingModule, HttpClientTestingModule],
       providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdhocLandingPageComponent);
     component = fixture.componentInstance;
+    spyOn(component.router, 'navigate');
     fixture.detectChanges();
   });
 

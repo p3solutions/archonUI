@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
 })
 export class AdhocLandingPageComponent implements OnInit {
 
-  constructor(private adhocService: AdhocService) { }
+  constructor(private adhocService: AdhocService, public router: Router) { }
 
   ngOnInit() {
-
+    this.router.navigate(['/workspace/adhoc']);
   }
 }
