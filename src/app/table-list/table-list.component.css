@@ -182,7 +182,7 @@ h4 {
 }
 
 .dataA-panel-body {
-  height: 452px;
+  height: 430px;
   margin-left: 5px;
   margin-right: 150px;
 }
@@ -211,7 +211,7 @@ h4 {
 
 #analysis-view .card {
   background-color: #fff;
-  height: 678px;
+  height: 770px;
 }
 
 #analysis-view .tablename-list {
@@ -445,7 +445,7 @@ input[type='checkbox'] {
   top: 22px;
   margin-right: 35px;
   float: right;
-  display: inline-block;
+  /* display: inline-block; */
   font-style: normal;
   font-weight: 400;
   line-height: 1;
@@ -641,11 +641,13 @@ a:hover {
 .arrow {
   opacity: 0.5;
   color: #000;
+  cursor: pointer;
 }
 
 .arrow:hover {
   opacity: 1;
   color: #000;
+  cursor: pointer;
 }
 
 .mar-1x {

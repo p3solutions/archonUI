@@ -128,6 +128,7 @@ export class MetalyzerHeaderComponent implements OnInit {
     this.metalyzerHeaderService.getAudit(param).subscribe(result => {
       this.auditArray = result;
     });
+    console.log(this.auditArray);
   }
 
   exportOverallpdf() {

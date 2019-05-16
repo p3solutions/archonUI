@@ -200,7 +200,7 @@
               </div>
               <div class="mat-step-data-analyzer" *ngIf="!newWSinfo">
                 <mat-horizontal-stepper linear #stepper labelPosition="bottom">
-                  <mat-step label="Connection Details">
+                  <mat-step label="Primary Table Selection">
                     <div class="panel-body dataA-panel-body">
                       <div class="col-md-12">
                         <div class="col-md-6">
@@ -237,12 +237,16 @@
                           </div>
                         </div>
                       </div>
+                      
                     </div>
-                    <div id="action-btn" class="action-btn-connection">
-                      <button type="button" (click)="gotoSecTableAndColSelection($event,stepper)" class="btn save btn-primary btn-padding matStepperNext">Next</button>
+                    <div class="col-md-5" style="text-align: right;">
+                      <pagination-controls id="dalist0" (pageChange)="getPage(page = $event)"></pagination-controls>
+                    </div>
+                    <div id="action-btn" class="action-btn-connection" style="float: right;">
+                      <button type="button"  [disabled]="selectedPrimColMap.size===0" (click)="gotoSecTableAndColSelection($event,stepper)" class="btn save btn-primary btn-padding matStepperNext">Next</button>
                     </div>
                   </mat-step>
-                  <mat-step label="Authentication">
+                  <mat-step label="Secondary Table Selection">
                       <div class="panel-body dataA-panel-body" id="panel-1">
                           <div class="col-md-12 mar-1x">
                             <div class="col-md-9 p-0">
@@ -318,12 +322,12 @@
                             <!-- <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> -->
                           </div>
                         </div>
-                    <div id="action-btn">
-                      <button (click)="gotoPrimarySel($event,stepper)" class="btn cancel matStepperPrevious btn-padding">Previous</button>
-                      <button (click)="gotoAnalyze($event,stepper)" class="btn save btn-primary btn-padding matStepperNext">Next</button>
+                    <div id="action-btn" style="float: right;">
+                      <button (click)="gotoPrimarySel($event,stepper)" class="btn btn-primary cancel matStepperPrevious btn-padding"  id="cancel-btn">Previous</button>
+                      <button (click)="gotoAnalyze($event,stepper)" [disabled]="finalSecColMap.size===0" class="btn save btn-primary btn-padding matStepperNext" style="margin-left:10px;">Next</button>
                     </div>
                   </mat-step>
-                  <mat-step label="Review details">
+                  <mat-step label="Analysis">
                       <div class="panel-body dataA-panel-body" id="panel-1">
                           <div class="col-md-4 dataA-scrollable-div-A">
                             <table class="table table-bordered">
@@ -369,12 +373,12 @@
                             </table>
                           </div>
                         </div>
-                        <div id="action-btn">
-                            <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn cancel matStepperPrevious btn-padding">Previous</button>
-                            <button (click)="dataAnalyse()" class="btn save btn-primary btn-padding matStepperNext">Analyze</button>
+                        <div id="action-btn" style="float: right;">
+                            <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn btn-primary cancel matStepperPrevious btn-padding" id="cancel-btn">Previous</button>
+                            <button (click)="dataAnalyse()" class="btn save btn-primary btn-padding matStepperNext" style="margin-left: 10px">Analyze</button>
                           </div>
                   </mat-step>
-                  <mat-step label="Review details">
+                  <mat-step label="Result">
                       <div class="panel-body dataA-panel-body" id="panel-1">
                           <div class="col-md-12 center-dev">
                             <div class="col-md-6"><strong>Analysis Status:</strong>
