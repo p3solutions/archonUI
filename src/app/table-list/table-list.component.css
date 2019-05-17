@@ -182,9 +182,9 @@ h4 {
 }
 
 .dataA-panel-body {
-  height: 430px;
-  margin-left: 5px;
-  margin-right: 150px;
+  /* height: 430px; */
+  margin-left: 75px;
+  /* margin-right: 50px; */
 }
 
 #panel-0{
@@ -192,7 +192,7 @@ h4 {
 }
 
 #panel-1{
-  height: 484px;
+  height: 434px;
 }
 
 .dataA-scrollable-div {
@@ -291,7 +291,7 @@ input[type='checkbox'] {
 
 .primary-table {
   background-color: #edf3f8;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
 }
 
 .container-tab{
@@ -357,7 +357,6 @@ input[type='checkbox'] {
 }
 
 .analyze-header {
-  margin-top: 2px;
   font-size: 16px;
 }
 
@@ -419,6 +418,11 @@ input[type='checkbox'] {
   margin-bottom: 5px;
   margin-left: 16px;
   float: left;
+}
+
+#da-arrow{
+  margin-left: 11px;
+  margin-right: 13px;
 }
 
 .table-list {
@@ -630,7 +634,7 @@ a:hover {
 }
 
 #arch-hdr {
-  padding: 6px;
+  padding: 8px;
   background-color: #64b5f6;
 }
 
@@ -648,6 +652,14 @@ a:hover {
   opacity: 1;
   color: #000;
   cursor: pointer;
+}
+
+.title-header{
+  font-size: 18px;
+}
+
+.container-da{
+  margin: 0px 70px
 }
 
 .mar-1x {
