@@ -13,8 +13,8 @@
           <!-- Indicators -->
           <ul class="multi-step-bars" id="back-none" >
             <li> 
-              <div class="col-md-6 text-center header-tab"><strong>Primary Table: {{primaryTable}}</strong></div>
-              <div class="col-md-6 text-center header-tab" id="right-align"><strong style="margin-left: 50px;">Secondary Table: {{secondaryTable}}</strong></div>
+              <div class="col-md-6" style="text-align: left;"><strong>Primary Table: {{primaryTable}}</strong></div>
+              <div class="col-md-6 text-center" id="right-align"><strong style="margin-left: 50px;">Secondary Table: {{secondaryTable}}</strong></div>
             </li>
           </ul>
           <ol class="only carousel-indicators hide">
@@ -24,7 +24,7 @@
           <div class="carousel-inner" role="listbox" style="padding-top: 16px;">         
 
             <div step="0" class="item active form-group second-last second">
-              <div class="col-md-12">
+              <div class="col-md-12" id="edit-relationship-table">
                   <table mat-table [dataSource]="joinDetailsArray" class="mat-elevation-z4" style="width: 100%;">
                     
                     <ng-container matColumnDef="isKey">
@@ -78,8 +78,9 @@
         </div>
         <div class="col-md-12"> 
           <!-- <button type="button" class="btn btn-primary">Automatch Column</button> -->
-          <button type="button" class="btn btn-primary cancel" id="cancel-btn" (click)="closeErrorMsg();resetSelection()"  data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="resetSelection(); closeErrorMsg();">Reset</button>
+          <button type="button" class="btn btn-primary cancel" id="cancel-btn" (click)="closeErrorMsg();resetSelection()" data-dismiss="modal" style="margin-right: 14px;">Close</button>
+          <button type="button" class="btn btn-primary" (click)="autocolumnMatchMode(); closeErrorMsg();">Automatch Column</button>
+          <button type="button" class="btn btn-primary" (click)="resetSelection(); closeErrorMsg();" style="margin-right: 14px;">Reset</button>
           <button type="button" class="btn btn-primary" (click)="updateRelation(); closeErrorMsg();">update</button>
       </div>
       </div>

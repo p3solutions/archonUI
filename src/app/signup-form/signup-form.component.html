@@ -30,7 +30,10 @@
           <mat-form-field>
             <input type="password" matInput name="signin-password" formControlName="password" placeholder="Password">
           </mat-form-field>
-          <mat-error *ngIf="signUpForm.get('password').invalid" style="text-align:left">
+          <mat-hint *ngIf="signUpForm.get('password').invalid && showHint == true" style="text-align:left">
+            Password must contain atleast 8 characters, 1 lower case letter [a-z], 1 upper case letter [A-Z], 1 numeric character [0-9] and 1 special character.
+           </mat-hint>
+          <mat-error *ngIf="signUpForm.get('password').invalid && showHint == false" style="text-align:left">
             *Password must contain atleast 8 characters, 1 lower case letter [a-z], 1 upper case letter [A-Z], 1 numeric character [0-9] and 1 special character.
            </mat-error>
         </div>
@@ -41,7 +44,7 @@
           </mat-form-field>
           <mat-error style="text-align:left"
             *ngIf="signUpForm.get('confirmPassword').errors && signUpForm.get('confirmPassword').errors.ConfirmPassword">
-            Password and Confirm Password doesn't match.
+            *Password and Confirm Password doesn't match.
           </mat-error>
         </div>
         <!-- <div class="col-md-12 form-group has-feedback">

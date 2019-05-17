@@ -5,7 +5,7 @@
       <a (click)="gotoDashboard()" data-tooltip="Back">
         <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
       </a>
-      <h3>  Status Monitor  <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span> </h3>
+      <h3>Status Monitoring<span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span> </h3>
     </div>
   </div>
 
@@ -146,10 +146,11 @@
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">
                     <td>{{i.name}}</td>
-                    <td>{{i.value !== '' ? i.value : 'NA'}}</td>
+                    <td>{{i.value !== null ? i.value : 'NA'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
-                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}</td></tr>
+                  <!-- <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}</td></tr> -->
+                  <tr><td>{{jobMessage?.name}}</td><td><textarea style="width:100%; overflow:scroll; resize:vertical;" ngModel="{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}" rows="3" id="comment"></textarea></td></tr>
                   <tr *ngIf="jobOutput !== null"><td colspan="2"><h4><b>Output</b></h4></td></tr>
                   <tr *ngIf="jobOutput !== null"><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
                   <tr><td colspan="2"><h4><b>ServerConfig</b></h4></td></tr>

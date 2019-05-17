@@ -26,6 +26,8 @@ export class SignupFormComponent implements OnInit {
   message = 'User Successfully Registered. Re-directing to Sign-In Page.';
   successMessage = false;
   thisComponent = this;
+  showHint = true;
+
 
   constructor(
     private signupService: SignupFormService,
@@ -42,6 +44,13 @@ export class SignupFormComponent implements OnInit {
       } else {
         this.signUpForm.get('confirmPassword').disable();
         this.signUpForm.controls['confirmPassword'].setValue('');
+      }
+    });
+    this.signUpForm.get('password').valueChanges.subscribe(response1 => {
+      if (this.signUpForm.get('password').invalid) {
+        this.showHint = false;
+      } else {
+        this.showHint = true;
       }
     });
     // setTimeout(() => this.enableSignUp(), 3000);
