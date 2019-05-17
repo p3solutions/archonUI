@@ -13,6 +13,7 @@ import {
 } from './ert-filter';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
@@ -226,7 +227,6 @@ export class ErtTableComponent implements OnInit {
   getErtAvailableTable(page) {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.ertService.getErtAvailableTable(this.ertJobId, this.avilableStartIndex).subscribe(result => {
-        console.log(result);
         this.ertAvillableTableList = result;
         this.avilableTableCount = this.ertAvillableTableList.erttableList.sourceTableCount -
           this.ertAvillableTableList.erttableList.selectedTableCount;
@@ -708,10 +708,11 @@ export class ErtTableComponent implements OnInit {
     } else {
       document.getElementById('addFilterModelId').click();
     }
-    this.parentChildMap = [];
     this.filterdata = new Tree();
     this.filterConfigColumnNameList = [];
     this.dataOrderList = [];
+    this.maxNode = 3;
+    let filterMap = new Map();
     this.filterConfigColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
     this.orderFilterConfigColumnNameList = this.selectedTableList.filter
@@ -722,10 +723,13 @@ export class ErtTableComponent implements OnInit {
     if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
       temp.filterAndOrderConfig.filterQuery !== '' && temp.filterAndOrderConfig.filterConfig !== null &&
       temp.filterAndOrderConfig.filterQuery !== null) {
-      console.log(temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"'));
-      const splitFilterAndOrder = temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"').split('@');
-      this.dataOrderList = JSON.parse(splitFilterAndOrder[1].replace(/'/g, '"'));
-      this.filterdata = JSON.parse(splitFilterAndOrder[0].replace(/'/g, '"'));
+      filterMap = new Map(JSON.parse(temp.filterAndOrderConfig.filterConfig.replace(/'/g, '"')));
+      if (filterMap.get('filterList') !== '') {
+        this.filterdata = JSON.parse(filterMap.get('filterList').replace(/'/g, '"'));
+      }
+      if (filterMap.get('orderLIst') !== '') {
+        this.dataOrderList = JSON.parse(filterMap.get('orderList').replace(/'/g, '"'));
+      }
     }
     this.removeDuplicateColumnForOrder();
   }
@@ -754,32 +758,80 @@ export class ErtTableComponent implements OnInit {
   }
 
   createFilterColumnConfig() {
+    const filterMap = new Map();
     let treeStack = [];
     let Expression;
     let tempString = 'order by';
-    treeStack = getPreorderDFS(this.filterdata);
-    Expression = this.constructExpression(treeStack.reverse());
-    console.log(JSON.stringify(this.dataOrderList).replace(/"/g, '\''));
-    this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
-      filterConfig = JSON.stringify(this.filterdata).replace(/"/g, '\'') + '@' + JSON.stringify(this.dataOrderList).replace(/"/g, '\'');
-    if (this.dataOrderList.length !== 0) {
-      for (const item of this.dataOrderList) {
-        tempString = tempString + item.column + ' ';
-        if (item.order !== null) {
-          tempString = tempString + ' ' + item.order;
+    const temp = this.validateTree(this.filterdata.root);
+    if (temp === null) {
+      treeStack = getPreorderDFS(this.filterdata);
+      Expression = this.constructExpression(treeStack.reverse());
+      filterMap.set('filterList', JSON.stringify(this.filterdata));
+      if (this.dataOrderList.length !== 0) {
+        filterMap.set('orderList', JSON.stringify(this.dataOrderList));
+        for (const item of this.dataOrderList) {
+          tempString = tempString + item.column + ' ';
+          if (item.order !== null) {
+            tempString = tempString + item.order;
+          }
+          tempString = tempString + ',';
         }
-        tempString = tempString + ', ';
+      } else {
+        tempString = '';
+        filterMap.set('orderList', '');
       }
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
+        filterConfig = JSON.stringify(Array.from(filterMap.entries())).replace(/"/g, '\'');
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.filterQuery
+        = Expression + tempString.substring(0, tempString.length - 1);
     } else {
-      tempString = '';
+      if (this.filterdata.root.children.length === 0) {
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
+          filterConfig = '';
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.filterQuery = '';
+        filterMap.set('filterList', '');
+        filterMap.set('orderList', JSON.stringify(this.dataOrderList));
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
+          filterConfig = JSON.stringify(Array.from(filterMap.entries())).replace(/"/g, '\'');
+        tempString = tempString + ' ';
+        for (const item of this.dataOrderList) {
+          tempString = tempString + item.column + ' ';
+          if (item.order !== null) {
+            tempString = tempString + item.order;
+          }
+          tempString = tempString + ',';
+        }
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
+          filterQuery = tempString.substring(0, tempString.length - 1);
+      } else {
+        if (this.dataOrderList.length !== 0) {
+          console.log(this.dataOrderList);
+        }
+        // alert('Invalid Filter Condition');
+      }
     }
-    this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.filterQuery
-      = Expression + tempString.substring(0, tempString.length - 1);
   }
+  // tslint:disable-next-line: no-shadowed-variable
+  validateTree(element) {
+    if (element.children.length === 0) {
+      if (element.column === null || element.condition === null || element.value === '') {
+        return false;
+      }
+    } else if (element.children != null) {
+      let i;
+      let result = null;
+      for (i = 0; result == null && i < element.children.length; i++) {
+        result = this.validateTree(element.children[i]);
+      }
+      return result;
+    }
+    return null;
+  }
+
 
   insertFilterNode(id: number, operation: string, column: string, condition: string, value: string, event) {
     if (operation === null || condition === null || value === '') {
-      alert('Please select all the value');
+      // alert('Please select all the value');
     } else {
       const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, []);
       if (id === 1) {
@@ -792,8 +844,7 @@ export class ErtTableComponent implements OnInit {
         filterTreeNode.condition = null;
         filterTreeNode.column = null;
         filterTreeNode.operation = operation;
-        this.parentChildMap.push({ child: 2, parent: 1 });
-        this.parentChildMap.push({ child: 3, parent: 1 });
+
       } else {
         const filterTreeNode = searchTree(this.filterdata.root, id);
         filterTreeNode.operation = operation;
@@ -804,28 +855,33 @@ export class ErtTableComponent implements OnInit {
         this.maxNode = this.maxNode + 1;
         const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false, column, condition, value, 18, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
-        this.parentChildMap.push({ child: this.maxNode, parent: id });
+
         this.maxNode = this.maxNode + 1;
         const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
-        this.parentChildMap.push({ child: this.maxNode, parent: id });
+
       }
     }
     event.stopPropagation();
   }
 
   constructExpression(postfix: string[]): string {
+    const expressionStack: string[] = [];
     for (let i = 0; i < postfix.length; i++) {
       if (postfix[i] !== 'AND' && postfix[i] !== 'OR') {
-        this.expressionStack.push(postfix[i]);
+        expressionStack.push(postfix[i]);
       } else {
-        const temp1 = this.expressionStack.pop();
-        const temp2 = this.expressionStack.pop();
-        const temp = '(' + temp1 + ' ' + postfix[i] + ' ' + temp2 + ')';
-        this.expressionStack.push(temp);
+        const temp1 = expressionStack.pop();
+        const temp2 = expressionStack.pop();
+        if (temp1 === undefined || temp2 === undefined) {
+          return 'Invalid';
+        } else {
+          const temp = '(' + temp1 + ' ' + postfix[i] + ' ' + temp2 + ')';
+          expressionStack.push(temp);
+        }
       }
     }
-    return this.expressionStack[0].substring(1, this.expressionStack[0].length - 1);
+    return expressionStack[0].substring(1, expressionStack[0].length - 1);
   }
 
   addAvailableTable() {
@@ -842,15 +898,16 @@ export class ErtTableComponent implements OnInit {
   }
 
   deleteFilterConfigTreeNode(id: number) {
-    const parent = this.parentChildMap.filter(a => a.child === id)[0].parent;
-    for (const item of this.parentChildMap.filter(a => a.parent === parent)) {
-      const filterTreeNode2 = searchTree(this.filterdata.root, item.child);
-      this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
-      const index = this.parentChildMap.findIndex(a => a.child === item.child)[0];
-      if (index !== -1) {
-        this.parentChildMap.splice(index, 1);
-      }
+    let id1: number;
+    if (id % 2 === 0) {
+      id1 = id + 1;
+    } else {
+      id1 = id - 1;
     }
+    const filterTreeNode1 = searchTree(this.filterdata.root, id);
+    const filterTreeNode2 = searchTree(this.filterdata.root, id1);
+    this.filterdata = deleteNode(this.filterdata, filterTreeNode1);
+    this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
   }
 
   addOrder() {
