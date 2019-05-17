@@ -50,6 +50,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   ngOnInit() {
     const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
     this.workspaceID = this.cookieService.get('workspaceId');
+    this.deleteSearchResult('');
     this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;
     if (this.screenInfoObject.sessionAdhocModel.selectedTableListString !== '') {
       const tempTableList = JSON.parse(this.screenInfoObject.sessionAdhocModel.selectedTableListString);
@@ -169,7 +170,7 @@ export class AdhocTableSelectionComponent implements OnInit {
     }
   }
 
-  deleteSearchResult() {
+  deleteSearchResult(value: string) {
     this.adhocScreenService.updateSearchCriteria([]);
     this.adhocScreenService.updateSearchResult(new SearchResult());
     this.adhocScreenService.updateSearchCriterion(new SearchCriteria());
@@ -182,7 +183,9 @@ export class AdhocTableSelectionComponent implements OnInit {
     this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = null;
     this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
     this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable = '';
-    document.getElementById(this.tempValue).click();
+    if (value === 'html') {
+      document.getElementById(this.tempValue).click();
+    }
   }
 
   cancelSearchResult() {

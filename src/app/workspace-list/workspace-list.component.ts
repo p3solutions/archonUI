@@ -79,6 +79,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             this.isProgress = false;
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
             this.workspaceActions = this.workspaceListInfo;
+            console.log(this.workspaceActions);
         });
     }
 

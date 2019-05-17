@@ -237,7 +237,7 @@ td.tdr {
     font-family: "Roboto", sans-serif;
   }
   
-  ::ng-deep svg {
+  ::ng-deep #char-table svg {
     height: 6vh;
   }
   

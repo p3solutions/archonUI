@@ -87,3 +87,40 @@ input:checked+.slider:before {
   position: absolute;
   bottom: 8px;
 }
+
+.modal-header {
+  padding: 10px;
+  padding-left: 15px;
+  background-color: #2879ff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.modal-close {
+  background-color: #2879ff;
+  border: #2879ff;
+  color: #ffffff;
+}
+
+.modal-body {
+  min-height: 55px;
+  border-bottom: 0px solid #E6E9ED;
+  padding: 20px 2px 0px 3px;
+  text-align: center
+}
+
+.btn.modal-cancel {
+  background-color: #2879ff;
+  border: #2879ff;
+  color: #ffffff;
+  transition: 0.5s;
+}
+
+.btn.modal-cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.modal-title {
+  color: white;
+  text-align: left
+}

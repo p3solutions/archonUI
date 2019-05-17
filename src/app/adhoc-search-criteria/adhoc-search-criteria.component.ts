@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   TableColumnNode, SearchCriteria, ResultFields, SearchResult, Tab, NestedLinks, SelectedTables,
-  AdhocHeaderInfo,
-  Adhoc,
-  SidePanel,
-  InlinePanel,
-  getUserId
+  AdhocHeaderInfo, Adhoc, SidePanel, InlinePanel, getUserId
 } from '../adhoc-landing-page/adhoc';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -42,6 +38,8 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   tempHeader = new AdhocHeaderInfo();
   successMsg = '';
   searchType = 'Table';
+  searchResult = new SearchResult();
+  searchCriteria: SearchCriteria[] = [];
   treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
   transformer = (node: TableColumnNode, level: number) => {
     return {
@@ -75,11 +73,16 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     }
     this.initTab();
     this.getTableColumnList();
+    this.removePreviousSearchResultAndCriteria();
   }
 
   filterOnlySelectedTable() {
-    const selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
-    const joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    let selectedValues = '';
+    let joinListMap: any = '';
+    if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues !== '') {
+      selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+      joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    }
     const tableNames = selectedValues;
     const selectedTables: SelectedTables[] = [];
     for (const table of tableNames) {
@@ -161,7 +164,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
           if (temp.length > 0) {
             tempTableColumnNode.columns = temp;
             tempTableColumnNode.id = node.id;
-            tempTableColumnNode.name =  node.name;
+            tempTableColumnNode.name = node.name;
             tempTableColumnNode.type = node.type;
             tempTableColumnNodeList.push(tempTableColumnNode);
           }
@@ -307,5 +310,97 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   clear() {
     this.adhocScreenService.updateResultField(new ResultFields());
     this.adhocScreenService.updateSearchCriteria([]);
+    this.adhocScreenService.updateSearchResult(new SearchResult());
+    this.checkSearchResultLength();
+  }
+
+  checkSearchResultLength() {
+    this.adhocScreenService.searchResult.subscribe(result => {
+      this.searchResult = JSON.parse(JSON.stringify(result));
+      if (this.searchResult.inLinePanel === null) {
+        this.searchResult.inLinePanel = new InlinePanel();
+      }
+      if (this.searchResult.sidePanel === null) {
+        this.searchResult.sidePanel = new SidePanel();
+      }
+    });
+    let searchResultLength = 0;
+    for (const item of this.searchResult.mainPanel) {
+      searchResultLength = searchResultLength + 1;
+    }
+    for (const inlineTab of this.searchResult.inLinePanel.tabs) {
+      for (const item of inlineTab.resultFields) {
+        searchResultLength = searchResultLength + 1;
+      }
+    }
+    for (const sideTab of this.searchResult.sidePanel.tabs) {
+      for (const item of sideTab.resultFields) {
+        searchResultLength = searchResultLength + 1;
+      }
+    }
+    this.searchResultLength = searchResultLength;
+  }
+
+  removePreviousSearchResultAndCriteria() {
+    let selectedValues = '';
+    let joinListMap: any = '';
+    if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues !== '') {
+      selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+      joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    }
+    const tableNames = selectedValues;
+    const selectedTables: string[] = [];
+    for (const table of tableNames) {
+      const tableId = joinListMap.get(table)[0].primaryTableId;
+      selectedTables.push(tableId);
+    }
+    this.adhocScreenService.updatedSearchResult.subscribe(result => {
+      this.searchResult = JSON.parse(JSON.stringify(result));
+    });
+    this.adhocScreenService.updatedSearchCriteria.subscribe(result => {
+      this.searchCriteria = JSON.parse(JSON.stringify(result));
+    });
+    for (let item = 0; item < this.searchCriteria.length; item++) {
+      if (!selectedTables.includes(this.searchCriteria[item].tableId)) {
+        this.searchCriteria[item].notSelected = true;
+      } else {
+        this.searchCriteria[item].notSelected = false;
+      }
+    }
+
+    this.searchCriteria = this.searchCriteria.filter(a => a.notSelected === false);
+
+    for (let item = 0; item < this.searchResult.mainPanel.length; item++) {
+      if (!selectedTables.includes(this.searchResult.mainPanel[item].tableId)) {
+        this.searchResult.mainPanel[item].notSelected = true;
+      } else {
+        this.searchResult.mainPanel[item].notSelected = false;
+      }
+    }
+    this.searchResult.mainPanel = this.searchResult.mainPanel.filter(a => a.notSelected === false);
+
+    for (const inlineTab of this.searchResult.inLinePanel.tabs) {
+      for (let item = 0; item < inlineTab.resultFields.length; item++) {
+        if (!selectedTables.includes(inlineTab.resultFields[item].tableId)) {
+          inlineTab.resultFields[item].notSelected = true;
+        } else {
+          inlineTab.resultFields[item].notSelected = false;
+        }
+      }
+      inlineTab.resultFields = inlineTab.resultFields.filter(a => a.notSelected === false);
+    }
+
+    for (const sideTab of this.searchResult.sidePanel.tabs) {
+      for (let item = 0; item < sideTab.resultFields.length; item++) {
+        if (!selectedTables.includes(sideTab.resultFields[item].tableId)) {
+          sideTab.resultFields[item].notSelected = true;
+        } else {
+          sideTab.resultFields[item].notSelected = false;
+        }
+      }
+      sideTab.resultFields = sideTab.resultFields.filter(a => a.notSelected === false);
+    }
+    this.adhocScreenService.updateSearchResult(this.searchResult);
+    this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
   }
 }
