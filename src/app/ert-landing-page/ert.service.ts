@@ -34,6 +34,7 @@ export class ErtService {
   runjobUrl = this.apiUrl + 'ert/runjob';
   deleteErtJobUrl = this.apiUrl + 'ert/ertJobSession?jobId=';
   extractConfigUrl = this.apiUrl + 'ert/extractconfig?ertJobId=';
+  queryValidationUrl = this.apiUrl + 'ert/queryValidation';
   schemaResultsTableCount = 0;
   joinListMap = new Map();
   mmrVersion = '';
@@ -137,6 +138,14 @@ export class ErtService {
 
   deleteErtJob(ertJobId: any): Observable<any> {
     return this.http.delete<any>(this.deleteErtJobUrl + ertJobId, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractDataForRunJob),
+        catchError(this.handleError('deleteErtJob', []))
+      );
+  }
+
+  validQuery(param: any): Observable<any> {
+    param.userId = this.userInfoService.getUserId();
+    return this.http.post<any>(this.queryValidationUrl, param, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractDataForRunJob),
         catchError(this.handleError('deleteErtJob', []))
       );

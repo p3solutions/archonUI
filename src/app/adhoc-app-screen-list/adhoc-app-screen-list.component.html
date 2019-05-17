@@ -56,7 +56,7 @@
     <mat-form-field>
       <input matInput name="screen-filter" #input placeholder="Search">
     </mat-form-field>
-    <span class="fa-stack" (click)="addScreen()" matTooltip="Create Screen">
+    <span class="fa-stack" (click)="!(applicationInfoList.length===0) && addScreen()" matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
       <i class="fa fa-circle fa-stack-2x"></i>
       <i class="fa fa-circle-thin fa-stack-2x"></i>
       <i class="fa fa-plus fa-stack-1x"></i>
@@ -94,7 +94,25 @@
         <th style="width:32%" mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
         <td class="word-breaker" style="width:32%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
       </ng-container>
-      <ng-container matColumnDef="edit">
+      <ng-container matColumnDef="updatedBy">
+        <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated By </th>
+        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
+      </ng-container>
+      <ng-container matColumnDef="updatedDate">
+        <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </th>
+        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element">
+          {{element.updatedAt * 1000 | date:'medium'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> action </th>
+        <td class="word-breaker" style="width:5%" mat-cell *matCellDef="let element">
+          <button mat-icon-button [matMenuTriggerFor]="actionmenu">
+            <i class="material-icons">
+              more_vert
+            </i>
+          </button></td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="edit">
         <th style="width:6%" mat-header-cell *matHeaderCellDef> Edit </th>
         <td style="width:6%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id, element)">
           <i class="material-icons">
@@ -130,7 +148,7 @@
             </i>
           </a>
         </td>
-      </ng-container>
+      </ng-container> -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
@@ -147,6 +165,25 @@
     <span>{{item.screenName}}</span>
   </button>
 </mat-menu>
+<mat-menu #actionmenu="matMenu" yPosition="below">
+  <button mat-menu-item>
+    <mat-icon>edit</mat-icon>
+    <span>
+      Edit</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>add</mat-icon>
+    <span>Add Nested Link</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>delete</mat-icon>
+    <span>Delete</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>save_alt</mat-icon>
+    <span>Download</span>
+  </button>
+</mat-menu>
 
 <button style="display:none" type="button" id="meta-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
   data-backdrop="static" data-toggle="modal" data-target="#metaDataVersion">Open Modal</button>
@@ -160,8 +197,8 @@
         <p>Please add metadata version for this workspace.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="gotoMetadata('cancel')" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
-          data-dismiss="modal">Ok</button>
+        <button type="button" (click)="gotoMetadata('cancel')"
+          class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" (click)="gotoMetadata('metadata')"
           class="btn btn-default adhoc-modal-btn" data-dismiss="modal">Ok</button>
       </div>
@@ -181,7 +218,8 @@
         <p>{{successMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
       </div>

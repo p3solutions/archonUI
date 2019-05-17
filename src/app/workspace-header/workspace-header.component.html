@@ -17,7 +17,11 @@
       </div>
 
       <div class="col-md-1 mt-29 pull-left pull-more" *ngIf="enableCreate">
-          <span matTooltip="Create New Workspace" (click)="openCreateWSModal()">
+          <!-- <span matTooltip="Create New Workspace" (click)="openCreateWSModal()">
+            <i class="material-icons plus">
+              </i>
+        </span> -->
+        <span matTooltip="Create New Workspace" (click)="createWorkspace()">
             <i class="material-icons plus">
               </i>
         </span>

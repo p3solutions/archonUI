@@ -80,7 +80,7 @@ export class ConfiguredDB {
     owner: OwnerObject;
     databaseTypeInfo: DatabaseObject;
     status: string;
-
+    isChecked = false;
 }
 
 

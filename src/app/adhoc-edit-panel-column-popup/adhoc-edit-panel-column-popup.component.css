@@ -156,6 +156,11 @@ pre {
   height: unset;
 }
 
+#filter-hide-div {
+  display: flex;
+  justify-content: space-between
+}
+
 ::ng-deep #mask-div svg {
   height: unset;
 }

@@ -38,7 +38,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     wsName: any;
     wsDesc: any;
     WSeditId: any;
-  deleteId: string;
+    deleteId: string;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -65,30 +65,31 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.getWSInfoID();
         const check = this.userinfoService.getRoleList();
         for (const i of check) {
-         if (this.enableCreateRoles.includes(i)) {
-           this.enableCreate = true;
-           break;
-         }
+            if (this.enableCreateRoles.includes(i)) {
+                this.enableCreate = true;
+                break;
+            }
         }
     }
 
     getWorkspaceListInfo(id: string) {
         this.workspaceListInfo = [];
-            this.workspaceListService.getList(id).subscribe(result => {
+        this.workspaceListService.getList(id).subscribe(result => {
             this.workspaceListInfo = result;
             this.isProgress = false;
             this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
             this.workspaceActions = this.workspaceListInfo;
+            console.log(this.workspaceActions);
         });
     }
 
     getWSInfoID() {
-            this.workspaceListService.getWSInfoID(this.workspaceHeaderService.getSelectedWorkspaceId()).subscribe(
-                (result) => {
-                  this.WSListInfo = result;
-                }
-              );
-      }
+        this.workspaceListService.getWSInfoID(this.workspaceHeaderService.getSelectedWorkspaceId()).subscribe(
+            (result) => {
+                this.WSListInfo = result;
+            }
+        );
+    }
 
     reloadWSlist() {
         this.getWorkspaceListInfo(this.token_data.user.id);
@@ -96,7 +97,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
 
     viewWSmodal(workspace) {
         this.WSListInfo = workspace;
-      }
+    }
 
     gotoManagementPanel() {
         this.router.navigate(['management-landing-page/management-panel']);
@@ -126,61 +127,66 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
 
     WSdelete(deleteId: string) {
         this.WSdeleteId = deleteId;
-      }
+    }
 
-      deleteWS() {
+    deleteWS() {
         this.workspaceListService.deleteWS(this.WSdeleteId).subscribe((result) => {
             document.getElementById('deletemsg').click();
-              this.successmsg = result;
-                this.success = true;
-                this.deleteId = this.WSdeleteId;
-                this.workspaceHeaderService.selected = undefined;
-                    this.getWorkspaceListInfo(this.token_data.user.id);
-                    setTimeout(() => {
-                      this.getWorkspaceListInfo(this.token_data.user.id);
-                  }, 15000);
-            },
+            this.successmsg = result;
+            this.success = true;
+            this.deleteId = this.WSdeleteId;
+            this.workspaceHeaderService.selected = undefined;
+            this.getWorkspaceListInfo(this.token_data.user.id);
+            setTimeout(() => {
+                this.getWorkspaceListInfo(this.token_data.user.id);
+            }, 15000);
+        },
             (error) => {
-              document.getElementById('deletemsg').click();
-              this.error = true;
-              this.errormsg = error.error.errorMessage;
+                document.getElementById('deletemsg').click();
+                this.error = true;
+                this.errormsg = error.error.errorMessage;
             }
-            );
-          }
+        );
+    }
 
     closeErrorMsg() {
         this.success = false;
         this.error = false;
-      }
-      editWS(workspace) {
+    }
+
+    createWorkspace() {
+        this.router.navigate(['create-workspace'], { queryParams: { r: 'workspace' } });
+    }
+
+    editWS(workspace) {
         this.WSListInfo = workspace;
         this.wsName = workspace.workspaceName;
         this.wsDesc = workspace.requestMessage;
         this.WSeditId = workspace.id;
-      }
-      updateWS() {
-            const params = {
+    }
+    updateWS() {
+        const params = {
             id: this.WSeditId,
-            workspaceName : this.wsName,
-            requestMessage : this.wsDesc
-          };
+            workspaceName: this.wsName,
+            requestMessage: this.wsDesc
+        };
         this.workspaceListService.updateWS(this.WSeditId, params).subscribe((result: any) => {
-             document.getElementById('editmsg').click();
-             if (result.success) {
-              this.successmsg = 'successfully updated';
-             } else {
-              this.successmsg = result.errorMessage;
-             }
-                this.success = true;
-                    this.getWorkspaceListInfo(this.token_data.user.id);
-            },
-            (error) => {
-              document.getElementById('editmsg').click();
-              this.error = true;
-              this.errormsg = error.error.errors[0].code;
+            document.getElementById('editmsg').click();
+            if (result.success) {
+                this.successmsg = 'successfully updated';
+            } else {
+                this.successmsg = result.errorMessage;
             }
-            );
-          }
+            this.success = true;
+            this.getWorkspaceListInfo(this.token_data.user.id);
+        },
+            (error) => {
+                document.getElementById('editmsg').click();
+                this.error = true;
+                this.errormsg = error.error.errors[0].code;
+            }
+        );
+    }
 }
 
 
