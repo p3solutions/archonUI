@@ -181,6 +181,27 @@ h4 {
   margin-left: -50px;
 }
 
+.inpt-sty{
+  border-bottom: 1px solid;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.selected-sty{
+  background: aliceblue;
+  margin-top: 11px;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  padding-left: 19px;
+}
+
+.paging{
+  margin-left: 94px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
 .dataA-panel-body {
   /* height: 430px; */
   margin-left: 75px;
@@ -188,16 +209,29 @@ h4 {
 }
 
 #panel-0{
-  height: 464px;
+  height: 200px;
+  margin-bottom: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.selected-sty1{
+  padding: 7px;
+  background-color: aliceblue;
+}
+
+.selected-sty2{
+  padding: 7px;
+  background-color: aliceblue;
 }
 
 #panel-1{
-  height: 434px;
+  height: 405px;
 }
 
 .dataA-scrollable-div {
   overflow: scroll;
-  max-height: 330px;
+  max-height: 240px;
 }
 
 .dataA-scrollable-div-A {
@@ -657,6 +691,7 @@ a:hover {
 .title-header{
   font-size: 18px;
 }
+
 
 .container-da{
   margin: 0px 70px

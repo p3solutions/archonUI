@@ -93,6 +93,9 @@ export class TableListComponent implements OnInit {
   currentStepNo = null;
   @ViewChild('stepper') stepper: MatStepper;
   value: any;
+  searchPrimary;
+  searchSec1;
+  searchSec2;
 
   constructor(
     private tablelistService: TableListService,

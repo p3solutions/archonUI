@@ -63,7 +63,7 @@
         <ng-container matColumnDef="globalGroup">
           <th style="width:11%" mat-header-cell *matHeaderCellDef> Global Group </th>
           <td style="width:11%" mat-cell *matCellDef="let element" class="global-select">
-            <select [ngModel]="element.globalGroupId"
+            <select [ngModel]="element.globalGroupId" [disabled]="true"
               (change)="changeGlobalGroup(element.id,$event.target.value)">
               <option *ngFor="let item of globalGroupList" [value]="item.id">
                 {{item.groupName}}
@@ -127,7 +127,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator #matPagintor1 id="user-table-svg" [length]="totalUser" [pageSize]="50" showFirstLastButtons>
+    <mat-paginator #matPagintor1 id="user-table-svg" [length]="dataSource.totalUserSubject.getValue()" [pageSize]="50" showFirstLastButtons>
     </mat-paginator>
   </div>
 </div>
