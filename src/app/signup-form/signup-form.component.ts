@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -7,6 +7,8 @@ import { SignupFormService } from './signup-form.service';
 import { ErrorObject } from '../error-object';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { ConfirmPasswordValidator, PasswordValidator } from './confirm-password-validator';
+import { response } from '../table-list/responemmr';
+import { NgOnChangesFeature } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-signup-form',
@@ -34,6 +36,14 @@ export class SignupFormComponent implements OnInit {
 
   ngOnInit() {
     this.createSignUpForm();
+    this.signUpForm.get('password').valueChanges.subscribe(response1 => {
+      if (this.signUpForm.get('password').valid) {
+        this.signUpForm.get('confirmPassword').enable();
+      } else {
+        this.signUpForm.get('confirmPassword').disable();
+        this.signUpForm.controls['confirmPassword'].setValue('');
+      }
+    });
     // setTimeout(() => this.enableSignUp(), 3000);
   }
   createSignUpForm() {
@@ -43,11 +53,12 @@ export class SignupFormComponent implements OnInit {
       lastName: new FormControl('', [Validators.required]),
       emailAddress: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, PasswordValidator.strong,
-        Validators.minLength(8)]),
-      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+      Validators.minLength(8)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
     }, {
         validator: ConfirmPasswordValidator.MatchPassword
       });
+    this.signUpForm.get('confirmPassword').disable();
   }
 
   onSignUp() {
@@ -85,6 +96,9 @@ export class SignupFormComponent implements OnInit {
       }
     );
   }
+
+
+
   // enableSignUp() {
   //   if (this.signUpForm.value.emailAddress && this.signUpForm.value.password && this.signUpForm.value.name) {
   //     this.enableSignUpBtn = true;

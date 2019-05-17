@@ -435,7 +435,7 @@
             <div class="form-group">Delete</div>
           </div>
           <div class="form-inline" *ngFor="let item of configColumnList;let i=index" id="config-table">
-            <div class="form-group">#</div>
+            <div class="form-group">{{i + 1}}</div>
             <div class="form-group">{{item.selectedConfigFunction}}</div>
             <div class="form-group">{{item.selectedColumnName}}</div>
             <div class="form-group">{{item.outputType}}</div>
