@@ -22,8 +22,10 @@ export class UserWorkspaceService {
     this.http = http;
   }
 
-  checkDBConnection(testDbParam: AnyObject) {
+  checkDBConnection(testDbParam: AnyObject, testServerParam: AnyObject ) {
     testDbParam.ownerId = this.userinfoService.getUserId();
+    testDbParam.userName = testServerParam.userName;
+    testDbParam.password = testServerParam.password;
     return this.http.post(this.checkDbConnectionUrl, testDbParam, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractData),
       catchError(this.handleError<any>('test-db-connection'))
@@ -62,8 +64,11 @@ export class UserWorkspaceService {
   }
 
   // Create new Database Configuration service api
-  createNewDBConfig(dbParam: AnyObject) {
+  createNewDBConfig(dbParam: AnyObject, testServerParam: AnyObject) {
     dbParam.ownerId = this.userinfoService.getUserId();
+    dbParam.userName = testServerParam.userName;
+    dbParam.password = btoa(testServerParam.password);
+    dbParam.isEncoded = true;
     return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, dbParam, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractData),
       catchError(this.handleError<WorkspaceObject>('createNewDBConfig'))

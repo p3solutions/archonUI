@@ -56,7 +56,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   dataSource: ScreenDataSource;
   screenInfo = new Adhoc();
   displayedColumns: string[] = ['position', 'link', 'screenName', 'parentScreenInfo.screenName',
-    'screenDesc', 'edit', 'nestedLink', 'delete', 'download'];
+    'screenDesc', 'updatedBy', 'updatedDate', 'action'];
   screenInfoList: Adhoc[] = [];
   applicationInfoList: ApplicationInfo[] = [];
   selectedAppObject = new ApplicationInfo();
@@ -167,6 +167,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.addPosition();
     this.dataSource.connect().subscribe(result => {
       this.screenInfoList = result;
+
       this.totalScreen = (this.paginator.pageIndex + 1) * 50;
       if (this.dataSource.paginationRequired) {
         this.totalScreen = this.totalScreen + 50;

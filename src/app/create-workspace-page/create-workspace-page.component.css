@@ -1,0 +1,304 @@
+#create-workspace-landing {
+  margin: 0 auto;
+  width: 57%;
+  margin-top: 2%
+}
+
+.mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+::ng-deep #create-workspace-landing .mat-horizontal-content-container {
+  overflow: hidden;
+  padding: 0 0px 0px 1px !important;
+}
+
+
+.workspace-detail-form {
+  padding-top: 3%
+}
+
+.workspace-detail {
+  display: flex;
+  align-items: flex-end;
+}
+
+.form-field-workspace {
+  width: 50%;
+  padding-right: 4%;
+}
+
+.form-field-workspace-owner {
+  width: 49%;
+}
+
+.form-field-workspace-date {
+  padding-top: 2%;
+}
+
+#action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+}
+
+#action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+#action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+}
+
+#action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+#action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+#action-btn {
+  margin: 17px;
+  text-align: right;
+  margin-right: 4px
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+  text-align: left;
+}
+
+::ng-deep #create-workspace-landing svg {
+  height: unset;
+}
+
+th {
+  color: #0c0c0c;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.workspace-name-info {
+  border-radius: 2px;
+  background-color: #f3f3f3;
+  font-size: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+  padding-left: 8px;
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.database-search {
+  text-align: right;
+  padding-right: 5px;
+  width: 44%;
+}
+
+::ng-deep #database-table .mat-checkbox label {
+  margin-bottom: 2px !important;
+}
+
+#database-table {
+  overflow: auto;
+  max-height: 300px
+}
+
+.database-search .mat-form-field {
+  width: 81%;
+}
+
+mat-card {
+  padding-bottom: 0px !important;
+}
+
+::ng-deep #comment-database .mat-form-field-appearance-legacy .mat-form-field-subscript-wrapper {
+  font-size: 12px !important;
+}
+
+#comment-database {
+  text-align: left;
+}
+
+#comment-database .mat-form-field {
+  width: 37%;
+}
+
+::ng-deep #create-workspace-landing .material-icons {
+  line-height: unset !important;
+  font-size: 37px !important;
+  color: unset !important;
+}
+
+::ng-deep #create-workspace-landing .mat-stepper-label-position-bottom .mat-horizontal-stepper-header .mat-step-icon {
+  font-size: 0px !important;
+}
+
+::ng-deep #create-workspace-landing .mat-horizontal-stepper-header .finished-step {
+  background-color: #ffff !important;
+  color: #2879ff !important;
+  border: solid 2px #2879ff !important;
+}
+
+::ng-deep #create-workspace-landing .mat-horizontal-stepper-header .unfinished-step {
+  border: solid 1px #cbcdd2 !important;
+  background-color: #cbcdd2 !important;
+}
+
+::ng-deep #create-workspace-landing .mat-horizontal-stepper-header .active-step {
+  background-color: #2879ff !important;
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  background-color: #2879ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-k-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color: #2879ff !important
+}
+
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line {
+  background-color: #2879ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color: #2879ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  background-color: #2879ff !important
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  border-top-width: 2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  border-top-width: 2px !important;
+}
+
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line {
+  border-top-width: 2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  border-top-width: 2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  border-top-width: 2px !important;
+}
+
+.outer-div {
+  display: flex;
+  margin-bottom: 3%;
+}
+
+.inner-div {
+  width: 50%;
+  text-align: left;
+}
+
+.inner-bold-item {
+  color: #121212;
+}
+
+.inner-grey-item {
+  color: #5c5d5e;
+}
+
+.info-div {
+  margin-top: 4%;
+  margin-bottom: 4%
+}
+
+.form-field-desc {
+  width: 100%;
+}
+
+#create-database-header {
+  display: inline-flex;
+  margin-bottom: 6px
+}
+
+.anchor-header {
+  padding-top: 22px;
+  padding-right: 20px
+}
+
+.heading-name {
+  font-size: 24px;
+  color: #0c0c0c;
+}
+
+td.mat-cell:first-of-type {
+  padding-left: 14px !important;
+}
+
+.modal-header {
+  padding: 10px;
+  padding-left: 15px;
+  background-color: #2879ff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.modal-close {
+  background-color: #2879ff;
+  border: #2879ff;
+  color: #ffffff;
+}
+
+.modal-body {
+  min-height: 55px;
+  border-bottom: 0px solid #E6E9ED;
+  padding: 20px 2px 0px 3px;
+  text-align: center
+}
+
+.btn.modal-cancel {
+  background-color: #2879ff;
+  border: #2879ff;
+  color: #ffffff;
+  transition: 0.5s;
+}
+
+.btn.modal-cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.modal-title {
+  color: white;
+  text-align: left
+}
+
+.loader {
+  margin-left: 3px;
+}

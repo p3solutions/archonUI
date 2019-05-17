@@ -44,7 +44,6 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
                 result.data.users.usersList.forEach((value, index) => {
                     value.status = this.getStatus(value);
                     value.action = 'Select Action';
-                    console.log(this.globalGroupIds);
                     if (this.globalGroupIds.includes(value.globalGroupId)) {
                         value.hide = true;
                     } else {

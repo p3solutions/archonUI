@@ -1384,6 +1384,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 .adhoc-modal-btn {
   padding-right: 30px;
   padding-left: 30px;
+  transition:0.5s;
 }
 
 .mat-menu-content button.mat-menu-item {
@@ -1692,7 +1693,7 @@ mat-checkbox svg {
   text-transform: inherit;
 }
 
-.word-breaker{
+.word-breaker {
   word-break: break-all;
 }
 
@@ -1735,4 +1736,97 @@ mat-checkbox svg {
 .mat-stepper-label-position-bottom .mat-stepper-horizontal-line{
   top: 38px !important;
   border-top-width:2px !important;
+}
+
+.create-app-dialog .flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-app-dialog .flex-container>* {
+  width: 100%;
+}
+
+.create-app-dialog .flex-container form {
+  margin-bottom: 20px;
+}
+
+.create-app-dialog  .flex-container form>* {
+  margin: 5px 0;
+}
+
+.create-app-dialog  button.mat-button {
+  background-color: #64b5f6;
+}
+
+.create-app-dialog .mat-dialog-title {
+  display: flex;
+  background-color: #2879ff;
+  padding-left: 26px;
+  padding-top: 17px;
+  color: #ffffff;
+  padding-bottom: 17px;
+}
+
+.create-app-dialog  .mat-dialog-content {
+  padding: 6px 14px 0px 27px;
+  margin: 0px;
+}
+
+.create-app-dialog .mat-dialog-actions {
+  margin-top: 14px;
+  padding-left: 24px;
+  border-top: 1px solid #b0afaf;
+  text-align: right;
+  padding-right: 11px;
+  padding-bottom: 11px;
+  display: block
+}
+
+.create-app-dialog  .mat-dialog-container {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 24px;
+}
+
+.create-app-dialog .material-icons {
+  padding-top: 3px;
+  padding-right: 4px;
+  font-size: 25px;
+  color: #ffffff;
+  padding-bottom: 2px;
+}
+
+.create-app-dialog  .material-icons:hover,
+.material-icons:focus {
+  padding-top: 3px;
+  padding-right: 4px;
+  font-size: 25px;
+  color: #ffffff;
+  padding-bottom: 2px;
+}
+
+.create-app-dialog  button.invite {
+  background-color: #2879ff;
+  color: #ffffff;
+  font-family: roboto;
+  font-size: 16px;
+  transition:0.5s;
+}
+
+.create-app-dialog  button.cancel {
+  font-family: roboto;
+  font-size: 16px;
+  transition:0.5s;
+}
+
+
+.create-app-dialog  button.invite:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
+.create-app-dialog  button.cancel:hover {
+  transform: scale(1.1, 1.1);
 }
