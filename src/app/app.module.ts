@@ -141,6 +141,8 @@ import { appInitializerFactory } from '@angular/platform-browser/src/browser/ser
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CookieService } from 'ngx-cookie-service';
 
+import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
+import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -238,7 +240,9 @@ const appInitializerFunction = (environment: EnvironmentService) => {
         ConfigurationComponent,
         SmtpConfigurationComponent,
         SsoSigninFormComponent,
-        RoleGroupConfigurationComponent
+        RoleGroupConfigurationComponent,
+        CreateWorkspacePageComponent,
+        CreateDatabasePageComponent
     ],
     imports: [
         JwtModule.forRoot({

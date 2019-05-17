@@ -8,7 +8,7 @@ export class ErtTableListObj {
     isSelectedTableLeft = false;
 }
 
-export class AvilErtTable{
+export class AvilErtTable {
     paginationRequired = false;
     erttableList = new ErtTableListObj();
 }

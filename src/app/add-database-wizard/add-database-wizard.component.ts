@@ -76,7 +76,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.testDbParam.supportedDBId = this.supportedDBId;
     this.testDbParam.authType = this.authType;
     this.testDbParam.profileName = this.profileName;
-    this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
+    this.userWorkspaceService.checkDBConnection(this.testDbParam, this.testDbParam).subscribe((res: any) => {
       if (res) {
         this.inProgress = false;
         this.dbTestConnectionErrorMsg = res.connection.errorMessage;
@@ -286,7 +286,7 @@ export class AddDatabaseWizardComponent implements OnInit {
   createDBConfig() {
     this.dbinProgress = true;
     // this.dbParam.dbProfileName = this.dbProfileName;
-      this.dbParam.userName = this.userName;
+    this.dbParam.userName = this.userName;
     this.dbParam.password = this.password;
     // this.dbParam.password = btoa(this.password);
     this.dbParam.port = this.port;
@@ -297,7 +297,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.dbParam.authType = this.authType;
     this.dbParam.profileName = this.profileName;
     this.addClass('progress-bar', 'width-100-pc');
-    this.userWorkspaceService.checkDBConnection(this.testDbParam).subscribe((res: any) => {
+    this.userWorkspaceService.checkDBConnection(this.testDbParam, this.testDbParam).subscribe((res: any) => {
       if (res) {
         if (res.connection.isConnected) {
           this.dbinProgress = false;
@@ -316,7 +316,7 @@ export class AddDatabaseWizardComponent implements OnInit {
     // this.router.navigate(['/workspace/database-list']);
   }
   createNewdb() {
-    this.userWorkspaceService.createNewDBConfig(this.dbParam).subscribe(res => {
+    this.userWorkspaceService.createNewDBConfig(this.dbParam,this.dbParam).subscribe(res => {
       if (res) {
         this.newWSinfo = res;
         // document.getElementById('populate-db-list').click();

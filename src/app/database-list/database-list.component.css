@@ -238,7 +238,7 @@ td.tdr {
   }
   
   ::ng-deep #char-table svg {
-    height: 6vh;
+    height: unset;
   }
   
   th {

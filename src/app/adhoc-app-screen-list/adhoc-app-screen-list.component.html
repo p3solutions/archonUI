@@ -94,7 +94,25 @@
         <th style="width:32%" mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
         <td class="word-breaker" style="width:32%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
       </ng-container>
-      <ng-container matColumnDef="edit">
+      <ng-container matColumnDef="updatedBy">
+        <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated By </th>
+        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
+      </ng-container>
+      <ng-container matColumnDef="updatedDate">
+        <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </th>
+        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element">
+          {{element.updatedAt * 1000 | date:'medium'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> action </th>
+        <td class="word-breaker" style="width:5%" mat-cell *matCellDef="let element">
+          <button mat-icon-button [matMenuTriggerFor]="actionmenu">
+            <i class="material-icons">
+              more_vert
+            </i>
+          </button></td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="edit">
         <th style="width:6%" mat-header-cell *matHeaderCellDef> Edit </th>
         <td style="width:6%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id, element)">
           <i class="material-icons">
@@ -130,7 +148,7 @@
             </i>
           </a>
         </td>
-      </ng-container>
+      </ng-container> -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
@@ -145,6 +163,25 @@
 <mat-menu #menu="matMenu">
   <button *ngFor="let item of childScreenInfo" mat-menu-item>
     <span>{{item.screenName}}</span>
+  </button>
+</mat-menu>
+<mat-menu #actionmenu="matMenu" yPosition="below">
+  <button mat-menu-item>
+    <mat-icon>edit</mat-icon>
+    <span>
+      Edit</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>add</mat-icon>
+    <span>Add Nested Link</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>delete</mat-icon>
+    <span>Delete</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>save_alt</mat-icon>
+    <span>Download</span>
   </button>
 </mat-menu>
 
