@@ -33,6 +33,7 @@ export class ErtColumnListObj {
     modifiedColumnName = '';
     dataType = '';
     isPrimaryKey = false;
+    isKey = false;
     viewQuery = null;
     isSelected = true;
     configQueryPreview = '';
@@ -46,6 +47,7 @@ export class ColumnListObj {
     modifiedColumnName = '';
     dataType = '';
     isPrimaryKey = false;
+    isKey = false;
     isSelected = false;
     configQueryPreview = '';
     userColumnQuery = '';

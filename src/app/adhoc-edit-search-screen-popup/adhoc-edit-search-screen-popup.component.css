@@ -175,3 +175,12 @@ a.disabled {
   margin-right: 0px;
   margin-bottom: 3px;
 }
+
+.check-div{
+  display: inline-flex
+}
+
+.check_box-section{
+  margin-right: 50px
+}
+

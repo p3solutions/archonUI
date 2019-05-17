@@ -19,12 +19,11 @@
     padding-top: 8px;
     padding-bottom: 8px;   
     text-align: center;
-    background-color: #269AF8;
-    color: white;
+    color:black;
   }
 
   .marginClass {
-    margin-top: 3%;
+    margin-top: 96px;
   }
 
   .pointer {
@@ -32,17 +31,41 @@
     margin-top: -20px;    
   }
   .sub-headerrs {
-    margin-left: 29px;
+    margin-left: 20px;
     margin-top: 10px;
     float: left;
   }
-  .ana-result {
-    text-align: left;
-    display :inline;
-    }
-    .secbutton {
-      margin-right: 4px;
-    }
-    .prebutton {
-      margin-right: -22px;
-    }
+.ana-result {
+  text-align: left;
+  display :inline;
+}
+
+.secbutton {
+  margin-right: 4px;
+}
+
+.prebutton {
+  margin-right: -22px;
+}
+
+#cancel-btn{
+  margin-right: 15px;
+  background-color: #64b5f6;
+}
+
+.alert-sty{
+  text-align: left;
+  margin-top: -24px;
+}
+
+.arch-btnn{
+  background-color: #2879ff;
+  color: #fff;
+  transition: .5s;
+}
+
+.arch-btnn:hover {
+  box-shadow: rgba(0,0,0,0.43) 0px 0px 4px 0px;
+  -webkit-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
+}

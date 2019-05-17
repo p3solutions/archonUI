@@ -13,6 +13,7 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-table-list',
@@ -20,6 +21,7 @@ import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service
   styleUrls: ['./table-list.component.css'],
 })
 export class TableListComponent implements OnInit {
+  indexExpanded = -1;
   query: string;
   search: any = '';
   homeStage = false;
@@ -88,6 +90,9 @@ export class TableListComponent implements OnInit {
   startIndex = 1;
   schemaResultsTableCount = 0;
   paginationRequired: boolean;
+  currentStepNo = null;
+  @ViewChild('stepper') stepper: MatStepper;
+  value: any;
 
   constructor(
     private tablelistService: TableListService,
@@ -108,17 +113,17 @@ export class TableListComponent implements OnInit {
   }
   ngOnInit() {
     this.tablelistService.currentValue.subscribe(value => {
-       this.homeStage = value;
-       if (this.homeStage === true) {
+      this.homeStage = value;
+      if (this.homeStage === true) {
         this.loadRelationTable(this.tableCopy);
-       }
-      });
-      this.storedProcViewService.currentSPVValue.subscribe(value => {
-        this.homeStage = value;
-        if (this.homeStage === true) {
-         this.loadRelationTable(this.tableCopy);
-        }
-       });
+      }
+    });
+    this.storedProcViewService.currentSPVValue.subscribe(value => {
+      this.homeStage = value;
+      if (this.homeStage === true) {
+        this.loadRelationTable(this.tableCopy);
+      }
+    });
     this.isAvailable = false;
     this.isRelationShipAvailable = false;
     this.getTableList();
@@ -137,12 +142,12 @@ export class TableListComponent implements OnInit {
         this.isTablelistAvailable = true;
         this.tablelistService.selectDropdown(false);
       } else {
-      this.tablelistService.selectDropdown(true);
+        this.tablelistService.selectDropdown(true);
       }
       this.isAvailable = true;
       if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      }
     });
   }
 
@@ -153,13 +158,13 @@ export class TableListComponent implements OnInit {
       this.tableList = res.tableList;
       if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      }
     });
   }
 
   searchTablelist() {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
+    this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
       this.tableList = res.tableList;
     });
   }
@@ -183,6 +188,9 @@ export class TableListComponent implements OnInit {
   }
 
   openDataAModal() {
+    setTimeout(() => {
+      this.changeMatStepIcon();
+    }, 1000);
     this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId).subscribe(res => {
       if (res.data.jobIds.length > 0) {
         this.homeStage = false;
@@ -361,16 +369,19 @@ export class TableListComponent implements OnInit {
     // this.enableNextBtn = this.selectedSecTbl.size > 0;
   }
   getCurrentStep() {
-    return document.querySelector('#dataAModal-carousel .item.active').getAttribute('step');
+    // return document.querySelector('#dataAModal-carousel .item.active').getAttribute('step');
   }
   enableDisableNextBtn() {
-    const currentStep = this.getCurrentStep();
+   // const currentStep = this.getCurrentStep();
+   console.log("btn");
+    const currentStep = this.currentStepNo;
     switch (currentStep) {
-      case '0':
+      case 0:
+      console.log(this.selectedPrimColMap.size>0);
         this.enableNextBtn = this.selectedPrimColMap.size > 0;
         break;
-      case '1':
-          this.enableNextBtn = this.finalSecColMap.size > 0;
+      case 1:
+        this.enableNextBtn = this.finalSecColMap.size > 0;
         break;
       // case '2':
       //   this.enableNextBtn
@@ -384,7 +395,7 @@ export class TableListComponent implements OnInit {
   }
   // carousel handling codes
   addClass(elementId, classSelector) {
-    document.getElementById(elementId).classList.add(classSelector);
+   // document.getElementById(elementId).classList.add(classSelector);
   }
   removeClass(elementId, classSelector) {
     document.getElementById(elementId).classList.remove(classSelector);
@@ -397,11 +408,82 @@ export class TableListComponent implements OnInit {
     this.enableNextBtn = this.selectedPrimColMap.size > 0;
   }
 
-  nextStep(e) {
-    document.getElementById('next-slide').click();
+  nextStep(e, stepper: MatStepper) {
+    this.currentStepNo = stepper.selectedIndex;
+    this.stepper.selectedIndex = 1;
+    // document.getElementById('next-slide').click();
     this.handleStepIindicator(true);
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
+  gotoSecTableAndColSelection(e, stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[0].classList.add('mat-psedu');
+      a[1].classList.add('mat-k-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[1].classList.add('mat-horizental-line');
+      const a1 = document.getElementsByClassName('mat-horizontal-stepper-header');
+      if (a1[1].classList.contains('mat-auth-psedu')) {
+        a1[1].classList.remove('mat-auth-psedu');
+        a1[2].classList.remove('mat-review-psedu');
+        const b1 = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+        b1[0].children[3].classList.remove('mat-horizental-line');
+      }
+      this.value[2].children[1].classList.add('unfinished-step');
+      this.value[0].children[1].classList.add('finished-step');
+      this.value[1].children[1].classList.add('active-step');
+    }, 300);
+    this.currentStepNo = stepper.selectedIndex;
+    this.stepper.selectedIndex = 1;
+    // document.getElementById('next-slide').click();
+    this.handleStepIindicator(true);
+    console.log(this.finalSecColMap.size);
+    this.enableNextBtn = this.finalSecColMap.size > 0;
+    console.log(this.finalSecColMap.size);
+  }
+  gotoPrimarySel(e, stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[0].classList.remove('mat-psedu');
+      a[1].classList.remove('mat-k-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[1].classList.remove('mat-horizental-line');
+      this.value[0].children[1].classList.add('active-step');
+      if (this.value[1].children[1].classList.contains('active-step')) {
+        this.value[1].children[1].classList.remove('active-step');
+      }
+      this.value[2].children[1].classList.add('unfinished-step');
+      this.value[1].children[1].classList.add('unfinished-step');
+    }, 300);
+    // document.getElementById('prev-slide').click();
+    this.finalSecColArray = [];
+    this.handleStepIindicator(false);
+    console.log(this.selectedPrimColMap.size);
+    this.enableNextBtn = this.selectedPrimColMap.size >= 1;
+    console.log(this.selectedPrimColMap.size);
+    this.currentStepNo = stepper.selectedIndex;
+    this.stepper.selectedIndex = 0;
+  }
+
+  gotoAnalyze(e, stepper: MatStepper) {
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[1].classList.add('mat-auth-psedu');
+      a[2].classList.add('mat-review-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[3].classList.add('mat-horizental-line');
+      this.value[1].children[1].classList.add('finished-step');
+      this.value[2].children[1].classList.add('active-step');
+    }, 300);
+    console.log(e);
+    console.log(stepper);
+    this.currentStepNo = stepper.selectedIndex;
+    this.stepper.selectedIndex = 2;
+    // document.getElementById('next-slide').click();
+    this.handleStepIindicator(true);
+    this.enableNextBtn = this.finalSecColMap.size > 0;
+  }
+
 
   getAllSelectedTblsCols() {
     this.finalPrimColArray = [];
@@ -475,15 +557,16 @@ export class TableListComponent implements OnInit {
     this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
   }
   handleStepIindicator(isNext) {
-    const slideNo = this.getCurrentStep();
-    const progressSelector = 'progress-bar';
+    // const slideNo = this.getCurrentStep();
+    const slideNo = this.currentStepNo;
+    // const progressSelector = 'progress-bar';
     switch (slideNo) {
-      case '0':
-      // if (this.finalSecColMap.size === 0) {
-      //   this.enableNextBtn = this.selectedPrimColMap.size > 0;
-      // } else {
-      //   this.enableNextBtn = this.finalSecColMap.size > 0;
-      // }
+      case 0:
+        // if (this.finalSecColMap.size === 0) {
+        //   this.enableNextBtn = this.selectedPrimColMap.size > 0;
+        // } else {
+        //   this.enableNextBtn = this.finalSecColMap.size > 0;
+        // }
         if (this.selectedSecTbl.size === 0) {
           this.enableNextBtn = false;
         }
@@ -491,38 +574,38 @@ export class TableListComponent implements OnInit {
         // this.removeClass(progressSelector, 'width-5-25-pc-rev');
         // this.addClass(progressSelector, 'width-5-25-pc');
         // // this.addClass('cancel-btn', 'hide');
-        this.removeClass(progressSelector, 'width-5-pc');
-        this.removeClass(progressSelector, 'width-33-pc-rev');
-        this.addClass(progressSelector, 'width-33-pc');
-        this.removeClass('prev-btn', 'hide');
+        // this.removeClass(progressSelector, 'width-5-pc');
+        // this.removeClass(progressSelector, 'width-33-pc-rev');
+        // this.addClass(progressSelector, 'width-33-pc');
+        // this.removeClass('prev-btn', 'hide');
         this.generateSecTblArray();
         break;
-      case '1':
+      case 1:
         // this.removeClass(progressSelector, 'width-5-25-pc');
-        this.removeClass(progressSelector, 'width-33-pc');
+        //  this.removeClass(progressSelector, 'width-33-pc');
         if (isNext) {
           // this.addClass(progressSelector, 'width-25-50-pc');
           // this.removeClass(progressSelector, 'width-25-50-pc-rev');
-          this.addClass(progressSelector, 'width-66-pc');
-          this.removeClass(progressSelector, 'width-66-pc-rev');
-          this.removeClass('analyse-btn', 'hide');
-          this.addClass('next-btn', 'hide');
+          // this.addClass(progressSelector, 'width-66-pc');
+          // this.removeClass(progressSelector, 'width-66-pc-rev');
+          // this.removeClass('analyse-btn', 'hide');
+          // this.addClass('next-btn', 'hide');
         } else {
           // this.removeClass(progressSelector, 'width-25-50-pc-rev');
           // this.addClass(progressSelector, 'width-5-25-pc-rev');
-          this.removeClass(progressSelector, 'width-66-pc-rev');
-          this.addClass(progressSelector, 'width-33-pc-rev');
-          // this.removeClass('cancel-btn', 'hide');
-          this.removeClass('next-btn', 'hide');
-          this.addClass('prev-btn', 'hide');
+          // this.removeClass(progressSelector, 'width-66-pc-rev');
+          // this.addClass(progressSelector, 'width-33-pc-rev');
+          // // this.removeClass('cancel-btn', 'hide');
+          // this.removeClass('next-btn', 'hide');
+          // this.addClass('prev-btn', 'hide');
         }
         this.getAllSelectedTblsCols();
         this.enableDisableNextBtn();
         break;
-      case '2':
+      case 2:
         // this.removeClass(progressSelector, 'width-25-50-pc');
         // this.removeClass(progressSelector, 'width-50-75-pc-rev');
-        this.removeClass(progressSelector, 'width-66-pc');
+        // this.removeClass(progressSelector, 'width-66-pc');
         // this.removeClass(progressSelector, 'width-100-pc-rev');
         if (isNext) {
           // this.removeClass(progressSelector, 'width-5-25-pc-rev');
@@ -532,9 +615,9 @@ export class TableListComponent implements OnInit {
           // this.removeClass(progressSelector, 'width-75-100-pc-rev');
           // this.addClass(progressSelector, 'width-25-50-pc-rev');
           // this.addClass(progressSelector, 'width-100-pc-rev');
-          this.addClass(progressSelector, 'width-66-pc-rev');
-          this.addClass('analyse-btn', 'hide');
-          this.removeClass('next-btn', 'hide');
+          //  this.addClass(progressSelector, 'width-66-pc-rev');
+          // this.addClass('analyse-btn', 'hide');
+          // this.removeClass('next-btn', 'hide');
         }
         break;
       // case '3':
@@ -555,11 +638,21 @@ export class TableListComponent implements OnInit {
     }
   }
   dataAnalyse() {
-    const progressSelector = 'progress-bar';
-    this.addClass(progressSelector, 'width-100-pc');
-    this.addClass('prev-btn', 'hide');
-    this.addClass('analyse-btn', 'hide');
-    this.removeClass('close-btn', 'hide');
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[3].classList.add('mat-analyze-psedu-before');
+      a[2].classList.add('mat-analyze-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[5].classList.add('mat-horizental-line');
+      this.value[2].children[1].classList.add('finished-step');
+      this.value[3].children[1].classList.add('active-step');
+    }, 300);
+    this.stepper.selectedIndex = 3;
+    // const progressSelector = 'progress-bar';
+    // this.addClass(progressSelector, 'width-100-pc');
+    // this.addClass('prev-btn', 'hide');
+    // this.addClass('analyse-btn', 'hide');
+    // this.removeClass('close-btn', 'hide');
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
       if (res && res.success) {
         this.dataAnalysisjobID = res.data.jobId;
@@ -596,6 +689,18 @@ export class TableListComponent implements OnInit {
       }
     });
   }
+
+  changeMatStepIcon() {
+    this.value = document.querySelectorAll('.mat-horizontal-stepper-header');
+    this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">settings_input_component</i>';
+    this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
+    this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
+    this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">playlist_add_check</i>';
+    this.value[2].children[1].classList.add('unfinished-step');
+    this.value[1].children[1].classList.add('unfinished-step');
+    this.value[3].children[1].classList.add('unfinished-step');
+  }
+
   deleteRelationship(indexOfDelete) {
     this.index = indexOfDelete;
     this.editrelationshipInfo = JSON.parse(JSON.stringify(this.relationshipInfo[this.index]));
@@ -708,10 +813,14 @@ export class TableListComponent implements OnInit {
   }
 
   selectAll() {
-      $('input:checkbox:enabled.m-r-10').click();
+    $('input:checkbox:enabled.m-r-10').click();
   }
 
   selectAllSec() {
     $('input:checkbox:enabled.m-r-10.m-r-sec').click();
-}
+  }
+
+  togglePanels(index: number) {
+    this.indexExpanded = index === this.indexExpanded ? -1 : index;
+  }
 }

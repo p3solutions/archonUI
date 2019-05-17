@@ -176,3 +176,8 @@ transition:0.5s;
 transform:scale(1.1,1.1);
 }
 
+table.mat-table {
+  border-spacing: 0;
+  width: 125%;
+}
+

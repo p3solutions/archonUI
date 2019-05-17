@@ -56,7 +56,7 @@
     <mat-form-field>
       <input matInput name="screen-filter" #input placeholder="Search">
     </mat-form-field>
-    <span class="fa-stack" (click)="addScreen()" matTooltip="Create Screen">
+    <span class="fa-stack" (click)="!(applicationInfoList.length===0) && addScreen()" matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
       <i class="fa fa-circle fa-stack-2x"></i>
       <i class="fa fa-circle-thin fa-stack-2x"></i>
       <i class="fa fa-plus fa-stack-1x"></i>

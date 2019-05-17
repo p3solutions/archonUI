@@ -46,6 +46,7 @@ export class SearchCriteria {
     isBetween = false;
     isBetweenInclusive = false;
     src = '';
+    notSelected = false;
 }
 
 export class AdhocHeaderInfo {
@@ -55,6 +56,7 @@ export class AdhocHeaderInfo {
     metadataVersion: string;
     appMetadataVersion: string;
     workspaceId: string;
+    appId = '';
 }
 
 export class InputFunctionsInfo {
@@ -101,7 +103,8 @@ export class ResultFields {
     isHidden = false;
     blob = false;
     encrypted = false;
-    todecrypt = true;
+    todecrypt = false;
+    notSelected = false;
 }
 
 export class SearchResult {

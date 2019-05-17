@@ -4,6 +4,7 @@ export class JoinValues {
         columnId: string;
         columnName: string;
         dataType: string;
+        isKey: boolean;
     };
     secondaryColumn: {
         columnId: string;

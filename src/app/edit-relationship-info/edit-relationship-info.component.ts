@@ -29,7 +29,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   updateNotifSuccess: boolean;
   selected = [];
 
-  displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumn'];
+  displayedColumns: string[] = ['isKey', 'columnName', 'columnDataType', 'secondaryColumn'];
 
   constructor(private editRelationshipInfo: EditRelationshipInfoService) { }
 
@@ -38,6 +38,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges) {
+    console.log(change);
     const value: SimpleChange = change.relation;
     this.userValues = value.currentValue;
     this.populateValues();
@@ -74,6 +75,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           }
         }
         this.joinDetailsArray.push(joinValue);
+        console.log(this.joinDetailsArray);
       }
     });
   }
