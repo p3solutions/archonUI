@@ -127,7 +127,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator #matPagintor1 id="user-table-svg" [length]="dataSource.totalUserSubject.getValue()" [pageSize]="50" showFirstLastButtons>
+    <mat-paginator #matPagintor1 id="user-table-svg" [length]="totalUser" [pageSize]="50" showFirstLastButtons>
     </mat-paginator>
   </div>
 </div>
