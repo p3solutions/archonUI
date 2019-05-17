@@ -60,6 +60,8 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
+import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
+import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -166,7 +168,7 @@ const routes: Routes = [
             ]
           }
         ]
-      },
+      }
     ]
   },
   {
@@ -223,6 +225,12 @@ const routes: Routes = [
   },
   {
     path: 'sso-sign-in', component: SsoSigninFormComponent
+  },
+  {
+    path: 'create-workspace', component: CreateWorkspacePageComponent, canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'create-database', component: CreateDatabasePageComponent, canActivate: [AuthenticationGuard]
   }
 ];
 

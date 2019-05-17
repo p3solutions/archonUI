@@ -51,7 +51,7 @@ export class WorkspaceServicesComponent implements OnInit {
         //   //     serviceId: '5ac5c6d0a54d7503ad946537',
         //   //     serviceName: 'Adhoc Query Builder'
         //   //   }
-        //   // ); 
+        //   // );
         const serviceActionsList = this.workspaceService.updateServiceActionsList(serviceActions);
         this.serviceActions = serviceActionsList;
         const carousel: any = $('#serviceCarousel');

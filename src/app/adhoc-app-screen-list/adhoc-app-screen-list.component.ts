@@ -56,7 +56,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   dataSource: ScreenDataSource;
   screenInfo = new Adhoc();
   displayedColumns: string[] = ['position', 'link', 'screenName', 'parentScreenInfo.screenName',
-    'screenDesc', 'edit', 'nestedLink', 'delete', 'download'];
+    'screenDesc', 'updatedBy', 'updatedDate', 'action'];
   screenInfoList: Adhoc[] = [];
   applicationInfoList: ApplicationInfo[] = [];
   selectedAppObject = new ApplicationInfo();
@@ -77,7 +77,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   deleteScreenId = '';
   screenInfoObject = new Adhoc();
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
-     private adhocScreenService: AdhocScreenService,
+    private adhocScreenService: AdhocScreenService,
     private router: Router, private adhocService: AdhocService,
     private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
 
@@ -107,12 +107,20 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   getApplication() {
+    let tempResponse = new AdhocHeaderInfo();
+    this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
+      tempResponse = response;
+    });
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.adhocService.getApplication(this.workspaceId, this.startIndex).subscribe(result => {
       this.applicationInfoList = result.list;
       this.isApplicationLeft = result.paginationRequired;
       if (this.applicationInfoList.length !== 0) {
-        this.selectedApp(this.applicationInfoList[0].id);
+        if (tempResponse.appId !== '') {
+          this.selectedApp(tempResponse.appId);
+        } else {
+          this.selectedApp(this.applicationInfoList[0].id);
+        }
       }
     });
   }
@@ -159,6 +167,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.addPosition();
     this.dataSource.connect().subscribe(result => {
       this.screenInfoList = result;
+
       this.totalScreen = (this.paginator.pageIndex + 1) * 50;
       if (this.dataSource.paginationRequired) {
         this.totalScreen = this.totalScreen + 50;
@@ -253,6 +262,9 @@ export class AdhocAppScreenListComponent implements OnInit {
       if (response.httpStatus === 200) {
         this.successMessage = 'Application Added Successfully';
         this.applicationInfoList = this.applicationInfoList.concat(response.data);
+        if (this.applicationInfoList.length === 1) {
+          this.selectedApp(this.applicationInfoList[0].id);
+        }
       } else {
         this.successMessage = 'Application not Added Successfully';
       }
@@ -338,6 +350,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     adhocHeaderInfo.appName = this.selectedAppObject.appName;
     adhocHeaderInfo.appMetadataVersion = this.selectedAppObject.metadataVersion;
     adhocHeaderInfo.workspaceId = this.workspaceId;
+    adhocHeaderInfo.appId = this.selectedAppObject.id;
     this.adhocService.updateAdhocHeaderInfo(adhocHeaderInfo);
     let screenInfoObject = new Adhoc();
     screenInfoObject = this.screenInfoList.filter(a => a.id === screenId)[0];
