@@ -139,6 +139,8 @@ import { RoleGroupConfigurationComponent } from './role-group-configuration/role
 import { EnvironmentService } from './environment/environment.service';
 import { appInitializerFactory } from '@angular/platform-browser/src/browser/server-transition';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CookieService } from 'ngx-cookie-service';
+
 import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
 import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 
@@ -321,7 +323,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
         AdhocScreenService,
         ScheduleMonitoringService,
         AuditService,
-        ScheduleJobService
+        ScheduleJobService,
+        CookieService
     ],
     bootstrap: [AppComponent],
     entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent

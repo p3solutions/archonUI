@@ -66,6 +66,9 @@ const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
       {
+        path: '', redirectTo: 'workspace-dashboard', pathMatch: 'prefix'
+      },
+      {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
             path: '', redirectTo: 'workspace-services', pathMatch: 'full'

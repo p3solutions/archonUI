@@ -14,6 +14,7 @@ import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.servic
 import { ErtService } from '../ert-landing-page/ert.service';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 import { TableSelectionService } from './table-selection.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-adhoc-table-selection',
@@ -41,14 +42,14 @@ export class AdhocTableSelectionComponent implements OnInit {
   searchTableName = '';
   page = 1;
   tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
-  constructor(public router: Router, private tablelistService: TableListService,
+  constructor(public router: Router, private tablelistService: TableListService, private cookieService: CookieService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
     private adhocSavedObjectService: AdhocSavedObjectService, private adhocScreenService: AdhocScreenService,
     private tableService: TableSelectionService, private adhocService: AdhocService) { }
 
   ngOnInit() {
     const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
-    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.workspaceID = this.cookieService.get('workspaceId');
     this.deleteSearchResult('');
     this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;
     if (this.screenInfoObject.sessionAdhocModel.selectedTableListString !== '') {
