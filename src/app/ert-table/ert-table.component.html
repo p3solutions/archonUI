@@ -12,7 +12,7 @@
 
         <div class='body-right'>
 
-          <a (click)="getErtAvailableTable()" matTooltip="Add More Table" *ngIf="showAvilableBtn" class="cursor-poniter"
+          <a (click)="getErtAvailableTable('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn" class="cursor-poniter"
             data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
 
 
@@ -20,7 +20,7 @@
           <div *ngIf="!showNoTablesMsg" id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
               <div
-                *ngFor="let item of selectedTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
+                *ngFor="let item of selectedTableList | paginate: { id:'selected-table-pagination', itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)"
                 [ngClass]="item.tableId===selectedTableId ?'selectTableCls well':'well'">
                 <div><input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
@@ -31,7 +31,7 @@
                 </div>
               </div>
             </div>
-            <pagination-controls *ngIf="this.ertJobId === undefined" (pageChange)="getPage(page = $event)">
+            <pagination-controls id="selected-table-pagination" (pageChange)="getPage(page = $event)">
             </pagination-controls>
           </div>
           <h4 *ngIf="showNoTablesMsg" style="margin-top: 50%;">No tables available</h4>
@@ -540,12 +540,12 @@
       <div class="modal-body">
         <div id="avaliable-table-list">
           <div class="form-control"
-            *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: avilableTableCount, currentPage: avilablePage } ">
+            *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { id:'availble-pagination', itemsPerPage: availItemsPerPage, totalItems: avilableTableCount, currentPage: availPage } ">
             <input type="checkbox" (click)="selectAvaliableTable(item.tableId,$event)" [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
         </div>
-        <pagination-controls style="font-size:13px" (pageChange)="getAvilableTablePage(avilablePage = $event)">
+        <pagination-controls id="availble-pagination" style="font-size:13px" (pageChange)="getAvilableTablePage(availPage = $event)">
         </pagination-controls>
       </div>
       <div class="modal-footer">
