@@ -314,3 +314,8 @@ input[type='checkbox'] {
 ::ng-deep .cdk-overlay-container{
   z-index: 1200 !important;
 }
+
+#msg-id{
+  text-align: left;
+  margin-bottom: 12px;
+}

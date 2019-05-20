@@ -62,7 +62,7 @@
             </div>
        </div>
       <div class="modal-footer">
-        <div class="col-md-4">
+        <div id="msg-id">
           <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
             <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -73,13 +73,18 @@
             <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <strong>Success</strong>:{{errorMsg}}
+            <strong>Success</strong>: {{errorMsg}}
           </div>
+          <div *ngIf="autoColumnMatch" class="alert alert-success alert-dismissible m-t-6" role="alert">
+              <button type="button" class="close" (click)="closeAutoMatchMessage()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong>Success</strong>: {{autoColumnMatchMessage}}
+            </div>
         </div>
         <div class="col-md-12"> 
-          <!-- <button type="button" class="btn btn-primary">Automatch Column</button> -->
           <button type="button" class="btn btn-primary cancel" id="cancel-btn" (click)="closeErrorMsg();resetSelection()" data-dismiss="modal" style="margin-right: 14px;">Close</button>
-          <button type="button" class="btn btn-primary" (click)="autocolumnMatchMode(); closeErrorMsg();">Automatch Column</button>
+          <!-- <button type="button" class="btn btn-primary" (click)="autocolumnMatchMode(); closeErrorMsg();">Automatch Column</button> -->
           <button type="button" class="btn btn-primary" (click)="resetSelection(); closeErrorMsg();" style="margin-right: 14px;">Reset</button>
           <button type="button" class="btn btn-primary" (click)="updateRelation(); closeErrorMsg();">update</button>
       </div>
