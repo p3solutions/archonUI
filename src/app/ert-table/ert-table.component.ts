@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -14,6 +14,7 @@ import {
 import { NgxSpinnerService } from 'ngx-spinner';
 import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
 import { map } from 'rxjs/operators';
+import { MatAccordion } from '@angular/material';
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
@@ -70,7 +71,8 @@ export class ErtTableComponent implements OnInit {
   showAvilableBtn = false;
   showNoTablesMsg = false;
   toCreateQuery = false;
-
+  isCombinedQueryMode = null;
+  @ViewChild(MatAccordion) accordion: MatAccordion;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -368,6 +370,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   openUsrDefinedColumnModel(columnName: string) {
+    this.accordion.closeAll();
     this.userDefinedList = [];
     this.usrDefinedColumnName = '';
     this.usrDefinedQueryView = '';
@@ -504,23 +507,21 @@ export class ErtTableComponent implements OnInit {
 
 
   addColumns(i: number) {
-    if (this.usrDefinedQueryViewMode === '') {
-      const control = <FormArray>this.myForm.controls['addEditColumn'];
-      if (control.controls[i].value.column !== null && control.controls[i].value.column !== '') {
-        this.userDefinedList.push({
-          prefix: control.controls[i].value.prefix, column: control.controls[i].value.column,
-          suffix: control.controls[i].value.suffix
-        });
-        const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
-          === control.controls[i].value.column);
-        if (tempIndex !== -1) {
-          this.ursDefinedColumnNameList.splice(tempIndex, 1);
-        }
-        control.push(this.initColumn());
-        control.removeAt(i);
+    const control = <FormArray>this.myForm.controls['addEditColumn'];
+    if (control.controls[i].value.column !== null && control.controls[i].value.column !== '') {
+      this.userDefinedList.push({
+        prefix: control.controls[i].value.prefix, column: control.controls[i].value.column,
+        suffix: control.controls[i].value.suffix
+      });
+      const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
+        === control.controls[i].value.column);
+      if (tempIndex !== -1) {
+        this.ursDefinedColumnNameList.splice(tempIndex, 1);
       }
-      this.createUsrDefinedCONCATString();
+      control.push(this.initColumn());
+      control.removeAt(i);
     }
+    this.createUsrDefinedCONCATString();
   }
 
   createUsrDefinedCONCATString() {
@@ -592,10 +593,21 @@ export class ErtTableComponent implements OnInit {
       }
   }
   saveUsrDefinedColumn() {
-    if (this.usrDefinedQueryViewMode !== '') {
+    if (!this.isCombinedQueryMode) {
       this.validateQueryMode();
-    } else if (this.usrDefinedQueryView !== '') {
-      this.validateColumnQueryMode();
+      if (this.toCreateQuery) {
+        this.usrDefinedQueryView = '';
+        this.userDefinedList = [];
+        this.ursDefinedColumnNameList = this.selectedTableList.filter
+          (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
+        this.setQueryModeUserDefined();
+      }
+    } else if (this.isCombinedQueryMode) {
+      this.validateCombinedColumnQueryMode();
+      if (this.toCreateQuery) {
+        this.usrDefinedQueryViewMode = '';
+        this.setQueryModeUserDefined();
+      }
     }
   }
 
@@ -604,6 +616,16 @@ export class ErtTableComponent implements OnInit {
       const tempUsrDefinedObj = new UsrDefinedColumnListObj();
       tempUsrDefinedObj.originalColumnName = this.usrDefinedColumnName.toUpperCase().trim();
       tempUsrDefinedObj.modifiedColumnName = this.usrDefinedColumnName.toUpperCase().trim();
+      if (!this.isCombinedQueryMode) {
+        this.usrDefinedQueryView = '';
+        this.userDefinedList = [];
+        this.ursDefinedColumnNameList = this.selectedTableList.filter
+          (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
+        this.setQueryModeUserDefined();
+      } else if (this.isCombinedQueryMode) {
+        this.usrDefinedQueryViewMode = '';
+        this.setQueryModeUserDefined();
+      }
       if (this.usrDefinedQueryViewMode !== '') {
         tempUsrDefinedObj.viewQuery = this.usrDefinedQueryViewMode;
       }
@@ -639,9 +661,11 @@ export class ErtTableComponent implements OnInit {
       'tableId': this.selectedTableId
     };
     this.ertService.validQuery(param).subscribe(res => {
-      console.log((res.data.trim().toLowerCase() !== 'valid query'));
-      console.log(res.data.trim().toLowerCase());
-      if (res.data.trim().toLowerCase() !== 'valid query') {
+      if (res.data === undefined) {
+        this.usrDefinedAlertMessage = 'Something Went Wrong, please try again.';
+        this.toCreateQuery = false;
+        document.getElementById('query-alert').classList.remove('alert-hide');
+      } else if (res.data.trim().toLowerCase() !== 'valid query') {
         this.usrDefinedAlertMessage = 'Invalid Query, please check.';
         this.toCreateQuery = false;
         document.getElementById('query-alert').classList.remove('alert-hide');
@@ -654,7 +678,7 @@ export class ErtTableComponent implements OnInit {
   }
 
 
-  validateColumnQueryMode() {
+  validateCombinedColumnQueryMode() {
     if (this.userDefinedList.length < 2) {
       this.usrDefinedAlertMessage = 'Invalid Query, please add two columns to create combined column query.';
       this.toCreateQuery = false;
@@ -951,6 +975,21 @@ export class ErtTableComponent implements OnInit {
     }
     event.stopPropagation();
   }
+  columnModeOpen() {
+    // this.usrDefinedQueryViewMode = '';
+    // this.setQueryModeUserDefined();
+    this.isCombinedQueryMode = true;
+  }
+
+  queryModeOpen() {
+    this.isCombinedQueryMode = false;
+    // this.usrDefinedQueryView = '';
+    // this.userDefinedList = [];
+    // this.ursDefinedColumnNameList = this.selectedTableList.filter
+    //   (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
+    // this.setQueryModeUserDefined();
+  }
+
 }
 
 

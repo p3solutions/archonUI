@@ -28,6 +28,7 @@ export class SignupFormComponent implements OnInit {
   thisComponent = this;
   showHint = true;
 
+  passwordNotMatch = false;
 
   constructor(
     private signupService: SignupFormService,
@@ -44,6 +45,7 @@ export class SignupFormComponent implements OnInit {
       } else {
         this.signUpForm.get('confirmPassword').disable();
         this.signUpForm.controls['confirmPassword'].setValue('');
+        this.passwordNotMatch = false;
       }
     });
     this.signUpForm.get('password').valueChanges.subscribe(response1 => {
@@ -115,5 +117,17 @@ export class SignupFormComponent implements OnInit {
   //     this.enableSignUpBtn = false;
   //   }
   // }
+
+  onKeyPressOfConfirmPassword() {
+    if (this.signUpForm.get('confirmPassword').value !== '') {
+      if (this.signUpForm.get('password').value !== this.signUpForm.get('confirmPassword').value) {
+        this.passwordNotMatch = true;
+      } else {
+        this.passwordNotMatch = false;
+      }
+    } else {
+      this.passwordNotMatch = false;
+    }
+  }
 }
 

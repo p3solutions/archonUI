@@ -56,11 +56,17 @@
     <mat-form-field>
       <input matInput name="screen-filter" #input placeholder="Search">
     </mat-form-field>
-    <span class="fa-stack" (click)="!(applicationInfoList.length===0) && addScreen()" matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
+    <span class="fa-stack" *ngIf="applicationInfoList.length!==0" (click)="!(applicationInfoList.length===0) && addScreen()"
+     matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
       <i class="fa fa-circle fa-stack-2x"></i>
       <i class="fa fa-circle-thin fa-stack-2x"></i>
       <i class="fa fa-plus fa-stack-1x"></i>
     </span>
+    <span class="fa-stack-disabled" *ngIf="applicationInfoList.length===0"  matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-circle-thin fa-stack-2x"></i>
+        <i class="fa fa-plus fa-stack-1x"></i>
+      </span>
   </div>
   <div
     class="{{datasourceHasValue()=== true ?'hide-html example-table-container mat-elevation-z8' : 'example-table-container mat-elevation-z8'}}"
