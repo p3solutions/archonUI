@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchPipe } from '../search.pipe';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { CookieService } from 'ngx-cookie-service';
 
 describe('AdhocTableSelectionComponent', () => {
   let component: AdhocTableSelectionComponent;
@@ -21,7 +22,8 @@ describe('AdhocTableSelectionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AdhocTableSelectionComponent, SearchPipe],
-      providers: [TableListService, UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      providers: [TableListService, UserinfoService, WorkspaceHeaderService, CookieService,
+         ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [HttpClientModule, FormsModule, ReactiveFormsModule, NgxPaginationModule, RouterTestingModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
