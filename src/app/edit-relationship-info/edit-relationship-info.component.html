@@ -73,8 +73,14 @@
             <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <strong>Success</strong>:{{errorMsg}}
+            <strong>Success</strong>: {{errorMsg}}
           </div>
+          <div *ngIf="autoColumnMatch" class="alert alert-success alert-dismissible m-t-6" role="alert">
+              <button type="button" class="close" (click)="closeAutoMatchMessage()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong>Success</strong>: {{autoColumnMatchMessage}}
+            </div>
         </div>
         <div class="col-md-12"> 
           <!-- <button type="button" class="btn btn-primary">Automatch Column</button> -->

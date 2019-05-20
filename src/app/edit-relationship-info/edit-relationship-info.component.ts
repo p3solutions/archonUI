@@ -29,6 +29,8 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   errorMsg: any;
   updateNotifSuccess: boolean;
   selected = [];
+  autoColumnMatch = false;
+  autoColumnMatchMessage = '';
 
   displayedColumns: string[] = ['isKey', 'columnName', 'columnDataType', 'secondaryColumn'];
 
@@ -164,6 +166,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   autocolumnMatchMode() {
     const secondaryColumnNameList = this.secondaryColumns.map(function (item) { return item['columnName']; });
     let tempIndexOfColumnList = 0;
+    console.log(this.primaryColumns);
     for (const primaryColumn of this.primaryColumns) {
       if (secondaryColumnNameList.includes(primaryColumn.columnName)) {
         const index = this.joinDetailsArray.findIndex(k => k.secondaryColumn.columnName === primaryColumn.columnName);
@@ -179,11 +182,17 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
             break;
           }
         }
-        if (!primaryValues.defaultSecondaryColumn) {
+         if (!primaryValues.defaultSecondaryColumn) {
           tableRow.children[3].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
           this.selectedValues(primaryValues, index, primaryColumn.columnName);
-        }
+         }
       }
     }
+    this.autoColumnMatch = true;
+    this.autoColumnMatchMessage = 'Automatch column applied successfully';
+  }
+
+  closeAutoMatchMessage() {
+    this.autoColumnMatch = false;
   }
 }
