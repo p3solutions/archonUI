@@ -168,12 +168,14 @@ modal-body .p {
 }
 
 .material-icons {
-  font-size: 26px;
+  font-size: 21px;
+  vertical-align: middle;
+  margin-right: 16px
 }
 
 .material-icons:hover,
 .material-icons:focus {
-  font-size: 26px;
+  font-size: 21px;
 }
 
 .link-btn {

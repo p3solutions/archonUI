@@ -77,6 +77,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   successMessage = '';
   deleteScreenId = '';
   screenInfoObject = new Adhoc();
+  menuActionData = new Adhoc();
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
     private adhocScreenService: AdhocScreenService,
     private router: Router, private adhocService: AdhocService, private cookieService: CookieService,
@@ -425,5 +426,9 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
     this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable = '';
     this.adhocSavedObjectService.screenInfoObject = this.screenInfoObject;
+  }
+
+  showActions(adhoc: Adhoc) {
+   this.menuActionData = adhoc;
   }
 }
