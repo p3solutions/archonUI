@@ -56,7 +56,8 @@
     <mat-form-field>
       <input matInput name="screen-filter" #input placeholder="Search">
     </mat-form-field>
-    <span class="fa-stack" (click)="!(applicationInfoList.length===0) && addScreen()" matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
+    <span class="fa-stack" (click)="!(applicationInfoList.length===0) && addScreen()"
+      matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
       <i class="fa fa-circle fa-stack-2x"></i>
       <i class="fa fa-circle-thin fa-stack-2x"></i>
       <i class="fa fa-plus fa-stack-1x"></i>
@@ -96,7 +97,7 @@
       </ng-container>
       <ng-container matColumnDef="updatedBy">
         <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated By </th>
-        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
+        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element"> </td>
       </ng-container>
       <ng-container matColumnDef="updatedDate">
         <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </th>
@@ -104,10 +105,10 @@
           {{element.updatedAt * 1000 | date:'medium'}} </td>
       </ng-container>
       <ng-container matColumnDef="action">
-        <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> action </th>
+        <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
         <td class="word-breaker" style="width:5%" mat-cell *matCellDef="let element">
-          <button mat-icon-button [matMenuTriggerFor]="actionmenu">
-            <i class="material-icons">
+          <button mat-icon-button (click)=showActions(element) [matMenuTriggerFor]="actionmenu">
+            <i style="color: #252525" class="material-icons">
               more_vert
             </i>
           </button></td>
@@ -166,21 +167,32 @@
   </button>
 </mat-menu>
 <mat-menu #actionmenu="matMenu" yPosition="below">
-  <button mat-menu-item>
-    <mat-icon>edit</mat-icon>
+  <button  (click)="gotoScreen(menuActionData.id, menuActionData)" mat-menu-item>
+      <i class="material-icons">
+          edit
+        </i>
     <span>
       Edit</span>
   </button>
-  <button mat-menu-item>
-    <mat-icon>add</mat-icon>
+  <button *ngIf="menuActionData.parentScreenInfo?.screenName===''" [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to create nested screen': ''"
+    (click)="!menuActionData.madeDownlaodDisabled && (menuActionData.parentScreenInfo?.screenName==='') && addNestedLink(menuActionData.id)" mat-menu-item>
+    <i class="material-icons">
+        add
+      </i>
     <span>Add Nested Link</span>
   </button>
-  <button mat-menu-item>
-    <mat-icon>delete</mat-icon>
+  <button (click)="deleteScreenPopUp(menuActionData.id)" mat-menu-item>
+      <i class="material-icons">
+          delete
+        </i>
     <span>Delete</span>
   </button>
-  <button mat-menu-item>
-    <mat-icon>save_alt</mat-icon>
+  <button [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to download': 'Download'"
+   (click)="!menuActionData.madeDownlaodDisabled && downloadScreen(menuActionData.id,menuActionData.screenName)"
+    mat-menu-item>
+    <i class="material-icons">
+        save_alt
+      </i>
     <span>Download</span>
   </button>
 </mat-menu>

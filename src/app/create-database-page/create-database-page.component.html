@@ -113,7 +113,7 @@
               <button [disabled]="inProgress" class="btn {{inProgress ? 'cancel-disabled': 'cancel'}}  btn-padding" (click)="testConnection()">Test
                 Connection<i *ngIf="inProgress" class="fa fa-spinner fa-spin loader"></i> </button>
               <button class="btn cancel btn-padding" (click)="gotoAuthentication(stepper)">Previous</button>
-              <button [disabled]="disableCreateBtn" (click)="createDatatbase(stepper)"
+              <button [disabled]="disableCreateBtn" (click)="createDatatbase()"
                 class="btn btn-padding {{disableCreateBtn ? 'save-disabled': 'save'}}"> <i *ngIf="dbinProgress"
                   class="fa fa-spinner fa-spin loader"></i> Create</button>
             </div>

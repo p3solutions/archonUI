@@ -14,6 +14,7 @@ import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { merge, fromEvent } from 'rxjs';
 import { TableSelectionService } from '../adhoc-table-selection/table-selection.service';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-create-screen-dialog',
   templateUrl: 'create-screen-dialog.html',
@@ -76,9 +77,10 @@ export class AdhocAppScreenListComponent implements OnInit {
   successMessage = '';
   deleteScreenId = '';
   screenInfoObject = new Adhoc();
+  menuActionData = new Adhoc();
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
     private adhocScreenService: AdhocScreenService,
-    private router: Router, private adhocService: AdhocService,
+    private router: Router, private adhocService: AdhocService, private cookieService: CookieService,
     private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
 
 
@@ -107,11 +109,11 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   getApplication() {
+    this.workspaceId = this.cookieService.get('workspaceId');
     let tempResponse = new AdhocHeaderInfo();
     this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
       tempResponse = response;
     });
-    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.adhocService.getApplication(this.workspaceId, this.startIndex).subscribe(result => {
       this.applicationInfoList = result.list;
       this.isApplicationLeft = result.paginationRequired;
@@ -126,8 +128,8 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   getHeaderInfo() {
-    this.workspaceName = this.workspaceHeaderService.getSelectedWorkspaceName();
-    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.workspaceName = this.cookieService.get('workspaceName');
+    this.workspaceId = this.cookieService.get('workspaceId');
     this.adhocService.getMMRVersionList(this.workspaceId).subscribe((result) => {
       if (result.length === 0) {
         document.getElementById('meta-popup-btn').click();
@@ -424,5 +426,9 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
     this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable = '';
     this.adhocSavedObjectService.screenInfoObject = this.screenInfoObject;
+  }
+
+  showActions(adhoc: Adhoc) {
+   this.menuActionData = adhoc;
   }
 }
