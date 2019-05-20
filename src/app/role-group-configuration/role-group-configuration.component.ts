@@ -13,9 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./role-group-configuration.component.css']
 })
 export class RoleGroupConfigurationComponent implements OnInit {
- // displayedColumns: string[] = ['groupName', 'user', 'auditor', 'admin', 'dbadmin', 'archonadmin', 'superadmin'];
   displayedColumns: string[] = ['groupName', 'user', 'auditor', 'admin', 'dbadmin'];
-
   rolesAvailable: string[] = ['roleUser', 'roleAudit', 'roleAdmin', 'roleManageDb', 'roleManageArchon', 'roleSuper'];
   roleOfUser = '';
   globalGroup: GlobalGroup[] = [];
