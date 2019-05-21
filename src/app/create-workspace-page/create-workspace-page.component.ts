@@ -15,7 +15,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   firstFormGroup: FormGroup;
   comment = '';
   @ViewChild('stepper') stepper: MatStepper;
-  displayedColumns: string[] = ['select', 'databaseProfileName', 'databaseName', 'owner', 'createdDate'];
+  displayedColumns: string[] = ['select', 'databaseProfileName', 'databaseName', 'owner.firstName', 'createdAt'];
   dataSource: MatTableDataSource<ConfiguredDB>;
   configDBList: ConfiguredDB[] = [];
   value: any;

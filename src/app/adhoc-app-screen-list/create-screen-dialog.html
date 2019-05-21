@@ -2,18 +2,21 @@
 <div mat-dialog-content>
   <form #createScreenForm="ngForm" class="flex-container">
     <mat-form-field *ngIf="screenInfo.parentScreenInfo.screenName!==''">
-      <input name="linkedScreen" [disabled]="true" #linkedScreen="ngModel" required matInput placeholder="Linked Screen Name"
-        [ngModel]="screenInfo.parentScreenInfo.screenName">
+      <input name="linkedScreen" [disabled]="true" #linkedScreen="ngModel" required matInput
+        placeholder="Linked Screen Name" [ngModel]="screenInfo.parentScreenInfo.screenName">
     </mat-form-field>
     <mat-form-field>
-      <input name="screenName" #screenName="ngModel" required matInput placeholder="Screen Name" [(ngModel)]="screenInfo.screenName">
+      <input name="screenName" #screenName="ngModel" required matInput placeholder="Screen Name"
+        [(ngModel)]="screenInfo.screenName">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput name="screenDesc" required placeholder="Description" #screenDesc="ngModel" [(ngModel)]="screenInfo.screenDesc"></textarea>
+      <textarea matInput name="screenDesc" required placeholder="Description" #screenDesc="ngModel"
+        [(ngModel)]="screenInfo.screenDesc"></textarea>
     </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button class="cancel" (click)="onNoClick()">Cancel</button>
-  <button mat-button class="invite"  [disabled]="!createScreenForm.form.valid" [mat-dialog-close]="screenInfo">Create Screen</button>
+  <button class="btn btn-padding secondary-btn-color" (click)="onNoClick()">Cancel</button>
+  <button class="btn btn-padding {{!createScreenForm.form.valid?'primary-btn-color-disabled':'primary-btn-color'}}"
+    [disabled]="!createScreenForm.form.valid" [mat-dialog-close]="screenInfo">Create Screen</button>
 </div>

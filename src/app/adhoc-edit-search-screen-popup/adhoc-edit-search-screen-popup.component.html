@@ -60,9 +60,9 @@
     </form>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn-transform btn btn-primary btn-sm" [disabled]="!editSearchCriteriaForm.valid"
+    <button type="button" class=" btn btn-padding {{!editSearchCriteriaForm.valid?'primary-btn-color-disabled':'primary-btn-color'}}" [disabled]="!editSearchCriteriaForm.valid"
       (click)="update()">Update</button>
-    <button class="btn-transform btn btn-primary btn-sm" (click)="cancel()">
+    <button class="btn btn-padding secondary-btn-color" (click)="cancel()">
       Cancel</button>
   </div>
 </div>
@@ -109,7 +109,7 @@
         </div>
       </div>
       <div id="info-btn" class="modal-footer">
-        <button type="button" class="btn-transform btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="primary-btn-color btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -71,8 +71,10 @@ export class ErtTableComponent implements OnInit {
   showAvilableBtn = false;
   showNoTablesMsg = false;
   toCreateQuery = false;
-  isCombinedQueryMode = null;
+  isCombinedQueryMode = false;
   availItemsPerPage = 49;
+  isQueryMode = false;
+  isUserDefinedColumnInProgress = false;
   @ViewChild(MatAccordion) accordion: MatAccordion;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
@@ -280,8 +282,6 @@ export class ErtTableComponent implements OnInit {
           this.selectedTableId = this.selectedTableList[0].tableId;
           this.getERTcolumnlist(this.selectedTableId, '');
         }
-        console.log(this.selectedTableList);
-        console.log(this.storeSelectedTables);
         if (this.startIndex === 1) {
           this.selectedTableList = this.storeSelectedTables.concat(this.selectedTableList);
           if (this.ertJobId !== '' && this.ertJobId !== undefined) {
@@ -439,6 +439,7 @@ export class ErtTableComponent implements OnInit {
     } else {
       this.enableUserDefined = true;
     }
+    this.openColumnMode();
   }
 
   queryMode() {
@@ -536,6 +537,7 @@ export class ErtTableComponent implements OnInit {
       control.removeAt(i);
     }
     this.createUsrDefinedCONCATString();
+    this.openColumnMode();
   }
 
   createUsrDefinedCONCATString() {
@@ -607,21 +609,12 @@ export class ErtTableComponent implements OnInit {
       }
   }
   saveUsrDefinedColumn() {
-    if (!this.isCombinedQueryMode) {
+    if (!this.isQueryMode) {
       this.validateQueryMode();
-      if (this.toCreateQuery) {
-        this.usrDefinedQueryView = '';
-        this.userDefinedList = [];
-        this.ursDefinedColumnNameList = this.selectedTableList.filter
-          (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
-        this.setQueryModeUserDefined();
-      }
-    } else if (this.isCombinedQueryMode) {
+      this.setQueryModeUserDefined();
+    } else if (!this.isCombinedQueryMode) {
       this.validateCombinedColumnQueryMode();
-      if (this.toCreateQuery) {
-        this.usrDefinedQueryViewMode = '';
-        this.setQueryModeUserDefined();
-      }
+      this.setQueryModeUserDefined();
     }
   }
 
@@ -630,16 +623,6 @@ export class ErtTableComponent implements OnInit {
       const tempUsrDefinedObj = new UsrDefinedColumnListObj();
       tempUsrDefinedObj.originalColumnName = this.usrDefinedColumnName.toUpperCase().trim();
       tempUsrDefinedObj.modifiedColumnName = this.usrDefinedColumnName.toUpperCase().trim();
-      if (!this.isCombinedQueryMode) {
-        this.usrDefinedQueryView = '';
-        this.userDefinedList = [];
-        this.ursDefinedColumnNameList = this.selectedTableList.filter
-          (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
-        this.setQueryModeUserDefined();
-      } else if (this.isCombinedQueryMode) {
-        this.usrDefinedQueryViewMode = '';
-        this.setQueryModeUserDefined();
-      }
       if (this.usrDefinedQueryViewMode !== '') {
         tempUsrDefinedObj.viewQuery = this.usrDefinedQueryViewMode;
       }
@@ -669,12 +652,14 @@ export class ErtTableComponent implements OnInit {
   }
 
   validateQueryMode() {
+    this.isUserDefinedColumnInProgress = true;
     const param: any = {
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
       'query': this.usrDefinedQueryViewMode,
       'tableId': this.selectedTableId
     };
     this.ertService.validQuery(param).subscribe(res => {
+      this.isUserDefinedColumnInProgress = false;
       if (res.data === undefined) {
         this.usrDefinedAlertMessage = 'Something Went Wrong, please try again.';
         this.toCreateQuery = false;
@@ -990,21 +975,19 @@ export class ErtTableComponent implements OnInit {
     }
     event.stopPropagation();
   }
-  columnModeOpen() {
-    // this.usrDefinedQueryViewMode = '';
-    // this.setQueryModeUserDefined();
-    this.isCombinedQueryMode = true;
-  }
 
-  queryModeOpen() {
-    this.isCombinedQueryMode = false;
-    // this.usrDefinedQueryView = '';
-    // this.userDefinedList = [];
-    // this.ursDefinedColumnNameList = this.selectedTableList.filter
-    //   (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
-    // this.setQueryModeUserDefined();
+  openColumnMode() {
+    if (this.usrDefinedQueryView === '' && this.usrDefinedQueryViewMode === '') {
+      this.isCombinedQueryMode = false;
+      this.isQueryMode = false;
+    } else if (this.usrDefinedQueryViewMode !== '' && this.usrDefinedQueryView === '') {
+      this.isQueryMode = false;
+      this.isCombinedQueryMode = true;
+    } else if (this.usrDefinedQueryViewMode === '' && this.usrDefinedQueryView !== '') {
+      this.isQueryMode = true;
+      this.isCombinedQueryMode = false;
+    }
   }
-
 }
 
 

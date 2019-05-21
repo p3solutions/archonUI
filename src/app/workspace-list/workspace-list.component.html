@@ -151,7 +151,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
       </div>
     </div>
 
@@ -170,8 +170,8 @@
         <p style="text-align:left; padding: 25px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default cancel" data-dismiss="modal">NO</button>
-        <button type="button" class="btn btn-default cancel" (click)="deleteWS()" data-dismiss="modal">YES</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteWS()" data-dismiss="modal">YES</button>
       </div>
     </div>
   </div>
@@ -193,7 +193,7 @@
         <p *ngIf="error" style="text-align:left; padding: 25px;"> {{errormsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default cancel" (click)="closeErrorMsg()"
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="closeErrorMsg()"
           data-dismiss="modal">CLOSE</button>
       </div>
     </div>
@@ -212,20 +212,20 @@
         <div class="modal-body row">
           <div class="col-md-12 row m-10">
             <mat-form-field class="example-full-width">
-              <input matInput required [(ngModel)]="wsName" name="wsName" placeholder="Workspace Name">
+              <input matInput maxlength="40" required [(ngModel)]="wsName" name="wsName" placeholder="Workspace Name">
             </mat-form-field>
 
           </div>
           <div class="col-md-12 row m-10">
             <mat-form-field class="example-full-width">
-              <textarea matInput [(ngModel)]="wsDesc" name="wsDesc" placeholder="Description / Notes"></textarea>
+              <textarea matInput maxlength="250" [(ngModel)]="wsDesc" name="wsDesc" placeholder="Description / Notes"></textarea>
             </mat-form-field>
 
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-default cancel" (click)="updateWS()" data-dismiss="modal"
+          <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding primary-btn-color" (click)="updateWS()" data-dismiss="modal"
             [disabled]="!wsForm.form.valid">Confirm</button>
         </div>
       </form>
@@ -248,7 +248,7 @@
         <p *ngIf="error" style="text-align:left; padding: 25px;"> {{errormsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default cancel" (click)="closeErrorMsg()"
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="closeErrorMsg()"
           data-dismiss="modal">CLOSE</button>
       </div>
     </div>

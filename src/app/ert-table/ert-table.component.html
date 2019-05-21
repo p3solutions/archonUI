@@ -141,12 +141,12 @@
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()"
+    <button type="button" class="btn btn-padding primary-btn-color" (click)="gotoExtractDigestExtraction()"
       style="float: right;margin-right: 24px">Next</button>
-    <button class="btn btn-primary Previous back" id="back-to-job-config" (click)="gotoJobConfiguration()"
-      style="float:right;margin-right:5px;">&laquo;
+    <button class="btn btn-padding primary-btn-color" id="back-to-job-config" (click)="gotoJobConfiguration()"
+      style="float:right;margin-right:5px;">
       Back</button>
-    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
+    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
       style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
@@ -166,8 +166,8 @@
             id="ucolumnname" placeholder="Enter unique column name">
         </div>
         <div>
-          <mat-accordion [multi]=false>
-            <mat-expansion-panel (opened)="columnModeOpen()">
+          <mat-accordion>
+            <mat-expansion-panel [disabled]="isCombinedQueryMode"  (closed)="openColumnMode()">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Combined Column Mode
@@ -230,14 +230,14 @@
               </div>
 
             </mat-expansion-panel>
-            <mat-expansion-panel (opened)="queryModeOpen()">
+            <mat-expansion-panel [disabled]="isQueryMode">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Query Mode
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="panel-body">
-                <textarea class="form-control" [(ngModel)]="usrDefinedQueryViewMode"
+                <textarea class="form-control" (keyup)="setQueryModeUserDefined()" [(ngModel)]="usrDefinedQueryViewMode"
                   style="width: 100%;height: 106px;"></textarea>
               </div>
             </mat-expansion-panel>
@@ -336,11 +336,10 @@
           <a class="close" (click)="closeUserDefinedAlert()" aria-label="close">&times;</a>
           <strong>Alert! </strong>{{usrDefinedAlertMessage}}
         </div>
-        <button type="button" class="btn btn-primary cancelBtnp" id="usr-defined-close"
+        <button type="button" class="btn btn-padding primary-btn-color" id="usr-defined-close"
           data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" [disabled]="enableUserDefined"
-          (click)="saveUsrDefinedColumn()">Save</button>
-
+        <button type="button"  class="btn btn-padding {{enableUserDefined?'primary-btn-color-disabled':'primary-btn-color'}}" [disabled]="enableUserDefined || isUserDefinedColumnInProgress"
+          (click)="saveUsrDefinedColumn()">Save <i *ngIf="isUserDefinedColumnInProgress" class="fa fa-spinner fa-spin inline-loader-ert"></i></button>
       </div>
     </div>
   </div>
@@ -474,9 +473,9 @@
         </section>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default cancelBtnp" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" (click)="createFilterColumnConfig()"
-          data-dismiss="modal">save</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="createFilterColumnConfig()"
+          data-dismiss="modal">Save</button>
 
       </div>
     </div>
@@ -502,7 +501,7 @@
         </div>
         <div class="form-group">
           <button type="button" [disabled]="selectValue.value===null" (click)="saveColumnConfig()"
-            class="btn btn-primary next">save</button>
+            class="btn btn-primary primary-btn-color">Add</button>
         </div>
         <div class="config-table">
           <div class="form-inline" id="config-table-header">
@@ -525,7 +524,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -549,8 +548,8 @@
         </pagination-controls>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" (click)="addAvailableTable()"
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="addAvailableTable()"
           data-dismiss="modal">Save</button>
       </div>
     </div>
@@ -566,8 +565,8 @@
         <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary next" (click)="refreshColumn()" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="refreshColumn()" data-dismiss="modal">Yes</button>
 
       </div>
     </div>
@@ -583,8 +582,8 @@
         <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary next" (click)="cancel()" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()" data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
@@ -602,7 +601,7 @@
         <p>Filter can only be applied on primary table.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+        <button type="button" class="btn btn-padding primary-btn-color"
           data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>

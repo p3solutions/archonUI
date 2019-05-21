@@ -15,7 +15,7 @@
           <form [formGroup]="databaseConnectionForm" class="workspace-detail-form">
             <div class="workspace-detail">
               <mat-form-field class="form-field-profile">
-                <input required formControlName="profileName" matInput placeholder="Profile Name">
+                <input required maxlength="40" formControlName="profileName" matInput placeholder="Profile Name">
               </mat-form-field>
             </div>
             <div class="workspace-detail">
