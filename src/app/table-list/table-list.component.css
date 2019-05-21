@@ -870,9 +870,6 @@ a:hover {
   transform: scale(1.1, 1.1);
 }
 
-/* pagination-controls::ng-deep .ngx-pagination .pagination-previous{
-  padding-right: 190px !important;
-} */
 
 pagination-controls::ng-deep ul.ngx-pagination {
   float: right
@@ -880,6 +877,7 @@ pagination-controls::ng-deep ul.ngx-pagination {
 
 .expand {
   margin-right: 20px;
+  margin-top: 20px;
 }
 
 
