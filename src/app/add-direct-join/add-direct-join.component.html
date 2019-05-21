@@ -1,10 +1,9 @@
 <div class="modal-dialog" role="worskspace">
   <div class="modal-content text-left">
-    <div class="modal-header">Add Direct Join 
-      <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg();resetselectedValues()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-             
+    <div class="modal-header">Add Direct Join   
+        <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg();resetselectedValues()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>    
     </div>
 
     <div class="modal-body row" style="height: 700px;">
@@ -100,9 +99,13 @@
       </div> -->
       <div class="col-md-8">
         <div style="text-align: right;">
-          <button type="button" class="btn btn-primary" id="cancel-btn" (click)="closeErrorMsg();resetselectedValues()" data-dismiss="modal">Close</button>
+          <div class="action-btn">
+              <button class="mat-raised-button cancel btn-primary btn-padding" (click)="closeErrorMsg(); resetselectedValues()" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary" id="cancel-btn" (click)="closeErrorMsg();resetselectedValues()" data-dismiss="modal">Close</button> -->
           <!-- <button type="button" (click)="autocolumnMatchMode()" class="btn btn-primary">Automatch Column</button>  -->
-          <button type="button" class="btn btn-primary" style="margin-left: 18px;"  (click)="addJoins()">Add Joins</button>
+          <!-- <button type="button" class="btn btn-primary" style="margin-left: 18px;"  (click)="addJoins()">Add Joins</button> -->
+          <button class="save mat-raised-button btn-padding" (click)="addJoins();">Add Joins</button>                
+          </div>
         </div>
       </div>
   </div>
