@@ -13,7 +13,7 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
-import { MatStepper } from '@angular/material';
+import { MatStepper, MatStepHeader } from '@angular/material';
 
 @Component({
   selector: 'app-table-list',
@@ -418,6 +418,7 @@ export class TableListComponent implements OnInit {
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
   gotoSecTableAndColSelection(e, stepper: MatStepper) {
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     setTimeout(() => {
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       a[0].classList.add('mat-psedu');
@@ -431,8 +432,15 @@ export class TableListComponent implements OnInit {
         const b1 = document.querySelectorAll('.mat-horizontal-stepper-header-container');
         b1[0].children[3].classList.remove('mat-horizental-line');
       }
-      this.value[2].children[1].classList.add('unfinished-step');
-      this.value[0].children[1].classList.add('finished-step');
+      if (steps[0].state === 'edit') {
+        this.value[0].children[1].classList.add('finished-step');
+      }
+      if (steps[2].state === 'edit') {
+        this.value[2].children[1].classList.add('finished-step');
+      }
+      if (steps[3].state === 'edit') {
+        this.value[3].children[1].classList.add('finished-step');
+      }
       this.value[1].children[1].classList.add('active-step');
     }, 300);
     this.currentStepNo = stepper.selectedIndex;
@@ -442,6 +450,7 @@ export class TableListComponent implements OnInit {
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
   gotoPrimarySel(e, stepper: MatStepper) {
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     setTimeout(() => {
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       a[0].classList.remove('mat-psedu');
@@ -449,11 +458,15 @@ export class TableListComponent implements OnInit {
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       b[0].children[1].classList.remove('mat-horizental-line');
       this.value[0].children[1].classList.add('active-step');
-      if (this.value[1].children[1].classList.contains('active-step')) {
-        this.value[1].children[1].classList.remove('active-step');
+      if (steps[1].state === 'edit') {
+        this.value[1].children[1].classList.add('finished-step');
       }
-      this.value[2].children[1].classList.add('unfinished-step');
-      this.value[1].children[1].classList.add('unfinished-step');
+      if (steps[2].state === 'edit') {
+        this.value[2].children[1].classList.add('finished-step');
+      }
+      if (steps[3].state === 'edit') {
+        this.value[3].children[1].classList.add('finished-step');
+      }
     }, 300);
     // document.getElementById('prev-slide').click();
     this.finalSecColArray = [];
@@ -464,14 +477,23 @@ export class TableListComponent implements OnInit {
   }
 
   gotoAnalyze(e, stepper: MatStepper) {
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     setTimeout(() => {
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       a[1].classList.add('mat-auth-psedu');
       a[2].classList.add('mat-review-psedu');
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       b[0].children[3].classList.add('mat-horizental-line');
-      this.value[1].children[1].classList.add('finished-step');
       this.value[2].children[1].classList.add('active-step');
+      if (steps[1].state === 'edit') {
+        this.value[1].children[1].classList.add('finished-step');
+      }
+      if (steps[3].state === 'edit') {
+        this.value[3].children[1].classList.add('finished-step');
+      }
+      if (steps[0].state === 'edit') {
+        this.value[0].children[1].classList.add('finished-step');
+      }
     }, 300);
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 2;
