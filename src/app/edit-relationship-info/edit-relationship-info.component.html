@@ -41,11 +41,19 @@
 
                     <ng-container matColumnDef="secondaryColumn">
                       <th mat-header-cell *matHeaderCellDef style="width: 10%;"> Secondary Column </th>
-                      <td mat-cell *matCellDef="let element; let ind=index" [hidden]="selected?.length <= 1"> 
+                      <!-- <td mat-cell *matCellDef="let element; let ind=index" [hidden]="selected?.length <= 1"> 
                           <select id="sec_select" #selected class="member-role" (change)="selectedValues(element,ind, selected.value)" style="width:85%">
                               <option [disabled]="element.secondaryColumn.columnName == selected.value">Select</option>
                               <option [selected]="element.secondaryColumn.columnName == i.columnName" [ngValue]="i" *ngFor="let i of secondaryColumns | secondaryColumn:element.primaryColumn.columnDataType">{{i.columnName}}</option>
                             </select>
+                      </td> -->
+                      <td mat-cell *matCellDef="let element; let ind=index">
+                        <mat-form-field>
+                          <mat-select [ngModel]="element.secondaryColumn.columnName" (ngModelChange)="selectedValues(element,ind, $event.value)">
+                            <mat-option value="select">Select</mat-option>
+                            <mat-option [value]="i.columnName" *ngFor="let i of secondaryColumns | secondaryColumn:element.primaryColumn.columnDataType">{{i.columnName}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
                       </td>
                     </ng-container>
                   
