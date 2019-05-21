@@ -870,4 +870,20 @@ a:hover {
   transform: scale(1.1, 1.1);
 }
 
+/* pagination-controls::ng-deep .ngx-pagination .pagination-previous{
+  padding-right: 190px !important;
+} */
+
+pagination-controls::ng-deep ul.ngx-pagination {
+  float: right
+}
+
+.expand {
+  margin-right: 20px;
+}
+
+
+
+
+
 

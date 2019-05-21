@@ -27,8 +27,10 @@
           </h5>
         </div>
       </div>
-      <pagination-controls style="float: right; margin-right: 36px; margin-top: 18px" id="tablelist"
+      <div class="expand">
+      <pagination-controls id="tablelist"
         (pageChange)="getPage(page = $event)"></pagination-controls>
+        </div>
     </div>
   </div>
   <div class="col-md-8 col-md-offset-2.5">
