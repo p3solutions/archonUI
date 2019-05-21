@@ -501,7 +501,7 @@
         </div>
         <div class="form-group">
           <button type="button" [disabled]="selectValue.value===null" (click)="saveColumnConfig()"
-            class="btn btn-primary primary-btn-color">Add</button>
+            class="btn btn-padding {{selectValue.value===null ? 'primary-btn-color-disabled' : 'primary-btn-color'}} ">Add</button>
         </div>
         <div class="config-table">
           <div class="form-inline" id="config-table-header">
