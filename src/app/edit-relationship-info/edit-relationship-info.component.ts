@@ -32,7 +32,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   autoColumnMatch = false;
   autoColumnMatchMessage = '';
 
-  displayedColumns: string[] = ['isKey', 'columnName', 'columnDataType', 'secondaryColumn'];
+  displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumn'];
 
   constructor(private editRelationshipInfo: EditRelationshipInfoService) { }
 
