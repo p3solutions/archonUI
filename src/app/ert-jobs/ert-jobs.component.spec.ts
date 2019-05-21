@@ -8,8 +8,9 @@ import { ErtService } from '../ert-landing-page/ert.service';
 import { ScheduleJobComponent } from '../schedule-job/schedule-job.component';
 import { BsDatepickerModule, TimepickerModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { MatSelectModule,
-  MatOptionModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule,
+import {
+  MatSelectModule,
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatTooltipModule,
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnvironmentService } from '../environment/environment.service';
@@ -23,7 +24,8 @@ describe('ErtJobsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ErtJobsComponent, ScheduleJobComponent],
       providers: [UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
-      imports: [HttpClientModule, RouterTestingModule, BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), FormsModule,MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule]
+      imports: [HttpClientModule, RouterTestingModule, MatTooltipModule,
+        BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule]
     })
       .compileComponents();
   }));
