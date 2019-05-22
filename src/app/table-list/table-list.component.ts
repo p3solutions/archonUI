@@ -134,6 +134,7 @@ export class TableListComponent implements OnInit {
     this.metalyzerHeaderService.getWorkspaceName().subscribe(result => {
       this.wsName = result;
     });
+    this.tablelistService.selectTables(true);
   }
 
   getTableList() {

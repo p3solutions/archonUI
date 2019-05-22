@@ -44,60 +44,13 @@
           <div class="col-md-3">
             <div class="card-title">Relationship Info</div>
           </div>
-        </div>
-        <div class="col col-md-12" style="margin-top:12px;">
-          <!-- <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span> -->
-          <div class="col-md-4"></div>
-          <div class="col col-md-3">
-            <mat-form-field>
-              <mat-label>Add New Join</mat-label>
-              <mat-select>
-                <mat-option data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct
-                  Join</mat-option>
-                <mat-option data-toggle="modal" data-target="#modelStoredProcView">SP/View Join</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <!-- <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" id="dropdown">
-              <li>
-                <a href="#" data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct
-                  Join</a>
-              </li>
-              <li>
-                <a href="#">Column-Match Join</a>
-              </li> 
-              <li>
-                 <a href="#" data-toggle="modal" data-target="#modelStoredProcView">SP/View Join</a> 
-                <a (click)="openStoredProcView()">SP/View Join</a>
-              </li>
-            </ul> -->
-          </div>
-          <div class="col col-md-3">
-            <mat-form-field>
-              <mat-label>Export as</mat-label>
-              <mat-select>
-                <mat-option (click)="exportxml()">Direct Join</mat-option>
-                <mat-option (click)="exportjson()">SP/View Join</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <!-- <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Export As
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" id="dropdown1">
-                <li>
-                  <a (click)="exportxml()">XML</a>
-                </li>
-                <li>
-                  <a (click)="exportjson()">JSON</a>
-                </li>             
-              </ul> -->
-          </div>
-          <div class="col-md-2" style="margin-top: 5px; text-align: right;">
-            <button mat-raised-button class="arch-button" (click)="openDataAModal()">Data Analyzer</button>
-          </div>
-        </div>
+        </div>       
+        <button style="display: none"  id="dataanalyze" (click)="openDataAModal()">Data Analyzer</button>
+        <button style="display: none"  id="directjoin" data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct
+            Join</button>
+        <button style="display: none"  id="spv" (click)="openStoredProcView()">SP/View Join</button>
+        <button style="display: none"  id="exxml" (click)="exportxml()">XML</button>
+        <button style="display: none"  id="exjson" (click)="exportjson()">JSON</button>
         <div class="container-tab">
           <div class="col-md-12 primary-table">
             <h5 class="card-title sub-headerr">Primary Table:
@@ -167,7 +120,7 @@
                   <div class="exp-mat-item">{{x.secondaryColumn.columnName}}</div>
                 </div>
                 <div class="action-btn">
-                  <button class="mat-raised-button cancel btn-primary btn-padding"
+                  <button class="mat-raised-button cancel btn-padding"
                     (click)="mep.expanded = !mep.expanded">Close</button>
                   <button class="save mat-raised-button btn-padding" data-toggle="modal" data-keyboard="false" data-backdrop="static"
                     data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)">Edit</button>
@@ -733,7 +686,7 @@
         </div>
         <div class="modal-footer">
             <div class="action-btn">
-                <button class="mat-raised-button cancel btn-primary btn-padding" (click)="closeErrorMsg()" data-dismiss="modal">Cancel</button>
+                <button class="mat-raised-button cancel btn-padding" (click)="closeErrorMsg()" data-dismiss="modal">Cancel</button>
                 <button class="save mat-raised-button btn-padding" (click)="confirmDelete();" disabled="{{delProgress ? 'true' : null }}">Confirm<span [ngClass]="{'archon-loading-icon' : delProgress}"></span></button> 
           </div> 
           <div *ngIf="deleteNotif?.show" class="alert alert-danger alert-dismissible m-t-10" role="alert">

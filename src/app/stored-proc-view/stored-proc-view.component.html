@@ -2,17 +2,12 @@
 <div class="modal fade " id="modelStoredProcView" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" style="width:1010px">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()">&times;</button>
-        <div>
-          <h4 class="modal-title">Add Stored Procedures and views</h4>
-        </div>
-        <div>
-          <div id="primary-tbl-heading">Primary table:</div>
-          <div id="primary-table-value">{{tableName}}</div>
-        </div>
-      </div>
+      <div class="modal-header">Add Stored Procedures and views
+        <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()">&times;</button>        
+      </div> 
       <div class="modal-body">
+          <h6 class="modal-title"><strong> Primary Table: {{tableName}}</strong></h6>
+
         <div *ngIf="isSPVAvailable">
         <div class="row" style="display: -webkit-box;">
           <div style="text-transform: uppercase;width:27%"><strong>Stored Procedure(SP)/Views</strong></div>
@@ -81,8 +76,10 @@
                     </div> 
                   </div>
           <div class="col-md-5">
-          <button type="button" [disabled]="disableSubmitBtn" (click)="addSPVJoin()" class="btn btn-primary">Add Join</button>
-          <button type="button" class="btn btn-primary" (click)="closeErrorMsg()"  data-dismiss="modal">Close</button>
+              <div class="action-btn">
+                   <button class="btn mat-raised-button cancel btn-padding" (click)="closeErrorMsg()" data-dismiss="modal">Close</button>
+                  <button class="btn save mat-raised-button btn-padding" [disabled]="disableSubmitBtn" (click)="addSPVJoin();">Add Join</button>
+         </div>
         </div>
       </div>
       </div>

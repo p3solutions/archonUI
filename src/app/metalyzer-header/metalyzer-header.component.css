@@ -133,7 +133,10 @@ span {
 }
 
 #frm-margin{
-  margin-top: 5px;
+  margin-top: 5px;  
+}
+.ws {
+  text-align: left
 }
 
 .arch-btnn{

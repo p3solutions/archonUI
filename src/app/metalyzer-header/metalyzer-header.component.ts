@@ -30,7 +30,7 @@ export class MetalyzerHeaderComponent implements OnInit {
   message: void;
   startIndex = 1;
   schemaResultsTableCount = 0;
-
+  disable = true;
   constructor(
     private router: Router,
     private tablelistService: TableListService,
@@ -50,11 +50,17 @@ export class MetalyzerHeaderComponent implements OnInit {
     });
     this.tablelistService.userselectTableslist.subscribe(data => {
       this.userselectTableslist = data;
+      if (this.userselectTableslist.tableId === undefined) {
+        this.disable = true;
+      } else {
+        this.disable = false;
+      }
     });
     this.tablelistService.Dropdownlist.subscribe(data => {
       this.dropdown = data;
     });
   }
+
 
   downloadFile(content, fileType) {
     const fileName = this.wsName + '-metadata.xml';
@@ -184,5 +190,20 @@ export class MetalyzerHeaderComponent implements OnInit {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
       }
     });
+  }
+  dataanalyze() {
+    document.getElementById('dataanalyze').click();
+  }
+  spvjoin() {
+    document.getElementById('spv').click();
+  }
+  adddirectjoin() {
+    document.getElementById('directjoin').click();
+  }
+  selectedxml() {
+    document.getElementById('exxml').click();
+  }
+  selectedjson() {
+    document.getElementById('exjson').click();
   }
 }

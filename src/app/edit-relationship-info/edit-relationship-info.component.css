@@ -1,6 +1,8 @@
 .modal-header{
   color: white;
   background-color: #2879ff;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 .modal-dialog {

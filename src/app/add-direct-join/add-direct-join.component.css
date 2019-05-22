@@ -4,6 +4,8 @@
   border-bottom: 1px solid #e5e5e5;
   background-color: #2879ff;
   color: #fff;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 .modal-title{

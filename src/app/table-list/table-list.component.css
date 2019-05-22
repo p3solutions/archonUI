@@ -326,6 +326,7 @@ input[type='checkbox'] {
 .primary-table {
   background-color: #edf3f8;
   margin-bottom: 12px;
+  margin-top: 12px;
 }
 
 .container-tab{
@@ -573,32 +574,6 @@ a:hover {
   text-align: center
 }
 
-
-.action-btn button.save {
-  background-color: #2879ff;
-  color: #ffffff;
-  text-transform: inherit;
-  margin-right: 6px;
-  transition: 0.5s;
-}
-
-.action-btn button.cancel {
-  background-color: #64b5f6;
-  color: #1b1b1b;
-  margin-right: 10px;
-  text-transform: inherit;
-  transition: 0.5s;
-}
-
-.action-btn button.save:hover {
-  transform: scale(1.1, 1.1);
-
-}
-
-.action-btn button.cancel:hover {
-  transform: scale(1.1, 1.1);
-}
-
 ::ng-deep #analysis-view .mat-expansion-panel {
   margin-bottom: 8px;
   margin-right: 31px;
@@ -650,12 +625,6 @@ a:hover {
 #aligner {
   margin-right: 3rem;
   padding-top: 4px;
-}
-
-#cancel-btn {
-  background-color: #64b5f6;
-  color: #000;
-  border: none;
 }
 
 .btn-primary{
