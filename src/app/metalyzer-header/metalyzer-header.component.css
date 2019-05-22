@@ -83,7 +83,7 @@ span {
 }
 
 .container-head{
-  margin: 0px 0px -15px 20px;
+  margin: -6px 10px -15px 10px;
 }
 
 .left-flexer{
@@ -138,6 +138,10 @@ span {
   margin-top: 14px;  
 }
 .ws {
+  text-align: left
+}
+.wss {
+  margin-left: 10px;
   text-align: left
 }
 

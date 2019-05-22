@@ -15,13 +15,13 @@
           </div>
       </div>       
       <div class="container-head col-md-12">
-        <div class="form-group col-md-3 heading-item ws" style="width: 25%;" id="frm-margin">
+        <div class="form-group col-md-3 heading-item wss" style="width: 25%;" id="frm-margin">
           <b>Workspace Name: </b>{{wsName | uppercase}}
         </div>
         <div class="form-group col-md-3 heading-item ws" style="width: 11%;" id="frm-margin">
           <b>Phase: </b>{{phase | uppercase}}
         </div>
-        <div class="dropdown col-md-2" style="width: 21%; margin-right: 8px;" *ngIf="dropdown">
+        <div class="dropdown col-md-2" style="width: 21%;" *ngIf="dropdown">
             <mat-form-field>
                 <mat-label>Export As XML / JSON / PDF</mat-label>
                 <mat-select>
