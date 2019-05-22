@@ -190,6 +190,7 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
     for (const item of roles) {
       if (item.roleName.toUpperCase().trim().includes('SUPER')) {
         this.disableInviteBtn = false;
+        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification', 'createdAt', 'updatedAt'];
         break;
       }
     }

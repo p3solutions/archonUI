@@ -48,7 +48,7 @@ export class ChangePasswordComponent implements OnInit {
     this.inProgress = true;
     const param = {
       userId: this.userId,
-      newPassword: this.newPassword,
+      newPassword: this.changePasswordForm.value.confirmPassword,
       oldPassword: this.changePasswordForm.value.oldPassword
     };
     this.changePasswordService.changePassword(param).subscribe((res) => {
@@ -60,9 +60,10 @@ export class ChangePasswordComponent implements OnInit {
           }
     },
       (err: HttpErrorResponse) => {
+        console.log(err);
         this.inProgress = false;
           this.errorObject = new ErrorObject;
-          this.errorObject.message = err.error.message;
+          this.errorObject.message = err.error.errorMessage;
           this.errorObject.show = !err.error.success;
       });
   }

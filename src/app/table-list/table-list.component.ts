@@ -93,6 +93,9 @@ export class TableListComponent implements OnInit {
   currentStepNo = null;
   @ViewChild('stepper') stepper: MatStepper;
   value: any;
+  searchPrimary;
+  searchSec1;
+  searchSec2;
 
   constructor(
     private tablelistService: TableListService,
@@ -252,7 +255,7 @@ export class TableListComponent implements OnInit {
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
-    console.log('in');
+    // console.log('in');
     const isChecked = _event.target.checked ? true : false;
     if (isPrimary) {
       for (let i = 0; i < this.primColArray.length; i++) {
@@ -373,11 +376,10 @@ export class TableListComponent implements OnInit {
   }
   enableDisableNextBtn() {
    // const currentStep = this.getCurrentStep();
-   console.log("btn");
+  //  console.log("btn");
     const currentStep = this.currentStepNo;
     switch (currentStep) {
       case 0:
-      console.log(this.selectedPrimColMap.size>0);
         this.enableNextBtn = this.selectedPrimColMap.size > 0;
         break;
       case 1:
@@ -437,9 +439,7 @@ export class TableListComponent implements OnInit {
     this.stepper.selectedIndex = 1;
     // document.getElementById('next-slide').click();
     this.handleStepIindicator(true);
-    console.log(this.finalSecColMap.size);
     this.enableNextBtn = this.finalSecColMap.size > 0;
-    console.log(this.finalSecColMap.size);
   }
   gotoPrimarySel(e, stepper: MatStepper) {
     setTimeout(() => {
@@ -458,9 +458,7 @@ export class TableListComponent implements OnInit {
     // document.getElementById('prev-slide').click();
     this.finalSecColArray = [];
     this.handleStepIindicator(false);
-    console.log(this.selectedPrimColMap.size);
     this.enableNextBtn = this.selectedPrimColMap.size >= 1;
-    console.log(this.selectedPrimColMap.size);
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 0;
   }
@@ -475,8 +473,6 @@ export class TableListComponent implements OnInit {
       this.value[1].children[1].classList.add('finished-step');
       this.value[2].children[1].classList.add('active-step');
     }, 300);
-    console.log(e);
-    console.log(stepper);
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 2;
     // document.getElementById('next-slide').click();

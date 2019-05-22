@@ -38,7 +38,8 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
       searchType: new FormControl(this.SearchCriterion.searchType, Validators.required),
       inputFunction: new FormControl(this.SearchCriterion.inputFunction),
       option: new FormControl(this.SearchCriterion.optionInfo.optionString),
-      isRequired: new FormControl(this.SearchCriterion.isRequired)
+      isRequired: new FormControl(this.SearchCriterion.isRequired),
+      isEncrypted: new FormControl(this.SearchCriterion.isEncrypted)
     }, {
         validator: checkOption('option')
       });
@@ -56,6 +57,7 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
       this.SearchCriterion.searchType = this.editSearchCriteriaForm.get('searchType').value;
       this.SearchCriterion.inputFunction = this.editSearchCriteriaForm.get('inputFunction').value;
       this.SearchCriterion.isRequired = this.editSearchCriteriaForm.get('isRequired').value;
+      this.SearchCriterion.isEncrypted = this.editSearchCriteriaForm.get('isEncrypted').value;
       this.SearchCriterion.optionInfo.optionString = this.editSearchCriteriaForm.get('option').value;
       this.createOptions();
       this.SearchCriteria.splice(index, 1, this.SearchCriterion);

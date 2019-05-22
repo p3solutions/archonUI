@@ -17,7 +17,7 @@
       </mat-form-field>
       <div id="output-div">
         <mat-form-field id="output-function">
-          <mat-select #selectorInput  formControlName="outputFunction" placeholder="Output Function">
+          <mat-select #selectorInput formControlName="outputFunction" placeholder="Output Function">
             <mat-option *ngFor="let outputFunction of outputFunctions;let i:index" [value]="outputFunction">
               {{outputFunction}}
             </mat-option>
@@ -29,12 +29,12 @@
       </div>
       <div id="mask-div">
         <section class="example-section">
-          <mat-checkbox  class="example-margin" formControlName="isMaskField">Mask Field</mat-checkbox>
+          <mat-checkbox class="example-margin" formControlName="isMaskField">Mask Field</mat-checkbox>
         </section>
         <section class="example-section">
           <mat-radio-group formControlName="maskType">
-            <mat-radio-button  style="margin-right: 40px;" name="maskType" value="start">Mask At Start</mat-radio-button>
-            <mat-radio-button  name="maskType" value="end">Mask At End</mat-radio-button>
+            <mat-radio-button style="margin-right: 40px;" name="maskType" value="start">Mask At Start</mat-radio-button>
+            <mat-radio-button name="maskType" value="end">Mask At End</mat-radio-button>
           </mat-radio-group>
         </section>
         <div>
@@ -55,16 +55,18 @@
         </mat-select>
       </mat-form-field>
       <section class="example-section" id="filter-hide-div">
-        <mat-checkbox  style="margin-right: 40px;" class="example-margin" formControlName="isEnableFilter">Enable
+        <mat-checkbox class="example-margin" formControlName="isEnableFilter">Enable
           Filter</mat-checkbox>
-        <mat-checkbox  class="example-margin" formControlName="isHidden">Hide Column</mat-checkbox>
+        <mat-checkbox class="example-margin" formControlName="isHidden">Hide Column</mat-checkbox>
+        <mat-checkbox class="example-margin" formControlName="encrypted">Encrypt Field in infoarchive</mat-checkbox>
+        <mat-checkbox class="example-margin" formControlName="todecrypt">Decrypt Field in infoarchive</mat-checkbox>
       </section>
     </form>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn-transform btn btn-primary btn-sm" [disabled]="!editResultFieldsForm.valid" (click)="update()"
-      >Update</button>
-    <button class="btn-transform btn btn-primary btn-sm" (click)="cancel()">
+    <button type="button" class="btn btn-padding {{!editResultFieldsForm.valid?'primary-btn-color-disabled':'primary-btn-color'}}" [disabled]="!editResultFieldsForm.valid"
+      (click)="update()">Update</button>
+    <button class="btn btn-padding secondary-btn-color" (click)="cancel()">
       Cancel</button>
   </div>
 </div>
@@ -111,7 +113,7 @@
         </div>
       </div>
       <div id="info-btn" class="modal-footer">
-        <button type="button" class="btn-transform btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

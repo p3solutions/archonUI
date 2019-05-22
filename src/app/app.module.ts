@@ -139,6 +139,10 @@ import { RoleGroupConfigurationComponent } from './role-group-configuration/role
 import { RedirectComponent } from './redirect/redirect.component';
 import { EnvironmentService } from './environment/environment.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CookieService } from 'ngx-cookie-service';
+
+import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
+import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -237,7 +241,9 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 SmtpConfigurationComponent,
                 SsoSigninFormComponent,
                 RoleGroupConfigurationComponent,
-                RedirectComponent
+                RedirectComponent,
+                CreateWorkspacePageComponent,
+                CreateDatabasePageComponent
         ],
         imports: [
                 JwtModule.forRoot({
@@ -317,7 +323,7 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 AdhocScreenService,
                 ScheduleMonitoringService,
                 AuditService,
-                ScheduleJobService
+                ScheduleJobService, CookieService
         ],
         bootstrap: [AppComponent],
         entryComponents: [NewWorkspaceComponent, AddDatabaseWizardComponent, StoredProcViewComponent

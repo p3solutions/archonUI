@@ -62,9 +62,14 @@ import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.compon
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import { RedirectGuard } from './redirect/redirect.guard';
+import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
+import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
+      {
+        path: '', redirectTo: 'workspace-dashboard', pathMatch: 'prefix'
+      },
       {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
@@ -168,7 +173,7 @@ const routes: Routes = [
             ]
           }
         ]
-      },
+      }
     ]
   },
   {
@@ -228,6 +233,14 @@ const routes: Routes = [
         path: 'sign-up', component: SignupFormComponent
       }
     ]
+  }, {
+    path: 'sso-sign-in', component: SsoSigninFormComponent
+  },
+  {
+    path: 'create-workspace', component: CreateWorkspacePageComponent, canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'create-database', component: CreateDatabasePageComponent, canActivate: [AuthenticationGuard]
   }
 ];
 

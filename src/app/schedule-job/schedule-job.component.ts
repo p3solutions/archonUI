@@ -26,7 +26,7 @@ export class ScheduleJobComponent implements OnInit {
   @Input() insid: any;
   jobInstancesList = [];
   instances = '';
-  eventTemp;
+  eventTemp = 0;
 
   constructor(
     private Schedulejobservice: ScheduleJobService,

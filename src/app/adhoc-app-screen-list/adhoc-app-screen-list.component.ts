@@ -14,6 +14,7 @@ import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { merge, fromEvent } from 'rxjs';
 import { TableSelectionService } from '../adhoc-table-selection/table-selection.service';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-create-screen-dialog',
   templateUrl: 'create-screen-dialog.html',
@@ -56,7 +57,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   dataSource: ScreenDataSource;
   screenInfo = new Adhoc();
   displayedColumns: string[] = ['position', 'link', 'screenName', 'parentScreenInfo.screenName',
-    'screenDesc', 'edit', 'nestedLink', 'delete', 'download'];
+    'screenDesc', 'updatedBy', 'updatedDate', 'action'];
   screenInfoList: Adhoc[] = [];
   applicationInfoList: ApplicationInfo[] = [];
   selectedAppObject = new ApplicationInfo();
@@ -76,9 +77,10 @@ export class AdhocAppScreenListComponent implements OnInit {
   successMessage = '';
   deleteScreenId = '';
   screenInfoObject = new Adhoc();
+  menuActionData = new Adhoc();
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
-     private adhocScreenService: AdhocScreenService,
-    private router: Router, private adhocService: AdhocService,
+    private adhocScreenService: AdhocScreenService,
+    private router: Router, private adhocService: AdhocService, private cookieService: CookieService,
     private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
 
 
@@ -107,19 +109,27 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   getApplication() {
-    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.workspaceId = this.cookieService.get('workspaceId');
+    let tempResponse = new AdhocHeaderInfo();
+    this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
+      tempResponse = response;
+    });
     this.adhocService.getApplication(this.workspaceId, this.startIndex).subscribe(result => {
       this.applicationInfoList = result.list;
       this.isApplicationLeft = result.paginationRequired;
       if (this.applicationInfoList.length !== 0) {
-        this.selectedApp(this.applicationInfoList[0].id);
+        if (tempResponse.appId !== '') {
+          this.selectedApp(tempResponse.appId);
+        } else {
+          this.selectedApp(this.applicationInfoList[0].id);
+        }
       }
     });
   }
 
   getHeaderInfo() {
-    this.workspaceName = this.workspaceHeaderService.getSelectedWorkspaceName();
-    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.workspaceName = this.cookieService.get('workspaceName');
+    this.workspaceId = this.cookieService.get('workspaceId');
     this.adhocService.getMMRVersionList(this.workspaceId).subscribe((result) => {
       if (result.length === 0) {
         document.getElementById('meta-popup-btn').click();
@@ -159,6 +169,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.addPosition();
     this.dataSource.connect().subscribe(result => {
       this.screenInfoList = result;
+
       this.totalScreen = (this.paginator.pageIndex + 1) * 50;
       if (this.dataSource.paginationRequired) {
         this.totalScreen = this.totalScreen + 50;
@@ -253,6 +264,9 @@ export class AdhocAppScreenListComponent implements OnInit {
       if (response.httpStatus === 200) {
         this.successMessage = 'Application Added Successfully';
         this.applicationInfoList = this.applicationInfoList.concat(response.data);
+        if (this.applicationInfoList.length === 1) {
+          this.selectedApp(this.applicationInfoList[0].id);
+        }
       } else {
         this.successMessage = 'Application not Added Successfully';
       }
@@ -338,6 +352,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     adhocHeaderInfo.appName = this.selectedAppObject.appName;
     adhocHeaderInfo.appMetadataVersion = this.selectedAppObject.metadataVersion;
     adhocHeaderInfo.workspaceId = this.workspaceId;
+    adhocHeaderInfo.appId = this.selectedAppObject.id;
     this.adhocService.updateAdhocHeaderInfo(adhocHeaderInfo);
     let screenInfoObject = new Adhoc();
     screenInfoObject = this.screenInfoList.filter(a => a.id === screenId)[0];
@@ -411,5 +426,9 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
     this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable = '';
     this.adhocSavedObjectService.screenInfoObject = this.screenInfoObject;
+  }
+
+  showActions(adhoc: Adhoc) {
+   this.menuActionData = adhoc;
   }
 }

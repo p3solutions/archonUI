@@ -130,7 +130,7 @@ tbody {
   min-height: 358px;
   width: 70%;
   margin-left: 15%;
-  max-height: 451px;
+  max-height: 461px;
   overflow: auto;
 }
 
@@ -175,3 +175,12 @@ a.disabled {
   margin-right: 0px;
   margin-bottom: 3px;
 }
+
+.check-div{
+  display: inline-flex
+}
+
+.check_box-section{
+  margin-right: 50px
+}
+
