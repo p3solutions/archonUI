@@ -711,10 +711,10 @@ export class TableListComponent implements OnInit {
 
   changeMatStepIcon() {
     this.value = document.querySelectorAll('.mat-horizontal-stepper-header');
-    this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">settings_input_component</i>';
-    this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
-    this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
-    this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">playlist_add_check</i>';
+    this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">crop_portrait</i>';
+    this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">table_chart</i>';
+    this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">insert_chart_outlined</i>';
+    this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">format_list_bulleted</i>';
     this.value[2].children[1].classList.add('unfinished-step');
     this.value[1].children[1].classList.add('unfinished-step');
     this.value[3].children[1].classList.add('unfinished-step');
