@@ -142,7 +142,11 @@ span {
 }
 .wss {
   margin-left: 10px;
-  text-align: left
+  text-align: left;
+  white-space: nowrap; 
+  width: 90%; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 
 .arch-btnn{
