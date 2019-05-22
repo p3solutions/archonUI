@@ -112,7 +112,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     };
     for (const i of this.resultantValues) {
       if (i.indexData === index) {
-        if (secondaryColumn === 'Select') {
+        if (secondaryColumn === 'select') {
           const indexx = this.resultantValues.indexOf(i);
           this.resultantValues.splice(indexx, 1);
           insert = 1;
@@ -129,6 +129,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     } else {
       this.resultantValues.push(test);
     }
+    console.log(this.resultantValues);
   }
 
 
@@ -166,7 +167,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   autocolumnMatchMode() {
     const secondaryColumnNameList = this.secondaryColumns.map(function (item) { return item['columnName']; });
     let tempIndexOfColumnList = 0;
-    console.log(this.primaryColumns);
     for (const primaryColumn of this.primaryColumns) {
       if (secondaryColumnNameList.includes(primaryColumn.columnName)) {
         const index = this.joinDetailsArray.findIndex(k => k.secondaryColumn.columnName === primaryColumn.columnName);

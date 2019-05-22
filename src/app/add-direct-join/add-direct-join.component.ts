@@ -168,9 +168,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   }
   resetselectedValues() {
-    $('#testreset option').prop('selected', function () {
-      return false;
-    });
+    this.populateValues();
+    
   }
 
   closeErrorMsg() {
