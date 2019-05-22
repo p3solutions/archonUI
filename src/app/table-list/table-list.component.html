@@ -712,7 +712,7 @@
 
   <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="true"
     data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInvite">Open Modal</button>
-  <div id="confirmCancelInvite" class="modal fade" role="dialog">
+  <div id="confirmCancelInvite" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header adhoc-modal-header">
@@ -722,8 +722,10 @@
           <p>{{message}}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+            <div class="action-btn">
+          <button type="button" class="mat-raised-button save btn-padding"
             data-dismiss="modal">Ok</button>
+            </div>
         </div>
       </div>
     </div>
