@@ -217,7 +217,7 @@ export class CreateDatabasePageComponent implements OnInit {
     this.userWorkspaceService.createNewDBConfig(this.databaseConnectionForm.value, this.userServerForm.value).subscribe(res => {
       if (res) {
         document.getElementById('success-popup-btn').click();
-        this.successDatabaseMessage = 'Database Created Successfully';
+        this.successDatabaseMessage = 'Database profile Created Successfully and pre analysis started.';
       }
     });
   }

@@ -12,7 +12,7 @@
 
         <div class='body-right'>
 
-          <a (click)="getErtAvailableTable()" matTooltip="Add More Table" *ngIf="showAvilableBtn" class="cursor-poniter"
+          <a (click)="getErtAvailableTable('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn" class="cursor-poniter"
             data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
 
 
@@ -20,7 +20,7 @@
           <div *ngIf="!showNoTablesMsg" id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
               <div
-                *ngFor="let item of selectedTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
+                *ngFor="let item of selectedTableList | paginate: { id:'selected-table-pagination', itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)"
                 [ngClass]="item.tableId===selectedTableId ?'selectTableCls well':'well'">
                 <div><input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
@@ -31,10 +31,10 @@
                 </div>
               </div>
             </div>
-            <pagination-controls *ngIf="this.ertJobId === undefined" (pageChange)="getPage(page = $event)">
+            <pagination-controls id="selected-table-pagination" (pageChange)="getPage(page = $event)">
             </pagination-controls>
           </div>
-          <h4 *ngIf="showNoTablesMsg" style="margin-top: 50%;" >No tables available</h4>
+          <h4 *ngIf="showNoTablesMsg" style="margin-top: 50%;">No tables available</h4>
         </div>
       </div>
     </div>
@@ -44,108 +44,109 @@
           Selected Table Columns List
         </div>
         <div class="card-body">
-            <ng-container *ngIf="!showNoTablesMsg">
-          <div class="row">
-            <div class="col-md-5" id="sel-table-name">
-              <div class='alias-name'>
+          <ng-container *ngIf="!showNoTablesMsg">
+            <div class="row">
+              <div class="col-md-5" id="sel-table-name">
+                <div class='alias-name'>
 
-                <mat-form-field>
-                  <input type="text" matInput name="tablename" id="tablename" [(ngModel)]="modifiedTableName"
-                    placeholder="Table Alias Name" (keyup)="toModifiedTableName()">
-                </mat-form-field>
+                  <mat-form-field>
+                    <input type="text" matInput name="tablename" id="tablename" [(ngModel)]="modifiedTableName"
+                      placeholder="Table Alias Name" (keyup)="toModifiedTableName()">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div id="" class="col-md-4">
+                <div *ngIf="errorMsg!==''" class="alert alert-danger alert-dismissible" role="alert">
+                  <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button> {{errorMsg}}
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <ul class="nav nav-tabs mgmt-panel fl-r" style="margin-right: 12px;">
+                  <li matTooltip="Add User Defined Column" class="icon-list trim-text"><a href="#"
+                      (click)="openUsrDefinedColumnModel('addNewColumn')" data-toggle="modal"
+                      data-target="#add-edit-user-defined-column-modal"><i
+                        class="fa fa-plus-circle edit-circle"></i></a>
+                  <li>
+                  <li matTooltip="Add Filter" style="cursor:pointer" class="icon-list trim-text"><a
+                      (click)="openFilteronfig()"><i class="fa fa-filter"></i></a>
+                  <li>
+                  <li matTooltip="Reset all modification" data-toggle="modal" data-target="#reset_confirm_model"
+                    class="icon-list trim-text"><a class="cursor-poniter"><i class="fa fa-undo"></i></a>
+                  <li>
+                </ul>
               </div>
             </div>
+            <div id="select-tbl-list">
+              <ngx-spinner bdOpacity=0.9 bdColor="#f9f9f9" size="medium" color="#0a85f8" type="ball-beat"
+                [fullScreen]="true">
+                <p style="color: #000000"> Loading... </p>
+              </ngx-spinner>
+              <div *ngIf="!showNoTablesMsg" class="scroll-div">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Include</th>
+                      <th>Column</th>
+                      <th>Column(As required in Output)
+                      <th>Type</th>
+                      <th>Config</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of showColumns()">
+                      <td><input (change)="selectColumns(item?.originalColumnName,item?.isSelected)"
+                          [(ngModel)]="item.isSelected" type="checkbox"></td>
+                      <td>{{item?.originalColumnName}} <i [ngClass]="{'fa fa-key':item?.isKey}"></i></td>
+                      <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
+                          [ngModel]="item?.modifiedColumnName"></td>
+                      <td>{{item?.dataType}}</td>
+                      <td><a *ngIf="item.dataType!=='USERDEFINED'" href="" data-toggle="modal"
+                          (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
+                          [attr.data-target]="item.dataType==='USERDEFINED' ? '#config-modal' : '#config-modal'"><i
+                            class="fa fa-cog"></i></a></td>
+                      <td><a *ngIf="item.dataType==='USERDEFINED'"
+                          (click)="openUsrDefinedColumnModel(item?.originalColumnName)" data-toggle="modal"
+                          data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
+                      <td><a (click)="deleteUsrDefinedColumnForEdit(item?.originalColumnName)"
+                          *ngIf="item.dataType==='USERDEFINED'"><i class="fa fa-trash"></i></a></td>
+                    </tr>
+                    <tr *ngFor="let item of showUserDefinedColumn()">
 
-            <div id="" class="col-md-4">
-              <div *ngIf="errorMsg!==''" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button> {{errorMsg}}
+                      <td><input (change)="selectUserDefinedColumns(item?.originalColumnName,item?.isSelected)"
+                          [(ngModel)]="item.isSelected" type="checkbox"></td>
+                      <td>{{item?.originalColumnName}}</td>
+                      <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
+                          [ngModel]="item?.modifiedColumnName"></td>
+                      <td>{{item?.dataType}}</td>
+                      <td></td>
+                      <td><a (click)="openUsrDefinedColumnModel(item?.originalColumnName)" data-toggle="modal"
+                          data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
+                      <td><a (click)="deleteUsrDefinedColumn(item?.originalColumnName)"><i class="fa fa-trash"></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-
-            <div class="col-md-3">
-              <ul class="nav nav-tabs mgmt-panel fl-r" style="margin-right: 12px;">
-                <li matTooltip="Add User Defined Column" class="icon-list trim-text"><a href="#"
-                    (click)="openUsrDefinedColumnModel('addNewColumn')" data-toggle="modal"
-                    data-target="#add-edit-user-defined-column-modal"><i class="fa fa-plus-circle edit-circle"></i></a>
-                <li>
-                <li matTooltip="Add Filter" style="cursor:pointer" class="icon-list trim-text"><a
-                    (click)="openFilteronfig()"><i class="fa fa-filter"></i></a>
-                <li>
-                <li matTooltip="Reset all modification" data-toggle="modal" data-target="#reset_confirm_model"
-                  class="icon-list trim-text"><a class="cursor-poniter"><i class="fa fa-undo"></i></a>
-                <li>
-              </ul>
-            </div>
-          </div>
-          <div id="select-tbl-list">
-            <ngx-spinner bdOpacity=0.9 bdColor="#f9f9f9" size="medium" color="#0a85f8" type="ball-beat"
-              [fullScreen]="true">
-              <p style="color: #000000"> Loading... </p>
-            </ngx-spinner>
-            <div *ngIf="!showNoTablesMsg" class="scroll-div">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Include</th>
-                    <th>Column</th>
-                    <th>Column(As required in Output)
-                    <th>Type</th>
-                    <th>Config</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of showColumns()">
-                    <td><input (change)="selectColumns(item?.originalColumnName,item?.isSelected)"
-                        [(ngModel)]="item.isSelected" type="checkbox"></td>
-                    <td>{{item?.originalColumnName}} <i [ngClass]="{'fa fa-key':item?.isKey}"></i></td>
-                    <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
-                        [ngModel]="item?.modifiedColumnName"></td>
-                    <td>{{item?.dataType}}</td>
-                    <td><a *ngIf="item.dataType!=='USERDEFINED'" href="" data-toggle="modal"
-                        (click)="openModelForColumnConfig(item?.originalColumnName,item?.dataType)"
-                        [attr.data-target]="item.dataType==='USERDEFINED' ? '#config-modal' : '#config-modal'"><i
-                          class="fa fa-cog"></i></a></td>
-                    <td><a *ngIf="item.dataType==='USERDEFINED'"
-                        (click)="openUsrDefinedColumnModel(item?.originalColumnName)" data-toggle="modal"
-                        data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
-                    <td><a (click)="deleteUsrDefinedColumnForEdit(item?.originalColumnName)"
-                        *ngIf="item.dataType==='USERDEFINED'"><i class="fa fa-trash"></i></a></td>
-                  </tr>
-                  <tr *ngFor="let item of showUserDefinedColumn()">
-
-                    <td><input (change)="selectUserDefinedColumns(item?.originalColumnName,item?.isSelected)"
-                        [(ngModel)]="item.isSelected" type="checkbox"></td>
-                    <td>{{item?.originalColumnName}}</td>
-                    <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
-                        [ngModel]="item?.modifiedColumnName"></td>
-                    <td>{{item?.dataType}}</td>
-                    <td></td>
-                    <td><a (click)="openUsrDefinedColumnModel(item?.originalColumnName)" data-toggle="modal"
-                        data-target="#add-edit-user-defined-column-modal"><i class="fa fa-edit"></i></a></td>
-                    <td><a (click)="deleteUsrDefinedColumn(item?.originalColumnName)"><i class="fa fa-trash"></i></a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </ng-container>
+          </ng-container>
         </div>
-        <h4 *ngIf="showNoTablesMsg" style="margin-top: 19%;" >No Columns available</h4>
+        <h4 *ngIf="showNoTablesMsg" style="margin-top: 19%;">No Columns available</h4>
       </div>
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-primary next" (click)="gotoExtractDigestExtraction()"
+    <button type="button" class="btn btn-padding primary-btn-color" (click)="gotoExtractDigestExtraction()"
       style="float: right;margin-right: 24px">Next</button>
-    <button class="btn btn-primary Previous back" id="back-to-job-config" (click)="gotoJobConfiguration()"
-      style="float:right;margin-right:5px;">&laquo;
+    <button class="btn btn-padding primary-btn-color" id="back-to-job-config" (click)="gotoJobConfiguration()"
+      style="float:right;margin-right:5px;">
       Back</button>
-    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
+    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
       style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
@@ -165,7 +166,83 @@
             id="ucolumnname" placeholder="Enter unique column name">
         </div>
         <div>
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <mat-accordion>
+            <mat-expansion-panel [disabled]="isCombinedQueryMode"  (closed)="openColumnMode()">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Combined Column Mode
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="panel-body">
+                <div id="add-edit-column">
+                  <div class="form-inline" id="add-edit">
+                    <div class="add-edit-heading form-group">
+                      Prefix
+                    </div>
+                    <div class=" add-edit-heading form-group">
+                      Column
+                    </div>
+                    <div class=" add-edit-heading form-group">
+                      Suffix
+                    </div>
+                    <div class=" add-edit-heading form-group">
+                      Action
+                    </div>
+                  </div>
+                  <form class="form-inline" id="add-edit-form" [formGroup]="myForm">
+                    <div formArrayName="addEditColumn">
+                      <div *ngFor="let addEditItem of myForm.controls.addEditColumn['controls']; let i=index">
+                        <div [formGroupName]="i">
+                          <div class="add-edit-form-item form-group">
+                            <input type="text" class="form-control form-control-sm" formControlName="prefix">
+                          </div>
+                          <div class="add-edit-form-item form-group">
+                            <select class="form-control" formControlName="column">
+                              <option [ngValue]="null">Select Column</option>
+                              <option [ngValue]="item" *ngFor="let item of ursDefinedColumnNameList">{{item}}</option>
+                            </select>
+                          </div>
+                          <div class="add-edit-form-item form-group">
+                            <input type="text" class="form-control form-control-sm" formControlName="suffix">
+                          </div>
+                          <div class="add-edit-form-item action form-group">
+                            <a (click)="addColumns(i)"><i class="fa fa-plus"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div id="user-defined-table">
+                  <div *ngFor="let item of userDefinedList;let i=index" class="user-defined-box form-inline">
+                    <div class="clearflex add-edit-form-item form-group">{{item.prefix}}</div>
+                    <div class="clearflex add-edit-form-item form-group">{{item.column}}</div>
+                    <div class="clearflex add-edit-form-item form-group">{{item.suffix}}</div>
+                    <div class="clearflex add-edit-form-item form-group"><a
+                        (click)="deleteUsrDefinedCol(i,item.column)"><i class="fa fa-trash"></i></a></div>
+                  </div>
+                </div>
+                <div id="query-mode-div">
+                  <label id="lbl-id">Query Mode</label>
+                  <textarea class="form-control" [disabled]="true" [(ngModel)]="usrDefinedQueryView"
+                    style="width: 100%;height: 106px;"></textarea>
+                </div>
+              </div>
+
+            </mat-expansion-panel>
+            <mat-expansion-panel [disabled]="isQueryMode">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Query Mode
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="panel-body">
+                <textarea class="form-control" (keyup)="setQueryModeUserDefined()" [(ngModel)]="usrDefinedQueryViewMode"
+                  style="width: 100%;height: 106px;"></textarea>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
               <div class="panel-heading" role="tab" id="headingOne">
                 <h4 style="text-align:left" class="panel-title">
@@ -251,7 +328,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="modal-footer">
@@ -259,11 +336,10 @@
           <a class="close" (click)="closeUserDefinedAlert()" aria-label="close">&times;</a>
           <strong>Alert! </strong>{{usrDefinedAlertMessage}}
         </div>
-        <button type="button" class="btn btn-primary cancelBtnp" id="usr-defined-close"
+        <button type="button" class="btn btn-padding primary-btn-color" id="usr-defined-close"
           data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" [disabled]="enableUserDefined"
-          (click)="saveUsrDefinedColumn()">Save</button>
-
+        <button type="button"  class="btn btn-padding {{enableUserDefined?'primary-btn-color-disabled':'primary-btn-color'}}" [disabled]="enableUserDefined || isUserDefinedColumnInProgress"
+          (click)="saveUsrDefinedColumn()">Save <i *ngIf="isUserDefinedColumnInProgress" class="fa fa-spinner fa-spin inline-loader-ert"></i></button>
       </div>
     </div>
   </div>
@@ -364,7 +440,8 @@
                       <div class="form-inline" *ngFor="let item of dataOrderList;let i=index">
                         <div class="add-edit-heading form-group">{{item.column}}</div>
                         <div class="add-edit-heading form-group">{{item.order}}</div>
-                        <div class="add-edit-heading form-group"><i (click)="deleteOrderConfig(item.column,i)" class="fa fa-trash"></i>
+                        <div class="add-edit-heading form-group"><i (click)="deleteOrderConfig(item.column,i)"
+                            class="fa fa-trash"></i>
                         </div>
                       </div>
                     </div>
@@ -396,9 +473,9 @@
         </section>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default cancelBtnp" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" (click)="createFilterColumnConfig()"
-          data-dismiss="modal">save</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="createFilterColumnConfig()"
+          data-dismiss="modal">Save</button>
 
       </div>
     </div>
@@ -424,7 +501,7 @@
         </div>
         <div class="form-group">
           <button type="button" [disabled]="selectValue.value===null" (click)="saveColumnConfig()"
-            class="btn btn-primary next">save</button>
+            class="btn btn-padding {{selectValue.value===null ? 'primary-btn-color-disabled' : 'primary-btn-color'}} ">Add</button>
         </div>
         <div class="config-table">
           <div class="form-inline" id="config-table-header">
@@ -447,7 +524,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -462,17 +539,17 @@
       <div class="modal-body">
         <div id="avaliable-table-list">
           <div class="form-control"
-            *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { itemsPerPage: itemsPerPage, totalItems: avilableTableCount, currentPage: avilablePage } ">
+            *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { id:'availble-pagination', itemsPerPage: availItemsPerPage, totalItems: avilableTableCount, currentPage: availPage } ">
             <input type="checkbox" (click)="selectAvaliableTable(item.tableId,$event)" [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
         </div>
-        <pagination-controls style="font-size:13px" (pageChange)="getAvilableTablePage(avilablePage = $event)">
+        <pagination-controls id="availble-pagination" style="font-size:13px" (pageChange)="getAvilableTablePage(availPage = $event)">
         </pagination-controls>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" (click)="addAvailableTable()"
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="addAvailableTable()"
           data-dismiss="modal">Save</button>
       </div>
     </div>
@@ -488,8 +565,8 @@
         <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary next" (click)="refreshColumn()" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="refreshColumn()" data-dismiss="modal">Yes</button>
 
       </div>
     </div>
@@ -505,8 +582,8 @@
         <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary next" (click)="cancel()" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()" data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
@@ -524,7 +601,7 @@
         <p>Filter can only be applied on primary table.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+        <button type="button" class="btn btn-padding primary-btn-color"
           data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>

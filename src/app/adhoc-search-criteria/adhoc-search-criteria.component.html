@@ -89,13 +89,13 @@
   </div>
 </div>
 <div class="row" id="nextbtn">
-  <button type="button" class="btn-transform btn btn-primary next btn-sm"
+  <button type="button" class="btn btn-padding {{searchResultLength===0 ? 'primary-btn-color-disabled' : 'primary-btn-color' }}"
     [disabled]="searchResultLength===0" (click)="gotoNestedScreen()"
-    style="float: right;margin-right: 12px">save</button>
-  <button class="btn-transform btn btn-primary Previous btn-sm" (click)="gotoGraph()" style="float:right;margin-right:5px;">
+    style="float: right;margin-right: 12px">Save</button>
+  <button class="btn btn-padding primary-btn-color" (click)="gotoGraph()" style="float:right;margin-right:5px;">
     Back</button>
-  <button class="btn-transform btn Previous btn-sm" id="clearBtn" (click)="clear()" style="float:right;margin-right:5px;">
-    clear</button>
+  <button class="btn btn-padding secondary-btn-color" id="clearBtn" (click)="clear()" style="float:right;margin-right:5px;">
+    Clear</button>
 </div>
 
 <button style="display:none" type="button" id="label-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
@@ -110,7 +110,7 @@
         <p>Column Label already present</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding btn-transform btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
@@ -128,7 +128,7 @@
         <p>{{successMsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="gotoAppScreen()" class="btn-padding btn-transform btn btn-primary adhoc-modal-btn"
+        <button type="button" (click)="gotoAppScreen()" class="btn btn-padding primary-btn-color"
           data-dismiss="modal">Ok</button>
       </div>
     </div>

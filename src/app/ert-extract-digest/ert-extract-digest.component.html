@@ -17,7 +17,7 @@
             </div>
             <div *ngIf="from =='SIP'" class="row">
               <div class="col-md-12 col-lg-12">
-                <input type="text" [(ngModel)]="extractDataConfigInfo.applicationName" (keypress)="space($event)" (keyup)="checkToEnableBtn()" id="extract-application-name"
+                <input type="text" [(ngModel)]="extractDataConfigInfo.applicationName" (keyup)="checkToEnableBtn()" id="extract-application-name"
                   name="title-name" class="form-control" placeholder="Application Name">
                   <div class="note">Note: Appliaction name is space not allowed</div>
               </div>
@@ -94,11 +94,11 @@
     </div>
   </div>
   <div class="row" id="saveBtnId">
-    <button type="button" [disabled]="isDisabledSaveBtn" class="btn btn-primary next" (click)="gotoTableColConfig()"
+    <button type="button" [disabled]="isDisabledSaveBtn" class="btn btn-padding primary-btn-color" (click)="gotoTableColConfig()"
       style="float: right;margin-right: 12px">Next</button>
-    <button class="btn btn-primary Previous back" (click)="gotoTableExtraction()" style="float:right;margin-right:5px;">&laquo;
+    <button class="btn btn-padding primary-btn-color" (click)="gotoTableExtraction()" style="float:right;margin-right:5px;">
       Back</button>
-    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
+    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>
@@ -112,8 +112,8 @@
         <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary next" (click)="cancel()" data-dismiss="modal">Yes</button>
+          <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()" data-dismiss="modal">Yes</button>
         
       </div>
     </div>
