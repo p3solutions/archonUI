@@ -71,10 +71,9 @@
                                 </th>
                                 <td style="width:25%" mat-cell *matCellDef="let row"> {{row.databaseName}} </td>
                             </ng-container>
-                            <ng-container matColumnDef="owner.firstName">
-                                <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header> Owner </th>
-                                <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.owner.firstName}}
-                                    {{row.owner.lastName}} </td>
+                            <ng-container matColumnDef="owner.id">
+                                <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
+                                <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.owner.id}}</td>
                             </ng-container>
                             <ng-container matColumnDef="createdAt">
                                 <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Created Date
