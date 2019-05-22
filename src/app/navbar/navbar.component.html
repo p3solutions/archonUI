@@ -31,7 +31,7 @@
               <i class="fa fa-bell" data-toggle="tooltip" data-placement="bottom" matTooltip="Notifications" ></i>
               <span class="badge bg-red">{{count}}</span>
             </a>
-            <ul id="notifications" class="dropdown-menu msg_list" role="menu">
+            <ul id="notifications" class="dropdown-menu msg_list notification-height" role="menu">
               <li *ngFor="let i of notifiactionArray" matTooltip="Marked as Read" [routerLink]="[i.route, {notification:true}]" (mouseleave)="updateNotification(i.id)" [ngClass]="{'read':i.read}">
                 <a>
                   <span>
