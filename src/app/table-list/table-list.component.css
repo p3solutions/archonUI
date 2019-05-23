@@ -230,7 +230,7 @@ h4 {
 }
 
 .dataA-scrollable-div {
-  overflow: scroll;
+  overflow: auto;
   max-height: 240px;
 }
 
