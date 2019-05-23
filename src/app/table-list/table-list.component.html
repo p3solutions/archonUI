@@ -219,9 +219,9 @@
                         <div class="col-md-11" style="text-align: right;">
                           <pagination-controls id="dalist0" (pageChange)="getPage(page = $event)"></pagination-controls>
                         </div>
-                        <div id="action-btn" class="col-md-12 action-btn-connection" style="text-align: right;">
-                          <button mat-raised-button type="button" (click)="gotoBack()" class="btn btn-primary" id="cancel-btn" style="margin-right: 10px;">Cancel</button>
-                          <button mat-raised-button type="button"  [disabled]="selectedPrimColMap.size===0" (click)="gotoSecTableAndColSelection($event,stepper)" class="btn save btn-primary btn-padding matStepperNext">Next</button>
+                        <div class="col-md-12 action-btn" style="text-align: right;">
+                          <button type="button" (click)="gotoBack()" class="btn cancel btn-padding" style="margin-right: 10px;">Cancel</button>
+                          <button type="button"  [disabled]="selectedPrimColMap.size===0" (click)="gotoSecTableAndColSelection($event,stepper)" class="btn save btn-padding matStepperNext">Next</button>
                         </div>
                       </mat-step>
                       <mat-step label="Secondary Table">
@@ -338,10 +338,11 @@
                                 Percentage of Rows to consider for Analysis
                                 <input mat-input type="number" class="inpt-sty" placeholder="Analysis" [(ngModel)]="analysisRowCount" min="1" max="100">
                               </div> -->
-                        <div id="action-btn" style="float: right;">
-                          <button (click)="gotoPrimarySel($event,stepper)" class="btn btn-primary cancel matStepperPrevious btn-padding"  id="cancel-btn">Previous</button>
-                          <button (click)="gotoAnalyze($event,stepper)" [disabled]="finalSecColMap.size===0" class="btn save btn-primary btn-padding matStepperNext" style="margin-left:10px;">Next</button>
-                        </div>
+                             
+                        <div class="action-btn" style="float: right;">
+                          <button (click)="gotoPrimarySel($event,stepper)" class="btn cancel btn-padding" >Previous</button>
+                          <button (click)="gotoAnalyze($event,stepper)" [disabled]="finalSecColMap.size===0" class="btn save btn-padding matStepperNext">Next</button>
+                        </div> 
                       </mat-step>
                       <mat-step label="Data Analysis">
                           <div class="panel-body dataA-panel-body" id="panel-1">
@@ -389,9 +390,9 @@
                                 </table>
                               </div>
                             </div>
-                            <div id="action-btn" style="float: right;">
-                                <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn btn-primary cancel matStepperPrevious btn-padding" id="cancel-btn">Previous</button>
-                                <button (click)="dataAnalyse()" class="btn save btn-primary btn-padding matStepperNext" style="margin-left: 10px">Analyze</button>
+                            <div class="action-btn" style="float: right;">
+                                <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn cancel btn-padding matStepperPrevious">Previous</button>
+                                <button (click)="dataAnalyse()" class="btn save btn-padding matStepperNext" >Analyze</button>
                               </div>
                       </mat-step>
                       <mat-step label="Result">

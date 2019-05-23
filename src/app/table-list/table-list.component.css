@@ -533,7 +533,7 @@ a:hover {
 }
 
 .btn {
-  font-size: 12px;
+  /* font-size: 12px; */
 }
 
 .expansion-outer {
@@ -820,6 +820,7 @@ a:hover {
   text-transform: inherit;
   margin-right: 10px;
   transition: 0.5s;
+  border-radius: 3px;
 }
 
 .action-btn button.cancel {
@@ -828,6 +829,7 @@ a:hover {
   margin-right: 10px;
   text-transform: inherit;
   transition: 0.5s;
+  border-radius: 3px;
 }
 
 .action-btn button.save:hover {
