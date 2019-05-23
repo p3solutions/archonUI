@@ -149,7 +149,7 @@
                   <tr *ngFor="let i of common" class="text-left">
                       <td *ngIf="i.value !== ''">{{i.name}}</td>
                       <td *ngIf="i.type !== 'Date'">{{i.value !== '' ? i.value : 'null'}}</td>
-                      <td *ngIf="i.type == 'Date' && i.value !== ''">{{i.value | date: 'medium'}}</td>
+                      <td *ngIf="i.type == 'Date' && i.value !== '' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">
