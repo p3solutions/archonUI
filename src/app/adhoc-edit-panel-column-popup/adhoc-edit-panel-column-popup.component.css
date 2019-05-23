@@ -19,7 +19,7 @@
   justify-content: space-around;
   margin: 11px 0px 11px 0px;
   font-size: 14px;
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -54,7 +54,7 @@
 #output-div a {
   font-size: 25px;
   float: right;
-  padding: 9px 2px;
+  padding-top: 16px;
 }
 
 .fa-info-circle {
@@ -119,7 +119,7 @@ tbody {
   overflow: auto;
 }
 
-#table-col-info div{
+#table-col-info div {
   width: 50%;
   text-align: left;
 }
@@ -188,4 +188,9 @@ modal-body .p {
 #nextbtn {
   margin-right: 0px;
   margin-bottom: 3px;
+}
+
+.info-function-icon {
+  cursor: not-allowed !important;
+  color: #676767 !important;
 }

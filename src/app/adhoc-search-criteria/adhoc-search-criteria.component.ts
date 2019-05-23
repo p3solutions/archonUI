@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {
   TableColumnNode, SearchCriteria, ResultFields, SearchResult, Tab, NestedLinks, SelectedTables,
-  AdhocHeaderInfo, Adhoc, SidePanel, InlinePanel, getUserId
+  AdhocHeaderInfo, Adhoc, SidePanel, InlinePanel
 } from '../adhoc-landing-page/adhoc';
+import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -44,7 +45,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   transformer = (node: TableColumnNode, level: number) => {
     return {
       expandable: !!node.columns && node.columns.length > 0,
-      node: { 'id': node.id, 'name': node.name, 'type': node.type, 'visible': node.visible },
+      node: { 'id': node.id, 'name': node.name, 'type': node.type, 'visible': node.visible, 'dataType': node.dataType },
       level: level,
     };
   }
@@ -116,7 +117,10 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       tableColumnNode.name = table.schemaName + '/' + table.tableName;
       tableColumnNode.visible = true;
       for (const column of table.columnList) {
-        tableColumnNode.columns.push({ 'id': column.columnId, 'name': column.name, 'type': 'column', 'visible': true });
+        tableColumnNode.columns.push({
+          'id': column.columnId, 'name': column.name, 'type': 'column', 'visible': true,
+          'dataType': column.type
+        });
       }
       this.TREE_DATA.push(tableColumnNode);
     }

@@ -60,7 +60,7 @@
 #input-div a {
   font-size: 25px;
   float: right;
-  padding: 9px 2px;
+  padding-top: 16px;
 }
 
 .fa-info-circle {
@@ -184,3 +184,11 @@ a.disabled {
   margin-right: 50px
 }
 
+.margin-bottom-date{
+  margin-bottom: 16px !important;
+}
+
+.info-function-icon {
+  cursor: not-allowed !important;
+  color: #676767 !important;
+}

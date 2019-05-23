@@ -23,8 +23,9 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <a [class.disabled]="selectorInput.value===''" (click)="!(selectorInput.value==='') && getInfo()">
-          <i class="fa fa-info-circle" aria-hidden="true"></i>
+        <a (click)="getInfo()">
+          <i class="material-icons {{editResultFieldsForm.get('outputFunction').value==='' ? 'info-function-icon':''}}"
+            aria-hidden="true">info</i>
         </a>
       </div>
       <div id="mask-div">
@@ -58,14 +59,16 @@
         <mat-checkbox class="example-margin" formControlName="isEnableFilter">Enable
           Filter</mat-checkbox>
         <mat-checkbox class="example-margin" formControlName="isHidden">Hide Column</mat-checkbox>
-        <mat-checkbox class="example-margin" formControlName="encrypted">Encrypt Field in infoarchive</mat-checkbox>
+        <mat-checkbox class="example-margin" (change)="isEncrypted($event)" formControlName="encrypted">Encrypt Field in
+          infoarchive</mat-checkbox>
         <mat-checkbox class="example-margin" formControlName="todecrypt">Decrypt Field in infoarchive</mat-checkbox>
       </section>
     </form>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-padding {{!editResultFieldsForm.valid?'primary-btn-color-disabled':'primary-btn-color'}}" [disabled]="!editResultFieldsForm.valid"
-      (click)="update()">Update</button>
+    <button type="button"
+      class="btn btn-padding {{!editResultFieldsForm.valid?'primary-btn-color-disabled':'primary-btn-color'}}"
+      [disabled]="!editResultFieldsForm.valid" (click)="update()">Update</button>
     <button class="btn btn-padding secondary-btn-color" (click)="cancel()">
       Cancel</button>
   </div>

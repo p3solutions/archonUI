@@ -24,11 +24,6 @@ export class AdhocSearchScreenComponent implements OnInit {
       this.searchCriteria = JSON.parse(JSON.stringify(result));
       this.updateSearchCriteriaLength.emit(this.searchCriteria.length);
     });
-    // this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
-    //   if (result === null) {
-    //     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-    //   }
-    // });
   }
 
   gotoSearchCriteriaEdit(columnId) {
@@ -38,6 +33,7 @@ export class AdhocSearchScreenComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
     if (event.container !== event.previousContainer) {
       this.adhocScreenService.updatedTreeData.subscribe(result => {
         this.TREE_DATA = JSON.parse(JSON.stringify(result));
@@ -54,6 +50,10 @@ export class AdhocSearchScreenComponent implements OnInit {
         tempSearchCriteria.name = event.item.data.node.name;
         tempSearchCriteria.tableName = tableName;
         tempSearchCriteria.label = event.item.data.node.name;
+        tempSearchCriteria.dataType = event.item.data.node.dataType;
+        if (tempSearchCriteria.dataType === 'date') {
+          tempSearchCriteria.fieldType = 'DATE';
+        }
         this.searchCriteria.push(tempSearchCriteria);
       } else {
         document.getElementById('label-popup-btn').click();
@@ -61,6 +61,7 @@ export class AdhocSearchScreenComponent implements OnInit {
     } else if (event.container === event.previousContainer) {
       moveItemInArray(this.searchCriteria, event.previousIndex, event.currentIndex);
     }
+    console.log(this.searchCriteria);
     this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
     this.updateSearchCriteriaLength.emit(this.searchCriteria.length);
   }

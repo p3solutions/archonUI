@@ -17,14 +17,6 @@
               id="inputValidation" placeholder="Search" />
             <span style="color: #676767" class="glyphicon glyphicon-search form-control-feedback"></span>
           </div>
-          <!-- <p>
-           <mat-form-field appearance="outline">
-              <mat-label>
-                <i class="material-icons">search</i>
-              </mat-label>
-              <input #search matInput (keyup)="filterTableAndColumn(search.value)" placeholder="Search Table">
-            </mat-form-field>
-          </p> -->
           <p>
             <mat-tree cdkDropList #column="cdkDropList"
               [cdkDropListConnectedTo]="['drag-search-column','drag-panel-column']" [cdkDropListData]="dataSource"

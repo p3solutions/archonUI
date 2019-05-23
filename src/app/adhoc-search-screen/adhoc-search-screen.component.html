@@ -1,6 +1,7 @@
 <div id="drag-search-column" class="row search-screen" cdkDropList [cdkDropListData]="searchCriteria"
   (cdkDropListDropped)="drop($event)">
-  <mat-card [class.mat-elevation-z2]="false" cdkDrag *ngFor="let item of searchCriteria" class="col-md-4 column-box h-100">
+  <mat-card [class.mat-elevation-z2]="false" cdkDrag *ngFor="let item of searchCriteria"
+    class="col-md-4 column-box h-100">
     <mat-card-header>
       <mat-card-title>{{item.label}}
         <span> <a class="cursor-poniter" (click)="gotoSearchCriteriaEdit(item?.columnId)"><i class="material-icons">
@@ -16,6 +17,11 @@
     <mat-form-field *ngIf="item.fieldType=='TEXT'" class="text-box" appearance="outline">
       <input matInput placeholder="Text">
     </mat-form-field>
+    <mat-form-field *ngIf="item.fieldType==='DATE'">
+      <input matInput [matDatepicker]="picker" placeholder="Date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
     <mat-form-field class="select" *ngIf="item?.fieldType=='COMBO'">
       <mat-select placeholder="Combo">
         <mat-option *ngFor="let opt of item?.optionInfo?.option" value="A">
@@ -24,18 +30,13 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field class="select" *ngIf="item?.fieldType=='RADIO'">
-      <mat-select placeholder="RADIO">
-        <mat-option *ngFor="let opt of item?.optionInfo?.option" value="A">
-          <input type="radio"> {{opt.label}},{{opt.value}}
-        </mat-option>
-      </mat-select>
+      <mat-radio-group>
+        <mat-radio-button *ngFor="let opt of item?.optionInfo?.option"  [value]="opt.value" name="radio-btn">{{opt.label}}</mat-radio-button>
+      </mat-radio-group>
     </mat-form-field>
     <mat-form-field class="select" *ngIf="item?.fieldType=='CHECK'">
-      <mat-select placeholder="CHECK">
-        <mat-option *ngFor="let opt of item?.optionInfo?.option" value="A">
-          <input type="checkbox">{{opt.label}},{{opt.value}}
-        </mat-option>
-      </mat-select>
+      <mat-checkbox *ngFor="let opt of item?.optionInfo?.option" [value]="opt.value"  class="example-margin">{{opt.label}}
+      </mat-checkbox>
     </mat-form-field>
   </mat-card>
 </div>

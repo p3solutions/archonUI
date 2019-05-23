@@ -2,8 +2,9 @@
 import { Component, OnInit, ViewChild, Inject, ElementRef } from '@angular/core';
 import {
   ApplicationInfo, AdhocHeaderInfo, Adhoc, ChildScreenInfo,
-  ParentScreenInfo, SessionAdhoc, getUserId, SearchResult, SearchCriteria, Tab, ResultFields
+  ParentScreenInfo, SessionAdhoc, SearchResult, SearchCriteria, Tab, ResultFields
 } from '../adhoc-landing-page/adhoc';
+import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort } from '@angular/material';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Router } from '@angular/router';
