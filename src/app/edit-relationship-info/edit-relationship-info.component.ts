@@ -102,20 +102,22 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     }
     const test = {
       indexData: index,
+      isSelected: true,
       relationshipId: primaryValues.relationshipId,
       primaryColumn: {
         columnId: primaryValues.primaryColumn.columnId,
         columnName: primaryValues.primaryColumn.columnName,
-        dataType: primaryValues.primaryColumn.columnDataType
+        dataType: primaryValues.primaryColumn.columnDataType,
+        isKey: primaryValues.primaryColumn.isKey
       },
       secondaryColumn: example
     };
     for (const i of this.resultantValues) {
       if (i.indexData === index) {
         if (secondaryColumn === 'select') {
-          const indexx = this.resultantValues.indexOf(i);
-          this.resultantValues.splice(indexx, 1);
           insert = 1;
+          console.log(i);
+          i.isSelected = false;
         } else {
           insert = 0;
           const indexx = this.resultantValues.indexOf(i);
