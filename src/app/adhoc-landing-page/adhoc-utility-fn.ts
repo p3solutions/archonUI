@@ -20,7 +20,7 @@ export const inputFunctionList: InputFunctionsInfo[] = [{
       if(lower-case($field) = 'male') then 'M'
       else if(lower-case($field) = 'female') then 'F'
       else 'U'
-    };`, 'input': ['M', 'm', 'F', 'f', 'U', 'u'], 'output': ['Male', 'Male', 'Female', 'Female', 'Unknown', 'Unknown']
+    };`, 'input': ['Male', 'male', 'Female', 'female', 'Unknown', 'unknown'], 'output': ['M', 'm', 'F', 'f', 'U', 'u']
 },
 {
     'sequenceNo': 2,
@@ -72,8 +72,16 @@ export function checkOption(controlName: string) {
             for (const option of tempOptions) {
                 tempOption = option.split(',');
                 if (tempOption[0] !== undefined && tempOption[1] !== undefined) {
-                    if (tempOption[0].trim() !== '' && tempOption[1].trim() !== '') {
-                        optionArray.push({ 'label': tempOption[0].trim(), 'value': tempOption[1].trim() });
+                    if (tempOption[0].length === 0 && tempOption[1].length === 0) {
+                        optionArray.push({ 'label': ' ', 'value': ' ' });
+                    } else if (tempOption[0] !== '' && tempOption[1].length === 0) {
+                        optionArray.push({ 'label': tempOption[0], 'value': ' ' });
+                        control.setErrors(null);
+                    } else if (tempOption[0].length === 0 && tempOption[1] !== '') {
+                        optionArray.push({ 'label': ' ', 'value': tempOption[1] });
+                        control.setErrors(null);
+                    } else if (tempOption[0] !== '' && tempOption[1] !== '') {
+                        optionArray.push({ 'label': tempOption[0], 'value': tempOption[1] });
                         control.setErrors(null);
                     } else {
                         control.setErrors({ mustMatch: true });

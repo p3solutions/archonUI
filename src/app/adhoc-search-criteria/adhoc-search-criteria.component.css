@@ -175,3 +175,8 @@ mat-card-header.header-blue {
 .mat-expansion-panel-header-title {
   font-size: 18px
 }
+
+.tree-height{
+  height: 75vh;
+  overflow: auto
+}

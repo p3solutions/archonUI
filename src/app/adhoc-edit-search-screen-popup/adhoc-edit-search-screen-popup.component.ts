@@ -92,9 +92,9 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
     for (const option of tempOptions) {
       tempOption = option.split(',');
       if (tempOption[0] !== undefined && tempOption[1] !== undefined) {
-        if (tempOption[0].trim() !== '' && tempOption[1].trim() !== '') {
-          optionArray.push({ 'label': tempOption[0].trim(), 'value': tempOption[1].trim() });
-        }
+       // if (tempOption[0] !== '' && tempOption[1]!== '') {
+          optionArray.push({ 'label': tempOption[0], 'value': tempOption[1] });
+       // }
       }
     }
     this.SearchCriterion.optionInfo.option = optionArray;

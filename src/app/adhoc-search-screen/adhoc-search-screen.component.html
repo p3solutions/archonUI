@@ -4,7 +4,9 @@
     class="col-md-4 column-box h-100">
     <mat-card-header>
       <mat-card-title>{{item.label}}
-        <span> <a class="cursor-poniter" (click)="gotoSearchCriteriaEdit(item?.columnId)"><i class="material-icons">
+        <span>
+          <span class="required-color" *ngIf="item.isRequired">*</span>
+          <a class="cursor-poniter" (click)="gotoSearchCriteriaEdit(item?.columnId)"><i class="material-icons">
               edit
             </i></a>
           <a class="cursor-poniter" (click)="deleteSearchCriteria(item?.columnId,item?.tableId)"><i
@@ -14,14 +16,30 @@
       </mat-card-title>
       <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
     </mat-card-header>
-    <mat-form-field *ngIf="item.fieldType=='TEXT'" class="text-box" appearance="outline">
+    <mat-form-field *ngIf="item.fieldType=='TEXT'" class="text-box">
       <input matInput placeholder="Text">
     </mat-form-field>
-    <mat-form-field *ngIf="item.fieldType==='DATE'">
-      <input matInput [matDatepicker]="picker" placeholder="Date">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+    <ng-container *ngIf="!item.isDateRange">
+      <mat-form-field *ngIf="item.fieldType==='DATE'" class="text-box">
+        <input matInput [matDatepicker]="picker" placeholder="Date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="item.isDateRange">
+      <div>
+        <mat-form-field *ngIf="item.fieldType==='DATE'" class="start-end">
+          <input matInput [matDatepicker]="picker" placeholder="Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field *ngIf="item.fieldType==='DATE' && item.isDateRange" class="end-date">
+          <input matInput [matDatepicker]="picker" placeholder="Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </ng-container>
     <mat-form-field class="select" *ngIf="item?.fieldType=='COMBO'">
       <mat-select placeholder="Combo">
         <mat-option *ngFor="let opt of item?.optionInfo?.option" value="A">
@@ -29,14 +47,15 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="select" *ngIf="item?.fieldType=='RADIO'">
-      <mat-radio-group>
-        <mat-radio-button *ngFor="let opt of item?.optionInfo?.option"  [value]="opt.value" name="radio-btn">{{opt.label}}</mat-radio-button>
-      </mat-radio-group>
-    </mat-form-field>
-    <mat-form-field class="select" *ngIf="item?.fieldType=='CHECK'">
-      <mat-checkbox *ngFor="let opt of item?.optionInfo?.option" [value]="opt.value"  class="example-margin">{{opt.label}}
+    <mat-radio-group class="grid-display" *ngIf="item?.fieldType=='RADIO'">
+      <mat-radio-button *ngFor="let opt of item?.optionInfo?.option" value="A" name="radio-btn">
+        {{opt.label}},{{opt.value}}
+      </mat-radio-button>
+    </mat-radio-group>
+    <ng-container *ngIf="item?.fieldType=='CHECK'">
+      <mat-checkbox *ngFor="let opt of item?.optionInfo?.option" value="A"
+        class="example-margin check-display">{{opt.label}},{{opt.value}}
       </mat-checkbox>
-    </mat-form-field>
+    </ng-container>
   </mat-card>
 </div>

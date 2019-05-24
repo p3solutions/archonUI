@@ -1,6 +1,6 @@
-<div fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
-  <div fxflex fxlayout fxLayoutGap="20px">
-    <div fxFlex="24%">
+<div>
+  <div class="row">
+    <div class="col-md-3">
       <mat-card id="left-card" class="example-card align-self-stretch">
         <mat-card-header class="header-blue graph-heading-div">
           <mat-card-title>Selection Details</mat-card-title>
@@ -17,7 +17,7 @@
               id="inputValidation" placeholder="Search" />
             <span style="color: #676767" class="glyphicon glyphicon-search form-control-feedback"></span>
           </div>
-          <p>
+          <p class="tree-height">
             <mat-tree cdkDropList #column="cdkDropList"
               [cdkDropListConnectedTo]="['drag-search-column','drag-panel-column']" [cdkDropListData]="dataSource"
               (cdkDropListDropped)="drop($event)" #tree [dataSource]="dataSource" [treeControl]="treeControl">
@@ -40,7 +40,7 @@
         </mat-card-content>
       </mat-card>
     </div>
-    <div fxFlex="76%">
+    <div  class="col-md-9">
       <div style="padding-bottom: 20px;">
         <mat-accordion>
           <mat-expansion-panel [expanded]="openSearch" (opened)="openSearch = true" (closed)="openSearch = false">
@@ -76,19 +76,20 @@
               *ngIf="isPanelColumnScreen"></app-adhoc-edit-panel-column-popup>
           </mat-expansion-panel>
         </mat-accordion>
+        <div class="row" id="nextbtn">
+            <button type="button" class="btn btn-padding {{searchResultLength===0 ? 'primary-btn-color-disabled' : 'primary-btn-color' }}"
+              [disabled]="searchResultLength===0" (click)="gotoNestedScreen()"
+              style="float: right;margin-right: 12px">Save</button>
+            <button class="btn btn-padding primary-btn-color" (click)="gotoGraph()" style="float:right;margin-right:5px;">
+              Back</button>
+            <button class="btn btn-padding secondary-btn-color" id="clearBtn" (click)="clear()" style="float:right;margin-right:5px;">
+              Clear</button>
+          </div>
       </div>
     </div>
   </div>
 </div>
-<div class="row" id="nextbtn">
-  <button type="button" class="btn btn-padding {{searchResultLength===0 ? 'primary-btn-color-disabled' : 'primary-btn-color' }}"
-    [disabled]="searchResultLength===0" (click)="gotoNestedScreen()"
-    style="float: right;margin-right: 12px">Save</button>
-  <button class="btn btn-padding primary-btn-color" (click)="gotoGraph()" style="float:right;margin-right:5px;">
-    Back</button>
-  <button class="btn btn-padding secondary-btn-color" id="clearBtn" (click)="clear()" style="float:right;margin-right:5px;">
-    Clear</button>
-</div>
+
 
 <button style="display:none" type="button" id="label-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
   data-backdrop="static" data-toggle="modal" data-target="#label-popup">Open Modal</button>
