@@ -172,7 +172,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       // }
     }
     console.log(this.removeIndexValue);
-    this.removeIndexValue = this.removeIndexValue.filter(a => a.isSelected === false);
+    this.removeIndexValue = this.removeIndexValue.filter(a => a.isSelected === false || a.isSelected === true);
     console.log(this.removeIndexValue);
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
       .subscribe(res => {
