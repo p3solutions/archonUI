@@ -1815,14 +1815,17 @@ mat-checkbox svg {
 .create-app-dialog  button.invite {
   background-color: #2879ff;
   color: #ffffff;
-  font-family: roboto;
-  font-size: 16px;
+  text-transform: inherit;
+  border-radius: 3px;
   transition:0.5s;
 }
 
 .create-app-dialog  button.cancel {
-  font-family: roboto;
-  font-size: 16px;
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  border-radius: 3px;
   transition:0.5s;
 }
 
@@ -1835,3 +1838,57 @@ mat-checkbox svg {
 .create-app-dialog  button.cancel:hover {
   transform: scale(1.1, 1.1);
 }
+
+/* start- common btn css */ 
+
+ button.secondary-btn-color {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition:0.5s;
+}
+
+button.primary-btn-color {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition:0.5s;
+}
+
+button.primary-btn-color-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+  cursor:not-allowed;
+}
+
+button.primary-btn-color:hover {
+  transform: scale(1.1, 1.1);
+  color: #ffffff;
+}
+
+button.secondary-btn-color-disabled {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  border-radius: 3px;
+}
+
+button.secondary-btn-color:hover {
+  transform: scale(1.1, 1.1);
+}
+
+button.primary-btn-color-disabled:hover {
+  color: #ffffff;
+
+}
+button.secondary-btn-color-disabled:hover {
+  color: #ffffff;
+}
+
+/* ends- common btn css */ 

@@ -76,13 +76,13 @@
     </div>
   </div>
   <div class="row" id="nextbtn" style="margin-top: 15px;">
-    <button type="button" [disabled]="isDisabled" class="btn btn-primary next" (click)="saveERTJob('READY')" style="float: right;margin-right: 12px">Mark
+    <button type="button" [disabled]="isDisabled" class="btn btn-padding primary-btn-color" (click)="saveERTJob('READY')" style="float: right;margin-right: 12px">Mark
       As Complete  <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i></button>
-    <button type="button" [disabled]="issaveDisabled"  class="btn btn-primary next" (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 12px">Save
+    <button type="button" [disabled]="issaveDisabled"  class="btn btn-padding primary-btn-color" (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 12px">Save
       As Draft <i *ngIf="issaveDisabled" class="fa fa-spinner fa-spin inline-loader"></i></button>
-    <button class="btn btn-primary Previous back" (click)="gotoExtractData();" style="float:right;margin-right:5px;">&laquo;
+    <button class="btn btn-padding primary-btn-color" (click)="gotoExtractData();" style="float:right;margin-right:5px;">
       Back</button>
-    <button class="btn btn-primary Previous cancelBtn" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
+    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>
@@ -96,8 +96,8 @@
         <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-primary cancelBtnp" data-dismiss="modal">NO</button>
-        <button type="button" class="btn btn-primary next" (click)="cancel()" data-dismiss="modal">YES</button>
+          <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()" data-dismiss="modal">YES</button>
         
       </div>
     </div>
@@ -116,7 +116,7 @@
         <p>{{successMsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="cancel()" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+        <button type="button" (click)="cancel()" class="btn btn-padding primary-btn-color"
           data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>

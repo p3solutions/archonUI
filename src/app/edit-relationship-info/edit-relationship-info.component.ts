@@ -165,11 +165,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         delete i.defaultSecondaryColumn;
       }
       delete i.indexData;
-      // if (i.isSelected === true || i.isSelected === false) {
-      // } else {
-      // const ind = this.removeIndexValue.indexOf(i);
-      // this.removeIndexValue.splice(ind, 1);
-      // }
     }
     console.log(this.removeIndexValue);
     this.removeIndexValue = this.removeIndexValue.filter(a => a.isSelected === false || a.isSelected === true);

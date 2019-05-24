@@ -39,12 +39,11 @@
         </div>
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="password" matInput name="signin-confirm-password" formControlName="confirmPassword"
+            <input type="password" (keyup)="onKeyPressOfConfirmPassword()" matInput name="signin-confirm-password" formControlName="confirmPassword"
               placeholder="Confirm Password">
           </mat-form-field>
-          <mat-error style="text-align:left"
-            *ngIf="signUpForm.get('confirmPassword').errors && signUpForm.get('confirmPassword').errors.ConfirmPassword">
-            *Password and Confirm Password doesn't match.
+          <mat-error *ngIf="passwordNotMatch" style="text-align:left">
+            Password and Confirm Password doesn't match.
           </mat-error>
         </div>
         <!-- <div class="col-md-12 form-group has-feedback">

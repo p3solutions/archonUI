@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -14,6 +14,7 @@ import {
 import { NgxSpinnerService } from 'ngx-spinner';
 import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
 import { map } from 'rxjs/operators';
+import { MatAccordion } from '@angular/material';
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
@@ -64,13 +65,17 @@ export class ErtTableComponent implements OnInit {
   storeSelectedTables: TableDetailsListObj[] = [];
   itemsPerPage = 49;
   avilableStartIndex = 1;
-  avilablePage = 1;
+  availPage = 1;
   avilableTableCount = 0;
   storeAvaliableTables: ErtTableObj[] = [];
   showAvilableBtn = false;
   showNoTablesMsg = false;
   toCreateQuery = false;
-
+  isCombinedQueryMode = false;
+  availItemsPerPage = 49;
+  isQueryMode = false;
+  isUserDefinedColumnInProgress = false;
+  @ViewChild(MatAccordion) accordion: MatAccordion;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -228,6 +233,7 @@ export class ErtTableComponent implements OnInit {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.ertService.getErtAvailableTable(this.ertJobId, this.avilableStartIndex).subscribe(result => {
         this.ertAvillableTableList = result;
+        console.log(this.ertAvillableTableList);
         this.avilableTableCount = this.ertAvillableTableList.erttableList.sourceTableCount -
           this.ertAvillableTableList.erttableList.selectedTableCount;
       });
@@ -272,15 +278,20 @@ export class ErtTableComponent implements OnInit {
             this.getERTcolumnlist(item.tableId, '');
           }
         }
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.getERTcolumnlist(this.selectedTableId, '');
-        if (this.selectedTableList.length > 0 && this.startIndex === 1) {
+        if (this.selectedTableList.length > 0) {
+          this.selectedTableId = this.selectedTableList[0].tableId;
+          this.getERTcolumnlist(this.selectedTableId, '');
+        }
+        if (this.startIndex === 1) {
           this.selectedTableList = this.storeSelectedTables.concat(this.selectedTableList);
           if (this.ertJobId !== '' && this.ertJobId !== undefined) {
             this.storeSelectedTables = this.selectedTableList.filter(a => a.isSelected === true);
           }
           this.itemsPerPage = this.itemsPerPage + this.storeSelectedTables.length;
         } else {
+          this.itemsPerPage = 49;
+        }
+        if (result.selectedTableCount !== 0) {
           this.itemsPerPage = 49;
         }
       } else {
@@ -291,26 +302,31 @@ export class ErtTableComponent implements OnInit {
 
   searchTablelist() {
     if (this.from !== 'data-record' && this.from !== 'SIP') {
-      this.selectedTableList = [];
-      const temp: TableDetailsListObj[] = [];
-      this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
-        this.ErtTablesearchList = result;
-        for (const item of this.ErtTablesearchList.ertTableList) {
-          const tempObj: TableDetailsListObj = new TableDetailsListObj();
-          tempObj.tableId = item.tableId;
-          tempObj.tableName = item.tableName;
-          tempObj.modifiedTableName = item.modifiedTableName;
-          if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-            tempObj.isSelected = true;
+      if (this.searchTableName !== '') {
+        this.selectedTableList = [];
+        const temp: TableDetailsListObj[] = [];
+        this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
+          this.ErtTablesearchList = result;
+          for (const item of this.ErtTablesearchList.ertTableList) {
+            const tempObj: TableDetailsListObj = new TableDetailsListObj();
+            tempObj.tableId = item.tableId;
+            tempObj.tableName = item.tableName;
+            tempObj.modifiedTableName = item.modifiedTableName;
+            if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+              tempObj.isSelected = true;
+            }
+            if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
+              temp.push(tempObj);
+            } else {
+              temp.push(this.storeSelectedTables.filter(a => a.tableId === tempObj.tableId)[0]);
+            }
           }
-          if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
-            temp.push(tempObj);
-          } else {
-            temp.push(this.storeSelectedTables.filter(a => a.tableId === tempObj.tableId)[0]);
-          }
-        }
-        this.selectedTableList = temp;
-      });
+          this.selectedTableList = temp;
+        });
+      } else {
+        this.page = 1;
+        this.getPage(1);
+      }
     }
   }
 
@@ -368,6 +384,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   openUsrDefinedColumnModel(columnName: string) {
+    this.accordion.closeAll();
     this.userDefinedList = [];
     this.usrDefinedColumnName = '';
     this.usrDefinedQueryView = '';
@@ -422,6 +439,7 @@ export class ErtTableComponent implements OnInit {
     } else {
       this.enableUserDefined = true;
     }
+    this.openColumnMode();
   }
 
   queryMode() {
@@ -504,23 +522,22 @@ export class ErtTableComponent implements OnInit {
 
 
   addColumns(i: number) {
-    if (this.usrDefinedQueryViewMode === '') {
-      const control = <FormArray>this.myForm.controls['addEditColumn'];
-      if (control.controls[i].value.column !== null && control.controls[i].value.column !== '') {
-        this.userDefinedList.push({
-          prefix: control.controls[i].value.prefix, column: control.controls[i].value.column,
-          suffix: control.controls[i].value.suffix
-        });
-        const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
-          === control.controls[i].value.column);
-        if (tempIndex !== -1) {
-          this.ursDefinedColumnNameList.splice(tempIndex, 1);
-        }
-        control.push(this.initColumn());
-        control.removeAt(i);
+    const control = <FormArray>this.myForm.controls['addEditColumn'];
+    if (control.controls[i].value.column !== null && control.controls[i].value.column !== '') {
+      this.userDefinedList.push({
+        prefix: control.controls[i].value.prefix, column: control.controls[i].value.column,
+        suffix: control.controls[i].value.suffix
+      });
+      const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
+        === control.controls[i].value.column);
+      if (tempIndex !== -1) {
+        this.ursDefinedColumnNameList.splice(tempIndex, 1);
       }
-      this.createUsrDefinedCONCATString();
+      control.push(this.initColumn());
+      control.removeAt(i);
     }
+    this.createUsrDefinedCONCATString();
+    this.openColumnMode();
   }
 
   createUsrDefinedCONCATString() {
@@ -592,10 +609,12 @@ export class ErtTableComponent implements OnInit {
       }
   }
   saveUsrDefinedColumn() {
-    if (this.usrDefinedQueryViewMode !== '') {
+    if (!this.isQueryMode) {
       this.validateQueryMode();
-    } else if (this.usrDefinedQueryView !== '') {
-      this.validateColumnQueryMode();
+      this.setQueryModeUserDefined();
+    } else if (!this.isCombinedQueryMode) {
+      this.validateCombinedColumnQueryMode();
+      this.setQueryModeUserDefined();
     }
   }
 
@@ -633,15 +652,19 @@ export class ErtTableComponent implements OnInit {
   }
 
   validateQueryMode() {
+    this.isUserDefinedColumnInProgress = true;
     const param: any = {
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
       'query': this.usrDefinedQueryViewMode,
       'tableId': this.selectedTableId
     };
     this.ertService.validQuery(param).subscribe(res => {
-      console.log((res.data.trim().toLowerCase() !== 'valid query'));
-      console.log(res.data.trim().toLowerCase());
-      if (res.data.trim().toLowerCase() !== 'valid query') {
+      this.isUserDefinedColumnInProgress = false;
+      if (res.data === undefined) {
+        this.usrDefinedAlertMessage = 'Something Went Wrong, please try again.';
+        this.toCreateQuery = false;
+        document.getElementById('query-alert').classList.remove('alert-hide');
+      } else if (res.data.trim().toLowerCase() !== 'valid query') {
         this.usrDefinedAlertMessage = 'Invalid Query, please check.';
         this.toCreateQuery = false;
         document.getElementById('query-alert').classList.remove('alert-hide');
@@ -654,7 +677,7 @@ export class ErtTableComponent implements OnInit {
   }
 
 
-  validateColumnQueryMode() {
+  validateCombinedColumnQueryMode() {
     if (this.userDefinedList.length < 2) {
       this.usrDefinedAlertMessage = 'Invalid Query, please add two columns to create combined column query.';
       this.toCreateQuery = false;
@@ -928,6 +951,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   getAvilableTablePage(page) {
+    console.log(page);
     this.ertAvillableTableList.erttableList.ertTableList = [];
     this.avilableStartIndex = page;
     this.getErtAvailableTable(page);
@@ -950,6 +974,19 @@ export class ErtTableComponent implements OnInit {
       }
     }
     event.stopPropagation();
+  }
+
+  openColumnMode() {
+    if (this.usrDefinedQueryView === '' && this.usrDefinedQueryViewMode === '') {
+      this.isCombinedQueryMode = false;
+      this.isQueryMode = false;
+    } else if (this.usrDefinedQueryViewMode !== '' && this.usrDefinedQueryView === '') {
+      this.isQueryMode = false;
+      this.isCombinedQueryMode = true;
+    } else if (this.usrDefinedQueryViewMode === '' && this.usrDefinedQueryView !== '') {
+      this.isQueryMode = true;
+      this.isCombinedQueryMode = false;
+    }
   }
 }
 

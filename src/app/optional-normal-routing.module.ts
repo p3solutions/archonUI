@@ -1,52 +1,29 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { componentFactoryName } from '@angular/compiler';
-import { Component } from '@angular/core/src/metadata/directives';
-
+import { Routes, RouterModule } from '@angular/router';
 import { WorkspaceLandingPageComponent } from './workspace-landing-page/workspace-landing-page.component';
-import { SigninFormComponent } from './signin-form/signin-form.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
-import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
-import { HeaderTabComponent } from './header-tab/header-tab.component';
-import { WorkspacePanelComponent } from './workspace-panel/workspace-panel.component';
-import { MemberRequestComponent } from './member-request/member-request.component';
-import { NoWorkspaceComponent } from './no-workspace/no-workspace.component';
+import { AuthenticationGuard } from './authentication/authentication.guard';
 import { WorkspaceDashboardComponent } from './workspace-dashboard/workspace-dashboard.component';
-import { ManageMembersComponent } from './manage-members/manage-members.component';
-import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component';
-import { NewPasswordSetter } from './enter-newpassword/new-password-setter';
-import { ManagementPanelComponent } from './management-panel/management-panel.component';
-import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
 import { WorkspaceServicesComponent } from './workspace-services/workspace-services.component';
-import { SignupFormComponent } from './signup-form/signup-form.component';
-import { WorkspaceListComponent } from './workspace-list/workspace-list.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
-import { DatabaseListComponent } from './database-list/database-list.component';
-import { MetalyzerHeaderComponent } from './metalyzer-header/metalyzer-header.component';
+import { WorkspaceInfoComponent } from './workspace-info/workspace-info.component';
+import { MemberRequestComponent } from './member-request/member-request.component';
+import { ManageMembersComponent } from './manage-members/manage-members.component';
+import { ManageMasterMetadataComponent } from './manage-master-metadata/manage-master-metadata.component';
+import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
 import { MetalyzerComponent } from './metalyzer/metalyzer.component';
 import { MetalyzerConfigurationComponent } from './metalyzer-configuration/metalyzer-configuration.component';
 import { TableListComponent } from './table-list/table-list.component';
-import { StatusScreenComponent } from './status-screen/status-screen.component';
 import { DataAnalyzerResultScreenComponent } from './data-analyzer-result-screen/data-analyzer-result-screen.component';
-import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
 import { DbExtractorComponent } from './db-extractor/db-extractor.component';
 import { DbExtractorStepOneComponent } from './db-extractor-step-one/db-extractor-step-one.component';
 import { DbExtractorStepTwoComponent } from './db-extractor-step-two/db-extractor-step-two.component';
 import { DbExtractorLastStepComponent } from './db-extractor-last-step/db-extractor-last-step.component';
 import { DbExtractorExecQueryComponent } from './db-extractor-exec-query/db-extractor-exec-query.component';
-import { AuthenticationGuard } from './authentication/authentication.guard';
 import { ErtLandingPageComponent } from './ert-landing-page/ert-landing-page.component';
-import { ErtCharReplacementComponent } from './ert-char-replacement/ert-char-replacement.component';
+import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
 import { ErtJobsConfigComponent } from './ert-jobs-config/ert-jobs-config.component';
 import { ErtTableComponent } from './ert-table/ert-table.component';
 import { ErtExtractDigestComponent } from './ert-extract-digest/ert-extract-digest.component';
 import { ErtTableColumnConfigComponent } from './ert-table-column-config/ert-table-column-config.component';
-import { ErtJobsComponent } from './ert-jobs/ert-jobs.component';
-import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
-import { AuditingComponent } from './auditing/auditing.component';
 import { ErtDatarecordConfigComponent } from './ert-datarecord-config/ert-datarecord-config.component';
 import { ErtSipConfigComponent } from './ert-sip-config/ert-sip-config.component';
 import { AdhocLandingPageComponent } from './adhoc-landing-page/adhoc-landing-page.component';
@@ -54,16 +31,32 @@ import { AdhocAppScreenListComponent } from './adhoc-app-screen-list/adhoc-app-s
 import { AdhocHeaderComponent } from './adhoc-header/adhoc-header.component';
 import { AdhocTableSelectionComponent } from './adhoc-table-selection/adhoc-table-selection.component';
 import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-search-criteria.component';
-import { AdhocEditSearchScreenPopupComponent } from './adhoc-edit-search-screen-popup/adhoc-edit-search-screen-popup.component';
-import { AdhocSearchScreenComponent } from './adhoc-search-screen/adhoc-search-screen.component';
+import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { ManagementLandingPageComponent } from './management-landing-page/management-landing-page.component';
+import { ManagementPanelComponent } from './management-panel/management-panel.component';
+import { DatabaseListComponent } from './database-list/database-list.component';
+import { WorkspaceListComponent } from './workspace-list/workspace-list.component';
+import { ManageUserRolesComponent } from './manage-user-roles/manage-user-roles.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
-import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
+import { StatusScreenComponent } from './status-screen/status-screen.component';
+import { SchedulemonitoringComponent } from './schedulemonitoring/schedulemonitoring.component';
+import { AuditingComponent } from './auditing/auditing.component';
+import { RedirectGuard } from './redirect/redirect.guard';
+import { RedirectComponent } from './redirect/redirect.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { SigninFormComponent } from './signin-form/signin-form.component';
+import { ForgotpasswordFormComponent } from './forgotpassword-form/forgotpassword-form.component';
+import { EnterNewpasswordComponent } from './enter-newpassword/enter-newpassword.component';
+import { SignupFormComponent } from './signup-form/signup-form.component';
 import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
 import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
-import { RedirectComponent } from './redirect/redirect.component';
-import { RedirectGuard } from './redirect/redirect.guard';
+
+// routes to sso as landing
+
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -177,18 +170,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: '', component: LandingPageComponent, children: [
-      {
-        path: '', redirectTo: '/sign-in', pathMatch: 'full'
-      }, {
-        path: 'sign-in', component: SigninFormComponent
-      }, {
-        path: 'forgot-password', component: ForgotpasswordFormComponent
-      }, {
-        path: 'password-reset', component: EnterNewpasswordComponent
-      }, {
-        path: 'sign-up', component: SignupFormComponent
-      }]
+    path: '', component: SsoSigninFormComponent , pathMatch: 'full'
   }, {
     path: 'user-profile', component: UserProfileComponent, canActivate: [AuthenticationGuard], children: [
       {
@@ -229,9 +211,6 @@ const routes: Routes = [
     path: 'audit', canActivate: [AuthenticationGuard], component: AuditingComponent
   },
   {
-    path: 'sso', component: SsoSigninFormComponent
-  },
-  {
     path: 'landing' , canActivate: [RedirectGuard], component: RedirectComponent
   },
   {
@@ -247,6 +226,8 @@ const routes: Routes = [
         path: 'sign-up', component: SignupFormComponent
       }
     ]
+  }, {
+    path: 'sso-sign-in', component: SsoSigninFormComponent
   },
   {
     path: 'create-workspace', component: CreateWorkspacePageComponent, canActivate: [AuthenticationGuard]
@@ -257,7 +238,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class OptionalNormalRoutingModule { }

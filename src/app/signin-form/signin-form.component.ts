@@ -45,7 +45,7 @@ export class SigninFormComponent implements OnInit {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
         localStorage.setItem('accessToken', data.data.accessToken);
-        localStorage.setItem('refreshToken', data.data.refreshToken);
+        // localStorage.setItem('refreshToken', data.data.refreshToken);
         this.router.navigateByUrl(this.workspaceUrl);
         // this.handleRedirection();
       },

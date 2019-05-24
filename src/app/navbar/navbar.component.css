@@ -233,3 +233,8 @@ ul.msg_list li a .message {
   cursor: pointer;
 }
 
+
+.notification-height{
+  height:600px;
+  overflow-y: auto;
+}

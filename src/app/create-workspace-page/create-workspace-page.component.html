@@ -15,7 +15,7 @@
                     <form [formGroup]="firstFormGroup" class="workspace-detail-form">
                         <div class="workspace-detail">
                             <mat-form-field class="form-field-workspace">
-                                <input required formControlName="workspaceName" matInput placeholder="Workspace Name">
+                                <input required maxlength="50" formControlName="workspaceName" matInput placeholder="Workspace Name">
                             </mat-form-field>
                             <mat-form-field class="form-field-workspace-owner">
                                 <input required matInput formControlName="owner" placeholder="Owner"
@@ -28,7 +28,7 @@
                                     [attr.disabled]="true">
                             </mat-form-field>
                             <mat-form-field class="form-field-workspace-owner">
-                                <textarea required matInput formControlName="description"
+                                <textarea maxlength="250" required matInput formControlName="description"
                                     placeholder="Description"></textarea>
                             </mat-form-field>
                         </div>
@@ -59,7 +59,7 @@
                                     </mat-checkbox>
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="databaseProfileName">
+                            <ng-container matColumnDef="profileName">
                                 <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header>Database
                                     Profile
                                     Name
@@ -71,12 +71,11 @@
                                 </th>
                                 <td style="width:25%" mat-cell *matCellDef="let row"> {{row.databaseName}} </td>
                             </ng-container>
-                            <ng-container matColumnDef="owner">
-                                <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header> Owner </th>
-                                <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.owner.firstName}}
-                                    {{row.owner.lastName}} </td>
+                            <ng-container matColumnDef="owner.id">
+                                <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
+                                <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.owner.id}}</td>
                             </ng-container>
-                            <ng-container matColumnDef="createdDate">
+                            <ng-container matColumnDef="createdAt">
                                 <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Created Date
                                 </th>
                                 <td style="width:25%" mat-cell *matCellDef="let row">
@@ -123,7 +122,7 @@
                         </div>
                         <div style="display: flex">
                             <mat-form-field class="form-field-desc">
-                                <textarea value="{{firstFormGroup.get('description').value}}" matInput
+                                <textarea maxlength="250" value="{{firstFormGroup.get('description').value}}" matInput
                                     placeholder="Description"></textarea>
                             </mat-form-field>
                         </div>
