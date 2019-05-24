@@ -15,25 +15,25 @@
           </div>
       </div>       
       <div class="container-head col-md-12">
-        <div class="form-group col-md-3 heading-item wss" style="width: 25%;" id="frm-margin">
+        <div class="form-group col-md-3 heading-item wss" style="width: 23%;" id="frm-margin">
           <b>Workspace Name: </b>{{wsName | uppercase}}
         </div>
-        <div class="form-group col-md-3 heading-item ws" style="width: 11%;" id="frm-margin">
+        <div class="form-group col-md-3 heading-item" style="width: 13%;" id="frm-margin">
           <b>Phase: </b>{{phase | uppercase}}
         </div>
         <div class="dropdown col-md-2" style="width: 21%;" *ngIf="dropdown">
             <mat-form-field>
                 <mat-label>Export As XML / JSON / PDF</mat-label>
                 <mat-select>
-                  <mat-option (click)="exportxml()">Export All Table As XML</mat-option>
-                  <mat-option (click)="exportjson()">Export All Table As JSON</mat-option>
-                  <mat-option *ngIf="disable == true" [disabled]="disable">Export Selected Table As XML</mat-option>
-                  <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedxml()">Export Selected Table As XML</mat-option>
-                  <mat-option *ngIf="disable == true" [disabled]="disable" >Export Selected Table As JSON</mat-option>
-                  <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedjson()">Export Selected Table As JSON</mat-option>
-                  <mat-option (click)="exportOverallpdf()">Export All Table Relationship As PDF</mat-option>
-                  <mat-option *ngIf="disable == true" [disabled]="disable">Export Selected Table Relationship As PDF</mat-option>
-                  <mat-option *ngIf="disable == false" [disabled]="disable" (click)="exportSelectedpdf()">Export Selected Table Relationship As PDF</mat-option>              
+                  <mat-option (click)="exportxml()" style="border-bottom: 1px solid #d6d6d6;">Export All Table As XML</mat-option>
+                  <mat-option (click)="exportjson()" style="border-bottom: 1px solid #d6d6d6;">Export All Table As JSON</mat-option>
+                  <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As XML</mat-option>
+                  <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedxml()" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As XML</mat-option>
+                  <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As JSON</mat-option>
+                  <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedjson()" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As JSON</mat-option>
+                  <mat-option (click)="exportOverallpdf()" style="border-bottom: 1px solid #d6d6d6;">Export All Table Relationship As PDF</mat-option>
+                  <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table Relationship As PDF</mat-option>
+                  <mat-option *ngIf="disable == false" [disabled]="disable" (click)="exportSelectedpdf()" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table Relationship As PDF</mat-option>              
                 </mat-select>
               </mat-form-field>
         </div>
@@ -51,13 +51,13 @@
         <div class="dropdown col-md-2" style="width: 21%;" *ngIf="dropdown">
           <mat-form-field>
             <mat-label>Add Join</mat-label>
-            <mat-select>
-                <mat-option *ngIf="disable == true" [disabled]="disable">Direct Join</mat-option>
-                <mat-option *ngIf="disable == true" [disabled]="disable">SP/View Join</mat-option>
-                <mat-option *ngIf="disable == true" [disabled]="disable">Data Analyzer</mat-option>
-                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="adddirectjoin()">Direct Join</mat-option>
-                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="spvjoin()" >SP/View Join</mat-option>
-                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="dataanalyze()" >Data Analyzer</mat-option>
+            <mat-select [disabled]="disable">
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="adddirectjoin()" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="spvjoin()" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="dataanalyze()" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
              
             </mat-select>
           </mat-form-field>

@@ -170,13 +170,13 @@
                       <mat-step label="Primary Column">
                         <div class="col-md-12 dataA-panel-body">
                           <div class="col-md-12" style="margin-left: -32px;">
-                            <div class="col-md-5">
+                            <div class="col-md-5" style="margin-left: -3px; width: 50%;">
                               <div class="body-left">
                                 <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
-                                <input type="text" class="form-control search-input" [(ngModel)]="searchPrimary" placeholder="Search Table">
+                                <input type="text" class="form-control search-input" [(ngModel)]="searchPrimary" placeholder="Search Column">
                               </div>
                             </div>
-                            <div class="col-md-5" style="margin-left: 41px;">
+                            <div class="col-md-5" style="margin-left: -48px; width: 47%;">
                               <div class="selected-sty">
                                 {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
                               </div>
@@ -198,7 +198,7 @@
                               </div>
                               <div class="col-md-12 list-block" style="padding-left: 0px; padding-right: 0px;">
                                 <div class="col-md-12 plr-0"
-                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 5, totalItems: schemaResultsTableCount, currentPage: primaryPage }">
+                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: primaryPage }">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{pColumn.column_name}}">
                                     <input id="{{pColumn}}" type="checkbox" [checked]="pColumn.selected"
                                       (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
@@ -213,7 +213,7 @@
                           </div>
                         </div>
                         <div class="col-md-10 paging">
-                            Percentage of Rows to consider for Analysis
+                            Percentage of Rows to consider for Analysis 
                             <input mat-input type="number" class="inpt-sty" placeholder="Analysis" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
                         <div class="col-md-11" style="text-align: right;">
@@ -239,17 +239,17 @@
 
                               <div class="col-md-6" style="height: 295px;padding-left: 0px;padding-right: 0px;">
                                 <div class="col-md-12">
-                                  <div class="col-md-6" style="margin-top: 9px;">
+                                  <div class="col-md-6" style="margin-top: 9px; margin-left: 3px;">
                                     <h4>Secondary Table</h4>
                                   </div>
-                                  <div class="col-md-6" style="margin-left: -31px;">
+                                  <div class="col-md-6" style="margin-left: -28px;">
                                     <div class="selected-sty1">
                                       {{selectedSecTbl.size}} out of {{secTblArray.length - 1}} selected
                                     </div>
                                   </div>
                                 </div>
                                 <div class="col-md-12">
-                                  <div class="body-left" style="margin-bottom: 10px;">
+                                  <div class="body-left" style="margin-bottom: 10px; width: 99%; margin-left: -2px;">
                                     <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
                                     <input type="text" class="form-control search-input " [(ngModel)]="searchSec1" placeholder="Search Table">
                                   </div>
@@ -283,22 +283,23 @@
                               </div>
                               <div class="col-md-6" *ngIf="secColArray.length > 0" style="padding-left: 0px; padding-right: 0px;">                              
                                   <div class="col-md-12">
-                                    <div class="col-md-6" style="margin-top: 9px;">
+                                    <div class="col-md-6" style="margin-top: 9px; margin-left: 3px;">
                                       <h4>Column List</h4>
                                     </div>
-                                    <div class="col-md-6" style="margin-left: -31px;">
+                                    <div class="col-md-6" style="margin-left: -28px;">
                                       <div class="selected-sty2">
                                         {{selectedSecColMap.size}} out of {{secColArray.length}} selected
                                       </div>
                                     </div>
                                   </div>
                                   <div class="col-md-12">
-                                      <div class="body-left" style="margin-bottom: 10px;">
+                                      <div class="body-left" style="margin-bottom: 10px; width: 99%; margin-left: -2px;">
                                         <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
-                                        <input type="text" class="form-control search-input " [(ngModel)]="searchSec2" placeholder="Search Table">
+                                        <input type="text" class="form-control search-input " [(ngModel)]="searchSec2" placeholder="Search Column">
                                       </div>
                                     </div>
-                                  <div class="col-md-12 p-0 dataA-scrollable-div" id="panel-1" style="padding-left: 33px;padding-right: 47px;">
+                                   
+                                  <div class="col-md-12 p-0 dataA-scrollable-div" id="panel-1" style="padding-left: 33px;padding-right: 0px; width: 85%;">
                                     <div class="col-md-12 p-0">
                                       <div class="col-md-12 column-header ana-br" title="Secondary Column">
                                         <input type="checkbox" style="margin-right: 10px;" (change)="selectAllSec()">
@@ -344,9 +345,19 @@
                         </div> 
                       </mat-step>
                       <mat-step label="Data Analysis">
-                          <div class="panel-body dataA-panel-body" id="panel-1">
+                          <div class="panel-body dataA-panel-body-r" id="panel-1">
                               <div class="col-md-4 dataA-scrollable-div-A">
-                                <table class="table table-bordered">
+                                  <div class="col-md-12 plr-0">
+                                      <h5 style="font-weight: bold;">Primary Table Columns</h5>
+                                    </div>
+                                  <div class="col-md-12 plr-0"
+                                  *ngFor="let x of finalPrimColArray">
+                                  <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
+                                      {{x.columnName}}
+                                  </div>                                 
+                                </div>
+
+                                <!-- <table class="table table-bordered">
                                   <thead>
                                     <tr>
                                       <th>Primary Table Columns</th>
@@ -357,10 +368,21 @@
                                       <td>{{x.columnName}}</td>
                                     </tr>
                                   </tbody>
-                                </table>
+                                </table> -->
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
-                                <table class="table table-bordered" id="finalSecTab">
+                                <div class="col-md-12 plr-0">
+                                    <h5 style="font-weight: bold;">Secondary Tables</h5>
+                                  </div>
+                                <div class="col-md-12 plr-0"
+                                *ngFor="let x of finalSecondaryTableList; let i = index" (click)="finalSecCol(x,i)">
+                                <div [class.selected]="i == selectedRow" class="col-md-12 cur-p trim-text ana-br da-table" id="list-br" title="{{x.tableName}}">                                  
+                                    {{x.tableName}}
+                                     <i class="fa fa-angle-right unselected"></i>
+                                </div>                                 
+                              </div>
+
+                                <!-- <table class="table table-bordered" id="finalSecTab">
                                   <thead>
                                     <tr>
                                       <th>Secondary Tables</th>
@@ -372,10 +394,20 @@
                                       <td>{{x.tableName}}</td>
                                     </tr>
                                   </tbody>
-                                </table>
+                                </table> -->
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
-                                <table class="table table-bordered">
+                                  <div class="col-md-12 plr-0">
+                                      <h5 style="font-weight: bold;">Secondary Column Names</h5>
+                                    </div>
+                                  <div class="col-md-12 plr-0"
+                                  *ngFor="let x of finalSecColArray">
+                                  <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
+                                      {{x.columnName}}
+                                  </div>                                 
+                                </div>
+
+                                <!-- <table class="table table-bordered">
                                   <thead>
                                     <tr>
                                       <th>Secondary Column Names</th>
@@ -386,7 +418,7 @@
                                       <td>{{x.columnName}}</td>
                                     </tr>
                                   </tbody>
-                                </table>
+                                </table> -->
                               </div>
                             </div>
                             <div class="action-btn" style="float: right;">
@@ -395,7 +427,7 @@
                               </div>
                       </mat-step>
                       <mat-step label="Result">
-                          <div class="panel-body dataA-panel-body" id="panel-1">
+                          <div class="panel-body dataA-panel-body-r" id="panel-r">
                               <div class="col-md-12 center-dev">
                                 <div class="col-md-6"><strong>Analysis Status:</strong>
                                   {{JobStatus}}
