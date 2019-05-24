@@ -2,6 +2,7 @@ import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, Event
 import { EditRelationshipInfoService } from './edit-relationship-info.service';
 import { JoinValues, SecondaryColumn, JoinValueColumn } from './edit-relationship-info-object';
 import { SecondaryColumnPipe } from '../secondary-column.pipe';
+import { ContentObserver } from '@angular/cdk/observers';
 
 @Component({
   selector: 'app-edit-relationship-info',
@@ -67,9 +68,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           if (detail.primaryColumn.columnId === i.columnId) {
             joinValue.relationshipId = detail.relationshipId;
             joinValue.secondaryColumn = detail.secondaryColumn;
-            console.log(joinValue.secondaryColumn);
-            joinValue.defaultSecondaryColumn = true;
-            console.log(1);
+            joinValue.defaultSecondaryColumn = detail.secondaryColumn;
             break;
           } else {
             joinValue.relationshipId = '';
@@ -80,19 +79,23 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           }
         }
         this.joinDetailsArray.push(joinValue);
-        // console.log(this.joinDetailsArray);
+      }
+      for (const i of this.joinDetailsArray) {
+        if (i.relationshipId !== '') {
+          this.resultantValues.push(JSON.parse(JSON.stringify(i)));
+          }
       }
     });
   }
 
   selectedValues(primaryValues, index, secondaryColumn) {
-    console.log(primaryValues, index, secondaryColumn);
     const example = {
       columnId: '',
       columnName: '',
       dataType: ''
     };
     let insert: number;
+    let arrayIndex;
     for (const i of this.secondaryColumns) {
       if (i.columnName === secondaryColumn) {
         example.columnId = i.columnId;
@@ -112,34 +115,63 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       },
       secondaryColumn: example
     };
-    for (const i of this.resultantValues) {
-      if (i.indexData === index) {
-        if (secondaryColumn === 'select') {
-          insert = 1;
-          console.log(i);
-          i.isSelected = false;
-        } else {
-          insert = 0;
-          const indexx = this.resultantValues.indexOf(i);
-          this.resultantValues.splice(indexx, 1);
-        }
+    if (primaryValues.defaultSecondaryColumn === false) {
+      for (const i of this.resultantValues) {
+       if (i.indexData === index) {
+       insert = 1;
+       arrayIndex = this.resultantValues.indexOf(i);
+       break;
+       } else {
+        insert = 0;
+       }
       }
-    }
-    if (insert === 0) {
+      if (insert === 1) {
+        if (secondaryColumn !== 'select') {
+        this.resultantValues[arrayIndex].secondaryColumn = example;
+        } else {
+          this.resultantValues.splice(arrayIndex, 1);
+        }
+      } else if (insert === 0) {
       this.resultantValues.push(test);
-    } else if (insert === 1) {
+      }
     } else {
-      this.resultantValues.push(test);
+      for (const i of this.resultantValues) {
+        if (i.primaryColumn.columnName === test.primaryColumn.columnName) {
+        if (secondaryColumn === 'select') {
+        i.isSelected = false;
+        } else {
+        i.isSelected = true;
+        }
+        }
+        if (i.isSelected && i.defaultSecondaryColumn) {
+        i.relationshipId = test.relationshipId;
+        if (i.defaultSecondaryColumn.columnName === secondaryColumn) {
+          i.secondaryColumn = i.defaultSecondaryColumn;
+          delete i.isSelected;
+        } else {
+          i.secondaryColumn = test.secondaryColumn;
+        }
+        }
+    }
     }
     console.log(this.resultantValues);
   }
 
 
   updateRelation() {
-    this.removeIndexValue = JSON.parse(JSON.stringify(this.resultantValues));
+    this.removeIndexValue = this.resultantValues;
     for (const i of this.removeIndexValue) {
+      if (i.defaultSecondaryColumn) {
+      delete i.defaultSecondaryColumn;
+      }
       delete i.indexData;
+      // if (i.isSelected === true || i.isSelected === false) {
+      // } else {
+      // const ind = this.removeIndexValue.indexOf(i);
+      // this.removeIndexValue.splice(ind, 1);
+      // }
     }
+    console.log(this.removeIndexValue);
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
       .subscribe(res => {
         if (res && res.success) {
