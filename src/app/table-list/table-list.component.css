@@ -207,9 +207,16 @@ h4 {
   margin-left: 75px;
   /* margin-right: 50px; */
 }
+.dataA-panel-body-r {
+  margin-left: 0px; 
+}
+
+#panel-r{
+  height: 438px;
+}
 
 #panel-0{
-  height: 200px;
+  height: 190px;
   margin-bottom: 5px;
   padding-left: 0px;
   padding-right: 0px;
@@ -226,7 +233,7 @@ h4 {
 }
 
 #panel-1{
-  height: 405px;
+  height: 385px;
 }
 
 .dataA-scrollable-div {
@@ -686,7 +693,7 @@ a:hover {
 }
 
 #list-br {
-  background-color: #fff;
+  /* background-color: #fff; */
   margin-bottom: 3px;
 }
 
