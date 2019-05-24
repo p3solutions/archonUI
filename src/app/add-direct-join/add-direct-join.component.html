@@ -62,7 +62,7 @@
 
                     <td mat-cell *matCellDef="let element; let ind=index">
                       <mat-form-field style="width: 85%;">
-                        <mat-select id="testreset" [ngModel]="element" (ngModelChange)="selectedValues(element,ind, $event)">
+                        <mat-select id="testreset" [ngModel]="'select'" (ngModelChange)="selectedValues(element,ind, $event)">
                           <mat-option value="select">Select</mat-option>
                           <mat-option [value]="sec.columnName" *ngFor="let sec of secondaryColumns | secondaryColumn:element.columnDataType">{{sec.columnName}}</mat-option>
                         </mat-select>
