@@ -33,6 +33,7 @@ export class TableListComponent implements OnInit {
   serviceActionType: string;
   tableList: string[];
   primColArray = [];
+  tempPrimColArray = [];
   secColArray = [];
   secTblArray = [];
   selectedPrimColMap = new Map(); // map of primary column name, true
@@ -93,9 +94,10 @@ export class TableListComponent implements OnInit {
   currentStepNo = null;
   @ViewChild('stepper') stepper: MatStepper;
   value: any;
-  searchPrimary;
+  searchPrimary = '';
   searchSec1;
   searchSec2;
+  primaryPage = 1;
 
   constructor(
     private tablelistService: TableListService,
@@ -229,6 +231,7 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getColumnsByTableId(tableId).subscribe((columns) => {
       if (isPrime) {
         this.primColArray = columns;
+        this.tempPrimColArray = columns;
         // this.primColLoader = false;
       } else {
         this.secTblColMap.set(tableId, columns);
@@ -376,8 +379,8 @@ export class TableListComponent implements OnInit {
     // return document.querySelector('#dataAModal-carousel .item.active').getAttribute('step');
   }
   enableDisableNextBtn() {
-   // const currentStep = this.getCurrentStep();
-  //  console.log("btn");
+    // const currentStep = this.getCurrentStep();
+    //  console.log("btn");
     const currentStep = this.currentStepNo;
     switch (currentStep) {
       case 0:
@@ -398,7 +401,7 @@ export class TableListComponent implements OnInit {
   }
   // carousel handling codes
   addClass(elementId, classSelector) {
-   // document.getElementById(elementId).classList.add(classSelector);
+    // document.getElementById(elementId).classList.add(classSelector);
   }
   removeClass(elementId, classSelector) {
     document.getElementById(elementId).classList.remove(classSelector);
@@ -841,5 +844,17 @@ export class TableListComponent implements OnInit {
 
   togglePanels(index: number) {
     this.indexExpanded = index === this.indexExpanded ? -1 : index;
+  }
+
+  searchTable(value) {
+    console.log(this.tempPrimColArray);
+    console.log(value);
+    if (value !== '') {
+      const tempList = this.tempPrimColArray.filter(a => a.columnName.trim().toLowerCase().includes(value.toLowerCase()));
+      this.primColArray = [];
+      this.primColArray = tempList;
+    } else {
+      this.primColArray = this.tempPrimColArray;
+    }
   }
 }

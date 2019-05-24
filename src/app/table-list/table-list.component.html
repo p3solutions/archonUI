@@ -198,9 +198,9 @@
                               </div>
                               <div class="col-md-12 list-block" style="padding-left: 0px; padding-right: 0px;">
                                 <div class="col-md-12 plr-0"
-                                  *ngFor="let pColumn of primColArray | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }">
+                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 5, totalItems: schemaResultsTableCount, currentPage: primaryPage }">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{pColumn.column_name}}">
-                                    <input id="{{pColumn}}" type="checkbox"
+                                    <input id="{{pColumn}}" type="checkbox" [checked]="pColumn.selected"
                                       (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
                                     {{pColumn.columnName}}
                                   </div>
@@ -217,7 +217,7 @@
                             <input mat-input type="number" class="inpt-sty" placeholder="Analysis" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
                         <div class="col-md-11" style="text-align: right;">
-                          <pagination-controls id="dalist0" (pageChange)="getPage(page = $event)"></pagination-controls>
+                          <pagination-controls id="dalist0" (pageChange)="primaryPage = $event"></pagination-controls>
                         </div>
                         <div class="col-md-12 action-btn" style="text-align: right;">
                           <button type="button" (click)="gotoBack()" class="btn cancel btn-padding" style="margin-right: 10px;">Cancel</button>
