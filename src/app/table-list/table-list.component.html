@@ -281,8 +281,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;">
-                                <div *ngIf="secColArray.length > 0" class="col-md-12">
+                              <div class="col-md-6" *ngIf="secColArray.length > 0" style="padding-left: 0px; padding-right: 0px;">                              
                                   <div class="col-md-12">
                                     <div class="col-md-6" style="margin-top: 9px;">
                                       <h4>Column List</h4>
@@ -330,7 +329,7 @@
                                     <pagination-controls id="dalist2" (pageChange)="getPage(page = $event)"></pagination-controls>
                                   </div>
                                   <!-- <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> -->
-                                </div>
+                               
                               </div>
                               </div>
                             </div>
