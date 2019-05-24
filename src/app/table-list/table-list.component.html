@@ -198,7 +198,7 @@
                               </div>
                               <div class="col-md-12 list-block" style="padding-left: 0px; padding-right: 0px;">
                                 <div class="col-md-12 plr-0"
-                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 5, totalItems: schemaResultsTableCount, currentPage: primaryPage }">
+                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: primaryPage }">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{pColumn.column_name}}">
                                     <input id="{{pColumn}}" type="checkbox" [checked]="pColumn.selected"
                                       (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
@@ -347,7 +347,17 @@
                       <mat-step label="Data Analysis">
                           <div class="panel-body dataA-panel-body-r" id="panel-1">
                               <div class="col-md-4 dataA-scrollable-div-A">
-                                <table class="table table-bordered">
+                                  <div class="col-md-12 plr-0">
+                                      <h5 style="font-weight: bold;">Primary Table Columns</h5>
+                                    </div>
+                                  <div class="col-md-12 plr-0"
+                                  *ngFor="let x of finalPrimColArray">
+                                  <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
+                                      {{x.columnName}}
+                                  </div>                                 
+                                </div>
+
+                                <!-- <table class="table table-bordered">
                                   <thead>
                                     <tr>
                                       <th>Primary Table Columns</th>
@@ -358,10 +368,21 @@
                                       <td>{{x.columnName}}</td>
                                     </tr>
                                   </tbody>
-                                </table>
+                                </table> -->
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
-                                <table class="table table-bordered" id="finalSecTab">
+                                <div class="col-md-12 plr-0">
+                                    <h5 style="font-weight: bold;">Secondary Tables</h5>
+                                  </div>
+                                <div class="col-md-12 plr-0"
+                                *ngFor="let x of finalSecondaryTableList; let i = index" (click)="finalSecCol(x,i)">
+                                <div [class.selected]="i == selectedRow" class="col-md-12 cur-p trim-text ana-br da-table" id="list-br" title="{{x.tableName}}">                                  
+                                    {{x.tableName}}
+                                     <i class="fa fa-angle-right unselected"></i>
+                                </div>                                 
+                              </div>
+
+                                <!-- <table class="table table-bordered" id="finalSecTab">
                                   <thead>
                                     <tr>
                                       <th>Secondary Tables</th>
@@ -373,10 +394,20 @@
                                       <td>{{x.tableName}}</td>
                                     </tr>
                                   </tbody>
-                                </table>
+                                </table> -->
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
-                                <table class="table table-bordered">
+                                  <div class="col-md-12 plr-0">
+                                      <h5 style="font-weight: bold;">Secondary Column Names</h5>
+                                    </div>
+                                  <div class="col-md-12 plr-0"
+                                  *ngFor="let x of finalSecColArray">
+                                  <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
+                                      {{x.columnName}}
+                                  </div>                                 
+                                </div>
+
+                                <!-- <table class="table table-bordered">
                                   <thead>
                                     <tr>
                                       <th>Secondary Column Names</th>
@@ -387,7 +418,7 @@
                                       <td>{{x.columnName}}</td>
                                     </tr>
                                   </tbody>
-                                </table>
+                                </table> -->
                               </div>
                             </div>
                             <div class="action-btn" style="float: right;">

@@ -278,6 +278,7 @@ h4 {
   border: 1px solid #269AF8;
 }
 
+
 input[type='checkbox'] {
   cursor: pointer;
 }
@@ -687,7 +688,7 @@ a:hover {
 .ana-br {
   border: 1px solid #dddddd;
   padding: 10px 10px;
-  border-radius: 6px;
+  border-radius: 4px;
   background-color: #fff;
   margin-bottom: 6px;
 }
