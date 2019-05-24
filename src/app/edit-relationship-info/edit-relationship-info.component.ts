@@ -83,7 +83,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       for (const i of this.joinDetailsArray) {
         if (i.relationshipId !== '') {
           this.resultantValues.push(JSON.parse(JSON.stringify(i)));
-          }
+        }
       }
     });
   }
@@ -117,42 +117,42 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     };
     if (primaryValues.defaultSecondaryColumn === false) {
       for (const i of this.resultantValues) {
-       if (i.indexData === index) {
-       insert = 1;
-       arrayIndex = this.resultantValues.indexOf(i);
-       break;
-       } else {
-        insert = 0;
-       }
+        if (i.indexData === index) {
+          insert = 1;
+          arrayIndex = this.resultantValues.indexOf(i);
+          break;
+        } else {
+          insert = 0;
+        }
       }
       if (insert === 1) {
         if (secondaryColumn !== 'select') {
-        this.resultantValues[arrayIndex].secondaryColumn = example;
+          this.resultantValues[arrayIndex].secondaryColumn = example;
         } else {
           this.resultantValues.splice(arrayIndex, 1);
         }
       } else if (insert === 0) {
-      this.resultantValues.push(test);
+        this.resultantValues.push(test);
       }
     } else {
       for (const i of this.resultantValues) {
         if (i.primaryColumn.columnName === test.primaryColumn.columnName) {
-        if (secondaryColumn === 'select') {
-        i.isSelected = false;
-        } else {
-        i.isSelected = true;
-        }
+          if (secondaryColumn === 'select') {
+            i.isSelected = false;
+          } else {
+            i.isSelected = true;
+          }
         }
         if (i.isSelected && i.defaultSecondaryColumn) {
-        i.relationshipId = test.relationshipId;
-        if (i.defaultSecondaryColumn.columnName === secondaryColumn) {
-          i.secondaryColumn = i.defaultSecondaryColumn;
-          delete i.isSelected;
-        } else {
-          i.secondaryColumn = test.secondaryColumn;
+          i.relationshipId = test.relationshipId;
+          if (i.defaultSecondaryColumn.columnName === secondaryColumn) {
+            i.secondaryColumn = i.defaultSecondaryColumn;
+            delete i.isSelected;
+          } else {
+            i.secondaryColumn = test.secondaryColumn;
+          }
         }
-        }
-    }
+      }
     }
     console.log(this.resultantValues);
   }
@@ -162,7 +162,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     this.removeIndexValue = this.resultantValues;
     for (const i of this.removeIndexValue) {
       if (i.defaultSecondaryColumn) {
-      delete i.defaultSecondaryColumn;
+        delete i.defaultSecondaryColumn;
       }
       delete i.indexData;
       // if (i.isSelected === true || i.isSelected === false) {
@@ -171,6 +171,8 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       // this.removeIndexValue.splice(ind, 1);
       // }
     }
+    console.log(this.removeIndexValue);
+    this.removeIndexValue = this.removeIndexValue.filter(a => a.isSelected === false);
     console.log(this.removeIndexValue);
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
       .subscribe(res => {
@@ -216,10 +218,10 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
             break;
           }
         }
-         if (!primaryValues.defaultSecondaryColumn) {
+        if (!primaryValues.defaultSecondaryColumn) {
           tableRow.children[3].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
           this.selectedValues(primaryValues, index, primaryColumn.columnName);
-         }
+        }
       }
     }
     this.autoColumnMatch = true;
