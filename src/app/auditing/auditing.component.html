@@ -15,7 +15,7 @@
         <mat-form-field>
             <mat-select msInfiniteScroll name="e-select"
                placeholder="Select Event" [(value)]="selectedEvent">
-              <mat-option appScrollServerCall [value]="" (click)="selectEvent('LOGIN');getAudit()">
+              <mat-option appScrollServerCall [value]="" (click)="selectEvent('');getAudit()">
                  RESET
               </mat-option>
               <mat-option appScrollServerCall *ngFor="let e of Events" [value]="e" (click)="selectEvent(e);getAudit()">
@@ -149,7 +149,7 @@
                   <tr *ngFor="let i of common" class="text-left">
                       <td *ngIf="i.value !== ''">{{i.name}}</td>
                       <td *ngIf="i.type !== 'Date'">{{i.value !== '' ? i.value : 'null'}}</td>
-                      <td *ngIf="i.type == 'Date' && i.value !== ''">{{i.value | date: 'medium'}}</td>
+                      <td *ngIf="i.type == 'Date' && i.value !== '' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">

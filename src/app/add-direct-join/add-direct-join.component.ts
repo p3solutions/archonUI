@@ -56,7 +56,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.workspaceID = this.workspaceID;
     this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
       this.primaryColumns = res;
-      console.log(this.primaryColumns);
     }
     );
   }
@@ -86,7 +85,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryTable, index, secondaryTableName) {
-    console.log(primaryTable, index, secondaryTableName);
     let secObject = {
       columnId: '',
       columnName: '',
@@ -113,7 +111,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     };
     for (const i of this.joinListTemp) {
       if (i.indexData === index) {
-        if (secondaryTableName === 'Select') {
+        if (secondaryTableName === 'select') {
           const indexx = this.joinListTemp.indexOf(i);
           this.joinListTemp.splice(indexx, 1);
           insert = 1;
@@ -168,9 +166,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   }
   resetselectedValues() {
-    $('#testreset option').prop('selected', function () {
-      return false;
-    });
+    this.populateValues();
+    
   }
 
   closeErrorMsg() {

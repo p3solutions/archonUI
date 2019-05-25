@@ -1,4 +1,4 @@
-<div class="row" id="analysis-view">
+<div class="row" id="analysis-view" style="padding-bottom: 10px;">
   <div class="col-md-3" id="table-list">
     <div class="card">
       <div class="card-body">
@@ -27,8 +27,10 @@
           </h5>
         </div>
       </div>
-      <pagination-controls style="float: right; margin-right: 36px; margin-top: 18px" id="tablelist"
+      <div class="expand">
+      <pagination-controls id="tablelist"
         (pageChange)="getPage(page = $event)"></pagination-controls>
+        </div>
     </div>
   </div>
   <div class="col-md-8 col-md-offset-2.5">
@@ -44,60 +46,13 @@
           <div class="col-md-3">
             <div class="card-title">Relationship Info</div>
           </div>
-        </div>
-        <div class="col col-md-12" style="margin-top:12px;">
-          <!-- <span [ngClass]="{'archon-loading-icon' : !isRelationShipAvailable}" class="icon"></span> -->
-          <div class="col-md-4"></div>
-          <div class="col col-md-3">
-            <mat-form-field>
-              <mat-label>Add New Join</mat-label>
-              <mat-select>
-                <mat-option data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct
-                  Join</mat-option>
-                <mat-option data-toggle="modal" data-target="#modelStoredProcView">SP/View Join</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <!-- <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Add New Join
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" id="dropdown">
-              <li>
-                <a href="#" data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct
-                  Join</a>
-              </li>
-              <li>
-                <a href="#">Column-Match Join</a>
-              </li> 
-              <li>
-                 <a href="#" data-toggle="modal" data-target="#modelStoredProcView">SP/View Join</a> 
-                <a (click)="openStoredProcView()">SP/View Join</a>
-              </li>
-            </ul> -->
-          </div>
-          <div class="col col-md-3">
-            <mat-form-field>
-              <mat-label>Export as</mat-label>
-              <mat-select>
-                <mat-option (click)="exportxml()">Direct Join</mat-option>
-                <mat-option (click)="exportjson()">SP/View Join</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <!-- <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Export As
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" id="dropdown1">
-                <li>
-                  <a (click)="exportxml()">XML</a>
-                </li>
-                <li>
-                  <a (click)="exportjson()">JSON</a>
-                </li>             
-              </ul> -->
-          </div>
-          <div class="col-md-2" style="margin-top: 5px; text-align: right;">
-            <button mat-raised-button class="arch-button" (click)="openDataAModal()">Data Analyzer</button>
-          </div>
-        </div>
+        </div>       
+        <button style="display: none"  id="dataanalyze" (click)="openDataAModal()">Data Analyzer</button>
+        <button style="display: none"  id="directjoin" data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct
+            Join</button>
+        <button style="display: none"  id="spv" (click)="openStoredProcView()">SP/View Join</button>
+        <button style="display: none"  id="exxml" (click)="exportxml()">XML</button>
+        <button style="display: none"  id="exjson" (click)="exportjson()">JSON</button>
         <div class="container-tab">
           <div class="col-md-12 primary-table">
             <h5 class="card-title sub-headerr">Primary Table:
@@ -128,11 +83,13 @@
             </h5>
           </div>
         </div>
-        <h5 *ngIf="!isRelationShipAvailable">
+        <div class="row table-headers" *ngIf="!isRelationShipAvailable">
+        <h5 style="padding-top: 30%; padding-left: 40%">
           Currently no relationship information available
         </h5>
+      </div>
         <mat-accordion [multi]="true">
-          <div class="items-list" style="padding-left: 0px">
+          <div class="items-list" style="padding-left: 0px" *ngIf="isRelationShipAvailable">
             <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of relationshipInfo;let ind=index;">
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -165,7 +122,7 @@
                   <div class="exp-mat-item">{{x.secondaryColumn.columnName}}</div>
                 </div>
                 <div class="action-btn">
-                  <button class="mat-raised-button cancel btn-primary btn-padding"
+                  <button class="mat-raised-button cancel btn-padding"
                     (click)="mep.expanded = !mep.expanded">Close</button>
                   <button class="save mat-raised-button btn-padding" data-toggle="modal" data-keyboard="false" data-backdrop="static"
                     data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)">Edit</button>
@@ -213,13 +170,13 @@
                       <mat-step label="Primary Column">
                         <div class="col-md-12 dataA-panel-body">
                           <div class="col-md-12" style="margin-left: -32px;">
-                            <!-- <div class="col-md-5">
+                            <div class="col-md-5" style="margin-left: -3px; width: 50%;">
                               <div class="body-left">
                                 <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
-                                <input type="text" class="form-control search-input" [(ngModel)]="searchPrimary" placeholder="Search Table">
+                                <input type="text" class="form-control search-input" [(ngModel)]="searchPrimary" placeholder="Search Column">
                               </div>
-                            </div> -->
-                            <div class="col-md-5" style="margin-left: 41px;">
+                            </div>
+                            <div class="col-md-5" style="margin-left: -48px; width: 47%;">
                               <div class="selected-sty">
                                 {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
                               </div>
@@ -241,9 +198,9 @@
                               </div>
                               <div class="col-md-12 list-block" style="padding-left: 0px; padding-right: 0px;">
                                 <div class="col-md-12 plr-0"
-                                  *ngFor="let pColumn of primColArray | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }">
+                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: primaryPage }">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{pColumn.column_name}}">
-                                    <input id="{{pColumn}}" type="checkbox"
+                                    <input id="{{pColumn}}" type="checkbox" [checked]="pColumn.selected"
                                       (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
                                     {{pColumn.columnName}}
                                   </div>
@@ -256,18 +213,18 @@
                           </div>
                         </div>
                         <div class="col-md-10 paging">
-                            Percentage of Rows to consider for Analysis
+                            Percentage of Rows to consider for Analysis 
                             <input mat-input type="number" class="inpt-sty" placeholder="Analysis" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
                         <div class="col-md-11" style="text-align: right;">
-                          <pagination-controls id="dalist0" (pageChange)="getPage(page = $event)"></pagination-controls>
+                          <pagination-controls id="dalist0" (pageChange)="primaryPage = $event"></pagination-controls>
                         </div>
-                        <div id="action-btn" class="col-md-12 action-btn-connection" style="text-align: right;">
-                          <button mat-raised-button type="button" (click)="gotoBack()" class="btn btn-primary" id="cancel-btn" style="margin-right: 10px;">Cancel</button>
-                          <button mat-raised-button type="button"  [disabled]="selectedPrimColMap.size===0" (click)="gotoSecTableAndColSelection($event,stepper)" class="btn save btn-primary btn-padding matStepperNext">Next</button>
+                        <div class="col-md-12 action-btn" style="text-align: right;">
+                          <button type="button" (click)="gotoBack()" class="btn cancel btn-padding" style="margin-right: 10px;">Cancel</button>
+                          <button type="button"  [disabled]="selectedPrimColMap.size===0" (click)="gotoSecTableAndColSelection($event,stepper)" class="btn save btn-padding matStepperNext">Next</button>
                         </div>
                       </mat-step>
-                      <mat-step label="Secondary Table & Column Selection">
+                      <mat-step label="Secondary Table">
                           <div class="dataA-panel-body" id="panel-1" style="margin-left:0px">
                               <!-- <div class="col-md-12 mar-1x">
                                 <div class="col-md-9 p-0">
@@ -282,21 +239,21 @@
 
                               <div class="col-md-6" style="height: 295px;padding-left: 0px;padding-right: 0px;">
                                 <div class="col-md-12">
-                                  <div class="col-md-6" style="margin-top: 9px;">
+                                  <div class="col-md-6" style="margin-top: 9px; margin-left: 3px;">
                                     <h4>Secondary Table</h4>
                                   </div>
-                                  <div class="col-md-6" style="margin-left: -31px;">
+                                  <div class="col-md-6" style="margin-left: -28px;">
                                     <div class="selected-sty1">
                                       {{selectedSecTbl.size}} out of {{secTblArray.length - 1}} selected
                                     </div>
                                   </div>
                                 </div>
-                                <!-- <div class="col-md-12">
-                                  <div class="body-left" style="margin-bottom: 10px;">
+                                <div class="col-md-12">
+                                  <div class="body-left" style="margin-bottom: 10px; width: 99%; margin-left: -2px;">
                                     <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
                                     <input type="text" class="form-control search-input " [(ngModel)]="searchSec1" placeholder="Search Table">
                                   </div>
-                                </div> -->
+                                </div>
                                 
                                 <div class="col-md-12" style="padding-left: 33px;padding-right: 54px;">
                                   <div class="col-md-12 p-0 dataA-scrollable-div">
@@ -324,25 +281,25 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;">
-                                <div *ngIf="secColArray.length > 0" class="col-md-12">
+                              <div class="col-md-6" *ngIf="secColArray.length > 0" style="padding-left: 0px; padding-right: 0px;">                              
                                   <div class="col-md-12">
-                                    <div class="col-md-6" style="margin-top: 9px;">
+                                    <div class="col-md-6" style="margin-top: 9px; margin-left: 3px;">
                                       <h4>Column List</h4>
                                     </div>
-                                    <div class="col-md-6" style="margin-left: -31px;">
+                                    <div class="col-md-6" style="margin-left: -28px;">
                                       <div class="selected-sty2">
                                         {{selectedSecColMap.size}} out of {{secColArray.length}} selected
                                       </div>
                                     </div>
                                   </div>
-                                  <!-- <div class="col-md-12">
-                                      <div class="body-left" style="margin-bottom: 10px;">
+                                  <div class="col-md-12">
+                                      <div class="body-left" style="margin-bottom: 10px; width: 99%; margin-left: -2px;">
                                         <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
-                                        <input type="text" class="form-control search-input " [(ngModel)]="searchSec2" placeholder="Search Table">
+                                        <input type="text" class="form-control search-input " [(ngModel)]="searchSec2" placeholder="Search Column">
                                       </div>
-                                    </div> -->
-                                  <div class="col-md-12 p-0 dataA-scrollable-div" id="panel-1" style="padding-left: 33px;padding-right: 47px;">
+                                    </div>
+                                   
+                                  <div class="col-md-12 p-0 dataA-scrollable-div" id="panel-1" style="padding-left: 33px;padding-right: 0px; width: 85%;">
                                     <div class="col-md-12 p-0">
                                       <div class="col-md-12 column-header ana-br" title="Secondary Column">
                                         <input type="checkbox" style="margin-right: 10px;" (change)="selectAllSec()">
@@ -373,7 +330,7 @@
                                     <pagination-controls id="dalist2" (pageChange)="getPage(page = $event)"></pagination-controls>
                                   </div>
                                   <!-- <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> -->
-                                </div>
+                               
                               </div>
                               </div>
                             </div>
@@ -381,15 +338,26 @@
                                 Percentage of Rows to consider for Analysis
                                 <input mat-input type="number" class="inpt-sty" placeholder="Analysis" [(ngModel)]="analysisRowCount" min="1" max="100">
                               </div> -->
-                        <div id="action-btn" style="float: right;">
-                          <button (click)="gotoPrimarySel($event,stepper)" class="btn btn-primary cancel matStepperPrevious btn-padding"  id="cancel-btn">Previous</button>
-                          <button (click)="gotoAnalyze($event,stepper)" [disabled]="finalSecColMap.size===0" class="btn save btn-primary btn-padding matStepperNext" style="margin-left:10px;">Next</button>
-                        </div>
+                             
+                        <div class="action-btn" style="float: right;">
+                          <button (click)="gotoPrimarySel($event,stepper)" class="btn cancel btn-padding" >Previous</button>
+                          <button (click)="gotoAnalyze($event,stepper)" [disabled]="finalSecColMap.size===0" class="btn save btn-padding matStepperNext">Next</button>
+                        </div> 
                       </mat-step>
                       <mat-step label="Data Analysis">
-                          <div class="panel-body dataA-panel-body" id="panel-1">
+                          <div class="panel-body dataA-panel-body-r" id="panel-1">
                               <div class="col-md-4 dataA-scrollable-div-A">
-                                <table class="table table-bordered">
+                                  <div class="col-md-12 plr-0">
+                                      <h5 style="font-weight: bold;">Primary Table Columns</h5>
+                                    </div>
+                                  <div class="col-md-12 plr-0"
+                                  *ngFor="let x of finalPrimColArray">
+                                  <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
+                                      {{x.columnName}}
+                                  </div>                                 
+                                </div>
+
+                                <!-- <table class="table table-bordered">
                                   <thead>
                                     <tr>
                                       <th>Primary Table Columns</th>
@@ -400,10 +368,21 @@
                                       <td>{{x.columnName}}</td>
                                     </tr>
                                   </tbody>
-                                </table>
+                                </table> -->
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
-                                <table class="table table-bordered" id="finalSecTab">
+                                <div class="col-md-12 plr-0">
+                                    <h5 style="font-weight: bold;">Secondary Tables</h5>
+                                  </div>
+                                <div class="col-md-12 plr-0"
+                                *ngFor="let x of finalSecondaryTableList; let i = index" (click)="finalSecCol(x,i)">
+                                <div [class.selected]="i == selectedRow" class="col-md-12 cur-p trim-text ana-br da-table" id="list-br" title="{{x.tableName}}">                                  
+                                    {{x.tableName}}
+                                     <i class="fa fa-angle-right unselected"></i>
+                                </div>                                 
+                              </div>
+
+                                <!-- <table class="table table-bordered" id="finalSecTab">
                                   <thead>
                                     <tr>
                                       <th>Secondary Tables</th>
@@ -415,10 +394,20 @@
                                       <td>{{x.tableName}}</td>
                                     </tr>
                                   </tbody>
-                                </table>
+                                </table> -->
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
-                                <table class="table table-bordered">
+                                  <div class="col-md-12 plr-0">
+                                      <h5 style="font-weight: bold;">Secondary Column Names</h5>
+                                    </div>
+                                  <div class="col-md-12 plr-0"
+                                  *ngFor="let x of finalSecColArray">
+                                  <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
+                                      {{x.columnName}}
+                                  </div>                                 
+                                </div>
+
+                                <!-- <table class="table table-bordered">
                                   <thead>
                                     <tr>
                                       <th>Secondary Column Names</th>
@@ -429,16 +418,16 @@
                                       <td>{{x.columnName}}</td>
                                     </tr>
                                   </tbody>
-                                </table>
+                                </table> -->
                               </div>
                             </div>
-                            <div id="action-btn" style="float: right;">
-                                <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn btn-primary cancel matStepperPrevious btn-padding" id="cancel-btn">Previous</button>
-                                <button (click)="dataAnalyse()" class="btn save btn-primary btn-padding matStepperNext" style="margin-left: 10px">Analyze</button>
+                            <div class="action-btn" style="float: right;">
+                                <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn cancel btn-padding matStepperPrevious">Previous</button>
+                                <button (click)="dataAnalyse()" class="btn save btn-padding matStepperNext" >Analyze</button>
                               </div>
                       </mat-step>
                       <mat-step label="Result">
-                          <div class="panel-body dataA-panel-body" id="panel-1">
+                          <div class="panel-body dataA-panel-body-r" id="panel-r">
                               <div class="col-md-12 center-dev">
                                 <div class="col-md-6"><strong>Analysis Status:</strong>
                                   {{JobStatus}}
@@ -717,26 +706,23 @@
       </div>
     </div>
   </div>
-  <!-- relationship delete -->
+  <!-- relationship delete -->  
   <div class="modal fade" id="confirmDelMemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
       <div class="modal-content text-left">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title">Delete</h4>
+            <div class='model-title'>
+                <div class='info-r'>Delete</div>
+              </div>
         </div>
         <div class="modal-body text-center" style="height: 100px;">
           Are you sure?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary cancel" (click)="closeErrorMsg()"
-            data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="confirmDelete()"
-            disabled="{{delProgress ? 'true' : null }}">Confirm
-            <span [ngClass]="{'archon-loading-icon' : delProgress}"></span>
-          </button>
+            <div class="action-btn">
+                <button class="mat-raised-button cancel btn-padding" (click)="closeErrorMsg()" data-dismiss="modal">Cancel</button>
+                <button class="save mat-raised-button btn-padding" (click)="confirmDelete();" disabled="{{delProgress ? 'true' : null }}">Confirm<span [ngClass]="{'archon-loading-icon' : delProgress}"></span></button> 
+          </div> 
           <div *ngIf="deleteNotif?.show" class="alert alert-danger alert-dismissible m-t-10" role="alert">
             <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -758,7 +744,7 @@
 
   <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="true"
     data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInvite">Open Modal</button>
-  <div id="confirmCancelInvite" class="modal fade" role="dialog">
+  <div id="confirmCancelInvite" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header adhoc-modal-header">
@@ -768,8 +754,10 @@
           <p>{{message}}</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+            <div class="action-btn">
+          <button type="button" class="mat-raised-button save btn-padding"
             data-dismiss="modal">Ok</button>
+            </div>
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
 <div id="metalyzer" class="row">
   <div classs="metalyzer-header">
-      <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+      <!-- <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
         <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         <strong> Please select a table</strong>
-      </div>
+      </div> -->
       <div class="head-container">
           <div class="flex-head">
             <a class="back-sty" (click)="gotoDashboard()" matTooltip="Back">
@@ -15,32 +15,50 @@
           </div>
       </div>       
       <div class="container-head col-md-12">
-        <div class="col-md-1"></div>
-        <div class="form-group col-md-3 heading-item" id="frm-margin">
+        <div class="form-group col-md-3 heading-item wss" style="width: 23%;" id="frm-margin">
           <b>Workspace Name: </b>{{wsName | uppercase}}
         </div>
-        <div class="form-group col-md-2 heading-item" id="frm-margin">
+        <div class="form-group col-md-3 heading-item" style="width: 13%;" id="frm-margin">
           <b>Phase: </b>{{phase | uppercase}}
         </div>
-        <div class="dropdown col-md-2" id="btn-margin" *ngIf="phase == 'Analysis'">
-          <button mat-raised-button class="arch-button" id="btn-mar" data-toggle="modal" data-keyboard="true"  data-target="#myModal" (click)="getAudit()">View Modifications
-          </button>
+        <div class="dropdown col-md-2" style="width: 21%;" *ngIf="dropdown">
+            <mat-form-field>
+                <mat-label>Export As XML / JSON / PDF</mat-label>
+                <mat-select>
+                  <mat-option (click)="exportxml()" style="border-bottom: 1px solid #d6d6d6;">Export All Table As XML</mat-option>
+                  <mat-option (click)="exportjson()" style="border-bottom: 1px solid #d6d6d6;">Export All Table As JSON</mat-option>
+                  <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As XML</mat-option>
+                  <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedxml()" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As XML</mat-option>
+                  <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As JSON</mat-option>
+                  <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedjson()" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As JSON</mat-option>
+                  <mat-option (click)="exportOverallpdf()" style="border-bottom: 1px solid #d6d6d6;">Export All Table Relationship As PDF</mat-option>
+                  <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table Relationship As PDF</mat-option>
+                  <mat-option *ngIf="disable == false" [disabled]="disable" (click)="exportSelectedpdf()" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table Relationship As PDF</mat-option>              
+                </mat-select>
+              </mat-form-field>
         </div>
-        <div class="dropdown col-md-2" *ngIf="dropdown">
+        <div class="dropdown col-md-2" style="width: 21%;"  *ngIf="phase == 'Analysis'">
           <mat-form-field>
-            <mat-label>Export As</mat-label>
+            <mat-label>View Details</mat-label>
             <mat-select>
-              <mat-option (click)="exportxml()">XML</mat-option>
-              <mat-option (click)="exportjson()">JSON</mat-option>
+              <!-- <mat-option [disabled]="false">View All Table Relationship</mat-option>
+              <mat-option [disabled]="true">View Selected Table Relationship</mat-option> -->
+              <mat-option data-toggle="modal" data-keyboard="true"  data-target="#myModal" (click)="getAudit()">View Modifications</mat-option>
+             
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="dropdown col-md-2" *ngIf="dropdown">
+        <div class="dropdown col-md-2" style="width: 21%;" *ngIf="dropdown">
           <mat-form-field>
-            <mat-label>View Relationship</mat-label>
-            <mat-select>
-              <mat-option (click)="exportSelectedpdf()">Selected Table</mat-option>
-              <mat-option (click)="exportOverallpdf()">Overall</mat-option>
+            <mat-label>Add Join</mat-label>
+            <mat-select [disabled]="disable">
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="adddirectjoin()" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="spvjoin()" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="dataanalyze()" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
+             
             </mat-select>
           </mat-form-field>
         </div>
@@ -130,8 +148,10 @@
         <p>{{message}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
-          data-dismiss="modal">Ok</button>
+          <div class="action-btn">
+              <button type="button" class="mat-raised-button save btn-padding"
+                data-dismiss="modal">Ok</button>
+                </div>
     </div>
   </div>
 </div>

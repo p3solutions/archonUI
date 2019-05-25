@@ -98,8 +98,8 @@ h4 {
 
 .items-list {
   overflow-x: hidden;
-  overflow-y: scroll;
-  height: 360px;
+  overflow-y: auto;
+  height: 576px;
   padding-left: 20px;
 }
 
@@ -108,7 +108,7 @@ h4 {
   margin-left: -5px;
   width: 95%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 280px;
   /* margin-top: 0px; */
 }
@@ -207,9 +207,16 @@ h4 {
   margin-left: 75px;
   /* margin-right: 50px; */
 }
+.dataA-panel-body-r {
+  margin-left: 0px; 
+}
+
+#panel-r{
+  height: 438px;
+}
 
 #panel-0{
-  height: 200px;
+  height: 190px;
   margin-bottom: 5px;
   padding-left: 0px;
   padding-right: 0px;
@@ -226,11 +233,11 @@ h4 {
 }
 
 #panel-1{
-  height: 405px;
+  height: 385px;
 }
 
 .dataA-scrollable-div {
-  overflow: scroll;
+  overflow: auto;
   max-height: 240px;
 }
 
@@ -249,12 +256,12 @@ h4 {
 }
 
 #analysis-view .tablename-list {
-  height: 370px;
+  height: 625px;
 }
 
 #analysis-view .search-input {
   margin-left: 20px;
-  width: 85%;
+  width: 84%;
 }
 
 #analysis-view .form-control-feedback {
@@ -270,6 +277,7 @@ h4 {
   background-color: #e8f0f6;
   border: 1px solid #269AF8;
 }
+
 
 input[type='checkbox'] {
   cursor: pointer;
@@ -326,6 +334,7 @@ input[type='checkbox'] {
 .primary-table {
   background-color: #edf3f8;
   margin-bottom: 12px;
+  margin-top: 12px;
 }
 
 .container-tab{
@@ -532,7 +541,7 @@ a:hover {
 }
 
 .btn {
-  font-size: 12px;
+  /* font-size: 12px; */
 }
 
 .expansion-outer {
@@ -573,32 +582,6 @@ a:hover {
   text-align: center
 }
 
-
-.action-btn button.save {
-  background-color: #2879ff;
-  color: #ffffff;
-  text-transform: inherit;
-  margin-right: 6px;
-  transition: 0.5s;
-}
-
-.action-btn button.cancel {
-  background-color: #64b5f6;
-  color: #1b1b1b;
-  margin-right: 10px;
-  text-transform: inherit;
-  transition: 0.5s;
-}
-
-.action-btn button.save:hover {
-  transform: scale(1.1, 1.1);
-
-}
-
-.action-btn button.cancel:hover {
-  transform: scale(1.1, 1.1);
-}
-
 ::ng-deep #analysis-view .mat-expansion-panel {
   margin-bottom: 8px;
   margin-right: 31px;
@@ -622,6 +605,8 @@ a:hover {
   color: #000;
   background-color: #64b5f6;
   padding: 8px;
+  border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 .card-title {
@@ -650,12 +635,6 @@ a:hover {
   padding-top: 4px;
 }
 
-#cancel-btn {
-  background-color: #64b5f6;
-  color: #000;
-  border: none;
-}
-
 .btn-primary{
   background-color: #2879ff;
   transition: 0.5s;
@@ -678,13 +657,13 @@ a:hover {
 
 .arrow {
   opacity: 0.5;
-  color: #000;
+  color: #80adf8;
   cursor: pointer;
 }
 
 .arrow:hover {
   opacity: 1;
-  color: #000;
+  color: #2879FF;
   cursor: pointer;
 }
 
@@ -709,13 +688,13 @@ a:hover {
 .ana-br {
   border: 1px solid #dddddd;
   padding: 10px 10px;
-  border-radius: 6px;
+  border-radius: 4px;
   background-color: #fff;
   margin-bottom: 6px;
 }
 
 #list-br {
-  background-color: #fff;
+  /* background-color: #fff; */
   margin-bottom: 3px;
 }
 
@@ -756,47 +735,47 @@ a:hover {
 }
 
 ::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header .active-step {
-  background-color: #2697ff !important;
+  background-color: #2879ff !important;
   color: #ffffff !important;
 }
 
 ::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-k-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
  [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu-before.mat-horizontal-stepper-header:not(:first-child)::before, [dir=rtl] 
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
-  background-color:  #2697ff !important
+  background-color:  #2879ff !important
 }
 
 ::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
@@ -822,5 +801,66 @@ a:hover {
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
   border-top-width:2px !important;
 }
+.model-title {
+  float: left;
+  display:inline-block;
+  font-size: 20px;
+  padding: -1px 15px 10px 15px;
+  text-align: left;
+  color: #ffffff;
+  cursor: none;
+}
+.modal-header {
+  padding: 10px;
+  padding-left: 15px;
+  background-color: #2879ff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+ }
+ .info-r {
+  font-size: 18px;
+  padding-left: 10px;
+  display:inline-block;  
+}
+.action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 10px;
+  transition: 0.5s;
+  border-radius: 3px;
+}
+
+.action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  transition: 0.5s;
+  border-radius: 3px;
+}
+
+.action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
+.action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+
+pagination-controls::ng-deep ul.ngx-pagination {
+  float: right
+}
+
+.expand {
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+
+
+
 
 

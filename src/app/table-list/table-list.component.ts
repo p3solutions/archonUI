@@ -13,7 +13,7 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
-import { MatStepper } from '@angular/material';
+import { MatStepper, MatStepHeader } from '@angular/material';
 
 @Component({
   selector: 'app-table-list',
@@ -33,6 +33,7 @@ export class TableListComponent implements OnInit {
   serviceActionType: string;
   tableList: string[];
   primColArray = [];
+  tempPrimColArray = [];
   secColArray = [];
   secTblArray = [];
   selectedPrimColMap = new Map(); // map of primary column name, true
@@ -93,9 +94,10 @@ export class TableListComponent implements OnInit {
   currentStepNo = null;
   @ViewChild('stepper') stepper: MatStepper;
   value: any;
-  searchPrimary;
+  searchPrimary = '';
   searchSec1;
   searchSec2;
+  primaryPage = 1;
 
   constructor(
     private tablelistService: TableListService,
@@ -134,6 +136,7 @@ export class TableListComponent implements OnInit {
     this.metalyzerHeaderService.getWorkspaceName().subscribe(result => {
       this.wsName = result;
     });
+    this.tablelistService.selectTables(true);
   }
 
   getTableList() {
@@ -228,6 +231,7 @@ export class TableListComponent implements OnInit {
     this.tablelistService.getColumnsByTableId(tableId).subscribe((columns) => {
       if (isPrime) {
         this.primColArray = columns;
+        this.tempPrimColArray = columns;
         // this.primColLoader = false;
       } else {
         this.secTblColMap.set(tableId, columns);
@@ -375,8 +379,8 @@ export class TableListComponent implements OnInit {
     // return document.querySelector('#dataAModal-carousel .item.active').getAttribute('step');
   }
   enableDisableNextBtn() {
-   // const currentStep = this.getCurrentStep();
-  //  console.log("btn");
+    // const currentStep = this.getCurrentStep();
+    //  console.log("btn");
     const currentStep = this.currentStepNo;
     switch (currentStep) {
       case 0:
@@ -397,7 +401,7 @@ export class TableListComponent implements OnInit {
   }
   // carousel handling codes
   addClass(elementId, classSelector) {
-   // document.getElementById(elementId).classList.add(classSelector);
+    // document.getElementById(elementId).classList.add(classSelector);
   }
   removeClass(elementId, classSelector) {
     document.getElementById(elementId).classList.remove(classSelector);
@@ -418,6 +422,7 @@ export class TableListComponent implements OnInit {
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
   gotoSecTableAndColSelection(e, stepper: MatStepper) {
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     setTimeout(() => {
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       a[0].classList.add('mat-psedu');
@@ -431,8 +436,15 @@ export class TableListComponent implements OnInit {
         const b1 = document.querySelectorAll('.mat-horizontal-stepper-header-container');
         b1[0].children[3].classList.remove('mat-horizental-line');
       }
-      this.value[2].children[1].classList.add('unfinished-step');
-      this.value[0].children[1].classList.add('finished-step');
+      if (steps[0].state === 'edit') {
+        this.value[0].children[1].classList.add('finished-step');
+      }
+      if (steps[2].state === 'edit') {
+        this.value[2].children[1].classList.add('finished-step');
+      }
+      if (steps[3].state === 'edit') {
+        this.value[3].children[1].classList.add('finished-step');
+      }
       this.value[1].children[1].classList.add('active-step');
     }, 300);
     this.currentStepNo = stepper.selectedIndex;
@@ -442,6 +454,7 @@ export class TableListComponent implements OnInit {
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
   gotoPrimarySel(e, stepper: MatStepper) {
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     setTimeout(() => {
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       a[0].classList.remove('mat-psedu');
@@ -449,11 +462,15 @@ export class TableListComponent implements OnInit {
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       b[0].children[1].classList.remove('mat-horizental-line');
       this.value[0].children[1].classList.add('active-step');
-      if (this.value[1].children[1].classList.contains('active-step')) {
-        this.value[1].children[1].classList.remove('active-step');
+      if (steps[1].state === 'edit') {
+        this.value[1].children[1].classList.add('finished-step');
       }
-      this.value[2].children[1].classList.add('unfinished-step');
-      this.value[1].children[1].classList.add('unfinished-step');
+      if (steps[2].state === 'edit') {
+        this.value[2].children[1].classList.add('finished-step');
+      }
+      if (steps[3].state === 'edit') {
+        this.value[3].children[1].classList.add('finished-step');
+      }
     }, 300);
     // document.getElementById('prev-slide').click();
     this.finalSecColArray = [];
@@ -464,14 +481,23 @@ export class TableListComponent implements OnInit {
   }
 
   gotoAnalyze(e, stepper: MatStepper) {
+    const steps: MatStepHeader[] = stepper._stepHeader.toArray();
     setTimeout(() => {
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       a[1].classList.add('mat-auth-psedu');
       a[2].classList.add('mat-review-psedu');
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       b[0].children[3].classList.add('mat-horizental-line');
-      this.value[1].children[1].classList.add('finished-step');
       this.value[2].children[1].classList.add('active-step');
+      if (steps[1].state === 'edit') {
+        this.value[1].children[1].classList.add('finished-step');
+      }
+      if (steps[3].state === 'edit') {
+        this.value[3].children[1].classList.add('finished-step');
+      }
+      if (steps[0].state === 'edit') {
+        this.value[0].children[1].classList.add('finished-step');
+      }
     }, 300);
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 2;
@@ -688,10 +714,10 @@ export class TableListComponent implements OnInit {
 
   changeMatStepIcon() {
     this.value = document.querySelectorAll('.mat-horizontal-stepper-header');
-    this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">settings_input_component</i>';
-    this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
-    this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">assignment_turned_in</i>';
-    this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">playlist_add_check</i>';
+    this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">crop_portrait</i>';
+    this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">table_chart</i>';
+    this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">insert_chart_outlined</i>';
+    this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">format_list_bulleted</i>';
     this.value[2].children[1].classList.add('unfinished-step');
     this.value[1].children[1].classList.add('unfinished-step');
     this.value[3].children[1].classList.add('unfinished-step');
@@ -818,5 +844,17 @@ export class TableListComponent implements OnInit {
 
   togglePanels(index: number) {
     this.indexExpanded = index === this.indexExpanded ? -1 : index;
+  }
+
+  searchTable(value) {
+    console.log(this.tempPrimColArray);
+    console.log(value);
+    if (value !== '') {
+      const tempList = this.tempPrimColArray.filter(a => a.columnName.trim().toLowerCase().includes(value.toLowerCase()));
+      this.primColArray = [];
+      this.primColArray = tempList;
+    } else {
+      this.primColArray = this.tempPrimColArray;
+    }
   }
 }
