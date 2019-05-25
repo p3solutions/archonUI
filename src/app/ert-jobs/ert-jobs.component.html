@@ -27,13 +27,13 @@
   <div *ngFor="let item of ertJobs" class="col-md-3 card">
     <div class="flex-cards-bar">
       <div class='title'>{{item.jobTitle===''?'No_title':item.jobTitle | titlecase}}<div class='info'><span
-            (click)="showJobDetails(item.jobId)" title="Click for more info"><i class="fa fa-info-circle"
+            (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
               aria-hidden="true"></i></span></div>
       </div>
       <!-- <div class='delete'><span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job">X</span></div>  
    -->
       <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
-          (click)="setJobId(item.jobId)" title="Delete">
+          (click)="setJobId(item.jobId)" matTooltip="Delete">
           <span aria-hidden="true">&times;</span>
         </button></div>
     </div>
@@ -50,16 +50,16 @@
     </div><br>
 
     <div class="flex-cards-footer">
-      <div class='foo-icon'><a [class.disabled]="item.madeDisable" title="Run Job"
+      <div class='foo-icon'><a [class.disabled]="item.madeDisable" matTooltip="{{item.madeDisable? '':'Run Job'}}"
           (click)="!madeDisable && openScheduleModel(item.jobId,item.jobStatus)" class="cursor-poniter fonticonbelow"><i
             class="fa fa-play" aria-hidden="true"></i></a></div>
       <div class='foo-iconedit'><a (click)="!madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
-          title="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
+        matTooltip="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
     </div>
   </div>
   <div class="col-md-12" *ngIf="ertJobslist">
     <h5 style="text-align: center; margin-top: 50px;">
-      Currently no job configurations  (Click on + icon to add job configuration)
+      Currently no job configurations (Click on + icon to add job configuration)
     </h5>
   </div>
 </div>
@@ -115,15 +115,14 @@
   <div class="modal-dialog">
     <div class="modal-content" style="width: 430px;">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Confirm Job Delete</h4>
       </div>
       <div class="modal-body">
         <p style="text-align:left">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="deleteErtJob()" data-dismiss="modal">YES</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteErtJob()" data-dismiss="modal">YES</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
       </div>
     </div>
   </div>
@@ -136,18 +135,20 @@
 <div id="successModel" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
-      <div class="modal-content" style="width: 430px;">
-          <div class="modal-header">
-            <div class='model-title'><div class='info-r'> Message</div></div>
+    <div class="modal-content" style="width: 430px;">
+      <div class="modal-header">
+        <div class='model-title'>
+          <div class='info-r'> Message</div>
         </div>
-          <div class="modal-body">
-           <p style="text-align:left; size: 18px;"> {{successMsg}}.</p>
-           <p *ngIf="isSuccessMsg" style="text-align:left;">check on Job Status page</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default cancel" (click)="close()" data-dismiss="modal">CLOSE</button>          
-          </div>
-        </div>
+      </div>
+      <div class="modal-body">
+        <p style="text-align:left; size: 18px;"> {{successMsg}}.</p>
+        <p *ngIf="isSuccessMsg" style="text-align:left;">check on Job Status page</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default cancel" (click)="close()" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
 
   </div>
 </div>

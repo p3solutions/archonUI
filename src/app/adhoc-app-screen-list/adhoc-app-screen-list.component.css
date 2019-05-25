@@ -151,6 +151,49 @@ modal-body .p {
   opacity: 1.0
 }
 
+
+
+.fa-stack-disabled {
+  font-size: 17px;
+  cursor: not-allowed;
+}
+
+.fa-stack-disabled .fa {
+  color: #c3c0c0;
+}
+
+.fa-stack-disabled .fa.fa-circle-thin {
+  color: #c3c0c0;
+}
+
+.fa-stack-disabled .fa.fa-circle {
+  opacity: 0.0;
+  color: #c3c0c0;
+}
+
+.fa-stack-disabled:hover .fa.fa-plus {
+  color: white;
+}
+
+.fa-stack-disabled:hover .fa.fa-circle-thin {
+  color: #c3c0c0;
+}
+
+.fa-stack-disabled:hover .fa.fa-circle {
+  opacity: 1.0
+}
+
+.fa-stack-disabled {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+}
+
+
+
 .example-container {
   position: relative;
   min-height: 200px;
@@ -168,12 +211,14 @@ modal-body .p {
 }
 
 .material-icons {
-  font-size: 26px;
+  font-size: 21px;
+  vertical-align: middle;
+  margin-right: 16px
 }
 
 .material-icons:hover,
 .material-icons:focus {
-  font-size: 26px;
+  font-size: 21px;
 }
 
 .link-btn {
@@ -198,4 +243,27 @@ a.disabled .material-icons {
 
 .hide-html {
   display: none;
+}
+
+.disabled-cls {
+  cursor: not-allowed;
+}
+
+.mat-menu-item:hover .material-icons {
+  color: #2879ff;
+}
+
+.disabled-mat-option {
+  opacity: 0.5 !important;
+  color: rgba(12, 12, 12, 0.5) !important;
+}
+
+.disabled-mat-option-icon {
+  opacity: 0.5 !important;
+  color: rgba(12, 12, 12, 0.5) !important;
+}
+
+.mat-menu-item.disabled-mat-option:hover .material-icons {
+  opacity: 0.5 !important;
+  color: rgba(12, 12, 12, 0.5) !important;
 }

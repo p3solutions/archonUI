@@ -11,6 +11,6 @@ export class WorkspaceLandingPageComponent implements OnInit {
     public router: Router
   ) { }
   ngOnInit() {
-    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+    // this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 }

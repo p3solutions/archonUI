@@ -183,7 +183,7 @@ p {
 
 
 ::ng-deep #user-table-svg svg {
-  height: 6vh !important;
+  height: 4vh !important;
 }
 
 #user-table {

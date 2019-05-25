@@ -49,7 +49,7 @@
               <span *ngFor="let member of workspaceInfoData?.members; let isLast = last">
                 {{member?.user?.name}}{{isLast ? '' : ','}}
               </span>
-              <a data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-members',workspaceInfoData?.id]">
+              <a  *ngIf="role?.name == 'ROLE_OWNER'" data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-members',workspaceInfoData?.id]">
                 <i class="material-icons">
                     edit
                     </i>
@@ -67,7 +67,7 @@
               <b>Manage Metadata Version</b>
             </td>
             <td class="ws-info-data">{{workspaceInfoData?.masterMetadataVersion}}
-              <a data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">
+              <a  *ngIf="role?.name == 'ROLE_OWNER'" data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">
                 <i class="material-icons">
                     edit
                     </i>

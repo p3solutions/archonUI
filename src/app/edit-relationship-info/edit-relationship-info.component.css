@@ -1,18 +1,131 @@
-.modal-dialog {
-    margin: 150px auto auto;
-    width: 850px;
+.modal-header{
+  color: white;
+  background-color: #2879ff;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
+
+.modal-dialog {
+  margin: 65px auto auto;
+  width: 850px;
+}
+
 .fa-check-circle {
-    color: #269af8;
+  color: #269af8;
 }
 
 #sec_select {
-    width: max-content;
+  width: max-content;
 }
 .m-t-6 {
-    padding: 8px;
-    margin-bottom: 5px;
+  padding: 8px;
+  margin-bottom: 5px;
 }
 .alert-dismissible {
-    padding-right: 45px;
+  padding-right: 45px;
+}
+
+#cancel-btn{
+  background-color: #64b5f6;
+  color:#000;
+}
+
+#back-none{
+  background-color: #fff;
+  padding:0px 15px;
+}
+
+.btn-primary{
+  transition: .5s;
+}
+
+.btn-primary:hover{
+  box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
+  -webkit-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
+}
+
+.header-tab{
+  background-color: #64b5f6;
+  color: #000;
+  padding: 10px 20px;
+  text-align: left;
+}
+
+#right-align{
+  text-align: center;
+}
+
+::ng-deep .cdk-overlay-container{
+  z-index: 1200 !important;
+}
+
+
+
+/* 
+#back-none{
+  background-color: white;
+}
+
+.header-tab{
+  background-color: #64b5f6;
+  padding: 6px; 
+} */
+
+#msg-id{
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 10px;
+  transition: 0.5s;
+}
+
+.action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  transition: 0.5s;
+}
+
+.action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
+.action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.mat-header-cell {
+  font-size: 12px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0c0c0c;
+}
+.fa-key {
+  color: #2879ff;
+}
+.info-r {
+  font-size: 18px;
+  padding-left: 10px;
+  display:inline-block;  
+}
+
+.model-title {
+  float: left;
+  display:inline-block;
+  font-size: 20px;
+  padding: -1px 15px 10px 15px;
+  text-align: left;
+  color: #ffffff;
 }

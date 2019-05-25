@@ -16,7 +16,8 @@
         <input matInput formControlName="label" placeholder="Label">
       </mat-form-field>
       <mat-form-field>
-        <mat-select formControlName="fieldType" placeholder="Field Type" #field (selectionChange)="changeFieldType($event.value)">
+        <mat-select formControlName="fieldType" placeholder="Field Type" #field
+          (selectionChange)="changeFieldType($event.value)">
           <mat-option *ngFor="let fieldType of fieldTypes" [value]="fieldType">
             {{fieldType}}
           </mat-option>
@@ -47,14 +48,21 @@
       <!-- <div id="required">
         <input style="margin: 2px 9px 0px 0px;" type="checkbox" formControlName="isRequired">Mandatory Field
       </div> -->
-      <section class="example-section" id="mandatory-div">
-        <mat-checkbox  class="example-margin" formControlName="isRequired">Mandatory Field</mat-checkbox>
-      </section>
+      <div class="check-div">
+        <section class="example-section check_box-section" id="mandatory-div">
+          <mat-checkbox class="example-margin" formControlName="isRequired">Mandatory Field</mat-checkbox>
+        </section>
+        <section class="example-section check_box-section" id="mandatory-div">
+          <mat-checkbox class="example-margin" formControlName="isEncrypted">Encrypted Field In Infoarchive</mat-checkbox>
+        </section>
+      </div>
+
     </form>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn-transform btn btn-primary btn-sm" [disabled]="!editSearchCriteriaForm.valid" (click)="update()">Update</button>
-    <button class="btn-transform btn btn-primary btn-sm" (click)="cancel()">
+    <button type="button" class=" btn btn-padding {{!editSearchCriteriaForm.valid?'primary-btn-color-disabled':'primary-btn-color'}}" [disabled]="!editSearchCriteriaForm.valid"
+      (click)="update()">Update</button>
+    <button class="btn btn-padding secondary-btn-color" (click)="cancel()">
       Cancel</button>
   </div>
 </div>
@@ -101,7 +109,7 @@
         </div>
       </div>
       <div id="info-btn" class="modal-footer">
-        <button  type="button" class="btn-transform btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="primary-btn-color btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

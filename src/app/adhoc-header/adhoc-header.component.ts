@@ -15,7 +15,7 @@ export class AdhocHeaderComponent implements OnInit {
   ngOnInit() {
     this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
       if (result === null) {
-        this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+       // this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
       } else {
         this.adhocHeaderInfo = result;
       }

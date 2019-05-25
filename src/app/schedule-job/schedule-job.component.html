@@ -25,7 +25,7 @@
           </mat-form-field>
         <br>
           <mat-form-field class="example-full-width">
-            <input id="datepicker1" matInput [matDatepicker]="picker" placeholder="Start Date" [disabled]="jobType !== 'Schedule Later'" [(ngModel)]="startdate">
+            <input id="datepicker1" matInput [min]="startdate" [matDatepicker]="picker" placeholder="Start Date" [disabled]="jobType !== 'Schedule Later'" [(ngModel)]="startdate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -35,7 +35,7 @@
           </div>
           <mat-form-field class="example-full-width">
               <mat-label>Interval</mat-label>
-              <select matNativeControl #Int (change)="Interval = Int.value" [disabled]="jobType !== 'Schedule Later'">
+              <select matNativeControl #Int (change)="Interval = Int.value; calculateRestriction(eventTemp)" [disabled]="jobType !== 'Schedule Later'">
                   <option>Once</option>
                     <option>Days</option>
                     <option>Weeks</option>
@@ -43,11 +43,11 @@
               </select>
             </mat-form-field>
           <mat-form-field class="example-full-width">
-              <input type="number" matInput placeholder="Frequency" [(ngModel)]="Frequency" [disabled]="Interval == 'Once'">
+              <input type="number" matInput placeholder="Frequency" min="0" (ngModelChange)="calculateRestriction($event)" [(ngModel)]="Frequency" [disabled]="Interval == 'Once'">
             </mat-form-field>
           <br>
             <mat-form-field class="example-full-width">
-              <input matInput id="datepicker2" [matDatepicker]="picker2" placeholder="End Date" [(ngModel)]="enddate" [disabled]="Interval == 'Once'">
+              <input matInput id="datepicker2" [min]="restrict" [matDatepicker]="picker2" placeholder="End Date" [(ngModel)]="enddate" [disabled]="Interval == 'Once'">
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>

@@ -12,6 +12,8 @@ import { UserinfoService } from '../userinfo.service';
 })
 export class MetalyzerHeaderComponent implements OnInit {
 
+  displayedColumns: string[] = ['modifiedBy', 'createdAt', 'modificationMode', 'modificationDescription'];
+
   wsName: string;
   phase: string;
   workspaceID: any;
@@ -26,6 +28,9 @@ export class MetalyzerHeaderComponent implements OnInit {
   p = 1;
   dropdown: any;
   message: void;
+  startIndex = 1;
+  schemaResultsTableCount = 0;
+  disable = true;
   constructor(
     private router: Router,
     private tablelistService: TableListService,
@@ -45,11 +50,17 @@ export class MetalyzerHeaderComponent implements OnInit {
     });
     this.tablelistService.userselectTableslist.subscribe(data => {
       this.userselectTableslist = data;
+      if (this.userselectTableslist.tableId === undefined) {
+        this.disable = true;
+      } else {
+        this.disable = false;
+      }
     });
     this.tablelistService.Dropdownlist.subscribe(data => {
       this.dropdown = data;
     });
   }
+
 
   downloadFile(content, fileType) {
     const fileName = this.wsName + '-metadata.xml';
@@ -124,8 +135,12 @@ export class MetalyzerHeaderComponent implements OnInit {
       'userId': this.userid
     };
     this.metalyzerHeaderService.getAudit(param).subscribe(result => {
-      this.auditArray = result;
+      this.auditArray = result.model;
+      if (result.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      }
     });
+    console.log(this.auditArray);
   }
 
   exportOverallpdf() {
@@ -158,5 +173,37 @@ export class MetalyzerHeaderComponent implements OnInit {
   }
   gotoDashboard() {
     this.router.navigate(['/workspace/workspace-dashboard']);
+  }
+
+  getPage(page: number) {
+    this.auditArray = [];
+    this.startIndex = page;
+    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.userid = this.userInfoService.getUserId();
+    const param = {
+      'workspaceId': this.workspaceID,
+      'userId': this.userid
+    };
+    this.metalyzerHeaderService.getAudit(param).subscribe(result => {
+      this.auditArray = result.model;
+      if (result.paginationRequired) {
+        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      }
+    });
+  }
+  dataanalyze() {
+    document.getElementById('dataanalyze').click();
+  }
+  spvjoin() {
+    document.getElementById('spv').click();
+  }
+  adddirectjoin() {
+    document.getElementById('directjoin').click();
+  }
+  selectedxml() {
+    document.getElementById('exxml').click();
+  }
+  selectedjson() {
+    document.getElementById('exjson').click();
   }
 }

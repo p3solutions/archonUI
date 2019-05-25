@@ -58,7 +58,9 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
       maskType: new FormControl(this.resultFields.maskDetail.maskType),
       maskLength: new FormControl(this.resultFields.maskDetail.maskLength),
       isEnableFilter: new FormControl(this.resultFields.isEnableFilter),
-      isHidden: new FormControl(this.resultFields.isHidden)
+      isHidden: new FormControl(this.resultFields.isHidden),
+      encrypted: new FormControl(this.resultFields.encrypted),
+      todecrypt: new FormControl(this.resultFields.todecrypt)
     });
   }
 
@@ -74,6 +76,8 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
     this.resultFields.outputFunction = this.editResultFieldsForm.get('outputFunction').value;
     this.resultFields.isHidden = this.editResultFieldsForm.get('isHidden').value;
     this.resultFields.isEnableFilter = this.editResultFieldsForm.get('isEnableFilter').value;
+    this.resultFields.encrypted = this.editResultFieldsForm.get('encrypted').value;
+    this.resultFields.todecrypt = this.editResultFieldsForm.get('todecrypt').value;
     this.resultFields.isMaskField = this.editResultFieldsForm.get('isMaskField').value;
     this.resultFields.maskDetail.maskType = this.editResultFieldsForm.get('maskType').value;
     this.resultFields.maskDetail.maskLength = this.editResultFieldsForm.get('maskLength').value;

@@ -5,7 +5,7 @@
           <a (click)="gotoDashboard()" data-tooltip="Back">
             <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
           </a>
-          <h3>  Schedule Job Monitor  <span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span> </h3>
+          <h3>Schedule Monitoring<span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span> </h3>
         </div>
       </div>
 
@@ -64,8 +64,8 @@
         <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Type </th>
         <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobType}}</td>
       </ng-container>
-      <ng-container matColumnDef="Tool">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Tool </th>
+      <ng-container matColumnDef="Job Origin">
+        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Origin </th>
         <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.tool}}</td>
       </ng-container>
       <ng-container matColumnDef="User">
@@ -171,7 +171,7 @@
                   <tr *ngFor="let i of common" class="text-left">
                       <td *ngIf="i.value !== ''">{{i.name}}</td>
                       <td *ngIf="i.type !== 'Date'">{{i.value !== '' ? i.value : 'null'}}</td>
-                      <td *ngIf="i.type == 'Date' && i.value !== ''">{{i.value | date: 'medium'}}</td>
+                      <td *ngIf="i.type == 'Date' && i.value !== '' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">

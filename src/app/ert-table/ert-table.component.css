@@ -697,4 +697,7 @@ a.disabled {
   border: 1px solid #2879ff;
 }
 
-
+.inline-loader-ert{
+  position: absolute;
+  margin: 3px
+}

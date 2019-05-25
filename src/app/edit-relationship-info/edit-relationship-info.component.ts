@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { EditRelationshipInfoService } from './edit-relationship-info.service';
 import { JoinValues, SecondaryColumn, JoinValueColumn } from './edit-relationship-info-object';
+import { SecondaryColumnPipe } from '../secondary-column.pipe';
+import { ContentObserver } from '@angular/cdk/observers';
 
 @Component({
   selector: 'app-edit-relationship-info',
@@ -27,7 +29,11 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   updateNotif: boolean;
   errorMsg: any;
   updateNotifSuccess: boolean;
+  selected = [];
+  autoColumnMatch = false;
+  autoColumnMatchMessage = '';
 
+  displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumn'];
 
   constructor(private editRelationshipInfo: EditRelationshipInfoService) { }
 
@@ -36,6 +42,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges) {
+    console.log(change);
     const value: SimpleChange = change.relation;
     this.userValues = value.currentValue;
     this.populateValues();
@@ -61,7 +68,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           if (detail.primaryColumn.columnId === i.columnId) {
             joinValue.relationshipId = detail.relationshipId;
             joinValue.secondaryColumn = detail.secondaryColumn;
-            joinValue.defaultSecondaryColumn = true;
+            joinValue.defaultSecondaryColumn = detail.secondaryColumn;
             break;
           } else {
             joinValue.relationshipId = '';
@@ -73,6 +80,11 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         }
         this.joinDetailsArray.push(joinValue);
       }
+      for (const i of this.joinDetailsArray) {
+        if (i.relationshipId !== '') {
+          this.resultantValues.push(JSON.parse(JSON.stringify(i)));
+        }
+      }
     });
   }
 
@@ -83,6 +95,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       dataType: ''
     };
     let insert: number;
+    let arrayIndex;
     for (const i of this.secondaryColumns) {
       if (i.columnName === secondaryColumn) {
         example.columnId = i.columnId;
@@ -92,41 +105,70 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     }
     const test = {
       indexData: index,
+      isSelected: true,
       relationshipId: primaryValues.relationshipId,
       primaryColumn: {
         columnId: primaryValues.primaryColumn.columnId,
         columnName: primaryValues.primaryColumn.columnName,
-        dataType: primaryValues.primaryColumn.columnDataType
+        dataType: primaryValues.primaryColumn.columnDataType,
+        isKey: primaryValues.primaryColumn.isKey
       },
       secondaryColumn: example
     };
-    for (const i of this.resultantValues) {
-      if (i.indexData === index) {
-        if (secondaryColumn === 'Select') {
-          const indexx = this.resultantValues.indexOf(i);
-          this.resultantValues.splice(indexx, 1);
+    if (primaryValues.defaultSecondaryColumn === false) {
+      for (const i of this.resultantValues) {
+        if (i.indexData === index) {
           insert = 1;
+          arrayIndex = this.resultantValues.indexOf(i);
+          break;
         } else {
           insert = 0;
-          const indexx = this.resultantValues.indexOf(i);
-          this.resultantValues.splice(indexx, 1);
+        }
+      }
+      if (insert === 1) {
+        if (secondaryColumn !== 'select') {
+          this.resultantValues[arrayIndex].secondaryColumn = example;
+        } else {
+          this.resultantValues.splice(arrayIndex, 1);
+        }
+      } else if (insert === 0) {
+        this.resultantValues.push(test);
+      }
+    } else {
+      for (const i of this.resultantValues) {
+        if (i.primaryColumn.columnName === test.primaryColumn.columnName) {
+          if (secondaryColumn === 'select') {
+            i.isSelected = false;
+          } else {
+            i.isSelected = true;
+          }
+        }
+        if (i.isSelected && i.defaultSecondaryColumn) {
+          i.relationshipId = test.relationshipId;
+          if (i.defaultSecondaryColumn.columnName === secondaryColumn) {
+            i.secondaryColumn = i.defaultSecondaryColumn;
+            delete i.isSelected;
+          } else {
+            i.secondaryColumn = test.secondaryColumn;
+          }
         }
       }
     }
-    if (insert === 0) {
-      this.resultantValues.push(test);
-    } else if (insert === 1) {
-    } else {
-      this.resultantValues.push(test);
-    }
+    console.log(this.resultantValues);
   }
 
 
   updateRelation() {
-    this.removeIndexValue = JSON.parse(JSON.stringify(this.resultantValues));
+    this.removeIndexValue = this.resultantValues;
     for (const i of this.removeIndexValue) {
+      if (i.defaultSecondaryColumn) {
+        delete i.defaultSecondaryColumn;
+      }
       delete i.indexData;
     }
+    console.log(this.removeIndexValue);
+    this.removeIndexValue = this.removeIndexValue.filter(a => a.isSelected === false || a.isSelected === true);
+    console.log(this.removeIndexValue);
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
       .subscribe(res => {
         if (res && res.success) {
@@ -134,10 +176,10 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.resultantValues = [];
           this.updateEvent.emit(true);
           this.errorMsg = res.data;
-          this.updateNotif = true;
+          this.updateNotifSuccess = true;
         } else {
           this.errorMsg = res.errors;
-          this.updateNotifSuccess = true;
+          this.updateNotif = true;
         }
       });
   }
@@ -153,4 +195,35 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     this.removeIndexValue = [];
   }
 
+  autocolumnMatchMode() {
+    const secondaryColumnNameList = this.secondaryColumns.map(function (item) { return item['columnName']; });
+    let tempIndexOfColumnList = 0;
+    for (const primaryColumn of this.primaryColumns) {
+      if (secondaryColumnNameList.includes(primaryColumn.columnName)) {
+        const index = this.joinDetailsArray.findIndex(k => k.secondaryColumn.columnName === primaryColumn.columnName);
+        const primaryValues = this.joinDetailsArray.find(s => s.secondaryColumn.columnName === primaryColumn.columnName);
+        const dataType = primaryValues.primaryColumn.columnDataType;
+        const tableHTML = document.getElementById('edit-relationship-table');
+        const tableBodyHTML = tableHTML.getElementsByTagName('tbody');
+        const tableRow = tableBodyHTML[0].children[index];
+        const filterSecondaryTable = new SecondaryColumnPipe().transform(this.secondaryColumns, dataType);
+        for (let i = 0; i < filterSecondaryTable.length; i++) {
+          tempIndexOfColumnList = i;
+          if (filterSecondaryTable[i] === primaryColumn.columnName) {
+            break;
+          }
+        }
+        if (!primaryValues.defaultSecondaryColumn) {
+          tableRow.children[3].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
+          this.selectedValues(primaryValues, index, primaryColumn.columnName);
+        }
+      }
+    }
+    this.autoColumnMatch = true;
+    this.autoColumnMatchMessage = 'Automatch column applied successfully';
+  }
+
+  closeAutoMatchMessage() {
+    this.autoColumnMatch = false;
+  }
 }

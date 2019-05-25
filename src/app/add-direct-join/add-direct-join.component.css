@@ -1,12 +1,20 @@
 .modal-header{
-  padding: 15px;
+  font-size: 20px;
+  padding: 14px 18px;
   border-bottom: 1px solid #e5e5e5;
   background-color: #2879ff;
   color: #fff;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.modal-title{
+  margin-left: 16px;
+  margin-bottom: 20px;
 }
 
 .modal-dialog {
-    margin: 100px auto auto;
+    margin: 65px auto auto;
     width: 1050px;
 }
 .fa-check-circle {
@@ -16,246 +24,345 @@
     margin-left: 2px;
   }
   
-  .input-group {
-    padding: 5%;
-  }
+.input-group {
+  padding: 5%;
+}
+
+#title-name {
+  padding-right: 0%;
+  padding-left: 10%;
+  margin-top: 0px;
+} 
+
+.form-control-feedback {
+  position: relative;
+  margin-top: -34px;
+  margin-left: 169px;
+  height: 32px;
+  color: #269af8;
+  line-height: 30px;
+}
+
+.inner-addon {
+  padding-left: 10%;
+  padding-right: 10%;
+  border-radius: 2%;
+}
+
+#search-body {
+  padding: 4%;
+}
+
+.list-group {
+  padding-right: 40px;
+}
+
+.list-group-item {
+  margin-left: 25px;
+  margin-bottom: -15px;
+  padding: 10px 10px;
+  /* width: 100%; */
+  text-transform: none;
+  /* margin-bottom: -15px; */
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+} 
+
+
+#item {
+  margin-top: 10px;
+  text-align: center;
+}
+
   
-  #title-name {
-    padding-right: 0%;
-    padding-left: 10%;
-    margin-top: 0px;
-  } 
+.items-list {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 280px;
+  padding-left: 20px;
+}
+
+.tablename-list {
+  margin-top: 10px;
+  margin-left: -20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 390px;
+}
+
+.card {
+    height: 538px;
+}
+
+.default-load {
+  margin-top: -20px;
+}
+
+.default-info {
+  padding: 20%;
+}
+
+.card-title {
+  float: left;
+  background-color: #64b5f6;
+  color: black;
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 16px;
+  border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.header {
+  /* float: left; */
+  margin-left: 20px;
+}
+
+.sub-header {
+  margin-left: 35px;
+}
+
+.droparrow {
+  float: right;
+  margin-right: 90px;
+}
+
+.droparrow-menu {
+  min-width: 200px;
+}
+
+.data-analyzer {
+  margin-top: 10px;
+}
+
+#loading-icon {
+  margin-left: -8px;
+}
+
+.icon {
+  display: inline-block;
+  margin-left: -50px;
+}
+.dataA-panel-body {
+  height: 325px;
+}
+.dataA-scrollable-div {
+  overflow: auto;
+  max-height: 300px;
+}
+.primary-col-chkbx {
+  margin: 4px 5px;
+}
+#analysis-view .card {
+  height: 500px;
+}
+#analysis-view .tablename-list {
+  height: 370px;
+}
+#analysis-view .search-input {
+  margin-left: 20px;
+  width: 85%;
+}
+#analysis-view .form-control-feedback {
+  margin-left: 240px;
+}
+.col-loader {
+  padding: 2px 15px;
+  float: right;
+}
+.da-table.selected {
+  border: 1px solid #269AF8;
+}
+input[type='checkbox'] {
+  cursor: pointer;
+}
+.unselected {
+  display: none;
+  float: right;
+  padding: 3px 0;
+  color: #269AF8;
+}
+.selected .unselected {
+  display: block;
+}
+
+/* overriding css */
+.form-control {
+  height: 35px;
+  width: 94%;
+  margin-top: 3px;
+  margin-left: 4px;
+}
+.form-control-feedback {
+  position: relative;
+  margin-top: -31px;
+  margin-left: 249px;
+  height: 32px;
+  color: #269af8;
+  line-height: 30px;
+}
+.selwidth {
+  width: 85%;
+}
+.m-t-6 {
+  padding: 8px;
+  margin-bottom: 5px;
+  }
+.alert-dismissible {
+  padding-right: 45px;
+}
+
+.table-hight {
+  margin-top: 0px;
+  margin-left: -2px;
+  margin-bottom: 32px;
+  overflow: auto;
+  overflow-y: auto;
+  height: 538px;
+}
+
+#customers {  
+  border-collapse: collapse;
+  width: 100%;   
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 6px;
+}
+
+/* #customers tr:nth-child(even){background-color: #F5F5F5;} */
+
+#customers tr:hover {background-color: #F5F5F5;}
+
+#customers th {
+  padding-top: 8px;
+  padding-bottom: 8px;   
+  text-align: left;
+  background-color: #64b5f6;
+  color: black;
+}
+.overflow-text {
+  float: left;
+  width: 96%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+.overflow-text-arrow {
+  float: left;
+  width: 4%;
+  text-align: right;
+  font-size: 12px;
+}
+.overflow-textrelation {
+  float: left;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;    
+}
+.ngx-pagination {
+  margin-left: -40px;
+  font-size: 9px;
+  margin-bottom: 1rem;
+  margin-top: 4px;
+}
+
+.container-list{
+  padding:0px 4px 0px 9px;
+}
+
+.close{
+  color: black;
+  background-color: #64b5f6;
+}
+
+.add-btn{
+  color: white;
+  background-color: #2879ff;
+}
+
+.arch-close{
+  color: black;
+  background-color: #64b5f6;
+}
+
+.arch-add{
+  color: White;
+  background-color: #2879ff;
+}
+
+.page-align{
+  padding:0px 20px;
+}
+
+#cancel-btn{
+  background-color: #64b5f6;
+  color: #000;
+  border: none;
+}
+
+.btn-primary{
+  transition: .5s;
+}
+
+.btn-primary:hover{
+  box-shadow: rgba(0,0,0,0.43) 0px 0px 9px 0px;
+  -webkit-transform: scale(1.1, 1.1);
+  transform: scale(1.1, 1.1);
+}
+
+::ng-deep .cdk-overlay-container{
+  z-index: 1200 !important;
+}
+
+#msg-id{
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 10px;
+  transition: 0.5s;
+}
+
+.action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  transition: 0.5s;
+}
+
+.action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
+.action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.mat-header-cell {
+  font-size: 14px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;  
+  text-align: left;
+  color: #0c0c0c;
   
-  .form-control-feedback {
-    position: relative;
-    margin-top: -34px;
-    margin-left: 180px;
-    height: 32px;
-    color: #269af8;
-    line-height: 30px;
-  }
-  
-  .inner-addon {
-    padding-left: 10%;
-    padding-right: 10%;
-    border-radius: 2%;
-  }
-  
-  #search-body {
-    padding: 4%;
-  }
-  
-  .list-group {
-    padding-right: 40px;
-  }
-  
-  .list-group-item {
-    margin-left: 25px;
-    margin-bottom: -15px;
-    padding: 5px 10px;
-    /* width: 100%; */
-    text-transform: none;
-    /* margin-bottom: -15px; */
-    text-align: left;
-  }
-  
-  a {
-    text-decoration: none;
-    color: black;
-  } 
-  
-  
-  #item {
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-   
-  .items-list {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    height: 280px;
-    padding-left: 20px;
-  }
-  
-  .tablename-list {
-    margin-top: 10px;
-    margin-left: -20px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    height: 240px;
- }
-  
-  .card {
-     height: 335px;
-  }
-  
-  button {
-    border-color: grey;
-  }
-  
-  .default-load {
-    margin-top: -20px;
-  }
-  
-  .default-info {
-    padding: 20%;
-  }
-  
-  .card-title {
-    float: left;
-  }
-  
-  .header {
-    /* float: left; */
-    margin-left: 20px;
-  }
-  
-  .sub-header {
-    margin-left: 35px;
-  }
-  
-  .droparrow {
-    float: right;
-    margin-right: 90px;
-  }
-  
-  .droparrow-menu {
-    min-width: 200px;
-  }
-  
-  .data-analyzer {
-    margin-top: 10px;
-  }
-  
-  #loading-icon {
-    margin-left: -8px;
-  }
-  
-  .icon {
-    display: inline-block;
-    margin-left: -50px;
-  }
-  .dataA-panel-body {
-    height: 325px;
-  }
-  .dataA-scrollable-div {
-    overflow: auto;
-    max-height: 300px;
-  }
-  .primary-col-chkbx {
-    margin: 4px 5px;
-  }
-  #analysis-view .card {
-    height: 500px;
-  }
-  #analysis-view .tablename-list {
-    height: 370px;
-  }
-  #analysis-view .search-input {
-    margin-left: 20px;
-    width: 85%;
-  }
-  #analysis-view .form-control-feedback {
-    margin-left: 240px;
-  }
-  .col-loader {
-    padding: 2px 15px;
-    float: right;
-  }
-  .da-table.selected {
-    border: 1px solid #269AF8;
-  }
-  input[type='checkbox'] {
-    cursor: pointer;
-  }
-  .unselected {
-    display: none;
-    float: right;
-    padding: 3px 0;
-    color: #269AF8;
-  }
-  .selected .unselected {
-    display: block;
-  }
-  
-  /* overriding css */
-  .form-control {
-    height: 35px;
-    width: 92%;
-    margin-top: 3px;
-    margin-left: 4px;
-  }
-  .form-control-feedback {
-    position: relative;
-    margin-top: -31px;
-    margin-left: 190px;
-    height: 32px;
-    color: #269af8;
-    line-height: 30px;
-  }
-  .selwidth {
-   width: 85%;
-  }
-  .m-t-6 {
-    padding: 8px;
-    margin-bottom: 5px;
-   }
-  .alert-dismissible {
-    padding-right: 45px;
-  }
-  
-  .table-hight {
-    margin-top: 0px;
-    margin-left: -2px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    height: 333px;
- }
- 
-  #customers {  
-    border-collapse: collapse;
-    width: 100%;   
-  }
-  
-  #customers td, #customers th {
-    border: 1px solid #ddd;
-    padding: 6px;
-  }
-  
-  /* #customers tr:nth-child(even){background-color: #F5F5F5;} */
-  
-  #customers tr:hover {background-color: #F5F5F5;}
-  
-  #customers th {
-    padding-top: 8px;
-    padding-bottom: 8px;   
-    text-align: left;
-    background-color: #269AF8;
-    color: white;
-  }
-  .overflow-text {
-    float: left;
-    width: 96%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 12px;
-  }
-  .overflow-text-arrow {
-    float: left;
-    width: 4%;
-    text-align: right;
-    font-size: 12px;
-  }
-  .overflow-textrelation {
-    float: left;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;    
-  }
-  .ngx-pagination {
-    margin-left: -40px;
-    font-size: 9px;
-    margin-bottom: 1rem;
-    margin-top: 4px;
+}
+tr.mat-header-row {
+  background-color: #64b5f6;
+  height: 38px;
+  border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }

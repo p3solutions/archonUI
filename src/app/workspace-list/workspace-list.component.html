@@ -1,142 +1,256 @@
 <div class="row">
-      <div class="col-md-6">
-          <div class="col-md-1 back-arrow" style="margin-left: 10px">
-            <a (click)="gotoManagementPanel()" data-tooltip="Back">
-              <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-            </a>
-          </div>
-          <div class="col-md-8" style="margin-left: -25px">
-            <h3 class="workspace-panel-heading">
-              Workspaces
-            </h3>
-          </div>
-        </div>
-        <div class="col-md-6 search">
-          <mat-form-field class="search-width">
-            <input matInput [(ngModel)]="searchText" placeholder="Search">
-          </mat-form-field>
-          <a *ngIf="enableCreate" style="font-size: 42px" matTooltip="Add Workspace" (click)="openCreateWSModal()"><i class="material-icons plus col">
-          </i></a>
-        </div>
-      </div> 
-      <div class="pl-20">
-      <div class="flex-container" *ngFor="let ws of workspaceActions | searchTable: searchText; let indRow = index; let last = last">
-          <mat-card class="example-card">
-            <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
-              <mat-card-title class="header">{{ws?.workspaceName}} <a (click)="viewWSmodal(ws)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i class="fa fa-info-circle fa-1x" aria-hidden="true"></i></a></mat-card-title>
-              <div class="spacer"></div>
-              <a (click)="WSdelete(ws?.id)" data-toggle="modal" href="#confirm_model" data-tooltip="Delete"><i class="material-icons">
-                delete
-                </i></a>
-            </mat-card-header>
-            <mat-card-content class="content" *ngFor="let db of ws.databases;">
-              <div class='body-left'>Databases(s)</div><div class='body-center'>:</div><div class='body-right'>{{db?.name}}</div>
-              <div class='body-left'>Meta Version</div><div class='body-center'>:</div><div class='body-right'>{{ws?.masterMetadataVersion}}</div>
-              <div class='body-left'>Last Updated Time</div><div class='body-center'>:</div><div class='body-right'>{{ws?.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</div>
-              <div class='body-left'>Status</div><div class='body-center'>:</div><div class='body-right'>{{ws?.workspaceState}}</div>
-            </mat-card-content>
-          </mat-card> 
-        </div>
-        </div>
-        <button type="button" style="display: none" id="reloadws" (click)="reloadWSlist()"></button>
-  <ng-template #createNewWorkspace></ng-template>
-  
-  <div id="db-profile-model" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-            <div class='model-title'><i class="fa fa-tachometer"></i><div class='info-r'>Workspace Profile</div></div>
-        </div>
-        <div class="modal-body">
-          <table class="table table-hover">
-            <thead></thead>
-            <tbody>
-              <tr>
-                <td class="tdl">Workspace Name</td>
-                <td class="tdr">{{WSListInfo?.workspaceName}}</td>
-              </tr>
-              <tr>
-                <td class="text-left tdl">MasterMetadata Version</td>
-                <td class="tdr">{{WSListInfo?.masterMetadataVersion}}</td>
-              </tr>
-              <tr>
-                <td class="tdl">WorkspaceState</td>
-                <td class="tdr">{{WSListInfo?.workspaceState}}</td>
-              </tr>
-              <tr>
-                <td class="tdl">Workspace Members</td>
-                <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.members; let isLast=last">
-                        {{ws?.user.name}}{{isLast ? '' : ', '}}
-                      </span></td>
-              </tr>
-              <tr>
-                <td class="tdl">Workspace Database Name</td>
-                <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
-                        {{ws?.name}}{{isLast ? '' : ', '}}
-                      </span></td>
-              </tr>
-              <tr>
-                <td class="tdl">Workspace Database Type</td>
-                <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
-                        {{ws?.type}}{{isLast ? '' : ', '}}
-                      </span></td>
-              </tr>
-              <tr>
-                <td class="tdl">Workspace Database Profile Name</td>
-                <td class="tdr">  <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
-                        {{ws?.dbProfileName}}{{isLast ? '' : ', '}}
-                      </span></td>
-              </tr>
-              <tr>
-                <td class="tdl">Workspace Owner</td>
-                <td class="tdr">{{WSListInfo?.owner.name}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-  
+  <div class="col-md-6">
+    <div class="col-md-1 back-arrow" style="margin-left: 10px">
+      <a (click)="gotoManagementPanel()" data-tooltip="Back">
+        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+      </a>
+    </div>
+    <div class="col-md-8" style="margin-left: -25px">
+      <h3 class="workspace-panel-heading">
+        Workspaces
+      </h3>
     </div>
   </div>
+  <div class="col-md-6 search">
+    <mat-form-field class="search-width">
+      <input matInput [(ngModel)]="searchText" placeholder="Search">
+    </mat-form-field>
+    <!-- <a *ngIf="enableCreate" style="font-size: 42px" matTooltip="Add Workspace" (click)="openCreateWSModal()"><i
+        class="material-icons plus col">
+      </i></a> -->
+      <a *ngIf="enableCreate" style="font-size: 42px" matTooltip="Add Workspace" (click)="createWorkspace()"><i class="material-icons plus col">
+      </i></a>
+  </div>
+</div>
+<div class="pl-20">
+  <div style="margin-top:10% " *ngIf="workspaceActions?.length===0">
+    <h4>No Workspace available. </h4>
+  </div>
+  <div class="flex-container"
+    *ngFor="let ws of workspaceActions | searchTable: searchText; let indRow = index; let last = last">
+    <div *ngIf="ws?.id === deleteId">
+      <mat-card class="example-card delete">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title class="header">{{ws?.workspaceName}} </mat-card-title>
+          <div class="spacer"></div>
+        </mat-card-header>
+        <mat-card-content class="content" *ngFor="let db of ws.databases;">
+          <div class='body-left'>Databases(s)</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{db?.name}}</div>
+          <div class='body-left'>Meta Version</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.masterMetadataVersion}}</div>
+          <div class='body-left'>Last Updated Time</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</div>
+          <div class='body-left'>Status</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.workspaceState}}</div>
+        </mat-card-content>
+        <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
+        </mat-card-footer>
+      </mat-card>
+    </div>
+    <div *ngIf="ws?.id !== deleteId">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title class="header">{{ws?.workspaceName}} </mat-card-title>
+          <div class="spacer"></div>
+          <a (click)="viewWSmodal(ws)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i
+              class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>
+        </mat-card-header>
+        <mat-card-content class="content" *ngFor="let db of ws.databases;">
+          <div class='body-left'>Databases(s)</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{db?.name}}</div>
+          <div class='body-left'>Meta Version</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.masterMetadataVersion}}</div>
+          <div class='body-left'>Last Updated Time</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.updatedAt * 1000 | date:'MMM/dd/yyyy hh:mm:ss a'}}</div>
+          <div class='body-left'>Status</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.workspaceState}}</div>
+        </mat-card-content>
+        <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
+          <a (click)="editWS(ws)" data-toggle="modal" href="#edit_model" data-tooltip="Edit"><i
+              class="material-icons ws">
+              edit
+            </i></a>
+          <a (click)="WSdelete(ws?.id)" data-toggle="modal" href="#confirm_model" data-tooltip="Delete"><i
+              class="material-icons ws">
+              delete
+            </i></a>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<button type="button" style="display: none" id="reloadws" (click)="reloadWSlist()"></button>
+<ng-template #createNewWorkspace></ng-template>
 
-  <div id="confirm_model" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content" style="width: 430px;">
-        <div class="modal-header">
-          <div class='model-title'><div class='info-r'>Confirm Workspace Delete</div></div>
+<div id="db-profile-model" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class='model-title'><i class="fa fa-tachometer"></i>
+          <div class='info-r'>Workspace Profile</div>
+        </div>
       </div>
-        <div class="modal-body">
-         <p style="text-align:left; padding: 25px;">Are you sure ?</p>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td class="tdl">Workspace Name</td>
+              <td class="tdr">{{WSListInfo?.workspaceName}}</td>
+            </tr>
+            <tr>
+              <td class="text-left tdl">MasterMetadata Version</td>
+              <td class="tdr">{{WSListInfo?.masterMetadataVersion}}</td>
+            </tr>
+            <tr>
+              <td class="tdl">WorkspaceState</td>
+              <td class="tdr">{{WSListInfo?.workspaceState}}</td>
+            </tr>
+            <tr>
+              <td class="tdl">Workspace Members</td>
+              <td class="tdr"> <span *ngFor="let ws of this.WSListInfo?.members; let isLast=last">
+                  {{ws?.user.name}}{{isLast ? '' : ', '}}
+                </span></td>
+            </tr>
+            <tr>
+              <td class="tdl">Workspace Database Name</td>
+              <td class="tdr"> <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
+                  {{ws?.name}}{{isLast ? '' : ', '}}
+                </span></td>
+            </tr>
+            <tr>
+              <td class="tdl">Workspace Database Type</td>
+              <td class="tdr"> <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
+                  {{ws?.type}}{{isLast ? '' : ', '}}
+                </span></td>
+            </tr>
+            <tr>
+              <td class="tdl">Workspace Database Profile Name</td>
+              <td class="tdr"> <span *ngFor="let ws of this.WSListInfo?.databases; let isLast=last">
+                  {{ws?.dbProfileName}}{{isLast ? '' : ', '}}
+                </span></td>
+            </tr>
+            <tr>
+              <td class="tdl">Workspace Owner</td>
+              <td class="tdr">{{WSListInfo?.owner.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="confirm_model" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 430px;">
+      <div class="modal-header">
+        <div class='model-title'>
+          <div class='info-r'>Confirm Workspace Delete</div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default cancel" data-dismiss="modal">NO</button>
-          <button type="button" class="btn btn-default cancel" (click)="deleteWS()" data-dismiss="modal">YES</button>          
-        </div>
+      </div>
+      <div class="modal-body">
+        <p style="text-align:left; padding: 25px;">Are you sure ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteWS()" data-dismiss="modal">YES</button>
       </div>
     </div>
   </div>
+</div>
 
 
-  <button style="display: none" type="button" id="deletemsg" data-toggle="modal" data-target="#deletemessage">Open Modal</button>
-      <div id="deletemessage" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-          <div class="modal-content" style="width: 430px;">
-            <div class="modal-header">
-              <div class='model-title'><div class='info-r'> Workspacce Delete</div></div>
-          </div>
-            <div class="modal-body">
-             <p *ngIf="success" style="text-align:left; padding: 25px;"> {{successmsg}}. please check after 15 seconds.</p>
-             <p *ngIf="error" style="text-align:left; padding: 25px;"> {{errormsg}}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default cancel" (click)="closeErrorMsg()" data-dismiss="modal">CLOSE</button>          
-            </div>
-          </div>
+<button style="display: none" type="button" id="deletemsg" data-toggle="modal" data-target="#deletemessage">Open
+  Modal</button>
+<div id="deletemessage" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 430px;">
+      <div class="modal-header">
+        <div class='model-title'>
+          <div class='info-r'> Workspace Delete</div>
         </div>
       </div>
-  
+      <div class="modal-body">
+        <p *ngIf="success" style="text-align:left; padding: 25px;"> {{successmsg}}. please check after 15 seconds.</p>
+        <p *ngIf="error" style="text-align:left; padding: 25px;"> {{errormsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="closeErrorMsg()"
+          data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="edit_model" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 500px;">
+      <form #wsForm="ngForm">
+        <div class="modal-header">
+          <div class='model-title'>
+            <div class='info-r'>Edit Workspace</div>
+          </div>
+        </div>
+        <div class="modal-body row">
+          <div class="col-md-12 row m-10">
+            <mat-form-field class="example-full-width">
+              <input matInput maxlength="40" required [(ngModel)]="wsName" name="wsName" placeholder="Workspace Name">
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-12 row m-10">
+            <mat-form-field class="example-full-width">
+              <textarea matInput maxlength="250" [(ngModel)]="wsDesc" name="wsDesc" placeholder="Description / Notes"></textarea>
+            </mat-form-field>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding primary-btn-color" (click)="updateWS()" data-dismiss="modal"
+            [disabled]="!wsForm.form.valid">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<button style="display: none" type="button" id="editmsg" data-toggle="modal" data-target="#editmessage">Open
+  Modal</button>
+<div id="editmessage" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 430px;">
+      <div class="modal-header">
+        <div class='model-title'>
+          <div class='info-r'> Message</div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p *ngIf="success" style="text-align:left; padding: 25px;"> {{successmsg}}</p>
+        <p *ngIf="error" style="text-align:left; padding: 25px;"> {{errormsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="closeErrorMsg()"
+          data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>

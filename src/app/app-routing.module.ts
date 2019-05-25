@@ -60,9 +60,16 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { SmtpConfigurationComponent } from './smtp-configuration/smtp-configuration.component';
 import { SsoSigninFormComponent } from './sso-signin-form/sso-signin-form.component';
 import { RoleGroupConfigurationComponent } from './role-group-configuration/role-group-configuration.component';
+import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
+import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
+import { RedirectComponent } from './redirect/redirect.component';
+import { RedirectGuard } from './redirect/redirect.guard';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
+      {
+        path: '', redirectTo: 'workspace-dashboard', pathMatch: 'prefix'
+      },
       {
         path: 'workspace-dashboard', component: WorkspaceDashboardComponent, children: [
           {
@@ -166,7 +173,7 @@ const routes: Routes = [
             ]
           }
         ]
-      },
+      }
     ]
   },
   {
@@ -222,7 +229,30 @@ const routes: Routes = [
     path: 'audit', canActivate: [AuthenticationGuard], component: AuditingComponent
   },
   {
-    path: 'sso-sign-in', component: SsoSigninFormComponent
+    path: 'sso', component: SsoSigninFormComponent
+  },
+  {
+    path: 'landing' , canActivate: [RedirectGuard], component: RedirectComponent
+  },
+  {
+    path: 'sign-in', component: LandingPageComponent, children: [
+      {
+        path: '', component: SigninFormComponent , pathMatch: 'full'
+      },
+      {
+        path: 'forgot-password', component: ForgotpasswordFormComponent
+      }, {
+        path: 'password-reset', component: EnterNewpasswordComponent
+      }, {
+        path: 'sign-up', component: SignupFormComponent
+      }
+    ]
+  },
+  {
+    path: 'create-workspace', component: CreateWorkspacePageComponent, canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'create-database', component: CreateDatabasePageComponent, canActivate: [AuthenticationGuard]
   }
 ];
 

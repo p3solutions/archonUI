@@ -1,17 +1,24 @@
-<div class="row col col-md-12 primary-table">
-  <h5 class="card-title sub-headerrs">Primary Table:
+
+<div class="col-md-12" style="background-color:#63b4f6;border-top-left-radius: 3px;
+border-top-right-radius: 3px;">
+    <h5 class="card-title sub-headerrs" style="font-size: 16px;background-color:#63b4f6">Data Anaylzer - Result</h5>
+  </div>
+
+<div class="col-md-12">
+  <h5 class="card-title sub-headerrs" style="margin: 19px;padding-top: 16px;font-size: 16px;">Primary Table:
     <strong>{{primaryTableName}}</strong>
   </h5>
 </div>
-<div class="col-md-12">
-  <div class="col-md-5 ana-result">Data Analysis Status : Completed</div>
-  <div class="col-md-7 pointer">
-    <button type="button" class="btn btn-primary secbutton" (click)="activateSecondaryFn()" id="Select">Secondary Tables</button> 
-    <button type="button" class="btn btn-primary prebutton" (click)="activatePrimaryFn();selectRow()">Primary Columns</button>
+
+<div class="col-md-12" style="margin-top: 22px;">
+  <div class="col-md-5 ana-result" style="font-size:16px;">Data Analysis Status : Completed</div>
+  <div class="col-md-7 pointer" style="text-align: right;margin-left: -24px;">
+    <button mat-raised-button type="button" class="arch-btnn secbutton" (click)="activateSecondaryFn()" id="Select" style="margin-right: 10px;">Secondary Tables</button> 
+    <button mat-raised-button type="button" class="arch-btnn prebutton" (click)="activatePrimaryFn();selectRow()">Primary Columns</button>
   </div>
 </div>
 <div *ngIf="activatePrimary">
-  <div class="col-md-12">
+  <div class="col-md-12" style="margin-top: 17px;">
     <div class="col-md-3">
       <table id="customers" class="sec-table">
         <tr>
@@ -39,16 +46,16 @@
             <td>{{x.dataType}}</td>
             <td>{{x.secondaryColumnName}}</td>
             <td>{{x.matchPercentage}}</td>
-            <td><input type="checkbox" [disabled]="x.matchPercentage == 0" (change)="checkedPriValues(x,$event,i)"></td>
+            <td><input type="checkbox" class="m-r" [disabled]="x.matchPercentage == 0" (change)="checkedPriValues(x,$event,i)"></td>
           </tr>
         </tbody>
       </table>
-      <pagination-controls id="primaryPopulate" (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls style="text-align: right;" id="primaryPopulate" (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>
 <div *ngIf="activateSecondary">
-  <div class="col-md-12">
+  <div class="col-md-12" style="margin-top: 17px;">
     <div class="col-md-3">
       <table id="customers" class="sec-table">
         <tr>
@@ -80,7 +87,7 @@
           </tr>
         </tbody>
       </table>
-      <pagination-controls id="secondaryPopulate" (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls style="text-align: right;" id="secondaryPopulate" (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>
@@ -99,50 +106,49 @@
       <strong>{{errorMsg}}</strong>
     </div>
   </div>
-  <div class="col-md-5">
-    <button type="button" class="btn btn-primary" href="#addJoins" data-toggle="modal">Add Selected Joins</button>
-    <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-toggle="modal" href="#confirmClose">Close</button>
+  <div class="col-md-5" style="margin-top:16px; text-align: right;">
+     
+      <div class="action-btn">
+    <button mat-raised-button class="mat-raised-button cancel btn-padding" data-keyboard="false"  data-backdrop="static"  data-toggle="modal" data-target="#confirmClose">Close</button>
+    <button mat-raised-button class="save mat-raised-button btn-padding" data-keyboard="false"  data-backdrop="static" data-toggle="modal" data-target="#addJoins">Add Selected Joins</button>
   </div>
-  <div class="col-md-12 text-danger">Note: Kindly click close button to clear the Analysis result. </div>
+  </div>
+  <div class="col-md-6 alert-sty text-danger">Note: Kindly click close button to clear the Analysis result. </div>
   </div>
 <!-- Close -->
 <div class="modal fade" id="confirmClose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
+  <div class="modal-dialog" role="document" style="width: 500px;">
     <div class="modal-content text-left">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="modal-header" style="background: #2879ff; color: #fff;">
         <h4 class="modal-title">Close Results</h4>
       </div>
       <div class="modal-body text-center" style="height: 100px;">
         Are you sure? The results will be cleared.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeScreen()">Confirm
-        </button>
+          <div class="action-btn">
+              <button class="mat-raised-button cancel btn-padding" data-keyboard="false" data-backdrop="static" data-dismiss="modal">Close</button>
+              <button class="save mat-raised-button btn-padding" data-dismiss="modal"  data-keyboard="false" data-backdrop="static" (click)="closeScreen();">Confirm</button>                
+          </div> 
       </div>
     </div>
   </div>
 </div>
 <!-- Add Join Confirmation -->
 <div class="modal fade" id="addJoins" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
+  <div class="modal-dialog" role="document" style="width: 500px;">
     <div class="modal-content text-left">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="modal-header" style="background: #2879ff; color: #fff;">        
         <h4 class="modal-title">Add Join Results</h4>
       </div>
       <div class="modal-body text-center" style="height: 100px;">
         Kindly confirm whether you need to join the selected data?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addJoins()">Confirm
-        </button>
+          <div class="action-btn">
+              <button class="mat-raised-button cancel btn-padding"  data-dismiss="modal">Close</button>
+              <button class="save mat-raised-button btn-padding" data-dismiss="modal" (click)="addJoins();">Confirm</button>                
+          </div> 
       </div>
     </div>
   </div>

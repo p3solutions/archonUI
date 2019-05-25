@@ -56,11 +56,17 @@
     <mat-form-field>
       <input matInput name="screen-filter" #input placeholder="Search">
     </mat-form-field>
-    <span class="fa-stack" (click)="addScreen()" matTooltip="Create Screen">
+    <span class="fa-stack" *ngIf="applicationInfoList.length!==0" (click)="!(applicationInfoList.length===0) && addScreen()"
+     matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
       <i class="fa fa-circle fa-stack-2x"></i>
       <i class="fa fa-circle-thin fa-stack-2x"></i>
       <i class="fa fa-plus fa-stack-1x"></i>
     </span>
+    <span class="fa-stack-disabled" *ngIf="applicationInfoList.length===0"  matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-circle-thin fa-stack-2x"></i>
+        <i class="fa fa-plus fa-stack-1x"></i>
+      </span>
   </div>
   <div
     class="{{datasourceHasValue()=== true ?'hide-html example-table-container mat-elevation-z8' : 'example-table-container mat-elevation-z8'}}"
@@ -94,7 +100,25 @@
         <th style="width:32%" mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
         <td class="word-breaker" style="width:32%" mat-cell *matCellDef="let element"> {{element.screenDesc}} </td>
       </ng-container>
-      <ng-container matColumnDef="edit">
+      <ng-container matColumnDef="updatedBy">
+        <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated By </th>
+        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element"> </td>
+      </ng-container>
+      <ng-container matColumnDef="updatedDate">
+        <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </th>
+        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element">
+          {{element.updatedAt * 1000 | date:'medium'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+        <td class="word-breaker" style="width:5%" mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)=showActions(element) [matMenuTriggerFor]="actionmenu">
+            <i style="color: #252525" class="material-icons">
+              more_vert
+            </i>
+          </button></td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="edit">
         <th style="width:6%" mat-header-cell *matHeaderCellDef> Edit </th>
         <td style="width:6%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id, element)">
           <i class="material-icons">
@@ -130,7 +154,7 @@
             </i>
           </a>
         </td>
-      </ng-container>
+      </ng-container> -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
@@ -142,9 +166,39 @@
     <h3>No screen is present</h3>
   </div>
 </div>
-<mat-menu #menu="matMenu">
+<mat-menu class="adhoc-action" #menu="matMenu">
   <button *ngFor="let item of childScreenInfo" mat-menu-item>
     <span>{{item.screenName}}</span>
+  </button>
+</mat-menu>
+<mat-menu #actionmenu="matMenu" yPosition="below">
+  <button  (click)="gotoScreen(menuActionData.id, menuActionData)" mat-menu-item>
+      <i class="material-icons">
+          edit
+        </i>
+    <span>
+      Edit</span>
+  </button>
+  <button class="{{menuActionData.madeDownlaodDisabled?'disabled-mat-option mat-menu-item':'mat-menu-item'}}" *ngIf="menuActionData.parentScreenInfo?.screenName===''" [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to create nested screen': ''"
+    (click)="!menuActionData.madeDownlaodDisabled && (menuActionData.parentScreenInfo?.screenName==='') && addNestedLink(menuActionData.id)" mat-menu-item>
+    <i class="material-icons {{menuActionData.madeDownlaodDisabled?'disabled-mat-option-icon':''}}">
+        add
+      </i>
+    <span>Add Nested Link</span>
+  </button>
+  <button (click)="deleteScreenPopUp(menuActionData.id)" mat-menu-item>
+      <i class="material-icons">
+          delete
+        </i>
+    <span>Delete</span>
+  </button>
+  <button class="{{menuActionData.madeDownlaodDisabled?'disabled-mat-option mat-menu-item':'mat-menu-item'}}" [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to download': 'Download'"
+   (click)="!menuActionData.madeDownlaodDisabled && downloadScreen(menuActionData.id,menuActionData.screenName)"
+    mat-menu-item>
+    <i class="material-icons {{menuActionData.madeDownlaodDisabled?'disabled-mat-option-icon':''}}">
+        save_alt
+      </i>
+    <span>Download</span>
   </button>
 </mat-menu>
 
@@ -160,10 +214,10 @@
         <p>Please add metadata version for this workspace.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="gotoMetadata('cancel')" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
-          data-dismiss="modal">Ok</button>
+        <button type="button" (click)="gotoMetadata('cancel')"
+          class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" (click)="gotoMetadata('metadata')"
-          class="btn btn-default adhoc-modal-btn" data-dismiss="modal">Ok</button>
+          class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
@@ -181,7 +235,8 @@
         <p>{{successMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-padding primary-btn-color"
+          data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
       </div>
@@ -201,9 +256,9 @@
         <p>Are you sure?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" (click)="deleteScreen()"
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteScreen()"
           data-dismiss="modal">Yes</button>
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+        <button type="button" class="btn btn-padding primary-btn-color"
           data-dismiss="modal">No</button>
       </div>
     </div>

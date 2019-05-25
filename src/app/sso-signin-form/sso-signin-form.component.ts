@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SsoSigninService } from './sso-signin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sso-signin-form',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SsoSigninFormComponent implements OnInit {
 
-  constructor() { }
+  SignInURL;
+
+  constructor(private ssoService: SsoSigninService, private route: Router) { }
 
   ngOnInit() {
+    this.ssoService.signIn().subscribe((result: any) => {
+      this.SignInURL = result.data.samlloginclient;
+    });
+  }
+
+  signInto() {
+   this.ssoService.signInredirect(this.SignInURL);
   }
 
 }
