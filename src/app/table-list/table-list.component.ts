@@ -14,6 +14,7 @@ import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.ser
 import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.service';
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
 import { MatStepper, MatStepHeader } from '@angular/material';
+import { StoredProcViewComponent } from '../stored-proc-view/stored-proc-view.component';
 
 @Component({
   selector: 'app-table-list',
@@ -98,6 +99,7 @@ export class TableListComponent implements OnInit {
   searchSec1;
   searchSec2;
   primaryPage = 1;
+  spview = false;
 
   constructor(
     private tablelistService: TableListService,
@@ -767,16 +769,21 @@ export class TableListComponent implements OnInit {
 
 
   openStoredProcView(event) {
-    if (this.storedprocViewRef.get(0)) {
-      this.storedprocViewRef.remove(0);
-      this.dynamicLoaderService.setRootViewContainerRef(this.storedprocViewRef);
-      this.dynamicLoaderService.addStoredProcViewDynamicComponent(this.tableName);
-      document.getElementById('openCreateStoredViewmodal').click();
-    } else {
-      this.dynamicLoaderService.setRootViewContainerRef(this.storedprocViewRef);
-      this.dynamicLoaderService.addStoredProcViewDynamicComponent(this.tableName);
-      document.getElementById('openCreateStoredViewmodal').click();
-    }
+    // if (this.storedprocViewRef.get(0)) {
+    //   this.storedprocViewRef.remove(0);
+    //   this.dynamicLoaderService.setRootViewContainerRef(this.storedprocViewRef);
+    //   this.dynamicLoaderService.addStoredProcViewDynamicComponent(this.tableName);
+      this.homeStage = false;
+      this.dataAModal = false;
+      const obj1 = new StoredProcViewComponent(this.workspaceHeaderService, this.storedProcViewService);
+      obj1.tableName =  this.tableName;
+      this.router.navigate(['workspace/metalyzer/ALL/analysis/spview']);
+      // document.getElementById('openCreateStoredViewmodal').click();
+    // } else {
+    //   this.dynamicLoaderService.setRootViewContainerRef(this.storedprocViewRef);
+    //   this.dynamicLoaderService.addStoredProcViewDynamicComponent(this.tableName);
+    //   document.getElementById('openCreateStoredViewmodal').click();
+    // }
   }
 
   // tslint:disable-next-line:use-life-cycle-interface

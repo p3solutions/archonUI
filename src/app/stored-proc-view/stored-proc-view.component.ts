@@ -11,7 +11,7 @@ import { ConstantPool, isNgTemplate } from '@angular/compiler';
   styleUrls: ['./stored-proc-view.component.css']
 })
 export class StoredProcViewComponent implements OnInit {
-  @Input() tableName: string;
+  tableName: string;
   spvRelatedTableList: { tableId: string, tableName: string, pColumn: string, sColumn: string, dataType: string }[] = [];
   spvTableNameList: { isTableChecked: boolean, tableName: string, isBorderSet: boolean, tableId: string }[] = [];
   spvInfoListTwo: { isSPVChecked: boolean, type: string, name: string, isBorderSet: boolean }[] = [];
