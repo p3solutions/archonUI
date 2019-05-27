@@ -124,6 +124,7 @@ export class AdhocAppScreenListComponent implements OnInit {
         } else {
           this.selectedApp(this.applicationInfoList[0].id);
         }
+        this.checkForMetadataInApplication();
       }
     });
   }
@@ -430,6 +431,14 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   showActions(adhoc: Adhoc) {
-   this.menuActionData = adhoc;
+    this.menuActionData = adhoc;
+  }
+
+  checkForMetadataInApplication() {
+    if (this.selectedAppObject.metadataVersion !== '') {
+      if (this.selectedAppObject.metadataVersion !== this.mmrVersion) {
+        console.log('1');
+      }
+    }
   }
 }

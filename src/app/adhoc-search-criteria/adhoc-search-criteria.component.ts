@@ -42,6 +42,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   searchResult = new SearchResult();
   searchCriteria: SearchCriteria[] = [];
   treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
+  updateInProgress = false;
   transformer = (node: TableColumnNode, level: number) => {
     return {
       expandable: !!node.columns && node.columns.length > 0,
@@ -260,8 +261,10 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     delete this.screenInfoObject['position'];
     delete this.screenInfoObject['createdAt'];
     delete this.screenInfoObject['updatedAt'];
+    this.updateInProgress = true;
     this.adhocService.updateScreen(this.screenInfoObject, this.screenInfoObject.screenId).subscribe(result => {
       document.getElementById('success-popup-btn').click();
+      this.updateInProgress = false;
       if (result.httpStatus === 200) {
         this.successMsg = 'Screen Updated Successfully';
       } else {
@@ -406,5 +409,14 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     }
     this.adhocScreenService.updateSearchResult(this.searchResult);
     this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
+  }
+
+
+  updateAdhocScreen() {
+    if (this.searchCriteria.length === 0) {
+      document.getElementById('withoutSearchField-popup-btn').click();
+    } else {
+      this.gotoNestedScreen();
+    }
   }
 }

@@ -1,22 +1,24 @@
-<div id="drag-panel-column" class="row panel-screen" cdkDropList
+<div id="drag-panel-column" class="row panel-screen" cdkDropList [cdkDropListData]="searchResult"
   (cdkDropListDropped)="drop($event)">
-  <mat-tab-group (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex">
+  <mat-tab-group (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex" cdkDropListGroup>
     <mat-tab label="Main Panel Details">
-      <mat-card *ngFor="let item of  searchResult?.mainPanel" class="col-md-4 panel-column-box">
-        <mat-card-header>
-          <mat-card-title>{{item.label}}
-            <span> <a class="cursor-poniter"
-                (click)="gotoMainPanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i class="material-icons">
-                  edit
-                </i></a>
-              <a class="cursor-poniter" (click)="deleteMainPanelColumn(item?.columnId,item?.tableId,item?.label)"><i
-                  class="material-icons">
-                  delete
-                </i></a></span>
-          </mat-card-title>
-          <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
-        </mat-card-header>
-      </mat-card>
+      <div id="{{mainPanelId}}" cdkDropList [cdkDropListData]="searchResult?.mainPanel" (cdkDropListDropped)="drop($event)">
+        <mat-card cdkDrag *ngFor="let item of searchResult?.mainPanel" class="col-md-4 panel-column-box">
+          <mat-card-header>
+            <mat-card-title>{{item.label}}
+              <span> <a class="cursor-poniter"
+                  (click)="gotoMainPanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i class="material-icons">
+                    edit
+                  </i></a>
+                <a class="cursor-poniter" (click)="deleteMainPanelColumn(item?.columnId,item?.tableId,item?.label)"><i
+                    class="material-icons">
+                    delete
+                  </i></a></span>
+            </mat-card-title>
+            <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </div>
     </mat-tab>
     <mat-tab label="Inline Panel Details">
       <ng-template mat-tab-label>
@@ -27,15 +29,16 @@
       <div>
         <div class="tab">
           <mat-tab-group *ngIf="openPanelIndex===1" #MatInlineTabGroup [(selectedIndex)]="selectedInlineTab"
-            (selectedTabChange)="inlinePanelTabChanged($event)">
+            (selectedTabChange)="inlinePanelTabChanged($event)" cdkDropListGroup>
             <mat-tab label="tab.tabName" *ngFor="let tab of searchResult?.inLinePanel?.tabs; let index = index">
               <ng-template mat-tab-label>
                 {{tab.tabName}}
                 <a class="example-tab-icon" [hidden]="index===0" (click)="removeInlineTab(index)"><i
                     class="fa fa-close"></i></a>
               </ng-template>
-              <div style="display:grid">
-                <mat-card *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab">
+              <div id="{{tab.tabName}}" cdkDropList [cdkDropListData]="tab?.resultFields"
+                (cdkDropListDropped)="drop($event)" style="display:grid">
+                <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab">
                   <mat-card-header>
                     <mat-card-title>{{item.label}}
                       <span> <a class="cursor-poniter"
@@ -80,15 +83,16 @@
         <div class="tab">
           <mat-tab-group #MatSideTabGroup *ngIf="openPanelIndex===2" [(selectedIndex)]="selectedSideTab"
             (selectedTabChange)="sidePanelTabChanged($event)">
-            <mat-tab #inlineTab label="tab.tabName"
-              *ngFor="let tab of searchResult?.sidePanel?.tabs; let index = index">
+            <mat-tab cdkDropList [cdkDropListData]="searchResult" (cdkDropListDropped)="drop($event)" #inlineTab
+              label="tab.tabName" *ngFor="let tab of searchResult?.sidePanel?.tabs; let index = index">
               <ng-template mat-tab-label>
                 {{tab.tabName}}
                 <a class="example-tab-icon" [hidden]="index===0" (click)="removeSideTab(index)"><i
                     class="fa fa-close"></i></a>
               </ng-template>
-              <div style="display:grid">
-                <mat-card *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab">
+              <div id="{{tab.tabName}}" cdkDropList [cdkDropListData]="tab?.resultFields"
+                (cdkDropListDropped)="drop($event)" style="display:grid">
+                <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab">
                   <mat-card-header>
                     <mat-card-title>{{item.label}}
                       <span> <a class="cursor-poniter"

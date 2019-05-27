@@ -33,7 +33,6 @@ export class AdhocSearchScreenComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
     if (event.container !== event.previousContainer) {
       this.adhocScreenService.updatedTreeData.subscribe(result => {
         this.TREE_DATA = JSON.parse(JSON.stringify(result));
@@ -61,7 +60,6 @@ export class AdhocSearchScreenComponent implements OnInit {
     } else if (event.container === event.previousContainer) {
       moveItemInArray(this.searchCriteria, event.previousIndex, event.currentIndex);
     }
-    console.log(this.searchCriteria);
     this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
     this.updateSearchCriteriaLength.emit(this.searchCriteria.length);
   }

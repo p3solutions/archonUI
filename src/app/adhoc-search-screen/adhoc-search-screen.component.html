@@ -42,6 +42,7 @@
     </ng-container>
     <mat-form-field class="select" *ngIf="item?.fieldType=='COMBO'">
       <mat-select placeholder="Combo">
+        <mat-option value="A"></mat-option>
         <mat-option *ngFor="let opt of item?.optionInfo?.option" value="A">
           {{opt.label}},{{opt.value}}
         </mat-option>
@@ -53,8 +54,8 @@
       </mat-radio-button>
     </mat-radio-group>
     <ng-container *ngIf="item?.fieldType=='CHECK'">
-      <mat-checkbox *ngFor="let opt of item?.optionInfo?.option" value="A"
-        class="example-margin check-display">{{opt.label}},{{opt.value}}
+      <mat-checkbox *ngFor="let opt of item?.optionInfo?.option" value="A" class="example-margin check-display">
+        {{opt.label}},{{opt.value}}
       </mat-checkbox>
     </ng-container>
   </mat-card>

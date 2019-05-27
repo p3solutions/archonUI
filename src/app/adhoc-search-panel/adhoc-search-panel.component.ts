@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-adhoc-search-panel',
   templateUrl: './adhoc-search-panel.component.html',
@@ -29,6 +29,7 @@ export class AdhocSearchPanelComponent implements OnInit {
   TREE_DATA: TableColumnNode[];
   inlineTabName = 'Tab 1';
   sideTabName = 'Tab 1';
+  mainPanelId = 'main-panel-drop-id';
   constructor(private adhocScreenService: AdhocScreenService,
     public router: Router, private adhocService: AdhocService) { }
 
@@ -51,11 +52,6 @@ export class AdhocSearchPanelComponent implements OnInit {
     this.adhocScreenService.updatedSidePanelTabChange.subscribe(result => {
       this.selectedSideTab = result.tabOrder;
     });
-    // this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
-    //   if (result === null) {
-    //     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-    //   }
-    // });
     this.checkSearchResultLength();
   }
 
@@ -166,38 +162,50 @@ export class AdhocSearchPanelComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    const tableId = this.adhocScreenService.treeMap.get(event.item.data.node.id);
-    this.adhocScreenService.updatedTreeData.subscribe(result => {
-      this.TREE_DATA = JSON.parse(JSON.stringify(result));
-    });
-    const tableName = this.TREE_DATA.find(a => a.id === tableId).name;
-    const tempResultFields = new ResultFields();
-    tempResultFields.tableId = tableId;
-    tempResultFields.columnId = event.item.data.node.id;
-    tempResultFields.name = event.item.data.node.name;
-    tempResultFields.tableName = tableName;
-    tempResultFields.label = event.item.data.node.name;
-    this.adhocScreenService.updatedSearchResult.subscribe(result => {
-      this.searchResult = result;
-    });
+    if (event.container !== event.previousContainer) {
+      const tableId = this.adhocScreenService.treeMap.get(event.item.data.node.id);
+      this.adhocScreenService.updatedTreeData.subscribe(result => {
+        this.TREE_DATA = JSON.parse(JSON.stringify(result));
+      });
+      const tableName = this.TREE_DATA.find(a => a.id === tableId).name;
+      const tempResultFields = new ResultFields();
+      tempResultFields.tableId = tableId;
+      tempResultFields.columnId = event.item.data.node.id;
+      tempResultFields.name = event.item.data.node.name;
+      tempResultFields.tableName = tableName;
+      tempResultFields.label = event.item.data.node.name;
+      this.adhocScreenService.updatedSearchResult.subscribe(result => {
+        this.searchResult = result;
+      });
 
-    if (this.checkDuplicateResultFields(tempResultFields.label, tableId)) {
+      if (this.checkDuplicateResultFields(tempResultFields.label, tableId)) {
+        if (this.openPanelIndex === 0) {
+          this.searchResult.mainPanel.push(tempResultFields);
+        }
+        if (this.openPanelIndex === 1) {
+          const temp = this.searchResult.inLinePanel.tabs[this.selectedInlineTab];
+          temp.resultFields.push(tempResultFields);
+        }
+        if (this.openPanelIndex === 2) {
+          const temp = this.searchResult.sidePanel.tabs[this.selectedSideTab];
+          temp.resultFields.push(tempResultFields);
+        }
+      } else {
+        document.getElementById('label-popup-btn').click();
+      }
+      this.checkSearchResultLength();
+    } else {
+      console.log(event);
       if (this.openPanelIndex === 0) {
-        this.searchResult.mainPanel.push(tempResultFields);
-
+        moveItemInArray(this.searchResult.mainPanel, event.previousIndex, event.currentIndex);
       }
       if (this.openPanelIndex === 1) {
-        const temp = this.searchResult.inLinePanel.tabs[this.selectedInlineTab];
-        temp.resultFields.push(tempResultFields);
+        moveItemInArray(this.searchResult.inLinePanel.tabs[this.selectedInlineTab].resultFields, event.previousIndex, event.currentIndex);
       }
       if (this.openPanelIndex === 2) {
-        const temp = this.searchResult.sidePanel.tabs[this.selectedSideTab];
-        temp.resultFields.push(tempResultFields);
+        moveItemInArray(this.searchResult.sidePanel.tabs[this.selectedSideTab].resultFields, event.previousIndex, event.currentIndex);
       }
-    } else {
-      document.getElementById('label-popup-btn').click();
     }
-    this.checkSearchResultLength();
     this.adhocScreenService.updateSearchResult(this.searchResult);
   }
   checkDuplicateResultFields(label, tableId) {

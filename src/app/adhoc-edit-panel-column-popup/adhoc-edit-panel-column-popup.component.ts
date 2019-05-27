@@ -23,7 +23,7 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
   searchResult = new SearchResult();
   outputFunctionInfo = new InputFunctionsInfo();
   outputFunctionsList = inputFunctionList;
-  sortingValue: string[] = ['Disable sorting in this column', 'Disable sorting in this column',
+  sortingValue: string[] = ['Disable sorting in this column', 'Enable sorting in this column',
     'Enable default sort-Ascending', 'Enable default sort-Descending'];
   outputFunctions: string[] = ['', 'Gender Description Common',
     'Date From YYYY-MM-DD to MM-DD-YYYY', 'Date From YYYY-MM-DD to YYYYMMDD', 'Date From YYYYMMDD To MM-DD-YYYY'];
@@ -157,4 +157,18 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
       this.editResultFieldsForm.get('todecrypt').enable();
     }
   }
+
+  // nameFormatter(value: string): string {
+  //   value = value.trim().replace('[^_^\\p{Alnum}.]', '_').replace('^', '_').replace('\\s+', '_');
+  //   value = ((value.startsWith('_') && value.endsWith('_') && value.length > 2)
+  //     ? value.substring(1).substring(0, value.length - 2)
+  //     : value);
+  //   return value.length > 0 ? ((value.charAt(0) >= '0' && value.charAt(0) <= '9') ? '_' : '') + value
+  //     : value;
+  // }
+
+  // labelFunction() {
+  //   console.log(1);
+  //   console.log(this.nameFormatter(this.editResultFieldsForm.get('label').value));
+  // }
 }
