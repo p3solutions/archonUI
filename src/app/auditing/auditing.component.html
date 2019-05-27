@@ -114,9 +114,13 @@
         <th style="width:10%;text-align: center" mat-header-cell *matHeaderCellDef mat-sort-header> Event Details </th>
         <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.eventDetails}}</td>
       </ng-container>
+      <ng-container matColumnDef="Event Date">
+        <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Event Date </th>
+        <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.eventDate | date:'medium'}}</td>
+      </ng-container>  
       <ng-container matColumnDef="Download">
-        <th style="width:10%;text-align: center" mat-header-cell *matHeaderCellDef> Download  </th>
-        <td style="width:10%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+        <th style="width:5%;text-align: center" mat-header-cell *matHeaderCellDef> Download  </th>
+        <td style="width:5%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
           <i class="material-icons details" matTooltip="Download" *ngIf="element.releatedJobId !== null" (click)="downloadJob(element.releatedJobId)">cloud_download</i>
           <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="element.releatedJobId == null">cloud_download</i>
         </td>
