@@ -1,4 +1,4 @@
-<div class="modal-dialog" role="worskspace">
+<!-- <div class="modal-dialog" role="worskspace">
   <div class="modal-content text-left">
     <div class="modal-header">Add Direct Join   
         <button type="button" class="close" data-dismiss="modal" (click)="closeErrorMsg();resetselectedValues()" aria-label="Close">
@@ -53,13 +53,6 @@
 
                   <ng-container matColumnDef="secondaryColumns">
                     <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-right-radius: 3px;"> Secondary Table Column </th>
-                    <!-- <td mat-cell *matCellDef="let element; let ind=index"> 
-                      <select id="testreset" #selected class="selwidth" (change)="selectedValues(element,ind,selected.value)">
-                          <option selected="true">Select</option>
-                          <option *ngFor="let sec of secondaryColumns | secondaryColumn:element.columnDataType">{{sec.columnName}}</option>
-                        </select>
-                    </td> -->
-
                     <td mat-cell *matCellDef="let element; let ind=index">
                       <mat-form-field style="width: 85%;">
                         <mat-select id="testreset" [ngModel]="'select'" (ngModelChange)="selectedValues(element,ind, $event)">
@@ -99,24 +92,44 @@
             <strong>Success</strong>: {{autoColumnMatchMessage}}
           </div>
       </div>
-      </div>
-      <!-- <div class="col-md-1"></div>
-      <div class="col-md-2" style="float:right;">
-        <button mat-button class="close" (click)="closeErrorMsg()" data-dismiss="modal">Close</button>
-      </div>
-      <div class="col-md-2">
-        <button mat-raised-button class="add-btn" (click)="addJoins()">Add Joins</button>
-      </div> -->
+      </div>      
       <div class="col-md-5">       
           <div class="action-btn">
               <button class="mat-raised-button cancel btn-padding" (click)="closeErrorMsg(); resetselectedValues()" data-dismiss="modal">Close</button>
-          <!-- <button type="button" class="btn btn-primary" id="cancel-btn" (click)="closeErrorMsg();resetselectedValues()" data-dismiss="modal">Close</button> -->
-          <!-- <button type="button" (click)="autocolumnMatchMode()" class="btn btn-primary">Automatch Column</button>  -->
-          <!-- <button type="button" class="btn btn-primary" style="margin-left: 18px;"  (click)="addJoins()">Add Joins</button> -->
+       
+          <button type="button" (click)="autocolumnMatchMode()" class="btn btn-primary">Automatch Column</button> 
+         
           <button class="save mat-raised-button btn-padding" (click)="addJoins();">Add Joins</button>                
           </div>       
       </div>
   </div>
   </div>
+</div> -->
+
+<div class="card-body">
+  <div class="col-md-12 card-header">
+    <div class="col-md-3">
+      <div class="card-title">Relationship Info</div>
+    </div>
+  </div>  
+  <div class="body-row">
+  <div class="col-md-12" style="margin-bottom: 12px;margin-top: 15px;">
+    <div class="back-arrowr" id="da-arrow">
+      <a class="arrow" (click)="gotoBack()" mat-tooltip="Back">
+        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+      </a>
+    </div>
+    <div class="title-header">Direct Join</div>
+  </div>    
+
+  <div class="container-tab">
+    <div class="col-md-12 primary-table">
+      <h5 class="card-title sub-headerr">Primary Table:
+        <strong>{{primaryTableName}}</strong>
+      </h5>
+    </div>
+  </div>
+</div>   
 </div>
+
 

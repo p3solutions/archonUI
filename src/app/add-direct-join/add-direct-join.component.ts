@@ -52,6 +52,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   populateValues() {
     this.primaryTableName = this.directJoin.tableName;
+    console.log(this.primaryTableName, 'col');
     this.primaryTableId = this.directJoin.tableId;
     this.workspaceID = this.workspaceID;
     this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
@@ -167,7 +168,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
   resetselectedValues() {
     this.populateValues();
-    
   }
 
   closeErrorMsg() {
