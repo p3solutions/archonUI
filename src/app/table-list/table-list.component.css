@@ -656,13 +656,13 @@ a:hover {
 }
 
 .arrow {
-  opacity: 0.5;
+
   color: #80adf8;
   cursor: pointer;
 }
 
 .arrow:hover {
-  opacity: 1;
+
   color: #2879FF;
   cursor: pointer;
 }

@@ -32,11 +32,13 @@ export class StoredProcViewComponent implements OnInit {
   updateSuccess: boolean;
   errorMsg: any;
   isSPVAvailable: boolean;
+  displayedColumns: string[] = ['PrimaryColumn', 'SecondaryColumn', 'DataType'];
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
     private storedProcViewService: StoredProcViewService) {
   }
 
   ngOnInit() {
+    this.tableName = this.storedProcViewService.tableName;
     this.workspaceid = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.storedProcViewService.getSPVNameList(this.workspaceid, this.tableName).subscribe((result) => {
       if (result.tableId !== null || result.spvInfoList !== null) {

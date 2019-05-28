@@ -775,8 +775,11 @@ export class TableListComponent implements OnInit {
     //   this.dynamicLoaderService.addStoredProcViewDynamicComponent(this.tableName);
       this.homeStage = false;
       this.dataAModal = false;
-      const obj1 = new StoredProcViewComponent(this.workspaceHeaderService, this.storedProcViewService);
-      obj1.tableName =  this.tableName;
+      this.storedProcViewService.tableName = this.tableName;
+      // const obj1 = new StoredProcViewComponent(this.workspaceHeaderService, this.storedProcViewService);
+      // obj1.tableName =  this.tableName;
+      // console.log(obj1.tableName, 'asf');
+      
       this.router.navigate(['workspace/metalyzer/ALL/analysis/spview']);
       // document.getElementById('openCreateStoredViewmodal').click();
     // } else {
