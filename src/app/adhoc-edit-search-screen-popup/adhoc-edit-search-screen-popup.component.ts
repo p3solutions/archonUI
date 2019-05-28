@@ -34,7 +34,6 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
   }
 
   initEditSearchForm() {
-    console.log(this.SearchCriterion.isDateRange);
     this.editSearchCriteriaForm = this.formBuilder.group({
       label: new FormControl(this.SearchCriterion.label, Validators.required),
       fieldType: new FormControl(this.SearchCriterion.fieldType, Validators.required),

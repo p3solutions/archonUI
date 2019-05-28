@@ -64,7 +64,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     if (this.screenInfoObject.sessionAdhocModel.searchCriteria.length > 0) {
       this.adhocScreenService.updateSearchCriteria(this.screenInfoObject.sessionAdhocModel.searchCriteria);
     }
-    if (this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel.length > 0) {
+    // if (this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel.length > 0) {
       if (this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel === null) {
         this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = new SidePanel();
       }
@@ -72,7 +72,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
         this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = new InlinePanel();
       }
       this.adhocScreenService.updateSearchResult(this.screenInfoObject.sessionAdhocModel.searchResult);
-    }
+   // }
     this.initTab();
     this.getTableColumnList();
     this.removePreviousSearchResultAndCriteria();

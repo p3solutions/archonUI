@@ -24,7 +24,7 @@ export class ScreenDataSource implements DataSource<Adhoc> {
                 case 'position': return this.compare(a.position, b.position, isAsc);
                 case 'screenName': return this.compare(a.screenName.toLowerCase(), b.screenName.toLowerCase(), isAsc);
                 case 'screenDesc': return this.compare(a.screenDesc.toLowerCase(), b.screenDesc.toLowerCase(), isAsc);
-               // case 'updatedBy': return this.compare(a.updatedBy.toLowerCase(), b.updatedBy.toLowerCase(), isAsc);
+                case 'updatedBy': return this.compare(a.createdBy.toLowerCase(), b.createdBy.toLowerCase(), isAsc);
                 case 'updatedDate': return this.compare(a.updatedAt, b.updatedAt, isAsc);
                 case 'parentScreenInfo.screenName': return this.compare(a.parentScreenInfo.screenName.toLowerCase(),
                  b.parentScreenInfo.screenName.toLowerCase(), isAsc);

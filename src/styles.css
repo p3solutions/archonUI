@@ -1841,6 +1841,7 @@ button.secondary-btn-color {
   background-color: #64b5f6;
   color: #1b1b1b;
   text-transform: inherit;
+  margin-right: 10px;
   border-radius: 3px;
   transition: 0.5s;
 }

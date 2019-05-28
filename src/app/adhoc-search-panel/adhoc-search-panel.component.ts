@@ -195,7 +195,6 @@ export class AdhocSearchPanelComponent implements OnInit {
       }
       this.checkSearchResultLength();
     } else {
-      console.log(event);
       if (this.openPanelIndex === 0) {
         moveItemInArray(this.searchResult.mainPanel, event.previousIndex, event.currentIndex);
       }

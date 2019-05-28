@@ -1,8 +1,9 @@
 <div id="drag-panel-column" class="row panel-screen" cdkDropList [cdkDropListData]="searchResult"
   (cdkDropListDropped)="drop($event)">
-  <mat-tab-group (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex" cdkDropListGroup>
+  <mat-tab-group #tabGroup (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex" cdkDropListGroup>
     <mat-tab label="Main Panel Details">
-      <div id="{{mainPanelId}}" cdkDropList [cdkDropListData]="searchResult?.mainPanel" (cdkDropListDropped)="drop($event)">
+      <div id="{{mainPanelId}}" cdkDropList [cdkDropListData]="searchResult?.mainPanel"
+      (cdkDropListDropped)="drop($event)" style="display:grid">
         <mat-card cdkDrag *ngFor="let item of searchResult?.mainPanel" class="col-md-4 panel-column-box">
           <mat-card-header>
             <mat-card-title>{{item.label}}

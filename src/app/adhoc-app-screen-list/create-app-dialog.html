@@ -6,12 +6,21 @@
         [(ngModel)]="appInfo.appName">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput name="appDesc" required placeholder="Description" #appDesc="ngModel"
+      <textarea matInput name="appDesc" placeholder="Description" #appDesc="ngModel"
         [(ngModel)]="appInfo.appDesc"></textarea>
     </mat-form-field>
+    <mat-form-field>
+      <mat-select #iaVersion="ngModel" required [(ngModel)]="appInfo.iaVersion" required name="ia-version"
+        placeholder="IA Version">
+        <mat-option *ngFor="let item of appInfo.iaVersionList" [value]="item">
+          {{item}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions>
   <button class="btn btn-padding secondary-btn-color" (click)="onNoClick()">Cancel</button>
-  <button class="btn btn-padding {{!createAppForm.form.valid?'primary-btn-color-disabled':'primary-btn-color'}}" [disabled]="!createAppForm.form.valid" [mat-dialog-close]="appInfo">Create</button>
+  <button class="btn btn-padding {{!createAppForm.form.valid?'primary-btn-color-disabled':'primary-btn-color'}}"
+          [disabled]="!createAppForm.form.valid" [mat-dialog-close]="appInfo">Create</button>
 </div>

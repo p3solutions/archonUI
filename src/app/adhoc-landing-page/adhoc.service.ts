@@ -24,6 +24,7 @@ export class AdhocService {
   downloadScreenUrl = this.apiUrl + 'adhocbuilder/application/screen/download?screenId=';
   getScreenInfoUrl = this.apiUrl + 'adhocbuilder/application/screen?screenId=';
   tableListUrl = this.apiUrl + 'metalyzer/tablesList?workspaceId=';
+  getIAVersionsUrl = this.apiUrl + 'adhocbuilder/ia-versions';
 
   constructor(
     private http: HttpClient,
@@ -124,6 +125,13 @@ export class AdhocService {
       pipe(
         map(this.extractData),
         catchError(this.handleError('tables-getTableList()', []))
+      );
+  }
+
+  getIAVersions(): Observable<any> {
+    return this.http.get<any>(this.getIAVersionsUrl, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('getIAVersions', []))
       );
   }
 

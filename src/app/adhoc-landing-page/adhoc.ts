@@ -8,6 +8,8 @@ export class ApplicationInfo {
     metadataVersion = '';
     appName = '';
     appDesc = '';
+    iaVersion = '';
+    iaVersionList: string[] = [];
 }
 
 export class TableColumnNode {
@@ -212,9 +214,10 @@ export class Adhoc {
     sessionAdhocModel = new SessionAdhoc();
     userId = '';
     updatedAt = '';
+    createdBy = '';
 }
 export class SearchTypesByfieldType {
-    fieldType  = '';
+    fieldType = '';
     searchTypes: string[] = [];
 }
 

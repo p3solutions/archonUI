@@ -102,7 +102,7 @@
       </ng-container>
       <ng-container matColumnDef="updatedBy">
         <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated By </th>
-        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element"> </td>
+        <td class="word-breaker" style="width:14%" mat-cell *matCellDef="let element"> {{element.createdBy}}</td>
       </ng-container>
       <ng-container matColumnDef="updatedDate">
         <th style="width:14%" mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date </th>
