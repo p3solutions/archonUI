@@ -297,8 +297,25 @@ export class AdhocTableSelectionComponent implements OnInit {
         .attr('dy', 4)
         .text(function (d: any) { return d.data.name; });
       nodeEnter.on('mouseover', function (d) {
-        link.style('visibility', function (d) { if (d.target.data.visible === false) { return 'visible'; } });
-        node.style('visibility', function (d) { if (d.data.visible === false) { return 'visible'; } });
+        const nodename = d.data.name;
+        link.style('visibility', function (d) {
+          if (d.parent !== null) {
+          if (d.target.data.visible === false && d.target.parent.data.name === nodename) {
+            return 'visible';
+          } else {
+            return 'none';
+          }
+        }
+        });
+        node.style('visibility', function (d) {
+          if (d.parent !== null) {
+            if (d.data.visible === false && d.parent.data.name === nodename) {
+              return 'visible';
+            } else {
+              return 'none';
+            }
+          }
+        });
         let ifSelected = 'Primary Table';
         if (d.parent !== null) {
           if (!d.data.visible) {
