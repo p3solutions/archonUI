@@ -33,6 +33,7 @@ export class StoredProcViewComponent implements OnInit {
   errorMsg: any;
   isSPVAvailable: boolean;
   displayedColumns: string[] = ['PrimaryColumn', 'SecondaryColumn', 'DataType'];
+  columnsList: any;
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
     private storedProcViewService: StoredProcViewService) {
   }
@@ -136,6 +137,9 @@ export class StoredProcViewComponent implements OnInit {
       this.spvTableNameList.forEach(a => a.isTableChecked = false);
     }
     this.enableSubmitBtn();
+    this.columnsList = this.getRelatingTableList();
+    console.log(this.columnsList, 'list');
+    
   }
 
   enableSubmitBtn() {
