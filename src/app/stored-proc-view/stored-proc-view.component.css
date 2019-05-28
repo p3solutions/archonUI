@@ -186,12 +186,15 @@
   line-height: normal;
   letter-spacing: normal;  
   text-align: left;
-  color: #0c0c0c;
-  
+  color: #0c0c0c;  
+}
+::ng-deep .mat-paginator-range-label {
+  margin: 0px !important;
 }
 
-
-
+::ng-deep .svg {
+  height: unset;
+}
 
 
 

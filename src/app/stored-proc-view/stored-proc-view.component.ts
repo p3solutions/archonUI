@@ -34,6 +34,7 @@ export class StoredProcViewComponent implements OnInit {
   isSPVAvailable: boolean;
   displayedColumns: string[] = ['PrimaryColumn', 'SecondaryColumn', 'DataType'];
   columnsList: any;
+  homeStage: boolean;
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
     private storedProcViewService: StoredProcViewService) {
   }
@@ -195,5 +196,8 @@ export class StoredProcViewComponent implements OnInit {
     this.errorMsg = '';
     this.updateNotif = false;
     this.updateSuccess = false;
+  }
+  gotoBack() {
+    this.homeStage = true;
   }
 }
