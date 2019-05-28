@@ -215,6 +215,7 @@ export class Adhoc {
     userId = '';
     updatedAt = '';
     createdBy = '';
+    lastModifiedBy = '';
 }
 export class SearchTypesByfieldType {
     fieldType = '';

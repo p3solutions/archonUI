@@ -66,9 +66,9 @@
 }
 
 .modal-header i {
-  font-size: xx-large;
-  color: #333;
-  padding: 0px 7px 2px 2px;
+  color: #ffffff;
+  padding: 0px 0px 7px 2px;
+  vertical-align: middle;
 }
 
 .modal-body .info {
@@ -193,4 +193,12 @@ modal-body .p {
 .info-function-icon {
   cursor: not-allowed !important;
   color: #676767 !important;
+}
+
+.modal-header-cls {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-align: left !important;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
