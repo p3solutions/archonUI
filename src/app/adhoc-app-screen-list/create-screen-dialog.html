@@ -6,11 +6,11 @@
         placeholder="Linked Screen Name" [ngModel]="screenInfo.parentScreenInfo.screenName">
     </mat-form-field>
     <mat-form-field>
-      <input name="screenName" #screenName="ngModel" required matInput placeholder="Screen Name"
+      <input name="screenName" maxlength="50" #screenName="ngModel" required matInput placeholder="Screen Name"
         [(ngModel)]="screenInfo.screenName">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput name="screenDesc" required placeholder="Description" #screenDesc="ngModel"
+      <textarea matInput name="screenDesc" maxlength="200" required placeholder="Description" #screenDesc="ngModel"
         [(ngModel)]="screenInfo.screenDesc"></textarea>
     </mat-form-field>
   </form>

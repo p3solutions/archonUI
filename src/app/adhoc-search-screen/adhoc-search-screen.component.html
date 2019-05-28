@@ -3,9 +3,9 @@
   <mat-card [class.mat-elevation-z2]="false" cdkDrag *ngFor="let item of searchCriteria"
     class="col-md-4 column-box h-100">
     <mat-card-header>
-      <mat-card-title>{{item.label}}
+      <mat-card-title>{{item.label}}<a class="required-color" *ngIf="item.isRequired">*</a>
+        <i *ngIf="item.isEncrypted" class="material-icons encypted-icon">lock</i>
         <span>
-          <span class="required-color" *ngIf="item.isRequired">*</span>
           <a class="cursor-poniter" (click)="gotoSearchCriteriaEdit(item?.columnId)"><i class="material-icons">
               edit
             </i></a>

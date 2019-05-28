@@ -71,10 +71,10 @@ th {
   font-family: roboto;
   float: left;
   margin: 0px 0px 0px 9px;
-  /* display: inline-block; */
   text-align: left;
-  background-color: #f0f0f0;
+  background-color: #eef2f9;
   border-radius: 3px;
+  width: 19.6%
 }
 
 th {
@@ -266,4 +266,19 @@ a.disabled .material-icons {
 .mat-menu-item.disabled-mat-option:hover .material-icons {
   opacity: 0.5 !important;
   color: rgba(12, 12, 12, 0.5) !important;
+}
+
+.metadata-warning {
+  border-radius: 3px;
+  background-color: #fcebeb;
+  color: #dd3c27;
+  font-size: 18px;
+  border-radius: 3px;
+  background-color: #fcebeb;
+  color: #dd3c27;
+  font-size: 18px;
+  text-align: left;
+  display: inline-flex;
+  padding: 11px 11px 11px 11px;
+  margin-left: 19%;
 }

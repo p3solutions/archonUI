@@ -88,22 +88,12 @@
   display: flex;
 }
 
-span.required-color {
-  float: left !important;
-  color: red !important;
-  padding-top: 3px
-}
-
-.end-date{
+.end-date {
   margin-right: 1%;
   width: 49%;
 }
 
-.start-end{
+.start-end {
   margin-right: 3%;
   width: 47%;
 }
-
-
-
-    

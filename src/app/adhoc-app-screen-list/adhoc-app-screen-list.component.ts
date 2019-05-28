@@ -80,6 +80,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   screenInfoObject = new Adhoc();
   menuActionData = new Adhoc();
   IAVersions: string[] = [];
+  oldMetadata = false;
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
     private adhocScreenService: AdhocScreenService,
     private router: Router, private adhocService: AdhocService, private cookieService: CookieService,
@@ -230,6 +231,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   selectedApp(appId: string) {
     this.selectedAppObject = JSON.parse(JSON.stringify(this.applicationInfoList.filter(a => a.id === appId)[0]));
     this.getScreen(0);
+    this.checkForMetadataInApplication();
   }
   openScreenDialog(): void {
     const dialogScreenRef = this.dialog.open(CreateScreenDialogComponent, {
@@ -263,7 +265,8 @@ export class AdhocAppScreenListComponent implements OnInit {
         'appDesc': result.appDesc,
         'workspaceId': this.workspaceId,
         'metadataVersion': this.mmrVersion,
-        'userId': getUserId()
+        'userId': getUserId(),
+        'iaVersion': result.iaVersion
       };
       this.adhocService.createApplication(param).subscribe((response) => {
         document.getElementById('success-popup-btn').click();
@@ -444,6 +447,9 @@ export class AdhocAppScreenListComponent implements OnInit {
   checkForMetadataInApplication() {
     if (this.selectedAppObject.metadataVersion !== '') {
       if (this.selectedAppObject.metadataVersion !== this.mmrVersion) {
+        this.oldMetadata = true;
+      } else {
+        this.oldMetadata = false;
       }
     }
   }

@@ -2,11 +2,11 @@
 <div mat-dialog-content>
   <form #createAppForm="ngForm" class="flex-container">
     <mat-form-field>
-      <input name="appName" #appName="ngModel" required matInput placeholder="Application Name"
+      <input name="appName" maxlength="50" #appName="ngModel" required matInput placeholder="Application Name"
         [(ngModel)]="appInfo.appName">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput name="appDesc" placeholder="Description" #appDesc="ngModel"
+      <textarea matInput name="appDesc" maxlength="200" placeholder="Description" #appDesc="ngModel"
         [(ngModel)]="appInfo.appDesc"></textarea>
     </mat-form-field>
     <mat-form-field>

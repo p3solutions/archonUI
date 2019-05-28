@@ -59,16 +59,16 @@
 <div id="saveScreen" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert</h4>
+      <div class="modal-header warning-popup-header-cls">
+        <h4 class="modal-title popup-title-cls"><i class="material-icons popup-material-icon-cls">warning</i>Alert</h4>
       </div>
       <div class="modal-body">
-        <p>Change in the graph source will result in loss of search result.</p>
+        <p class="popup-paragraph-cls">Change in the graph source will result in loss of search result.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="cancelSearchResult()" class="btn btn-padding secondary-btn-color"
+        <button type="button" (click)="cancelSearchResult()" class="btn btn-padding btn-secondary-popup"
           data-dismiss="modal">Cancel</button>
-        <button type="button" (click)="deleteSearchResult('html')" class="btn btn-padding primary-btn-color"
+        <button type="button" (click)="deleteSearchResult('html')" class="btn btn-padding btn-warning-popup-primary-color"
           data-dismiss="modal">Ok</button>
       </div>
     </div>

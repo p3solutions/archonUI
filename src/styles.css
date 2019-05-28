@@ -1922,7 +1922,135 @@ button.secondary-btn-color-disabled:hover {
   color: #0c0c0c;
 }
 
-
-
-
 /*end-  selected list css */
+
+/* start-encypted field,and required icon in adhoc  */
+
+.encypted-icon {
+  font-size: 15px !important;
+  vertical-align: top !important;
+  color: #2879ff !important;
+  padding-left: 3px;
+}
+
+.material-icons.encypted-icon:hover {
+  font-size: 15px !important;
+  vertical-align: top !important;
+  color: #2879ff !important;
+  padding-left: 3px;
+}
+
+a.required-color {
+  color: #dd3c27 !important;
+  font-size: 15px;
+  vertical-align: top;
+  padding-left: 4px;
+}
+
+/* end-encypted field,and required icon in adhoc  */
+
+/* start-popup msg color */
+
+.error-popup-header-cls {
+  padding: 4px;
+  padding-left: 15px;
+  background-color: #dd3c27;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: white;
+  height: 60px;
+  text-align: left;
+}
+
+button.btn-error-popup-primary-color {
+  background-color: #dd3c27;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+button.btn-error-popup-primary-color:hover {
+  color: #ffffff;
+  transform: scale(1.1, 1.1);
+}
+
+.success-popup-header-cls {
+  padding: 4px;
+  padding-left: 15px;
+  background-color: #08aa5a;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: white;
+  height: 60px;
+  text-align: left;
+}
+
+button.btn-success-popup-primary-color {
+  background-color: #08aa5a;
+  color: #ffffff !important;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+button.btn-success-popup-primary-color:hover {
+  color: #ffffff !important;
+  transform: scale(1.1, 1.1);
+}
+
+.warning-popup-header-cls {
+  padding: 4px;
+  padding-left: 15px;
+  background-color: #fbc41e;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: white;
+  height: 60px;
+  text-align: left;
+}
+
+button.btn-warning-popup-primary-color {
+  background-color: #fbc41e;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+button.btn-warning-popup-primary-color:hover {
+  color: #ffffff;
+  transform: scale(1.1, 1.1);
+}
+
+button.btn-secondary-popup{
+  background-color: #dedede;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+button.btn-secondary-popup:hover {
+  color: #ffffff;
+  transform: scale(1.1, 1.1);
+}
+
+.popup-title-cls {
+  margin-top: 12px;
+}
+
+.popup-material-icon-cls {
+  vertical-align: top;
+  color: #ffffff
+}
+
+.popup-paragraph-cls{
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.71
+}
+
+

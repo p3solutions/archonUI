@@ -1,12 +1,14 @@
 <div id="drag-panel-column" class="row panel-screen" cdkDropList [cdkDropListData]="searchResult"
   (cdkDropListDropped)="drop($event)">
-  <mat-tab-group #tabGroup (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex" cdkDropListGroup>
+  <mat-tab-group #tabGroup (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex"
+    cdkDropListGroup>
     <mat-tab label="Main Panel Details">
       <div id="{{mainPanelId}}" cdkDropList [cdkDropListData]="searchResult?.mainPanel"
-      (cdkDropListDropped)="drop($event)" style="display:grid">
-        <mat-card cdkDrag *ngFor="let item of searchResult?.mainPanel" class="col-md-4 panel-column-box">
+        (cdkDropListDropped)="drop($event)" style="display:grid">
+        <mat-card cdkDrag *ngFor="let item of searchResult?.mainPanel"
+          class="col-md-4 panel-column-box" [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
           <mat-card-header>
-            <mat-card-title>{{item.label}}
+            <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" class="material-icons encypted-icon">lock</i>
               <span> <a class="cursor-poniter"
                   (click)="gotoMainPanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i class="material-icons">
                     edit
@@ -39,9 +41,10 @@
               </ng-template>
               <div id="{{tab.tabName}}" cdkDropList [cdkDropListData]="tab?.resultFields"
                 (cdkDropListDropped)="drop($event)" style="display:grid">
-                <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab">
+                <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab"
+                [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
                   <mat-card-header>
-                    <mat-card-title>{{item.label}}
+                    <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" class="material-icons encypted-icon">lock</i>
                       <span> <a class="cursor-poniter"
                           (click)="gotoInlinePanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i
                             class="material-icons">
@@ -93,9 +96,10 @@
               </ng-template>
               <div id="{{tab.tabName}}" cdkDropList [cdkDropListData]="tab?.resultFields"
                 (cdkDropListDropped)="drop($event)" style="display:grid">
-                <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab">
+                <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab"
+                [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
                   <mat-card-header>
-                    <mat-card-title>{{item.label}}
+                    <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" class="material-icons encypted-icon">lock</i>
                       <span> <a class="cursor-poniter"
                           (click)="gotoSidePanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i
                             class="material-icons">

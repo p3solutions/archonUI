@@ -46,9 +46,15 @@
       </div>
     </div>
   </div>
-  <div class="row" *ngIf="selectedAppObject.appDesc!==''" id="app_desc">
-    <b>Application Description</b>
-    <p>{{selectedAppObject.appDesc!==null?selectedAppObject.appDesc :'Created By Archon'}}</p>
+  <div>
+    <div *ngIf="selectedAppObject.appDesc!==''" id="app_desc">
+      <b style="color:#2879ff">Application Description</b>
+      <p>{{selectedAppObject.appDesc!==null?selectedAppObject.appDesc :'Created By Archon'}}</p>
+    </div>
+    <div></div>
+    <div *ngIf="oldMetadata" class="metadata-warning">
+      This is the old application metadata version.
+    </div>
   </div>
 </div>
 <div class="container-fluid">
@@ -56,17 +62,19 @@
     <mat-form-field>
       <input matInput name="screen-filter" #input placeholder="Search">
     </mat-form-field>
-    <span class="fa-stack" *ngIf="applicationInfoList.length!==0" (click)="!(applicationInfoList.length===0) && addScreen()"
-     matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
+    <span class="fa-stack" *ngIf="applicationInfoList.length!==0"
+      (click)="!(applicationInfoList.length===0) && addScreen()"
+      matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
       <i class="fa fa-circle fa-stack-2x"></i>
       <i class="fa fa-circle-thin fa-stack-2x"></i>
       <i class="fa fa-plus fa-stack-1x"></i>
     </span>
-    <span class="fa-stack-disabled" *ngIf="applicationInfoList.length===0"  matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-circle-thin fa-stack-2x"></i>
-        <i class="fa fa-plus fa-stack-1x"></i>
-      </span>
+    <span class="fa-stack-disabled" *ngIf="applicationInfoList.length===0"
+      matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
+      <i class="fa fa-circle fa-stack-2x"></i>
+      <i class="fa fa-circle-thin fa-stack-2x"></i>
+      <i class="fa fa-plus fa-stack-1x"></i>
+    </span>
   </div>
   <div
     class="{{datasourceHasValue()=== true ?'hide-html example-table-container mat-elevation-z8' : 'example-table-container mat-elevation-z8'}}"
@@ -118,43 +126,6 @@
             </i>
           </button></td>
       </ng-container>
-      <!-- <ng-container matColumnDef="edit">
-        <th style="width:6%" mat-header-cell *matHeaderCellDef> Edit </th>
-        <td style="width:6%" mat-cell *matCellDef="let element" (click)="gotoScreen(element.id, element)">
-          <i class="material-icons">
-            edit
-          </i>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="nestedLink">
-        <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Nested Link </th>
-        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element"
-          (click)="(element.parentScreenInfo?.screenName==='') && addNestedLink(element.id)">
-          <i *ngIf="element.parentScreenInfo?.screenName===''" class="material-icons">
-            add
-          </i>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="delete">
-        <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Delete</th>
-        <td style="width:9%;text-align: center" mat-cell *matCellDef="let element"
-          (click)="deleteScreenPopUp(element.id)">
-          <i class="material-icons">
-            delete
-          </i> </td>
-      </ng-container>
-      <ng-container matColumnDef="download">
-        <th style="width:9%;text-align: center" mat-header-cell *matHeaderCellDef> Download </th>
-        <td [matTooltip]="element.madeDownlaodDisabled?'Edit screen to download': 'Download'"
-          style="width:9%;text-align: center" mat-cell *matCellDef="let element">
-          <a [class.disabled]="element.madeDownlaodDisabled"
-            (click)="!element.madeDownlaodDisabled && downloadScreen(element.id,element.screenName)">
-            <i class="material-icons">
-              save_alt
-            </i>
-          </a>
-        </td>
-      </ng-container> -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
@@ -172,32 +143,36 @@
   </button>
 </mat-menu>
 <mat-menu #actionmenu="matMenu" yPosition="below">
-  <button  (click)="gotoScreen(menuActionData.id, menuActionData)" mat-menu-item>
-      <i class="material-icons">
-          edit
-        </i>
+  <button (click)="gotoScreen(menuActionData.id, menuActionData)" mat-menu-item>
+    <i class="material-icons">
+      edit
+    </i>
     <span>
       Edit</span>
   </button>
-  <button class="{{menuActionData.madeDownlaodDisabled?'disabled-mat-option mat-menu-item':'mat-menu-item'}}" *ngIf="menuActionData.parentScreenInfo?.screenName===''" [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to create nested screen': ''"
-    (click)="!menuActionData.madeDownlaodDisabled && (menuActionData.parentScreenInfo?.screenName==='') && addNestedLink(menuActionData.id)" mat-menu-item>
+  <button class="{{menuActionData.madeDownlaodDisabled?'disabled-mat-option mat-menu-item':'mat-menu-item'}}"
+    *ngIf="menuActionData.parentScreenInfo?.screenName===''"
+    [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to create nested screen': ''"
+    (click)="!menuActionData.madeDownlaodDisabled && (menuActionData.parentScreenInfo?.screenName==='') && addNestedLink(menuActionData.id)"
+    mat-menu-item>
     <i class="material-icons {{menuActionData.madeDownlaodDisabled?'disabled-mat-option-icon':''}}">
-        add
-      </i>
+      add
+    </i>
     <span>Add Nested Link</span>
   </button>
   <button (click)="deleteScreenPopUp(menuActionData.id)" mat-menu-item>
-      <i class="material-icons">
-          delete
-        </i>
+    <i class="material-icons">
+      delete
+    </i>
     <span>Delete</span>
   </button>
-  <button class="{{menuActionData.madeDownlaodDisabled?'disabled-mat-option mat-menu-item':'mat-menu-item'}}" [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to download': 'Download'"
-   (click)="!menuActionData.madeDownlaodDisabled && downloadScreen(menuActionData.id,menuActionData.screenName)"
+  <button class="{{menuActionData.madeDownlaodDisabled?'disabled-mat-option mat-menu-item':'mat-menu-item'}}"
+    [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to download': 'Download'"
+    (click)="!menuActionData.madeDownlaodDisabled && downloadScreen(menuActionData.id,menuActionData.screenName)"
     mat-menu-item>
     <i class="material-icons {{menuActionData.madeDownlaodDisabled?'disabled-mat-option-icon':''}}">
-        save_alt
-      </i>
+      save_alt
+    </i>
     <span>Download</span>
   </button>
 </mat-menu>
@@ -207,15 +182,16 @@
 <div id="metaDataVersion" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert</h4>
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+            <i class="material-icons popup-material-icon-cls">error_outline</i>Alert</h4>
       </div>
       <div class="modal-body">
-        <p>Please add metadata version for this workspace.</p>
+        <p class="popup-paragraph-cls">Please add metadata version for this workspace.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="gotoMetadata('cancel')"
-          class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
+        <button type="button" (click)="gotoMetadata('cancel')" class="btn btn-padding btn-error-popup-primary-color"
+          data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" (click)="gotoMetadata('metadata')"
           class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
       </div>
@@ -228,16 +204,16 @@
 <div id="success" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert</h4>
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">check_circle_outline</i>Success</h4>
       </div>
       <div class="modal-body">
-        <p>{{successMessage}}</p>
+        <p class="popup-paragraph-cls">{{successMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color"
-          data-dismiss="modal">Ok</button>
-        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-padding btn-success-popup-primary-color"
           data-dismiss="modal">Ok</button>
       </div>
     </div>
@@ -249,17 +225,17 @@
 <div id="delete" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Confirmation Alert</h4>
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>Confirmation Alert</h4>
       </div>
       <div class="modal-body">
-        <p>Are you sure?</p>
+        <p class="popup-paragraph-cls">Are you sure?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteScreen()"
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="deleteScreen()"
           data-dismiss="modal">Yes</button>
-        <button type="button" class="btn btn-padding primary-btn-color"
-          data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
       </div>
     </div>
   </div>

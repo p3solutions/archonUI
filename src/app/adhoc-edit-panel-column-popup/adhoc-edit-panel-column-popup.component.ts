@@ -64,7 +64,7 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
       encrypted: new FormControl(this.resultFields.encrypted),
       todecrypt: new FormControl(this.resultFields.todecrypt)
     });
-    if (this.resultFields.todecrypt) {
+    if (this.resultFields.todecrypt || this.resultFields.encrypted) {
       this.editResultFieldsForm.get('todecrypt').enable();
     } else {
       this.editResultFieldsForm.get('todecrypt').disable();
