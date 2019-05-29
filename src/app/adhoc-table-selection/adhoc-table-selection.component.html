@@ -9,20 +9,11 @@
           <div class="col-md-6" class="graph-heading-div">
             <h3 class="black-heading">Table list</h3>
           </div>
-          <!-- <div class="inner-addon right-addon">
-              <a href="" style="z-index:1" class="glyphicon glyphicon-search"></a>
-              <input type="text" class="form-control search-input" id="listSearch" placeholder="Table Search">
-            </div> -->
           <div class="form-group has-feedback" id="search-box">
             <input type="text" [(ngModel)]="searchTableName" id="listSearch" (keyup)="searchTablelist()"
               class="form-control" id="inputValidation" placeholder="Search" />
             <span class="glyphicon glyphicon-search search-icon"></span>
           </div>
-          <!-- <div class="form-group has-feedback" id="search-box">
-            <input type="text" class="form-control" [(ngModel)]="searchTableName" id="listSearch"
-              (keyup)="searchTablelist()" placeholder="Search" />
-            <span class="glyphicon glyphicon-search icon-color form-control-feedback"></span>
-          </div> -->
           <div id="tbl-list">
             <div class="scroll-div border">
               <div class="table-list-item-cls {{i.tableName == selectedPrimaryTable ? 'selected-table-cls':''}}"
@@ -63,7 +54,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header warning-popup-header-cls">
-        <h4 class="modal-title popup-title-cls"><i class="material-icons popup-material-icon-cls">warning</i>Alert</h4>
+        <h4 class="modal-title popup-title-cls"><i class="material-icons popup-material-icon-cls">warning</i>Warning</h4>
       </div>
       <div class="modal-body">
         <p class="popup-paragraph-cls">Change in the graph source will result in loss of search result.</p>

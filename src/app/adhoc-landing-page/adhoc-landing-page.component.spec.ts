@@ -6,6 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { UserinfoService } from '../userinfo.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 
 describe('AdhocLandingPageComponent', () => {
   let component: AdhocLandingPageComponent;
@@ -14,8 +15,8 @@ describe('AdhocLandingPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AdhocLandingPageComponent],
-      imports: [RouterTestingModule, HttpClientTestingModule],
-      providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      imports: [RouterTestingModule, HttpClientTestingModule, NgxSpinnerModule],
+      providers: [UserinfoService, NgxSpinnerService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));
