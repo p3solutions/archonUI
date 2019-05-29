@@ -40,11 +40,7 @@
         </section>
         <div>
           <mat-form-field>
-            <mat-select formControlName="maskLength" placeholder="Mask Value">
-              <mat-option *ngFor="let maskValue of maskValues" [value]="maskValue">
-                {{maskValue}}
-              </mat-option>
-            </mat-select>
+            <input matInput type="number" min="0" max="100" formControlName="maskLength" placeholder="Mask Value">
           </mat-form-field>
         </div>
       </div>
@@ -80,7 +76,7 @@
       <div class="modal-header modal-header-cls">
         <h3 class="modal-title"> <a>
             <i class="material-icons">
-                lock</i>
+              lock</i>
           </a>
           Function Information</h3>
       </div>

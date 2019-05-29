@@ -48,6 +48,7 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
       });
     this.changeFieldType(this.SearchCriterion.fieldType);
     this.setSearchType(this.SearchCriterion.fieldType);
+    this.makeFieldEncrypted();
   }
 
   setSearchType(fieldType) {
@@ -77,8 +78,8 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
 
 
   getInfo() {
-    this.inputFunctionInfo = this.InputFunctionsList.find(a => a.functionName.replace(/ /g, '').toLowerCase() === 
-    this.editSearchCriteriaForm.get('inputFunction').value.replace(/ /g, '').toLowerCase());
+    this.inputFunctionInfo = this.InputFunctionsList.find(a => a.functionName.replace(/ /g, '').toLowerCase() ===
+      this.editSearchCriteriaForm.get('inputFunction').value.replace(/ /g, '').toLowerCase());
     if (this.inputFunctionInfo !== undefined) {
       document.getElementById('openFunctionInfoModel').click();
     }
@@ -91,9 +92,9 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
     for (const option of tempOptions) {
       tempOption = option.split(',');
       if (tempOption[0] !== undefined && tempOption[1] !== undefined) {
-       // if (tempOption[0] !== '' && tempOption[1]!== '') {
-          optionArray.push({ 'label': tempOption[0], 'value': tempOption[1] });
-       // }
+        // if (tempOption[0] !== '' && tempOption[1]!== '') {
+        optionArray.push({ 'label': tempOption[0], 'value': tempOption[1] });
+        // }
       }
     }
     this.SearchCriterion.optionInfo.option = optionArray;
@@ -150,5 +151,25 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
         this.editSearchCriteriaForm.controls['isDateRange'].setValue(false);
       }
     }
+  }
+
+  makeFieldEncrypted() {
+    if (this.editSearchCriteriaForm.get('isEncrypted').value) {
+      if (this.editSearchCriteriaForm.get('fieldType').value !== 'DATE') {
+        this.editSearchCriteriaForm.controls['fieldType'].setValue('TEXT');
+        this.isOptionFieldDisable = true;
+        this.editSearchCriteriaForm.controls['option'].clearValidators();
+        this.editSearchCriteriaForm.controls['option'].updateValueAndValidity();
+      }
+      this.editSearchCriteriaForm.get('fieldType').disable();
+      this.editSearchCriteriaForm.controls['searchType'].setValue('=');
+      this.editSearchCriteriaForm.get('searchType').disable();
+    } else {
+      if (this.editSearchCriteriaForm.get('fieldType').value !== 'DATE') {
+        this.editSearchCriteriaForm.get('fieldType').enable();
+      }
+      this.editSearchCriteriaForm.get('searchType').enable();
+    }
+    this.setSearchType(this.editSearchCriteriaForm.get('fieldType').value);
   }
 }

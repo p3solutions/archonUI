@@ -1,4 +1,7 @@
 <div id="ert-table-id">
+  <ngx-spinner bdOpacity=0.9 bdColor="#333" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+  </ngx-spinner>
   <div class="row entry-card">
     <div class="col-md-3">
       <div class="card" style="height:455px">
@@ -68,8 +71,8 @@
       <div class="modal-footer">
         <button type="button" (click)="cancelSearchResult()" class="btn btn-padding btn-secondary-popup"
           data-dismiss="modal">Cancel</button>
-        <button type="button" (click)="deleteSearchResult('html')" class="btn btn-padding btn-warning-popup-primary-color"
-          data-dismiss="modal">Ok</button>
+        <button type="button" (click)="deleteSearchResult('html')"
+          class="btn btn-padding btn-warning-popup-primary-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

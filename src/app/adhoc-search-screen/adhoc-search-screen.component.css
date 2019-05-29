@@ -97,3 +97,8 @@
   margin-right: 3%;
   width: 47%;
 }
+
+.scroll-column-box {
+  height: 57px;
+  overflow: auto
+}

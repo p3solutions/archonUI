@@ -272,13 +272,12 @@ a.disabled .material-icons {
   border-radius: 3px;
   background-color: #fcebeb;
   color: #dd3c27;
-  font-size: 18px;
   border-radius: 3px;
   background-color: #fcebeb;
   color: #dd3c27;
-  font-size: 18px;
+  font-size: 14px;
   text-align: left;
   display: inline-flex;
   padding: 11px 11px 11px 11px;
-  margin-left: 19%;
+  margin-left: 16%;
 }

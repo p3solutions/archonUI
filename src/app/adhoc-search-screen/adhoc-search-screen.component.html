@@ -29,12 +29,12 @@
     <ng-container *ngIf="item.isDateRange">
       <div>
         <mat-form-field *ngIf="item.fieldType==='DATE'" class="start-end">
-          <input matInput [matDatepicker]="picker" placeholder="Date">
+          <input matInput [matDatepicker]="picker" placeholder="Start Date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field *ngIf="item.fieldType==='DATE' && item.isDateRange" class="end-date">
-          <input matInput [matDatepicker]="picker" placeholder="Date">
+          <input matInput [matDatepicker]="picker" placeholder="End Date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -48,15 +48,19 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-radio-group class="grid-display" *ngIf="item?.fieldType=='RADIO'">
-      <mat-radio-button *ngFor="let opt of item?.optionInfo?.option" value="A" name="radio-btn">
-        {{opt.label}},{{opt.value}}
-      </mat-radio-button>
-    </mat-radio-group>
+    <div class="scroll-column-box" *ngIf="item?.fieldType=='RADIO'">
+      <mat-radio-group class="grid-display">
+        <mat-radio-button *ngFor="let opt of item?.optionInfo?.option" value="A" name="radio-btn">
+          {{opt.label}},{{opt.value}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
     <ng-container *ngIf="item?.fieldType=='CHECK'">
-      <mat-checkbox *ngFor="let opt of item?.optionInfo?.option" value="A" class="example-margin check-display">
-        {{opt.label}},{{opt.value}}
-      </mat-checkbox>
+      <div class="scroll-column-box">
+        <mat-checkbox *ngFor="let opt of item?.optionInfo?.option" value="A" class="example-margin check-display">
+          {{opt.label}},{{opt.value}}
+        </mat-checkbox>
+      </div>
     </ng-container>
   </mat-card>
 </div>

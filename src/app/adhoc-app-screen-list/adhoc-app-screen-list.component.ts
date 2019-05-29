@@ -16,6 +16,7 @@ import { merge, fromEvent } from 'rxjs';
 import { TableSelectionService } from '../adhoc-table-selection/table-selection.service';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
 import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-create-screen-dialog',
   templateUrl: 'create-screen-dialog.html',
@@ -82,7 +83,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   IAVersions: string[] = [];
   oldMetadata = false;
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
-    private adhocScreenService: AdhocScreenService,
+    private adhocScreenService: AdhocScreenService, private spinner: NgxSpinnerService,
     private router: Router, private adhocService: AdhocService, private cookieService: CookieService,
     private adhocSavedObjectService: AdhocSavedObjectService, private tableSelection: TableSelectionService) { }
 
@@ -140,6 +141,7 @@ export class AdhocAppScreenListComponent implements OnInit {
         document.getElementById('meta-popup-btn').click();
       } else {
         this.mmrVersion = result[0].versionNo;
+        this.checkForMetadataInApplication();
       }
     });
   }
@@ -170,6 +172,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     a.dispatchEvent(e);
   }
   getScreen(startIndexOfScreen) {
+    this.spinner.show();
     this.dataSource = new ScreenDataSource(this.adhocService);
     this.addPosition();
     this.dataSource.connect().subscribe(result => {
@@ -185,6 +188,7 @@ export class AdhocAppScreenListComponent implements OnInit {
           this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
         }
       }
+      this.spinner.hide();
     });
     this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id);
   }
@@ -446,7 +450,7 @@ export class AdhocAppScreenListComponent implements OnInit {
 
   checkForMetadataInApplication() {
     if (this.selectedAppObject.metadataVersion !== '') {
-      if (this.selectedAppObject.metadataVersion !== this.mmrVersion) {
+      if (this.selectedAppObject.metadataVersion.trim().toLowerCase() !== this.mmrVersion.trim().toLowerCase()) {
         this.oldMetadata = true;
       } else {
         this.oldMetadata = false;

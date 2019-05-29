@@ -11,6 +11,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { AdhocScreenService } from './adhoc-screen.service';
 import { AdhocSavedObjectService } from '../adhoc-header/adhoc-saved-object.service';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 interface ExampleFlatNode {
   expandable: boolean;
   node: { name: string, type: string, id: string, 'visible': boolean };
@@ -57,22 +58,23 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   // tslint:disable-next-line:member-ordering
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   constructor(private router: Router, private adhocScreenService: AdhocScreenService, private adhocService: AdhocService,
-    private adhocSavedObjectService: AdhocSavedObjectService, public activatedRoute: ActivatedRoute, ) {
+    private adhocSavedObjectService: AdhocSavedObjectService, public activatedRoute: ActivatedRoute,
+    private spinner: NgxSpinnerService) {
   }
   ngOnInit() {
+    console.log(1);
+    this.spinner.show();
     this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;
     if (this.screenInfoObject.sessionAdhocModel.searchCriteria.length > 0) {
       this.adhocScreenService.updateSearchCriteria(this.screenInfoObject.sessionAdhocModel.searchCriteria);
     }
-    // if (this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel.length > 0) {
-      if (this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel === null) {
-        this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = new SidePanel();
-      }
-      if (this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel === null) {
-        this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = new InlinePanel();
-      }
-      this.adhocScreenService.updateSearchResult(this.screenInfoObject.sessionAdhocModel.searchResult);
-   // }
+    if (this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel === null) {
+      this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = new SidePanel();
+    }
+    if (this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel === null) {
+      this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = new InlinePanel();
+    }
+    this.adhocScreenService.updateSearchResult(this.screenInfoObject.sessionAdhocModel.searchResult);
     this.initTab();
     this.getTableColumnList();
     this.removePreviousSearchResultAndCriteria();
@@ -139,6 +141,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       }
     }
     this.adhocScreenService.setTreeMap(this.treeMap);
+    this.spinner.hide();
   }
 
   initTab() {
@@ -312,6 +315,10 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     this.screenInfoObject.sessionAdhocModel.linearTableMapOrder.forEach((value, index) => {
       value.tableName = schemaName + '/' + value.tableName;
     });
+  }
+
+  clearSearchCriteria() {
+    document.getElementById('clear-popup-btn').click();
   }
 
   clear() {
