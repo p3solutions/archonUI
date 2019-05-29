@@ -96,7 +96,7 @@
     <div class="body-row">
     <div class="col-md-12" style="margin-bottom: 12px;margin-top: 15px;">
       <div class="back-arrowr" id="da-arrow">
-        <a class="arrow" (click)="closeScreen()" mat-tooltip="Back">
+        <a class="arrow" (click)="closeScreen();closeErrorMsg()" mat-tooltip="Back">
           <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
         </a>
       </div>
@@ -164,31 +164,7 @@
         </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
-        <!-- <div class="well well-sm" *ngFor="let item of getRelatingTableList()">
-          <div class="div-third-col">{{item.pColumn}}</div>
-          <div class="first-div-third-col">{{item.sColumn}}</div>
-          <div class="sec-div-third-col">{{item.dataType}}</div>
-        </div> -->
       </div>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </div>
     <div *ngIf="!isSPVAvailable"><h5 style="margin-top: 35%;">
@@ -211,7 +187,7 @@
             </div>
     <div class="col-md-5" *ngIf="isSPVAvailable">
         <div class="action-btn">
-             <button class="btn mat-raised-button cancel btn-padding" (click)="closeScreen()" data-dismiss="modal">Close</button>
+             <button class="btn mat-raised-button cancel btn-padding" (click)="closeScreen();closeErrorMsg()" data-dismiss="modal">Close</button>
             <button class="btn save btn-padding" [disabled]="disableSubmitBtn" (click)="addSPVJoin();">Add Join</button>
    </div>
   </div>

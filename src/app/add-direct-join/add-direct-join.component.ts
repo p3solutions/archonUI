@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output, ViewChild } from '@angular/core';
 import { takeLast } from 'rxjs/operators';
 import { AddDirectJoinService } from './add-direct-join.service';
 import { TableListService } from '../table-list/table-list.service';
 import { SecondaryColumnPipe } from '../secondary-column.pipe';
 import { Router } from '@angular/router';
+import { MatTableDataSource, MatSort } from '@angular/material';
+import {MatPaginator} from '@angular/material/paginator';
 
 
 @Component({
@@ -36,9 +38,10 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   selected = [];
   autoColumnMatch = false;
   autoColumnMatchMessage = '';
-
+  dataSource = new MatTableDataSource<any>(this.primaryColumns);
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumns'];
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService, private router: Router) { }
 
@@ -48,6 +51,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.getTableList();
     this.enableRelation = false;
     this.populateValues();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnChanges(change: SimpleChanges) {
@@ -60,7 +65,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.primaryTableId = this.directJoin.tableId;
     this.workspaceID = this.workspaceID;
     this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
-      this.primaryColumns = res;
+    this.primaryColumns = res;
+    this.dataSource.data = this.primaryColumns;
     }
     );
   }
