@@ -9,7 +9,7 @@ import { SecondaryColumnPipe } from '../secondary-column.pipe';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatTableModule } from '@angular/material';
+import { MatFormFieldModule, MatTableModule, MatSelectModule, } from '@angular/material';
 import { SearchPipe } from '../search.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TableListService } from '../table-list/table-list.service';
@@ -21,7 +21,7 @@ describe('AddDirectJoinComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AddDirectJoinComponent, SecondaryColumnPipe, SearchPipe],
-      imports: [HttpClientModule, RouterTestingModule, FormsModule, MatFormFieldModule, NgxPaginationModule, MatTableModule],
+      imports: [HttpClientModule, RouterTestingModule, FormsModule, MatFormFieldModule, MatSelectModule, NgxPaginationModule, MatTableModule],
       providers: [AddDirectJoinService, UserinfoService, TableListService,
         { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })

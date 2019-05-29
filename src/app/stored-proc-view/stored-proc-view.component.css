@@ -1,3 +1,14 @@
+.modal-header{
+    font-size: 20px;
+    padding: 14px 18px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #2879ff;
+    color: #fff;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    text-align: left;
+  }
+
 #primary-tbl-heading {
     float: left;
     text-align: right;
@@ -60,7 +71,7 @@ div.sticky {
     position: sticky;
     top: 0;
     padding: 8px 10px;
-    background-color: #269af8;
+    background-color: #64b5f6;
     font-size: 13px;
     letter-spacing: 0.2px;
     text-transform: uppercase;
@@ -186,3 +197,28 @@ table.responsive-table tr>td, table.responsive-table th {
 .display-icon{
     display: none;
 }
+
+.action-btn button.save {
+    background-color: #2879ff;
+    color: #ffffff;
+    text-transform: inherit;
+    margin-right: 10px;
+    transition: 0.5s;
+  }
+  
+  .action-btn button.cancel {
+    background-color: #64b5f6;
+    color: #1b1b1b;
+    margin-right: 10px;
+    text-transform: inherit;
+    transition: 0.5s;
+  }
+  
+  .action-btn button.save:hover {
+    transform: scale(1.1, 1.1);
+  
+  }
+  
+  .action-btn button.cancel:hover {
+    transform: scale(1.1, 1.1);
+  }

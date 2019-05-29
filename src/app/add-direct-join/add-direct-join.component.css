@@ -4,6 +4,8 @@
   border-bottom: 1px solid #e5e5e5;
   background-color: #2879ff;
   color: #fff;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 .modal-title{
@@ -12,7 +14,7 @@
 }
 
 .modal-dialog {
-    margin: 100px auto auto;
+    margin: 65px auto auto;
     width: 1050px;
 }
 .fa-check-circle {
@@ -79,7 +81,7 @@ a {
   
 .items-list {
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 280px;
   padding-left: 20px;
 }
@@ -88,7 +90,7 @@ a {
   margin-top: 10px;
   margin-left: -20px;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 390px;
 }
 
@@ -111,6 +113,8 @@ a {
   padding: 8px;
   width: 100%;
   margin-bottom: 16px;
+  border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 .header {
@@ -189,7 +193,7 @@ input[type='checkbox'] {
 /* overriding css */
 .form-control {
   height: 35px;
-  width: 92%;
+  width: 94%;
   margin-top: 3px;
   margin-left: 4px;
 }
@@ -218,6 +222,7 @@ input[type='checkbox'] {
   margin-bottom: 32px;
   overflow: auto;
   overflow-y: auto;
+  height: 538px;
 }
 
 #customers {  
@@ -318,4 +323,46 @@ input[type='checkbox'] {
 #msg-id{
   text-align: left;
   margin-bottom: 12px;
+}
+
+.action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 10px;
+  transition: 0.5s;
+}
+
+.action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 10px;
+  text-transform: inherit;
+  transition: 0.5s;
+}
+
+.action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
+.action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.mat-header-cell {
+  font-size: 14px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;  
+  text-align: left;
+  color: #0c0c0c;
+  
+}
+tr.mat-header-row {
+  background-color: #64b5f6;
+  height: 38px;
+  border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }

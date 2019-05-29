@@ -1,5 +1,6 @@
 
-<div class="col-md-12" style="background-color:#63b4f6">
+<div class="col-md-12" style="background-color:#63b4f6;border-top-left-radius: 3px;
+border-top-right-radius: 3px;">
     <h5 class="card-title sub-headerrs" style="font-size: 16px;background-color:#63b4f6">Data Anaylzer - Result</h5>
   </div>
 
@@ -106,49 +107,48 @@
     </div>
   </div>
   <div class="col-md-5" style="margin-top:16px; text-align: right;">
-    <button mat-raised-button class="arch-btnn" id="cancel-btn" data-keyboard="false"  data-backdrop="static"  data-toggle="modal" data-target="#confirmClose">Close</button>
-    <button mat-raised-button class="arch-btnn" data-keyboard="false"  data-backdrop="static" data-toggle="modal" data-target="#addJoins">Add Selected Joins</button>
+     
+      <div class="action-btn">
+    <button mat-raised-button class="mat-raised-button cancel btn-padding" data-keyboard="false"  data-backdrop="static"  data-toggle="modal" data-target="#confirmClose">Close</button>
+    <button mat-raised-button class="save mat-raised-button btn-padding" data-keyboard="false"  data-backdrop="static" data-toggle="modal" data-target="#addJoins">Add Selected Joins</button>
+  </div>
   </div>
   <div class="col-md-6 alert-sty text-danger">Note: Kindly click close button to clear the Analysis result. </div>
   </div>
 <!-- Close -->
 <div class="modal fade" id="confirmClose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
+  <div class="modal-dialog" role="document" style="width: 500px;">
     <div class="modal-content text-left">
       <div class="modal-header" style="background: #2879ff; color: #fff;">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
         <h4 class="modal-title">Close Results</h4>
       </div>
       <div class="modal-body text-center" style="height: 100px;">
         Are you sure? The results will be cleared.
       </div>
       <div class="modal-footer">
-        <button mat-raised-button class="arch-btnn" id="cancel-btn"  data-keyboard="false" data-backdrop="static" data-dismiss="modal">Cancel</button>
-        <button mat-raised-button class="arch-btnn" data-dismiss="modal"  data-keyboard="false" data-backdrop="static" (click)="closeScreen()">Confirm
-        </button>
+          <div class="action-btn">
+              <button class="mat-raised-button cancel btn-padding" data-keyboard="false" data-backdrop="static" data-dismiss="modal">Close</button>
+              <button class="save mat-raised-button btn-padding" data-dismiss="modal"  data-keyboard="false" data-backdrop="static" (click)="closeScreen();">Confirm</button>                
+          </div> 
       </div>
     </div>
   </div>
 </div>
 <!-- Add Join Confirmation -->
 <div class="modal fade" id="addJoins" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
+  <div class="modal-dialog" role="document" style="width: 500px;">
     <div class="modal-content text-left">
-      <div class="modal-header" style="background: #2879ff; color: #fff;">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="modal-header" style="background: #2879ff; color: #fff;">        
         <h4 class="modal-title">Add Join Results</h4>
       </div>
       <div class="modal-body text-center" style="height: 100px;">
         Kindly confirm whether you need to join the selected data?
       </div>
       <div class="modal-footer">
-        <button mat-raised-button type="button" class="arch-btnn" id="cancel-btn" data-dismiss="modal">Cancel</button>
-        <button mat-raised-button type="button" class="arch-btnn" data-dismiss="modal" (click)="addJoins()">Confirm
-        </button>
+          <div class="action-btn">
+              <button class="mat-raised-button cancel btn-padding"  data-dismiss="modal">Close</button>
+              <button class="save mat-raised-button btn-padding" data-dismiss="modal" (click)="addJoins();">Confirm</button>                
+          </div> 
       </div>
     </div>
   </div>
