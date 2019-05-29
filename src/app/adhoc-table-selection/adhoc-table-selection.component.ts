@@ -158,14 +158,25 @@ export class AdhocTableSelectionComponent implements OnInit {
           } else {
             this.relationshipInfo = result;
           }
-          this.primaryTable = getPrimaryArray(this.relationshipInfo);
-          this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-          for (const i of this.primaryTable) {
-            this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+          if (this.relationshipInfo.length > 0) {
+            this.primaryTable = getPrimaryArray(this.relationshipInfo);
+            this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+            for (const i of this.primaryTable) {
+              this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+            }
+            this.selectedValues.push(value.tableName);
+            this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+            this.createchart();
+          } else {
+            this.data = {
+              color: '#ffffff',
+              enableClick: false,
+              id: 'NoRelation',
+              name: '',
+              visible: true,
+            };
+            this.createchart();
           }
-          this.selectedValues.push(value.tableName);
-          this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
-          this.createchart();
         });
     }
   }
@@ -323,6 +334,9 @@ export class AdhocTableSelectionComponent implements OnInit {
           } else {
             ifSelected = 'Select Value';
           }
+        }
+        if (d.data.id === 'NoRelation') {
+            ifSelected = 'No Relationship';
         }
         div.transition().duration(200).style('opacity', .9);
         div.html(ifSelected)
