@@ -4,6 +4,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { stringify } from '@angular/compiler/src/util';
 import { StoredProcViewService } from './stored-proc-view.service';
 import { ConstantPool, isNgTemplate } from '@angular/compiler';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-stored-proc-view',
@@ -35,6 +36,7 @@ export class StoredProcViewComponent implements OnInit {
   displayedColumns: string[] = ['PrimaryColumn', 'SecondaryColumn', 'DataType'];
   columnsList: any;
   homeStage: boolean;
+  dataSource = new MatTableDataSource<any>(this.columnsList);
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
     private storedProcViewService: StoredProcViewService) {
   }
@@ -139,8 +141,7 @@ export class StoredProcViewComponent implements OnInit {
     }
     this.enableSubmitBtn();
     this.columnsList = this.getRelatingTableList();
-    console.log(this.columnsList, 'list');
-    
+  this.dataSource.data = this.columnsList;
   }
 
   enableSubmitBtn() {

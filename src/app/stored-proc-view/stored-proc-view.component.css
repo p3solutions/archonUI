@@ -180,21 +180,31 @@
     clear: both;
 }
 .mat-header-cell {
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;  
   text-align: left;
   color: #0c0c0c;  
+  font-weight: bold;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 10px;
+}
+
+.mat-cell, .mat-footer-cell {
+  font-size: 12px;
+  text-align: left;
+  padding-left: 10px;
 }
 ::ng-deep .mat-paginator-range-label {
   margin: 0px !important;
 }
-
-::ng-deep .svg {
-  height: unset;
+::ng-deep .mat-paginator-icon {
+  height: unset !important;
 }
+
 
 
 
@@ -230,7 +240,7 @@ table.responsive-table tr>td, table.responsive-table th {
     font-weight: 300;
     font-size: 12px;
     letter-spacing: 0.2px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     padding: 10px 10px
 }
 
@@ -243,7 +253,7 @@ table.responsive-table tr>td, table.responsive-table th {
     font-weight: 300;
     font-size: 12px;
     letter-spacing: 0.2px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     padding: 10px 10px
 }
 
