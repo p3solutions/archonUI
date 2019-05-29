@@ -5,6 +5,8 @@ import { stringify } from '@angular/compiler/src/util';
 import { StoredProcViewService } from './stored-proc-view.service';
 import { ConstantPool, isNgTemplate } from '@angular/compiler';
 import { MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
+import { TableListService } from '../table-list/table-list.service';
 
 @Component({
   selector: 'app-stored-proc-view',
@@ -38,7 +40,7 @@ export class StoredProcViewComponent implements OnInit {
   homeStage: boolean;
   dataSource = new MatTableDataSource<any>(this.columnsList);
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
-    private storedProcViewService: StoredProcViewService) {
+    private storedProcViewService: StoredProcViewService, private router: Router, private tablelistService: TableListService) {
   }
 
   ngOnInit() {
@@ -200,5 +202,9 @@ export class StoredProcViewComponent implements OnInit {
   }
   gotoBack() {
     this.homeStage = true;
+  }
+  closeScreen() {
+    this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+    this.tablelistService.changeBooleanValue(true);
   }
 }

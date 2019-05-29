@@ -3,6 +3,7 @@ import { takeLast } from 'rxjs/operators';
 import { AddDirectJoinService } from './add-direct-join.service';
 import { TableListService } from '../table-list/table-list.service';
 import { SecondaryColumnPipe } from '../secondary-column.pipe';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,9 +12,9 @@ import { SecondaryColumnPipe } from '../secondary-column.pipe';
   styleUrls: ['./add-direct-join.component.css']
 })
 export class AddDirectJoinComponent implements OnInit, OnChanges {
-  @Input() directJoin: any;
+  directJoin: any;
   tableList: string[];
-  @Input() workspaceID: any;
+  workspaceID: any;
   @Output() updateEvent = new EventEmitter<boolean>();
   primaryTableName: any;
   primaryTableId: any;
@@ -39,20 +40,23 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumns'];
 
 
-  constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService) { }
+  constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService, private router: Router) { }
 
   ngOnInit() {
+    this.workspaceID = this.addDirectJoinService.workspaceID;
+    this.directJoin = this.addDirectJoinService.directJoin;
     this.getTableList();
-  }
-
-  ngOnChanges(change: SimpleChanges) {
     this.enableRelation = false;
     this.populateValues();
   }
 
+  ngOnChanges(change: SimpleChanges) {
+    // this.enableRelation = false;
+    // this.populateValues();
+  }
+
   populateValues() {
     this.primaryTableName = this.directJoin.tableName;
-    console.log(this.primaryTableName, 'col');
     this.primaryTableId = this.directJoin.tableId;
     this.workspaceID = this.workspaceID;
     this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
@@ -231,6 +235,11 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   closeAutoMatchMessage() {
     this.autoColumnMatch = false;
+  }
+
+  closeScreen() {
+    this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+    this.tablelistService.changeBooleanValue(true);
   }
 
 }

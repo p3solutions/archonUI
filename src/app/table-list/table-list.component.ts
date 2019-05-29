@@ -799,8 +799,10 @@ export class TableListComponent implements OnInit {
   adddirectjoin() {
     this.homeStage = false;
     this.dataAModal = false;
-    this.addDirectjoin = true;
-    this.router.navigate(['workspace/metalyzer/ALL/analysis/addjoin']);
+    this.addDirectJoinService.workspaceID = this.workspaceID;
+    this.addDirectJoinService.directJoin = this.joinValues;
+  //  this.addDirectjoin = true;
+     this.router.navigate(['workspace/metalyzer/ALL/analysis/addjoin']);
   }
 
   downloadFile(content, fileType) {

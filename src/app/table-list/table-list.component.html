@@ -48,7 +48,7 @@
           </div>
         </div>       
         <button style="display: none"  id="dataanalyze" (click)="openDataAModal()">Data Analyzer</button>
-        <button style="display: none"  id="directjoin" data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct
+        <button style="display: none"  id="directjoin" (click)="adddirectjoin()" >Direct
             Join</button>
         <button style="display: none"  id="spv" (click)="openStoredProcView()">SP/View Join</button>
         <button style="display: none"  id="exxml" (click)="exportxml()">XML</button>
@@ -410,11 +410,11 @@
       </div>
     </div>
   </div>
-  <div *ngIf="addDirectjoin">
-    <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues"
+  <!-- <div *ngIf="addDirectjoin">
+    <app-add-direct-join  [directJoin]="joinValues"
       [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static"
       data-keyboard="false"></app-add-direct-join>
-  </div>
+  </div> -->
   <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="true"
     data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInvite">Open Modal</button>
   <div id="confirmCancelInvite" class="modal fade" role="dialog" tabindex="-1">

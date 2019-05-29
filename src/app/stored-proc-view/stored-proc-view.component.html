@@ -96,7 +96,7 @@
     <div class="body-row">
     <div class="col-md-12" style="margin-bottom: 12px;margin-top: 15px;">
       <div class="back-arrowr" id="da-arrow">
-        <a class="arrow" (click)="gotoBack()" mat-tooltip="Back">
+        <a class="arrow" (click)="closeScreen()" mat-tooltip="Back">
           <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
         </a>
       </div>
@@ -211,7 +211,7 @@
             </div>
     <div class="col-md-5" *ngIf="isSPVAvailable">
         <div class="action-btn">
-             <button class="btn mat-raised-button cancel btn-padding" (click)="closeErrorMsg()" data-dismiss="modal">Close</button>
+             <button class="btn mat-raised-button cancel btn-padding" (click)="closeScreen()" data-dismiss="modal">Close</button>
             <button class="btn save btn-padding" [disabled]="disableSubmitBtn" (click)="addSPVJoin();">Add Join</button>
    </div>
   </div>

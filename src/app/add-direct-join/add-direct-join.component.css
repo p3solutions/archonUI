@@ -243,14 +243,14 @@ input[type='checkbox'] {
 /* overriding css */
 .form-control {
   height: 35px;
-  width: 94%;
-  margin-top: 3px;
-  margin-left: 4px;
+  width: 93%;
+  margin-top: 7px;
+  margin-left: 5px;
 }
 .form-control-feedback {
   position: relative;
   margin-top: -31px;
-  margin-left: 249px;
+  margin-left: 238px;
   height: 32px;
   color: #269af8;
   line-height: 30px;
@@ -415,4 +415,14 @@ tr.mat-header-row {
   height: 38px;
   border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+}
+.first-div-new {
+  display: block;
+  width: 86%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+  margin-left: 15px;
+  text-align: left;
+  font-weight: bold;
 }

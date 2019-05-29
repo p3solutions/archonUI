@@ -8,6 +8,8 @@ import { of } from 'rxjs';
 
 @Injectable()
 export class AddDirectJoinService {
+  workspaceID;
+  directJoin;
 
   private apiUrl = this.environment.apiUrl;
 
