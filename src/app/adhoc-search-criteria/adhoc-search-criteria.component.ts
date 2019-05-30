@@ -266,9 +266,9 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     delete this.screenInfoObject['updatedAt'];
     this.updateInProgress = true;
     this.adhocService.updateScreen(this.screenInfoObject, this.screenInfoObject.screenId).subscribe(result => {
-      document.getElementById('success-popup-btn').click();
       this.updateInProgress = false;
       if (result.httpStatus === 200) {
+        document.getElementById('success-popup-btn').click();
         this.successMsg = 'Screen Updated Successfully';
       } else {
         this.successMsg = 'Screen Not Updated Successfully';

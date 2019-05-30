@@ -1,10 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { Tab, SearchResult, ResultFields, TableColumnNode, InlinePanel, SidePanel } from '../adhoc-landing-page/adhoc';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
 import { Router } from '@angular/router';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
-import { Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-adhoc-search-panel',
@@ -30,6 +28,7 @@ export class AdhocSearchPanelComponent implements OnInit {
   inlineTabName = 'Tab 1';
   sideTabName = 'Tab 1';
   mainPanelId = 'main-panel-drop-id';
+  renameTabName = '';
   constructor(private adhocScreenService: AdhocScreenService,
     public router: Router, private adhocService: AdhocService) { }
 
@@ -255,9 +254,23 @@ export class AdhocSearchPanelComponent implements OnInit {
   }
 
   renameSideTabName() {
+    console.log(this.sideTabName, this.selectedSideTab);
     this.searchResult.sidePanel.tabs[this.selectedSideTab].tabName = this.sideTabName;
+    console.log(this.searchResult.sidePanel.tabs[this.selectedSideTab].tabName);
+    this.adhocScreenService.updateSearchResult(this.searchResult);
   }
   renameInlineTabName() {
     this.searchResult.inLinePanel.tabs[this.selectedInlineTab].tabName = this.inlineTabName;
+    this.adhocScreenService.updateSearchResult(this.searchResult);
+  }
+
+  openInlineRenamePopup() {
+    document.getElementById('inline-tab-rename-popup-btn').click();
+    this.inlineTabName = this.searchResult.inLinePanel.tabs[this.selectedInlineTab].tabName;
+  }
+
+  openSideRenamePopup() {
+    document.getElementById('side-tab-rename-popup-btn').click();
+    this.sideTabName = this.searchResult.sidePanel.tabs[this.selectedSideTab].tabName;
   }
 }
