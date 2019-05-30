@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { StoredProcView, SelectedTableNameListObj, TableNameAndRelatingTable, SpvInfo, SpvNameList } from './stored-proc-view';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { StoredProcView, SelectedTableNameListObj, TableNameAndRelatingTable, SpvInfo, SpvNameList, ColumnList } from './stored-proc-view';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { stringify } from '@angular/compiler/src/util';
 import { StoredProcViewService } from './stored-proc-view.service';
 import { ConstantPool, isNgTemplate } from '@angular/compiler';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 
@@ -35,10 +35,13 @@ export class StoredProcViewComponent implements OnInit {
   updateSuccess: boolean;
   errorMsg: any;
   isSPVAvailable: boolean;
-  displayedColumns: string[] = ['PrimaryColumn', 'SecondaryColumn', 'DataType'];
+  displayedColumns: string[] = ['pColumn', 'sColumn', 'dataType'];
   columnsList: any;
   homeStage: boolean;
-  dataSource = new MatTableDataSource<any>(this.columnsList);
+  dataSource: MatTableDataSource<ColumnList>;
+  columnlength = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
     private storedProcViewService: StoredProcViewService, private router: Router, private tablelistService: TableListService) {
   }
@@ -143,7 +146,28 @@ export class StoredProcViewComponent implements OnInit {
     }
     this.enableSubmitBtn();
     this.columnsList = this.getRelatingTableList();
-  this.dataSource.data = this.columnsList;
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
+    this.dataSource = new MatTableDataSource(this.columnsList);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    console.log(this.dataSource.data);
+    console.log(this.columnsList);
+    this.columnlength = this.columnsList.length;
   }
 
   enableSubmitBtn() {
@@ -183,7 +207,8 @@ export class StoredProcViewComponent implements OnInit {
         'tableId': this.primaryTableId,
         'tableName': this.tableName,
       },
-      'spvInfoList': this.selectedSPVJoinList};
+      'spvInfoList': this.selectedSPVJoinList
+    };
     this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
       if (res && res.errorDetails.length === 0) {
         this.updateSuccess = true;
