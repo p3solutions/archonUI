@@ -463,7 +463,7 @@ table tr td:nth-child(6) {
 #avaliable-table-list {
   font-size: 12px;
   overflow: auto;
-  height: 220px;
+  height: 350px;
 }
 
 #avaliable-table-list div {
@@ -703,7 +703,9 @@ a.disabled {
 }
 
 #create-job-select-table-list {
-  text-align: left
+  text-align: left;
+  height: 350px;
+  overflow: auto
 }
 
 .mb-5 {

@@ -60,7 +60,6 @@ export class ErtTableComponent implements OnInit {
   enableUserDefined = false;
   usrDefinedAlertMessage = '';
   columnConfigFunctionList: ColumnConfigFunction[] = [];
-  ertedittable: boolean;
   lastPage = 1;
   storeSelectedTables: TableDetailsListObj[] = [];
   itemsPerPage = 49;
@@ -81,6 +80,9 @@ export class ErtTableComponent implements OnInit {
   currentPageOfOriginalErtTable = 1;
   searchOriginalTableName = '';
   tempOriginalSelectedTable: TableDetailsListObj[] = [];
+  isEditErtTableLeft = false;
+  editErtTableIndex = 1;
+  totalEditErtTableList = 50;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -88,6 +90,7 @@ export class ErtTableComponent implements OnInit {
 
   ngOnInit() {
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
+    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.myForm = this._fb.group({
       addEditColumn: this._fb.array([
         this.initColumn(),
@@ -99,31 +102,34 @@ export class ErtTableComponent implements OnInit {
     if (this.from !== 'data-record' && this.from !== 'SIP' && this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.showAvilableBtn = true;
     }
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      document.getElementById('back-to-job-config').classList.add('hide');
+    }
+    console.log(this.ertJobId);
+    console.log(this.from);
     if (this.from === 'data-record') {
       this.getERTtableListForDataRecord();
     } else if (this.from === 'SIP') {
       this.getERTtableListForSIP();
+    } else if (this.from === 'TABLE') {
+      this.getEditErtTableList(1);
     } else {
-      this.ertedittable = true;
-      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-        document.getElementById('back-to-job-config').classList.add('hide');
-      }
       if (this.ertJobId !== '' && this.ertService.selectedList.length !== 0) {
-        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-        this.selectedTableList = this.ertService.selectedList;
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.storeSelectedTables = this.ertService.storeSelectedTables;
-        this.getERTcolumnlist(this.selectedTableId, '');
+        // this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
+        // this.selectedTableList = this.ertService.selectedList;
+        // this.selectedTableId = this.selectedTableList[0].tableId;
+        // this.storeSelectedTables = this.ertService.storeSelectedTables;
+        // this.getERTcolumnlist(this.selectedTableId, '');
       } else if (this.ertJobId !== '') {
-        this.getERTtableList();
+        // this.getERTtableList();
       } else if (this.ertService.selectedList.length === 0) {
-        this.getERTtableList();
+        // this.getERTtableList();
       } else {
-        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-        this.selectedTableList = this.ertService.selectedList;
-        this.storeSelectedTables = this.ertService.storeSelectedTables;
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.getERTcolumnlist(this.selectedTableId, '');
+        // this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
+        // this.selectedTableList = this.ertService.selectedList;
+        // this.storeSelectedTables = this.ertService.storeSelectedTables;
+        // this.selectedTableId = this.selectedTableList[0].tableId;
+        // this.getERTcolumnlist(this.selectedTableId, '');
       }
     }
   }
@@ -131,13 +137,49 @@ export class ErtTableComponent implements OnInit {
   openCreateJobSelectTablePopup(index) { // During creating job when user click on add table btn.
     document.getElementById('create-job-select-table-popup-btn').click();
     this.getOriginalErttableList(1);
+    this.currentPageOfOriginalErtTable = 1;
   }
 
   getOriginalErttableList(currentIndex) { // During creating job when user click on pagination of add table.
+    this.spinner.show();
     this.ertService.getERTtableList(this.workspaceId, this.ertJobId, currentIndex).subscribe(response => {
-      this.originalErttableList = response;
-      this.totalItemOfOriginalErtTable = this.originalErttableList.sourceTableCount;
+      try {
+        this.originalErttableList = response;
+        this.totalItemOfOriginalErtTable = this.originalErttableList.sourceTableCount - this.originalErttableList.selectedTableCount;
+        this.checkForAlreadySelectedTable();
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
     });
+  }
+
+  getEditErtTableList(currentIndex) { // During Editing job when user click on pagination of add table.
+    this.spinner.show();
+    this.ertService.getERTtableList(this.workspaceId, this.ertJobId, currentIndex).subscribe(response => {
+      try {
+        this.originalErttableList = response;
+        this.isEditErtTableLeft = response.isSelectedTableLeft;
+        for (const tempTable of this.originalErttableList.ertTableList) {
+          const tempObj: TableDetailsListObj = new TableDetailsListObj();
+          tempObj.tableId = tempTable.tableId;
+          tempObj.tableName = tempTable.tableName;
+          tempObj.modifiedTableName = tempTable.modifiedTableName;
+          tempObj.isSelected = true;
+          this.selectedTableList.push(tempObj);
+        }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
+    });
+  }
+
+  getNextBatchOfERTTable(event) {
+    if (true && event === 'bottom') {
+      this.editErtTableIndex = this.editErtTableIndex + 1;
+      this.getEditErtTableList(this.editErtTableIndex);
+    }
   }
 
   getSearchoriginalTablelist() {  // During creating job when user search table.
@@ -146,27 +188,89 @@ export class ErtTableComponent implements OnInit {
       this.ertService.getERTtablesearchList(this.workspaceId, this.searchOriginalTableName.toUpperCase(),
         this.ertJobId).subscribe(response => {
           this.originalErttableList = response;
+          this.checkForAlreadySelectedTable();
         });
     } else {
       this.getOriginalErttableList('1');
     }
   }
 
-  closeErrorMsg() {
-    this.errorMsg = '';
+  checkForAlreadySelectedTable() { // Check for a selected table in add case.
+    for (const tempTable of this.selectedTableList) {
+      if (this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
+        this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0].isSelected = true;
+      }
+    }
+    for (const tempTable of this.tempOriginalSelectedTable) {
+      if (this.originalErttableList.ertTableList === undefined) {
+        this.spinner.hide();
+      } else if (this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
+        this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0].isSelected = true;
+      }
+    }
+  }
+
+  inEditCheckForAlreadySelectedTable() { // Check for a selected table in edit case.
+    for (const tempTable of this.selectedTableList) {
+      if (this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
+        this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0].isSelected = true;
+      }
+    }
+    for (const tempTable of this.tempOriginalSelectedTable) {
+      if (this.ertAvillableTableList.erttableList.ertTableList === undefined) {
+        this.spinner.hide();
+      } else if (this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
+        this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0].isSelected = true;
+      }
+    }
   }
 
   addTempOriginalSelectedTable(tableId, $event) {
-    if ($event.checked) {
-      this.tempOriginalSelectedTable
+    let tempOriginalTableObj = new ErtTableObj();
+    if ($event.target.checked) {
+      tempOriginalTableObj = this.originalErttableList.ertTableList.filter(a => a.tableId === tableId)[0];
+      const tempObj: TableDetailsListObj = new TableDetailsListObj();
+      tempObj.tableId = tableId;
+      tempObj.tableName = tempOriginalTableObj.tableName;
+      tempObj.modifiedTableName = tempOriginalTableObj.modifiedTableName;
+      tempObj.isSelected = true;
+      this.tempOriginalSelectedTable.push(tempObj);
     } else {
+      const index = this.tempOriginalSelectedTable.findIndex(a => a.tableId === tableId);
+      if (index !== -1) {
+        this.tempOriginalSelectedTable.splice(index, 1);
+      }
+    }
+  }
 
+  addTempEditErtSelectedTable(tableId, $event) {
+    let tempOriginalTableObj = new ErtTableObj();
+    if ($event.target.checked) {
+      tempOriginalTableObj = this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tableId)[0];
+      const tempObj: TableDetailsListObj = new TableDetailsListObj();
+      tempObj.tableId = tableId;
+      tempObj.tableName = tempOriginalTableObj.tableName;
+      tempObj.modifiedTableName = tempOriginalTableObj.modifiedTableName;
+      tempObj.isSelected = true;
+      this.tempOriginalSelectedTable.push(tempObj);
+    } else {
+      const index = this.tempOriginalSelectedTable.findIndex(a => a.tableId === tableId);
+      if (index !== -1) {
+        this.tempOriginalSelectedTable.splice(index, 1);
+      }
     }
   }
 
 
   addSelectTableCreateJob() {
+    Array.prototype.push.apply(this.selectedTableList, this.tempOriginalSelectedTable);
+    this.tempOriginalSelectedTable = [];
+    this.selectedTableId = this.selectedTableList[0].tableId;
+    this.getERTcolumnlist(this.selectedTableId, '');
+  }
 
+  closeErrorMsg() {
+    this.errorMsg = '';
   }
 
   getERTtableListForDataRecord() {
@@ -271,13 +375,25 @@ export class ErtTableComponent implements OnInit {
     });
   }
 
+  openAvailableErtTablePopup(index) { // During creating job when user click on add table btn.
+    document.getElementById('ert-available-table-popup-btn').click();
+    this.getErtAvailableTable(1);
+    this.availPage = 1;
+  }
+
   getErtAvailableTable(page) {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-      this.ertService.getErtAvailableTable(this.ertJobId, this.avilableStartIndex).subscribe(result => {
-        this.ertAvillableTableList = result;
-        console.log(this.ertAvillableTableList);
-        this.avilableTableCount = this.ertAvillableTableList.erttableList.sourceTableCount -
-          this.ertAvillableTableList.erttableList.selectedTableCount;
+      this.spinner.show();
+      this.ertService.getErtAvailableTable(this.ertJobId, page).subscribe(result => {
+        try {
+          this.ertAvillableTableList = result;
+          this.avilableTableCount = this.ertAvillableTableList.erttableList.sourceTableCount -
+            this.ertAvillableTableList.erttableList.selectedTableCount;
+          this.inEditCheckForAlreadySelectedTable();
+          this.spinner.hide();
+        } catch {
+          this.spinner.hide();
+        }
       });
     }
   }
@@ -993,9 +1109,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   getAvilableTablePage(page) {
-    console.log(page);
     this.ertAvillableTableList.erttableList.ertTableList = [];
-    this.avilableStartIndex = page;
     this.getErtAvailableTable(page);
   }
 

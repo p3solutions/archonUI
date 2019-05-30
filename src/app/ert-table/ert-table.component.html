@@ -11,16 +11,16 @@
             (keyup)="searchTablelist()" placeholder="Search Table"></div>
 
         <div class='body-right'>
-          <a (click)="getErtAvailableTable('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn"
-            class="cursor-poniter" data-toggle="modal" data-target="#ert_available_table_modal"><i
+          <a (click)="openAvailableErtTablePopup('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn"
+            class="cursor-poniter"><i
               class="fa fa-plus-circle"></i></a>
-          <a (click)="openCreateJobSelectTablePopup('1')" matTooltip="Select Table to create job"
+          <a *ngIf="!showAvilableBtn" (click)="openCreateJobSelectTablePopup('1')" matTooltip="Select Table to create job"
             class="cursor-poniter"><i class="fa fa-plus-circle"></i></a></div>
         <div class="card-body" id="ert-tbl-search">
           <div *ngIf="!showNoTablesMsg" id="tbl-list" style="height: 326px;">
-            <div class="scroll-div border">
-              <div
-                *ngFor="let item of selectedTableList | paginate: { id:'selected-table-pagination', itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName"
+            <div class="scroll-div border" appScrollable (scrollPosition)="getNextBatchOfERTTable($event)">
+              <!-- | paginate: { id:'selected-table-pagination', itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } -->
+              <div *ngFor="let item of selectedTableList | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)"
                 [ngClass]="item.tableId===selectedTableId ?'selectTableCls well':'well'">
                 <div><input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
@@ -31,8 +31,8 @@
                 </div>
               </div>
             </div>
-            <pagination-controls id="selected-table-pagination" (pageChange)="getPage(page = $event)">
-            </pagination-controls>
+            <!-- <pagination-controls id="selected-table-pagination" (pageChange)="getPage(page = $event)">
+            </pagination-controls> -->
           </div>
           <h4 *ngIf="showNoTablesMsg" style="margin-top: 50%;">No tables available</h4>
         </div>
@@ -81,10 +81,6 @@
               </div>
             </div>
             <div id="select-tbl-list">
-              <ngx-spinner bdOpacity=0.9 bdColor="#f9f9f9" size="medium" color="#0a85f8" type="ball-beat"
-                [fullScreen]="true">
-                <p style="color: #000000"> Loading... </p>
-              </ngx-spinner>
               <div *ngIf="!showNoTablesMsg" class="scroll-div">
                 <table class="table table-striped">
                   <thead>
@@ -531,8 +527,9 @@
     </div>
   </div>
 </div>
-
-<div id="ert_available_table_modal" class="modal fade" role="dialog">
+<button style="display:none" type="button" id="ert-available-table-popup-btn" class="btn btn-info btn-lg"
+  data-toggle="modal" data-target="#ert-available-table-popup">Open Modal</button>
+<div id="ert-available-table-popup" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -540,9 +537,9 @@
       </div>
       <div class="modal-body">
         <div id="avaliable-table-list">
-          <div class="form-control"
-            *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { id:'availble-pagination', itemsPerPage: availItemsPerPage, totalItems: avilableTableCount, currentPage: availPage } ">
-            <input type="checkbox" (click)="selectAvaliableTable(item.tableId,$event)" [(ngModel)]="item.isSelected">
+          <div class="form-control {{item.isSelected?'selected-table-cls':''}}"
+            *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { id:'availble-pagination', itemsPerPage: 50, totalItems: avilableTableCount, currentPage: availPage } ">
+            <input type="checkbox" (click)="addTempEditErtSelectedTable(item.tableId,$event)" [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
         </div>
@@ -552,7 +549,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="addAvailableTable()"
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="addSelectTableCreateJob()"
           data-dismiss="modal">Save</button>
       </div>
     </div>
@@ -630,8 +627,9 @@
             (keyup)="getSearchoriginalTablelist()" placeholder="Search Table"></div>
         <div id="create-job-select-table-list">
           <div class="form-control mb-5 {{item.isSelected?'selected-table-cls':''}}"
-            *ngFor="let item of originalErttableList.ertTableList | paginate: { id:'create-job-select-table-pagination-id', itemsPerPage: 49, totalItems: totalItemOfOriginalErtTable, currentPage: currentPageOfOriginalErtTable } ">
-            <input type="checkbox" (click)="addTempOriginalSelectedTable(item.tableId,$event)" class="align-checkbox" [(ngModel)]="item.isSelected">
+            *ngFor="let item of originalErttableList.ertTableList | paginate: { id:'create-job-select-table-pagination-id', itemsPerPage: 50, totalItems: totalItemOfOriginalErtTable, currentPage: currentPageOfOriginalErtTable } ">
+            <input type="checkbox" (click)="addTempOriginalSelectedTable(item.tableId,$event)" class="align-checkbox"
+              [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
         </div>
