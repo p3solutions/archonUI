@@ -693,11 +693,30 @@ a.disabled {
   display: block;
 }
 
-.selectTableCls{
+.selectTableCls {
   border: 1px solid #2879ff;
 }
 
-.inline-loader-ert{
+.inline-loader-ert {
   position: absolute;
   margin: 3px
 }
+
+#create-job-select-table-list {
+  text-align: left
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.align-checkbox {
+  vertical-align: text-top;
+}
+
+.search-original-table{
+  font-size: 12px;
+  color: #121212;
+  margin-bottom: 4px;
+}
+

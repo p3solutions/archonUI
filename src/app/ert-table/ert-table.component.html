@@ -11,11 +11,11 @@
             (keyup)="searchTablelist()" placeholder="Search Table"></div>
 
         <div class='body-right'>
-
-          <a (click)="getErtAvailableTable('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn" class="cursor-poniter"
-            data-toggle="modal" data-target="#ert_available_table_modal"><i class="fa fa-plus-circle"></i></a></div>
-
-
+          <a (click)="getErtAvailableTable('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn"
+            class="cursor-poniter" data-toggle="modal" data-target="#ert_available_table_modal"><i
+              class="fa fa-plus-circle"></i></a>
+          <a (click)="openCreateJobSelectTablePopup('1')" matTooltip="Select Table to create job"
+            class="cursor-poniter"><i class="fa fa-plus-circle"></i></a></div>
         <div class="card-body" id="ert-tbl-search">
           <div *ngIf="!showNoTablesMsg" id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
@@ -167,7 +167,7 @@
         </div>
         <div>
           <mat-accordion>
-            <mat-expansion-panel [disabled]="isCombinedQueryMode"  (closed)="openColumnMode()">
+            <mat-expansion-panel [disabled]="isCombinedQueryMode" (closed)="openColumnMode()">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Combined Column Mode
@@ -338,8 +338,10 @@
         </div>
         <button type="button" class="btn btn-padding primary-btn-color" id="usr-defined-close"
           data-dismiss="modal">Close</button>
-        <button type="button"  class="btn btn-padding {{enableUserDefined?'primary-btn-color-disabled':'primary-btn-color'}}" [disabled]="enableUserDefined || isUserDefinedColumnInProgress"
-          (click)="saveUsrDefinedColumn()">Save <i *ngIf="isUserDefinedColumnInProgress" class="fa fa-spinner fa-spin inline-loader-ert"></i></button>
+        <button type="button"
+          class="btn btn-padding {{enableUserDefined?'primary-btn-color-disabled':'primary-btn-color'}}"
+          [disabled]="enableUserDefined || isUserDefinedColumnInProgress" (click)="saveUsrDefinedColumn()">Save <i
+            *ngIf="isUserDefinedColumnInProgress" class="fa fa-spinner fa-spin inline-loader-ert"></i></button>
       </div>
     </div>
   </div>
@@ -544,7 +546,8 @@
             {{item.tableName}}
           </div>
         </div>
-        <pagination-controls id="availble-pagination" style="font-size:13px" (pageChange)="getAvilableTablePage(availPage = $event)">
+        <pagination-controls id="availble-pagination" style="font-size:13px"
+          (pageChange)="getAvilableTablePage(availPage = $event)">
         </pagination-controls>
       </div>
       <div class="modal-footer">
@@ -566,7 +569,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="refreshColumn()" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="refreshColumn()"
+          data-dismiss="modal">Yes</button>
 
       </div>
     </div>
@@ -583,7 +587,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()"
+          data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
@@ -601,10 +606,43 @@
         <p>Filter can only be applied on primary table.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color"
-          data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<button style="display:none" type="button" id="create-job-select-table-popup-btn" class="btn btn-info btn-lg"
+  data-toggle="modal" data-target="#create-job-select-table-popup">Open Modal</button>
+<div id="create-job-select-table-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header info-popup-header-cls">
+        <div class="modal-title popup-title-cls">Select Table to create job</div>
+      </div>
+      <div class="modal-body">
+        <div class='search-original-table'><span style="z-index:1"
+            class="glyphicon glyphicon-search inner-addon right-addon"></span>
+          <input type="text" class="form-control search-input" [(ngModel)]="searchOriginalTableName" id="listSearch"
+            (keyup)="getSearchoriginalTablelist()" placeholder="Search Table"></div>
+        <div id="create-job-select-table-list">
+          <div class="form-control mb-5 {{item.isSelected?'selected-table-cls':''}}"
+            *ngFor="let item of originalErttableList.ertTableList | paginate: { id:'create-job-select-table-pagination-id', itemsPerPage: 49, totalItems: totalItemOfOriginalErtTable, currentPage: currentPageOfOriginalErtTable } ">
+            <input type="checkbox" (click)="addTempOriginalSelectedTable(item.tableId,$event)" class="align-checkbox" [(ngModel)]="item.isSelected">
+            {{item.tableName}}
+          </div>
+        </div>
+        <pagination-controls id="create-job-select-table-pagination-id" style="font-size:13px"
+          (pageChange)="getOriginalErttableList(currentPageOfOriginalErtTable = $event)">
+        </pagination-controls>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="addSelectTableCreateJob()"
+          data-dismiss="modal">Add</button>
       </div>
     </div>
   </div>

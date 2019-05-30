@@ -76,6 +76,11 @@ export class ErtTableComponent implements OnInit {
   isQueryMode = false;
   isUserDefinedColumnInProgress = false;
   @ViewChild(MatAccordion) accordion: MatAccordion;
+  originalErttableList: ErtTableListObj = new ErtTableListObj(); // to show ert table list in popup when we create or add job.
+  totalItemOfOriginalErtTable = 50;
+  currentPageOfOriginalErtTable = 1;
+  searchOriginalTableName = '';
+  tempOriginalSelectedTable: TableDetailsListObj[] = [];
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -123,8 +128,45 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
+  openCreateJobSelectTablePopup(index) { // During creating job when user click on add table btn.
+    document.getElementById('create-job-select-table-popup-btn').click();
+    this.getOriginalErttableList(1);
+  }
+
+  getOriginalErttableList(currentIndex) { // During creating job when user click on pagination of add table.
+    this.ertService.getERTtableList(this.workspaceId, this.ertJobId, currentIndex).subscribe(response => {
+      this.originalErttableList = response;
+      this.totalItemOfOriginalErtTable = this.originalErttableList.sourceTableCount;
+    });
+  }
+
+  getSearchoriginalTablelist() {  // During creating job when user search table.
+    this.currentPageOfOriginalErtTable = 1;
+    if (this.searchOriginalTableName !== '') {
+      this.ertService.getERTtablesearchList(this.workspaceId, this.searchOriginalTableName.toUpperCase(),
+        this.ertJobId).subscribe(response => {
+          this.originalErttableList = response;
+        });
+    } else {
+      this.getOriginalErttableList('1');
+    }
+  }
+
   closeErrorMsg() {
     this.errorMsg = '';
+  }
+
+  addTempOriginalSelectedTable(tableId, $event) {
+    if ($event.checked) {
+      this.tempOriginalSelectedTable
+    } else {
+
+    }
+  }
+
+
+  addSelectTableCreateJob() {
+
   }
 
   getERTtableListForDataRecord() {
