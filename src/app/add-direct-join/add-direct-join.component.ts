@@ -245,7 +245,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   closeScreen() {
     this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
-    this.tablelistService.changeBooleanValue(true);
+    this.addDirectJoinService.changeDJVBooleanValue(true);
+    // this.tablelistService.changeBooleanValue(true);
   }
 
 }

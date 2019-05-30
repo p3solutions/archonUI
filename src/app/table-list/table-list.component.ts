@@ -100,6 +100,7 @@ export class TableListComponent implements OnInit {
   searchSec2;
   primaryPage = 1;
   spview = false;
+  directjoin: boolean;
 
   constructor(
     private tablelistService: TableListService,
@@ -128,6 +129,12 @@ export class TableListComponent implements OnInit {
     this.storedProcViewService.currentSPVValue.subscribe(value => {
       this.homeStage = value;
       if (this.homeStage === true) {
+        this.loadRelationTable(this.tableCopy);
+      }
+    });
+    this.addDirectJoinService.currentDJVValue.subscribe(value => {
+      this.directjoin = value;
+      if (this.directjoin === true) {
         this.loadRelationTable(this.tableCopy);
       }
     });

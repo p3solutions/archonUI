@@ -205,6 +205,6 @@ export class StoredProcViewComponent implements OnInit {
   }
   closeScreen() {
     this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
-    this.tablelistService.changeBooleanValue(true);
+    this.storedProcViewService.changeSPVBooleanValue(true);
   }
 }
