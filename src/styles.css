@@ -1962,7 +1962,6 @@ a.required-color {
 .modal-body {
   position: relative;
   padding: 15px;
-  min-height: 120px;
 }
 
 .error-popup-header-cls {
@@ -2096,7 +2095,8 @@ button.btn-secondary-popup:hover {
   font-style: normal;
   font-stretch: normal;
   line-height: 1.71;
-  margin-top: 20px;
+  margin-top: 25px;
+  margin-bottom: 25px;
   
 }
 
