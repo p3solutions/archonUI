@@ -1956,6 +1956,15 @@ a.required-color {
 
 /* start-popup msg color */
 
+.modal-dialog {
+  margin: 65px auto auto;
+}
+.modal-body {
+  position: relative;
+  padding: 15px;
+  min-height: 120px;
+}
+
 .error-popup-header-cls {
   padding: 4px;
   padding-left: 15px;
@@ -2053,19 +2062,24 @@ button.btn-info-popup-primary-color:hover {
 }
 
 button.btn-secondary-popup{
+  margin-right: 5px;
   background-color: #dedede;
-  color: #ffffff;
+  color: #000;
   text-transform: inherit;
   border-radius: 3px;
   transition: 0.5s;
 }
 
 button.btn-secondary-popup:hover {
-  color: #ffffff;
+  color: #000;
   transform: scale(1.1, 1.1);
 }
 
-
+.pop-title {
+  margin-left: -10px;
+  display: inline-block;
+  vertical-align: middle;
+}
 .popup-title-cls {
   margin-top: 12px;
 }
@@ -2076,11 +2090,14 @@ button.btn-secondary-popup:hover {
 }
 
 .popup-paragraph-cls{
+  text-align: left;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
-  line-height: 1.71
+  line-height: 1.71;
+  margin-top: 20px;
+  
 }
 
 
