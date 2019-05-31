@@ -70,7 +70,7 @@ th {
   padding: 7px 6px 0px 12px;
   font-family: roboto;
   float: left;
-  margin: 0px 0px 0px 24px;
+  margin: -10px 0px 0px 24px;
   text-align: left;
   background-color: #eef2f9;
   border-radius: 3px;
@@ -276,15 +276,18 @@ a.disabled .material-icons {
   width: 21%;
   padding: 12px 0px 31px 0px;
   margin-left: 78px;
+  margin-top: -18px;
 }
 
 .no-record-found {
   background: white;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
-  margin-right: 10px;
-  font-size: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, .2);
-  margin-left: 10px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+    margin-right: 10px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    margin-left: 10px;
+    height: 53px;
+    padding: 14px;
 }
 
 .mat-paginator-shadow {

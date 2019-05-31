@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="row-group">
+    <div class="row-group" style="margin-bottom: -12px">
       <div class="col-md-3" *ngIf="selectedAppObject.appDesc!==''" id="app_desc">
         <b style="color:#2879ff">Application Description</b>
         <p>{{selectedAppObject.appDesc!==null?selectedAppObject.appDesc :'Created By Archon'}}</p>
@@ -76,7 +76,8 @@
       <i class="fa fa-plus fa-stack-1x"></i>
     </span>
   </div>
-  <div class=" {{datasourceHasValue()?'example-table-container-no-record':'example-table-container'}} mat-elevation-z8" id="screen-table">
+  <div class=" {{datasourceHasValue()?'example-table-container-no-record':'example-table-container'}} mat-elevation-z8"
+    id="screen-table">
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortDirection="desc">
       <ng-container matColumnDef="position">
         <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
@@ -128,9 +129,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Screen Present.</div>
-  <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}" id="screen-table" [length]="totalScreen"
-    [pageSize]="50"> </mat-paginator>
+  <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Data found.</div>
+  <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}" id="screen-table"
+    [length]="totalScreen" [pageSize]="50"> </mat-paginator>
 </div>
 <mat-menu class="adhoc-action" #menu="matMenu">
   <button *ngFor="let item of childScreenInfo" mat-menu-item>
