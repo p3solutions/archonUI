@@ -4,12 +4,12 @@
     class="col-md-4 column-box h-100">
     <mat-card-header>
       <mat-card-title>{{item.label}}<a class="required-color" *ngIf="item.isRequired">*</a>
-        <i *ngIf="item.isEncrypted" class="material-icons encypted-icon">lock</i>
+        <i *ngIf="item.isEncrypted" matTooltip="Encypted field" class="material-icons encypted-icon">lock</i>
         <span>
-          <a class="cursor-poniter" (click)="gotoSearchCriteriaEdit(item?.columnId)"><i class="material-icons">
+          <a class="cursor-poniter" matTooltip="Edit" (click)="gotoSearchCriteriaEdit(item?.columnId)"><i class="material-icons">
               edit
             </i></a>
-          <a class="cursor-poniter" (click)="deleteSearchCriteria(item?.columnId,item?.tableId)"><i
+          <a class="cursor-poniter" matTooltip="Delete" (click)="deleteSearchCriteria(item?.columnId,item?.tableId)"><i
               class="material-icons">
               delete
             </i></a></span>

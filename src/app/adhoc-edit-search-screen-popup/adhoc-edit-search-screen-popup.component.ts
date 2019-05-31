@@ -160,6 +160,7 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
         this.isOptionFieldDisable = true;
         this.editSearchCriteriaForm.controls['option'].clearValidators();
         this.editSearchCriteriaForm.controls['option'].updateValueAndValidity();
+        this.editSearchCriteriaForm.controls['option'].setValue('');
       }
       this.editSearchCriteriaForm.get('fieldType').disable();
       this.editSearchCriteriaForm.controls['searchType'].setValue('=');

@@ -74,15 +74,16 @@ export class InputFunctionsInfo {
 export class Tab {
     tabName = 'Tab';
     tabOrder = 0;
+    isTabRename = false;
     resultFields: ResultFields[] = [];
 }
 
 export class InlinePanel {
-    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabOrder': 0, 'resultFields': [] }];
+    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabOrder': 0, 'isTabRename': false, 'resultFields': [] }];
 }
 
 export class SidePanel {
-    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabOrder': 0, 'resultFields': [] }];
+    tabs: Tab[] = [{ 'tabName': 'Tab 1', 'tabOrder': 0, 'isTabRename': false, 'resultFields': [] }];
 }
 
 export class MaskDetail {

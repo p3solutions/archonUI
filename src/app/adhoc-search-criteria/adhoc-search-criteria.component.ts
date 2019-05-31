@@ -62,7 +62,6 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     private spinner: NgxSpinnerService) {
   }
   ngOnInit() {
-    console.log(1);
     this.spinner.show();
     this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;
     if (this.screenInfoObject.sessionAdhocModel.searchCriteria.length > 0) {

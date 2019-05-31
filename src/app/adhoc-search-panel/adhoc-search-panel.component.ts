@@ -254,9 +254,7 @@ export class AdhocSearchPanelComponent implements OnInit {
   }
 
   renameSideTabName() {
-    console.log(this.sideTabName, this.selectedSideTab);
     this.searchResult.sidePanel.tabs[this.selectedSideTab].tabName = this.sideTabName;
-    console.log(this.searchResult.sidePanel.tabs[this.selectedSideTab].tabName);
     this.adhocScreenService.updateSearchResult(this.searchResult);
   }
   renameInlineTabName() {

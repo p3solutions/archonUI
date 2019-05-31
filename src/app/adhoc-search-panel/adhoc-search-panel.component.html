@@ -8,13 +8,14 @@
         <mat-card cdkDrag *ngFor="let item of searchResult?.mainPanel" class="col-md-4 panel-column-box"
           [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
           <mat-card-header>
-            <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" class="material-icons encypted-icon">lock</i>
-              <span> <a class="cursor-poniter"
-                  (click)="gotoMainPanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i class="material-icons">
+            <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted field" class="material-icons encypted-icon {{item.isHidden?'hidden-icon':''}}">lock</i>
+              <span> <a class="cursor-poniter" matTooltip="Edit"
+                  (click)="gotoMainPanelColumnEdit(item?.columnId,item?.tableId,item?.label)">
+                  <i class="material-icons {{item.isHidden?'hidden-icon':''}}">
                     edit
                   </i></a>
-                <a class="cursor-poniter" (click)="deleteMainPanelColumn(item?.columnId,item?.tableId,item?.label)"><i
-                    class="material-icons">
+                <a class="cursor-poniter" matTooltip="Delete" (click)="deleteMainPanelColumn(item?.columnId,item?.tableId,item?.label)"><i
+                    class="material-icons {{item.isHidden?'hidden-icon':''}}">
                     delete
                   </i></a></span>
             </mat-card-title>
@@ -46,16 +47,16 @@
                 <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab"
                   [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
                   <mat-card-header>
-                    <mat-card-title>{{item.label}}<i *ngIf="item.encrypted"
+                    <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted field"
                         class="material-icons encypted-icon">lock</i>
-                      <span> <a class="cursor-poniter"
+                      <span> <a class="cursor-poniter" matTooltip="Edit"
                           (click)="gotoInlinePanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i
-                            class="material-icons">
+                            class="material-icons {{item.isHidden?'hidden-icon':''}}">
                             edit
                           </i></a>
-                        <a class="cursor-poniter"
+                        <a class="cursor-poniter" matTooltip="Delete"
                           (click)="deleteInlinePanelColumn(item?.columnId,item?.tableId,item?.label)"><i
-                            class="material-icons">
+                            class="material-icons {{item.isHidden?'hidden-icon':''}}">
                             delete
                           </i></a></span>
                     </mat-card-title>
@@ -92,16 +93,16 @@
                 <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab"
                   [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
                   <mat-card-header>
-                    <mat-card-title>{{item.label}}<i *ngIf="item.encrypted"
-                        class="material-icons encypted-icon">lock</i>
-                      <span> <a class="cursor-poniter"
+                    <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted Field"
+                        class="material-icons encypted-icon {{item.isHidden?'hidden-icon':''}}">lock</i>
+                      <span> <a class="cursor-poniter" matTooltip="Edit"
                           (click)="gotoSidePanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i
-                            class="material-icons">
+                            class="material-icons {{item.isHidden?'hidden-icon':''}}">
                             edit
                           </i></a>
-                        <a class="cursor-poniter"
+                        <a class="cursor-poniter" matTooltip="Delete"
                           (click)="deleteSidePanelColumn(item?.columnId,item?.tableId,item?.label)"><i
-                            class="material-icons">
+                            class="material-icons {{item.isHidden?'hidden-icon':''}}">
                             delete
                           </i></a></span>
                     </mat-card-title>

@@ -180,3 +180,11 @@ button.example-add-tab-button.mat-raised-button:hover {
 .mat-card.hidden-field {
   opacity: 0.4;
 }
+
+.hidden-icon {
+  color: #d0cece !important;
+}
+
+.material-icons.hidden-icon:hover {
+  color: #d0cece !important;
+}

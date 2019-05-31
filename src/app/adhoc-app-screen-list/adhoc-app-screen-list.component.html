@@ -1,4 +1,3 @@
-
 <div class="container-fluid">
   <div class="row">
     <div id="create-app-header">
@@ -47,18 +46,18 @@
       </div>
     </div>
   </div>
-  <div>
-    <div *ngIf="selectedAppObject.appDesc!==''" id="app_desc">
-      <b style="color:#2879ff">Application Description</b>
-      <p>{{selectedAppObject.appDesc!==null?selectedAppObject.appDesc :'Created By Archon'}}</p>
-    </div>
-    <div></div>
-    <div *ngIf="oldMetadata" class="metadata-warning">
-      This is the old application metadata version.
+  <div class="row">
+    <div class="row-group">
+      <div class="col-md-3" *ngIf="selectedAppObject.appDesc!==''" id="app_desc">
+        <b style="color:#2879ff">Application Description</b>
+        <p>{{selectedAppObject.appDesc!==null?selectedAppObject.appDesc :'Created By Archon'}}</p>
+      </div>
+      <div class="col-md-3"></div>
+      <div *ngIf="oldMetadata" class="col-md-3 metadata-warning">
+        This is the old application metadata version.
+      </div>
     </div>
   </div>
-</div>
-<div class="container-fluid">
   <div id="search-screen">
     <mat-form-field>
       <input matInput name="screen-filter" #input placeholder="Search">
@@ -77,9 +76,7 @@
       <i class="fa fa-plus fa-stack-1x"></i>
     </span>
   </div>
-  <div
-    class="{{datasourceHasValue()=== true ?'hide-html example-table-container mat-elevation-z8' : 'example-table-container mat-elevation-z8'}}"
-    id="screen-table">
+  <div class=" {{datasourceHasValue()?'example-table-container-no-record':'example-table-container'}} mat-elevation-z8" id="screen-table">
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortDirection="desc">
       <ng-container matColumnDef="position">
         <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
@@ -131,12 +128,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <mat-paginator class="{{datasourceHasValue()=== true ?'hide-html':'mat-paginator'}}" id="screen-table"
-    [length]="totalScreen" [pageSize]="50">
-  </mat-paginator>
-  <div *ngIf="datasourceHasValue()=== true">
-    <h3>No screen is present</h3>
-  </div>
+  <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Screen Present.</div>
+  <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}" id="screen-table" [length]="totalScreen"
+    [pageSize]="50"> </mat-paginator>
 </div>
 <mat-menu class="adhoc-action" #menu="matMenu">
   <button *ngFor="let item of childScreenInfo" mat-menu-item>
@@ -185,7 +179,7 @@
     <div class="modal-content">
       <div class="modal-header error-popup-header-cls">
         <h4 class="modal-title popup-title-cls">
-            <i class="material-icons popup-material-icon-cls">error_outline</i>Error</h4>
+          <i class="material-icons popup-material-icon-cls">error_outline</i>Error</h4>
       </div>
       <div class="modal-body">
         <p class="popup-paragraph-cls">Please add metadata version for this workspace.</p>

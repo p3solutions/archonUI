@@ -233,7 +233,11 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   selectedApp(appId: string) {
-    this.selectedAppObject = JSON.parse(JSON.stringify(this.applicationInfoList.filter(a => a.id === appId)[0]));
+    if (this.applicationInfoList.filter(a => a.id === appId)[0] !== undefined) {
+      this.selectedAppObject = JSON.parse(JSON.stringify(this.applicationInfoList.filter(a => a.id === appId)[0]));
+    } else {
+      this.selectedAppObject = this.applicationInfoList[0];
+    }
     this.getScreen(0);
     this.checkForMetadataInApplication();
   }
