@@ -146,22 +146,6 @@ export class StoredProcViewComponent implements OnInit {
     }
     this.enableSubmitBtn();
     this.columnsList = this.getRelatingTableList();
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
-    // this.columnsList.push({ tableId: 'a', tableName: 'a', pColumn: 'a', sColumn: 'a', dataType: 'a' });
     this.dataSource = new MatTableDataSource(this.columnsList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

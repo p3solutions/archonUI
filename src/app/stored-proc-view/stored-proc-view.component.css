@@ -66,6 +66,13 @@
     letter-spacing: 0.2px;
     margin-bottom: 6px;
 }
+div.sticky-new {
+  top: 0;
+  padding: 8px 10px;   
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  margin-bottom: 6px;
+}
 .scroll-div {
     height: 360px;
     overflow: auto;

@@ -138,7 +138,7 @@
         </div>
       </div>
       <div class="column-three border">
-        <div class="sticky">
+        <div class="sticky-new">
           <div class="first-div-new" style="margin-left: -8px;">Primary and Secondary Relative Tables</div>         
         </div>
 
@@ -179,7 +179,7 @@
               <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Data Type </th>
               <td style="width:15%" mat-cell *matCellDef="let element"> {{element.dataType}} </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
           <mat-paginator [length]="columnlength" [pageSize]= "7"></mat-paginator>
