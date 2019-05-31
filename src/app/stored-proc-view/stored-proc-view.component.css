@@ -81,12 +81,14 @@
     float: left;
     width: 28%;  
     height: 500px;
+    margin-left: -10px;
 }
 
 .column-three {
-    float: left;
-    width: 42%;  
-    height: 500px;
+  float: left;
+  width: 41%;
+  height: 500px;
+  margin-left: 17px;
 }
 
 .first-div {

@@ -100,7 +100,6 @@ export class TableListComponent implements OnInit {
   searchSec2;
   primaryPage = 1;
   spview = false;
-  directjoin: boolean;
 
   constructor(
     private tablelistService: TableListService,
@@ -129,13 +128,17 @@ export class TableListComponent implements OnInit {
     this.storedProcViewService.currentSPVValue.subscribe(value => {
       this.homeStage = value;
       if (this.homeStage === true) {
-        this.loadRelationTable(this.tableCopy);
+        setTimeout(() => {
+          this.loadRelationTable(this.tableCopy);
+        }, 1000);
       }
     });
     this.addDirectJoinService.currentDJVValue.subscribe(value => {
-      this.directjoin = value;
-      if (this.directjoin === true) {
-        this.loadRelationTable(this.tableCopy);
+      this.homeStage = value;
+      if (this.homeStage === true) {
+        setTimeout(() => {
+          this.loadRelationTable(this.tableCopy);
+        }, 1000);
       }
     });
     this.isAvailable = false;
@@ -786,7 +789,6 @@ export class TableListComponent implements OnInit {
       // const obj1 = new StoredProcViewComponent(this.workspaceHeaderService, this.storedProcViewService);
       // obj1.tableName =  this.tableName;
       // console.log(obj1.tableName, 'asf');
-      
       this.router.navigate(['workspace/metalyzer/ALL/analysis/spview']);
       // document.getElementById('openCreateStoredViewmodal').click();
     // } else {

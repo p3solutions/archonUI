@@ -858,6 +858,9 @@ pagination-controls::ng-deep ul.ngx-pagination {
   margin-right: 20px;
   margin-top: 20px;
 }
+.progress-bar-success {
+  background-color: #2879ff !important;
+}
 
 
 

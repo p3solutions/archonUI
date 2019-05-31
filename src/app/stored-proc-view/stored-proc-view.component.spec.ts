@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { UserinfoService } from '../userinfo.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { MatTableModule, MatPaginatorModule } from '@angular/material';
 
 describe('StoredProcViewComponent', () => {
   let component: StoredProcViewComponent;
@@ -19,7 +20,7 @@ describe('StoredProcViewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [StoredProcViewComponent],
       imports: [HttpClientModule, RouterTestingModule, FormsModule],
-      providers: [WorkspaceHeaderService, UserinfoService, StoredProcViewService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      providers: [WorkspaceHeaderService, UserinfoService, StoredProcViewService, MatTableModule, MatPaginatorModule, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

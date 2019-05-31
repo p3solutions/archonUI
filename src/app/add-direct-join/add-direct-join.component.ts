@@ -4,8 +4,7 @@ import { AddDirectJoinService } from './add-direct-join.service';
 import { TableListService } from '../table-list/table-list.service';
 import { SecondaryColumnPipe } from '../secondary-column.pipe';
 import { Router } from '@angular/router';
-import { MatTableDataSource, MatSort } from '@angular/material';
-import {MatPaginator} from '@angular/material/paginator';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 
 @Component({
@@ -40,6 +39,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   autoColumnMatchMessage = '';
   dataSource = new MatTableDataSource<any>(this.primaryColumns);
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumns'];
+  columnlength = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -51,8 +51,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.getTableList();
     this.enableRelation = false;
     this.populateValues();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   ngOnChanges(change: SimpleChanges) {
@@ -67,6 +65,9 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
     this.primaryColumns = res;
     this.dataSource.data = this.primaryColumns;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.columnlength = this.primaryColumns.length;
     }
     );
   }
