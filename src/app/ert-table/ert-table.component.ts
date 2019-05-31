@@ -105,32 +105,29 @@ export class ErtTableComponent implements OnInit {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       document.getElementById('back-to-job-config').classList.add('hide');
     }
-    console.log(this.ertJobId);
-    console.log(this.from);
     if (this.from === 'data-record') {
       this.getERTtableListForDataRecord();
     } else if (this.from === 'SIP') {
       this.getERTtableListForSIP();
     } else if (this.from === 'TABLE') {
+      this.getERTTableForTableMode();
+    } else if (this.ertJobId !== '' && this.ertJobId !== undefined && this.ertService.selectedList.length !== 0) {
+      this.getERTTableFromService();
+    }
+  }
+
+  getERTTableFromService() {
+    this.selectedTableList = this.ertService.selectedList;
+    this.selectedTableId = this.selectedTableList[0].tableId;
+    this.getERTcolumnlist(this.selectedTableId, '');
+  }
+
+
+  getERTTableForTableMode() {
+    if (this.ertJobId !== '' && this.ertJobId !== undefined && this.ertService.selectedList.length === 0) {
       this.getEditErtTableList(1);
     } else {
-      if (this.ertJobId !== '' && this.ertService.selectedList.length !== 0) {
-        // this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-        // this.selectedTableList = this.ertService.selectedList;
-        // this.selectedTableId = this.selectedTableList[0].tableId;
-        // this.storeSelectedTables = this.ertService.storeSelectedTables;
-        // this.getERTcolumnlist(this.selectedTableId, '');
-      } else if (this.ertJobId !== '') {
-        // this.getERTtableList();
-      } else if (this.ertService.selectedList.length === 0) {
-        // this.getERTtableList();
-      } else {
-        // this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-        // this.selectedTableList = this.ertService.selectedList;
-        // this.storeSelectedTables = this.ertService.storeSelectedTables;
-        // this.selectedTableId = this.selectedTableList[0].tableId;
-        // this.getERTcolumnlist(this.selectedTableId, '');
-      }
+      this.getERTTableFromService();
     }
   }
 
@@ -167,6 +164,12 @@ export class ErtTableComponent implements OnInit {
           tempObj.modifiedTableName = tempTable.modifiedTableName;
           tempObj.isSelected = true;
           this.selectedTableList.push(tempObj);
+          this.selectedTableId = this.selectedTableList[0].tableId;
+        }
+        for (const table of this.selectedTableList) {
+          this.spinner.show();
+          this.getERTcolumnlist(table.tableId, '');
+          this.spinner.hide();
         }
         this.spinner.hide();
       } catch {
@@ -761,7 +764,7 @@ export class ErtTableComponent implements OnInit {
       }
     } else
       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-        this.router.navigate([url + '/', this.ertJobId]);
+        this.router.navigate([url + '/', this.ertJobId], { queryParams: { from: this.from } });
       } else {
         this.router.navigate([url]);
       }

@@ -115,7 +115,7 @@ export class ErtExtractDigestComponent implements OnInit {
       }
     } else
       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-        this.router.navigate([url + '/', this.ertJobId]);
+        this.router.navigate([url + '/', this.ertJobId], { queryParams: { from: this.from } });
       } else {
         this.router.navigate([url]);
       }
