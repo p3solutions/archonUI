@@ -173,24 +173,27 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
   getScreen(startIndexOfScreen) {
     this.spinner.show();
-    this.dataSource = new ScreenDataSource(this.adhocService);
-    this.addPosition();
-    this.dataSource.connect().subscribe(result => {
-      this.screenInfoList = result;
-
-      this.totalScreen = (this.paginator.pageIndex + 1) * 50;
-      if (this.dataSource.paginationRequired) {
-        this.totalScreen = this.totalScreen + 50;
-      } else {
-        if (this.paginator.pageIndex === 0) {
-          this.totalScreen = this.screenInfoList.length;
+    try {
+      this.dataSource = new ScreenDataSource(this.adhocService, this.spinner);
+      this.addPosition();
+      this.dataSource.connect().subscribe(result => {
+        this.screenInfoList = result;
+        this.totalScreen = (this.paginator.pageIndex + 1) * 50;
+        if (this.dataSource.paginationRequired) {
+          this.totalScreen = this.totalScreen + 50;
         } else {
-          this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
+          if (this.paginator.pageIndex === 0) {
+            this.totalScreen = this.screenInfoList.length;
+          } else {
+            this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
+          }
         }
-      }
+        this.spinner.hide();
+      });
+      this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id);
+    } catch {
       this.spinner.hide();
-    });
-    this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id);
+    }
   }
 
   deleteScreenPopUp(screenId) {
@@ -200,13 +203,19 @@ export class AdhocAppScreenListComponent implements OnInit {
 
   deleteScreen() {
     const userId = getUserId();
-    this.adhocService.deleteScreen(this.deleteScreenId, userId).subscribe(result => {
-      const index = this.screenInfoList.findIndex(a => a.id === this.deleteScreenId);
-      if (index !== -1) {
-        this.screenInfoList.splice(index, 1);
-      }
-      this.getScreen(0);
-    });
+    this.spinner.show();
+    try {
+      this.adhocService.deleteScreen(this.deleteScreenId, userId).subscribe(result => {
+        const index = this.screenInfoList.findIndex(a => a.id === this.deleteScreenId);
+        if (index !== -1) {
+          this.screenInfoList.splice(index, 1);
+        }
+        this.getScreen(0);
+        this.spinner.hide();
+      });
+    } catch{
+      this.spinner.hide();
+    }
   }
 
   loadLessonsPage() {
