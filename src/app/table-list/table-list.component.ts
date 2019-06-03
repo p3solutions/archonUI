@@ -715,11 +715,12 @@ export class TableListComponent implements OnInit {
         this.JobStatus = '';
         this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
       } else {
-        setTimeout(() => {
-          (<any>$('#dataAModal-carousel')).carousel(3);
-        }, 1000);
-        const progressSelector = 'progress-bar';
-        this.addClass(progressSelector, 'width-100-pc');
+        // setTimeout(() => {
+        //   (<any>$('#dataAModal-carousel')).carousel(3);
+        // }, 1000);
+        // const progressSelector = 'progress-bar';
+        // this.addClass(progressSelector, 'width-100-pc');
+        
       }
     });
   }
