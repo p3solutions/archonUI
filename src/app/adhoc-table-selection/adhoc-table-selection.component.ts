@@ -153,24 +153,27 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.relationshipInfo = [];
       this.tablelistService.getListOfRelationTableMMR(this.workspaceID,
         tempHeader.appMetadataVersion, value.tableName).subscribe(result => {
-          console.log(result);
-          if (this.tableService.booleanNested) {
-            for (const i of result) {
-              if (this.includesArray.includes(i.secondaryTable.tableName)) {
-                this.relationshipInfo.push(i);
+          if (result.length !== 0) {
+            if (this.tableService.booleanNested) {
+              for (const i of result) {
+                if (this.includesArray.includes(i.secondaryTable.tableName)) {
+                  this.relationshipInfo.push(i);
+                }
               }
+            } else {
+              this.relationshipInfo = result;
             }
+            this.primaryTable = getPrimaryArray(this.relationshipInfo);
+            this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+            for (const i of this.primaryTable) {
+              this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+            }
+            this.selectedValues.push(value.tableName);
+            this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+            this.createchart();
           } else {
-            this.relationshipInfo = result;
+            this.data = null;
           }
-          this.primaryTable = getPrimaryArray(this.relationshipInfo);
-          this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-          for (const i of this.primaryTable) {
-            this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
-          }
-          this.selectedValues.push(value.tableName);
-          this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
-          this.createchart();
         });
     }
   }
