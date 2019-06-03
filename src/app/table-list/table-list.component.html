@@ -344,7 +344,8 @@
                             </div>
                             <div class="action-btn" style="float: right;">
                                 <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn cancel btn-padding matStepperPrevious">Previous</button>
-                                <button data-toggle="modal" href="#analyzes" (click)="dataAnalyse()" class="btn save btn-padding matStepperNext" >Analyze</button>
+                                <button data-keyboard="false"
+                                data-backdrop="static" data-toggle="modal" href="#analyzes" (click)="dataAnalyse()" class="btn save btn-padding matStepperNext" >Analyze</button>
                               </div>
                       </mat-step>
                       <mat-step label="Result">

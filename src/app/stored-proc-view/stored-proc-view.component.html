@@ -110,7 +110,9 @@
         </h5>
       </div>
     </div>
-
+    <div *ngIf="!isSPVAvailable"><h5 style="margin-top: 35%;">
+        No Stored Procedures and views information available
+      </h5> </div>
     <div *ngIf="isSPVAvailable"> 
       <div class="column-one scroll-div border">
         <div class="sticky">
@@ -185,9 +187,7 @@
           <mat-paginator [length]="columnlength" [pageSize]= "7"></mat-paginator>
         </div>
     </div>
-    <div *ngIf="!isSPVAvailable"><h5 style="margin-top: 35%;">
-      No Stored Procedures and views information available
-    </h5> </div>
+    
     <div class="modal-footer" *ngIf="isSPVAvailable">
       <div class="col-md-7">         
           <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
@@ -210,6 +210,7 @@
    </div>
   </div>
 </div>
+
 
   </div>   
   </div>
