@@ -17,6 +17,7 @@ import { TableSelectionService } from '../adhoc-table-selection/table-selection.
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
 import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-create-screen-dialog',
   templateUrl: 'create-screen-dialog.html',
@@ -286,15 +287,21 @@ export class AdhocAppScreenListComponent implements OnInit {
         'iaVersion': result.iaVersion
       };
       this.adhocService.createApplication(param).subscribe((response) => {
-        document.getElementById('success-popup-btn').click();
         if (response.httpStatus === 200) {
-          this.successMessage = 'Application Added Successfully';
+          document.getElementById('success-popup-btn').click();
+          this.successMessage = 'Application Added Successfully.';
           this.applicationInfoList = this.applicationInfoList.concat(response.data);
           if (this.applicationInfoList.length === 1) {
             this.selectedApp(this.applicationInfoList[0].id);
           }
         } else {
-          this.successMessage = 'Application not Added Successfully';
+          document.getElementById('failed-popup-btn').click();
+          this.successMessage = 'Application not Added Successfully.';
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error) {
+          document.getElementById('failed-popup-btn').click();
+          this.successMessage = err.error.errorMessage;
         }
       });
     }
@@ -324,12 +331,18 @@ export class AdhocAppScreenListComponent implements OnInit {
       delete adhoc['id'];
       delete adhoc['screenId'];
       this.adhocService.createScreen(adhoc).subscribe((response) => {
-        document.getElementById('success-popup-btn').click();
         if (response.httpStatus === 200) {
-          this.successMessage = 'Screen Added Successfully';
+          document.getElementById('success-popup-btn').click();
+          this.successMessage = 'Screen Added Successfully.';
           this.getScreen(0);
         } else {
-          this.successMessage = 'Screen not Added Successfully';
+          document.getElementById('failed-popup-btn').click();
+          this.successMessage = 'Screen not Added Successfully.';
+        }
+      },(err: HttpErrorResponse) => {
+        if (err.error) {
+          document.getElementById('failed-popup-btn').click();
+          this.successMessage = err.error.errorMessage;
         }
       });
       this.screenInfo = new Adhoc();

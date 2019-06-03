@@ -2083,9 +2083,18 @@ button.btn-secondary-popup:hover {
   margin-top: 12px;
 }
 
-.popup-material-icon-cls {
-  vertical-align: top;
-  color: #ffffff
+.popup-title-cls .popup-material-icon-cls {
+  vertical-align: middle;
+  color: #ffffff;
+  font-size: 22px!important;
+  margin-right: 5px
+}
+
+.popup-material-icon-cls:hover {
+  vertical-align: middle;
+  color: #ffffff;
+  font-size: 22px !important;
+  margin-right: 5px
 }
 
 .popup-paragraph-cls{
@@ -2097,7 +2106,10 @@ button.btn-secondary-popup:hover {
   line-height: 1.71;
   margin-top: 25px;
   margin-bottom: 25px;
-  
+}
+
+.modal-body-width{
+  width:480px;
 }
 
 

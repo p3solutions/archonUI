@@ -1,4 +1,4 @@
-i {
+i:not(.popup-material-icon-cls)  {
   padding: 0px 9px 0px 0px;
 }
 

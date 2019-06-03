@@ -46,9 +46,7 @@ export class AdhocService {
 
   createApplication(param): Observable<any> {
     return this.http.post<any>(this.createApplicationUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForSuccess),
-        catchError(this.handleError('createApplication', []))
-      );
+      pipe(map(this.extractDataForSuccess));
   }
 
   getApplication(workspaceId, startIndex): Observable<any> {
@@ -69,16 +67,12 @@ export class AdhocService {
 
   createScreen(param): Observable<any> {
     return this.http.post<any>(this.createScreenUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForSuccess),
-        catchError(this.handleError('createScreen', []))
-      );
+      pipe(map(this.extractDataForSuccess));
   }
 
   updateScreen(param, screenId): Observable<any> {
     return this.http.put<any>(this.createScreenUrl + '?screenId=' + screenId, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForSuccess),
-        catchError(this.handleError('updateScreen', []))
-      );
+      pipe(map(this.extractDataForSuccess));
   }
 
   getScreen(startIndex, workspaceId, appId): Observable<any> {
