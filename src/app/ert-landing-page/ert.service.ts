@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserinfoService } from '../userinfo.service';
 import {
@@ -8,6 +8,7 @@ import {
   ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo, ExtractConfig, AvilErtTable
 } from './ert';
 import { EnvironmentService } from '../environment/environment.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class ErtService {
   constructor(
     private http: HttpClient,
     private userInfoService: UserinfoService,
-    private environment: EnvironmentService
+    private environment: EnvironmentService,
+    private spinner: NgxSpinnerService
   ) { }
   private apiUrl = this.environment.apiUrl;
   getERTtableListUrl = this.apiUrl + 'ert/ertTableList?workspaceId=';
@@ -114,6 +116,22 @@ export class ErtService {
         map(this.extractDataForColumn),
         catchError(this.handleError('getERTcolumnlist', []))
       );
+  }
+
+  geEditedtERTcolumnlist(ertJobId = '', workspaceId: string, tableIds: string[] = []) {
+    const request: any[] = [];
+    let ertColumnLists: ErtColumnListObj[] = [];
+    for (const tableId of tableIds) {
+      request.push(this.http.get<ErtColumnListObj[]>(this.getERTcolumnlistUrl + ertJobId +
+        '&workspaceId=' + workspaceId + '&tableId=' + tableId,
+        { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractDataForColumn)));
+    }
+    const combineErtColumnResult = forkJoin(request);
+    combineErtColumnResult.subscribe(response => {
+      ertColumnLists = response;
+      console.log(ertColumnLists);
+      this.spinner.hide();
+    });
   }
 
   getErtAvailableTable(ertJobId: string, startIndex): Observable<AvilErtTable> {

@@ -166,12 +166,7 @@ export class ErtTableComponent implements OnInit {
           this.selectedTableList.push(tempObj);
           this.selectedTableId = this.selectedTableList[0].tableId;
         }
-        for (const table of this.selectedTableList) {
-          this.spinner.show();
-          this.getERTcolumnlist(table.tableId, '');
-          this.spinner.hide();
-        }
-        this.spinner.hide();
+        this.getEditedERTcolumnlist();
       } catch {
         this.spinner.hide();
       }
@@ -499,13 +494,19 @@ export class ErtTableComponent implements OnInit {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList.length === 0) {
       this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
-        this.spinner.hide();
         this.ErtTableColumnList = result;
         this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
+        this.spinner.hide();
       });
     } else {
       this.spinner.hide();
     }
+  }
+
+  getEditedERTcolumnlist() {
+    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+    const tableIds = this.selectedTableList.map(function (item) { return item['tableId']; });
+    this.ertService.geEditedtERTcolumnlist(this.ertJobId, this.workspaceId, tableIds);
   }
 
   getERTcolumnlistForDataRecord(tableId: string) {
