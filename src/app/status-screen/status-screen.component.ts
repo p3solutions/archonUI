@@ -29,7 +29,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   @ViewChild('click') button: ElementRef;
   startIndex = 1;
   displayedColumns: string[] = ['jobName', 'userid', 'Job Origin', 'jobInfo.startTime', 'Start Time',
-    'End Time', 'Status', 'Details', 'Retry', 'Download'];
+    'End Time', 'Status', 'Details', 'Retry', 'Stop', 'Download'];
   dataSource: StatusDataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -166,5 +166,9 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
       a.dataset.downloadurl = [type, a.download, a.href].join(':');
       e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
       a.dispatchEvent(e);
+    }
+
+    stopJob(id){
+    console.log(id);
     }
 }

@@ -57,7 +57,7 @@
   <div class="row" style="padding-top: 70px;">
     <div class="example-table-container mat-elevation-z4" id="screen-table">
       <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="jobInfo.startTime" matSortDirection="desc">
-        <ng-container matColumnDef="jobName">
+        <ng-container matColumnDef="jobName" sticky>
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
           <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
         </ng-container>
@@ -66,8 +66,8 @@
           <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.userId}}</td>
         </ng-container>
         <ng-container matColumnDef="Job Origin">
-          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Origin </th>
-          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobOrigin}}</td>
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Origin </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobOrigin}}</td>
         </ng-container>
         <ng-container matColumnDef="jobInfo.startTime">
           <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Scheduled Time </th>
@@ -102,6 +102,13 @@
           <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
             <i class="material-icons replay" matTooltip="Retry" *ngIf="element.jobInfo.jobStatus === 'FAILED'" (click)="retryJob(element.id)">replay</i>
             <i class="material-icons replay" style="color: grey" matTooltip="Nope" *ngIf="element.jobInfo.jobStatus !== 'FAILED'">replay</i>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Stop">
+          <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
+          <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+            <i class="material-icons stop" matTooltip="Stop" *ngIf="element.isCancellable" (click)="stopJob(element.id)">stop</i>
+            <i class="material-icons stop" style="color: grey" matTooltip="Nope" *ngIf="!element.isCancellable">stop</i>
           </td>
         </ng-container>
         <ng-container matColumnDef="Download">
