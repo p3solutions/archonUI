@@ -45,8 +45,13 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   dataSource = new MatTableDataSource<any>(this.populateSecondaryValuesArray);
   displayedColumns: string[] = ['primaryColumn', 'dataType', 'secondaryColumnName', 'matchPercentage'];
   columnlength = 0;
+  dataSource1 = new MatTableDataSource<any>(this.populatePrimaryValuesArray);
+  displayedColumns1: string[] = ['tableName', 'dataType', 'secondaryColumnName', 'matchPercentage'];
+  columnlength1 = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  toggleBoolean = false;
+  selectedRow: any;
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -143,12 +148,18 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.activatePrimary = true;
   }
 
-  populatePrimaryValues(x) {
-    this.populatePrimaryValuesArray = this.primaryColMap.get(x.key);    
+  populatePrimaryValues(x, i) {
+    this.selectedRow = i;
+    this.populatePrimaryValuesArray = this.primaryColMap.get(x.key);
+    this.dataSource1.data = this.populatePrimaryValuesArray;
+    this.dataSource1.paginator = this.paginator;
+    this.dataSource1.sort = this.sort;
+    this.columnlength1 = this.populatePrimaryValuesArray.length;
     this.selectedPrimaryColumn = x.key;
   }
 
-  populateSecondaryValues(x) {
+  populateSecondaryValues(x, i) {
+    this.selectedRow = i;
     this.populateSecondaryValuesArray = this.secTableNameMap.get(x.key);
     this.dataSource.data = this.populateSecondaryValuesArray;
     this.dataSource.paginator = this.paginator;
@@ -307,5 +318,9 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         (<HTMLElement>document.querySelectorAll('.sec-table tr')[1]).click();
       }, 1);
     }
+  }
+
+  toggle(){
+      this.toggleBoolean = !this.toggleBoolean;
   }
 }
