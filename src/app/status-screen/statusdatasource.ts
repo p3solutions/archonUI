@@ -61,6 +61,7 @@ export class StatusDataSource implements DataSource<any> {
             if (result.paginationRequired) {
                 this.totalScreen = (this.indexValue + 1) * 50;
             }
+            console.log(result.list);
             this.adhocSubject.next(result.list);
         });
     }
