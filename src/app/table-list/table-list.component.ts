@@ -711,8 +711,6 @@ export class TableListComponent implements OnInit {
         this.tablelistService.changeArray(this.resultantArray);
         this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
       } else if (this.JobStatus === 'FAILED') {
-        this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
-         this.JobStatus = '';
         // this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
         document.getElementById('anaerror').click();
       } else {
@@ -881,5 +879,15 @@ export class TableListComponent implements OnInit {
     } else {
       this.primColArray = this.tempPrimColArray;
     }
+  }
+
+  closeScreen() {
+    this.homeStage = true;
+    this.dataAModal = false;
+    setTimeout(() => {
+      this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
+    }, 1000);
+    this.JobStatus = '';
+    this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
   }
 }
