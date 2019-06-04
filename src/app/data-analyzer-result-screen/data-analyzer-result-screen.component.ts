@@ -47,6 +47,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   columnlength = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  toggleBoolean = false;
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -307,5 +308,9 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         (<HTMLElement>document.querySelectorAll('.sec-table tr')[1]).click();
       }, 1);
     }
+  }
+
+  toggle(){
+      this.toggleBoolean = !this.toggleBoolean;
   }
 }
