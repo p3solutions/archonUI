@@ -27,6 +27,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   jobOutput: any;
   jobServerConfig: any;
   @ViewChild('click') button: ElementRef;
+  @ViewChild('click1') button1: ElementRef;
   startIndex = 1;
   displayedColumns: string[] = ['jobName', 'userid', 'Job Origin', 'jobInfo.startTime', 'Start Time',
     'End Time', 'Status', 'Details', 'Retry', 'Stop', 'Download'];
@@ -34,6 +35,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
+  responsemsg;
 
   constructor(
     private router: Router,
@@ -169,6 +171,14 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
     }
 
     stopJob(id){
-    console.log(id);
+      const el: HTMLElement = this.button1.nativeElement as HTMLElement;
+      this.statusService.terminateJob(id).subscribe(result => {
+      if (result.success) {
+        this.responsemsg = result.data;
+      } else {
+        this.responsemsg = result.errorMessage;
+      }
+      });
+      el.click();
     }
 }

@@ -18,7 +18,6 @@ export class StatusDataSource implements DataSource<any> {
 
     sortfn(sort) {
     const data = this.adhocSubject.getValue().slice();
-    console.log(sort, data);
     if (!sort.active || sort.direction === '') {
         const data1 = this.adhocSubject.getValue();
         this.adhocSubject.next(data1);
@@ -61,7 +60,6 @@ export class StatusDataSource implements DataSource<any> {
             if (result.paginationRequired) {
                 this.totalScreen = (this.indexValue + 1) * 50;
             }
-            console.log(result.list);
             this.adhocSubject.next(result.list);
         });
     }

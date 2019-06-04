@@ -58,8 +58,8 @@
     <div class="example-table-container mat-elevation-z4" id="screen-table">
       <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="jobInfo.startTime" matSortDirection="desc">
         <ng-container matColumnDef="jobName" sticky>
-          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
+          <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
+          <td style="width:25%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
         </ng-container>
         <ng-container matColumnDef="userid">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
@@ -70,20 +70,20 @@
           <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobOrigin}}</td>
         </ng-container>
         <ng-container matColumnDef="jobInfo.startTime">
-          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Scheduled Time </th>
-          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.scheduledTime | date:'medium'}}</td>
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Scheduled Time </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.scheduledTime | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Start Time">
-          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
-          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.startTime | date:'medium'}}</td>
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.startTime | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="End Time">
-          <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
-          <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.endTime | date:'medium'}}</td>
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobInfo.endTime | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Status">
-          <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
-          <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+          <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
+          <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
             <i class="material-icons success" matTooltip="Success" *ngIf="element.jobInfo.jobStatus === 'SUCCESS'">check_circle</i>
             <i class="material-icons inpro" matTooltip="In_Progress" *ngIf="element.jobInfo.jobStatus === 'IN_PROGRESS'">sync</i>
             <i class="material-icons failure" matTooltip="Failed" *ngIf="element.jobInfo.jobStatus === 'FAILED'">error</i>
@@ -91,29 +91,29 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="Details">
-          <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Details </th>
-          <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+          <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Details </th>
+          <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
             <i class="material-icons details" matTooltip="View Job Details" *ngIf="element.id !== null" (click)="openDetail(element.id)">info</i>
             <i class="material-icons details" style="color: grey" matTooltip="No Job Details" *ngIf="element.id == null">info</i>
           </td>
         </ng-container>
         <ng-container matColumnDef="Retry">
-          <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Retry </th>
-          <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+          <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Retry </th>
+          <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
             <i class="material-icons replay" matTooltip="Retry" *ngIf="element.jobInfo.jobStatus === 'FAILED'" (click)="retryJob(element.id)">replay</i>
             <i class="material-icons replay" style="color: grey" matTooltip="Nope" *ngIf="element.jobInfo.jobStatus !== 'FAILED'">replay</i>
           </td>
         </ng-container>
         <ng-container matColumnDef="Stop">
-          <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
-          <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+          <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
+          <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
             <i class="material-icons stop" matTooltip="Stop" *ngIf="element.isCancellable" (click)="stopJob(element.id)">stop</i>
             <i class="material-icons stop" style="color: grey" matTooltip="Nope" *ngIf="!element.isCancellable">stop</i>
           </td>
         </ng-container>
         <ng-container matColumnDef="Download">
-            <th style="width:6%;text-align: center" mat-header-cell *matHeaderCellDef> Download  </th>
-            <td style="width:6%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+            <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Download  </th>
+            <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
              <!-- <i class="material-icons details" matTooltip="Download" *ngIf="(element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION' || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'GENERATE_XML_JSON') || (element.jobInfo.jobStatus === 'SUCCESS' && element.jobOrigin === 'ER_GENERATION'))" (click)="downloadJob(element.id)">cloud_download</i>
               <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="(element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'RDBMS_EXTRACTION') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'ERT_EXTRACTION') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'GENERAL_XML_JSON') || (element.jobInfo.jobStatus !== 'SUCCESS' && element.jobOrigin === 'ER_GENERATION')">cloud_download</i>
               <i class="material-icons details" style="color: grey" matTooltip="Not Available" *ngIf="(element.jobOrigin !== 'ERT_EXTRACTION') && (element.jobOrigin !== 'RDBMS_EXTRACTION') && (element.jobOrigin !== 'GENERATE_XML_JSON') && (element.jobOrigin !== 'ER_GENERATION')">cloud_download</i>  -->
@@ -129,6 +129,8 @@
   </div>
 
 <button #click data-toggle="modal" data-target="#jobDetailsModal" hidden></button>
+
+<button #click1 data-toggle="modal" data-target="#stopPopupModal" hidden></button>
 
 <!-- Modal -->
 <div id="jobDetailsModal" class="modal fade" role="dialog">
@@ -148,22 +150,23 @@
                 <tbody >
                   <tr *ngFor="let i of common" class="text-left">
                     <td *ngIf="i.value !== ''">{{i.name}}</td>
-                    <td *ngIf="i.type !== 'Date'">{{i.value !== '' ? i.value : 'null'}}</td>
-                    <td *ngIf="i.type == 'Date' && i.value !== '' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
-                    <td *ngIf="i.type == 'Date' && i.value == 'N/A'">{{i.value}}</td>                    
+                    <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
+                    <td *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
+                    <td *ngIf="i.type == 'Date' && i.value == 'N/A'">{{i.value}}</td>  
+                    <td *ngIf="i.type == 'Date' && i.value == 'null'"></td>                 
                   </tr>
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">
                     <td>{{i.name}}</td>
-                    <td>{{i.value !== null ? i.value : 'NA'}}</td>
+                    <td>{{i.value}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
                   <!-- <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}</td></tr> -->
-                  <tr><td>{{jobMessage?.name}}</td><td><textarea readonly style="width:100%; overflow:scroll; resize:vertical;" ngModel="{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}" rows="3" id="comment"></textarea></td></tr>
+                  <tr><td>{{jobMessage?.name}}</td><td><textarea readonly style="width:100%; overflow:scroll; resize:vertical;" ngModel="{{jobMessage?.value}}" rows="3" id="comment"></textarea></td></tr>
                   <tr *ngIf="jobOutput !== null"><td colspan="2"><h4><b>Output</b></h4></td></tr>
                   <tr *ngIf="jobOutput !== null"><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
                   <tr><td colspan="2"><h4><b>ServerConfig</b></h4></td></tr>
-                  <tr *ngFor="let i of jobServerConfig"><td>{{i.name}}</td><td>{{i.value !== null ? i.value : 'NA'}}</td></tr>
+                  <tr *ngFor="let i of jobServerConfig"><td>{{i.name}}</td><td>{{i.value}}</td></tr>
                 </tbody>
               </table>
       </div>
@@ -171,3 +174,24 @@
         <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
       </div>
     </div>
+</div>
+</div>
+
+
+    <!-- Stop Popup -->
+<div id="stopPopupModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content" style="width: 630px;">
+          <div class="modal-header">
+            <div class='model-title'><div class='info-r'>Notification</div></div>
+        </div>
+        <div class="modal-body">
+           {{responsemsg}} 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  
