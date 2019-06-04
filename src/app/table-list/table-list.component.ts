@@ -711,10 +711,14 @@ export class TableListComponent implements OnInit {
         this.tablelistService.changeArray(this.resultantArray);
         this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
       } else if (this.JobStatus === 'FAILED') {
-        // this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
         document.getElementById('anaerror').click();
+        // this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
+        // this.JobStatus = '';
+      } else if (this.JobStatus === 'SCHEDULED') {
+        // this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
+        // this.JobStatus = '';
+        // this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
       } else {
-        this.stepper.selectedIndex = 1;
         setTimeout(() => {
           this.stepper.selectedIndex = 2;
           this.value[2].children[1].classList.add('active-step');
@@ -882,12 +886,12 @@ export class TableListComponent implements OnInit {
   }
 
   closeScreen() {
-    this.homeStage = true;
-    this.dataAModal = false;
     setTimeout(() => {
       this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
     }, 1000);
-    this.JobStatus = '';
+    // this.JobStatus = '';
+    this.homeStage = true;
+    this.dataAModal = false;
     this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
   }
 }

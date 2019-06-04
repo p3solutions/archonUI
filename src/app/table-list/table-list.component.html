@@ -365,6 +365,7 @@
                                   </div>
                                 </div>
                               </div> -->
+                              <router-outlet></router-outlet>
                             </div>
                       </mat-step>
                     </mat-horizontal-stepper>
@@ -408,7 +409,7 @@
         </div>
         <div class="modal-footer">          
           <button type="button" class="btn btn-padding btn-info-popup-primary-color" (click)="gotoBack()" data-dismiss="modal">Run As Background</button>
-          <button type="button" class="btn btn-padding btn-info-popup-primary-color"  (click)="getJobStatus()" style="margin-left: 10px;">Refresh</button>
+          <button type="button" class="btn btn-padding btn-info-popup-primary-color"  (click)="getJobStatus()" style="margin-left: 10px;" data-dismiss="modal">Refresh</button>
         </div>
       </div>
     </div>

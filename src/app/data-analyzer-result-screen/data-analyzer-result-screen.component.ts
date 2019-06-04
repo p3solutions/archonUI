@@ -5,6 +5,7 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { Route, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-data-analyzer-result-screen',
@@ -38,7 +39,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   updateNotif = false;
   p = 1;
   jobId: any;
-
+  @ViewChild('stepper') stepper: MatStepper;
+  value: any;
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -62,6 +64,15 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
 
   ngAfterViewInit() {
     this.selectRow();
+    this.value = document.querySelectorAll('.mat-horizontal-stepper-header');
+    this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">crop_portrait</i>';
+    this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">table_chart</i>';
+    this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">insert_chart_outlined</i>';
+    this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">format_list_bulleted</i>';
+    this.value[0].children[1].classList.add('finished-step');
+    this.value[1].children[1].classList.add('finished-step');
+    this.value[2].children[1].classList.add('finished-step');
+    this.value[3].children[1].classList.add('active-step');
   }
 
   getPrimaryColumns() {
