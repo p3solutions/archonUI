@@ -6,6 +6,7 @@ import { Route, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { MatStepper } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-data-analyzer-result-screen',
@@ -41,6 +42,11 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   jobId: any;
   @ViewChild('stepper') stepper: MatStepper;
   value: any;
+  dataSource = new MatTableDataSource<any>(this.populateSecondaryValuesArray);
+  displayedColumns: string[] = ['primaryColumn', 'dataType', 'secondaryColumnName', 'matchPercentage'];
+  columnlength = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -138,12 +144,16 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   populatePrimaryValues(x) {
-    this.populatePrimaryValuesArray = this.primaryColMap.get(x.key);
+    this.populatePrimaryValuesArray = this.primaryColMap.get(x.key);    
     this.selectedPrimaryColumn = x.key;
   }
 
   populateSecondaryValues(x) {
     this.populateSecondaryValuesArray = this.secTableNameMap.get(x.key);
+    this.dataSource.data = this.populateSecondaryValuesArray;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.columnlength = this.populatePrimaryValuesArray.length;
     this.selectedSecondaryTable = x.key;
   }
 

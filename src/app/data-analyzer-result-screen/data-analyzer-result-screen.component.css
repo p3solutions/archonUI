@@ -14,6 +14,67 @@
     margin: 65px auto auto;
     width: 1050px;
 }
+
+
+.card-header {
+  color: #000;
+  background-color: #64b5f6;
+  padding: 8px;
+  border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.card-title {
+  font-size: 16px;
+  float: left;
+}
+.back-arrowr {
+  margin-top: 2px;
+  margin-bottom: 5px;
+  margin-left: 16px;
+  float: left;
+}
+
+#da-arrow{
+  margin-left: 11px;
+  margin-right: 13px;
+}
+.title-header{
+  font-size: 18px;
+  text-align: left;
+}
+.arrow {
+ 
+  color: #80adf8;
+  cursor: pointer;
+}
+
+.arrow:hover {
+
+  color: #2879FF;
+  cursor: pointer;
+}
+.body-row {
+    padding: 15px;
+    margin-right: -15px;
+  margin-left: -15px;
+}
+.primary-table {
+  background-color: #edf3f8;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+
+.container-tab{
+  margin-left: 22px;
+  margin-right: 31px;
+}
+.card-title {
+  float: left;
+}
+.sub-headerr {
+  margin-left: 4px;
+}
   .modal-header{
     font-size: 20px;
     padding: 14px 18px;
@@ -35,7 +96,7 @@
   }
 
   .marginClass {
-    margin-top: 96px;
+    /* margin-top: 96px; */
   }
 
   .pointer {
@@ -115,4 +176,160 @@
 ::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header .active-step {
   background-color: #2879ff !important;
   color: #ffffff !important;
+}
+
+.container-da{
+  margin: 0px 70px
+}
+.dataA-panel-body {
+  /* height: 430px; */
+  margin-left: 75px;
+  /* margin-right: 50px; */
+}
+.dataA-panel-body-r {
+  margin-left: -50px;
+  margin-right: -50px;
+}
+
+#panel-r{
+  height: 438px;
+}
+.panel-body {
+  /* padding: 15px; */
+}
+/* Toggle Button */
+.one *, .one *:before, .one *:after {
+  -moz-box-sizing: border-box; 
+ -webkit-box-sizing: border-box; 
+ box-sizing: border-box;
+}
+
+.one .button-wrap {
+ /* width: 120px; */
+ /* margin: 10px auto 0; */
+ cursor: pointer;
+}
+.one .button-bg {
+ width: 105%;
+ height: 100%;
+ background-color:#cfd7e3;;
+ border-radius: 40px;
+ color:#595959;
+ transition:all 0.2s ease;
+}
+.one .button-switch {
+ position:relative;
+ left:0px;
+ width: 175px;
+ height: 44px;
+ border:solid 22px;
+ border-radius: 36px;
+ transition:all 0.2s ease;
+ border-color:#2879ff;
+}
+.one .button-active .button-switch { left:116px; width: 172px;border-color:#2879ff; }
+.one .button-in, 
+.one .button-out {
+ position:absolute; 
+ transition:all 0.2s ease;
+ padding-top:10px;
+ font-family: Roboto;
+ font-size:18px;
+}
+.one .button-in { margin-left:178px; }
+.one .button-out { margin-left:20px; margin-right: 20px; color:#ffffff; }
+.one .button-active .button-out { color:#595959; }
+.one .button-active .button-in { color:#ffffff;margin-left: 132px;}
+.one .button-active .button-bg { background-color:#cfd7e3; }
+
+.index {
+ z-index: 1;
+}
+
+.one-width {
+width: 350px;
+}
+
+/* Toggle Button Ends */
+
+.first-div-new {
+  display: block;
+  width: 86%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+  margin-left: 15px;
+  text-align: left;
+  font-weight: bold;
+}
+.container-list{
+  padding:0px 4px 0px 9px;
+}
+.tablename-list {
+  margin-top: 10px;
+  margin-left: -20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 300px;
+}
+.list-group-item {
+  margin-left: 25px;
+  margin-bottom: -15px;
+  padding: 10px 10px;
+  /* width: 100%; */
+  text-transform: none;
+  /* margin-bottom: -15px; */
+  text-align: left;
+}
+.da-table.selected {
+  border: 1px solid #269AF8;
+  background-color: #e8f0f6;
+}
+input[type='checkbox'] {
+  cursor: pointer;
+}
+.unselected {
+  display: none;
+  float: right;
+  padding: 3px 0;
+  color: #269AF8;
+}
+.selected .unselected {
+  display: block;
+}
+.first-div-n {
+  display: block;
+  width: 86%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+  margin-left: 0px;
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+.mat-header-cell {
+  font-size: 12px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;  
+  text-align: left;
+  color: #0c0c0c;  
+  font-weight: bold;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 10px;
+}
+
+.mat-cell, .mat-footer-cell {
+  font-size: 12px;
+  text-align: left;
+  padding-left: 10px;
+}
+::ng-deep .mat-paginator-range-label {
+  margin: 0px !important;
+}
+::ng-deep .mat-paginator-icon {
+  height: unset !important;
 }
