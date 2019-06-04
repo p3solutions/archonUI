@@ -714,8 +714,11 @@ export class TableListComponent implements OnInit {
         this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
         this.JobStatus = '';
         this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+      } else if (this.JobStatus === 'SCHEDULED') {
+        // this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
+        // this.JobStatus = '';
+        // this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
       } else {
-        this.stepper.selectedIndex = 1;
         setTimeout(() => {
           this.stepper.selectedIndex = 2;
           this.value[2].children[1].classList.add('active-step');

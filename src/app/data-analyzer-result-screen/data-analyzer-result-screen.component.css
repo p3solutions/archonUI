@@ -105,3 +105,14 @@
 .action-btn button.cancel:hover {
   transform: scale(1.1, 1.1);
 }
+
+::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header .finished-step {
+  background-color: #ffff !important;
+  color: #2879ff !important;
+  border: solid 2px #2879ff !important;
+}
+
+::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header .active-step {
+  background-color: #2879ff !important;
+  color: #ffffff !important;
+}
