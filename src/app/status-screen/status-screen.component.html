@@ -180,18 +180,22 @@
 
     <!-- Stop Popup -->
 <div id="stopPopupModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-      <div class="modal-content" style="width: 630px;">
-          <div class="modal-header">
-            <div class='model-title'><div class='info-r'>Notification</div></div>
+    <div class="modal-dialog" style="width: 480px;">
+        <div class="modal-content">
+          <div class="info-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">info_outline</i><div class="pop-title" style="margin-left: 0px;">Notification</div></h4>
+          </div>
+          <div class="modal-body">
+            <p class="popup-paragraph-cls">{{responsemsg}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-padding btn-info-popup-primary-color"
+              data-dismiss="modal">Ok</button>
+          </div>
         </div>
-        <div class="modal-body">
-           {{responsemsg}} 
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
-      </div>
-    </div>
   </div>
-  </div>
+
+  
   
