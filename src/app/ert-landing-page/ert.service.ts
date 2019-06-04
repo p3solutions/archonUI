@@ -118,20 +118,15 @@ export class ErtService {
       );
   }
 
-  geEditedtERTcolumnlist(ertJobId = '', workspaceId: string, tableIds: string[] = []) {
+  getEditedtERTcolumnlist(ertJobId = '', workspaceId: string, tableIds: string[] = []): Observable<any[]> {
     const request: any[] = [];
-    let ertColumnLists: ErtColumnListObj[] = [];
     for (const tableId of tableIds) {
       request.push(this.http.get<ErtColumnListObj[]>(this.getERTcolumnlistUrl + ertJobId +
         '&workspaceId=' + workspaceId + '&tableId=' + tableId,
         { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractDataForColumn)));
     }
     const combineErtColumnResult = forkJoin(request);
-    combineErtColumnResult.subscribe(response => {
-      ertColumnLists = response;
-      console.log(ertColumnLists);
-      this.spinner.hide();
-    });
+    return combineErtColumnResult;
   }
 
   getErtAvailableTable(ertJobId: string, startIndex): Observable<AvilErtTable> {

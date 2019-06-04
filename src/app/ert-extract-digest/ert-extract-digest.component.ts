@@ -20,7 +20,6 @@ export class ErtExtractDigestComponent implements OnInit {
   from = '';
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
   ngOnInit() {
-    console.log(this.ertService.selectedList.filter(a => a.isSelected === true));
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
     if (this.from === 'data-record' || this.from === 'SIP') {
       this.isDisabledSaveBtn = true;

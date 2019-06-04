@@ -31,7 +31,7 @@ export class ErtJobsConfigComponent implements OnInit {
     } else if (ertJobMode === 'SIP') {
       this.route.navigate(['/workspace/ert/ert-sip-config']);
     } else {
-      this.route.navigate(['/workspace/ert/ert-table']);
+      this.route.navigate(['/workspace/ert/ert-table'],{ queryParams: { from: 'TABLE' } });
     }
   }
 
