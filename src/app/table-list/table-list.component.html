@@ -47,12 +47,7 @@
             <div class="card-title">Relationship Info</div>
           </div>
         </div>       
-        <button style="display: none"  id="dataanalyze" (click)="openDataAModal()">Data Analyzer</button>
-        <button style="display: none"  id="directjoin" (click)="adddirectjoin()" >Direct
-            Join</button>
-        <button style="display: none"  id="spv" (click)="openStoredProcView()">SP/View Join</button>
-        <button style="display: none"  id="exxml" (click)="exportxml()">XML</button>
-        <button style="display: none"  id="exjson" (click)="exportjson()">JSON</button>
+       
         <div class="container-tab">
           <div class="col-md-12 primary-table">
             <h5 class="card-title sub-headerr">Primary Table:
@@ -419,6 +414,30 @@
   </div>
    <!--  end analyze popup -->
 
+   <!--  start analyze popup error-->
+   <button style="display:none" type="button" id="anaerror" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#analyzeserror">Open Modal</button>
+
+  <div id="analyzeserror" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 12px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 12px;">Failed</div></h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">Data analysis failed</p>
+      </div>
+      <div class="modal-footer">        
+        <!-- <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button> -->
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="gotoBack()"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+     <!--  end analyze popup error -->
+
   <!-- relationship delete -->  
   <div class="modal fade" id="confirmDelMemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
@@ -470,3 +489,10 @@
         </div>
       </div>
     </div>
+
+    <button style="display: none"  id="dataanalyze" (click)="openDataAModal()">Data Analyzer</button>
+    <button style="display: none"  id="directjoin" (click)="adddirectjoin()" >Direct
+        Join</button>
+    <button style="display: none"  id="spv" (click)="openStoredProcView()">SP/View Join</button>
+    <button style="display: none"  id="exxml" (click)="exportxml()">XML</button>
+    <button style="display: none"  id="exjson" (click)="exportjson()">JSON</button>

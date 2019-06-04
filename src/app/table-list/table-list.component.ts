@@ -712,8 +712,9 @@ export class TableListComponent implements OnInit {
         this.router.navigate(['workspace/metalyzer/ALL/analysis/resultant']);
       } else if (this.JobStatus === 'FAILED') {
         this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
-        this.JobStatus = '';
-        this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+         this.JobStatus = '';
+        // this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+        document.getElementById('anaerror').click();
       } else {
         // setTimeout(() => {
         //   (<any>$('#dataAModal-carousel')).carousel(3);
