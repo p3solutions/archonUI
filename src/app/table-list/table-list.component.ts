@@ -208,7 +208,7 @@ export class TableListComponent implements OnInit {
   openDataAModal() {
     setTimeout(() => {
       this.changeMatStepIcon();
-    }, 1000);
+    }, 800);
     this.tablelistService.stateManagement(this.userId, this.workspaceID, this.metalyzerServiceId).subscribe(res => {
       if (res.data.jobIds.length > 0) {
         this.homeStage = false;
@@ -716,12 +716,12 @@ export class TableListComponent implements OnInit {
         // this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
         document.getElementById('anaerror').click();
       } else {
-        // setTimeout(() => {
-        //   (<any>$('#dataAModal-carousel')).carousel(3);
-        // }, 1000);
-        // const progressSelector = 'progress-bar';
-        // this.addClass(progressSelector, 'width-100-pc');
-        
+        this.stepper.selectedIndex = 1;
+        setTimeout(() => {
+          this.stepper.selectedIndex = 2;
+          this.value[2].children[1].classList.add('active-step');
+        }, 1000);
+        document.getElementById('open-analyzer-popup').click();
       }
     });
   }
