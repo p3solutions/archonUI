@@ -16,6 +16,8 @@ export class AuditService {
   getEventsUrl = this.apiUrl + 'audits/events';
   downloadUrl = this.apiUrl + 'audits/download?jobId=';
   jobDetails = this.apiUrl + 'jobStatus/jobDetails?jobId=';
+  auditjobUrl = this.apiUrl + 'jobStatus/auditDetails?jobId=';
+
   startIndex = 1;
   constructor(
     private http: HttpClient,
@@ -33,8 +35,19 @@ export class AuditService {
       catchError(this.handleError<any>('getEvents')));
   }
 
-  getJobDetails(jobId: string): Observable<any> {
+  getStatusJobDetails(jobId: string): Observable<any> {
     return this.http.get<any>(this.jobDetails + jobId, { headers: this.getHeaders() }).pipe(
+      map(this.extractStatusJobDetails),
+      catchError(this.handleError<any>('getJobDetails')));
+  }
+
+  private extractStatusJobDetails(res: any) {
+    const data = res.data;
+    return data || [];
+  }
+
+  getJobDetails(jobId: string): Observable<any> {
+    return this.http.get<any>(this.auditjobUrl + jobId, { headers: this.getHeaders() }).pipe(
       map(this.extractJobDetails),
       catchError(this.handleError<any>('getJobDetails')));
   }

@@ -140,35 +140,67 @@
             <div class='model-title'><div class='info-r'>Job Details</div></div>
         </div>
         <div class="modal-body">
-            <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Field</th>
-                    <th>Values</th>
-                  </tr>
-                </thead>
-                <tbody >
-                  <tr *ngFor="let i of common" class="text-left">
-                    <td *ngIf="i.value !== ''">{{i.name}}</td>
-                    <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
-                    <td *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
-                    <td *ngIf="i.type == 'Date' && i.value == 'N/A'">{{i.value}}</td>  
-                    <td *ngIf="i.type == 'Date' && i.value == 'null'"></td>                 
-                  </tr>
-                  <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
-                  <tr *ngFor="let i of input" class="text-left">
-                    <td>{{i.name}}</td>
-                    <td>{{i.value}}</td>
-                  </tr>
-                  <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
-                  <!-- <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}</td></tr> -->
-                  <tr><td>{{jobMessage?.name}}</td><td><textarea readonly style="width:100%; overflow:scroll; resize:vertical;" ngModel="{{jobMessage?.value}}" rows="3" id="comment"></textarea></td></tr>
-                  <tr *ngIf="jobOutput !== null"><td colspan="2"><h4><b>Output</b></h4></td></tr>
-                  <tr *ngIf="jobOutput !== null"><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
-                  <tr><td colspan="2"><h4><b>ServerConfig</b></h4></td></tr>
-                  <tr *ngFor="let i of jobServerConfig"><td>{{i.name}}</td><td>{{i.value}}</td></tr>
-                </tbody>
-              </table>
+            <mat-accordion>
+            <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of jobArray;let ind=index;">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div class="expansion-outer">
+                      <div class="expansion-item-sec">Attempt {{ind+1}}</div>
+                      </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Field</th>
+                        <th>Values</th>
+                      </tr>
+                    </thead>
+                    <tbody >
+                      <tr *ngFor="let i of relation.common" class="text-left">
+                        <td *ngIf="i.value !== ''">{{i.name}}</td>
+                        <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
+                        <td *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
+                        <td *ngIf="i.type == 'Date' && i.value == 'N/A'">{{i.value}}</td>  
+                        <td *ngIf="i.type == 'Date' && i.value == 'null'"></td>                 
+                      </tr>
+                      <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
+                      <tr *ngFor="let i of relation.input" class="text-left">
+                        <td>{{i.name}}</td>
+                        <td>{{i.value}}</td>
+                      </tr>
+                      <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
+                      <!-- <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}</td></tr> -->
+                      <tr><td>{{relation.message?.name}}</td><td><textarea readonly style="width:100%; overflow:scroll; resize:vertical;" ngModel="{{relation.message?.value}}" rows="3" id="comment"></textarea></td></tr>
+                      <tr *ngIf="relation.output !== null"><td colspan="2"><h4><b>Output</b></h4></td></tr>
+                      <tr *ngIf="relation.output !== null"><td>{{relation.output?.name}}</td><td>{{relation.output?.value}}</td></tr>
+                      <tr><td colspan="2"><h4><b>ServerConfig</b></h4></td></tr>
+                      <tr *ngFor="let i of relation.serverConfiguration"><td>{{i.name}}</td><td>{{i.value}}</td></tr>
+                    </tbody>
+                  </table>
+                <!-- <div>
+                  <div class="exp-content-outer border-top-line">
+                    <div class="exp-mat-item">
+                      <strong>Primary Table Column</strong>
+                    </div>
+                    <div class="exp-mat-item">
+                      <strong>Secondary Table Column</strong>
+                    </div>
+                  </div>
+                  <div class="exp-content-outer" *ngFor="let x of relation.joinListInfo">
+                    <div class="exp-mat-item">{{x.primaryColumn.columnName}}</div>
+                    <div class="exp-mat-item">{{x.secondaryColumn.columnName}}</div>
+                  </div>
+                  <div class="action-btn">
+                    <button class="mat-raised-button cancel btn-padding"
+                      (click)="mep.expanded = !mep.expanded">Close</button>
+                    <button class="save mat-raised-button btn-padding" data-toggle="modal" data-keyboard="false" data-backdrop="static"
+                      data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)">Edit</button>
+                  </div>
+                </div> -->
+              </mat-expansion-panel>
+              </mat-accordion>
+           
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>

@@ -21,11 +21,6 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   selectedJobStatus = '';
   loadStatus = true;
   errorObject: ErrorObject;
-  common: any;
-  input: any;
-  jobMessage: any;
-  jobOutput: any;
-  jobServerConfig: any;
   @ViewChild('click') button: ElementRef;
   @ViewChild('click1') button1: ElementRef;
   startIndex = 1;
@@ -36,6 +31,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
   responsemsg;
+  jobArray: {common: any, input: any, message: any, output: any, serverConfiguration: any}[] = [];
 
   constructor(
     private router: Router,
@@ -129,13 +125,8 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
 
   openDetail(id) {
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
-    this.service.getJobDetails(id).subscribe(result => {
-      console.log(result);
-      this.common = result.common;
-      this.input = result.input;
-      this.jobMessage = result.message;
-      this.jobOutput = result.output;
-      this.jobServerConfig = result.serverConfiguration;
+    this.service.getStatusJobDetails(id).subscribe(result => {
+      this.jobArray = result;
     });
     el.click();
   }
