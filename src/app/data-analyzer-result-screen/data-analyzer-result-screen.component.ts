@@ -43,10 +43,10 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   @ViewChild('stepper') stepper: MatStepper;
   value: any;
   dataSource = new MatTableDataSource<any>(this.populateSecondaryValuesArray);
-  displayedColumns: string[] = ['primaryColumn', 'dataType', 'secondaryColumnName', 'matchPercentage'];
+  displayedColumns: string[] = ['primaryColumn', 'dataType', 'secondaryColumnName', 'matchPercentage', 'checked'];
   columnlength = 0;
   dataSource1 = new MatTableDataSource<any>(this.populatePrimaryValuesArray);
-  displayedColumns1: string[] = ['tableName', 'dataType', 'secondaryColumnName', 'matchPercentage'];
+  displayedColumns1: string[] = ['tableName', 'dataType', 'secondaryColumnName', 'matchPercentage', 'checked'];
   columnlength1 = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -313,14 +313,14 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   selectRow() {
-    if ((<HTMLElement>document.querySelectorAll('.sec-table tr')[1]) !== undefined) {
+    if ((<HTMLElement>document.querySelectorAll('.sec-table div')[0]) !== undefined) {
       setTimeout(() => {
-        (<HTMLElement>document.querySelectorAll('.sec-table tr')[1]).click();
+        (<HTMLElement>document.querySelectorAll('.sec-table div')[0]).click();
       }, 1);
     }
   }
 
-  toggle(){
+  toggle() {
       this.toggleBoolean = !this.toggleBoolean;
   }
 }

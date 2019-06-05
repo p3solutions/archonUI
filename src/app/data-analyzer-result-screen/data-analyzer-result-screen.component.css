@@ -96,7 +96,8 @@
   }
 
   .marginClass {
-    /* margin-top: 96px; */
+    margin-top: 20px;
+    margin-bottom: -43px;
   }
 
   .pointer {
@@ -341,7 +342,7 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
   margin-bottom: 6px;
 }
 .plr-0 {
-  margin-top: 5px;
+  margin-top: 6px;
   margin-right: -30px;
 }
 

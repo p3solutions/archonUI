@@ -60,7 +60,7 @@
                               <div class="col-md-3 dataA-scrollable-div-A"  style="margin-left: -15px; width: 28%;">
                                 <div class="first-div-new">Primary Column</div>  
                                 <div class="plr-0">
-                                <div class="col-md-12"
+                                <div class="col-md-12 sec-table"
                                 *ngFor="let x of primaryColMap | keyvalue; let i = index" (click)="populatePrimaryValues(x,i)">
                                 <div [class.selected]="i == selectedRow" class="col-md-12 cur-p trim-text ana-br da-table" id="list-br" title="{{x.key}}">                                  
                                     {{x.key}}
@@ -97,8 +97,15 @@
                                       <td mat-cell *matCellDef="let element"> {{element.secondaryColumnName}} </td>
                                     </ng-container>
                                     <ng-container matColumnDef="matchPercentage">
-                                      <th mat-header-cell *matHeaderCellDef style="width: 10%"> Accuracy </th>
+                                      <th mat-header-cell *matHeaderCellDef style="width: 10%"> Accuracy (%) </th>
                                       <td mat-cell *matCellDef="let element"> {{element.matchPercentage}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="checked">
+                                      <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
+                                      <td mat-cell *matCellDef="let element">
+                                        <mat-checkbox [disabled]="element.matchPercentage == 0"
+                                        (change)="checkedSecValues(x,$event,i)"></mat-checkbox>
+                                      </td>
                                     </ng-container>
                                     
                                   <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
@@ -139,7 +146,7 @@
                             <div class="col-md-3 dataA-scrollable-div-A"  style="margin-left: -15px; width: 28%;">
                                 <div class="first-div-new">Secondary Table</div> 
                                 <div class="plr-0">
-                                <div class="col-md-12"
+                                <div class="col-md-12 sec-table"
                                 *ngFor="let x of secTableNameMap | keyvalue; let i = index" (click)="populateSecondaryValues(x,i)">
                                 <div [class.selected]="i == selectedRow" class="col-md-12 cur-p trim-text ana-br da-table" id="list-br" title="{{x.key}}">                                  
                                     {{x.key}}
@@ -176,8 +183,15 @@
                                       <td mat-cell *matCellDef="let element"> {{element.secondaryColumnName}} </td>
                                     </ng-container>
                                     <ng-container matColumnDef="matchPercentage">
-                                      <th mat-header-cell *matHeaderCellDef style="width: 10%"> Accuracy </th>
+                                      <th mat-header-cell *matHeaderCellDef style="width: 10%"> Accuracy (%) </th>
                                       <td mat-cell *matCellDef="let element"> {{element.matchPercentage}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="checked">
+                                      <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
+                                      <td mat-cell *matCellDef="let element">
+                                        <mat-checkbox [disabled]="element.matchPercentage == 0"
+                                        (change)="checkedSecValues(x,$event,i)"></mat-checkbox>
+                                      </td>
                                     </ng-container>
                                     
                                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -231,7 +245,7 @@
                             <strong>{{errorMsg}}</strong>
                           </div>
                         </div>
-                        <div class="col-md-5" style="margin-top:16px; text-align: right;">
+                        <div class="col-md-5" style="text-align: right;">
           
                           <div class="action-btn">
                             <button mat-raised-button class="mat-raised-button cancel btn-padding" data-keyboard="false"
@@ -240,8 +254,8 @@
                               data-backdrop="static" data-toggle="modal" data-target="#addJoins">Add Selected Joins</button>
                           </div>
                         </div>
-                        <div class="col-md-6 alert-sty text-danger">Note: Kindly click close button to clear the Analysis result.
-                        </div>
+                        <!-- <div class="col-md-6 alert-sty text-danger">Note: Kindly click close button to clear the Analysis result.
+                        </div> -->
                       </div>
           
                     </div>

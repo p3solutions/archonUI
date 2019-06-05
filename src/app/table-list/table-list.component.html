@@ -233,7 +233,7 @@
                                   <div class="col-md-12 p-0 dataA-scrollable-div">
                                     <div class="da-table-parent">
                                       <div class="col-md-12 p-0"
-                                        *ngFor="let secTbl of secTblArray | paginate: {id: 'dalist1', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: pageTable } let i=index;"
+                                        *ngFor="let secTbl of secTblArray | searchTable : searchSec1 | paginate: {id: 'dalist1', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: pageTable } let i=index;"
                                         [hidden]="secTbl.tableName === selectedPrimTbl">
                                         <div class="col-md-12 cur-p da-table trim-text ana-br" id="list-br"
                                           title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
@@ -278,7 +278,7 @@
                                       </div>
                                     </div>
                                     <div class="col-md-12 p-0"
-                                      *ngFor="let sColumn of secColArray | paginate: {id: 'dalist2', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: pageColumn } let i=index;"
+                                      *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: pageColumn } let i=index;"
                                       id="secondaryColums">
                                       <div class="col-md-12  trim-text ana-br" id="list-br" title="{{sColumn.columnName}}">
                                         <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb"
