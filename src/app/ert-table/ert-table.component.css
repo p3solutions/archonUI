@@ -722,3 +722,15 @@ a.disabled {
   margin-bottom: 4px;
 }
 
+.startIndex{
+  margin-right: 2%;
+    width: 50%;
+    border: none;
+    border-bottom: 1px solid #2196F3
+}
+
+.endIndex{
+    width: 50%;
+    border: none;
+    border-bottom: 1px solid #2196F3
+}

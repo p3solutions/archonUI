@@ -43,6 +43,8 @@ export class ErtService {
   RelationSIP: any[];
   startIndex: 1;
   storeSelectedTables: TableDetailsListObj[] = [];
+  isDataRecordGraphChange = false;
+  isSIPGraphChange = false;
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }

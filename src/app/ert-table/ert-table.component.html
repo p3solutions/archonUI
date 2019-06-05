@@ -7,13 +7,12 @@
         </div>
         <div class='body-left'><span style="z-index:1"
             class="glyphicon glyphicon-search inner-addon right-addon"></span>
-          <input type="text" class="form-control search-input"  id="listSearch" placeholder="Search Table"></div>
+          <input type="text" class="form-control search-input" id="listSearch" placeholder="Search Table"></div>
         <div class='body-right'>
           <a (click)="openAvailableErtTablePopup('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn"
-            class="cursor-poniter"><i
-              class="fa fa-plus-circle"></i></a>
-          <a *ngIf="showAddTableBtn" (click)="openCreateJobSelectTablePopup('1')" matTooltip="Select Table to create job"
-            class="cursor-poniter"><i class="fa fa-plus-circle"></i></a></div>
+            class="cursor-poniter"><i class="fa fa-plus-circle"></i></a>
+          <a *ngIf="showAddTableBtn" (click)="openCreateJobSelectTablePopup('1')"
+            matTooltip="Select Table to create job" class="cursor-poniter"><i class="fa fa-plus-circle"></i></a></div>
         <div class="card-body" id="ert-tbl-search">
           <div *ngIf="!showNoTablesMsg" id="tbl-list" style="height: 326px;">
             <div class="scroll-div border" appScrollable (scrollPosition)="getNextBatchOfERTTable($event)">
@@ -495,9 +494,19 @@
             <option *ngFor="let item of columnConfigFunctionList" [value]="item.function">{{item.function}}</option>
           </select>
         </div>
+        <div *ngIf="configColumnObject.selectedConfigFunction==='SUBSTRING'" class="form-group" style="display: flex">
+          <div class="startIndex">
+            <input type="number" class="form-control" (keyup)="setSubStringStartEndIndex(selectValue.value)" placeholder="Start Index" [(ngModel)]="configColumnObject.startIndex"
+              id="ucolumnname" name="startindex">
+          </div>
+          <div class="endIndex">
+            <input type="number" class="form-control" (keyup)="setSubStringStartEndIndex(selectValue.value)" placeholder="End Index" [(ngModel)]="configColumnObject.endIndex"
+              id="ucolumnname" name="endindex">
+          </div>
+        </div>
         <div class="form-group">
-          <button type="button" [disabled]="selectValue.value===null" (click)="saveColumnConfig()"
-            class="btn btn-padding {{selectValue.value===null ? 'primary-btn-color-disabled' : 'primary-btn-color'}} ">Add</button>
+          <button type="button" [disabled]="selectValue.value===null || disabledAddColumnConfigBtn" (click)="saveColumnConfig()"
+            class="btn btn-padding {{(selectValue.value===null || disabledAddColumnConfigBtn)?'primary-btn-color-disabled' : 'primary-btn-color'}} ">Add</button>
         </div>
         <div class="config-table">
           <div class="form-inline" id="config-table-header">
@@ -520,7 +529,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -537,7 +546,8 @@
         <div id="avaliable-table-list">
           <div class="form-control {{item.isSelected?'selected-table-cls':''}}"
             *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { id:'availble-pagination', itemsPerPage: 50, totalItems: avilableTableCount, currentPage: availPage } ">
-            <input type="checkbox" (click)="addTempEditErtSelectedTable(item.tableId,$event)" [(ngModel)]="item.isSelected">
+            <input type="checkbox" (click)="addTempEditErtSelectedTable(item.tableId,$event)"
+              [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
         </div>

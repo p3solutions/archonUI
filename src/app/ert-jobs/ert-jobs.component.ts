@@ -4,6 +4,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { UserinfoService } from '../userinfo.service';
 import { ERTJobs, ErtJobParams, ExtractDataConfigInfo, IngestionDataConfig } from '../ert-landing-page/ert';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ert-jobs',
@@ -23,7 +24,7 @@ export class ErtJobsComponent implements OnInit {
   instanceId: any;
   ertJobslist: boolean;
 
-  constructor(public ertService: ErtService, private userInfoService: UserinfoService,
+  constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
 
   ngOnInit() {
@@ -36,6 +37,7 @@ export class ErtJobsComponent implements OnInit {
   }
   getErtJobList() {
     const userId = this.userInfoService.getUserId();
+    this.spinner.show();
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
       this.ertJobs = result;
@@ -54,6 +56,7 @@ export class ErtJobsComponent implements OnInit {
           item.madeEditDisable = false;
         }
       }
+      this.spinner.hide();
     });
   }
 

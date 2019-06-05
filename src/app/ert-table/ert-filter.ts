@@ -232,4 +232,6 @@ export const columnConfigFunctionList: ColumnConfigFunction[] = [
     { function: 'LOWER', dataType: 'VARCHAR', outputType: 'STRING' },
     { function: 'SUBSTRING', dataType: 'VARCHAR', outputType: 'STRING' },
     { function: 'REVERSE', dataType: 'VARCHAR', outputType: 'STRING' },
+    { function: 'ADDTIME', dataType: 'TIMESTAMP', outputType: 'DATE' },
+    { function: 'ADDDATE', dataType: 'TIMESTAMP', outputType: 'DATE' }
 ];

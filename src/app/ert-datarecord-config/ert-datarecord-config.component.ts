@@ -56,6 +56,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
   gotoDataRecFinal() {
     this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
     this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable, '');
+    this.ertService.isDataRecordGraphChange = true;
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'data-record' } });
   }
   gotoJobConfiguration() {

@@ -37,9 +37,15 @@ export class ErtTableComponent implements OnInit {
   orderFilterConfigColumnNameList: string[] = [];
   userDefinedList: { 'prefix': string, 'column': string, 'suffix': string }[] = [];
   ertJobId = '';
-  configColumnObject: { selectedColumnName: string, selectedConfigFunction: string, outputType: string } =
-    { selectedColumnName: '', selectedConfigFunction: null, outputType: '' };
-  configColumnList: { selectedColumnName: string, selectedConfigFunction: string, outputType: string }[] = [];
+  configColumnObject: {
+    selectedColumnName: string, selectedConfigFunction: string,
+    outputType: string, startIndex: number, endIndex: number
+  } =
+    { selectedColumnName: '', selectedConfigFunction: null, outputType: '', startIndex: null, endIndex: null };
+  configColumnList: {
+    selectedColumnName: string, selectedConfigFunction: string, outputType: string, startIndex: number,
+    endIndex: number
+  }[] = [];
   selectedTableId = '';
   configColumnQuery = '';
   maxNode = 3;
@@ -84,7 +90,9 @@ export class ErtTableComponent implements OnInit {
   editErtTableIndex = 1;
   totalEditErtTableList = 50;
   showAddTableBtn = false;
-  previousUrl = '';
+  substringStartIndex = null;
+  substringEndIndex = null;
+  disabledAddColumnConfigBtn = false;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -110,41 +118,24 @@ export class ErtTableComponent implements OnInit {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       document.getElementById('back-to-job-config').classList.add('hide'); // Hide the Back btn if job is on edit mode.
     }
-    this.router.events
-    .pipe(
-      filter(event => event instanceof RoutesRecognized),
-      pairwise()
-    )
-    .subscribe((e: any) => {
-      this.previousUrl = e[0].urlAfterRedirects;
-      console.log(this.previousUrl);
-      this.checkForTheServiceLevelvalue();
-    });
-     if (this.ertService.selectedList.length !== 0) {
-      console.log(1);
-      this.getPreviousUrl();
+    this.checkForMode();
+  }
+
+  checkForMode() {
+    if (this.ertService.selectedList.length !== 0) {
+      if (this.ertService.isDataRecordGraphChange) {
+        this.getERTtableListForDataRecord(); // If it is Data-record job and route from graph page.
+      } else if (this.ertService.isSIPGraphChange) {
+        this.getERTtableListForSIP(); // If it is SIP job and route from graph page.
+      } else {
+        this.getERTTableFromService(); // If data is present in service level then we restore the data from service.
+      }
     } else if (this.from === 'data-record') {
       this.getERTtableListForDataRecord(); // If it is Data-record job.
     } else if (this.from === 'SIP') {
       this.getERTtableListForSIP(); // If it is SIP job.
     } else if (this.from === 'TABLE') {
       this.getERTTableForTableMode(); // If it is TABLE job.
-    }
-  }
-
-  getPreviousUrl() {
-    console.log(2);
-   
-  }
-
-  checkForTheServiceLevelvalue() {
-    console.log(this.previousUrl);
-    if (this.previousUrl === '/workspace/ert/ert-datarecord-config') {
-      console.log(this.previousUrl);
-    } else if (this.previousUrl === '/workspace/ert/ert-sip-config') {
-      console.log(this.previousUrl);
-    } else {
-      this.getERTTableFromService(); // If data is present in service level then we restore the data from service.
     }
   }
 
@@ -255,7 +246,7 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
-  addTempOriginalSelectedTable(tableId, $event) {
+  addTempOriginalSelectedTable(tableId, $event) { // when we click on checkbox of original tables
     let tempOriginalTableObj = new ErtTableObj();
     if ($event.target.checked) {
       tempOriginalTableObj = this.originalErttableList.ertTableList.filter(a => a.tableId === tableId)[0];
@@ -273,7 +264,7 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
-  addTempEditErtSelectedTable(tableId, $event) {
+  addTempEditErtSelectedTable(tableId, $event) { // when we click on checkbox of edit ert tables.
     let tempOriginalTableObj = new ErtTableObj();
     if ($event.target.checked) {
       tempOriginalTableObj = this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tableId)[0];
@@ -292,7 +283,7 @@ export class ErtTableComponent implements OnInit {
   }
 
 
-  addSelectTableCreateJob() {
+  addSelectTableCreateJob() { // when we click on the add of ert tables.
     Array.prototype.push.apply(this.selectedTableList, this.tempOriginalSelectedTable);
     this.selectedTableId = this.selectedTableList[0].tableId;
     const tableIds = this.tempOriginalSelectedTable.map(function (item) { return item['tableId']; });
@@ -368,6 +359,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   refreshColumn() {
+    this.spinner.show();
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, this.selectedTableId).subscribe((result) => {
       this.ErtTableColumnList = result;
@@ -376,6 +368,7 @@ export class ErtTableComponent implements OnInit {
       this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
       this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList = [];
       this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig = new FilterAndOrderConfig();
+      this.spinner.hide();
     });
   }
 
@@ -391,7 +384,7 @@ export class ErtTableComponent implements OnInit {
     this.availPage = 1;
   }
 
-  getErtAvailableTable(page) {
+  getErtAvailableTable(page) { // to get the available ert tables.
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.spinner.show();
       this.ertService.getErtAvailableTable(this.ertJobId, page).subscribe(result => {
@@ -635,6 +628,11 @@ export class ErtTableComponent implements OnInit {
 
   setColumnConfigObj(value: string) {
     this.configColumnObject.selectedConfigFunction = value;
+    if (value === 'SUBSTRING' && (this.substringEndIndex === null || this.substringStartIndex === null)) {
+      this.disabledAddColumnConfigBtn = true;
+    } else {
+      this.disabledAddColumnConfigBtn = false;
+    }
   }
 
   openModelForColumnConfig(columnName: string, dataType: string) {
@@ -643,6 +641,14 @@ export class ErtTableComponent implements OnInit {
       this.configColumnQuery = '';
       this.configColumnObject.selectedColumnName = columnName;
       this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
+      if (dataType.trim().toUpperCase() === 'SMALLINT' || dataType.trim().toUpperCase() === 'DECIMAL') {
+        dataType = 'INT';
+      } else {
+        dataType = 'VARCHAR';
+      }
+      if (this.columnConfigFunctionList.length === 0) {
+        this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
+      }
       const temp = this.selectedTableList.filter
         (a => a.tableId === this.selectedTableId)[0].columnList.filter(b => b.originalColumnName === columnName)[0];
       if (temp.userColumnQuery != null && temp.viewQuery) {
@@ -654,29 +660,66 @@ export class ErtTableComponent implements OnInit {
 
   saveColumnConfig() {
     let tempString = '';
+    let outputType = '';
+    this.disabledAddColumnConfigBtn = false;
     if (this.configColumnObject.selectedConfigFunction !== null) {
       this.configColumnObject.outputType = this.columnConfigFunctionList.
         filter(a => a.function === this.configColumnObject.selectedConfigFunction)[0].outputType;
-    }
-    if (this.configColumnObject.selectedConfigFunction !== null) {
       this.configColumnList.push(this.configColumnObject);
     }
     const tempColumnName = this.configColumnObject.selectedColumnName;
-    this.configColumnObject = { selectedColumnName: tempColumnName, selectedConfigFunction: null, outputType: null };
-    for (const item of this.configColumnList) {
-      tempString = tempString + item.selectedConfigFunction + '(';
+    // start- To create query string.
+    for (let item = 0; item < this.configColumnList.length; item++) {
+      if (item === 0 && this.configColumnList[0].selectedConfigFunction.trim().toUpperCase() === 'SUBSTRING') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempColumnName + ',' +
+          this.configColumnList[item].startIndex + ',' + this.configColumnList[item].endIndex + ')';
+      } else if (item === 0 && this.configColumnList[0].selectedConfigFunction.trim().toUpperCase() !== 'SUBSTRING') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempColumnName + ')';
+      } else if (this.configColumnList[item].selectedConfigFunction.trim().toUpperCase() === 'SUBSTRING') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempString + ',' +
+          this.configColumnList[item].startIndex + ',' + this.configColumnList[item].endIndex + ')';
+      } else if (this.configColumnList[item].selectedConfigFunction.trim().toUpperCase() !== 'SUBSTRING') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempString + ')';
+      }
     }
+    // end
+    this.configColumnObject = {
+      selectedColumnName: tempColumnName, selectedConfigFunction: null, outputType: null,
+      startIndex: null, endIndex: null
+    };
     if (this.configColumnList.length !== 0) {
-      tempString = tempString + tempColumnName;
+      // Set function list acc to the last function.
+      outputType = this.configColumnList[this.configColumnList.length - 1].outputType;
+      this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.outputType.trim().toUpperCase() ===
+        outputType.trim().toUpperCase());
+    } else {
+      // set to original function if length is zero.
+      const tempDataType = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0]
+        .columnList.filter(b => b.originalColumnName.trim().toUpperCase() === tempColumnName.trim().toUpperCase())[0].dataType;
+      this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.trim().toUpperCase() ===
+        tempDataType.trim().toUpperCase());
     }
-    for (const item of this.configColumnList) {
-      tempString = tempString + ')';
+    if (outputType.trim().toUpperCase() === 'NUMBER') {
+      // remove length function in case of number.
+      const index = this.columnConfigFunctionList.findIndex(a => a.function === 'LENGTH');
+      if (index !== -1) {
+        this.columnConfigFunctionList.splice(index, 1);
+      }
+    } else if (this.configColumnList.length !== 0) {
+      // insert length function in case of other datatype.
+      this.columnConfigFunctionList.push({ function: 'LENGTH', dataType: 'VARCHAR', outputType: 'NUMBER' });
     }
     this.configColumnQuery = tempString;
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
     const tempColumnList = temp.columnList.filter(a => a.originalColumnName === this.configColumnObject.selectedColumnName)[0];
     tempColumnList.viewQuery = this.configColumnQuery;
     tempColumnList.userColumnQuery = JSON.stringify(this.configColumnList).replace(/"/g, '\'');
+  }
+
+  setSubStringStartEndIndex(value) {
+    if (this.configColumnObject.endIndex !== null && this.configColumnObject.startIndex !== null) {
+      this.disabledAddColumnConfigBtn = false;
+    }
   }
 
   selectColumns(columnName: string, isSelected: boolean) {
@@ -762,13 +805,12 @@ export class ErtTableComponent implements OnInit {
   }
 
   gotoExtractDigestExtraction() {
-    if (this.startIndex !== 1) {
-      this.selectedTableList = this.storeSelectedTables.concat(this.selectedTableList.filter(a => a.isSelected === false));
-    }
     if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
       this.errorMsg = 'Please select a table';
     } else {
       this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount, this.storeSelectedTables);
+      this.ertService.isSIPGraphChange = false;
+      this.ertService.isDataRecordGraphChange = false;
       this.navigateToUrl('workspace/ert/ert-extract-ingest');
     }
   }
