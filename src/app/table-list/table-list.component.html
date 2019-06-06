@@ -184,7 +184,7 @@
                               </div>
                               <div class="col-md-12 list-block" style="padding-left: 0px; padding-right: 0px;">
                                 <div class="col-md-12 plr-0"
-                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: primaryPage }">
+                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, currentPage: primaryPage }">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{pColumn.column_name}}">
                                     <input id="{{pColumn}}" type="checkbox" [checked]="pColumn.selected"
                                       (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
@@ -233,7 +233,7 @@
                                   <div class="col-md-12 p-0 dataA-scrollable-div">
                                     <div class="da-table-parent">
                                       <div class="col-md-12 p-0"
-                                        *ngFor="let secTbl of secTblArray | searchTable : searchSec1 | paginate: {id: 'dalist1', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: pageTable } let i=index;"
+                                        *ngFor="let secTbl of secTblArray | searchTable : searchSec1 | paginate: {id: 'dalist1', itemsPerPage: 50, currentPage: pageTable } let i=index;"
                                         [hidden]="secTbl.tableName === selectedPrimTbl">
                                         <div class="col-md-12 cur-p da-table trim-text ana-br" id="list-br"
                                           title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
@@ -278,7 +278,7 @@
                                       </div>
                                     </div>
                                     <div class="col-md-12 p-0"
-                                      *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: pageColumn } let i=index;"
+                                      *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, currentPage: pageColumn } let i=index;"
                                       id="secondaryColums">
                                       <div class="col-md-12  trim-text ana-br" id="list-br" title="{{sColumn.columnName}}">
                                         <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb"
@@ -345,26 +345,6 @@
                       </mat-step>
                       <mat-step label="Result">
                           <div class="panel-body dataA-panel-body-r" id="panel-r">
-                              <!-- <div class="col-md-12 center-dev">
-                                <div class="col-md-6"><strong>Analysis Status:</strong>
-                                  {{JobStatus}}
-                                </div>
-                                <div class="col-md-6 ">
-                                  <div class="col-md-3 "></div>
-                                  <div class="col-md-3 ">
-                                    <a (click)="getJobStatus()" data-tooltip="refresh"><i class="fa fa-refresh"></i></a>
-                                    <i class="fa fa-stop" style="color: darkred;margin-left: 24px"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-12 centered">
-                                <div class="progress">
-                                  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
-                                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                    In Progress
-                                  </div>
-                                </div>
-                              </div> -->
                               <router-outlet></router-outlet>
                             </div>
                       </mat-step>
@@ -432,7 +412,6 @@
         <p class="popup-paragraph-cls">Data analysis failed</p>
       </div>
       <div class="modal-footer">        
-        <!-- <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button> -->
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="closeScreen();"
           data-dismiss="modal">Ok</button>
       </div>
@@ -468,11 +447,7 @@
       </div>
     </div>
   </div>
-  <!-- <div *ngIf="addDirectjoin">
-    <app-add-direct-join  [directJoin]="joinValues"
-      [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static"
-      data-keyboard="false"></app-add-direct-join>
-  </div> -->
+ 
   <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="true"
     data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInvite">Open Modal</button>
   <div id="confirmCancelInvite" class="modal fade" role="dialog" tabindex="-1">
