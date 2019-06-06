@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdhocSearchScreenComponent } from './adhoc-search-screen.component';
 import {
   MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule,
-  MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule, MatTabsModule
+  MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule, MatTabsModule, MatDatepickerModule, MatCheckboxModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,9 +21,9 @@ describe('AdhocSearchScreenComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AdhocSearchScreenComponent],
       imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule
-        , MatOptionModule, RouterTestingModule, HttpClientTestingModule,
+        , MatOptionModule, RouterTestingModule, HttpClientTestingModule, MatDatepickerModule, MatCheckboxModule,
         MatSelectModule, MatInputModule, DragDropModule, MatTabsModule, BrowserAnimationsModule],
-        providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
 
     })
       .compileComponents();

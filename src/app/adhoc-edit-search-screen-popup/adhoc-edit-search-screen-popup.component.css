@@ -60,7 +60,7 @@
 #input-div a {
   font-size: 25px;
   float: right;
-  padding: 9px 2px;
+  padding-top: 16px;
 }
 
 .fa-info-circle {
@@ -72,9 +72,9 @@
 }
 
 .modal-header i {
-  font-size: xx-large;
-  color: #333;
-  padding: 0px 7px 2px 2px;
+  color: #ffffff;
+  padding: 0px 0px 7px 2px;
+  vertical-align: middle;
 }
 
 .modal-body .info {
@@ -130,7 +130,7 @@ tbody {
   min-height: 358px;
   width: 70%;
   margin-left: 15%;
-  max-height: 461px;
+  max-height: 561px;
   overflow: auto;
 }
 
@@ -176,11 +176,27 @@ a.disabled {
   margin-bottom: 3px;
 }
 
-.check-div{
+.check-div {
   display: inline-flex
 }
 
-.check_box-section{
+.check_box-section {
   margin-right: 50px
 }
 
+.margin-bottom-date {
+  margin-bottom: 16px !important;
+}
+
+.info-function-icon {
+  cursor: not-allowed !important;
+  color: #676767 !important;
+}
+
+.modal-header-cls {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-align: left !important;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}

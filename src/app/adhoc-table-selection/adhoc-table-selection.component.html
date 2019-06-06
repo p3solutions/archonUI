@@ -1,4 +1,7 @@
 <div id="ert-table-id">
+  <ngx-spinner bdOpacity=0.9 bdColor="#333" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+  </ngx-spinner>
   <div class="row entry-card">
     <div class="col-md-3">
       <div class="card" style="height:455px">
@@ -6,27 +9,24 @@
           <div class="col-md-6" class="graph-heading-div">
             <h3 class="black-heading">Table list</h3>
           </div>
-          <!-- <div class="inner-addon right-addon">
-              <a href="" style="z-index:1" class="glyphicon glyphicon-search"></a>
-              <input type="text" class="form-control search-input" id="listSearch" placeholder="Table Search">
-            </div> -->
           <div class="form-group has-feedback" id="search-box">
-            <input type="text" class="form-control" [(ngModel)]="searchTableName" id="listSearch"
-              (keyup)="searchTablelist()" placeholder="Search" />
-            <span class="glyphicon glyphicon-search icon-color form-control-feedback"></span>
+            <input type="text" [(ngModel)]="searchTableName" id="listSearch" (keyup)="searchTablelist()"
+              class="form-control" id="inputValidation" placeholder="Search" />
+            <span class="glyphicon glyphicon-search search-icon"></span>
           </div>
           <div id="tbl-list">
             <div class="scroll-div border">
-              <div class="well"
+              <div class="table-list-item-cls {{i.tableName == selectedPrimaryTable ? 'selected-table-cls':''}}"
                 *ngFor="let i of tableList | paginate: { itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName">
                 <div><input [id]="i.tableName" style="float:left" type="radio" [value]="i.tableName"
                     [checked]="i.tableName == selectedPrimaryTable" name="x" (click)="populategraph(i, $event)"></div>
                 <div class="first-div">{{i.tableName}}</div>
-                <div><i class="fa fa-chevron-right icon-div "></i></div>
+                <div class="{{ i.tableName == selectedPrimaryTable ? '' : 'hide-div'}}"><i
+                    class="fa fa-chevron-right icon-div"></i></div>
               </div>
             </div>
           </div>
-          <pagination-controls (pageChange)="getPage(page = $event)"></pagination-controls>
+          <pagination-controls class="ngx-graph-pagination" (pageChange)="getPage(page = $event)"></pagination-controls>
         </div>
       </div>
     </div>
@@ -43,8 +43,7 @@
   <div class="row" id="nextbtn">
     <button type="button" class="btn btn-padding primary-btn-color" [disabled]="data == null"
       (click)="gotoDataRecFinal()" style="float: right;margin-right: 12px">Next</button>
-    <button class="btn btn-padding primary-btn-color" (click)="gotoScreenApp()"
-      style="float:right;margin-right:5px;">
+    <button class="btn btn-padding primary-btn-color" (click)="gotoScreenApp()" style="float:right;margin-right:5px;">
       Back</button>
   </div>
 </div>
@@ -52,19 +51,20 @@
 <button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
   data-backdrop="static" data-toggle="modal" data-target="#saveScreen">Open Modal</button>
 <div id="saveScreen" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert</h4>
+      <div class="modal-header warning-popup-header-cls">
+        <h4 class="modal-title popup-title-cls" style="margin-right: 5px"><i
+            class="material-icons popup-material-icon-cls">warning</i>Warning</h4>
       </div>
       <div class="modal-body">
-        <p>Change in the graph source will result in loss of search result.</p>
+        <p class="popup-paragraph-cls">Change in the graph source will result in loss of search result.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="cancelSearchResult()"
-          class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
+        <button type="button" (click)="cancelSearchResult()" class="btn btn-padding btn-secondary-popup"
+          data-dismiss="modal">Cancel</button>
         <button type="button" (click)="deleteSearchResult('html')"
-          class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
+          class="btn btn-padding btn-warning-popup-primary-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
