@@ -295,7 +295,7 @@ export class TableListComponent implements OnInit {
             this.selectedSecColMap.set(secColName, true);
             const secTbl = <HTMLInputElement>document.getElementById(this.prefixSecTblId + this.SecondaryTableName);
             if (!this.selectedSecTbl.has(this.SecondaryTableName)) { // if sec table unselected and sec col is checked
-              secTbl.checked = true;
+              secTbl.click();
             }
             this.finalSecColMap.set(secColName, true);
           } else {
@@ -354,10 +354,6 @@ export class TableListComponent implements OnInit {
       this.loadRelationTable(table);
       this.resetDataAModal();
     } else {
-      // const secTbl = _event.target.children.namedItem(this.prefixSecTblId + table.tableName.toLowerCase());
-      // if (secTbl) {
-      //   secTbl.checked = true;
-      // }
       this.SecondaryTableName = table.tableName;
       this.SecondaryTableId = table.tableId;
       this.showSecTblCols(table.tableId);
@@ -388,12 +384,7 @@ export class TableListComponent implements OnInit {
     }
     // this.enableNextBtn = this.selectedSecTbl.size > 0;
   }
-  getCurrentStep() {
-    // return document.querySelector('#dataAModal-carousel .item.active').getAttribute('step');
-  }
   enableDisableNextBtn() {
-    // const currentStep = this.getCurrentStep();
-    //  console.log("btn");
     const currentStep = this.currentStepNo;
     switch (currentStep) {
       case 0:
@@ -402,12 +393,6 @@ export class TableListComponent implements OnInit {
       case 1:
         this.enableNextBtn = this.finalSecColMap.size > 0;
         break;
-      // case '2':
-      //   this.enableNextBtn
-      //   break;
-      // case '3':
-      //   this.enableNextBtn = this.selectedPrimCol.size > 0;
-      //   break;
       default:
         break;
     }
@@ -430,7 +415,6 @@ export class TableListComponent implements OnInit {
   nextStep(e, stepper: MatStepper) {
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 1;
-    // document.getElementById('next-slide').click();
     this.handleStepIindicator(true);
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
@@ -462,7 +446,6 @@ export class TableListComponent implements OnInit {
     }, 300);
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 1;
-    // document.getElementById('next-slide').click();
     this.handleStepIindicator(true);
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
@@ -485,7 +468,6 @@ export class TableListComponent implements OnInit {
         this.value[3].children[1].classList.add('finished-step');
       }
     }, 300);
-    // document.getElementById('prev-slide').click();
     this.finalSecColArray = [];
     this.handleStepIindicator(false);
     this.enableNextBtn = this.selectedPrimColMap.size >= 1;
@@ -515,7 +497,6 @@ export class TableListComponent implements OnInit {
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 2;
     this.stepperIndex = 2;
-    // document.getElementById('next-slide').click();
     this.handleStepIindicator(true);
     this.enableNextBtn = this.finalSecColMap.size > 0;
   }
@@ -593,83 +574,17 @@ export class TableListComponent implements OnInit {
     this.finalSecondaryTableList = this.selectedTblsColsObj.secondaryTableList;
   }
   handleStepIindicator(isNext) {
-    // const slideNo = this.getCurrentStep();
     const slideNo = this.currentStepNo;
-    // const progressSelector = 'progress-bar';
     switch (slideNo) {
       case 0:
-        // if (this.finalSecColMap.size === 0) {
-        //   this.enableNextBtn = this.selectedPrimColMap.size > 0;
-        // } else {
-        //   this.enableNextBtn = this.finalSecColMap.size > 0;
-        // }
         if (this.selectedSecTbl.size === 0) {
           this.enableNextBtn = false;
         }
-        // this.removeClass(progressSelector, 'width-5-pc');
-        // this.removeClass(progressSelector, 'width-5-25-pc-rev');
-        // this.addClass(progressSelector, 'width-5-25-pc');
-        // // this.addClass('cancel-btn', 'hide');
-        // this.removeClass(progressSelector, 'width-5-pc');
-        // this.removeClass(progressSelector, 'width-33-pc-rev');
-        // this.addClass(progressSelector, 'width-33-pc');
-        // this.removeClass('prev-btn', 'hide');
         this.generateSecTblArray();
         break;
       case 1:
-        // this.removeClass(progressSelector, 'width-5-25-pc');
-        //  this.removeClass(progressSelector, 'width-33-pc');
-        if (isNext) {
-          // this.addClass(progressSelector, 'width-25-50-pc');
-          // this.removeClass(progressSelector, 'width-25-50-pc-rev');
-          // this.addClass(progressSelector, 'width-66-pc');
-          // this.removeClass(progressSelector, 'width-66-pc-rev');
-          // this.removeClass('analyse-btn', 'hide');
-          // this.addClass('next-btn', 'hide');
-        } else {
-          // this.removeClass(progressSelector, 'width-25-50-pc-rev');
-          // this.addClass(progressSelector, 'width-5-25-pc-rev');
-          // this.removeClass(progressSelector, 'width-66-pc-rev');
-          // this.addClass(progressSelector, 'width-33-pc-rev');
-          // // this.removeClass('cancel-btn', 'hide');
-          // this.removeClass('next-btn', 'hide');
-          // this.addClass('prev-btn', 'hide');
-        }
         this.getAllSelectedTblsCols();
         this.enableDisableNextBtn();
-        break;
-      case 2:
-        // this.removeClass(progressSelector, 'width-25-50-pc');
-        // this.removeClass(progressSelector, 'width-50-75-pc-rev');
-        // this.removeClass(progressSelector, 'width-66-pc');
-        // this.removeClass(progressSelector, 'width-100-pc-rev');
-        if (isNext) {
-          // this.removeClass(progressSelector, 'width-5-25-pc-rev');
-          // this.addClass(progressSelector, 'width-50-75-pc');
-          // this.removeClass(progressSelector, 'width-33-pc-rev');
-        } else {
-          // this.removeClass(progressSelector, 'width-75-100-pc-rev');
-          // this.addClass(progressSelector, 'width-25-50-pc-rev');
-          // this.addClass(progressSelector, 'width-100-pc-rev');
-          //  this.addClass(progressSelector, 'width-66-pc-rev');
-          // this.addClass('analyse-btn', 'hide');
-          // this.removeClass('next-btn', 'hide');
-        }
-        break;
-      // case '3':
-      //   // this.removeClass(progressSelector, 'width-50-75-pc');
-      //   this.removeClass(progressSelector, 'width-100-pc');
-      //   if (isNext) {
-      //     // this.addClass(progressSelector, 'width-75-100-pc');
-      //     // this.addClass(progressSelector, 'width-75-100-pc');
-      //     // this.removeClass('analyse-btn', 'hide');
-      //     // this.addClass('next-btn', 'hide');
-      //     // this.addClass('prev-btn', 'hide');
-      //   } else {
-      //     this.addClass(progressSelector, 'width-100-pc-rev');
-      //   }
-      //  break;
-      default:
         break;
     }
   }
@@ -684,11 +599,6 @@ export class TableListComponent implements OnInit {
       this.value[3].children[1].classList.add('active-step');
     }, 300);
     this.stepper.selectedIndex = 3;
-    // const progressSelector = 'progress-bar';
-    // this.addClass(progressSelector, 'width-100-pc');
-    // this.addClass('prev-btn', 'hide');
-    // this.addClass('analyse-btn', 'hide');
-    // this.removeClass('close-btn', 'hide');
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
       if (res && res.success) {
         this.dataAnalysisjobID = res.data.jobId;
@@ -717,10 +627,6 @@ export class TableListComponent implements OnInit {
         document.getElementById('anaerror').click();
         // this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
         // this.JobStatus = '';
-      } else if (this.JobStatus === 'SCHEDULED') {
-        // this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
-        // this.JobStatus = '';
-        // this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
       } else {
         setTimeout(() => {
           this.stepper.selectedIndex = 2;
