@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ɵConsole } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -9,7 +9,7 @@ import {
 } from '../ert-landing-page/ert';
 import {
   addFilterNode, FilterConfigNode, Tree, searchTree,
-  getPreorderDFS, ColumnConfigFunction, deleteNode, columnConfigFunctionList
+  getPreorderDFS, ColumnConfigFunction, deleteNode, columnConfigFunctionList, findParentNode
 } from './ert-filter';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
@@ -642,7 +642,7 @@ export class ErtTableComponent implements OnInit {
       this.configColumnObject.selectedColumnName = columnName;
       this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
       if (dataType.trim().toUpperCase() === 'SMALLINT' || dataType.trim().toUpperCase() === 'BIGINT'
-       || dataType.trim().toUpperCase() === 'DECIMAL') {
+        || dataType.trim().toUpperCase() === 'DECIMAL') {
         dataType = 'INT';
       } else {
         dataType = 'VARCHAR';
@@ -963,7 +963,7 @@ export class ErtTableComponent implements OnInit {
     this.orderFilterConfigColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-    const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, []);
+    const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, 0, []);
     this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
     if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
       temp.filterAndOrderConfig.filterQuery !== '' && temp.filterAndOrderConfig.filterConfig !== null &&
@@ -1078,11 +1078,11 @@ export class ErtTableComponent implements OnInit {
     if (operation === null || condition === null || value === '') {
       // alert('Please select all the value');
     } else {
-      const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, []);
+      const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, this.maxNode, []);
       if (id === 1) {
-        const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, []);
+        const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, 1, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
-        const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, []);
+        const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, 1, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
         const filterTreeNode = searchTree(this.filterdata.root, 1);
         filterTreeNode.value = '';
@@ -1096,16 +1096,20 @@ export class ErtTableComponent implements OnInit {
         filterTreeNode.condition = null;
         filterTreeNode.column = null;
         filterTreeNode.margin_left = 10;
+        const parentId = id;
         this.maxNode = this.maxNode + 1;
-        const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false, column, condition, value, 18, []);
+        const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false,
+          column, condition, value, 18, parentId, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
         this.maxNode = this.maxNode + 1;
-        const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, []);
+        const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, parentId, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
       }
     }
     console.log(this.filterdata);
-    event.stopPropagation();
+    if (event !== '') {
+      event.stopPropagation();
+    }
   }
 
   constructExpression(postfix: string[]): string {
@@ -1141,6 +1145,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   deleteFilterConfigTreeNode(id: number) {
+    let attachNode: any = '';
     let id1: number;
     if (id % 2 === 0) {
       id1 = id + 1;
@@ -1148,8 +1153,40 @@ export class ErtTableComponent implements OnInit {
       id1 = id - 1;
     }
     const filterTreeNode1 = searchTree(this.filterdata.root, id);
-   // const filterTreeNode2 = searchTree(this.filterdata.root, id1);
-    this.filterdata = deleteNode(this.filterdata, filterTreeNode1);
+    const parentId = filterTreeNode1.parentId;
+    const filterTreeNode3 = findParentNode(this.filterdata.root, parentId);
+    console.log(filterTreeNode1);
+    console.log(filterTreeNode3);
+    if (filterTreeNode3.children[0].id === id && filterTreeNode3.children[0].children.length === 0) {
+      if (filterTreeNode3.children[1].column === null &&
+        filterTreeNode3.children[1].condition === null && filterTreeNode3.children[1].value === '') {
+        console.log('is operator');
+        attachNode = filterTreeNode3.children[1];
+      }
+    }
+    if (filterTreeNode3.children[1].id === id && filterTreeNode3.children[1].children.length === 0) {
+      if (filterTreeNode3.children[0].column === null &&
+        filterTreeNode3.children[0].condition === null && filterTreeNode3.children[0].value === '') {
+        console.log('is operator');
+        attachNode = filterTreeNode3.children[0];
+      }
+    }
+    let tempNode: any = '';
+    console.log(attachNode);
+    if (attachNode === '') {
+      console.log(filterTreeNode3.parentId);
+      if (filterTreeNode3.children[0].id === id) {
+        this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[0]);
+        tempNode = filterTreeNode3.children[1];
+      } else {
+        this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[1]);
+        tempNode = filterTreeNode3.children[0];
+      }
+      this.filterdata = deleteNode(this.filterdata, filterTreeNode3);
+    }
+    console.log(filterTreeNode3.parentId);
+    this.insertFilterNode(filterTreeNode3.parentId, tempNode.operation, tempNode.column, tempNode.condition, tempNode.value, '');
+    // const filterTreeNode2 = searchTree(this.filterdata.root, id1);
     // this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
     console.log(this.filterdata);
   }

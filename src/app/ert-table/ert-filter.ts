@@ -9,9 +9,10 @@ export class FilterConfigNode {
     value: string;
     children: FilterConfigNode[] = [];
     margin_left: number;
+    parentId: number;
 
     constructor(id: number, operation: string, displayAND: boolean, displayOR: boolean, column: string,
-        condition: string, value: string, margin_left: number, children: FilterConfigNode[]) {
+        condition: string, value: string, margin_left: number, parentId: number, children: FilterConfigNode[]) {
         this.id = id;
         this.operation = operation;
         this.displayAND = displayAND;
@@ -21,6 +22,7 @@ export class FilterConfigNode {
         this.value = value;
         children = children;
         margin_left = margin_left;
+        this.parentId = parentId;
     }
 }
 
@@ -32,6 +34,7 @@ function filterNode(data) {
     this.column = data.column;
     this.condition = data.condition;
     this.value = data.value;
+    this.parentId = data.parentId;
     this.children = [];
 }
 
@@ -235,3 +238,18 @@ export const columnConfigFunctionList: ColumnConfigFunction[] = [
     { function: 'ADDTIME', dataType: 'TIMESTAMP', outputType: 'DATE' },
     { function: 'ADDDATE', dataType: 'TIMESTAMP', outputType: 'DATE' }
 ];
+
+export function findParentNode(element, id: number) {
+    console.log(element.children);
+    if (element.id === id) {
+        return element;
+    } else if (element.children != null) {
+        let i;
+        let result = null;
+        for (i = 0; result == null && i < element.children.length; i++) {
+         result = searchTree(element.children[i], id);
+        }
+        return result;
+    }
+    return null;
+}
