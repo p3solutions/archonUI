@@ -24,7 +24,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-select (selectionChange)="changeSearchType($event.value)" formControlName="searchType" placeholder="Search Type">
+        <mat-select (selectionChange)="changeSearchType()" formControlName="searchType" placeholder="Search Type">
           <mat-option *ngFor="let searchType of searchTypes" [value]="searchType">
             {{searchType}}
           </mat-option>
