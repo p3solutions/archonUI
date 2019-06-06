@@ -19,7 +19,7 @@
         <mat-form-field class="example-full-width">
             <mat-label>Schedule Server</mat-label>
             <select matNativeControl #jobinstances (change)="instances = jobinstances.value">
-                <option >Local</option>
+                <!-- <option >Local</option> -->
                 <option *ngFor="let instances of jobInstancesList" [value]="instances">{{instances}}</option>
             </select>
           </mat-form-field>

@@ -50,6 +50,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   dbpassword: any;
   dbName: any;
   deleteId: string;
+  userinfoId: any;
 
   constructor(
     private configDBListService: DatabaseListService,
@@ -59,6 +60,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     private workspaceHeaderService: WorkspaceHeaderService,
     private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService
   ) {
+    this.userinfoId = this.userinfoService.getUserId();
     this.dynamicLoaderService = dynamicLoaderService;
     this.viewContainerRef = viewContainerRef;
   }
