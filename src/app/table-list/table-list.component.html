@@ -47,12 +47,7 @@
             <div class="card-title">Relationship Info</div>
           </div>
         </div>       
-        <button style="display: none"  id="dataanalyze" (click)="openDataAModal()">Data Analyzer</button>
-        <button style="display: none"  id="directjoin" data-toggle="modal" (click)="adddirectjoin()" data-target="#openAddDirectJoinModal">Direct
-            Join</button>
-        <button style="display: none"  id="spv" (click)="openStoredProcView()">SP/View Join</button>
-        <button style="display: none"  id="exxml" (click)="exportxml()">XML</button>
-        <button style="display: none"  id="exjson" (click)="exportjson()">JSON</button>
+       
         <div class="container-tab">
           <div class="col-md-12 primary-table">
             <h5 class="card-title sub-headerr">Primary Table:
@@ -60,7 +55,6 @@
             </h5>
           </div>
         </div>
-        <!-- <hr> -->
         <div class="row table-headers" *ngIf="isRelationShipAvailable">
           <div class="col col-md-3 sec-width">
             <h5 id="sec-tab">
@@ -158,15 +152,10 @@
                   </h5>
                 </div>
               </div>
-              <!-- <div class="bdy-hdr">
-                <h5 class="card-title sub-headerrs">Primary Table:
-                  <strong>{{tableName}}</strong>
-                </h5>
-              </div> -->
               <div class="container-da">
                 <div class="col-md-12 mat-elevation-z2">
                   <div class="mat-step-data-analyzer" *ngIf="!newWSinfo">
-                    <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+                    <mat-horizontal-stepper [selectedIndex]="stepperIndex" #stepper labelPosition="bottom">
                       <mat-step label="Primary Column">
                         <div class="col-md-12 dataA-panel-body">
                           <div class="col-md-12" style="margin-left: -32px;">
@@ -192,21 +181,15 @@
                             </div>
                             <div class="col-md-10 dataA-scrollable-div" id="panel-0">
                               <div class="col-md-12">
-                                <!-- <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
-                                      Suggestion
-                                    </div> -->
                               </div>
                               <div class="col-md-12 list-block" style="padding-left: 0px; padding-right: 0px;">
                                 <div class="col-md-12 plr-0"
-                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: primaryPage }">
+                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, currentPage: primaryPage }">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{pColumn.column_name}}">
                                     <input id="{{pColumn}}" type="checkbox" [checked]="pColumn.selected"
                                       (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
                                     {{pColumn.columnName}}
                                   </div>
-                                  <!-- <div class="col-md-4 tabular-div-column" title="">
-                                        {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
-                                      </div> -->
                                 </div>
                               </div>
                             </div>
@@ -226,15 +209,6 @@
                       </mat-step>
                       <mat-step label="Secondary Table">
                           <div class="dataA-panel-body" id="panel-1" style="margin-left:0px">
-                              <!-- <div class="col-md-12 mar-1x">
-                                <div class="col-md-9 p-0">
-                                  <div class="">
-                                    Percentage of Rows to consider for Analysis
-                                    <input mat-input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1"
-                                      max="100">
-                                  </div>
-                                </div>
-                              </div> -->
                             <div class="col-md-12">
 
                               <div class="col-md-6" style="height: 295px;padding-left: 0px;padding-right: 0px;">
@@ -257,19 +231,14 @@
                                 
                                 <div class="col-md-12" style="padding-left: 33px;padding-right: 54px;">
                                   <div class="col-md-12 p-0 dataA-scrollable-div">
-                                    <!-- <div class="col-md-12 p-0">
-                                      <div class="col-md-12 ana-br" title="Secondary Column">
-                                        Secondary Table
-                                      </div>
-                                    </div> -->
                                     <div class="da-table-parent">
                                       <div class="col-md-12 p-0"
-                                        *ngFor="let secTbl of secTblArray | paginate: {id: 'dalist1', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page } let i=index;"
+                                        *ngFor="let secTbl of secTblArray | searchTable : searchSec1 | paginate: {id: 'dalist1', itemsPerPage: 50, currentPage: pageTable } let i=index;"
                                         [hidden]="secTbl.tableName === selectedPrimTbl">
                                         <div class="col-md-12 cur-p da-table trim-text ana-br" id="list-br"
                                           title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
                                           <input id="{{prefixSecTblId + (secTbl.tableName)}}" class="cb-{{i}}" type="checkbox"
-                                            (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
+                                            (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10" [checked]="secTbl.selected">
                                           {{secTbl.tableName}}
                                           <i class="fa fa-angle-right unselected"></i>
                                         </div>
@@ -277,7 +246,7 @@
                                     </div>
                                   </div>
                                   <div class="col-md-12" style="margin-top: 18px;text-align: right;padding-right: 0px;">
-                                    <pagination-controls id="dalist1" (pageChange)="getPage(page = $event)"></pagination-controls>
+                                    <pagination-controls id="dalist1" (pageChange)="pageTable = $event"></pagination-controls>
                                   </div>
                                 </div>
                               </div>
@@ -307,38 +276,25 @@
                                         <span class="col-loader"
                                           [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
                                       </div>
-                                      <!-- <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
-                                          Suggestion
-                                        </div> -->
                                     </div>
                                     <div class="col-md-12 p-0"
-                                      *ngFor="let sColumn of secColArray | paginate: {id: 'dalist2', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page } let i=index;"
+                                      *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, currentPage: pageColumn } let i=index;"
                                       id="secondaryColums">
                                       <div class="col-md-12  trim-text ana-br" id="list-br" title="{{sColumn.columnName}}">
                                         <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb"
                                           type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
-                                          checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10 m-r-sec">
+                                          checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10 m-r-sec" [checked]="sColumn.selected">
                                         {{sColumn.columnName}}
                                       </div>
-                                      <!-- <div class="col-md-4 tabular-div-column" title="">
-                                          {{sColumn.confidence_score ? sColumn.confidence_score : 0}} %
-                                        </div> -->
                                     </div>
                                   </div>
                               
                                   <div class="col-md-12" style="margin-top: 18px;text-align: right;padding-right: 36px;">
-                                    <pagination-controls id="dalist2" (pageChange)="getPage(page = $event)"></pagination-controls>
+                                    <pagination-controls id="dalist2" (pageChange)="pageColumn = $event"></pagination-controls>
                                   </div>
-                                  <!-- <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> -->
-                               
                               </div>
                               </div>
                             </div>
-                            <!-- <div class="col-md-10">
-                                Percentage of Rows to consider for Analysis
-                                <input mat-input type="number" class="inpt-sty" placeholder="Analysis" [(ngModel)]="analysisRowCount" min="1" max="100">
-                              </div> -->
-                             
                         <div class="action-btn" style="float: right;">
                           <button (click)="gotoPrimarySel($event,stepper)" class="btn cancel btn-padding" >Previous</button>
                           <button (click)="gotoAnalyze($event,stepper)" [disabled]="finalSecColMap.size===0" class="btn save btn-padding matStepperNext">Next</button>
@@ -356,19 +312,6 @@
                                       {{x.columnName}}
                                   </div>                                 
                                 </div>
-
-                                <!-- <table class="table table-bordered">
-                                  <thead>
-                                    <tr>
-                                      <th>Primary Table Columns</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr *ngFor="let x of finalPrimColArray">
-                                      <td>{{x.columnName}}</td>
-                                    </tr>
-                                  </tbody>
-                                </table> -->
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
                                 <div class="col-md-12 plr-0">
@@ -381,20 +324,6 @@
                                      <i class="fa fa-angle-right unselected"></i>
                                 </div>                                 
                               </div>
-
-                                <!-- <table class="table table-bordered" id="finalSecTab">
-                                  <thead>
-                                    <tr>
-                                      <th>Secondary Tables</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr class="pointer" [class.active]="i == selectedRow"
-                                      *ngFor="let x of finalSecondaryTableList; let i = index" (click)="finalSecCol(x,i)">
-                                      <td>{{x.tableName}}</td>
-                                    </tr>
-                                  </tbody>
-                                </table> -->
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
                                   <div class="col-md-12 plr-0">
@@ -406,298 +335,23 @@
                                       {{x.columnName}}
                                   </div>                                 
                                 </div>
-
-                                <!-- <table class="table table-bordered">
-                                  <thead>
-                                    <tr>
-                                      <th>Secondary Column Names</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr *ngFor="let x of finalSecColArray">
-                                      <td>{{x.columnName}}</td>
-                                    </tr>
-                                  </tbody>
-                                </table> -->
                               </div>
                             </div>
                             <div class="action-btn" style="float: right;">
                                 <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn cancel btn-padding matStepperPrevious">Previous</button>
-                                <button (click)="dataAnalyse()" class="btn save btn-padding matStepperNext" >Analyze</button>
+                                <button data-keyboard="false"
+                                data-backdrop="static" data-toggle="modal" href="#analyzes" (click)="dataAnalyse()" class="btn save btn-padding matStepperNext" >Analyze</button>
                               </div>
                       </mat-step>
                       <mat-step label="Result">
                           <div class="panel-body dataA-panel-body-r" id="panel-r">
-                              <div class="col-md-12 center-dev">
-                                <div class="col-md-6"><strong>Analysis Status:</strong>
-                                  {{JobStatus}}
-                                </div>
-                                <div class="col-md-6 ">
-                                  <div class="col-md-3 "></div>
-                                  <div class="col-md-3 ">
-                                    <a (click)="getJobStatus()" data-tooltip="refresh"><i class="fa fa-refresh"></i></a>
-                                    <i class="fa fa-stop" style="color: darkred;margin-left: 24px"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-md-12 centered">
-                                <div class="progress">
-                                  <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
-                                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                    In Progress
-                                  </div>
-                                </div>
-                              </div>
+                              <router-outlet></router-outlet>
                             </div>
                       </mat-step>
                     </mat-horizontal-stepper>
                   </div>
                 </div>
               </div>
-
-              <!-- carousel 
-            <div id="dataAModal-carousel" class="carousel slide" data-ride="carousel" data-interval="false"
-                style="margin-top: 60px;">
-                 Indicators 
-                <ul *ngIf="newWSinfo" class="multi-step-bars">
-                  <li>
-                    <span id="progress-bar" class="bar-expand width-5-pc"></span>
-                    <div class="col-md-4 text-center">Primary Column</div>
-                    <div class="col-md-4 text-center">Secondary Table &#38; Column selection</div>
-                    <div class="col-md-4 text-center">Data Analysis</div>
-                  </li>
-                </ul>
-
-                <ol class="only carousel-indicators hide">
-                  <li data-target="#createWSModal-carousel" data-slide-to="0" class="active"></li>
-                  <li data-target="#createWSModal-carousel" data-slide-to="1"></li>
-                  <li data-target="#createWSModal-carousel" data-slide-to="2"></li>
-                  <li data-target="#createWSModal-carousel" data-slide-to="3"></li>
-                </ol>
-                 Wrapper for slides 
-                <div class="carousel-inner" role="listbox">
-
-                 DA UI 1 
-                  <div step="0" class="item active form-group">
-                    <div class="col-md-12">
-                      <div class="col-md-12" style="float: right;">
-                        Percentage of Rows to consider for Analysis
-                        <input mat-input type="number" [(ngModel)]="analysisRowCount" min="1" max="100">
-                      </div>
-                    </div>
-                    <div class="panel-body dataA-panel-body">
-                      <div class="col-md-12 mar-1x" style="margin-left: 18px;">
-                        {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
-                      </div>
-                      <div class="col-md-6 dataA-scrollable-div" id="panel-0">
-                        <div class="col-md-12">
-                          <div class="col-md-12 ana-br" title="Primary Column">
-                            <input type="checkbox" (change)="selectAll()">
-                            Primary Column
-                            <span class="col-loader"
-                              [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
-                          </div>
-                           <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
-                            Suggestion
-                          </div> 
-                        </div>
-                        <div class="col-md-12 list-block">
-                          <div class="col-md-12 plr-0"
-                            *ngFor="let pColumn of primColArray | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }">
-                            <div class="col-md-12 trim-text ana-br" id="list-br" title="{{pColumn.column_name}}">
-                              <input id="{{pColumn}}" type="checkbox"
-                                (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
-                              {{pColumn.columnName}}
-                            </div>
-                             <div class="col-md-4 tabular-div-column" title="">
-                              {{pColumn.confidence_score ? pColumn.confidence_score : 0}} %
-                            </div> 
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6" style="text-align: right; margin-left: -80px;">
-                      <pagination-controls id="dalist0" (pageChange)="getPage(page = $event)"></pagination-controls>
-                    </div>
-
-                  </div>
-
-                  <div step="1" class="item form-group second second-last">
-                    <div class="panel-body dataA-panel-body" id="panel-1">
-                      <div class="col-md-12 mar-1x">
-                        <div class="col-md-9 p-0">
-                          <div class="">
-                            Percentage of Rows to consider for Analysis
-                            <input mat-input type="number" class="m-l-10" [(ngModel)]="analysisRowCount" min="1"
-                              max="100">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6" style="height: 295px;">
-                        <div class="col-md-12 mar-1x">
-                          {{selectedSecTbl.size}} out of {{secTblArray.length - 1}} selected
-                        </div>
-                        <div class="col-md-8 p-0 dataA-scrollable-div">
-                          <div class="col-md-12 p-0">
-                            <div class="col-md-12 ana-br" title="Secondary Column">
-                              Secondary Table
-                            </div>
-                          </div>
-                          <div class="da-table-parent">
-                            <div class="col-md-12 p-0 "
-                              *ngFor="let secTbl of secTblArray | paginate: {id: 'dalist1', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }; let i=index"
-                              [hidden]="secTbl.tableName === selectedPrimTbl">
-                              <div class="col-md-12 cur-p da-table trim-text ana-br" id="list-br"
-                                title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
-                                <input id="{{prefixSecTblId + (secTbl.tableName)}}" class="cb-{{i}}" type="checkbox"
-                                  (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10">
-                                {{secTbl.tableName}}
-                                <i class="fa fa-angle-right unselected"></i>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-12" style="margin-left: 94px;margin-top: 18px;">
-                          <pagination-controls id="dalist1" (pageChange)="getPage(page = $event)"></pagination-controls>
-                        </div>
-                      </div>
-
-                      <div *ngIf="secColArray.length > 0" class="col-md-6">
-                        <div class="col-md-12 mar-1x">
-                          {{selectedSecColMap.size}} out of {{secColArray.length}} selected
-                        </div>
-                        <div class="col-md-8 p-0 dataA-scrollable-div" id="panel-1">
-                          <div class="col-md-12 p-0">
-                            <div class="col-md-12 column-header ana-br" title="Secondary Column">
-                              <input type="checkbox" (change)="selectAllSec()">
-                              Secondary Columns
-                              <span class="col-loader"
-                                [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
-                            </div>
-                            <!-- <div class="col-md-4 tabular-div-column column-header" title="Suggestion">
-                                Suggestion
-                              </div> 
-                          </div>
-                          <div class="col-md-12 p-0"
-                            *ngFor="let sColumn of secColArray | paginate: {id: 'dalist2', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page }; let i=index"
-                            id="secondaryColums">
-                            <div class="col-md-12  trim-text ana-br" id="list-br" title="{{sColumn.columnName}}">
-                              <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb"
-                                type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
-                                checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10 m-r-sec">
-                              {{sColumn.columnName}}
-                            </div>
-                           <div class="col-md-4 tabular-div-column" title="">
-                                {{sColumn.confidence_score ? sColumn.confidence_score : 0}} %
-                              </div> 
-                          </div>
-                        </div>
-                        <div class="col-md-12" style="margin-left: 94px;margin-top: 18px;">
-                          <pagination-controls id="dalist2" (pageChange)="getPage(page = $event)"></pagination-controls>
-                        </div>
-                        <div class="col-md-12 text-danger">Note: Kindly Select the Secondary Tables Before Columns</div> 
-                      </div>
-                    </div>
-                  </div>
-
-                  <div step="2" class="item form-group third">
-                    <div class="panel-body dataA-panel-body" id="panel-1">
-                      <div class="col-md-4 dataA-scrollable-div-A">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Primary Table Columns</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let x of finalPrimColArray">
-                              <td>{{x.columnName}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="col-md-4 dataA-scrollable-div-A">
-                        <table class="table table-bordered" id="finalSecTab">
-                          <thead>
-                            <tr>
-                              <th>Secondary Tables</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr class="pointer" [class.active]="i == selectedRow"
-                              *ngFor="let x of finalSecondaryTableList; let i = index" (click)="finalSecCol(x,i)">
-                              <td>{{x.tableName}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="col-md-4 dataA-scrollable-div-A">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Secondary Column Names</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let x of finalSecColArray">
-                              <td>{{x.columnName}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div step="3" class="item form-group final">
-                    <div class="panel-body dataA-panel-body" id="panel-1">
-                      <div class="col-md-12 center-dev">
-                        <div class="col-md-6"><strong>Analysis Status:</strong>
-                          {{JobStatus}}
-                        </div>
-                        <div class="col-md-6 ">
-                          <div class="col-md-3 "></div>
-                          <div class="col-md-3 ">
-                            <a (click)="getJobStatus()" data-tooltip="refresh"><i class="fa fa-refresh"></i></a>
-                            <i class="fa fa-stop" style="color: darkred;margin-left: 24px"></i>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12 centered">
-                        <div class="progress">
-                          <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
-                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                            In Progress
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="item form-group message">
-                  </div> 
-
-                Controls
-                  <a hidden class="left carousel-control" id="prev-slide" href="#dataAModal-carousel" role="button"
-                    data-slide="prev">
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a hidden class="right carousel-control" id="next-slide" href="#dataAModal-carousel" role="button"
-                    data-slide="next">
-                    <span class="sr-only">Next</span>
-                  </a>
-                </div>
-                / end of Carousel 
-              </div>
-              <div class="modal-footer {{newWSinfo ? 'msg-footer' : ''}}">
-                 <button type="button" id="cancel-btn" class="btn btn-secondary cancel" data-dismiss="modal">Cancel</button> 
-                <button type="button" id="prev-btn" class="btn btn-primary hide"
-                  (click)="prevStep($event)">Previous</button>
-                <button type="button" id="next-btn" class="btn btn-primary" (click)="nextStep($event)"
-                  disabled="{{enableNextBtn ? null : 'disabled'}}">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
-                <button type="button" id="analyse-btn" class="btn btn-primary hide" href="#dataAModal-carousel"
-                  data-slide="next" (click)="dataAnalyse()">Analyse</button>
-                <button type="button" id="close-btn" class="btn btn-primary hide" (click)="gotoBack()">Close</button>
-                 <button type="button" id="ok-btn" class="btn btn-primary hide" (click)="resetCarousel()">Done</button> -->
               </div>
 
             </div>
@@ -706,6 +360,66 @@
       </div>
     </div>
   </div>
+  <button type="button" style="display: none" id="open-analyzer-popup" data-toggle="modal" data-target="#analyzes"></button>
+  <button type="button" style="display: none" id="close-analyzer-popup" data-dismiss="modal"></button>
+  <!--  start analyze popup -->
+  <div id="analyzes" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 680px;">
+      <div class="modal-content">
+        <div class="modal-header info-popup-header-cls">
+          <h4 class="modal-title popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">image_search</i><div class="pop-title" style="margin-left: 0px;">Analysis  {{JobStatus}}</div></h4>
+        </div>
+        <div class="modal-body" style="height: 180px;">
+         
+            <div class="col-md-12">
+            <div class="progress">
+              <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+                aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+              </div>
+            </div>
+         
+          <div class="col-md-12">             
+                <div class="progress-back" style="vertical-align: middle;">
+                  <div class="msg">
+                 Data analysis scheduled. Please wait until the current job finishes to schedule another data analysis
+                </div>
+                </div>            
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">          
+          <button type="button" class="btn btn-padding btn-info-popup-primary-color" (click)="gotoBack()" data-dismiss="modal">Run As Background</button>
+          <button type="button" class="btn btn-padding btn-info-popup-primary-color"  (click)="getJobStatus()" style="margin-left: 10px;" data-dismiss="modal">Refresh</button>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!--  end analyze popup -->
+
+   <!--  start analyze popup error-->
+   <button style="display:none" type="button" id="anaerror" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#analyzeserror">Open Modal</button>
+
+  <div id="analyzeserror" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 12px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 12px;">Failed</div></h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">Data analysis failed</p>
+      </div>
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="closeScreen();"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+     <!--  end analyze popup error -->
+
   <!-- relationship delete -->  
   <div class="modal fade" id="confirmDelMemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
@@ -733,15 +447,7 @@
       </div>
     </div>
   </div>
-  <!-- <app-stored-proc-view class="modal fade" id="modelStoredProcView" data-backdrop="static" data-keyboard="false"></app-stored-proc-view> -->
-  <ng-template #storedprocView></ng-template>
-  <div *ngIf="addDirectjoin">
-    <app-add-direct-join class="modal fade" id="openAddDirectJoinModal" [directJoin]="joinValues"
-      [workspaceID]="workspaceID" (updateEvent)="refreshRelation($event)" role="dialog" data-backdrop="static"
-      data-keyboard="false"></app-add-direct-join>
-  </div>
-
-
+ 
   <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="true"
     data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInvite">Open Modal</button>
   <div id="confirmCancelInvite" class="modal fade" role="dialog" tabindex="-1">
@@ -761,3 +467,10 @@
         </div>
       </div>
     </div>
+
+    <button style="display: none"  id="dataanalyze" (click)="openDataAModal()">Data Analyzer</button>
+    <button style="display: none"  id="directjoin" (click)="adddirectjoin()" >Direct
+        Join</button>
+    <button style="display: none"  id="spv" (click)="openStoredProcView($event)">SP/View Join</button>
+    <button style="display: none"  id="exxml" (click)="exportxml()">XML</button>
+    <button style="display: none"  id="exjson" (click)="exportjson()">JSON</button>

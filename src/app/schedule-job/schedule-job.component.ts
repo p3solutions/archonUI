@@ -57,7 +57,7 @@ export class ScheduleJobComponent implements OnInit {
         'scheduleNow': scheduleNow,
         'startDate': Date1.valueOf(),
         'frequency': this.Frequency,
-        'endDate': this.enddate.setHours(23, 59, 59, 0),
+        'endDate': this.startdate.setHours(23, 59, 59, 0),
         'interval': this.Interval,
         'ins' : this.instances
         };

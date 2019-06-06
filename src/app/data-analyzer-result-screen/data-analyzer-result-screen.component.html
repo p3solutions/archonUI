@@ -1,120 +1,295 @@
-
-<div class="col-md-12" style="background-color:#63b4f6;border-top-left-radius: 3px;
-border-top-right-radius: 3px;">
-    <h5 class="card-title sub-headerrs" style="font-size: 16px;background-color:#63b4f6">Data Anaylzer - Result</h5>
-  </div>
-
-<div class="col-md-12">
-  <h5 class="card-title sub-headerrs" style="margin: 19px;padding-top: 16px;font-size: 16px;">Primary Table:
-    <strong>{{primaryTableName}}</strong>
-  </h5>
-</div>
-
-<div class="col-md-12" style="margin-top: 22px;">
-  <div class="col-md-5 ana-result" style="font-size:16px;">Data Analysis Status : Completed</div>
-  <div class="col-md-7 pointer" style="text-align: right;margin-left: -24px;">
-    <button mat-raised-button type="button" class="arch-btnn secbutton" (click)="activateSecondaryFn()" id="Select" style="margin-right: 10px;">Secondary Tables</button> 
-    <button mat-raised-button type="button" class="arch-btnn prebutton" (click)="activatePrimaryFn();selectRow()">Primary Columns</button>
-  </div>
-</div>
-<div *ngIf="activatePrimary">
-  <div class="col-md-12" style="margin-top: 17px;">
+<div class="card-body">
+  <div class="col-md-12 card-header">
     <div class="col-md-3">
-      <table id="customers" class="sec-table">
-        <tr>
-          <th>Primary Column</th>
-        </tr>
-        <tr *ngFor="let x of primaryColMap | keyvalue" (click)="populatePrimaryValues(x)">
-          <td class="pointer">{{x.key}}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-md-9">
-      <table id="customers" class="table table-hover table-bordered primaryPopulate">
-        <thead>
-          <tr>
-            <th>Secondary Table</th>
-            <th>Column Type</th>
-            <th>Secondary Column</th>
-            <th>Accuracy (in %)</th>
-            <th><input type="checkbox" (change)="selectAll($event)"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of populatePrimaryValuesArray | paginate: { id: 'primaryPopulate' , itemsPerPage: 7, currentPage: p };let i=index">
-            <td>{{x.tableName}}</td>
-            <td>{{x.dataType}}</td>
-            <td>{{x.secondaryColumnName}}</td>
-            <td>{{x.matchPercentage}}</td>
-            <td><input type="checkbox" class="m-r" [disabled]="x.matchPercentage == 0" (change)="checkedPriValues(x,$event,i)"></td>
-          </tr>
-        </tbody>
-      </table>
-      <pagination-controls style="text-align: right;" id="primaryPopulate" (pageChange)="p = $event"></pagination-controls>
+      <div class="card-title">Relationship Info</div>
     </div>
   </div>
+  <div class="body-row">
+    <div class="col-md-12" style="margin-bottom: 12px;margin-top: 15px;">
+      <div class="back-arrowr" id="da-arrow">
+        <a class="arrow" data-toggle="modal" data-target="#confirmClose" mat-tooltip="Back">
+          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="title-header">Data Analyzer</div>
+    </div>    
+  
+    <div class="container-tab">
+      <div class="col-md-12 primary-table">
+        <h5 class="card-title sub-headerr">Primary Table:
+          <strong>{{primaryTableName}}</strong>
+        </h5>
+      </div>
+    </div>
+    <div class="container-da">
+        <div class="col-md-12 mat-elevation-z2">
+          <div class="mat-step-data-analyzer-2">
+            <mat-horizontal-stepper  [selectedIndex]= "selectedIndex" #stepper labelPosition="bottom">
+              <mat-step label="Primary Column">
+                
+                  <div class="panel-body dataA-panel-body-r" id="panel-r">
+                    
+          
+                      <!-- <div class="col-md-12" style="margin-top: 22px;">
+                        <div class="col-md-5 ana-result" style="font-size:16px;">Data Analysis Status : Completed</div>
+                        <div class="col-md-7 pointer" style="text-align: right;margin-left: -24px;">
+                          <button mat-raised-button type="button" class="arch-btnn secbutton" (click)="activateSecondaryFn()"
+                            id="Select" style="margin-right: 10px;">Secondary Tables</button>
+                          <button mat-raised-button type="button" class="arch-btnn prebutton"
+                            (click)="activatePrimaryFn();selectRow()">Primary Columns</button>
+                        </div>
+                      </div> -->
+                      <div class="col-md-12" style="margin-top: -15px;">
+                          <div class="col-md-4" style="width: 30.495%"></div>
+                          <div class="col-md-3 one one-width">
+                              <div class="button-wrap" (click)="toggle()" [ngClass]="{'button-active' : toggleBoolean}"  #myDiv>
+                                <div class="button-bg">
+                                  <div class="button-out index" (click)="activateSecondaryFn()">Secondary Tables</div>
+                                  <div class="button-in index" (click)="activatePrimaryFn();selectRow()">Primary Columns</div>
+                                  <div class="button-switch"></div>
+                                </div>
+                              </div>
+                            </div>
+                              <div class="col-md-5" style="width: 37.495%"></div>
+                        </div>
+
+                      <div *ngIf="activatePrimary">
+                        <div class="col-md-12" style="margin-top: 14px; margin-left: -15px;
+                        margin-right: 0px;">
+                              <div class="col-md-3 dataA-scrollable-div-A"  style="margin-left: -15px; width: 28%;">
+                                <div class="first-div-new">Primary Column</div>  
+                                <div class="plr-0">
+                                <div class="col-md-12 sec-table"
+                                *ngFor="let x of primaryColMap | keyvalue; let i = index" (click)="populatePrimaryValues(x,i)">
+                                <div [class.selected]="i == selectedRow" class="col-md-12 cur-p trim-text ana-br da-table" id="list-br" title="{{x.key}}">                                  
+                                    {{x.key}}
+                                     <i class="fa fa-angle-right unselected"></i>
+                                </div>                                 
+                              </div>
+                            </div>
+                               </div>
+
+                          <!-- <div class="col-md-3">
+                            <table id="customers" class="sec-table">
+                              <tr>
+                                <th>Primary Column</th>
+                              </tr>
+                              <tr *ngFor="let x of primaryColMap | keyvalue" (click)="populatePrimaryValues(x)">
+                                <td class="pointer">{{x.key}}</td>
+                              </tr>
+                            </table>
+                          </div> -->
+                          <div class="col-md-9" style="width: 73%">
+                              <div class="first-div-n">Data Analysis Result</div>
+                              <div class="mat-elevation-z8" style="width:105%">
+                              <table mat-table [dataSource]="dataSource1" style="width:100%">
+                                  <ng-container matColumnDef="tableName" >
+                                    <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-left-radius: 3px;"> Secondary Table </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.tableName}} </td>
+                                  </ng-container>
+                                  <ng-container matColumnDef="dataType">
+                                    <th mat-header-cell *matHeaderCellDef style="width: 10%"> Column Type </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.dataType}} </td>
+                                  </ng-container>
+                                  <ng-container matColumnDef="secondaryColumnName" >
+                                      <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-left-radius: 3px;"> Secondary Column </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.secondaryColumnName}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="matchPercentage">
+                                      <th mat-header-cell *matHeaderCellDef style="width: 10%"> Accuracy (%) </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.matchPercentage}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="checked">
+                                      <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
+                                      <td mat-cell *matCellDef="let element">
+                                        <mat-checkbox [disabled]="element.matchPercentage == 0"
+                                        (change)="checkedSecValues(x,$event,i)"></mat-checkbox>
+                                      </td>
+                                    </ng-container>
+                                    
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                  <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                                </table>
+                                <mat-paginator [length]="columnlength1" [pageSize]= "4"></mat-paginator>
+                                </div>
+                            <!-- <table id="customers" class="table table-hover table-bordered primaryPopulate">
+                              <thead>
+                                <tr>
+                                  <th>Secondary Table</th>
+                                  <th>Column Type</th>
+                                  <th>Secondary Column</th>
+                                  <th>Accuracy (in %)</th>
+                                  <th><input type="checkbox" (change)="selectAll($event)"></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr
+                                  *ngFor="let x of populatePrimaryValuesArray | paginate: { id: 'primaryPopulate' , itemsPerPage: 7, currentPage: p };let i=index">
+                                  <td>{{x.tableName}}</td>
+                                  <td>{{x.dataType}}</td>
+                                  <td>{{x.secondaryColumnName}}</td>
+                                  <td>{{x.matchPercentage}}</td>
+                                  <td><input type="checkbox" class="m-r" [disabled]="x.matchPercentage == 0"
+                                      (change)="checkedPriValues(x,$event,i)"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls style="text-align: right;" id="primaryPopulate" (pageChange)="p = $event">
+                            </pagination-controls> -->
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="activateSecondary">
+                        <div class="col-md-12" style="margin-top: 14px; margin-left: -15px;
+                        margin-right: 0px;">
+                            <div class="col-md-3 dataA-scrollable-div-A"  style="margin-left: -15px; width: 28%;">
+                                <div class="first-div-new">Secondary Table</div> 
+                                <div class="plr-0">
+                                <div class="col-md-12 sec-table"
+                                *ngFor="let x of secTableNameMap | keyvalue; let i = index" (click)="populateSecondaryValues(x,i)">
+                                <div [class.selected]="i == selectedRow" class="col-md-12 cur-p trim-text ana-br da-table" id="list-br" title="{{x.key}}">                                  
+                                    {{x.key}}
+                                     <i class="fa fa-angle-right unselected"></i>
+                                </div>                                 
+                              </div>
+                            </div>
+                               </div>
+
+                          <!-- <div class="col-md-3">
+                            <table id="customers" class="sec-table">
+                              <tr>
+                                <th>Secondary Table</th>
+                              </tr>
+                              <tr *ngFor="let x of secTableNameMap | keyvalue" (click)="populateSecondaryValues(x)">
+                                <td class="pointer">{{x.key}}</td>
+                              </tr>
+                            </table>
+                          </div> -->
+                          <div class="col-md-9" style="width: 73%">
+                              <div class="first-div-n">Data Analysis Result</div>
+                              <div class="mat-elevation-z8" style="width:105%">
+                              <table mat-table [dataSource]="dataSource"  style="width:100%">
+                                  <ng-container matColumnDef="primaryColumn" >
+                                    <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-left-radius: 3px;"> Primary Column </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.primaryColumn}} </td>
+                                  </ng-container>
+                                  <ng-container matColumnDef="dataType">
+                                    <th mat-header-cell *matHeaderCellDef style="width: 10%"> Column Type </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.dataType}} </td>
+                                  </ng-container>
+                                  <ng-container matColumnDef="secondaryColumnName" >
+                                      <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-left-radius: 3px;"> Secondary Column </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.secondaryColumnName}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="matchPercentage">
+                                      <th mat-header-cell *matHeaderCellDef style="width: 10%"> Accuracy (%) </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.matchPercentage}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="checked">
+                                      <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
+                                      <td mat-cell *matCellDef="let element">
+                                        <mat-checkbox [disabled]="element.matchPercentage == 0"
+                                        (change)="checkedSecValues(x,$event,i)"></mat-checkbox>
+                                      </td>
+                                    </ng-container>
+                                    
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                                <mat-paginator [length]="columnlength" [pageSize]= "4"></mat-paginator>
+                                </div>
+                            <!-- <table id="customers" class="table table-hover table-bordered secondaryPopulate">
+                              <thead>
+                                <tr>
+                                  <th>Primary Column</th>
+                                  <th>Column Type</th>
+                                  <th>Secondary Column</th>
+                                  <th>Accuracy (in %)</th>
+                                  <th><input type="checkbox" (change)="selectAll($event)"></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr
+                                  *ngFor="let x of populateSecondaryValuesArray | paginate: { id: 'secondaryPopulate' , itemsPerPage: 4, currentPage: p };let i=index">
+                                  <td>{{x.primaryColumn}}</td>
+                                  <td>{{x.dataType}}</td>
+                                  <td>{{x.secondaryColumnName}}</td>
+                                  <td>{{x.matchPercentage}}</td>
+                                  <td><input type="checkbox" [disabled]="x.matchPercentage == 0"
+                                      (change)="checkedSecValues(x,$event,i)"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <pagination-controls style="text-align: right;" id="secondaryPopulate" (pageChange)="p = $event">
+                            </pagination-controls> -->
+                          </div>
+
+
+
+
+                        </div>
+                      </div>
+                      <div class="col-md-12 marginClass">
+                        <div class="col-md-7">
+                          <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+                            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>New Join Added Successfully</strong>
+                          </div>
+                          <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+                            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <strong>{{errorMsg}}</strong>
+                          </div>
+                        </div>
+                        <div class="col-md-5" style="text-align: right;">
+          
+                          <div class="action-btn">
+                            <button mat-raised-button class="mat-raised-button cancel btn-padding" data-keyboard="false"
+                              data-backdrop="static" data-toggle="modal" data-target="#confirmClose">Close</button>
+                            <button mat-raised-button class="save mat-raised-button btn-padding" data-keyboard="false"
+                              data-backdrop="static" data-toggle="modal" data-target="#addJoins">Add Selected Joins</button>
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-6 alert-sty text-danger">Note: Kindly click close button to clear the Analysis result.
+                        </div> -->
+                      </div>
+          
+                    </div>
+      
+              </mat-step>
+              <mat-step label="Secondary Table">   
+                ZCX   
+              </mat-step>
+              <mat-step label="Data Analysis">   
+                \zzX             
+              </mat-step>
+              <mat-step label="Result">  
+                zX              
+              </mat-step>
+            </mat-horizontal-stepper>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
-<div *ngIf="activateSecondary">
-  <div class="col-md-12" style="margin-top: 17px;">
-    <div class="col-md-3">
-      <table id="customers" class="sec-table">
-        <tr>
-          <th>Secondary Table</th>
-        </tr>
-        <tr *ngFor="let x of secTableNameMap | keyvalue" (click)="populateSecondaryValues(x)">
-          <td class="pointer">{{x.key}}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-md-9">
-      <table id="customers" class="table table-hover table-bordered secondaryPopulate">
-        <thead>
-          <tr>
-            <th>Primary Column</th>
-            <th>Column Type</th>
-            <th>Secondary Column</th>
-            <th>Accuracy (in %)</th>
-            <th><input type="checkbox" (change)="selectAll($event)"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of populateSecondaryValuesArray | paginate: { id: 'secondaryPopulate' , itemsPerPage: 7, currentPage: p };let i=index">
-            <td>{{x.primaryColumn}}</td>
-            <td>{{x.dataType}}</td>
-            <td>{{x.secondaryColumnName}}</td>
-            <td>{{x.matchPercentage}}</td>
-            <td><input type="checkbox" [disabled]="x.matchPercentage == 0" (change)="checkedSecValues(x,$event,i)"></td>
-          </tr>
-        </tbody>
-      </table>
-      <pagination-controls style="text-align: right;" id="secondaryPopulate" (pageChange)="p = $event"></pagination-controls>
-    </div>
-  </div>
-</div>
-<div class="col-md-12 marginClass">
-  <div class="col-md-7">
-    <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
-      <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <strong>New Join Added Successfully</strong>
-    </div>
-    <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
-      <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <strong>{{errorMsg}}</strong>
-    </div>
-  </div>
-  <div class="col-md-5" style="margin-top:16px; text-align: right;">
-     
-      <div class="action-btn">
-    <button mat-raised-button class="mat-raised-button cancel btn-padding" data-keyboard="false"  data-backdrop="static"  data-toggle="modal" data-target="#confirmClose">Close</button>
-    <button mat-raised-button class="save mat-raised-button btn-padding" data-keyboard="false"  data-backdrop="static" data-toggle="modal" data-target="#addJoins">Add Selected Joins</button>
-  </div>
-  </div>
-  <div class="col-md-6 alert-sty text-danger">Note: Kindly click close button to clear the Analysis result. </div>
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- Close -->
 <div class="modal fade" id="confirmClose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document" style="width: 500px;">
@@ -126,10 +301,12 @@ border-top-right-radius: 3px;">
         Are you sure? The results will be cleared.
       </div>
       <div class="modal-footer">
-          <div class="action-btn">
-              <button class="mat-raised-button cancel btn-padding" data-keyboard="false" data-backdrop="static" data-dismiss="modal">Close</button>
-              <button class="save mat-raised-button btn-padding" data-dismiss="modal"  data-keyboard="false" data-backdrop="static" (click)="closeScreen();">Confirm</button>                
-          </div> 
+        <div class="action-btn">
+          <button class="mat-raised-button cancel btn-padding" data-keyboard="false" data-backdrop="static"
+            data-dismiss="modal">Close</button>
+          <button class="save mat-raised-button btn-padding" data-dismiss="modal" data-keyboard="false"
+            data-backdrop="static" (click)="closeScreen();">Confirm</button>
+        </div>
       </div>
     </div>
   </div>
@@ -138,17 +315,17 @@ border-top-right-radius: 3px;">
 <div class="modal fade" id="addJoins" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document" style="width: 500px;">
     <div class="modal-content text-left">
-      <div class="modal-header" style="background: #2879ff; color: #fff;">        
+      <div class="modal-header" style="background: #2879ff; color: #fff;">
         <h4 class="modal-title">Add Join Results</h4>
       </div>
       <div class="modal-body text-center" style="height: 100px;">
         Kindly confirm whether you need to join the selected data?
       </div>
       <div class="modal-footer">
-          <div class="action-btn">
-              <button class="mat-raised-button cancel btn-padding"  data-dismiss="modal">Close</button>
-              <button class="save mat-raised-button btn-padding" data-dismiss="modal" (click)="addJoins();">Confirm</button>                
-          </div> 
+        <div class="action-btn">
+          <button class="mat-raised-button cancel btn-padding" data-dismiss="modal">Close</button>
+          <button class="save mat-raised-button btn-padding" data-dismiss="modal" (click)="addJoins();">Confirm</button>
+        </div>
       </div>
     </div>
   </div>

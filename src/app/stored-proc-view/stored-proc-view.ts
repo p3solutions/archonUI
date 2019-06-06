@@ -38,3 +38,12 @@ export class SpvNameList {
     tableName = '';
     spvInfoList: { type: string, name: string }[] = [];
 }
+
+
+export class ColumnList {
+    tableId = '';
+    tableName = '';
+    pColumn = '';
+    sColumn = '';
+    dataType = ''
+}

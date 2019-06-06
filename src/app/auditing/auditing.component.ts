@@ -37,7 +37,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   @ViewChild('click') button: ElementRef;
   uniqueService;
   displayedColumns: string[] = ['User Name', 'WorkSpace Name', 'Related Job ID', 'Service Name',
-  'Event Name', 'Event Desc', 'Event Details', 'Download'];
+  'Event Name', 'Event Desc', 'Event Details', 'Event Date', 'Download'];
 dataSource: AuditDataSource;
 @ViewChild(MatPaginator) paginator: MatPaginator;
 @ViewChild(MatSort) sort: MatSort;
