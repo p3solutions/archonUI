@@ -129,7 +129,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Data found.</div>
+  <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Records found.</div>
   <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}" id="screen-table"
     [length]="totalScreen" [pageSize]="50"> </mat-paginator>
 </div>
@@ -226,7 +226,7 @@
           <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i><div class="pop-title">Delete</div></h4>
       </div>
       <div class="modal-body">
-        <p class="popup-paragraph-cls">Are you sure?</p>
+        <p class="popup-paragraph-cls">Are you sure you want to delete the screen?</p>
       </div>
       <div class="modal-footer">        
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>

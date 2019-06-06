@@ -182,9 +182,9 @@ button.example-add-tab-button.mat-raised-button:hover {
 }
 
 .hidden-icon {
-  color: #d0cece !important;
+  color: #80adf8 !important;
 }
 
 .material-icons.hidden-icon:hover {
-  color: #d0cece !important;
+  color: #2879ff !important;
 }
