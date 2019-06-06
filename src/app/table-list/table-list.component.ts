@@ -100,6 +100,7 @@ export class TableListComponent implements OnInit {
   searchSec2;
   primaryPage = 1;
   spview = false;
+  stepperIndex = 0;
 
   constructor(
     private tablelistService: TableListService,
@@ -513,6 +514,7 @@ export class TableListComponent implements OnInit {
     }, 300);
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 2;
+    this.stepperIndex = 2;
     // document.getElementById('next-slide').click();
     this.handleStepIindicator(true);
     this.enableNextBtn = this.finalSecColMap.size > 0;
@@ -698,6 +700,7 @@ export class TableListComponent implements OnInit {
   getJobStatus() {
     this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
       this.JobStatus = res.data.jobStatus;
+      document.getElementById('close-analyzer-popup').click();
       if (this.JobStatus === 'SUCCESS') {
         this.dataAModal = false;
         this.homeStage = false;
@@ -721,6 +724,7 @@ export class TableListComponent implements OnInit {
       } else {
         setTimeout(() => {
           this.stepper.selectedIndex = 2;
+          this.stepperIndex = 2;
           this.value[2].children[1].classList.add('active-step');
         }, 1000);
         document.getElementById('open-analyzer-popup').click();
@@ -787,14 +791,14 @@ export class TableListComponent implements OnInit {
     //   this.storedprocViewRef.remove(0);
     //   this.dynamicLoaderService.setRootViewContainerRef(this.storedprocViewRef);
     //   this.dynamicLoaderService.addStoredProcViewDynamicComponent(this.tableName);
-      this.homeStage = false;
-      this.dataAModal = false;
-      this.storedProcViewService.tableName = this.tableName;
-      // const obj1 = new StoredProcViewComponent(this.workspaceHeaderService, this.storedProcViewService);
-      // obj1.tableName =  this.tableName;
-      // console.log(obj1.tableName, 'asf');
-      this.router.navigate(['workspace/metalyzer/ALL/analysis/spview']);
-      // document.getElementById('openCreateStoredViewmodal').click();
+    this.homeStage = false;
+    this.dataAModal = false;
+    this.storedProcViewService.tableName = this.tableName;
+    // const obj1 = new StoredProcViewComponent(this.workspaceHeaderService, this.storedProcViewService);
+    // obj1.tableName =  this.tableName;
+    // console.log(obj1.tableName, 'asf');
+    this.router.navigate(['workspace/metalyzer/ALL/analysis/spview']);
+    // document.getElementById('openCreateStoredViewmodal').click();
     // } else {
     //   this.dynamicLoaderService.setRootViewContainerRef(this.storedprocViewRef);
     //   this.dynamicLoaderService.addStoredProcViewDynamicComponent(this.tableName);
@@ -814,8 +818,8 @@ export class TableListComponent implements OnInit {
     this.dataAModal = false;
     this.addDirectJoinService.workspaceID = this.workspaceID;
     this.addDirectJoinService.directJoin = this.joinValues;
-  //  this.addDirectjoin = true;
-     this.router.navigate(['workspace/metalyzer/ALL/analysis/addjoin']);
+    //  this.addDirectjoin = true;
+    this.router.navigate(['workspace/metalyzer/ALL/analysis/addjoin']);
   }
 
   downloadFile(content, fileType) {

@@ -52,6 +52,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   @ViewChild(MatSort) sort: MatSort;
   toggleBoolean = false;
   selectedRow: any;
+  selectedIndex = 0;
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -84,6 +85,17 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.value[1].children[1].classList.add('finished-step');
     this.value[2].children[1].classList.add('finished-step');
     this.value[3].children[1].classList.add('active-step');
+    const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+    const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+    a[1].classList.add('mat-auth-psedu');
+    a[2].classList.add('mat-review-psedu');
+    a[0].classList.add('mat-psedu');
+    a[1].classList.add('mat-k-psedu');
+    b[0].children[1].classList.add('mat-horizental-line');
+    b[0].children[3].classList.add('mat-horizental-line');
+    b[0].children[5].classList.add('mat-horizental-line');
+    a[3].classList.add('mat-analyze-psedu-before');
+    a[2].classList.add('mat-analyze-psedu');
   }
 
   getPrimaryColumns() {

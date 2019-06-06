@@ -23,13 +23,12 @@
     </div>
     <div class="container-da">
         <div class="col-md-12 mat-elevation-z2">
-          <div class="mat-step-data-analyzer">
-            <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+          <div class="mat-step-data-analyzer-2">
+            <mat-horizontal-stepper  [selectedIndex]= "selectedIndex" #stepper labelPosition="bottom">
               <mat-step label="Primary Column">
                 
                   <div class="panel-body dataA-panel-body-r" id="panel-r">
-                     
-          
+                    
           
                       <!-- <div class="col-md-12" style="margin-top: 22px;">
                         <div class="col-md-5 ana-result" style="font-size:16px;">Data Analysis Status : Completed</div>
@@ -261,11 +260,14 @@
                     </div>
       
               </mat-step>
-              <mat-step label="Secondary Table">      
+              <mat-step label="Secondary Table">   
+                ZCX   
               </mat-step>
-              <mat-step label="Data Analysis">                
+              <mat-step label="Data Analysis">   
+                \zzX             
               </mat-step>
-              <mat-step label="Result">                
+              <mat-step label="Result">  
+                zX              
               </mat-step>
             </mat-horizontal-stepper>
           </div>

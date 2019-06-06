@@ -155,7 +155,7 @@
               <div class="container-da">
                 <div class="col-md-12 mat-elevation-z2">
                   <div class="mat-step-data-analyzer" *ngIf="!newWSinfo">
-                    <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+                    <mat-horizontal-stepper [selectedIndex]="stepperIndex" #stepper labelPosition="bottom">
                       <mat-step label="Primary Column">
                         <div class="col-md-12 dataA-panel-body">
                           <div class="col-md-12" style="margin-left: -32px;">
@@ -381,6 +381,7 @@
     </div>
   </div>
   <button type="button" style="display: none" id="open-analyzer-popup" data-toggle="modal" data-target="#analyzes"></button>
+  <button type="button" style="display: none" id="close-analyzer-popup" data-dismiss="modal"></button>
   <!--  start analyze popup -->
   <div id="analyzes" class="modal fade" role="dialog">
     <div class="modal-dialog" style="width: 680px;">
