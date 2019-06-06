@@ -641,7 +641,8 @@ export class ErtTableComponent implements OnInit {
       this.configColumnQuery = '';
       this.configColumnObject.selectedColumnName = columnName;
       this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
-      if (dataType.trim().toUpperCase() === 'SMALLINT' || dataType.trim().toUpperCase() === 'DECIMAL') {
+      if (dataType.trim().toUpperCase() === 'SMALLINT' || dataType.trim().toUpperCase() === 'BIGINT'
+       || dataType.trim().toUpperCase() === 'DECIMAL') {
         dataType = 'INT';
       } else {
         dataType = 'VARCHAR';
@@ -1088,7 +1089,6 @@ export class ErtTableComponent implements OnInit {
         filterTreeNode.condition = null;
         filterTreeNode.column = null;
         filterTreeNode.operation = operation;
-
       } else {
         const filterTreeNode = searchTree(this.filterdata.root, id);
         filterTreeNode.operation = operation;
@@ -1099,13 +1099,12 @@ export class ErtTableComponent implements OnInit {
         this.maxNode = this.maxNode + 1;
         const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false, column, condition, value, 18, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
-
         this.maxNode = this.maxNode + 1;
         const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
-
       }
     }
+    console.log(this.filterdata);
     event.stopPropagation();
   }
 
@@ -1149,9 +1148,10 @@ export class ErtTableComponent implements OnInit {
       id1 = id - 1;
     }
     const filterTreeNode1 = searchTree(this.filterdata.root, id);
-    const filterTreeNode2 = searchTree(this.filterdata.root, id1);
+   // const filterTreeNode2 = searchTree(this.filterdata.root, id1);
     this.filterdata = deleteNode(this.filterdata, filterTreeNode1);
-    this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
+    // this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
+    console.log(this.filterdata);
   }
 
   addOrder() {

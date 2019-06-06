@@ -366,7 +366,7 @@
                   <ng-template #nodeTemplateRef let-node>
                     <div class="node" [class.node--selected]="( node === selectedTreeNode )">
                       <div aria-expanded="false" data-toggle="collapse" [attr.href]="'#' + node.id">
-                        <div class="filter-toogle-div" (click)="showFilterChild($event)"
+                        {{node.id}}<div class="filter-toogle-div" (click)="showFilterChild($event)"
                           [style.margin-left.px]="node.margin_left" *ngIf="node.children.length>0"><i
                             class="fa fa-chevron-down"></i>{{node.operation}}</div>
                         <div *ngIf="node.children.length==0" [style.margin-left.px]="node.margin_left"
