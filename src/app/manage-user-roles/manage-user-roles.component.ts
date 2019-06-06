@@ -324,7 +324,7 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
     } else {
       document.getElementById('confirmChangeGlobalRole').click();
       if (this.roleOfUser === 'superadmin') {
-        this.tempChangeGlobalGroupUrl = 'superadmin/' + userId + '/groups/global';
+        this.tempChangeGlobalGroupUrl = 'superadmin/' + this.userinfoId + '/groups/global';
       } else if (this.roleOfUser === 'admin') {
         this.tempChangeGlobalGroupUrl = 'users/' + this.userinfoId + '/groups/global';
       }
