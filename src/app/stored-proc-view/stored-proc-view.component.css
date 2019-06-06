@@ -1,3 +1,146 @@
+.card-header {
+    color: #000;
+    background-color: #64b5f6;
+    padding: 8px;
+    border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+  }
+  
+  .card-title {
+    font-size: 16px;
+    float: left;
+  }
+  .back-arrowr {
+    margin-top: 2px;
+    margin-bottom: 5px;
+    margin-left: 16px;
+    float: left;
+  }
+  
+  #da-arrow{
+    margin-left: 11px;
+    margin-right: 13px;
+  }
+  .title-header{
+    font-size: 18px;
+    text-align: left;
+  }
+  .arrow {
+   
+    color: #80adf8;
+    cursor: pointer;
+  }
+  
+  .arrow:hover {
+  
+    color: #2879FF;
+    cursor: pointer;
+  }
+  .body-row {
+      padding: 15px;
+      margin-right: -15px;
+    margin-left: -15px;
+  }
+  .primary-table {
+    background-color: #edf3f8;
+    margin-bottom: 12px;
+    margin-top: 12px;
+  }
+  
+  .container-tab{
+    margin-left: 22px;
+    margin-right: 31px;
+  }
+  .card-title {
+    float: left;
+  }
+  .sub-headerr {
+    margin-left: 4px;
+  }
+
+  div.sticky {
+    position: sticky;
+    top: 0;
+    padding: 8px 10px;   
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    margin-bottom: 6px;
+}
+div.sticky-new {
+  top: 0;
+  padding: 8px 10px;   
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  margin-bottom: 6px;
+}
+.scroll-div {
+    height: 360px;
+    overflow: auto;
+    padding-left: 25px;
+}
+.column-one {
+    float: left;
+    width: 27%;
+    height: 500px;
+}
+
+.column-two {
+    float: left;
+    width: 28%;  
+    height: 500px;
+    margin-left: -10px;
+}
+
+.column-three {
+  float: left;
+  width: 41%;
+  height: 500px;
+  margin-left: 17px;
+}
+
+.first-div {
+    display: block;
+    width: 66%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre;
+    margin-left: 27px;
+    text-align: left;
+}
+.first-div-new {
+  display: block;
+  width: 86%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+  margin-left: 27px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.second-div {
+    margin-top: -18px;
+    margin-left: 165px;
+    width: 24%;
+    overflow: hidden;
+    text-align: left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .modal-header{
     font-size: 20px;
     padding: 14px 18px;
@@ -39,49 +182,40 @@
     box-sizing: border-box;
 }
 
-.column-one {
-    float: left;
-    width: 27%;
-    padding: 10px;
-    height: 300px;
-}
-
-.column-two {
-    float: left;
-    width: 28%;
-    padding: 10px;
-    height: 300px;
-}
-
-.column-three {
-    float: left;
-    width: 45%;
-    padding: 10px;
-    height: 300px;
-}
 
 .row:after {
     content: "";
     display: table;
     clear: both;
 }
-
-div.sticky {
-    color: white;
-    position: sticky;
-    top: 0;
-    padding: 8px 10px;
-    background-color: #64b5f6;
-    font-size: 13px;
-    letter-spacing: 0.2px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
+.mat-header-cell {
+  font-size: 12px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;  
+  text-align: left;
+  color: #0c0c0c;  
+  font-weight: bold;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 10px;
 }
 
-.scroll-div {
-    height: 360px;
-    overflow: scroll;
+.mat-cell, .mat-footer-cell {
+  font-size: 12px;
+  text-align: left;
+  padding-left: 10px;
 }
+::ng-deep .mat-paginator-range-label {
+  margin: 0px !important;
+}
+::ng-deep .mat-paginator-icon {
+  height: unset !important;
+}
+
+
+
 
 table.responsive-table tr>td, table.responsive-table th {
     text-align: left;
@@ -97,23 +231,7 @@ table.responsive-table tr>td, table.responsive-table th {
     
 }
 
-.first-div {
-    display: block;
-    width: 66%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: pre;
-    margin-left: 27px;
-    text-align: left;
-}
 
-.second-div {
-    margin-top: -18px;
-    margin-left: 165px;
-    width: 24%;
-    overflow: hidden;
-    text-align: left;
-}
 
 .icon-div {
     width: 5%;
@@ -124,29 +242,27 @@ table.responsive-table tr>td, table.responsive-table th {
 
 .well {
     min-height: 22px;
-    margin-bottom: 9px;
+    margin-bottom: 4px;
     background-color: #fff;
-    border: 1px solid #333;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    box-shadow: inset 0 1px 1px #fcf8e3; 
     font-weight: 300;
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 0.2px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     padding: 10px 10px
 }
 
 .well-with-blue {
     min-height: 22px;
-    margin-bottom: 9px;
-    background-color: #fff;
-    border: 1px solid #269af8;
+    margin-bottom: 4px;
+    background-color: #e8f0f6;
+    border: 1px solid #269AF8;
     border-radius: 4px;
-    box-shadow: inset 0 1px 1px #269af8; 
     font-weight: 300;
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 0.2px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     padding: 10px 10px
 }
 
@@ -180,7 +296,7 @@ table.responsive-table tr>td, table.responsive-table th {
 }
 
 .sec-div-third-col {
-    width: 27%;
+    width: 20%;
     margin-left: 300px;
     margin-top: -18px;
     text-align: left;
@@ -191,7 +307,7 @@ table.responsive-table tr>td, table.responsive-table th {
 
 .well:hover {
     background-color: #f5f5f5;
-    border: 1px solid white;
+    border: 1px solid #8c8c8c;
 }
 
 .display-icon{
@@ -204,14 +320,16 @@ table.responsive-table tr>td, table.responsive-table th {
     text-transform: inherit;
     margin-right: 10px;
     transition: 0.5s;
+    border-radius: 4px;
   }
   
   .action-btn button.cancel {
     background-color: #64b5f6;
     color: #1b1b1b;
-    margin-right: 10px;
+    margin-right: 5px;
     text-transform: inherit;
     transition: 0.5s;
+    border-radius: 4px;
   }
   
   .action-btn button.save:hover {

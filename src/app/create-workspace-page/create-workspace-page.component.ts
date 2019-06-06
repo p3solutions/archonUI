@@ -164,7 +164,11 @@ export class CreateWorkspacePageComponent implements OnInit {
       this.workspaceInProgress = false;
       if (res) {
         document.getElementById('success-popup-btn').click();
-        this.successWorkspaceMessage = 'Workspace Created Successfully.';
+        if (res.workspaceState === 'PENDING') {
+          this.successWorkspaceMessage = 'Workpace is pending for the approval.';
+        } else {
+          this.successWorkspaceMessage = 'Workspace Created Successfully.';
+        }
       } else {
         document.getElementById('select-db-btn').click();
         this.errorMessage = 'This Workspace Name already is in use.';

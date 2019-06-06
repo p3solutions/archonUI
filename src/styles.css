@@ -1490,6 +1490,10 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
   color: #ff6702;
 }
 
+.stop {
+  color: #FD3000; 
+}
+
 
 
 .create-user-invite-dialog .flex-container {
@@ -1953,6 +1957,7 @@ a.required-color {
 }
 
 /* end-encypted field,and required icon in adhoc  */
+/* ends- common btn css */ 
 
 /* start-popup msg color */
 

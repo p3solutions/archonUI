@@ -15,6 +15,7 @@ export class StatusService {
   startIndex = 1;
   getSearchStatus = this.apiUrl + 'jobStatus/jobList/search?userId=';
   downloadUrl = this.apiUrl + 'audits/download?jobId=';
+  terminateUrl = this.apiUrl + 'jobStatus/terminateJob?jobId=';
 
   constructor(
     private http: HttpClient,
@@ -61,6 +62,11 @@ export class StatusService {
   downloadZip(jobId): Observable<Blob> {
     return this.http.get(this.downloadUrl + jobId, { headers: this.getHeaders(), responseType: 'blob' })
       .pipe(catchError(this.handleError<any>('download')));
+  }
+
+  terminateJob(jobId){
+    return this.http.put(this.terminateUrl + jobId, { headers: this.getHeaders() })
+    .pipe(catchError(this.handleError<any>('terminateJob')));
   }
 
   private extractJobSearch(res) {

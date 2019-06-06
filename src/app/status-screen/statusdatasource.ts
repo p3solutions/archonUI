@@ -18,7 +18,6 @@ export class StatusDataSource implements DataSource<any> {
 
     sortfn(sort) {
     const data = this.adhocSubject.getValue().slice();
-    console.log(sort, data);
     if (!sort.active || sort.direction === '') {
         const data1 = this.adhocSubject.getValue();
         this.adhocSubject.next(data1);

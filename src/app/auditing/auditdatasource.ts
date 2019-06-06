@@ -35,6 +35,7 @@ export class AuditDataSource implements DataSource<any> {
               case 'Event Name': return this.compare(a.eventName.toLowerCase(), b.eventName.toLowerCase(), isAsc);
               case 'Event Desc': return this.compare(a.eventDescription.toLowerCase(), b.eventDescription.toLowerCase(), isAsc);
               case 'Event Details': return this.compare(a.eventDetails.toLowerCase(), b.eventDetails.toLowerCase(), isAsc);
+              case 'Event Date': return this.compare(a.eventDate, b.eventDate, isAsc);
               default: return 0;
             }
           });
