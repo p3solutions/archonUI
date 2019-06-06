@@ -59,17 +59,19 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   populateValues() {
-    this.primaryTableName = this.directJoin.tableName;
-    this.primaryTableId = this.directJoin.tableId;
-    this.workspaceID = this.workspaceID;
-    this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
-    this.primaryColumns = res;
-    this.dataSource.data = this.primaryColumns;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.columnlength = this.primaryColumns.length;
+    if (this.directJoin !== undefined) {
+      this.primaryTableName = this.directJoin.tableName;
+      this.primaryTableId = this.directJoin.tableId;
+      this.workspaceID = this.workspaceID;
+      this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
+        this.primaryColumns = res;
+        this.dataSource.data = this.primaryColumns;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.columnlength = this.primaryColumns.length;
+      }
+      );
     }
-    );
   }
 
   toggleTblSelection(_event) {
@@ -190,7 +192,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   searchTablelist() {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
+    this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
       this.tableList = res.tableList;
     });
   }
@@ -199,7 +201,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       this.tableList = res.tableList;
       if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      }
     });
   }
   getPage(page: number) {
@@ -209,7 +211,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       this.tableList = res.tableList;
       if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      }
     });
   }
 
@@ -232,8 +234,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
             break;
           }
         }
-          tableRow.children[2].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
-          this.selectedValues(primaryValues, index, primaryColumn.columnName);
+        tableRow.children[2].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
+        this.selectedValues(primaryValues, index, primaryColumn.columnName);
       }
     }
     this.autoColumnMatch = true;

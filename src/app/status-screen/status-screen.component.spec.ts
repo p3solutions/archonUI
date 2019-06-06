@@ -18,7 +18,7 @@ import { UserProfileService } from '../user-profile/user-profile.service';
 import { FormsModule } from '@angular/forms';
 import {
   MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
-  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule
+  MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule, MatExpansionModule
 } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -75,7 +75,9 @@ describe('StatusScreenComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule,
+        FormsModule, MatTableModule, MatSelectModule, 
+        MatOptionModule, MatSortModule, MatPaginatorModule,
+         MatFormFieldModule, MatInputModule, BrowserAnimationsModule, MatExpansionModule,
         HttpClientModule,
         HttpClientTestingModule,
         RouterTestingModule

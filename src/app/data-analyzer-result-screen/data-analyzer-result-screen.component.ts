@@ -77,25 +77,27 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   ngAfterViewInit() {
     this.selectRow();
     this.value = document.querySelectorAll('.mat-horizontal-stepper-header');
-    this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">crop_portrait</i>';
-    this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">table_chart</i>';
-    this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">insert_chart_outlined</i>';
-    this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">format_list_bulleted</i>';
-    this.value[0].children[1].classList.add('finished-step');
-    this.value[1].children[1].classList.add('finished-step');
-    this.value[2].children[1].classList.add('finished-step');
-    this.value[3].children[1].classList.add('active-step');
-    const a = document.getElementsByClassName('mat-horizontal-stepper-header');
-    const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
-    a[1].classList.add('mat-auth-psedu');
-    a[2].classList.add('mat-review-psedu');
-    a[0].classList.add('mat-psedu');
-    a[1].classList.add('mat-k-psedu');
-    b[0].children[1].classList.add('mat-horizental-line');
-    b[0].children[3].classList.add('mat-horizental-line');
-    b[0].children[5].classList.add('mat-horizental-line');
-    a[3].classList.add('mat-analyze-psedu-before');
-    a[2].classList.add('mat-analyze-psedu');
+    if (this.value[0] !== undefined && this.value[1] !== undefined && this.value[2] !== undefined && this.value[3] !== undefined) {
+      this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">crop_portrait</i>';
+      this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">table_chart</i>';
+      this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">insert_chart_outlined</i>';
+      this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">format_list_bulleted</i>';
+      this.value[0].children[1].classList.add('finished-step');
+      this.value[1].children[1].classList.add('finished-step');
+      this.value[2].children[1].classList.add('finished-step');
+      this.value[3].children[1].classList.add('active-step');
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      a[1].classList.add('mat-auth-psedu');
+      a[2].classList.add('mat-review-psedu');
+      a[0].classList.add('mat-psedu');
+      a[1].classList.add('mat-k-psedu');
+      b[0].children[1].classList.add('mat-horizental-line');
+      b[0].children[3].classList.add('mat-horizental-line');
+      b[0].children[5].classList.add('mat-horizental-line');
+      a[3].classList.add('mat-analyze-psedu-before');
+      a[2].classList.add('mat-analyze-psedu');
+    }
   }
 
   getPrimaryColumns() {
@@ -333,6 +335,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   toggle() {
-      this.toggleBoolean = !this.toggleBoolean;
+    this.toggleBoolean = !this.toggleBoolean;
   }
 }
