@@ -135,10 +135,11 @@
 <!-- Modal -->
 <div id="jobDetailsModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-      <div class="modal-content" style="width: 630px;">
-          <div class="modal-header">
-            <div class='model-title'><div class='info-r'>Job Details</div></div>
-        </div>
+      <div class="modal-content" style="width: 900px;">
+        <div class="info-popup-header-cls">
+          <h4 class="popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">list</i><div class="pop-title" style="margin-left: 0px;">Job Details</div></h4>
+        </div>         
         <div class="modal-body">
             <mat-accordion>
             <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of jobArray;let ind=index;">
@@ -149,61 +150,69 @@
                       </div>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Field</th>
-                        <th>Values</th>
-                      </tr>
-                    </thead>
-                    <tbody >
-                      <tr *ngFor="let i of relation.common" class="text-left">
-                        <td *ngIf="i.value !== ''">{{i.name}}</td>
-                        <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
-                        <td *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
-                        <td *ngIf="i.type == 'Date' && i.value == 'N/A'">{{i.value}}</td>  
-                        <td *ngIf="i.type == 'Date' && i.value == 'null'"></td>                 
-                      </tr>
-                      <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
-                      <tr *ngFor="let i of relation.input" class="text-left">
-                        <td>{{i.name}}</td>
-                        <td>{{i.value}}</td>
-                      </tr>
-                      <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
-                      <!-- <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}</td></tr> -->
-                      <tr><td>{{relation.message?.name}}</td><td><textarea readonly style="width:100%; overflow:scroll; resize:vertical;" ngModel="{{relation.message?.value}}" rows="3" id="comment"></textarea></td></tr>
-                      <tr *ngIf="relation.output !== null"><td colspan="2"><h4><b>Output</b></h4></td></tr>
-                      <tr *ngIf="relation.output !== null"><td>{{relation.output?.name}}</td><td>{{relation.output?.value}}</td></tr>
-                      <tr><td colspan="2"><h4><b>ServerConfig</b></h4></td></tr>
-                      <tr *ngFor="let i of relation.serverConfiguration"><td>{{i.name}}</td><td>{{i.value}}</td></tr>
-                    </tbody>
-                  </table>
-                <!-- <div>
-                  <div class="exp-content-outer border-top-line">
-                    <div class="exp-mat-item">
-                      <strong>Primary Table Column</strong>
-                    </div>
-                    <div class="exp-mat-item">
-                      <strong>Secondary Table Column</strong>
-                    </div>
-                  </div>
-                  <div class="exp-content-outer" *ngFor="let x of relation.joinListInfo">
-                    <div class="exp-mat-item">{{x.primaryColumn.columnName}}</div>
-                    <div class="exp-mat-item">{{x.secondaryColumn.columnName}}</div>
-                  </div>
-                  <div class="action-btn">
-                    <button class="mat-raised-button cancel btn-padding"
-                      (click)="mep.expanded = !mep.expanded">Close</button>
-                    <button class="save mat-raised-button btn-padding" data-toggle="modal" data-keyboard="false" data-backdrop="static"
-                      data-target="#openEditRelationshipModal" (click)="openEditRelationship(relation)">Edit</button>
-                  </div>
-                </div> -->
+               <div class="line"></div>  
+               <div class="col-md-12">           
+                <div class="col-md-6" *ngFor="let i of relation.common;">               
+                    <div class="inner-div-l">
+                      <div *ngIf="i.value !== ''" class="inner-bold-item">{{i.name}}</div>
+                      <div *ngIf="i.type !== 'Date'" class="inner-grey-item">{{i.value}}</div>
+                      <div *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'" class="inner-grey-item">{{i.value | date: 'medium'}}</div>
+                      <div *ngIf="i.type == 'Date' && i.value == 'N/A'" class="inner-grey-item">{{i.value}}</div>
+                      <div *ngIf="i.type == 'Date' && i.value == 'null'" class="inner-grey-item">{{i.value}}</div>
+                    </div>                   
+                </div>
+              </div>
+              <div *ngIf="relation.input !== null" class="col-md-12">
+                <div class="bg">Input</div>
+              </div>
+              <div *ngIf="relation.input !== null" class="col-md-12">           
+                <div class="col-md-6" *ngFor="let i of relation.input">               
+                    <div class="inner-div-l">
+                      <div class="inner-bold-item">{{i.name}}</div>
+                      <div class="inner-grey-item">{{i.value}}</div>
+                    </div>                   
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="bg">Message</div>
+              </div>
+              <div class="col-md-12">           
+                <div class="col-md-12">               
+                    <div class="inner-div-l">
+                      <div class="inner-bold-item">{{relation.message?.name}}</div>
+                      <div class="inner-grey-item">{{relation.message?.value}}</div>
+                    </div>                   
+                </div>
+              </div>
+              <div  *ngIf="relation.output !== null" class="col-md-12">
+                <div class="bg">Output</div>
+              </div>
+              <div  *ngIf="relation.output !== null" class="col-md-12">           
+                <div class="col-md-12">               
+                    <div class="inner-div-l">
+                      <div class="inner-bold-item">{{relation.output?.name}}</div>
+                      <div class="inner-grey-item">{{relation.output?.value}}</div>
+                    </div>                   
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="bg">ServerConfig</div>
+              </div>
+              <div class="col-md-12">           
+                <div class="col-md-6" *ngFor="let i of relation.serverConfiguration">               
+                    <div class="inner-div-l">
+                      <div class="inner-bold-item">{{i.name}}</div>
+                      <div class="inner-grey-item">{{i.value}}</div>
+                    </div>                   
+                </div>
+              </div> 
               </mat-expansion-panel>
               </mat-accordion>
            
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-padding btn-info-popup-primary-color" (click)="closeScreen();"
+          data-dismiss="modal">Close</button>
       </div>
     </div>
 </div>

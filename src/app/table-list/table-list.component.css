@@ -106,7 +106,7 @@ h4 {
 .tablename-list {
   margin-top: 10px;
   margin-left: -5px;
-  width: 95%;
+  width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   height: 280px;
@@ -261,7 +261,7 @@ h4 {
 
 #analysis-view .search-input {
   margin-left: 20px;
-  width: 84%;
+  width: 89%;
 }
 
 #analysis-view .form-control-feedback {

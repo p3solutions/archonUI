@@ -25,6 +25,7 @@ a {
 a:focus,
 a:hover {
   color: #2879ff;
+  cursor: pointer;
 }
 
 a:focus,
