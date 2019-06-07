@@ -151,7 +151,7 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                <div class="line"></div>  
-               <div class="col-md-12">           
+               <div class="col-md-12 ws">           
                 <div class="col-md-6" *ngFor="let i of relation.common;">               
                     <div class="inner-div-l">
                       <div *ngIf="i.value !== ''" class="inner-bold-item">{{i.name}}</div>
@@ -162,10 +162,10 @@
                     </div>                   
                 </div>
               </div>
-              <div *ngIf="relation.input !== null" class="col-md-12">
+              <div *ngIf="relation.input !== null" class="col-md-12 ws">
                 <div class="bg">Input</div>
               </div>
-              <div *ngIf="relation.input !== null" class="col-md-12">           
+              <div *ngIf="relation.input !== null" class="col-md-12 ws">           
                 <div class="col-md-6" *ngFor="let i of relation.input">               
                     <div class="inner-div-l">
                       <div class="inner-bold-item">{{i.name}}</div>
@@ -173,10 +173,10 @@
                     </div>                   
                 </div>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12 ws">
                 <div class="bg">Message</div>
               </div>
-              <div class="col-md-12">           
+              <div class="col-md-12 ws">           
                 <div class="col-md-12">               
                     <div class="inner-div-l">
                       <div class="inner-bold-item">{{relation.message?.name}}</div>
@@ -184,10 +184,10 @@
                     </div>                   
                 </div>
               </div>
-              <div  *ngIf="relation.output !== null" class="col-md-12">
+              <div  *ngIf="relation.output !== null" class="col-md-12 ws">
                 <div class="bg">Output</div>
               </div>
-              <div  *ngIf="relation.output !== null" class="col-md-12">           
+              <div  *ngIf="relation.output !== null" class="col-md-12 ws">           
                 <div class="col-md-12">               
                     <div class="inner-div-l">
                       <div class="inner-bold-item">{{relation.output?.name}}</div>
@@ -195,10 +195,10 @@
                     </div>                   
                 </div>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12 ws">
                 <div class="bg">ServerConfig</div>
               </div>
-              <div class="col-md-12">           
+              <div class="col-md-12 ws">           
                 <div class="col-md-6" *ngFor="let i of relation.serverConfiguration">               
                     <div class="inner-div-l">
                       <div class="inner-bold-item">{{i.name}}</div>

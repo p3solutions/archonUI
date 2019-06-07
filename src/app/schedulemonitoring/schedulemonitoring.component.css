@@ -203,7 +203,7 @@ table.mat-table {
   margin-left: -10px;
 }
 .inner-bold-item {
-  color: #121212;
+  color: #000000;
   word-break: break-all;
 }
 
@@ -226,6 +226,9 @@ font-weight: bold;
   border-top: 1px solid #ddd !important;
   margin-top: -10px;
   margin-bottom: 15px;
+}
+.ws {
+  /* margin-left: -20px; */
 }
 
 

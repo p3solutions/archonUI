@@ -161,7 +161,7 @@
             <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">list</i><div class="pop-title" style="margin-left: 0px;">Job Details</div></h4>
         </div> 
         <div class="modal-body">
-            <div class="col-md-12">           
+            <div class="col-md-12 ws">           
                 <div class="col-md-6" *ngFor="let i of common">               
                     <div class="inner-div-l">
                       <div *ngIf="i.value !== ''" class="inner-bold-item">{{i.name}}</div>
@@ -172,10 +172,10 @@
                     </div>                   
                 </div>
               </div>
-              <div *ngIf="input !== null" class="col-md-12">
+              <div *ngIf="input !== null" class="col-md-12 ws">
                 <div class="bg">Input</div>
               </div>
-              <div *ngIf="input !== null" class="col-md-12">           
+              <div *ngIf="input !== null" class="col-md-12 ws">           
                   <div class="col-md-6" *ngFor="let i of input">               
                       <div class="inner-div-l">
                         <div class="inner-bold-item">{{i.name}}</div>
@@ -183,10 +183,10 @@
                       </div>                   
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 ws">
                     <div class="bg">Message</div>
                   </div>
-                  <div class="col-md-12">           
+                  <div class="col-md-12 ws">           
                     <div class="col-md-12">               
                         <div class="inner-div-l">
                           <div class="inner-bold-item">{{jobMessage?.name}}</div>
@@ -194,10 +194,10 @@
                         </div>                   
                     </div>
                   </div>
-                  <div  *ngIf="jobOutput !== null" class="col-md-12">
+                  <div  *ngIf="jobOutput !== null" class="col-md-12 ws">
                       <div class="bg">Output</div>
                     </div>
-                    <div  *ngIf="jobOutput !== null" class="col-md-12">           
+                    <div  *ngIf="jobOutput !== null" class="col-md-12 ws">           
                       <div class="col-md-12">               
                           <div class="inner-div-l">
                             <div class="inner-bold-item">{{jobOutput?.name}}</div>
