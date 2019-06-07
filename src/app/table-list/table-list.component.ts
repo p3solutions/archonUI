@@ -207,6 +207,7 @@ export class TableListComponent implements OnInit {
   }
 
   openDataAModal() {
+    this.stepperIndex = 0;
     setTimeout(() => {
       this.changeMatStepIcon();
     }, 800);
@@ -589,16 +590,16 @@ export class TableListComponent implements OnInit {
     }
   }
   dataAnalyse() {
-    setTimeout(() => {
-      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
-      a[3].classList.add('mat-analyze-psedu-before');
-      a[2].classList.add('mat-analyze-psedu');
-      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
-      b[0].children[5].classList.add('mat-horizental-line');
-      this.value[2].children[1].classList.add('finished-step');
-      this.value[3].children[1].classList.add('active-step');
-    }, 300);
-    this.stepper.selectedIndex = 3;
+    // setTimeout(() => {
+    //   const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+    //   a[3].classList.add('mat-analyze-psedu-before');
+    //   a[2].classList.add('mat-analyze-psedu');
+    //   const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+    //   b[0].children[5].classList.add('mat-horizental-line');
+    //   this.value[2].children[1].classList.add('finished-step');
+    //   this.value[3].children[1].classList.add('active-step');
+    // }, 300);
+    // this.stepper.selectedIndex = 3;
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
       if (res && res.success) {
         this.dataAnalysisjobID = res.data.jobId;
@@ -610,7 +611,8 @@ export class TableListComponent implements OnInit {
   getJobStatus() {
     this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
       this.JobStatus = res.data.jobStatus;
-      document.getElementById('close-analyzer-popup').click();
+      console.log(this.JobStatus);
+      // document.getElementById('close-analyzer-popup').click();
       if (this.JobStatus === 'SUCCESS') {
         this.dataAModal = false;
         this.homeStage = false;
@@ -628,12 +630,16 @@ export class TableListComponent implements OnInit {
         // this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
         // this.JobStatus = '';
       } else {
+        console.log('a');
         setTimeout(() => {
           this.stepper.selectedIndex = 2;
           this.stepperIndex = 2;
           this.value[2].children[1].classList.add('active-step');
+          if (document.getElementById('analyzes').classList.contains('in') === false) {
+            document.getElementById('open-analyzer-popup').click();
+          } else {
+          }
         }, 1000);
-        document.getElementById('open-analyzer-popup').click();
       }
     });
   }
