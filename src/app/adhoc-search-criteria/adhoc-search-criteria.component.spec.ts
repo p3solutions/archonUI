@@ -4,7 +4,7 @@ import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule,
-  MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule, MatTabsModule, MatCheckboxModule
+  MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule, MatTabsModule, MatCheckboxModule, MatDatepickerModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -35,9 +35,9 @@ describe('AdhocSearchCriteriaComponent', () => {
         AdhocSearchScreenComponent, AdhocEditPanelColumnPopupComponent,
         AdhocEditSearchScreenPopupComponent],
       imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule
-        , MatOptionModule, RouterTestingModule, HttpClientTestingModule,
+        , MatOptionModule, RouterTestingModule, HttpClientTestingModule, MatDatepickerModule, MatCheckboxModule,
         MatSelectModule, MatInputModule, DragDropModule, MatCheckboxModule, MatTabsModule, BrowserAnimationsModule],
-      providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }] 
+      providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
 
     })
       .compileComponents();

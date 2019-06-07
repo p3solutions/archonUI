@@ -12,7 +12,7 @@
 }
 
 ::ng-deep .mat-card.column-box {
-  width: 31.60%;
+  /* width: 31.60%; */
   padding: 11px 9px 8px 10px;
   margin: 12px 10px 6px 8px;
   border-radius: 3px;
@@ -38,10 +38,10 @@
   width: -webkit-fill-available
 }
 
-::ng-deep .column-box mat-form-field.text-box .mat-form-field-wrapper {
+/* ::ng-deep .column-box mat-form-field.text-box .mat-form-field-wrapper {
   padding-bottom: 0px;
   background-color: #ffffff;
-}
+} */
 
 .fa-trash {
   color: #1385f8
@@ -59,10 +59,16 @@
   margin-top: 7px;
   margin-left: -12px;
   overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-flow: row wrap;
 }
 
 ::ng-deep mat-card.col-md-4.column-box.cdk-drag.mat-card.ng-star-inserted {
   padding-bottom: 10px;
+  flex: 0 1 31%;
 }
 
 .material-icons {
@@ -73,4 +79,26 @@
 .material-icons:focus {
   font-size: 24px;
 }
-    
+
+.grid-display {
+  display: inline-grid;
+}
+
+.check-display {
+  display: flex;
+}
+
+.end-date {
+  margin-right: 1%;
+  width: 49%;
+}
+
+.start-end {
+  margin-right: 3%;
+  width: 47%;
+}
+
+.scroll-column-box {
+  height: 57px;
+  overflow: auto
+}

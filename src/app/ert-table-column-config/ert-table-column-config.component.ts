@@ -119,7 +119,6 @@ export class ErtTableColumnConfigComponent implements OnInit {
           delete item1['viewQuery'];
         }
       }
-      delete item['isSelected'];
     }
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
@@ -134,7 +133,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
         'databaseId': this.workspaceHeaderService.getDatabaseID()
       },
       'ertJobParams': this.ertService.ertJobParams,
-      'tableDetailsList': this.ertService.selectedList.filter(a => a.isSelected !== false),
+      'tableDetailsList': this.ertService.selectedList,
       'ingestionDataConfig': this.ertService.ingestionDataConfig,
       'extractDataConfigInfo': this.ertService.extractDataConfigInfo
     };
