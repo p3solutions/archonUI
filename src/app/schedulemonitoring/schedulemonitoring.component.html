@@ -170,16 +170,18 @@
                 <tbody >
                   <tr *ngFor="let i of common" class="text-left">
                       <td *ngIf="i.value !== ''">{{i.name}}</td>
-                      <td *ngIf="i.type !== 'Date'">{{i.value !== '' ? i.value : 'null'}}</td>
-                      <td *ngIf="i.type == 'Date' && i.value !== '' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
+                      <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
+                        <td *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
+                        <td *ngIf="i.type == 'Date' && i.value == 'N/A'">{{i.value}}</td>  
+                        <td *ngIf="i.type == 'Date' && i.value == 'null'"></td>    
                   </tr>
                   <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
                   <tr *ngFor="let i of input" class="text-left">
                     <td>{{i.name}}</td>
-                    <td>{{i.value !== '' ? i.value : 'null'}}</td>
+                    <td>{{i.value}}</td>
                   </tr>
                   <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
-                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value !== '' ? jobMessage?.value : 'null'}}</td></tr>
+                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
                   <tr *ngIf="jobOutput !== null"><td colspan="2"><h4><b>Output</b></h4></td></tr>
                   <tr *ngIf="jobOutput !== null"><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
                 </tbody>

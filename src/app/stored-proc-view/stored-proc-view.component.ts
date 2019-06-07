@@ -1,9 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { StoredProcView, SelectedTableNameListObj, TableNameAndRelatingTable, SpvInfo, SpvNameList } from './stored-proc-view';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { StoredProcView, SelectedTableNameListObj, TableNameAndRelatingTable, SpvInfo, SpvNameList, ColumnList } from './stored-proc-view';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { stringify } from '@angular/compiler/src/util';
 import { StoredProcViewService } from './stored-proc-view.service';
 import { ConstantPool, isNgTemplate } from '@angular/compiler';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Router } from '@angular/router';
+import { TableListService } from '../table-list/table-list.service';
 
 @Component({
   selector: 'app-stored-proc-view',
@@ -11,7 +14,7 @@ import { ConstantPool, isNgTemplate } from '@angular/compiler';
   styleUrls: ['./stored-proc-view.component.css']
 })
 export class StoredProcViewComponent implements OnInit {
-  @Input() tableName: string;
+  tableName: string;
   spvRelatedTableList: { tableId: string, tableName: string, pColumn: string, sColumn: string, dataType: string }[] = [];
   spvTableNameList: { isTableChecked: boolean, tableName: string, isBorderSet: boolean, tableId: string }[] = [];
   spvInfoListTwo: { isSPVChecked: boolean, type: string, name: string, isBorderSet: boolean }[] = [];
@@ -32,11 +35,19 @@ export class StoredProcViewComponent implements OnInit {
   updateSuccess: boolean;
   errorMsg: any;
   isSPVAvailable: boolean;
+  displayedColumns: string[] = ['pColumn', 'sColumn', 'dataType'];
+  columnsList: any;
+  homeStage: boolean;
+  dataSource: MatTableDataSource<ColumnList>;
+  columnlength = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
-    private storedProcViewService: StoredProcViewService) {
+    private storedProcViewService: StoredProcViewService, private router: Router, private tablelistService: TableListService) {
   }
 
   ngOnInit() {
+    this.tableName = this.storedProcViewService.tableName;
     this.workspaceid = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.storedProcViewService.getSPVNameList(this.workspaceid, this.tableName).subscribe((result) => {
       if (result.tableId !== null || result.spvInfoList !== null) {
@@ -134,6 +145,13 @@ export class StoredProcViewComponent implements OnInit {
       this.spvTableNameList.forEach(a => a.isTableChecked = false);
     }
     this.enableSubmitBtn();
+    this.columnsList = this.getRelatingTableList();
+    this.dataSource = new MatTableDataSource(this.columnsList);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    console.log(this.dataSource.data);
+    console.log(this.columnsList);
+    this.columnlength = this.columnsList.length;
   }
 
   enableSubmitBtn() {
@@ -173,7 +191,8 @@ export class StoredProcViewComponent implements OnInit {
         'tableId': this.primaryTableId,
         'tableName': this.tableName,
       },
-      'spvInfoList': this.selectedSPVJoinList};
+      'spvInfoList': this.selectedSPVJoinList
+    };
     this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
       if (res && res.errorDetails.length === 0) {
         this.updateSuccess = true;
@@ -189,5 +208,12 @@ export class StoredProcViewComponent implements OnInit {
     this.errorMsg = '';
     this.updateNotif = false;
     this.updateSuccess = false;
+  }
+  gotoBack() {
+    this.homeStage = true;
+  }
+  closeScreen() {
+    this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+    this.storedProcViewService.changeSPVBooleanValue(true);
   }
 }

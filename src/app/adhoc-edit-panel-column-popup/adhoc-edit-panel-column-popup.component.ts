@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { AdhocScreenService } from '../adhoc-search-criteria/adhoc-screen.service';
-import { Tab, ResultFields, SearchResult, InputFunctionsInfo, inputFunctionList } from '../adhoc-landing-page/adhoc';
+import { Tab, ResultFields, SearchResult, InputFunctionsInfo } from '../adhoc-landing-page/adhoc';
+import { inputFunctionList } from '../adhoc-landing-page/adhoc-utility-fn';
+
 
 @Component({
   selector: 'app-adhoc-edit-panel-column-popup',
@@ -21,9 +23,9 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
   searchResult = new SearchResult();
   outputFunctionInfo = new InputFunctionsInfo();
   outputFunctionsList = inputFunctionList;
-  sortingValue: string[] = ['Disable sorting in this column', 'Disable sorting in this column',
+  sortingValue: string[] = ['Disable sorting in this column', 'Enable sorting in this column',
     'Enable default sort-Ascending', 'Enable default sort-Descending'];
-  outputFunctions: string[] = ['', 'Gender Description Common', 'Gender Description to acronym',
+  outputFunctions: string[] = ['', 'Gender Description Common',
     'Date From YYYY-MM-DD to MM-DD-YYYY', 'Date From YYYY-MM-DD to YYYYMMDD', 'Date From YYYYMMDD To MM-DD-YYYY'];
   maskValues: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   constructor(private adhocScreenService: AdhocScreenService, private formBuilder: FormBuilder) { }
@@ -62,6 +64,11 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
       encrypted: new FormControl(this.resultFields.encrypted),
       todecrypt: new FormControl(this.resultFields.todecrypt)
     });
+    if (this.resultFields.todecrypt || this.resultFields.encrypted) {
+      this.editResultFieldsForm.get('todecrypt').enable();
+    } else {
+      this.editResultFieldsForm.get('todecrypt').disable();
+    }
   }
 
   update() {
@@ -145,4 +152,27 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
   cancel() {
     this.showPanelSearchColumnEvent.emit(false);
   }
+
+  isEncrypted(event) {
+    if (!event.checked) {
+      this.editResultFieldsForm.get('todecrypt').setValue(false);
+      this.editResultFieldsForm.get('todecrypt').disable();
+    } else {
+      this.editResultFieldsForm.get('todecrypt').enable();
+    }
+  }
+
+  // nameFormatter(value: string): string {
+  //   value = value.trim().replace('[^_^\\p{Alnum}.]', '_').replace('^', '_').replace('\\s+', '_');
+  //   value = ((value.startsWith('_') && value.endsWith('_') && value.length > 2)
+  //     ? value.substring(1).substring(0, value.length - 2)
+  //     : value);
+  //   return value.length > 0 ? ((value.charAt(0) >= '0' && value.charAt(0) <= '9') ? '_' : '') + value
+  //     : value;
+  // }
+
+  // labelFunction() {
+  //   console.log(1);
+  //   console.log(this.nameFormatter(this.editResultFieldsForm.get('label').value));
+  // }
 }

@@ -15,6 +15,7 @@ import { ErtService } from '../ert-landing-page/ert.service';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 import { TableSelectionService } from './table-selection.service';
 import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-adhoc-table-selection',
@@ -43,13 +44,14 @@ export class AdhocTableSelectionComponent implements OnInit {
   page = 1;
   tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
   constructor(public router: Router, private tablelistService: TableListService, private cookieService: CookieService,
-    private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute,
+    private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute, private spinner: NgxSpinnerService,
     private adhocSavedObjectService: AdhocSavedObjectService, private adhocScreenService: AdhocScreenService,
     private tableService: TableSelectionService, private adhocService: AdhocService) { }
 
   ngOnInit() {
     const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
     this.workspaceID = this.cookieService.get('workspaceId');
+    this.spinner.show();
     this.deleteSearchResult('');
     this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;
     if (this.screenInfoObject.sessionAdhocModel.selectedTableListString !== '') {
@@ -62,12 +64,14 @@ export class AdhocTableSelectionComponent implements OnInit {
       for (const i of this.tableList) {
         this.includesArray.push(i.tableName);
       }
+      this.spinner.hide();
     } else {
       this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
         this.tableList = res.tableList;
         if (res.paginationRequired) {
           this.schemaResultsTableCount = (this.startIndex + 1) * 50;
         }
+        this.spinner.hide();
       });
     }
     if (this.screenInfoObject.sessionAdhocModel.graphDetails.data !== '') {
@@ -149,23 +153,46 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.relationshipInfo = [];
       this.tablelistService.getListOfRelationTableMMR(this.workspaceID,
         tempHeader.appMetadataVersion, value.tableName).subscribe(result => {
-          if (this.tableService.booleanNested) {
-            for (const i of result) {
-              if (this.includesArray.includes(i.secondaryTable.tableName)) {
-                this.relationshipInfo.push(i);
+          if (result.length !== 0) {
+            if (this.tableService.booleanNested) {
+              for (const i of result) {
+                if (this.includesArray.includes(i.secondaryTable.tableName)) {
+                  this.relationshipInfo.push(i);
+                }
               }
+            } else {
+              this.relationshipInfo = result;
             }
+            this.primaryTable = getPrimaryArray(this.relationshipInfo);
+            this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+            for (const i of this.primaryTable) {
+              this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+            }
+            this.selectedValues.push(value.tableName);
+            this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+            this.createchart();
           } else {
             this.relationshipInfo = result;
           }
-          this.primaryTable = getPrimaryArray(this.relationshipInfo);
-          this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-          for (const i of this.primaryTable) {
-            this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+          if (this.relationshipInfo.length > 0) {
+            this.primaryTable = getPrimaryArray(this.relationshipInfo);
+            this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+            for (const i of this.primaryTable) {
+              this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+            }
+            this.selectedValues.push(value.tableName);
+            this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+            this.createchart();
+          } else {
+            this.data = {
+              color: '#ffffff',
+              enableClick: false,
+              id: 'NoRelation',
+              name: '',
+              visible: true,
+            };
+            this.createchart();
           }
-          this.selectedValues.push(value.tableName);
-          this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
-          this.createchart();
         });
     }
   }
@@ -297,8 +324,25 @@ export class AdhocTableSelectionComponent implements OnInit {
         .attr('dy', 4)
         .text(function (d: any) { return d.data.name; });
       nodeEnter.on('mouseover', function (d) {
-        link.style('visibility', function (d) { if (d.target.data.visible === false) { return 'visible'; } });
-        node.style('visibility', function (d) { if (d.data.visible === false) { return 'visible'; } });
+        const nodename = d.data.name;
+        link.style('visibility', function (d) {
+          if (d.parent !== null) {
+          if (d.target.data.visible === false && d.target.parent.data.name === nodename) {
+            return 'visible';
+          } else {
+            return 'none';
+          }
+        }
+        });
+        node.style('visibility', function (d) {
+          if (d.parent !== null) {
+            if (d.data.visible === false && d.parent.data.name === nodename) {
+              return 'visible';
+            } else {
+              return 'none';
+            }
+          }
+        });
         let ifSelected = 'Primary Table';
         if (d.parent !== null) {
           if (!d.data.visible) {
@@ -306,6 +350,9 @@ export class AdhocTableSelectionComponent implements OnInit {
           } else {
             ifSelected = 'Select Value';
           }
+        }
+        if (d.data.id === 'NoRelation') {
+            ifSelected = 'No Relationship';
         }
         div.transition().duration(200).style('opacity', .9);
         div.html(ifSelected)

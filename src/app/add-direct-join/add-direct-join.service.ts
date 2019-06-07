@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from '../environment/environment.service';
 import { UserinfoService } from '../userinfo.service';
@@ -8,7 +8,10 @@ import { of } from 'rxjs';
 
 @Injectable()
 export class AddDirectJoinService {
-
+  workspaceID;
+  directJoin;
+  private addDJVValue = new BehaviorSubject(false);
+  currentDJVValue = this.addDJVValue.asObservable();
   private apiUrl = this.environment.apiUrl;
 
   private columnListUrl = this.apiUrl + 'metalyzer/table/columnList?tableId=';
@@ -55,5 +58,9 @@ export class AddDirectJoinService {
   }
 
   private log(message: string) {
+  }
+
+  changeDJVBooleanValue(message) {
+    this.addDJVValue.next(message);
   }
 }

@@ -190,7 +190,8 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
     for (const item of roles) {
       if (item.roleName.toUpperCase().trim().includes('SUPER')) {
         this.disableInviteBtn = false;
-        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification', 'createdAt', 'updatedAt'];
+        this.displayedColumns = ['id', 'firstName', 'lastName',
+        'emailAddress', 'globalGroup', 'status', 'businessJustification', 'createdAt', 'updatedAt'];
         break;
       }
     }
@@ -323,7 +324,7 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
     } else {
       document.getElementById('confirmChangeGlobalRole').click();
       if (this.roleOfUser === 'superadmin') {
-        this.tempChangeGlobalGroupUrl = 'superadmin/' + userId + '/groups/global';
+        this.tempChangeGlobalGroupUrl = 'superadmin/' + this.userinfoId + '/groups/global';
       } else if (this.roleOfUser === 'admin') {
         this.tempChangeGlobalGroupUrl = 'users/' + this.userinfoId + '/groups/global';
       }

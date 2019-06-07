@@ -1,41 +1,66 @@
 <div id="drag-search-column" class="row search-screen" cdkDropList [cdkDropListData]="searchCriteria"
   (cdkDropListDropped)="drop($event)">
-  <mat-card [class.mat-elevation-z2]="false" cdkDrag *ngFor="let item of searchCriteria" class="col-md-4 column-box h-100">
+  <mat-card [class.mat-elevation-z2]="false" cdkDrag *ngFor="let item of searchCriteria"
+    class="col-md-4 column-box h-100">
     <mat-card-header>
-      <mat-card-title>{{item.label}}
-        <span> <a class="cursor-poniter" (click)="gotoSearchCriteriaEdit(item?.columnId)"><i class="material-icons">
+      <mat-card-title>{{item.label}}<a class="required-color" *ngIf="item.isRequired">*</a>
+        <i *ngIf="item.isEncrypted" matTooltip="Encypted field" class="material-icons encypted-icon">lock</i>
+        <span>
+          <a class="cursor-poniter" matTooltip="Edit" (click)="gotoSearchCriteriaEdit(item?.columnId)"><i class="material-icons">
               edit
             </i></a>
-          <a class="cursor-poniter" (click)="deleteSearchCriteria(item?.columnId,item?.tableId)"><i
+          <a class="cursor-poniter" matTooltip="Delete" (click)="deleteSearchCriteria(item?.columnId,item?.tableId)"><i
               class="material-icons">
               delete
             </i></a></span>
       </mat-card-title>
       <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
     </mat-card-header>
-    <mat-form-field *ngIf="item.fieldType=='TEXT'" class="text-box" appearance="outline">
+    <mat-form-field *ngIf="item.fieldType=='TEXT'" class="text-box">
       <input matInput placeholder="Text">
     </mat-form-field>
+    <ng-container *ngIf="!item.isDateRange">
+      <mat-form-field *ngIf="item.fieldType==='DATE'" class="text-box">
+        <input matInput [matDatepicker]="picker" placeholder="Date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="item.isDateRange">
+      <div>
+        <mat-form-field *ngIf="item.fieldType==='DATE'" class="start-end">
+          <input matInput [matDatepicker]="picker" placeholder="Start Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field *ngIf="item.fieldType==='DATE' && item.isDateRange" class="end-date">
+          <input matInput [matDatepicker]="picker" placeholder="End Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </ng-container>
     <mat-form-field class="select" *ngIf="item?.fieldType=='COMBO'">
       <mat-select placeholder="Combo">
+        <mat-option value="A"></mat-option>
         <mat-option *ngFor="let opt of item?.optionInfo?.option" value="A">
           {{opt.label}},{{opt.value}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="select" *ngIf="item?.fieldType=='RADIO'">
-      <mat-select placeholder="RADIO">
-        <mat-option *ngFor="let opt of item?.optionInfo?.option" value="A">
-          <input type="radio"> {{opt.label}},{{opt.value}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="select" *ngIf="item?.fieldType=='CHECK'">
-      <mat-select placeholder="CHECK">
-        <mat-option *ngFor="let opt of item?.optionInfo?.option" value="A">
-          <input type="checkbox">{{opt.label}},{{opt.value}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="scroll-column-box" *ngIf="item?.fieldType=='RADIO'">
+      <mat-radio-group class="grid-display">
+        <mat-radio-button *ngFor="let opt of item?.optionInfo?.option" value="A" name="radio-btn">
+          {{opt.label}},{{opt.value}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <ng-container *ngIf="item?.fieldType=='CHECK'">
+      <div class="scroll-column-box">
+        <mat-checkbox *ngFor="let opt of item?.optionInfo?.option" value="A" class="example-margin check-display">
+          {{opt.label}},{{opt.value}}
+        </mat-checkbox>
+      </div>
+    </ng-container>
   </mat-card>
 </div>

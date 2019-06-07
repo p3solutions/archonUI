@@ -1,4 +1,4 @@
-i {
+i:not(.popup-material-icon-cls)  {
   padding: 0px 9px 0px 0px;
 }
 
@@ -174,4 +174,9 @@ mat-card-header.header-blue {
 
 .mat-expansion-panel-header-title {
   font-size: 18px
+}
+
+.tree-height{
+  height: 75vh;
+  overflow: auto
 }
