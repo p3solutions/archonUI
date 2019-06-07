@@ -777,12 +777,20 @@ export class TableListComponent implements OnInit {
       });
   }
 
-  selectAll() {
-    $('input:checkbox:enabled.m-r-10').click();
+  selectAll(event) {
+    if (event.target.checked) {
+      $('input:checkbox:not(:checked).m-r-10').click();
+    } else {
+      $('input:checkbox:checked.m-r-10').click();
+    }
   }
 
-  selectAllSec() {
-    $('input:checkbox:enabled.m-r-10.m-r-sec').click();
+  selectAllSec(event) {
+    if (event.target.checked) {
+      $('input:checkbox:not(:checked).m-r-10.m-r-sec').click();
+    } else {
+      $('input:checkbox:checked.m-r-10.m-r-sec').click();
+    }
   }
 
   togglePanels(index: number) {

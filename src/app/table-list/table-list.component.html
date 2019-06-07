@@ -174,7 +174,7 @@
                           
                           <div class="col-md-12">
                             <div class="col-md-10 ana-br p-0" title="Primary Column" style="margin-top: 15px;">
-                              <input type="checkbox" style="margin-right: 10px;" (change)="selectAll()">
+                              <input type="checkbox" style="margin-right: 10px;" (change)="selectAll($event)">
                               Primary Column
                               <span class="col-loader"
                                 [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
@@ -271,7 +271,7 @@
                                   <div class="col-md-12 p-0 dataA-scrollable-div" id="panel-1" style="padding-left: 33px;padding-right: 0px; width: 85%;">
                                     <div class="col-md-12 p-0">
                                       <div class="col-md-12 column-header ana-br" title="Secondary Column">
-                                        <input type="checkbox" style="margin-right: 10px;" (change)="selectAllSec()">
+                                        <input type="checkbox" style="margin-right: 10px;" (change)="selectAllSec($event)">
                                         Secondary Columns
                                         <span class="col-loader"
                                           [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
