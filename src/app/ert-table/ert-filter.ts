@@ -74,16 +74,19 @@ Tree.prototype.remove = function (data) {
     if (this.root.id === data.id) {
         this.root = null;
     }
-
     const queue = [this.root];
     while (queue.length) {
         const node = queue.shift();
-        for (let i = 0; i < node.children.length; i++) {
-            if (node.children[i].id === data.id) {
-                node.children.splice(i, 1);
-            } else {
-                queue.push(node.children[i]);
+        if (node !== null) {
+            for (let i = 0; i < node.children.length; i++) {
+                if (node.children[i].id === data.id) {
+                    node.children.splice(i, 1);
+                } else {
+                    queue.push(node.children[i]);
+                }
             }
+        } else {
+
         }
     }
 };
@@ -186,6 +189,7 @@ Tree.prototype.printByLevel = function () {
 };
 
 export function addFilterNode(filterConfigTree: FilterConfigTree, parent: FilterConfigNode, child: FilterConfigNode): string {
+    console.log(child,parent);
     const filterTree = new Tree();
     if (filterConfigTree != null) {
         filterTree.root = filterConfigTree.root;
@@ -240,14 +244,13 @@ export const columnConfigFunctionList: ColumnConfigFunction[] = [
 ];
 
 export function findParentNode(element, id: number) {
-    console.log(element.children);
     if (element.id === id) {
         return element;
     } else if (element.children != null) {
         let i;
         let result = null;
         for (i = 0; result == null && i < element.children.length; i++) {
-         result = searchTree(element.children[i], id);
+            result = searchTree(element.children[i], id);
         }
         return result;
     }

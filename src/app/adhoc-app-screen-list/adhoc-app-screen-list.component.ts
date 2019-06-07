@@ -4,7 +4,7 @@ import {
   ApplicationInfo, AdhocHeaderInfo, Adhoc, ChildScreenInfo,
   ParentScreenInfo, SessionAdhoc, getUserId, SearchResult, SearchCriteria, Tab, ResultFields
 } from '../adhoc-landing-page/adhoc';
-import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort } from '@angular/material';
+import { MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSort } from '@angular/material';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Router } from '@angular/router';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';

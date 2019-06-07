@@ -1145,49 +1145,65 @@ export class ErtTableComponent implements OnInit {
   }
 
   deleteFilterConfigTreeNode(id: number) {
-    let attachNode: any = '';
-    let id1: number;
-    if (id % 2 === 0) {
-      id1 = id + 1;
-    } else {
-      id1 = id - 1;
-    }
+    let attachNode = false;
+    let tempNode: any = '';
+    // let grandParentNodeId: any = '';
     const filterTreeNode1 = searchTree(this.filterdata.root, id);
     const parentId = filterTreeNode1.parentId;
+    // let grandParentNode: any = '';
     const filterTreeNode3 = findParentNode(this.filterdata.root, parentId);
-    console.log(filterTreeNode1);
-    console.log(filterTreeNode3);
     if (filterTreeNode3.children[0].id === id && filterTreeNode3.children[0].children.length === 0) {
       if (filterTreeNode3.children[1].column === null &&
         filterTreeNode3.children[1].condition === null && filterTreeNode3.children[1].value === '') {
-        console.log('is operator');
-        attachNode = filterTreeNode3.children[1];
+        attachNode = true;
+        // attachNode = filterTreeNode3.children[1];
+        // this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[0]);
+        // this.filterdata = deleteNode(this.filterdata, filterTreeNode3);
       }
     }
     if (filterTreeNode3.children[1].id === id && filterTreeNode3.children[1].children.length === 0) {
       if (filterTreeNode3.children[0].column === null &&
         filterTreeNode3.children[0].condition === null && filterTreeNode3.children[0].value === '') {
-        console.log('is operator');
-        attachNode = filterTreeNode3.children[0];
+        attachNode = true;
+        // attachNode = filterTreeNode3.children[0];
+        // console.log(filterTreeNode3);
+        // grandParentNodeId = filterTreeNode3.parentId;
+        // grandParentNode = searchTree(this.filterdata.root, grandParentNodeId);
+        // this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[1]);
+        // this.filterdata = deleteNode(this.filterdata, filterTreeNode3);
       }
     }
-    let tempNode: any = '';
     console.log(attachNode);
-    if (attachNode === '') {
-      console.log(filterTreeNode3.parentId);
+    if (attachNode === false) {
       if (filterTreeNode3.children[0].id === id) {
-        this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[0]);
         tempNode = filterTreeNode3.children[1];
+        this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[0]);
       } else {
-        this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[1]);
         tempNode = filterTreeNode3.children[0];
+        this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[1]);
       }
       this.filterdata = deleteNode(this.filterdata, filterTreeNode3);
+      if (filterTreeNode3.parentId !== 0) {
+        const filterTreeNode2 = searchTree(this.filterdata.root, filterTreeNode3.parentId);
+        tempNode.parentId = filterTreeNode3.parentId;
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2, tempNode));
+      }
+    } else if (attachNode === true) {
+      const filterTreeNode11 = searchTree(this.filterdata.root, id);
+      const parentId1 = filterTreeNode1.parentId;
+      this.filterdata = deleteNode(this.filterdata, filterTreeNode1);
+      const filterTreeNode2 = searchTree(this.filterdata.root, parentId);
+      const grandParentId = filterTreeNode2.parentId;
+      this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
+      if (grandParentId !== 0) {
+        const grandParentNode = searchTree(this.filterdata.root, grandParentId);
+        filterTreeNode2.children[0].parentId = grandParentId;
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, grandParentNode, filterTreeNode2.children[0]));
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[0]));
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[1]));
+      }
     }
-    console.log(filterTreeNode3.parentId);
-    this.insertFilterNode(filterTreeNode3.parentId, tempNode.operation, tempNode.column, tempNode.condition, tempNode.value, '');
-    // const filterTreeNode2 = searchTree(this.filterdata.root, id1);
-    // this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
+
     console.log(this.filterdata);
   }
 
