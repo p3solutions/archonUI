@@ -421,21 +421,25 @@
 
   <!-- relationship delete -->  
   <div class="modal fade" id="confirmDelMemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document" style="top: 25%; width: 500px;">
-      <div class="modal-content text-left">
-        <div class="modal-header">
-            <div class='model-title'>
-                <div class='info-r'>Delete</div>
+             
+    <div class="modal-dialog"  style="width: 480px;">
+      <div class="modal-content">
+          <div class="error-popup-header-cls">
+              <h4 class="popup-title-cls">
+                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 15px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 15px;">Delete</div></h4>
+            </div>
+            <div class="modal-body">
+                <p class="popup-paragraph-cls"> Are you sure delete this relationship? </p>
               </div>
-        </div>
-        <div class="modal-body text-center" style="height: 100px;">
-          Are you sure?
-        </div>
         <div class="modal-footer">
-            <div class="action-btn">
+            <button type="button" class="btn btn-padding btn-secondary-popup" (click)="closeErrorMsg();"
+            data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="confirmDelete();" disabled="{{delProgress ? 'true' : null }}"
+            >OK<span [ngClass]="{'archon-loading-icon' : delProgress}"></span></button>
+            <!-- <div class="action-btn">
                 <button class="mat-raised-button cancel btn-padding" (click)="closeErrorMsg()" data-dismiss="modal">Cancel</button>
                 <button class="save mat-raised-button btn-padding" (click)="confirmDelete();" disabled="{{delProgress ? 'true' : null }}">Confirm<span [ngClass]="{'archon-loading-icon' : delProgress}"></span></button> 
-          </div> 
+          </div>  -->
           <div *ngIf="deleteNotif?.show" class="alert alert-danger alert-dismissible m-t-10" role="alert">
             <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
               <span aria-hidden="true">&times;</span>
