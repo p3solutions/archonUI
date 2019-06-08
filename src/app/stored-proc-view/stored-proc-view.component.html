@@ -105,7 +105,7 @@
  
     <div class="container-tab">
       <div class="col-md-12 primary-table">
-        <h5 class="card-title sub-headerr">Primary Table:
+        <h5 class="card-title sub-headerr">Primary Table :
           <strong>{{tableName}}</strong>
         </h5>
       </div>
@@ -116,12 +116,12 @@
     <div *ngIf="isSPVAvailable"> 
       <div class="column-one scroll-div border">
         <div class="sticky">
-          <div><input style="float:left" type="checkbox"></div>
+          <div><mat-checkbox style="float:left; padding-top: 5px;" ></mat-checkbox><!--<input style="float:left" type="checkbox">--></div>
           <div class="first-div-new">SP / View Name</div>         
         </div>
         <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvInfoListTwo"
           (click)="getTableNameList(item.name)">
-          <div><input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox"></div>
+          <div><mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)"></mat-checkbox><!--<input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox">--></div>
           <div class="first-div">{{item.name}}</div>
           <div class="second-div">{{item.type}}</div>
           <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div "></i></div>
@@ -129,12 +129,12 @@
       </div>
       <div class="column-two scroll-div border">
         <div class="sticky">
-          <div><input style="float:left" type="checkbox"></div>
+          <div><mat-checkbox style="float:left; padding-top: 5px;" ></mat-checkbox></div>
           <div class="first-div-new">Relating Tables</div>         
         </div>
         <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvTableNameList"
           (click)="showSPVRelatedTableName(item)">
-          <div><input style="float:left" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)" type="checkbox"></div>
+          <div><mat-checkbox style="float:left; padding-top: 2px;" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)"></mat-checkbox><!--<input style="float:left" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)" type="checkbox">--></div>
           <div class="first-div-sec-col">{{item.tableName}}</div>
           <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div"></i></div>
         </div>
@@ -167,24 +167,24 @@
         </div>
         <mat-paginator [length]="columnlength" [pageSize]="5" ></mat-paginator>
       </div> -->
-      <div class="example-table-container mat-elevation-z8" id="spv-table">
+      <div *ngIf="columnlength != 0" class="example-table-container mat-elevation-z8" id="spv-table">
           <table mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="pColumn">
-              <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Primary Column  </th>
-              <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.pColumn}}</td>
+              <th style="width:35%" mat-header-cell *matHeaderCellDef mat-sort-header> Primary Column  </th>
+              <td mat-cell *matCellDef="let element; let i = index;">{{element.pColumn}}</td>
             </ng-container>
             <ng-container matColumnDef="sColumn">
-              <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Secondary Column </th>
-              <td style="width:15%" mat-cell *matCellDef="let element"> {{element.sColumn}} </td>
+              <th style="width:35%" mat-header-cell *matHeaderCellDef mat-sort-header> Secondary Column </th>
+              <td mat-cell *matCellDef="let element"> {{element.sColumn}} </td>
             </ng-container>
             <ng-container matColumnDef="dataType">
-              <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Data Type </th>
-              <td style="width:15%" mat-cell *matCellDef="let element"> {{element.dataType}} </td>
+              <th style="width:30%" mat-header-cell *matHeaderCellDef mat-sort-header> Data Type </th>
+              <td mat-cell *matCellDef="let element"> {{element.dataType}} </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-          <mat-paginator [length]="columnlength" [pageSize]= "7"></mat-paginator>
+          <mat-paginator [length]="columnlength" [pageSize]= "7" [pageSizeOptions]="[7, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
     
