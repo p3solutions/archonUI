@@ -259,6 +259,7 @@ export class TableListComponent implements OnInit {
   gotoBack() {
     this.homeStage = true;
     this.dataAModal = false;
+    this.tablelistService.dataAnalyzerReset = true;
   }
   resetDataAModal() {
     this.enableNextBtn = false;
@@ -270,6 +271,7 @@ export class TableListComponent implements OnInit {
     this.finalSecColMap.clear();
     this.selectedSecTbl.clear();
     this.finalSecColArray = [];
+    console.log(this.selectedSecTbl);
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
@@ -299,6 +301,7 @@ export class TableListComponent implements OnInit {
               secTbl.click();
             }
             this.finalSecColMap.set(secColName, true);
+            console.log(this.selectedSecTbl);
           } else {
             this.selectedSecColMap.delete(secColName);
             this.finalSecColMap.delete(secColName);
@@ -449,6 +452,18 @@ export class TableListComponent implements OnInit {
     this.stepper.selectedIndex = 1;
     this.handleStepIindicator(true);
     this.enableNextBtn = this.finalSecColMap.size > 0;
+    setTimeout(() => {
+      if (this.tablelistService.dataAnalyzerReset) {
+        const inputElements = document.querySelectorAll('.sec-br input');
+        for (let i = 0; i < inputElements.length; i++) {
+            if(inputElements[i].type === 'checkbox') {
+              inputElements[i].checked = false;
+            }
+        }
+        this.tablelistService.dataAnalyzerReset = false;
+      }
+    }, 100);
+    
   }
   gotoPrimarySel(e, stepper: MatStepper) {
     const steps: MatStepHeader[] = stepper._stepHeader.toArray();

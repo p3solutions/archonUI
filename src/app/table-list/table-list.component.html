@@ -235,7 +235,7 @@
                                       <div class="col-md-12 p-0"
                                         *ngFor="let secTbl of secTblArray | searchTable : searchSec1 | paginate: {id: 'dalist1', itemsPerPage: 50, currentPage: pageTable } let i=index;"
                                         [hidden]="secTbl.tableName === selectedPrimTbl">
-                                        <div class="col-md-12 cur-p da-table trim-text ana-br" id="list-br"
+                                        <div class="col-md-12 cur-p da-table trim-text ana-br sec-br" id="list-br"
                                           title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
                                           <input id="{{prefixSecTblId + (secTbl.tableName)}}" class="cb-{{i}}" type="checkbox"
                                             (change)="toggleSecTblSelection($event, secTbl)" class="m-r-10" [checked]="secTbl.selected">

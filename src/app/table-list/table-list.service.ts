@@ -33,6 +33,7 @@ export class TableListService {
   private selectDropdownlist = new BehaviorSubject('false');
   Dropdownlist = this.selectDropdownlist.asObservable();
   startIndex = 1;
+  dataAnalyzerReset = false;
  
 
   constructor(private http: HttpClient,
