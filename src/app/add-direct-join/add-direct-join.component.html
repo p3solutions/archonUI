@@ -143,32 +143,33 @@
               </div> <div class="overflow-text-arrow"><i class="fa fa-angle-right unselected"></i> </div>
               </button>
             </div>  
-          </div>                                                      
+          </div> 
+          <div style="padding-top:15px;"></div>
+        <div class="page-align">
+          <pagination-controls style="font-size: 12px; text-align: right;" id="jointablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
+        </div>                                                     
           </div>         
         </div>
-        <div style="padding-top:15px;"></div>
-        <div class="page-align">
-          <pagination-controls style="font-size: 9px; text-align: right;" id="jointablelist" (pageChange)="getPage(page = $event)"></pagination-controls>
-        </div>
+        
      
 </div>
 
-<div class="col-md-8" style="margin-left: -15px;" id="add-join-table" *ngIf="enableRelation">
+<div class="col-md-8" style="margin-left: -9px;" id="add-join-table" *ngIf="enableRelation">
     <div class="first-div-n">Column Details</div>
     <div class="mat-elevation-z8 table-hight"> 
   <table mat-table [dataSource]="dataSource"  class="mat-elevation-z4" style="width:100%">
     <ng-container matColumnDef="columnName" >
-      <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-left-radius: 3px;"> Primary Table Column </th>
+      <th mat-header-cell *matHeaderCellDef style="width: 35%; border-top-left-radius: 3px;"> Primary Table Column </th>
       <td mat-cell *matCellDef="let element"> {{element.columnName}} </td>
     </ng-container>
     <ng-container matColumnDef="columnDataType">
-      <th mat-header-cell *matHeaderCellDef style="width: 10%"> Column Type </th>
+      <th mat-header-cell *matHeaderCellDef style="width: 30%"> Column Type </th>
       <td mat-cell *matCellDef="let element"> {{element.columnDataType}} </td>
     </ng-container>
     <ng-container matColumnDef="secondaryColumns">
-      <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-right-radius: 3px;"> Secondary Table Column </th>
+      <th mat-header-cell *matHeaderCellDef style="width: 35%; border-top-right-radius: 3px;"> Secondary Table Column </th>
       <td mat-cell *matCellDef="let element; let ind=index">
-        <mat-form-field style="width: 85%;">
+        <mat-form-field style="width: 100%;">
           <mat-select id="testreset" [ngModel]="'select'" (ngModelChange)="selectedValues(element,ind, $event)">
             <mat-option value="select">Select</mat-option>
             <mat-option [value]="sec.columnName" *ngFor="let sec of secondaryColumns | secondaryColumn:element.columnDataType">{{sec.columnName}}</mat-option>
@@ -179,7 +180,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator [length]="columnlength" [pageSize]= "7"></mat-paginator>
+  <mat-paginator [length]="columnlength" [pageSize]= "7" [pageSizeOptions]="[7, 10, 20]" showFirstLastButtons></mat-paginator>
   <!-- <mat-paginator [pageSize]="5" [length]="columnlength" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
 </div>
 <div class="col-md-12" style="margin-top: -15px;

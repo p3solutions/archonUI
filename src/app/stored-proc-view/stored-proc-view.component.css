@@ -7,7 +7,7 @@
   }
   
   .card-title {
-    font-size: 16px;
+    font-size: 14px;
     float: left;
   }
   .back-arrowr {
@@ -44,18 +44,18 @@
   .primary-table {
     background-color: #edf3f8;
     margin-bottom: 12px;
-    margin-top: 12px;
+    /* margin-top: 12px; */
   }
   
   .container-tab{
     margin-left: 22px;
-    margin-right: 31px;
+    margin-right: 22px;
   }
   .card-title {
     float: left;
   }
   .sub-headerr {
-    margin-left: 4px;
+    margin-left: -4px;
   }
 
   div.sticky {

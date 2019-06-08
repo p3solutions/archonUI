@@ -7,7 +7,7 @@
         </div>
 
         <div class='body-left'>
-          <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <a style="z-index:1; margin-right:0px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
           <input type="text" style="width: 89%;" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
             (keyup)="searchTablelist()" placeholder="Search Table">
         </div>
@@ -146,7 +146,7 @@
                 <div class="title-header">Data Analyzer</div>
               </div>
               <div class="container-tab">
-                <div class="col-md-12 primary-table">
+                <div class="col-md-12 primary-table" style="margin-top: 0px;">
                   <h5 class="card-title sub-headerr">Primary Table:
                     <strong>{{tableName}}</strong>
                   </h5>

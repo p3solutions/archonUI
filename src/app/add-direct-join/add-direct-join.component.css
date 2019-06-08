@@ -7,7 +7,7 @@
 }
 
 .card-title {
-  font-size: 16px;
+  font-size: 14px;
   float: left;
 }
 .back-arrowr {
@@ -44,18 +44,18 @@
 .primary-table {
   background-color: #edf3f8;
   margin-bottom: 12px;
-  margin-top: 12px;
+  /* margin-top: 12px; */
 }
 
 .container-tab{
   margin-left: 22px;
-  margin-right: 31px;
+  margin-right: 22px;
 }
 .card-title {
   float: left;
 }
 .sub-headerr {
-  margin-left: 4px;
+  margin-left: -4px;
 }
 
 .modal-header{
@@ -151,7 +151,8 @@ a {
   margin-left: -20px;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 281px;
+  height: 500px;
+  /* max-height: 500px; */
 }
 
 .card {
@@ -243,17 +244,18 @@ input[type='checkbox'] {
 
 /* overriding css */
 .form-control {
-  height: 35px;
+  height: 40px;
   width: 93%;
   margin-top: 7px;
   margin-left: 5px;
+  border-radius: 3px;
 }
 .form-control-feedback {
   position: relative;
-  margin-top: -31px;
+  margin-top: -35px;
   margin-left: 238px;
-  height: 32px;
-  color: #269af8;
+  height: 30px;
+  color: #80adf8;
   line-height: 30px;
 }
 .selwidth {
@@ -403,7 +405,7 @@ input[type='checkbox'] {
 }
 
 .mat-header-cell {
-  font-size: 13px;
+  font-size: 14px;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
@@ -427,6 +429,8 @@ tr.mat-header-row, tr.mat-footer-row, tr.mat-row {
   margin-left: 15px;
   text-align: left;
   font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 ::ng-deep .mat-paginator-icon {
   height: unset !important;
@@ -440,5 +444,6 @@ tr.mat-header-row, tr.mat-footer-row, tr.mat-row {
   margin-left: 0px;
   text-align: left;
   font-weight: bold;
-  margin-bottom: 7px;
+  margin-bottom: 10px;
+  font-size: 18px;
 }
