@@ -456,14 +456,13 @@ export class TableListComponent implements OnInit {
       if (this.tablelistService.dataAnalyzerReset) {
         const inputElements = document.querySelectorAll('.sec-br input');
         for (let i = 0; i < inputElements.length; i++) {
-            if(inputElements[i].type === 'checkbox') {
-              inputElements[i].checked = false;
+            if ((inputElements[i] as HTMLInputElement).type === 'checkbox') {
+              (inputElements[i] as HTMLInputElement).checked = false;
             }
         }
         this.tablelistService.dataAnalyzerReset = false;
       }
     }, 100);
-    
   }
   gotoPrimarySel(e, stepper: MatStepper) {
     const steps: MatStepHeader[] = stepper._stepHeader.toArray();
