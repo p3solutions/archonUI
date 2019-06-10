@@ -1147,30 +1147,19 @@ export class ErtTableComponent implements OnInit {
   deleteFilterConfigTreeNode(id: number) {
     let attachNode = false;
     let tempNode: any = '';
-    // let grandParentNodeId: any = '';
     const filterTreeNode1 = searchTree(this.filterdata.root, id);
     const parentId = filterTreeNode1.parentId;
-    // let grandParentNode: any = '';
     const filterTreeNode3 = findParentNode(this.filterdata.root, parentId);
     if (filterTreeNode3.children[0].id === id && filterTreeNode3.children[0].children.length === 0) {
       if (filterTreeNode3.children[1].column === null &&
         filterTreeNode3.children[1].condition === null && filterTreeNode3.children[1].value === '') {
         attachNode = true;
-        // attachNode = filterTreeNode3.children[1];
-        // this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[0]);
-        // this.filterdata = deleteNode(this.filterdata, filterTreeNode3);
       }
     }
     if (filterTreeNode3.children[1].id === id && filterTreeNode3.children[1].children.length === 0) {
       if (filterTreeNode3.children[0].column === null &&
         filterTreeNode3.children[0].condition === null && filterTreeNode3.children[0].value === '') {
         attachNode = true;
-        // attachNode = filterTreeNode3.children[0];
-        // console.log(filterTreeNode3);
-        // grandParentNodeId = filterTreeNode3.parentId;
-        // grandParentNode = searchTree(this.filterdata.root, grandParentNodeId);
-        // this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[1]);
-        // this.filterdata = deleteNode(this.filterdata, filterTreeNode3);
       }
     }
     console.log(attachNode);
@@ -1187,10 +1176,12 @@ export class ErtTableComponent implements OnInit {
         const filterTreeNode2 = searchTree(this.filterdata.root, filterTreeNode3.parentId);
         tempNode.parentId = filterTreeNode3.parentId;
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2, tempNode));
+      } else {
+        const filterConfigNode = new FilterConfigNode(1, null, false, false, tempNode.column, tempNode.condition, tempNode.value, 0, 0, []);
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
+        console.log(this.filterdata);
       }
     } else if (attachNode === true) {
-      const filterTreeNode11 = searchTree(this.filterdata.root, id);
-      const parentId1 = filterTreeNode1.parentId;
       this.filterdata = deleteNode(this.filterdata, filterTreeNode1);
       const filterTreeNode2 = searchTree(this.filterdata.root, parentId);
       const grandParentId = filterTreeNode2.parentId;
@@ -1201,6 +1192,16 @@ export class ErtTableComponent implements OnInit {
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, grandParentNode, filterTreeNode2.children[0]));
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[0]));
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[1]));
+      } else {
+        console.log(this.filterdata);
+        const filterConfigNode = new FilterConfigNode(1, filterTreeNode2.children[0].operation,
+           false, false, filterTreeNode2.children[0].column,
+          filterTreeNode2.children[0].condition, filterTreeNode2.children[0].value, 0, 0, []);
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
+        filterTreeNode2.children[0].children[0].parentId = 1;
+        filterTreeNode2.children[0].children[1].parentId = 1;
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterTreeNode2.children[0].children[0]));
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterTreeNode2.children[0].children[1]));
       }
     }
 
