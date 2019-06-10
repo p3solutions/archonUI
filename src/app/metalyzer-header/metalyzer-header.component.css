@@ -63,7 +63,7 @@ span {
 }
 #metalyzer {
   margin-bottom: 10px;
-  padding-right: 37px;
+  padding-right: 4.1%;
 }
 
 /* New Header rules for Metalyzer Analysis */
@@ -83,7 +83,9 @@ span {
 }
 
 .container-head{
-  margin: -6px 10px -25px 10px;
+  margin: -6px 0px -25px 0px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .left-flexer{
@@ -141,10 +143,9 @@ span {
   text-align: left
 }
 .wss {
-  margin-left: 10px;
+  margin-left: 35px;
   text-align: left;
   white-space: nowrap; 
-  width: 90%; 
   overflow: hidden;
   text-overflow: ellipsis; 
 }

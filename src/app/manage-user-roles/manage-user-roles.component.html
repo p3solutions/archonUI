@@ -31,7 +31,7 @@
         </mat-form-field>
       </div>
       <div id="user-invite-btn">
-        <button [disabled]="disableInviteBtn" (click)="openUserInviteDialog()" mat-raised-button color="accent">
+        <button [hidden]="disableInviteBtn" (click)="openUserInviteDialog()" mat-raised-button color="accent">
           <i class="material-icons">
             mail_outline
           </i>

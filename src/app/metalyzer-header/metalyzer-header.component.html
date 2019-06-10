@@ -14,14 +14,28 @@
             <h3>Metalyzer</h3>
           </div>
       </div>       
-      <div class="container-head col-md-12">
-        <div class="form-group col-md-3 heading-item wss" style="width: 23%;" id="frm-margin">
-          <b>Workspace Name: </b>{{wsName | uppercase}}
+      <div class="container-head">
+        <div class="form-group heading-item wss" id="frm-margin">
+          <b>Workspace Name: </b>&nbsp;&nbsp;{{wsName | uppercase}}
         </div>
-        <div class="form-group col-md-3 heading-item" style="width: 13%;" id="frm-margin">
-          <b>Phase: </b>{{phase | uppercase}}
+        <div class="form-group heading-item" id="frm-margin">
+          <b>Phase: </b>&nbsp;&nbsp;{{phase | uppercase}}
         </div>
-        <div class="dropdown col-md-2" style="width: 21%;" *ngIf="dropdown">
+        <div class="dropdown" *ngIf="dropdown">
+          <mat-form-field>
+            <mat-label>Add Join</mat-label>
+            <mat-select [disabled]="disable">
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="adddirectjoin()" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="spvjoin()" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="dataanalyze()" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
+             
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="dropdown" *ngIf="dropdown">
             <mat-form-field>
                 <mat-label>Export As XML / JSON / PDF</mat-label>
                 <mat-select>
@@ -37,27 +51,13 @@
                 </mat-select>
               </mat-form-field>
         </div>
-        <div class="dropdown col-md-2" style="width: 21%;"  *ngIf="phase == 'Analysis'">
+        <div class="dropdown"   *ngIf="phase == 'Analysis'">
           <mat-form-field>
             <mat-label>View Details</mat-label>
             <mat-select>
               <!-- <mat-option [disabled]="false">View All Table Relationship</mat-option>
               <mat-option [disabled]="true">View Selected Table Relationship</mat-option> -->
               <mat-option data-toggle="modal" data-keyboard="true"  data-target="#myModal" (click)="getAudit()">View Modifications</mat-option>
-             
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="dropdown col-md-2" style="width: 21%;" *ngIf="dropdown">
-          <mat-form-field>
-            <mat-label>Add Join</mat-label>
-            <mat-select [disabled]="disable">
-                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
-                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
-                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
-                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="adddirectjoin()" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
-                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="spvjoin()" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
-                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="dataanalyze()" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
              
             </mat-select>
           </mat-form-field>
