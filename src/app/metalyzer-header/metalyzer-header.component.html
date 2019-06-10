@@ -55,10 +55,7 @@
           <mat-form-field>
             <mat-label>View Details</mat-label>
             <mat-select>
-              <!-- <mat-option [disabled]="false">View All Table Relationship</mat-option>
-              <mat-option [disabled]="true">View Selected Table Relationship</mat-option> -->
-              <mat-option data-toggle="modal" data-keyboard="true"  data-target="#myModal" (click)="getAudit()">View Modifications</mat-option>
-             
+              <mat-option data-toggle="modal" data-keyboard="true"  data-target="#myModal">View Modifications</mat-option>   
             </mat-select>
           </mat-form-field>
         </div>
@@ -77,28 +74,8 @@
         <h4 class="modal-title text-left">Metalyzer Audit</h4>
       </div>
       <div class="modal-body">
-        <!-- <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>Modified By</th>
-              <th>Modified At</th>
-              <th>Modification Mode</th>
-              <th>Modification Description</th>
-            </tr>
-          </thead>
-          <tbody >
-            <tr *ngFor="let i of auditArray | paginate: { itemsPerPage: 10, currentPage: p }" class="text-left">
-              <td>{{i.modifiedBy}}</td>
-              <td>{{i.createdAt * 1000 | date: 'medium' }}</td>
-              <td>{{i.modificationMode}}</td>
-              <td>{{i.modificationDescription[0]}}</td>
-            </tr>
-          </tbody>
-        </table> -->
-
-        <div class="mat-elevation-z2">
-          <table mat-table [dataSource]="auditArray | paginate: { id:'paginateControl', itemsPerPage: 50, currentPage: p, totalItems: schemaResultsTableCount }">
-    
+        <div class="mat-elevation-z4 mat-container">
+          <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="modifiedBy">
               <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Modified By </th>
               <td mat-cell *matCellDef="let element"> {{element.modifiedBy}} </td>
@@ -111,22 +88,20 @@
 
             <ng-container matColumnDef="modificationMode">
               <th style="text-align: center; width: 20%"  mat-header-cell *matHeaderCellDef> Modification Mode </th>
-              <td mat-cell *matCellDef="let element"> {{element.modificationMode}} </td>
+              <td mat-cell *matCellDef="let element" style="text-align: left;"> {{element.modificationMode}} </td>
             </ng-container>
 
             <ng-container matColumnDef="modificationDescription">
               <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Modification Description </th>
-              <td mat-cell *matCellDef="let element"> {{element.modificationDescription[0]}} </td>
+              <td mat-cell *matCellDef="let element" style="text-align: left;padding-left: 10px;">{{element.modificationDescription[0]}} </td>
             </ng-container>
         
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
-
-        <div class="paginate-sty">
-          <pagination-controls id="paginateControl" (pageChange)="getPage(p = $event)"></pagination-controls>
-        </div>
+        <mat-paginator id="screen-table" [length]="dataSource.totalScreen" [pageSize]="50">
+          </mat-paginator>
           
       </div>
       <div class="modal-footer">
