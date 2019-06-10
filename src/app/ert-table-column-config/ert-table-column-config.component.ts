@@ -93,12 +93,13 @@ export class ErtTableColumnConfigComponent implements OnInit {
   saveERTJob(ertJobStatus: string) {
     this.isDisabled = false;
     this.issaveDisabled = false;
+    let selectedList: any = '';
     if (ertJobStatus === 'READY') {
       this.isDisabled = true;
     } else if (ertJobStatus === 'DRAFT') {
       this.issaveDisabled = true;
     }
-    for (const item of this.ertService.selectedList.filter(a => a.isSelected === true)) {
+    for (const item of this.ertService.selectedList) {
       if (item.filterAndOrderConfig.filterConfig === '' && item.filterAndOrderConfig.filterQuery === '') {
         delete item['filterAndOrderConfig'];
       } else if (item.filterAndOrderConfig.filterConfig === null && item.filterAndOrderConfig.filterQuery === null) {
@@ -123,6 +124,12 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
+    console.log(this.ertJobId);
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      selectedList = this.ertService.selectedList;
+    } else {
+      selectedList = this.ertService.selectedList.filter(a => a.isSelected === true);
+    }
     let param: any = {
       'userId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
@@ -133,7 +140,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
         'databaseId': this.workspaceHeaderService.getDatabaseID()
       },
       'ertJobParams': this.ertService.ertJobParams,
-      'tableDetailsList': this.ertService.selectedList,
+      'tableDetailsList': selectedList,
       'ingestionDataConfig': this.ertService.ingestionDataConfig,
       'extractDataConfigInfo': this.ertService.extractDataConfigInfo
     };
@@ -157,7 +164,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
     console.log(param);
     this.ertService.saveErtJob(param).subscribe(result => {
       const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
-      'Job successfully marked as completed.';
+        'Job successfully marked as completed.';
       document.getElementById('message-popup-btn').click();
       this.successMsg = result.errorMessage !== null ? result.errorMessage : msg;
     }, (err: HttpErrorResponse) => {
