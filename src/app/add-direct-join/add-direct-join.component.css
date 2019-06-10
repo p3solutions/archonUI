@@ -447,3 +447,6 @@ tr.mat-header-row, tr.mat-footer-row, tr.mat-row {
   margin-bottom: 10px;
   font-size: 18px;
 }
+::ng-deep .mat-form-field-infix {
+  border-top: 0.1375em solid transparent !important;
+}
