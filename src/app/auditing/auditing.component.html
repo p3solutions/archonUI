@@ -116,7 +116,7 @@
       </ng-container>
       <ng-container matColumnDef="Event Date">
         <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Event Date </th>
-        <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.eventDate | date:'medium'}}</td>
+        <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element.eventDate*1000 | date:'medium'}}</td>
       </ng-container>  
       <ng-container matColumnDef="Download">
         <th style="width:5%;text-align: center" mat-header-cell *matHeaderCellDef> Download  </th>

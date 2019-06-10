@@ -85,7 +85,7 @@
         <mat-accordion [multi]="true">
           <div class="items-list" style="padding-left: 0px" *ngIf="isRelationShipAvailable">
             <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of relationshipInfo;let ind=index;">
-              <mat-expansion-panel-header>
+              <mat-expansion-panel-header style="border-top: 1px solid #ddd;">
                 <mat-panel-title>
                   <div class="expansion-outer">
                     <div class="expansion-item-sec">{{relation.secondaryTable.tableName}}</div>
@@ -102,6 +102,7 @@
                   </div>
                 </mat-panel-title>
               </mat-expansion-panel-header>
+              <div class="line"></div>  
               <div>
                 <div class="exp-content-outer border-top-line">
                   <div class="exp-mat-item">

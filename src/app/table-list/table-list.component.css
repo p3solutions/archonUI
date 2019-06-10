@@ -375,14 +375,14 @@ input[type='checkbox'] {
   width: 19%;
   text-align: left;
   font-size: 14px;
-  padding-left: 17px;
+  padding-left: 22px;
 }
 
 .conf-width {
   width: 18%;
   text-align: left;
   font-size: 14px;
-  padding-left: 0px;
+  padding-left: 12px;
   padding-right: 0px;
 }
 
@@ -390,7 +390,8 @@ input[type='checkbox'] {
   width: 26%;
   text-align: left;
   font-size: 14px;
-  padding-left: 0px
+  padding-left: 0px;
+  margin-left: -4px;
 }
 
 .action-width {
@@ -566,7 +567,7 @@ a:hover {
 
 .expansion-item-join {
   width: 28%;
-  padding: 0px 15px 0px 15px
+  /* padding: 0px 15px 0px 15px */
 }
 
 .exp-content-outer {
@@ -574,13 +575,14 @@ a:hover {
   display: inline-flex;
   height: 39px;
   padding: 8px 2px 7px 0px;
-  border-bottom: 1px solid #8c8c8c;
+  border-bottom: 1px solid #c8c9ca;
   background-color: #f3f3f3;
 }
 
 .exp-mat-item {
   width: 50%;
-  text-align: center
+  text-align: left;
+  padding-left: 20px;
 }
 
 ::ng-deep #analysis-view .mat-expansion-panel {
@@ -594,7 +596,7 @@ a:hover {
 }
 
 .border-top-line {
-  border-top: 1px solid #8c8c8c
+  /* border-top: 1px solid #8c8c8c */
 }
 
 .exp-trash-item {
@@ -888,6 +890,11 @@ pagination-controls::ng-deep ul.ngx-pagination {
 }
 .msg {
   margin-top: 10px;
+}
+.line {
+  border-top: 1px solid #ddd !important;
+  margin-top: -5px;
+  margin-bottom: 15px;
 }
 
 
