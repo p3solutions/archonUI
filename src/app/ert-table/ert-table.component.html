@@ -96,7 +96,7 @@
                       <td><input (change)="selectColumns(item?.originalColumnName,item?.isSelected)"
                           [(ngModel)]="item.isSelected" type="checkbox"></td>
                       <td>{{item?.originalColumnName}} <i [ngClass]="{'fa fa-key':item?.isKey}"></i></td>
-                      <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
+                      <td><input class="form-control" type="text" required="true" appNonspecialchar (ngModelChange)="changeColumnName(item?.originalColumnName,$event)"
                           [ngModel]="item?.modifiedColumnName"></td>
                       <td>{{item?.dataType}}</td>
                       <td><a *ngIf="item.dataType!=='USERDEFINED'" href="" data-toggle="modal"

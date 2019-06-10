@@ -144,6 +144,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
 import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 import { ScrollableDirective } from './scrollable.directive';
+import { NonspecialcharDirective } from './nonspecialchar.directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -245,7 +246,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 RedirectComponent,
                 CreateWorkspacePageComponent,
                 CreateDatabasePageComponent,
-                ScrollableDirective
+                ScrollableDirective,
+                NonspecialcharDirective
         ],
         imports: [
                 JwtModule.forRoot({

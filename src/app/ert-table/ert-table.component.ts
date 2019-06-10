@@ -1195,7 +1195,7 @@ export class ErtTableComponent implements OnInit {
       } else {
         console.log(this.filterdata);
         const filterConfigNode = new FilterConfigNode(1, filterTreeNode2.children[0].operation,
-           false, false, filterTreeNode2.children[0].column,
+          false, false, filterTreeNode2.children[0].column,
           filterTreeNode2.children[0].condition, filterTreeNode2.children[0].value, 0, 0, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
         filterTreeNode2.children[0].children[0].parentId = 1;
@@ -1259,6 +1259,18 @@ export class ErtTableComponent implements OnInit {
     } else if (this.usrDefinedQueryViewMode === '' && this.usrDefinedQueryView !== '') {
       this.isQueryMode = true;
       this.isCombinedQueryMode = false;
+    }
+  }
+
+  changeColumnName(originalColumnName, modifiedColumnName) {
+    console.log(originalColumnName, modifiedColumnName);
+    const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.
+      filter(a => a.originalColumnName === originalColumnName);
+      console.log(temp);
+    if (modifiedColumnName.length === 0) {
+      temp[0].modifiedColumnName = originalColumnName;
+    } else {
+      temp[0].modifiedColumnName = modifiedColumnName;
     }
   }
 }
