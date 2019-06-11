@@ -253,7 +253,8 @@ input[type='checkbox'] {
 .form-control-feedback {
   position: relative;
   margin-top: -35px;
-  margin-left: 238px;
+  float: right;
+  margin-right: 6%;
   height: 30px;
   color: #80adf8;
   line-height: 30px;

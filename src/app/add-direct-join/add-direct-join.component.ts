@@ -162,18 +162,21 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     if (this.resultArray.length > 0) {
       this.addDirectJoinService.addNewJoin(param).subscribe(res => {
         if (res && res.data.errorDetails.length === 0) {
+          document.getElementById('addssmsg').click();
           this.updateEvent.emit(true);
           this.updateSuccess = true;
           this.joinListTemp = [];
           this.resultArray = [];
           this.resetselectedValues();
         } else {
+          document.getElementById('addermsg').click();
           this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
           this.updateNotif = true;
           this.resultArray = [];
         }
       });
     } else {
+      document.getElementById('addermsg').click();
       this.errorMsg = 'Please select columns to add joins';
       this.updateNotif = true;
     }
