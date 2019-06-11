@@ -173,17 +173,6 @@ export class AdhocTableSelectionComponent implements OnInit {
             this.createchart();
           } else {
             this.relationshipInfo = result;
-          }
-          if (this.relationshipInfo.length > 0) {
-            this.primaryTable = getPrimaryArray(this.relationshipInfo);
-            this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-            for (const i of this.primaryTable) {
-              this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
-            }
-            this.selectedValues.push(value.tableName);
-            this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
-            this.createchart();
-          } else {
             this.data = {
               color: '#ffffff',
               enableClick: false,

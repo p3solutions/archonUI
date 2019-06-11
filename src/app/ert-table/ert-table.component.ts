@@ -784,10 +784,11 @@ export class ErtTableComponent implements OnInit {
     const filterMap = new Map();
     let tempString = 'order by ';
     let expressionWhere = '';
+    const tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     const temp = this.validateTree(this.filterdata.root);
     if (temp === null) {
       if (this.filterdata.root.children.length !== 0) {
-        this.createFilterWhereClause(this.filterdata.root).subscribe(a => {
+        this.createFilterWhereClause(this.filterdata.root, tableName).subscribe(a => {
           expressionWhere = a;
         });
       } else {
@@ -797,7 +798,7 @@ export class ErtTableComponent implements OnInit {
       if (this.dataOrderList.length !== 0) {
         filterMap.set('orderList', JSON.stringify(this.dataOrderList));
         for (const item of this.dataOrderList) {
-          tempString = tempString + item.column + ' ';
+          tempString = tempString + tableName + '.' + item.column + ' ';
           if (item.order !== null) {
             tempString = tempString + item.order;
           }
@@ -823,7 +824,7 @@ export class ErtTableComponent implements OnInit {
           filterConfig = JSON.stringify(Array.from(filterMap.entries())).replace(/"/g, '\'');
         tempString = tempString + ' ';
         for (const item of this.dataOrderList) {
-          tempString = tempString + item.column + ' ';
+          tempString = tempString + tableName + '.' + item.column + ' ';
           if (item.order !== null) {
             tempString = tempString + item.order;
           }
@@ -840,15 +841,15 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
-  createFilterWhereClause(obj): Observable<string> {
+  createFilterWhereClause(obj, tableName): Observable<string> {
     const children = obj.children;
     for (const child of children) {
       if (child.children.length === 0) {
         // tslint:disable-next-line:max-line-length
-        this.filterWhereClause = this.filterWhereClause + '(' + child.column + ' ' + child.condition + ' ' + child.value + ') ' + child.operation + ' ';
+        this.filterWhereClause = this.filterWhereClause + '(' + tableName + '.' + child.column + ' ' + child.condition + ' ' + child.value + ') ' + child.operation + ' ';
       } else {
         this.filterWhereClause = this.filterWhereClause + '(';
-        this.createFilterWhereClause(child);
+        this.createFilterWhereClause(child, tableName);
         this.filterWhereClause = this.filterWhereClause + ')';
       }
     }
