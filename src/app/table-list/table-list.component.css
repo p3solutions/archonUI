@@ -109,17 +109,37 @@ h4 {
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 280px;
+  /* height: 280px; */
   /* margin-top: 0px; */
-}
-
-.expansion-outer{
-  margin-top: 12px;
 }
 
 .card {
   width: 105%;
-  height: 410px;
+  /* height: 410px; */
+  height: 100%;
+}
+
+#analysis-view .card {
+  background-color: #fff;
+  /* height: 770px; */
+}
+
+#analysis-view .tablename-list {
+  /* height: 625px; */
+}
+
+/* #analysis-view{
+  display: flex;
+}
+
+.col-list {
+  flex: 1;
+} */
+
+
+
+.expansion-outer{
+  margin-top: 12px;
 }
 
 .default-load {
@@ -208,7 +228,7 @@ h4 {
   /* margin-right: 50px; */
 }
 .dataA-panel-body-r {
-  margin-left: 0px; 
+  margin-left: 0px;
 }
 
 #panel-r{
@@ -248,15 +268,6 @@ h4 {
 
 .primary-col-chkbx {
   margin: 4px 5px;
-}
-
-#analysis-view .card {
-  background-color: #fff;
-  height: 770px;
-}
-
-#analysis-view .tablename-list {
-  height: 625px;
 }
 
 #analysis-view .search-input {
@@ -705,7 +716,7 @@ a:hover {
 
 .plr-0{
   padding-left: 0px;
-  padding-right: 0px 
+  padding-right: 0px
 }
 
 .ana-br {
@@ -762,7 +773,7 @@ a:hover {
   color: #ffffff !important;
 }
 
-::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
   background-color:  #2879ff !important
 }
@@ -776,32 +787,32 @@ a:hover {
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu-before.mat-horizontal-stepper-header:not(:first-child)::before, [dir=rtl] 
+::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu-before.mat-horizontal-stepper-header:not(:first-child)::before, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
   background-color:  #2879ff !important
 }
 
-::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
   border-top-width:2px !important;
 }
@@ -809,18 +820,18 @@ a:hover {
 ::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
  [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
   border-top-width:2px !important ;
-} 
+}
 
 ::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
   border-top-width:2px !important;
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, 
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
   border-top-width:2px !important;
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
   border-top-width:2px !important;
 }
@@ -843,7 +854,7 @@ a:hover {
  .info-r {
   font-size: 18px;
   padding-left: 10px;
-  display:inline-block;  
+  display:inline-block;
 }
 .action-btn button.save {
   background-color: #2879ff;

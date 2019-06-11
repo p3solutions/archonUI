@@ -1,5 +1,6 @@
-<div class="row" id="analysis-view" style="padding-bottom: 10px;">
-  <div class="col-md-3" id="table-list">
+<div class="row" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch" id="analysis-view" style="padding-bottom: 10px;">
+  <div fxflex fxlayout fxLayoutGap="20px">
+  <div fxFlex="24%" class="col-md-3" id="table-list">
     <div class="card">
       <div class="card-body">
         <div class="table-list">
@@ -27,13 +28,13 @@
           </h5>
         </div>
       </div>
-      <div class="expand">
+      <div class="card-footer" style="height: 40px;margin-top: 3%;">
       <pagination-controls id="tablelist"
         (pageChange)="getPage(page = $event)"></pagination-controls>
         </div>
     </div>
   </div>
-  <div class="col-md-8 col-md-offset-2.5">
+  <div fxFlex="76%" class="col-md-8 col-md-offset-2.5">
     <div class="card">
       <div class="card-body default-load" *ngIf="defaultModel">
         <h2 class="default-info">Choose one of the listed tables to view relationship information with other tables</h2>
@@ -131,8 +132,8 @@
         id="openEditRelationshipModal" [relation]="editValues" [workspaceID]="workspaceID" role="dialog">
       </app-edit-relationship-info>
       <!-- Data Analyzer -->
-      <div *ngIf="dataAModal" class="">
-        <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
+      <div *ngIf="dataAModal" id="relationshipCard">
+        <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace"> 
           <div class="text-left">
             <div class="modal-header" id="arch-hdr">
                <div class="col-md-5 analyze-header">Relationship Info</div>
@@ -360,6 +361,7 @@
       </div>
     </div>
   </div>
+</div>
   <button type="button" style="display: none" id="open-analyzer-popup" data-toggle="modal" data-target="#analyzes"></button>
   <button type="button" style="display: none" id="close-analyzer-popup" data-dismiss="modal"></button>
   <!--  start analyze popup -->

@@ -15,7 +15,7 @@
         <div class="form-group heading-item" id="frm-margin">
           <b>Phase: </b>&nbsp;&nbsp;{{phase | uppercase}}
         </div>
-        <div class="dropdown" *ngIf="dropdown">
+        <div class="dropdown" *ngIf="dropdown" style="width: 18%;">
           <mat-form-field>
             <mat-label>Add Join</mat-label>
             <mat-select [disabled]="disable">
@@ -29,7 +29,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="dropdown" *ngIf="dropdown">
+        <div class="dropdown" *ngIf="dropdown" style="width: 18%;">
             <mat-form-field>
                 <mat-label>Export As XML / JSON / PDF</mat-label>
                 <mat-select>
@@ -45,7 +45,7 @@
                 </mat-select>
               </mat-form-field>
         </div>
-        <div class="dropdown"   *ngIf="phase == 'Analysis'">
+        <div class="dropdown"   *ngIf="phase == 'Analysis'" style="width: 18%;">
           <mat-form-field>
             <mat-label>View Details</mat-label>
             <mat-select>
