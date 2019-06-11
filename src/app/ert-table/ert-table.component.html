@@ -7,7 +7,8 @@
         </div>
         <div class='body-left'><span style="z-index:1"
             class="glyphicon glyphicon-search inner-addon right-addon"></span>
-          <input type="text" class="form-control search-input" id="listSearch" placeholder="Search Table"></div>
+          <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+            placeholder="Search Table"></div>
         <div class='body-right'>
           <a (click)="openAvailableErtTablePopup('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn"
             class="cursor-poniter"><i class="fa fa-plus-circle"></i></a>
@@ -16,7 +17,6 @@
         <div class="card-body" id="ert-tbl-search">
           <div *ngIf="!showNoTablesMsg" id="tbl-list" style="height: 326px;">
             <div class="scroll-div border" appScrollable (scrollPosition)="getNextBatchOfERTTable($event)">
-              <!-- | paginate: { id:'selected-table-pagination', itemsPerPage: itemsPerPage, totalItems: schemaResultsTableCount, currentPage: page } -->
               <div *ngFor="let item of selectedTableList | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)"
                 [ngClass]="item.tableId===selectedTableId ?'selectTableCls well':'well'">
@@ -28,8 +28,6 @@
                 </div>
               </div>
             </div>
-            <!-- <pagination-controls id="selected-table-pagination" (pageChange)="getPage(page = $event)">
-            </pagination-controls> -->
           </div>
           <h4 *ngIf="showNoTablesMsg" style="margin-top: 50%;">No tables available</h4>
         </div>
@@ -47,8 +45,9 @@
                 <div class='alias-name'>
 
                   <mat-form-field>
-                    <input type="text" matInput name="tablename" id="tablename" [(ngModel)]="modifiedTableName"
-                      placeholder="Table Alias Name" (keyup)="toModifiedTableName()">
+                    <input type="text" appNonspecialchar appOnlyuppercaseallow matInput name="tablename" id="tablename"
+                      [(ngModel)]="modifiedTableName" placeholder="Table Alias Name"
+                      (keyup)="toModifiedTableName($event)">
                   </mat-form-field>
                 </div>
               </div>
@@ -96,7 +95,8 @@
                       <td><input (change)="selectColumns(item?.originalColumnName,item?.isSelected)"
                           [(ngModel)]="item.isSelected" type="checkbox"></td>
                       <td>{{item?.originalColumnName}} <i [ngClass]="{'fa fa-key':item?.isKey}"></i></td>
-                      <td><input class="form-control" type="text" required="true" appNonspecialchar (ngModelChange)="changeColumnName(item?.originalColumnName,$event)"
+                      <td><input class="form-control" type="text" required="true" appNonspecialchar
+                          appOnlyuppercaseallow (ngModelChange)="changeColumnName(item?.originalColumnName,$event)"
                           [ngModel]="item?.modifiedColumnName"></td>
                       <td>{{item?.dataType}}</td>
                       <td><a *ngIf="item.dataType!=='USERDEFINED'" href="" data-toggle="modal"
@@ -114,8 +114,8 @@
                       <td><input (change)="selectUserDefinedColumns(item?.originalColumnName,item?.isSelected)"
                           [(ngModel)]="item.isSelected" type="checkbox"></td>
                       <td>{{item?.originalColumnName}}</td>
-                      <td><input class="form-control" type="text" (ngModelChange)="item.modifiedColumnName=$event"
-                          [ngModel]="item?.modifiedColumnName"></td>
+                      <td><input class="form-control" type="text" appNonspecialchar appOnlyuppercaseallow
+                          (ngModelChange)="item.modifiedColumnName=$event" [ngModel]="item?.modifiedColumnName"></td>
                       <td>{{item?.dataType}}</td>
                       <td></td>
                       <td><a (click)="openUsrDefinedColumnModel(item?.originalColumnName)" data-toggle="modal"
@@ -154,9 +154,10 @@
       </div>
       <div class="modal-body">
         <div id="table-name-heading" class="form-group">
-          <input type="text" appNonspecialchar class="form-control" (keyup)="setQueryModeUserDefined()"
-            [disabled]="disabledUserDefinedColName" [(ngModel)]="usrDefinedColumnName" name="ucolumnname"
-            id="ucolumnname" placeholder="Enter unique column name">
+          <input type="text" appNonspecialchar appNonspecialchar class="form-control"
+            (keyup)="setQueryModeUserDefined()" [disabled]="disabledUserDefinedColName"
+            [(ngModel)]="usrDefinedColumnName" name="ucolumnname" id="ucolumnname"
+            placeholder="Enter unique column name">
         </div>
         <div>
           <mat-accordion>
@@ -327,7 +328,7 @@
       <div class="modal-footer">
         <div style="text-align: -webkit-left" id="query-alert" class="alert-hide alert alert-danger alert-dismissible">
           <a class="close" (click)="closeUserDefinedAlert()" aria-label="close">&times;</a>
-          <strong>Alert! </strong>{{usrDefinedAlertMessage}}
+          {{usrDefinedAlertMessage}}
         </div>
         <button type="button" class="btn btn-padding primary-btn-color" id="usr-defined-close"
           data-dismiss="modal">Close</button>
@@ -380,15 +381,17 @@
                             (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">
                             OR</div>
                           <div class="form-group">
-                            <select class="form-control" [(ngModel)]="node.column" #selectfiltercolumn>
+                            <select class="form-control" (change)="filterColumnSelectionChange(node.column)"
+                              [(ngModel)]="node.column" #selectfiltercolumn>
                               <option [ngValue]="null" selected>Select Column</option>
-                              <option [value]="item" (change)="filterColumnSelectionChange(node.column)" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                              <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
                             </select>
                           </div>
                           <div class="form-group">
                             <select #selectcondition [(ngModel)]="node.condition" class="form-control">
-                              <option [ngValue]="null"selected>Select condition</option>
-                              <option [value]="item" *ngFor="let item of filterOperationList">{{item.operation}}</option>          
+                              <option [ngValue]="null" selected>Select condition</option>
+                              <option [value]="item" *ngFor="let item of filterOperationList">{{item.operation}}
+                              </option>
                             </select>
                           </div>
                           <div class="form-group">
@@ -485,16 +488,17 @@
         </div>
         <div *ngIf="configColumnObject.selectedConfigFunction==='SUBSTRING'" class="form-group" style="display: flex">
           <div class="startIndex">
-            <input type="number" class="form-control" (keyup)="setSubStringStartEndIndex(selectValue.value)" placeholder="Start Index" [(ngModel)]="configColumnObject.startIndex"
-              id="ucolumnname" name="startindex">
+            <input type="number" class="form-control" (keyup)="setSubStringStartEndIndex(selectValue.value)"
+              placeholder="Start Index" [(ngModel)]="configColumnObject.startIndex" id="ucolumnname" name="startindex">
           </div>
           <div class="endIndex">
-            <input type="number" class="form-control" (keyup)="setSubStringStartEndIndex(selectValue.value)" placeholder="End Index" [(ngModel)]="configColumnObject.endIndex"
-              id="ucolumnname" name="endindex">
+            <input type="number" class="form-control" (keyup)="setSubStringStartEndIndex(selectValue.value)"
+              placeholder="End Index" [(ngModel)]="configColumnObject.endIndex" id="ucolumnname" name="endindex">
           </div>
         </div>
         <div class="form-group">
-          <button type="button" [disabled]="selectValue.value===null || disabledAddColumnConfigBtn" (click)="saveColumnConfig()"
+          <button type="button" [disabled]="selectValue.value===null || disabledAddColumnConfigBtn"
+            (click)="saveColumnConfig()"
             class="btn btn-padding {{(selectValue.value===null || disabledAddColumnConfigBtn)?'primary-btn-color-disabled' : 'primary-btn-color'}} ">Add</button>
         </div>
         <div class="config-table">

@@ -145,6 +145,7 @@ import { CreateWorkspacePageComponent } from './create-workspace-page/create-wor
 import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 import { ScrollableDirective } from './scrollable.directive';
 import { NonspecialcharDirective } from './nonspecialchar.directive';
+import { OnlyuppercaseallowDirective } from './ert-table/onlyuppercaseallow.directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -247,7 +248,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 CreateWorkspacePageComponent,
                 CreateDatabasePageComponent,
                 ScrollableDirective,
-                NonspecialcharDirective
+                NonspecialcharDirective,
+                OnlyuppercaseallowDirective
         ],
         imports: [
                 JwtModule.forRoot({

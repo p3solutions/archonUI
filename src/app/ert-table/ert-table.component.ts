@@ -545,8 +545,14 @@ export class ErtTableComponent implements OnInit {
     event.stopPropagation();
   }
 
-  toModifiedTableName() {
-    this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName;
+  toModifiedTableName(modifiedTableName: string) {
+    const tempOriginalTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+    if (this.modifiedTableName.length === 0) {
+      this.modifiedTableName = tempOriginalTableName;
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = tempOriginalTableName;
+    } else {
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName;
+    }
   }
 
   showColumns() {
@@ -836,14 +842,20 @@ export class ErtTableComponent implements OnInit {
       }
   }
   saveUsrDefinedColumn() {
-    console.log(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList
-      .filter(b => b.originalColumnName.includes(this.usrDefinedColumnName)).length === 0);
-    if (!this.isQueryMode) {
-      this.validateQueryMode();
-      this.setQueryModeUserDefined();
-    } else if (!this.isCombinedQueryMode) {
-      this.validateCombinedColumnQueryMode();
-      this.setQueryModeUserDefined();
+    const isColumnNameExist = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList
+      .filter(b => b.originalColumnName.trim().toUpperCase().includes(this.usrDefinedColumnName.trim().toUpperCase()));
+    const length = isColumnNameExist.length;
+    if (length !== 1) {
+      if (!this.isQueryMode) {
+        this.validateQueryMode();
+        this.setQueryModeUserDefined();
+      } else if (!this.isCombinedQueryMode) {
+        this.validateCombinedColumnQueryMode();
+        this.setQueryModeUserDefined();
+      }
+    } else {
+      this.usrDefinedAlertMessage = 'Kindly provide different column name.';
+      document.getElementById('query-alert').classList.remove('alert-hide');
     }
   }
 
