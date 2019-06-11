@@ -214,3 +214,44 @@
 
   </div>   
   </div>
+
+  
+<button style="display: none" type="button" id="spvemsg" data-toggle="modal" data-target="#spvermsg">Open Modal</button>
+<div class="modal fade" id="spvermsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+  <div class="modal-dialog"  style="width: 480px;">
+    <div class="modal-content">
+        <div class="error-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls"> {{errorMsg}} </p>
+            </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">OK</button>      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<button style="display: none" type="button" id="spvsmsg" data-toggle="modal" data-target="#spvssmsg">Open Modal</button>
+<div class="modal fade" id="spvssmsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+  <div class="modal-dialog"  style="width: 480px;">
+    <div class="modal-content">
+        <div class="success-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls"> {{errorMsg}} </p>
+            </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="closeErrorMsg(); resetSelection()">OK</button>      
+      </div>
+    </div>
+  </div>
+</div>
+
+

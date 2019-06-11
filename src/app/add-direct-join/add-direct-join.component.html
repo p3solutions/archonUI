@@ -48,7 +48,7 @@
 
 <div class="col-md-8" style="margin-left: -9px;" id="add-join-table" *ngIf="enableRelation">
     <div class="first-div-n">Column Details</div>
-    <div class="mat-elevation-z8 table-hight"> 
+    <div class="mat-elevation-z8 table-hight">        
   <table mat-table [dataSource]="dataSource"  class="mat-elevation-z4" style="width:100%">
     <ng-container matColumnDef="columnName" >
       <th mat-header-cell *matHeaderCellDef style="width: 35%; border-top-left-radius: 3px;"> Primary Table Column </th>
@@ -72,6 +72,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <div *ngIf="!secondaryColumns"><span [ngClass]="{'archon-loading-icon' : true}" id="loading-icon"></span></div>
   <mat-paginator [length]="columnlength" [pageSize]= "8" [pageSizeOptions]="[8, 10, 20]" showFirstLastButtons></mat-paginator>
   <!-- <mat-paginator [pageSize]="5" [length]="columnlength" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
 </div>

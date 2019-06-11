@@ -4,8 +4,8 @@
             <h4 class="popup-title-cls">
               <i class="material-icons popup-material-icon-cls" style="font-size: 25px!important;vertical-align: middle;
               color: #ffffff;
-              margin-top: 1px;">edit_outline</i><div class="pop-title" style="margin-left: -200px; margin-top: 3px;">Edit Relations</div><button type="button" class="close" style="margin-right: 10px;
-    margin-top: 2px;"  data-dismiss="modal" (click)="closeErrorMsg()">&times;</button></h4>
+              margin-top: 1px;">edit_outline</i><div class="pop-title" style="margin-left: -200px; margin-top: 3px;">Edit Relations</div><button type="button" class="close" style="margin-right: 15px; font-size: 26px;
+    margin-top: 1px;"  data-dismiss="modal" (click)="closeErrorMsg()">&times;</button></h4>
                
           </div>
       <div class="modal-body row">
@@ -27,7 +27,7 @@
             <div step="0" class="item active form-group second-last second">
                
               <div class="col-md-12" id="edit-relationship-table">
-                <div *ngIf="!joinDetailsArray"><span [ngClass]="{'archon-loading-icon-new' : true}" id="loading-icon"></span></div>
+               
                   
                   <table mat-table [dataSource]="joinDetailsArray" class="mat-elevation-z4" style="width: 100%;">
                     
@@ -57,6 +57,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                   </table>
+                  <div *ngIf="!joinDetailsArray"><span [ngClass]="{'archon-loading-icon' : true}" id="loading-icon"></span></div>
                 </div>
               </div>
               
@@ -64,26 +65,14 @@
             </div>
        </div>
       <div class="modal-footer">
-         <div id="msg-id">
-          <!-- <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
-            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>Error!</strong>:{{errorMsg}}
-          </div>
-          <div *ngIf="updateNotifSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
-            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>Success</strong>: {{errorMsg}}
-          </div>  -->
+         <!-- <div id="msg-id">          
           <div *ngIf="autoColumnMatch" class="alert alert-success alert-dismissible m-t-6" role="alert">
               <button type="button" class="close" (click)="closeAutoMatchMessage()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
               <strong>Success</strong>: {{autoColumnMatchMessage}}
             </div>
-        </div>
+        </div> -->
         <div class="col-md-12" style="padding-right: 0px;"> 
             <div class="action-btn">
             <button class="mat-raised-button cancel btn-padding" (click)="closeErrorMsg(); resetSelection()" data-dismiss="modal">Cancel</button>

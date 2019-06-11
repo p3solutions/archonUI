@@ -195,9 +195,11 @@ export class StoredProcViewComponent implements OnInit {
     };
     this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
       if (res && res.errorDetails.length === 0) {
+        document.getElementById('spvsmsg').click();
         this.updateSuccess = true;
         this.storedProcViewService.changeSPVBooleanValue(true);
       } else {
+        document.getElementById('spvemsg').click();
         this.errorMsg = res.errorDetails[0].errors[0].errorMessage;
         this.updateNotif = true;
       }

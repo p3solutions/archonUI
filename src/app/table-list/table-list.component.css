@@ -605,6 +605,7 @@ a:hover {
 
 ::ng-deep #analysis-view .mat-expansion-panel-spacing {
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 ::ng-deep #analysis-view .mat-expansion-panel-spacing .mat-expansion-panel-header {
   /* margin-top: -9px; */
