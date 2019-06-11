@@ -2,9 +2,11 @@
     <div class="modal-content">
         <div class="info-popup-header-cls">
             <h4 class="popup-title-cls">
-              <i class="material-icons " style="font-size: 25px!important;vertical-align: middle;
+              <i class="material-icons popup-material-icon-cls" style="font-size: 25px!important;vertical-align: middle;
               color: #ffffff;
-              margin-top: 1px;">edit_outline</i><div class="pop-title" style="margin-left: -195px; margin-top: 3px;">Edit Relations</div></h4>
+              margin-top: 1px;">edit_outline</i><div class="pop-title" style="margin-left: -200px; margin-top: 3px;">Edit Relations</div><button type="button" class="close" style="margin-right: 10px;
+    margin-top: 2px;"  data-dismiss="modal" (click)="closeErrorMsg()">&times;</button></h4>
+               
           </div>
       <div class="modal-body row">
       <!-- carousel -->
@@ -21,9 +23,12 @@
           </ol>
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox" style="padding-top: 16px;">         
-
+          
             <div step="0" class="item active form-group second-last second">
+               
               <div class="col-md-12" id="edit-relationship-table">
+                <div *ngIf="!joinDetailsArray"><span [ngClass]="{'archon-loading-icon-new' : true}" id="loading-icon"></span></div>
+                  
                   <table mat-table [dataSource]="joinDetailsArray" class="mat-elevation-z4" style="width: 100%;">
                     
                    
