@@ -321,6 +321,9 @@ input#ucolumnname {
 #config-table div {
   width: 20%;
   font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .config-table {

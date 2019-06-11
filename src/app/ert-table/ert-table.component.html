@@ -7,8 +7,8 @@
         </div>
         <div class='body-left'><span style="z-index:1"
             class="glyphicon glyphicon-search inner-addon right-addon"></span>
-          <input type="text" class="form-control search-input" (keyup)="searchTableOnEdit()" [(ngModel)]="searchTableName" id="listSearch"
-            placeholder="Search Table"></div>
+          <input type="text" class="form-control search-input" (keyup)="searchTableOnEdit()"
+            [(ngModel)]="searchTableName" id="listSearch" placeholder="Search Table"></div>
         <div class='body-right'>
           <a (click)="openAvailableErtTablePopup('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn"
             class="cursor-poniter"><i class="fa fa-plus-circle"></i></a>
@@ -512,7 +512,7 @@
           <div class="form-inline" *ngFor="let item of configColumnList;let i=index" id="config-table">
             <div class="form-group">{{i + 1}}</div>
             <div class="form-group">{{item.selectedConfigFunction}}</div>
-            <div class="form-group">{{item.selectedColumnName}}</div>
+            <div class="form-group" [matTooltip]="item.param">{{item.param}}</div>
             <div class="form-group">{{item.outputType}}</div>
             <div class="form-group cursor-pointer"><i class="fa fa-trash" (click)="deleteColumnCOnfig(i)"></i></div>
           </div>

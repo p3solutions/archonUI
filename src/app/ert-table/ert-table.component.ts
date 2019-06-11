@@ -37,12 +37,12 @@ export class ErtTableComponent implements OnInit {
   userDefinedList: { 'prefix': string, 'column': string, 'suffix': string }[] = [];
   ertJobId = '';
   configColumnObject: {
-    selectedColumnName: string, selectedConfigFunction: string,
+    selectedColumnName: string, selectedConfigFunction: string, param: string
     outputType: string, startIndex: number, endIndex: number
   } =
-    { selectedColumnName: '', selectedConfigFunction: null, outputType: '', startIndex: null, endIndex: null };
+    { selectedColumnName: '', selectedConfigFunction: null, outputType: '', startIndex: null, endIndex: null, param: '' };
   configColumnList: {
-    selectedColumnName: string, selectedConfigFunction: string, outputType: string, startIndex: number,
+    selectedColumnName: string, selectedConfigFunction: string, outputType: string, startIndex: number, param: string,
     endIndex: number
   }[] = [];
   selectedTableId = '';
@@ -715,9 +715,12 @@ export class ErtTableComponent implements OnInit {
         tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempString + ')';
       }
     }
+    if (this.configColumnList.length > 0) {
+      this.configColumnList[this.configColumnList.length - 1].param = tempString;
+    }
     // end
     this.configColumnObject = {
-      selectedColumnName: tempColumnName, selectedConfigFunction: null, outputType: null,
+      selectedColumnName: tempColumnName, selectedConfigFunction: null, outputType: null, param: '',
       startIndex: null, endIndex: null
     };
     if (this.configColumnList.length !== 0) {
@@ -833,7 +836,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   deleteColumnCOnfig(i: number) {
-    this.configColumnList.splice(i, 1);
+    this.configColumnList.length = i;
     this.saveColumnConfig();
   }
 
