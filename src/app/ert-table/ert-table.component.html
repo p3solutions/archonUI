@@ -7,7 +7,7 @@
         </div>
         <div class='body-left'><span style="z-index:1"
             class="glyphicon glyphicon-search inner-addon right-addon"></span>
-          <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+          <input type="text" class="form-control search-input" (keyup)="searchTableOnEdit()" [(ngModel)]="searchTableName" id="listSearch"
             placeholder="Search Table"></div>
         <div class='body-right'>
           <a (click)="openAvailableErtTablePopup('1')" matTooltip="Add More Table" *ngIf="showAvilableBtn"

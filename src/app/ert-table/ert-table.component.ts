@@ -93,6 +93,7 @@ export class ErtTableComponent implements OnInit {
   disabledAddColumnConfigBtn = false;
   filterOperationList: FilterOperationList[] = [];
 
+
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -490,6 +491,26 @@ export class ErtTableComponent implements OnInit {
         this.page = 1;
         this.getPage(1);
       }
+    }
+  }
+
+  searchTableOnEdit() {
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
+        this.ErtTablesearchList = result;
+        for (const item of this.ErtTablesearchList.ertTableList) {
+          const tempObj: TableDetailsListObj = new TableDetailsListObj();
+          tempObj.tableId = item.tableId;
+          tempObj.tableName = item.tableName;
+          tempObj.modifiedTableName = item.modifiedTableName;
+          if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+            tempObj.isSelected = true;
+          }
+          if (this.selectedTableList.findIndex(a => a.tableId === tempObj.tableId) === -1) {
+            this.selectedTableList.push(tempObj);
+          }
+        }
+      });
     }
   }
 
