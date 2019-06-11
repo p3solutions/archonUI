@@ -189,7 +189,7 @@ Tree.prototype.printByLevel = function () {
 };
 
 export function addFilterNode(filterConfigTree: FilterConfigTree, parent: FilterConfigNode, child: FilterConfigNode): string {
-    console.log(child,parent);
+    console.log(child, parent);
     const filterTree = new Tree();
     if (filterConfigTree != null) {
         filterTree.root = filterConfigTree.root;
@@ -256,3 +256,33 @@ export function findParentNode(element, id: number) {
     }
     return null;
 }
+
+export class FilterOperationList {
+    operation = '';
+    dataType = '';
+}
+
+export const filterOperationList: FilterOperationList[] = [
+    { operation: '=', dataType: 'NUMBER' },
+    { operation: '!=', dataType: 'NUMBER' },
+    { operation: '>', dataType: 'NUMBER' },
+    { operation: '<', dataType: 'NUMBER' },
+    { operation: '>=', dataType: 'NUMBER' },
+    { operation: '<=', dataType: 'NUMBER' },
+    { operation: '=', dataType: 'DATE' },
+    { operation: '!=', dataType: 'DATE' },
+    { operation: '>', dataType: 'DATE' },
+    { operation: '<', dataType: 'DATE' },
+    { operation: '>=', dataType: 'DATE' },
+    { operation: '<=', dataType: 'DATE' },
+    // { operation: 'between', dataType: 'DATE' },
+    { operation: 'is null', dataType: 'DATE' },
+    { operation: 'is not null', dataType: 'DATE' },
+    { operation: '=', dataType: 'BOOLEAN'},
+    { operation: '!=', dataType: 'BOOLEAN'},
+    { operation: '=', dataType: ''},
+    { operation: '!=', dataType: ''},
+    { operation: 'like', dataType: '' },
+    { operation: 'is null', dataType: '' },
+    { operation: 'is not null', dataType: '' }
+];

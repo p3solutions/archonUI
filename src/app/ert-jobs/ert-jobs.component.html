@@ -11,12 +11,7 @@
       </div>
     </div>
     <div class="col-md-3" style="text-align:left">
-      <!-- <div id="success-msg" class="alert alert-success alert-dismissible">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Success!</strong> Job has started.
-      </div> -->
     </div>
-
     <div class="col-md-3" style="text-align: right; margin-top: -9px;">
       <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert/ert-jobs-config']"
         matTooltip="Add Job"> <i class="material-icons">
@@ -26,12 +21,10 @@
   </div>
   <div *ngFor="let item of ertJobs" class="col-md-3 card">
     <div class="flex-cards-bar">
-      <div class='title'>{{item.jobTitle===''?'No_title':item.jobTitle | titlecase}}<div class='info'><span
+      <div class='title'>{{item.jobTitle === '' ?'No_title':item.jobTitle}}<div class='info'><span
             (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
               aria-hidden="true"></i></span></div>
       </div>
-      <!-- <div class='delete'><span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job">X</span></div>  
-   -->
       <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
           (click)="setJobId(item.jobId)" matTooltip="Delete">
           <span aria-hidden="true">&times;</span>
@@ -54,7 +47,7 @@
           (click)="!madeDisable && openScheduleModel(item.jobId,item.jobStatus)" class="cursor-poniter fonticonbelow"><i
             class="fa fa-play" aria-hidden="true"></i></a></div>
       <div class='foo-iconedit'><a (click)="!madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
-        matTooltip="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
+          matTooltip="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
     </div>
   </div>
   <div class="col-md-12" *ngIf="ertJobslist">
@@ -121,7 +114,8 @@
         <p style="text-align:left">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteErtJob()" data-dismiss="modal">YES</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteErtJob()"
+          data-dismiss="modal">YES</button>
         <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
       </div>
     </div>

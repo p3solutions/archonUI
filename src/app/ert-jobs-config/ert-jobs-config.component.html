@@ -10,8 +10,8 @@
         <div id="job-name-heading" class="form-group">
           <input type="text" class="form-control" [(ngModel)]="ertJobParams.ertJobTitle" (keyup)="enableJobSelection()"
             name="jobname" id="jobname" placeholder="Enter Job Name">
-          <small *ngIf="ertJobParams.ertJobTitle == ''">* Job name is mandatory fill field to enable job selection.</small>
-          <small *ngIf="ertService.mmrVersion == ''">* Metadata Version is required for SIP and Data Record.</small>
+          <small *ngIf="ertJobParams.ertJobTitle === ''">* Job name is mandatory fill field to enable job selection.</small>
+          <small *ngIf="ertService.mmrVersion === ''">* Metadata Version is required for SIP and Data Record.</small>
         </div>
         <div id="job-section">
           <div id="job-section-heading">Choose Job Type</div>

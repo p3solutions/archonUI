@@ -9,11 +9,10 @@ import {
 } from '../ert-landing-page/ert';
 import {
   addFilterNode, FilterConfigNode, Tree, searchTree,
-  getPreorderDFS, ColumnConfigFunction, deleteNode, columnConfigFunctionList, findParentNode
+  getPreorderDFS, ColumnConfigFunction, deleteNode, columnConfigFunctionList, findParentNode, FilterOperationList, filterOperationList
 } from './ert-filter';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
-import { map, filter, pairwise } from 'rxjs/operators';
 import { MatAccordion } from '@angular/material';
 @Component({
   selector: 'app-ert-table',
@@ -52,7 +51,6 @@ export class ErtTableComponent implements OnInit {
   ertAvillableTableList: AvilErtTable = new AvilErtTable();
   expressionStack: string[] = [];
   searchTableName: string;
-  parentChildMap: { child: number, parent: number }[] = [];
   dataOrderList: DataOrderConfig[] = [];
   dataOrderObj: DataOrderConfig = new DataOrderConfig();
   schemaResultsTableCount = 0;
@@ -93,6 +91,8 @@ export class ErtTableComponent implements OnInit {
   substringStartIndex = null;
   substringEndIndex = null;
   disabledAddColumnConfigBtn = false;
+  filterOperationList: FilterOperationList[] = [];
+
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -186,6 +186,8 @@ export class ErtTableComponent implements OnInit {
           tempObj.isSelected = true;
           this.selectedTableList.push(tempObj);
           this.selectedTableId = this.selectedTableList[0].tableId;
+          this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
+          this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
         }
         this.getEditedERTcolumnlist(tableIds);
       } catch {
@@ -641,9 +643,12 @@ export class ErtTableComponent implements OnInit {
       this.configColumnQuery = '';
       this.configColumnObject.selectedColumnName = columnName;
       this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
-      if (dataType.trim().toUpperCase() === 'SMALLINT' || dataType.trim().toUpperCase() === 'BIGINT'
+      if (dataType.trim().toUpperCase() === 'SMALLINT' ||
+        dataType.trim().toUpperCase() === 'INT' || dataType.trim().toUpperCase() === 'BIGINT'
         || dataType.trim().toUpperCase() === 'DECIMAL') {
         dataType = 'INT';
+      } else if (dataType.trim().toUpperCase() === 'BIT') {
+        dataType = '';
       } else {
         dataType = 'VARCHAR';
       }
@@ -831,6 +836,8 @@ export class ErtTableComponent implements OnInit {
       }
   }
   saveUsrDefinedColumn() {
+    console.log(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList
+      .filter(b => b.originalColumnName.includes(this.usrDefinedColumnName)).length === 0);
     if (!this.isQueryMode) {
       this.validateQueryMode();
       this.setQueryModeUserDefined();
@@ -1263,15 +1270,31 @@ export class ErtTableComponent implements OnInit {
   }
 
   changeColumnName(originalColumnName, modifiedColumnName) {
-    console.log(originalColumnName, modifiedColumnName);
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.
       filter(a => a.originalColumnName === originalColumnName);
-      console.log(temp);
     if (modifiedColumnName.length === 0) {
       temp[0].modifiedColumnName = originalColumnName;
     } else {
       temp[0].modifiedColumnName = modifiedColumnName;
     }
+  }
+
+
+  filterColumnSelectionChange(columnName) {
+    let type = '';
+    const tempSelectedTableColumns = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
+    const dataType = tempSelectedTableColumns.filter(a => a.originalColumnName === columnName)[0].dataType;
+    if (dataType.trim().toUpperCase() === 'SMALLINT' || dataType.trim().toUpperCase() === 'BIGINT'
+      || dataType.trim().toUpperCase() === 'DECIMAL' || dataType.trim().toUpperCase() === 'INT') {
+      type = 'NUMBER';
+    } else if (dataType.trim().toUpperCase() === 'BIT') {
+      type = 'BOOLEAN';
+    } else if (dataType.trim().toUpperCase() === 'DATE') {
+      type = 'DATE';
+    } else {
+      type = '';
+    }
+    this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === type.trim().toUpperCase());
   }
 }
 

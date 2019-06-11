@@ -154,7 +154,7 @@
       </div>
       <div class="modal-body">
         <div id="table-name-heading" class="form-group">
-          <input type="text" class="form-control" (keyup)="setQueryModeUserDefined()"
+          <input type="text" appNonspecialchar class="form-control" (keyup)="setQueryModeUserDefined()"
             [disabled]="disabledUserDefinedColName" [(ngModel)]="usrDefinedColumnName" name="ucolumnname"
             id="ucolumnname" placeholder="Enter unique column name">
         </div>
@@ -382,24 +382,13 @@
                           <div class="form-group">
                             <select class="form-control" [(ngModel)]="node.column" #selectfiltercolumn>
                               <option [ngValue]="null" selected>Select Column</option>
-                              <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
+                              <option [value]="item" (change)="filterColumnSelectionChange(node.column)" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
                             </select>
                           </div>
                           <div class="form-group">
                             <select #selectcondition [(ngModel)]="node.condition" class="form-control">
-                              <option value="null" selected>Select condition</option>
-                              <option value="=">=</option>
-                              <option value="!=">!=</option>
-                              <option value="<=">
-                                <=</option> <option value="<">
-                                  <</option> <option value=">=">>=
-                              </option>
-                              <option value=">">></option>
-                              <option value="between">between</option>
-                              <option value="in">in</option>
-                              <option value="is null">is null</option>
-                              <option value="is not null">is not null</option>
-                              <option value="like">like</option>
+                              <option [ngValue]="null"selected>Select condition</option>
+                              <option [value]="item" *ngFor="let item of filterOperationList">{{item.operation}}</option>          
                             </select>
                           </div>
                           <div class="form-group">

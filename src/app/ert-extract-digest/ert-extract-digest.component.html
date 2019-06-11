@@ -6,7 +6,7 @@
           <div class="card-body" id="extract-data">
             <div class="save-extract-heading">
               <div>
-                <input id="extract-checkbox" type="checkbox"><label>Extract Data</label>
+                <input [disabled]="true" id="extract-checkbox" type="checkbox"><label>Extract Data</label>
               </div>
             </div>
             <div *ngIf="from =='data-record'" class="row">
@@ -55,14 +55,14 @@
               <div>
                 <input type="text" (keyup)="checkToEnableBtn()" [(ngModel)]="ingestionDataConfigObj.infoArchiveName" name="app-name"
                   class="form-control" [disabled]="disableIngestData" placeholder="InfoArchieve Application Name">
-                <small>Note:Appliaction name is case sensitive</small>
+                <small>Note: Appliaction name is case sensitive</small>
               </div>
             </div>
             <div class="form-group">
               <div>
                 <input type="text" (keyup)="checkToEnableBtn()" [(ngModel)]="ingestionDataConfigObj.infoArchiveSchemaName"
                   name="schema-name" [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve Application Schema Name">
-                <small>Note:Schema name is case sensitive</small>
+                <small>Note: Schema name is case sensitive</small>
               </div>
             </div>
             <div class="form-group">
