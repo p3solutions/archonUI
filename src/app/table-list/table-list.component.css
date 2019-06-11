@@ -369,6 +369,7 @@ input[type='checkbox'] {
   text-align: left;
   /* margin-left: 10px; */
   font-size: 14px;
+  padding-left: 6%;
 }
 
 .def-width {
@@ -376,6 +377,7 @@ input[type='checkbox'] {
   text-align: left;
   font-size: 14px;
   padding-left: 22px;
+  font-weight: bold;
 }
 
 .conf-width {
@@ -592,6 +594,21 @@ a:hover {
 
 ::ng-deep #analysis-view .mat-expansion-panel-spacing {
   margin-bottom: 10px;
+}
+::ng-deep #analysis-view .mat-expansion-panel-spacing .mat-expansion-panel-header {
+  /* margin-top: -9px; */
+  padding-bottom: 9px;
+}
+::ng-deep #analysis-view .mat-expanded .mat-expansion-indicator {
+  margin-top: 10px;
+}
+
+::ng-deep #analysis-view #mat-expansion-panel-header-0 {
+  border-top: 1px solid #f0f0f0;
+}
+
+::ng-deep #analysis-view .mat-expansion-panel-spacing .mat-expanded#mat-expansion-panel-header-0 {
+  border-top: 1px solid #f0f0f0;
 }
 
 .action-btn {
@@ -896,7 +913,7 @@ pagination-controls::ng-deep ul.ngx-pagination {
 }
 .line {
   border-top: 1px solid #ddd !important;
-  margin-top: -5px;
+  margin-top: -7px;
   margin-bottom: 15px;
 }
 

@@ -2069,14 +2069,14 @@ button.btn-info-popup-primary-color:hover {
 button.btn-secondary-popup{
   margin-right: 5px;
   background-color: #dedede;
-  color: #000;
+  color: #313131;
   text-transform: inherit;
   border-radius: 3px;
   transition: 0.5s;
 }
 
 button.btn-secondary-popup:hover {
-  color: #000;
+  color: #313131;
   transform: scale(1.1, 1.1);
 }
 
