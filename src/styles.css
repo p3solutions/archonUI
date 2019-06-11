@@ -8,6 +8,10 @@ body {
   padding-right: 0 !important;
 }
 
+.overlayclass {
+overflow-y: hidden;
+}
+
 h1,
 h2,
 h3,
