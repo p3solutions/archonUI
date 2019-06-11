@@ -1,6 +1,7 @@
-<div class="row" id="analysis-view" style="padding-bottom: 10px;">
-  <div class="col-md-3 col-list" id="table-list">
-    <div class="card h-100">
+<div class="row" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch" id="analysis-view" style="padding-bottom: 10px;">
+  <div fxflex fxlayout fxLayoutGap="20px">
+  <div fxFlex="24%" class="col-md-3" id="table-list">
+    <div class="card">
       <div class="card-body">
         <div class="table-list">
           Table List <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
@@ -33,8 +34,8 @@
         </div>
     </div>
   </div>
-  <div class="col-md-8 col-md-offset-2.5 col-list">
-    <div class="card h-100">
+  <div fxFlex="76%" class="col-md-8 col-md-offset-2.5">
+    <div class="card">
       <div class="card-body default-load" *ngIf="defaultModel">
         <h2 class="default-info">Choose one of the listed tables to view relationship information with other tables</h2>
       </div>
@@ -55,26 +56,26 @@
             </h5>
           </div>
         </div>
-        <div class="row table-headers" *ngIf="isRelationShipAvailable">
-          <div class="col col-md-3 sec-width">
-            <h5 id="sec-tab">
-              <strong>Secondary Table</strong>
-            </h5>
+        <div class="row table-headers" *ngIf="isRelationShipAvailable" style="padding-bottom: 10px;">
+          <div class="col col-md-3 sec-width" style="font-weight: bold">
+         
+              Secondary Table
+          
           </div>
-          <div class="col col-md-3 def-width">
-            <h5>
-              <strong>Definition Type</strong>
-            </h5>
+          <div class="col col-md-3 def-width" style="font-weight: bold">
+           
+             Definition Type
+          
           </div>
-          <div class="col col-md-3 conf-width">
-            <h5>
-              <strong>Config Mode</strong>
-            </h5>
+          <div class="col col-md-3 conf-width" style="font-weight: bold">
+           
+              Config Mode
+          
           </div>
-          <div class="col col-md-3 join-width">
-            <h5>
-              <strong>Join Name</strong>
-            </h5>
+          <div class="col col-md-3 join-width" style="font-weight: bold">
+          
+             Join Name
+           
           </div>
         </div>
         <div class="row table-headers" *ngIf="!isRelationShipAvailable">
@@ -85,7 +86,7 @@
         <mat-accordion [multi]="true">
           <div class="items-list" style="padding-left: 0px" *ngIf="isRelationShipAvailable">
             <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of relationshipInfo;let ind=index;">
-              <mat-expansion-panel-header style="border-top: 1px solid #ddd;">
+              <mat-expansion-panel-header>
                 <mat-panel-title>
                   <div class="expansion-outer">
                     <div class="expansion-item-sec">{{relation.secondaryTable.tableName}}</div>
@@ -360,6 +361,7 @@
       </div>
     </div>
   </div>
+</div>
   <button type="button" style="display: none" id="open-analyzer-popup" data-toggle="modal" data-target="#analyzes"></button>
   <button type="button" style="display: none" id="close-analyzer-popup" data-dismiss="modal"></button>
   <!--  start analyze popup -->
@@ -430,7 +432,7 @@
                 <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 15px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 15px;">Delete</div></h4>
             </div>
             <div class="modal-body">
-                <p class="popup-paragraph-cls"> Are you sure delete this relationship? </p>
+                <p class="popup-paragraph-cls"> Are you sure you want to delete this relationship? </p>
               </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-padding btn-secondary-popup" (click)="closeErrorMsg();"

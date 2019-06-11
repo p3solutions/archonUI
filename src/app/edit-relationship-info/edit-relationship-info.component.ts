@@ -173,6 +173,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       .subscribe(res => {
         console.log(res);
         if (res && res.success) {
+          document.getElementById('editssmsg').click();
           this.removeIndexValue = [];
           this.resultantValues = [];
           this.updateEvent.emit(true);
@@ -180,6 +181,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.updateNotifSuccess = true;
         } else {
           console.log(res);
+          document.getElementById('editermsg').click();
           this.errorMsg = res.errors;
           this.updateNotif = true;
         }
