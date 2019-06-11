@@ -1,6 +1,6 @@
 <div class="row" id="analysis-view" style="padding-bottom: 10px;">
-  <div class="col-md-3" id="table-list">
-    <div class="card">
+  <div class="col-md-3 col-list" id="table-list">
+    <div class="card h-100">
       <div class="card-body">
         <div class="table-list">
           Table List <span [ngClass]="{'archon-loading-icon' : !isAvailable}" id="loading-icon"></span>
@@ -27,14 +27,14 @@
           </h5>
         </div>
       </div>
-      <div class="expand">
+      <div class="card-footer" style="height: 40px;margin-top: 3%;">
       <pagination-controls id="tablelist"
         (pageChange)="getPage(page = $event)"></pagination-controls>
         </div>
     </div>
   </div>
-  <div class="col-md-8 col-md-offset-2.5">
-    <div class="card">
+  <div class="col-md-8 col-md-offset-2.5 col-list">
+    <div class="card h-100">
       <div class="card-body default-load" *ngIf="defaultModel">
         <h2 class="default-info">Choose one of the listed tables to view relationship information with other tables</h2>
       </div>
@@ -131,8 +131,8 @@
         id="openEditRelationshipModal" [relation]="editValues" [workspaceID]="workspaceID" role="dialog">
       </app-edit-relationship-info>
       <!-- Data Analyzer -->
-      <div *ngIf="dataAModal" class="">
-        <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace">
+      <div *ngIf="dataAModal" id="relationshipCard">
+        <div class=" {{newWSinfo ? 'msg-modal' : ''}}" role="worskspace"> 
           <div class="text-left">
             <div class="modal-header" id="arch-hdr">
                <div class="col-md-5 analyze-header">Relationship Info</div>

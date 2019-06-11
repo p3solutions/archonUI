@@ -146,8 +146,6 @@ span {
   margin-left: 35px;
   text-align: left;
   white-space: nowrap; 
-  overflow: hidden;
-  text-overflow: ellipsis; 
 }
 
 .arch-btnn{

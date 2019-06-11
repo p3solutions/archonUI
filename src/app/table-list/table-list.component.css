@@ -113,13 +113,32 @@ h4 {
   /* margin-top: 0px; */
 }
 
-.expansion-outer{
-  margin-top: 12px;
-}
-
 .card {
   width: 105%;
   height: 410px;
+}
+
+#analysis-view .card {
+  background-color: #fff;
+  height: 770px;
+}
+
+#analysis-view .tablename-list {
+  height: 625px;
+}
+
+/* #analysis-view{
+  display: flex;
+}
+
+.col-list {
+  flex: 1;
+} */
+
+
+
+.expansion-outer{
+  margin-top: 12px;
 }
 
 .default-load {
@@ -248,15 +267,6 @@ h4 {
 
 .primary-col-chkbx {
   margin: 4px 5px;
-}
-
-#analysis-view .card {
-  background-color: #fff;
-  height: 770px;
-}
-
-#analysis-view .tablename-list {
-  height: 625px;
 }
 
 #analysis-view .search-input {
