@@ -181,10 +181,10 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.updateEvent.emit(true);
           this.errorMsg = res.data;
           this.updateNotifSuccess = true;
-          setTimeout(() => {
-          const close: HTMLButtonElement = document.querySelector('#openEditRelationshipModal .cancel');
-          close.click();
-          }, 1500);
+          // setTimeout(() => {
+          // const close: HTMLButtonElement = document.querySelector('#openEditRelationshipModal .cancel');
+          // close.click();
+          // }, 1500);
         } else {
           // console.log(res);
           // document.getElementById('editermsg').click();
