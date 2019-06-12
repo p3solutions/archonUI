@@ -557,7 +557,8 @@
           <input type="text" class="form-control search-input" [(ngModel)]="searchOriginalTableName" id="listSearch"
             (keyup)="getSearchoriginalTablelist()" placeholder="Search Table"></div>
         <div id="create-job-select-table-list">
-          <div class="form-control mb-5 {{item.isSelected?'selected-table-cls':''}}"
+          <div [matTooltip]="item.alreadyIsSelected?'Already Present in selected table list':''"
+            class="form-control mb-5 {{item.isSelected?'selected-table-cls':''}}"
             *ngFor="let item of originalErttableList.ertTableList | paginate: { id:'create-job-select-table-pagination-id', itemsPerPage: 50, totalItems: totalItemOfOriginalErtTable, currentPage: currentPageOfOriginalErtTable } ">
             <input type="checkbox" [disabled]="item.alreadyIsSelected"
               (click)="addTempOriginalSelectedTable(item.tableId,$event)" class="align-checkbox"

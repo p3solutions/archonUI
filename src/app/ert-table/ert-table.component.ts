@@ -231,7 +231,7 @@ export class ErtTableComponent implements OnInit {
           temp.alreadyIsSelected = true;
         } else {
           temp.isSelected = false;
-          temp.alreadyIsSelected = false;
+          temp.alreadyIsSelected = true;
         }
       }
     }
@@ -253,7 +253,7 @@ export class ErtTableComponent implements OnInit {
           temp.alreadyIsSelected = true;
         } else {
           temp.isSelected = false;
-          temp.alreadyIsSelected = false;
+          temp.alreadyIsSelected = true;
         }
       }
     }
@@ -314,12 +314,17 @@ export class ErtTableComponent implements OnInit {
 
 
   addSelectTableCreateJob() { // when we click on the add of ert tables.
-    Array.prototype.push.apply(this.selectedTableList, this.tempOriginalSelectedTable);
-    this.selectedTableId = this.selectedTableList[0].tableId;
-    const tableIds = this.tempOriginalSelectedTable.map(function (item) { return item['tableId']; });
-    this.spinner.show();
-    this.tempOriginalSelectedTable = [];
-    this.getEditedERTcolumnlist(tableIds);
+    if (this.tempOriginalSelectedTable.length !== 0) {
+      Array.prototype.push.apply(this.selectedTableList, this.tempOriginalSelectedTable);
+      this.selectedTableId = this.selectedTableList[0].tableId;
+      const tableIds = this.tempOriginalSelectedTable.map(function (item) { return item['tableId']; });
+      this.spinner.show();
+      this.tempOriginalSelectedTable = [];
+      this.getEditedERTcolumnlist(tableIds);
+    } else {
+      this.spinner.hide();
+    }
+
   }
 
   closeErrorMsg() {
