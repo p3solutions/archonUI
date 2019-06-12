@@ -116,12 +116,12 @@
     <div *ngIf="isSPVAvailable"> 
       <div class="column-one scroll-div border">
         <div class="sticky">
-          <div><mat-checkbox style="float:left; padding-top: 5px;" ></mat-checkbox><!--<input style="float:left" type="checkbox">--></div>
+          <div><mat-checkbox style="float:left; padding-top: 5px;" (change)="selectAll($event)" ></mat-checkbox><!--<input style="float:left" type="checkbox">--></div>
           <div class="first-div-new">SP / View Name</div>         
         </div>
         <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvInfoListTwo"
           (click)="getTableNameList(item.name)">
-          <div><mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)"></mat-checkbox><!--<input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox">--></div>
+          <div><mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" id="{{item}}" [checked]="item.selected" class="spvall" type="checkbox"></mat-checkbox><!--<input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox">--></div>
           <div class="first-div">{{item.name}}</div>
           <div class="second-div">{{item.type}}</div>
           <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div "></i></div>
@@ -190,7 +190,7 @@
     
     <div class="modal-footer" *ngIf="isSPVAvailable">
       <div class="col-md-7">         
-          <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+          <!-- <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
               <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -201,7 +201,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
                 <strong>{{errorMsg}}</strong>
-              </div> 
+              </div>  -->
             </div>
     <div class="col-md-5" *ngIf="isSPVAvailable">
         <div class="action-btn">
