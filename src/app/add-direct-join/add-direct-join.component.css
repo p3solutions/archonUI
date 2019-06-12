@@ -455,3 +455,5 @@ tr.mat-header-row, tr.mat-footer-row, tr.mat-row {
 ::ng-deep .test > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix {
 border-top: 0.5em solid transparent;
 }
+
+button:focus {outline:0;}
