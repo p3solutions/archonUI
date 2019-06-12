@@ -225,7 +225,14 @@ export class ErtTableComponent implements OnInit {
   checkForAlreadySelectedTable() { // Check for a selected table in add case.
     for (const tempTable of this.selectedTableList) {
       if (this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
-        this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0].isSelected = true;
+        const temp = this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0];
+        if (tempTable.isSelected) {
+          temp.isSelected = true;
+          temp.alreadyIsSelected = true;
+        } else {
+          temp.isSelected = false;
+          temp.alreadyIsSelected = false;
+        }
       }
     }
     for (const tempTable of this.tempOriginalSelectedTable) {
@@ -240,7 +247,14 @@ export class ErtTableComponent implements OnInit {
   inEditCheckForAlreadySelectedTable() { // Check for a selected table in edit case.
     for (const tempTable of this.selectedTableList) {
       if (this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
-        this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0].isSelected = true;
+        const temp = this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0];
+        if (tempTable.isSelected) {
+          temp.isSelected = true;
+          temp.alreadyIsSelected = true;
+        } else {
+          temp.isSelected = false;
+          temp.alreadyIsSelected = false;
+        }
       }
     }
     for (const tempTable of this.tempOriginalSelectedTable) {
@@ -261,7 +275,12 @@ export class ErtTableComponent implements OnInit {
       tempObj.tableName = tempOriginalTableObj.tableName;
       tempObj.modifiedTableName = tempOriginalTableObj.modifiedTableName;
       tempObj.isSelected = true;
-      this.tempOriginalSelectedTable.push(tempObj);
+      const checkInSelectedTableList = this.selectedTableList.filter(a => a.tableId === tableId)[0];
+      if (checkInSelectedTableList === undefined) {
+        this.tempOriginalSelectedTable.push(tempObj);
+      } else {
+        checkInSelectedTableList.isSelected = true;
+      }
     } else {
       const index = this.tempOriginalSelectedTable.findIndex(a => a.tableId === tableId);
       if (index !== -1) {
@@ -279,7 +298,12 @@ export class ErtTableComponent implements OnInit {
       tempObj.tableName = tempOriginalTableObj.tableName;
       tempObj.modifiedTableName = tempOriginalTableObj.modifiedTableName;
       tempObj.isSelected = true;
-      this.tempOriginalSelectedTable.push(tempObj);
+      const checkInSelectedTableList = this.selectedTableList.filter(a => a.tableId === tableId)[0];
+      if (checkInSelectedTableList === undefined) {
+        this.tempOriginalSelectedTable.push(tempObj);
+      } else {
+        checkInSelectedTableList.isSelected = true;
+      }
     } else {
       const index = this.tempOriginalSelectedTable.findIndex(a => a.tableId === tableId);
       if (index !== -1) {
@@ -540,13 +564,17 @@ export class ErtTableComponent implements OnInit {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getEditedtERTcolumnlist(this.ertJobId, this.workspaceId, tableIds).subscribe(response => {
       ertColumnList = response;
-      for (let item = 0; item < tableIds.length; item++) {
-        ertTableColumnMap.set(tableIds[item], ertColumnList[item]);
+      try {
+        for (let item = 0; item < tableIds.length; item++) {
+          ertTableColumnMap.set(tableIds[item], ertColumnList[item]);
+        }
+        for (const tableId of tableIds) {
+          this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = ertTableColumnMap.get(tableId);
+        }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
       }
-      for (const tableId of tableIds) {
-        this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = ertTableColumnMap.get(tableId);
-      }
-      this.spinner.hide();
     });
   }
 

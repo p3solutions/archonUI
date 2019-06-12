@@ -458,8 +458,8 @@
         <div id="avaliable-table-list">
           <div class="form-control {{item.isSelected?'selected-table-cls':''}}"
             *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { id:'availble-pagination', itemsPerPage: 50, totalItems: avilableTableCount, currentPage: availPage } ">
-            <input type="checkbox" (click)="addTempEditErtSelectedTable(item.tableId,$event)"
-              [(ngModel)]="item.isSelected">
+            <input type="checkbox" [disabled]="item.alreadyIsSelected"
+              (click)="addTempEditErtSelectedTable(item.tableId,$event)" [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
         </div>
@@ -559,7 +559,8 @@
         <div id="create-job-select-table-list">
           <div class="form-control mb-5 {{item.isSelected?'selected-table-cls':''}}"
             *ngFor="let item of originalErttableList.ertTableList | paginate: { id:'create-job-select-table-pagination-id', itemsPerPage: 50, totalItems: totalItemOfOriginalErtTable, currentPage: currentPageOfOriginalErtTable } ">
-            <input type="checkbox" (click)="addTempOriginalSelectedTable(item.tableId,$event)" class="align-checkbox"
+            <input type="checkbox" [disabled]="item.alreadyIsSelected"
+              (click)="addTempOriginalSelectedTable(item.tableId,$event)" class="align-checkbox"
               [(ngModel)]="item.isSelected">
             {{item.tableName}}
           </div>
