@@ -173,15 +173,17 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       .subscribe(res => {
         console.log(res);
         if (res && res.success) {
-          document.getElementById('editssmsg').click();
+          // const close: HTMLButtonElement = document.querySelector('#openEditRelationshipModal .cancel');
+          // close.click();
+          // document.getElementById('editssmsg').click();
           this.removeIndexValue = [];
           this.resultantValues = [];
           this.updateEvent.emit(true);
           this.errorMsg = res.data;
           this.updateNotifSuccess = true;
         } else {
-          console.log(res);
-          document.getElementById('editermsg').click();
+          // console.log(res);
+          // document.getElementById('editermsg').click();
           this.errorMsg = res.errors;
           this.updateNotif = true;
         }

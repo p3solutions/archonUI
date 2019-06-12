@@ -121,7 +121,7 @@
         </div>
         <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvInfoListTwo"
           (click)="getTableNameList(item.name)">
-          <div><mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" class="spvall" ></mat-checkbox><!--<input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox">--></div>
+          <div><mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" id="{{item}}" [checked]="item.selected" class="spvall" type="checkbox"></mat-checkbox><!--<input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox">--></div>
           <div class="first-div">{{item.name}}</div>
           <div class="second-div">{{item.type}}</div>
           <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div "></i></div>

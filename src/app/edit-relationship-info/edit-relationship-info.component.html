@@ -65,14 +65,32 @@
             </div>
        </div>
       <div class="modal-footer">
-         <!-- <div id="msg-id">          
-          <div *ngIf="autoColumnMatch" class="alert alert-success alert-dismissible m-t-6" role="alert">
+          <div *ngIf="updateNotif" id="msg-id"> 
+            <div class="alert alert-danger alert-dismissible m-t-6" role="alert">
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Error!</strong>:{{errorMsg}}
+          </div> 
+        </div>        
+          <!-- 
+            <div *ngIf="autoColumnMatch" id="msg-id"> 
+              <div class="alert alert-success alert-dismissible m-t-6" role="alert">
               <button type="button" class="close" (click)="closeAutoMatchMessage()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
               <strong>Success</strong>: {{autoColumnMatchMessage}}
             </div>
-        </div> -->
+          </div> -->
+        
+        <div *ngIf="updateNotifSuccess" id="msg-id"> 
+        <div class="alert alert-success alert-dismissible m-t-6" role="alert">
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Success</strong>: {{errorMsg}}
+          </div>
+        </div>
         <div class="col-md-12" style="padding-right: 0px;"> 
             <div class="action-btn">
             <button class="mat-raised-button cancel btn-padding" (click)="closeErrorMsg(); resetSelection()" data-dismiss="modal">Cancel</button>
@@ -86,28 +104,7 @@
     </div>
   </div>
 
-  
-<button style="display: none" type="button" id="editermsg" data-toggle="modal" data-target="#editemsg">Open Modal</button>
-<div class="modal fade" id="editemsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
-    <div class="modal-content">
-        <div class="error-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
-          </div>
-          <div class="modal-body">
-              <p class="popup-paragraph-cls"> {{errorMsg}} </p>
-            </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">OK</button>      
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<button style="display: none" type="button" id="editssmsg" data-toggle="modal" data-target="#editsmsg">Open Modal</button>
+<!-- <button style="display: none" type="button" id="editssmsg" data-toggle="modal" data-target="#editsmsg">Open Modal</button>
 <div class="modal fade" id="editsmsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
   <div class="modal-dialog"  style="width: 480px;">
     <div class="modal-content">
@@ -123,5 +120,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
