@@ -12,9 +12,9 @@ import {
   getPreorderDFS, ColumnConfigFunction, deleteNode, columnConfigFunctionList
 } from './ert-filter';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
-import { map } from 'rxjs/operators';
 import { MatAccordion } from '@angular/material';
+import { Observable } from 'rxjs';
+import { of } from "rxjs";
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
@@ -75,6 +75,7 @@ export class ErtTableComponent implements OnInit {
   availItemsPerPage = 49;
   isQueryMode = false;
   isUserDefinedColumnInProgress = false;
+  filterWhereClause = '';
   @ViewChild(MatAccordion) accordion: MatAccordion;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
@@ -233,7 +234,6 @@ export class ErtTableComponent implements OnInit {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.ertService.getErtAvailableTable(this.ertJobId, this.avilableStartIndex).subscribe(result => {
         this.ertAvillableTableList = result;
-        console.log(this.ertAvillableTableList);
         this.avilableTableCount = this.ertAvillableTableList.erttableList.sourceTableCount -
           this.ertAvillableTableList.erttableList.selectedTableCount;
       });
@@ -782,18 +782,23 @@ export class ErtTableComponent implements OnInit {
 
   createFilterColumnConfig() {
     const filterMap = new Map();
-    let treeStack = [];
-    let Expression;
-    let tempString = 'order by';
+    let tempString = 'order by ';
+    let expressionWhere = '';
+    const tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     const temp = this.validateTree(this.filterdata.root);
     if (temp === null) {
-      treeStack = getPreorderDFS(this.filterdata);
-      Expression = this.constructExpression(treeStack.reverse());
+      if (this.filterdata.root.children.length !== 0) {
+        this.createFilterWhereClause(this.filterdata.root, tableName).subscribe(a => {
+          expressionWhere = a;
+        });
+      } else {
+        expressionWhere = this.filterdata.root.column + ' ' + this.filterdata.root.condition + ' ' + this.filterdata.root.value;
+      }
       filterMap.set('filterList', JSON.stringify(this.filterdata));
       if (this.dataOrderList.length !== 0) {
         filterMap.set('orderList', JSON.stringify(this.dataOrderList));
         for (const item of this.dataOrderList) {
-          tempString = tempString + item.column + ' ';
+          tempString = tempString + tableName + '.' + item.column + ' ';
           if (item.order !== null) {
             tempString = tempString + item.order;
           }
@@ -805,8 +810,9 @@ export class ErtTableComponent implements OnInit {
       }
       this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
         filterConfig = JSON.stringify(Array.from(filterMap.entries())).replace(/"/g, '\'');
+      this.filterWhereClause = 'where ' + '(' + expressionWhere + ')';
       this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.filterQuery
-        = Expression + tempString.substring(0, tempString.length - 1);
+        = this.filterWhereClause + ' ' + tempString.substring(0, tempString.length - 1);
     } else {
       if (this.filterdata.root.children.length === 0) {
         this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig.
@@ -818,7 +824,7 @@ export class ErtTableComponent implements OnInit {
           filterConfig = JSON.stringify(Array.from(filterMap.entries())).replace(/"/g, '\'');
         tempString = tempString + ' ';
         for (const item of this.dataOrderList) {
-          tempString = tempString + item.column + ' ';
+          tempString = tempString + tableName + '.' + item.column + ' ';
           if (item.order !== null) {
             tempString = tempString + item.order;
           }
@@ -833,6 +839,21 @@ export class ErtTableComponent implements OnInit {
         // alert('Invalid Filter Condition');
       }
     }
+  }
+
+  createFilterWhereClause(obj, tableName): Observable<string> {
+    const children = obj.children;
+    for (const child of children) {
+      if (child.children.length === 0) {
+        // tslint:disable-next-line:max-line-length
+        this.filterWhereClause = this.filterWhereClause + '(' + tableName + '.' + child.column + ' ' + child.condition + ' ' + child.value + ') ' + child.operation + ' ';
+      } else {
+        this.filterWhereClause = this.filterWhereClause + '(';
+        this.createFilterWhereClause(child, tableName);
+        this.filterWhereClause = this.filterWhereClause + ')';
+      }
+    }
+    return of(this.filterWhereClause);
   }
   // tslint:disable-next-line: no-shadowed-variable
   validateTree(element) {
@@ -951,7 +972,6 @@ export class ErtTableComponent implements OnInit {
   }
 
   getAvilableTablePage(page) {
-    console.log(page);
     this.ertAvillableTableList.erttableList.ertTableList = [];
     this.avilableStartIndex = page;
     this.getErtAvailableTable(page);
