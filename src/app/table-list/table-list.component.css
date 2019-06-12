@@ -99,8 +99,9 @@ h4 {
 .items-list {
   overflow-x: hidden;
   overflow-y: auto;
-  height: 576px;
+  height: max-content;
   padding-left: 20px;
+  padding-bottom: 2%;
 }
 
 .tablename-list {
@@ -109,14 +110,13 @@ h4 {
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  /* height: 280px; */
-  /* margin-top: 0px; */
+  max-height:50vh;
 }
 
 .card {
   width: 105%;
-  /* height: 410px; */
   height: 105%;
+  min-height: 70vh;
 }
 
 #analysis-view .card {
@@ -128,15 +128,14 @@ h4 {
   /* height: 625px; */
 }
 
-/* #analysis-view{
+#analysis-view{
+  overflow: auto;
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-flow: row wrap;
 }
-
-.col-list {
-  flex: 1;
-} */
-
-
 
 .expansion-outer{
   margin-top: 12px;

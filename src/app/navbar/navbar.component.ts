@@ -28,8 +28,6 @@ export class NavbarComponent implements OnInit {
 
   constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService) { }
   ngOnInit() {
-    const ele = document.getElementsByTagName('body')[0];
-    ele.classList.remove('overlayclass');
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
      if (this.enableAuditArray.includes(i)) {
