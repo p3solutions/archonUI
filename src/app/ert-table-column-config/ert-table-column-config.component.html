@@ -2,18 +2,18 @@
   <div class="row">
     <div class="col-md-3">
       <div class="card" style="height:455px; margin-left: 25px;">
-          <div class="table-list">
-              Table List
-             </div>
-             <div class='body-left'><a href="" style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
-              <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
-                placeholder="Search Table"></div>
-                
-
-        <div class="card-body" id="ert-tbl-search">          
-          <div id="tbl-list"  style="height: 326px;">
+        <div class="table-list">
+          Table List
+        </div>
+        <div class='body-left'><a href="" style="z-index:1"
+            class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+            placeholder="Search Table"></div>
+        <div class="card-body" id="ert-tbl-search">
+          <div id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
-              <div class="well" (click)="selectTable(item.tableId)" *ngFor="let item of selectedTableList | searchTable:searchTableName">
+              <div class="well" (click)="selectTable(item.tableId)"
+                *ngFor="let item of selectedTableList | searchTable:searchTableName">
                 <div class="first-div">{{item.tableName}}</div>
               </div>
             </div>
@@ -24,25 +24,11 @@
     <div class="col-md-9">
       <div class="card" style="height:455px; margin-right: 25px;">
         <div class="card-body">
-          <!-- <div class="row">
-            <div class="col-md-6">
-              <div id="table-name-heading" class="form-group" style="padding: 10px;">
-                <label id="lbl-alias">{{selectedTableName}}</label>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div id="table-name-heading" class="form-group" style="padding: 10px;">
-                <label id="lbl-alias">{{ExpectedTableName}}</label>
-              </div>
-            </div>
-          </div> -->
           <div class="col-md-6">
             <div class="card" style="height:453px;overflow-y:auto;margin-left: -15px;">
               <div class="card-body" id="ingest-data">
                 <div class="table-c-list">
-                
-                   Original Table - {{selectedTableName}}
-                 
+                  Original Table - {{selectedTableName}}
                 </div>
                 <div class="form-group">
                   <div *ngFor="let item of showColumns('original')" class="table-col-exptd">
@@ -56,9 +42,7 @@
             <div class="card" style="height:453px;overflow-y:auto;margin-right: -15px;">
               <div class="card-body" id="delete-data">
                 <div class="table-c-list">
-                
-                   Expected Table - {{ExpectedTableName}}
-                
+                  Expected Table - {{ExpectedTableName}}
                 </div>
                 <div class="form-group">
                   <div *ngFor="let item of showColumns('expected')" class="table-col-exptd">
@@ -76,13 +60,19 @@
     </div>
   </div>
   <div class="row" id="nextbtn" style="margin-top: 15px;">
-    <button type="button" [disabled]="isDisabled" class="btn btn-padding primary-btn-color" (click)="saveERTJob('READY')" style="float: right;margin-right: 12px">Mark
-      As Complete  <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i></button>
-    <button type="button" [disabled]="issaveDisabled"  class="btn btn-padding primary-btn-color" (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 12px">Save
+    <button type="button" [disabled]="isDisabled"
+      class="btn btn-padding {{isDisabled?'primary-btn-color-disabled':'primary-btn-hover-margin primary-btn-color'}} "
+      (click)="saveERTJob('READY')" style="float: right;margin-right: 24px">Mark
+      As Complete <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i></button>
+    <button type="button" [disabled]="issaveDisabled"
+      class="btn btn-padding {{issaveDisabled?'primary-btn-color-disabled':'primary-btn-hover-draft-margin primary-btn-color'}} "
+      (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 5px">Save
       As Draft <i *ngIf="issaveDisabled" class="fa fa-spinner fa-spin inline-loader"></i></button>
-    <button class="btn btn-padding primary-btn-color" (click)="gotoExtractData();" style="float:right;margin-right:5px;">
+    <button class="btn btn-padding primary-btn-color" (click)="gotoExtractData();"
+      style="float:right;margin-right:5px;">
       Back</button>
-    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
+    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
+      style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>
@@ -96,9 +86,10 @@
         <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()" data-dismiss="modal">YES</button>
-        
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()"
+          data-dismiss="modal">YES</button>
+
       </div>
     </div>
   </div>

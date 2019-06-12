@@ -9,35 +9,37 @@
                 <input [disabled]="true" id="extract-checkbox" type="checkbox"><label>Extract Data</label>
               </div>
             </div>
-            <div *ngIf="from =='data-record'" class="row">
+            <div *ngIf="from ==='data-record'" class="row">
               <div class="col-md-12 col-lg-12">
-                <input type="text" [(ngModel)]="extractDataConfigInfo.titleName" (keyup)="checkToEnableBtn()" id="extract-title-name"
-                  name="title-name" class="form-control" placeholder="Title Name">
+                <input type="text" [(ngModel)]="extractDataConfigInfo.titleName" (keyup)="checkToEnableBtn()"
+                  id="extract-title-name" name="title-name" class="form-control" placeholder="Title Name">
               </div>
             </div>
-            <div *ngIf="from =='SIP'" class="row">
+            <div *ngIf="from ==='SIP'" class="row">
               <div class="col-md-12 col-lg-12">
-                <input type="text" [(ngModel)]="extractDataConfigInfo.applicationName" (keyup)="checkToEnableBtn()" id="extract-application-name"
-                  name="title-name" class="form-control" placeholder="Application Name">
-                  <div class="note">Note: Appliaction name is space not allowed</div>
+                <input type="text" [(ngModel)]="extractDataConfigInfo.applicationName" (keyup)="checkToEnableBtn()"
+                  id="extract-application-name" name="title-name" class="form-control" placeholder="Application Name">
+                <!-- <div class="note">Note: Application name is space not allowed.</div> -->
               </div>
             </div>
-            <div *ngIf="from =='SIP'" class="row">
+            <div *ngIf="from ==='SIP'" class="row">
               <div class="col-md-12 col-lg-12">
-                <input type="text" [(ngModel)]="extractDataConfigInfo.holdingName" (keypress)="space($event)" (keyup)="checkToEnableBtn()" id="extract-holding-name"
-                  name="title-name" class="form-control" placeholder="Holding Name">
-                  <div class="note">Note: Holding name is space not allowed</div>
+                <input type="text" [(ngModel)]="extractDataConfigInfo.holdingName" (keypress)="space($event)"
+                  (keyup)="checkToEnableBtn()" id="extract-holding-name" name="title-name" class="form-control"
+                  placeholder="Holding Name">
+                <div class="note">Note: In Holding name space is not allowed.</div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12 col-lg-12 font-left" id="extract-slider-heading">
-                  <small>Xml/SIP file split size in MB (Default 100)</small>
+                <small>Xml/SIP file split size in MB (Default 100)</small>
               </div>
             </div>
             <div class="row">
               <div class=" col-md-12 col-lg-12" style="height: 60px; font-size: 12px;">
-                <mv-slider [value]="extractDataConfigInfo.xmlFileSplitSize" [step]="10" (change)="setXMLFileSplitSize($event)"
-                  [ticksLabels]="[0,200,400,600,800,1000]" [ticks]="[0,200,400,600,800,1000]"></mv-slider>
+                <mv-slider [value]="extractDataConfigInfo.xmlFileSplitSize" [step]="10"
+                  (change)="setXMLFileSplitSize($event)" [ticksLabels]="[0,200,400,600,800,1000]"
+                  [ticks]="[0,200,400,600,800,1000]"></mv-slider>
               </div>
             </div>
           </div>
@@ -53,28 +55,33 @@
             </div>
             <div class="form-group">
               <div>
-                <input type="text" (keyup)="checkToEnableBtn()" [(ngModel)]="ingestionDataConfigObj.infoArchiveName" name="app-name"
-                  class="form-control" [disabled]="disableIngestData" placeholder="InfoArchieve Application Name">
-                <small>Note: Appliaction name is case sensitive</small>
+                <input type="text" (keyup)="checkToEnableBtn()" [(ngModel)]="ingestionDataConfigObj.infoArchiveName"
+                  name="app-name" class="form-control" [disabled]="disableIngestData"
+                  placeholder="InfoArchieve Application Name">
+                <small>Note: Appliaction name is case sensitive.</small>
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="text" (keyup)="checkToEnableBtn()" [(ngModel)]="ingestionDataConfigObj.infoArchiveSchemaName"
-                  name="schema-name" [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve Application Schema Name">
-                <small>Note: Schema name is case sensitive</small>
+                <input type="text" (keyup)="checkToEnableBtn()"
+                  [(ngModel)]="ingestionDataConfigObj.infoArchiveSchemaName" name="schema-name"
+                  [disabled]="disableIngestData" class="form-control"
+                  placeholder="InfoArchieve Application Schema Name">
+                <small>Note: Schema name is case sensitive.</small>
               </div>
             </div>
             <div class="form-group">
               <div>
                 <input type="text" (keyup)="checkToEnableBtn()" [(ngModel)]="ingestionDataConfigObj.infoArchiveUserName"
-                  name="user-name" [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve username">
+                  name="user-name" [disabled]="disableIngestData" class="form-control"
+                  placeholder="InfoArchieve username">
               </div>
             </div>
             <div class="form-group">
               <div>
-                <input type="password" (keyup)="checkToEnableBtn()" name="info-password" [(ngModel)]="ingestionDataConfigObj.infoArchivePassword"
-                  [disabled]="disableIngestData" class="form-control" placeholder="InfoArchieve password">
+                <input type="password" (keyup)="checkToEnableBtn()" name="info-password"
+                  [(ngModel)]="ingestionDataConfigObj.infoArchivePassword" [disabled]="disableIngestData"
+                  class="form-control" placeholder="InfoArchieve password">
               </div>
             </div>
           </div>
@@ -94,27 +101,33 @@
     </div>
   </div>
   <div class="row" id="saveBtnId">
-    <button type="button" [disabled]="isDisabledSaveBtn" class="btn btn-padding primary-btn-color" (click)="gotoTableColConfig()"
-      style="float: right;margin-right: 12px">Next</button>
-    <button class="btn btn-padding primary-btn-color" (click)="gotoTableExtraction()" style="float:right;margin-right:5px;">
+    <button type="button" [disabled]="isDisabledSaveBtn"
+      class="btn btn-padding {{isDisabledSaveBtn?'primary-btn-color-disabled':'primary-btn-color'}}"
+      (click)="gotoTableColConfig()" style="float: right">Next</button>
+    <button class="btn btn-padding primary-btn-color" (click)="gotoTableExtraction()"
+      style="float:right;margin-right:5px;">
       Back</button>
-    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model" style="float:right;margin-right:5px;">
+    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
+      style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>
 <div id="confirm_model" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content" style="width: 430px;">
-      <div class="modal-header">
-        <div class="modal-title">Confirm Cancel</div>
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header warning-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">warning</i>
+          <div class="pop-title-ert">Confirm Cancel</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
+        <p class="popup-paragraph-cls">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()" data-dismiss="modal">Yes</button>
-        
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-warning-popup-primary-color" (click)="cancel()"
+          data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>

@@ -24,11 +24,6 @@ export class AdhocSearchScreenComponent implements OnInit {
       this.searchCriteria = JSON.parse(JSON.stringify(result));
       this.updateSearchCriteriaLength.emit(this.searchCriteria.length);
     });
-    // this.adhocService.updatedAdhocHeaderInfo.subscribe(result => {
-    //   if (result === null) {
-    //     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
-    //   }
-    // });
   }
 
   gotoSearchCriteriaEdit(columnId) {
@@ -54,6 +49,10 @@ export class AdhocSearchScreenComponent implements OnInit {
         tempSearchCriteria.name = event.item.data.node.name;
         tempSearchCriteria.tableName = tableName;
         tempSearchCriteria.label = event.item.data.node.name;
+        tempSearchCriteria.dataType = event.item.data.node.dataType;
+        if (tempSearchCriteria.dataType === 'date') {
+          tempSearchCriteria.fieldType = 'DATE';
+        }
         this.searchCriteria.push(tempSearchCriteria);
       } else {
         document.getElementById('label-popup-btn').click();

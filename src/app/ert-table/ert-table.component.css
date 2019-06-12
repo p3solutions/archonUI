@@ -658,13 +658,13 @@ a:hover {
   text-transform: capitalize;
 }
 
-.modal-header {
+/* .modal-header {
   padding: 4px;
   padding-left: 15px;
   background-color: #2879ff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-}
+} */
 
 .modal-title {
   float: left;

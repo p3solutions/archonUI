@@ -93,14 +93,25 @@ export class ErtDatarecordConfigComponent implements OnInit {
         this.isRelationNot = true;
         this.enableNextBtn = false;
       }
-      this.primaryTable = getPrimaryArray(this.relationshipInfo);
-      this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-      for (const i of this.primaryTable) {
-        this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
-      }
-      this.selectedValues.push(value.tableName);
-      this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
-      this.createchart();
+       if (this.relationshipInfo.length > 0) {
+            this.primaryTable = getPrimaryArray(this.relationshipInfo);
+            this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+            for (const i of this.primaryTable) {
+              this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+            }
+            this.selectedValues.push(value.tableName);
+            this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+            this.createchart();
+          } else {
+            this.data = {
+              color: '#ffffff',
+              enableClick: false,
+              id: 'NoRelation',
+              name: '',
+              visible: true,
+            };
+            this.createchart();
+          }
     });
   }
 
@@ -204,17 +215,36 @@ export class ErtDatarecordConfigComponent implements OnInit {
         .attr('dy', 4)
         .text(function (d: any) { return d.data.name; });
       nodeEnter.on('mouseover', function (d) {
-        link.style('visibility', function (d) { if (d.target.data.visible === false) { return 'visible'; } });
-        node.style('visibility', function (d) { if (d.data.visible === false) { return 'visible'; } });
-        let ifSelected = 'Primary Table';
-        console.log(d);
+        const nodename = d.data.name;
+        link.style('visibility', function (d) {
         if (d.parent !== null) {
-          if (!d.data.visible) {
+          if (d.target.data.visible === false && d.target.parent.data.name === nodename) {
+            return 'visible';
+          } else {
+            return 'none';
+          }
+        }
+        });
+        node.style('visibility', function (d) {
+          if (d.parent !== null) {
+            if (d.data.visible === false && d.parent.data.name === nodename) {
+              return 'visible';
+            } else {
+              return 'none';
+            }
+          }
+        });
+        let ifSelected = 'Primary Table';
+        if (d.parent !== null) {
+          if (d.data.color === 'black') {
             ifSelected = 'Value Already Selected in this Level';
           } else {
             ifSelected = 'Select Value';
           }
         }
+        if (d.data.id === 'NoRelation') {
+          ifSelected = 'No Relationship';
+      }
         div.transition().duration(200).style('opacity', .9);
         div.html(ifSelected)
           .style('left', (d3.event.pageX - 350) + 'px')

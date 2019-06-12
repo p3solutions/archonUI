@@ -284,11 +284,11 @@ td.tdr {
   color: white
 } */
 
-.material-icons {
+.material-icons:not(.popup-material-icon-cls) {
   font-size: 29px !important;
 }
 
-.job-info-icon{
+.job-info-icon {
   color: #ffffff;
   font-size: 22px !important;
 }

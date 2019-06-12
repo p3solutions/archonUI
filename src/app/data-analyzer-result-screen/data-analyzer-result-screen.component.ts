@@ -5,6 +5,8 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { Route, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
+import { MatStepper } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-data-analyzer-result-screen',
@@ -38,7 +40,19 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   updateNotif = false;
   p = 1;
   jobId: any;
-
+  @ViewChild('stepper') stepper: MatStepper;
+  value: any;
+  dataSource = new MatTableDataSource<any>(this.populateSecondaryValuesArray);
+  displayedColumns: string[] = ['primaryColumn', 'dataType', 'secondaryColumnName', 'matchPercentage', 'checked'];
+  columnlength = 0;
+  dataSource1 = new MatTableDataSource<any>(this.populatePrimaryValuesArray);
+  displayedColumns1: string[] = ['tableName', 'dataType', 'secondaryColumnName', 'matchPercentage', 'checked'];
+  columnlength1 = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  toggleBoolean = false;
+  selectedRow: any;
+  selectedIndex = 0;
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -62,6 +76,28 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
 
   ngAfterViewInit() {
     this.selectRow();
+    this.value = document.querySelectorAll('.mat-horizontal-stepper-header');
+    if (this.value[0] !== undefined && this.value[1] !== undefined && this.value[2] !== undefined && this.value[3] !== undefined) {
+      this.value[0].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">crop_portrait</i>';
+      this.value[1].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">table_chart</i>';
+      this.value[2].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">insert_chart_outlined</i>';
+      this.value[3].querySelector('.mat-step-icon-content').innerHTML = '<i class="material-icons">format_list_bulleted</i>';
+      this.value[0].children[1].classList.add('finished-step');
+      this.value[1].children[1].classList.add('finished-step');
+      this.value[2].children[1].classList.add('finished-step');
+      this.value[3].children[1].classList.add('active-step');
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      a[1].classList.add('mat-auth-psedu');
+      a[2].classList.add('mat-review-psedu');
+      a[0].classList.add('mat-psedu');
+      a[1].classList.add('mat-k-psedu');
+      b[0].children[1].classList.add('mat-horizental-line');
+      b[0].children[3].classList.add('mat-horizental-line');
+      b[0].children[5].classList.add('mat-horizental-line');
+      a[3].classList.add('mat-analyze-psedu-before');
+      a[2].classList.add('mat-analyze-psedu');
+    }
   }
 
   getPrimaryColumns() {
@@ -126,13 +162,23 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.activatePrimary = true;
   }
 
-  populatePrimaryValues(x) {
+  populatePrimaryValues(x, i) {
+    this.selectedRow = i;
     this.populatePrimaryValuesArray = this.primaryColMap.get(x.key);
+    this.dataSource1.data = this.populatePrimaryValuesArray;
+    this.dataSource1.paginator = this.paginator;
+    this.dataSource1.sort = this.sort;
+    this.columnlength1 = this.populatePrimaryValuesArray.length;
     this.selectedPrimaryColumn = x.key;
   }
 
-  populateSecondaryValues(x) {
+  populateSecondaryValues(x, i) {
+    this.selectedRow = i;
     this.populateSecondaryValuesArray = this.secTableNameMap.get(x.key);
+    this.dataSource.data = this.populateSecondaryValuesArray;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.columnlength = this.populatePrimaryValuesArray.length;
     this.selectedSecondaryTable = x.key;
   }
 
@@ -281,10 +327,14 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   selectRow() {
-    if ((<HTMLElement>document.querySelectorAll('.sec-table tr')[1]) !== undefined) {
+    if ((<HTMLElement>document.querySelectorAll('.sec-table div')[0]) !== undefined) {
       setTimeout(() => {
-        (<HTMLElement>document.querySelectorAll('.sec-table tr')[1]).click();
+        (<HTMLElement>document.querySelectorAll('.sec-table div')[0]).click();
       }, 1);
     }
+  }
+
+  toggle() {
+    this.toggleBoolean = !this.toggleBoolean;
   }
 }

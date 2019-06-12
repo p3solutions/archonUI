@@ -64,6 +64,8 @@ import { CreateWorkspacePageComponent } from './create-workspace-page/create-wor
 import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import { RedirectGuard } from './redirect/redirect.guard';
+import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
+import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -97,7 +99,14 @@ const routes: Routes = [
             path: 'analysis', component: TableListComponent, children: [
               {
                 path: 'resultant', component: DataAnalyzerResultScreenComponent
-              }]
+              },
+              {
+                path: 'addjoin', component: AddDirectJoinComponent
+              },
+              {
+                path: 'spview', component: StoredProcViewComponent
+              }
+            ]
           }
         ]
       }, {

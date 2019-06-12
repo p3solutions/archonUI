@@ -11,7 +11,7 @@ import { EnvironmentService } from '../environment/environment.service';
   providedIn: 'root'
 })
 export class StoredProcViewService {
-
+  tableName;
   private addSPVValue = new BehaviorSubject(false);
   currentSPVValue = this.addSPVValue.asObservable();
 

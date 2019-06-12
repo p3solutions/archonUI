@@ -1490,6 +1490,10 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
   color: #ff6702;
 }
 
+.stop {
+  color: #FD3000;
+}
+
 
 
 .create-user-invite-dialog .flex-container {
@@ -1886,7 +1890,6 @@ button.secondary-btn-color:hover {
 
 button.primary-btn-color-disabled:hover {
   color: #ffffff;
-
 }
 
 button.secondary-btn-color-disabled:hover {
@@ -1954,7 +1957,6 @@ a.required-color {
 
 /* end-encypted field,and required icon in adhoc  */
 /* ends- common btn css */
-
 /* start-popup msg color */
 
 .modal-dialog {
@@ -2114,3 +2116,21 @@ button.btn-secondary-popup:hover {
 .modal-body-width {
   width: 480px;
 }
+
+.pop-title-ert {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+button.ert-secondary-btn-color {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+button.ert-secondary-btn-color:hover {
+  transform: scale(1.1, 1.1);
+}
+

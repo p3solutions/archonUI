@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output, ViewChild } from '@angular/core';
 import { takeLast } from 'rxjs/operators';
 import { AddDirectJoinService } from './add-direct-join.service';
 import { TableListService } from '../table-list/table-list.service';
 import { SecondaryColumnPipe } from '../secondary-column.pipe';
+import { Router } from '@angular/router';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 
 @Component({
@@ -11,9 +13,9 @@ import { SecondaryColumnPipe } from '../secondary-column.pipe';
   styleUrls: ['./add-direct-join.component.css']
 })
 export class AddDirectJoinComponent implements OnInit, OnChanges {
-  @Input() directJoin: any;
+  directJoin: any;
   tableList: string[];
-  @Input() workspaceID: any;
+  workspaceID: any;
   @Output() updateEvent = new EventEmitter<boolean>();
   primaryTableName: any;
   primaryTableId: any;
@@ -35,29 +37,41 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   selected = [];
   autoColumnMatch = false;
   autoColumnMatchMessage = '';
-
+  dataSource = new MatTableDataSource<any>(this.primaryColumns);
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumns'];
+  columnlength = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-
-  constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService) { }
+  constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService, private router: Router) { }
 
   ngOnInit() {
+    this.workspaceID = this.addDirectJoinService.workspaceID;
+    this.directJoin = this.addDirectJoinService.directJoin;
     this.getTableList();
-  }
-
-  ngOnChanges(change: SimpleChanges) {
     this.enableRelation = false;
     this.populateValues();
   }
 
+  ngOnChanges(change: SimpleChanges) {
+    // this.enableRelation = false;
+    // this.populateValues();
+  }
+
   populateValues() {
-    this.primaryTableName = this.directJoin.tableName;
-    this.primaryTableId = this.directJoin.tableId;
-    this.workspaceID = this.workspaceID;
-    this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
-      this.primaryColumns = res;
+    if (this.directJoin !== undefined) {
+      this.primaryTableName = this.directJoin.tableName;
+      this.primaryTableId = this.directJoin.tableId;
+      this.workspaceID = this.workspaceID;
+      this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
+        this.primaryColumns = res;
+        this.dataSource.data = this.primaryColumns;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.columnlength = this.primaryColumns.length;
+      }
+      );
     }
-    );
   }
 
   toggleTblSelection(_event) {
@@ -167,7 +181,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
   resetselectedValues() {
     this.populateValues();
-    
   }
 
   closeErrorMsg() {
@@ -179,7 +192,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   searchTablelist() {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
+    this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
       this.tableList = res.tableList;
     });
   }
@@ -188,7 +201,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       this.tableList = res.tableList;
       if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      }
     });
   }
   getPage(page: number) {
@@ -198,7 +211,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       this.tableList = res.tableList;
       if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      }
     });
   }
 
@@ -221,8 +234,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
             break;
           }
         }
-          tableRow.children[2].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
-          this.selectedValues(primaryValues, index, primaryColumn.columnName);
+        tableRow.children[2].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
+        this.selectedValues(primaryValues, index, primaryColumn.columnName);
       }
     }
     this.autoColumnMatch = true;
@@ -231,6 +244,12 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   closeAutoMatchMessage() {
     this.autoColumnMatch = false;
+  }
+
+  closeScreen() {
+    this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+    this.addDirectJoinService.changeDJVBooleanValue(true);
+    // this.tablelistService.changeBooleanValue(true);
   }
 
 }

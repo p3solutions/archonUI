@@ -1,51 +1,62 @@
-<div id="drag-panel-column" class="row panel-screen" cdkDropList
+<div id="drag-panel-column" class="row panel-screen" cdkDropList [cdkDropListData]="searchResult"
   (cdkDropListDropped)="drop($event)">
-  <mat-tab-group (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex">
+  <mat-tab-group #tabGroup (selectedTabChange)="panelChange($event)" [(selectedIndex)]="openPanelIndex"
+    cdkDropListGroup>
     <mat-tab label="Main Panel Details">
-      <mat-card *ngFor="let item of  searchResult?.mainPanel" class="col-md-4 panel-column-box">
-        <mat-card-header>
-          <mat-card-title>{{item.label}}
-            <span> <a class="cursor-poniter"
-                (click)="gotoMainPanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i class="material-icons">
-                  edit
-                </i></a>
-              <a class="cursor-poniter" (click)="deleteMainPanelColumn(item?.columnId,item?.tableId,item?.label)"><i
-                  class="material-icons">
-                  delete
-                </i></a></span>
-          </mat-card-title>
-          <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
-        </mat-card-header>
-      </mat-card>
+      <div id="{{mainPanelId}}" cdkDropList [cdkDropListData]="searchResult?.mainPanel"
+        (cdkDropListDropped)="drop($event)" style="display:grid">
+        <mat-card cdkDrag *ngFor="let item of searchResult?.mainPanel" class="col-md-4 panel-column-box"
+          [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
+          <mat-card-header>
+            <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted field" class="material-icons encypted-icon {{item.isHidden?'hidden-icon':''}}">lock</i>
+              <span> <a class="cursor-poniter" matTooltip="Edit"
+                  (click)="gotoMainPanelColumnEdit(item?.columnId,item?.tableId,item?.label)">
+                  <i class="material-icons {{item.isHidden?'hidden-icon':''}}">
+                    edit
+                  </i></a>
+                <a class="cursor-poniter" matTooltip="Delete" (click)="deleteMainPanelColumn(item?.columnId,item?.tableId,item?.label)"><i
+                    class="material-icons {{item.isHidden?'hidden-icon':''}}">
+                    delete
+                  </i></a></span>
+            </mat-card-title>
+            <mat-card-subtitle>({{item.tableName}})</mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </div>
     </mat-tab>
     <mat-tab label="Inline Panel Details">
       <ng-template mat-tab-label>
         Inline Panel Details
       </ng-template>
-      <button mat-raised-button class="example-add-tab-button" (click)="addTabInInlinePanel($event)">
-        <i class=" fa fa-plus"></i></button>
+      <button mat-raised-button matTooltip="Add Tab" class="example-add-tab-button" (click)="addTabInInlinePanel($event)">
+        <i  class=" fa fa-plus"></i></button>
       <div>
         <div class="tab">
           <mat-tab-group *ngIf="openPanelIndex===1" #MatInlineTabGroup [(selectedIndex)]="selectedInlineTab"
-            (selectedTabChange)="inlinePanelTabChanged($event)">
+            (selectedTabChange)="inlinePanelTabChanged($event)" cdkDropListGroup>
             <mat-tab label="tab.tabName" *ngFor="let tab of searchResult?.inLinePanel?.tabs; let index = index">
               <ng-template mat-tab-label>
                 {{tab.tabName}}
-                <a class="example-tab-icon" [hidden]="index===0" (click)="removeInlineTab(index)"><i
-                    class="fa fa-close"></i></a>
+                <a (click)="openInlineRenamePopup()" matTooltip="Rename Tab Name" class="example-tab-icon"><i
+                    class="fa fa-pencil"></i></a>
+                <a class="example-tab-icon" [hidden]="index===0" matTooltip="Remove Tab"
+                  (click)="removeInlineTab(index)"><i class="fa fa-close"></i></a>
               </ng-template>
-              <div style="display:grid">
-                <mat-card *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab">
+              <div id="{{tab.tabName}}" cdkDropList [cdkDropListData]="tab?.resultFields"
+                (cdkDropListDropped)="drop($event)" style="display:grid">
+                <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab"
+                  [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
                   <mat-card-header>
-                    <mat-card-title>{{item.label}}
-                      <span> <a class="cursor-poniter"
+                    <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted field"
+                        class="material-icons encypted-icon">lock</i>
+                      <span> <a class="cursor-poniter" matTooltip="Edit"
                           (click)="gotoInlinePanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i
-                            class="material-icons">
+                            class="material-icons {{item.isHidden?'hidden-icon':''}}">
                             edit
                           </i></a>
-                        <a class="cursor-poniter"
+                        <a class="cursor-poniter" matTooltip="Delete"
                           (click)="deleteInlinePanelColumn(item?.columnId,item?.tableId,item?.label)"><i
-                            class="material-icons">
+                            class="material-icons {{item.isHidden?'hidden-icon':''}}">
                             delete
                           </i></a></span>
                     </mat-card-title>
@@ -55,18 +66,6 @@
               </div>
             </mat-tab>
           </mat-tab-group>
-        </div>
-      </div>
-      <div class="rename" style="width: 26%; margin-left: 3%;">
-        <div class="rename-box">
-          <mat-form-field appearance="standard">
-            <mat-label>Rename Tab</mat-label>
-            <input matInput [(ngModel)]="inlineTabName" placeholder="Rename Tab">
-          </mat-form-field>
-          <div class="renameBtn-div">
-            <button mat-raised-button [disabled]="inlineTabName===''" class="renameBtn" (click)="renameInlineTabName()">
-              Rename</button>
-          </div>
         </div>
       </div>
     </mat-tab>
@@ -74,31 +73,36 @@
       <ng-template mat-tab-label>
         Side Panel Details
       </ng-template>
-      <button mat-raised-button class="example-add-tab-button" (click)="addTabInSidePanel()">
+      <button mat-raised-button matTooltip="Add Tab" class="example-add-tab-button" (click)="addTabInSidePanel()">
         <i class=" fa fa-plus"></i></button>
       <div style="width:100%">
         <div class="tab">
           <mat-tab-group #MatSideTabGroup *ngIf="openPanelIndex===2" [(selectedIndex)]="selectedSideTab"
             (selectedTabChange)="sidePanelTabChanged($event)">
-            <mat-tab #inlineTab label="tab.tabName"
-              *ngFor="let tab of searchResult?.sidePanel?.tabs; let index = index">
+            <mat-tab cdkDropList [cdkDropListData]="searchResult" (cdkDropListDropped)="drop($event)" #inlineTab
+              label="tab.tabName" *ngFor="let tab of searchResult?.sidePanel?.tabs; let index = index">
               <ng-template mat-tab-label>
                 {{tab.tabName}}
-                <a class="example-tab-icon" [hidden]="index===0" (click)="removeSideTab(index)"><i
-                    class="fa fa-close"></i></a>
+                <a (click)="openSideRenamePopup()" matTooltip="Rename Tab Name" class="example-tab-icon"><i
+                    class="fa fa-pencil"></i></a>
+                <a class="example-tab-icon" [hidden]="index===0" matTooltip="Remove Tab"
+                  (click)="removeSideTab(index)"><i class="fa fa-close"></i></a>
               </ng-template>
-              <div style="display:grid">
-                <mat-card *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab">
+              <div id="{{tab.tabName}}" cdkDropList [cdkDropListData]="tab?.resultFields"
+                (cdkDropListDropped)="drop($event)" style="display:grid">
+                <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab"
+                  [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
                   <mat-card-header>
-                    <mat-card-title>{{item.label}}
-                      <span> <a class="cursor-poniter"
+                    <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted Field"
+                        class="material-icons encypted-icon {{item.isHidden?'hidden-icon':''}}">lock</i>
+                      <span> <a class="cursor-poniter" matTooltip="Edit"
                           (click)="gotoSidePanelColumnEdit(item?.columnId,item?.tableId,item?.label)"><i
-                            class="material-icons">
+                            class="material-icons {{item.isHidden?'hidden-icon':''}}">
                             edit
                           </i></a>
-                        <a class="cursor-poniter"
+                        <a class="cursor-poniter" matTooltip="Delete"
                           (click)="deleteSidePanelColumn(item?.columnId,item?.tableId,item?.label)"><i
-                            class="material-icons">
+                            class="material-icons {{item.isHidden?'hidden-icon':''}}">
                             delete
                           </i></a></span>
                     </mat-card-title>
@@ -109,19 +113,61 @@
             </mat-tab>
           </mat-tab-group>
         </div>
-        <div class="rename">
-          <div class="rename-box">
-            <mat-form-field appearance="standard">
-              <mat-label>Rename Tab</mat-label>
-              <input matInput [(ngModel)]="sideTabName" placeholder="Rename Tab">
-            </mat-form-field>
-            <div class="renameBtn-div">
-              <button mat-raised-button [disabled]="sideTabName===''" class="renameBtn" (click)="renameSideTabName()">
-                Rename</button>
-            </div>
-          </div>
-        </div>
       </div>
     </mat-tab>
   </mat-tab-group>
+</div>
+
+<button style="display:none" type="button" id="inline-tab-rename-popup-btn" class="btn btn-info btn-lg"
+  data-toggle="modal" data-target="#inline-tab-rename-popup">Open
+  Modal</button>
+<div id="inline-tab-rename-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i style=" margin-right: 6px" class="material-icons popup-material-icon-cls">edit</i>Rename Inline Panel Tab
+          Name</h4>
+      </div>
+      <div class="modal-body" style="text-align:left">
+        <mat-form-field style="width:48%" appearance="standard">
+          <mat-label>Rename Tab</mat-label>
+          <input matInput [(ngModel)]="inlineTabName" placeholder="Rename Tab">
+        </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
+        <button type="button" [disabled]="inlineTabName===''"
+          class="btn btn-padding {{inlineTabName===''?'primary-btn-color-disabled':'primary-btn-color'}}"
+          (click)="renameInlineTabName()" data-dismiss="modal">Rename</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="side-tab-rename-popup-btn" class="btn btn-info btn-lg"
+  data-toggle="modal" data-target="#side-tab-rename-popup">Open
+  Modal</button>
+<div id="side-tab-rename-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i style=" margin-right: 6px" class="material-icons popup-material-icon-cls">edit</i>Rename Side Panel Tab
+          Name</h4>
+      </div>
+      <div class="modal-body" style="text-align:left">
+        <mat-form-field style="width:48%" appearance="standard">
+          <mat-label>Rename Tab</mat-label>
+          <input matInput [(ngModel)]="sideTabName" placeholder="Rename Tab">
+        </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
+        <button type="button" [disabled]="sideTabName===''"
+          class="btn btn-padding {{sideTabName===''?'primary-btn-color-disabled':'primary-btn-color'}}"
+          (click)="renameSideTabName()" data-dismiss="modal">Rename</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -171,6 +171,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     console.log(this.removeIndexValue);
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
       .subscribe(res => {
+        console.log(res);
         if (res && res.success) {
           this.removeIndexValue = [];
           this.resultantValues = [];
@@ -178,6 +179,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.errorMsg = res.data;
           this.updateNotifSuccess = true;
         } else {
+          console.log(res);
           this.errorMsg = res.errors;
           this.updateNotif = true;
         }

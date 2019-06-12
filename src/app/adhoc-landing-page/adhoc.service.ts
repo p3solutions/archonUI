@@ -24,6 +24,7 @@ export class AdhocService {
   downloadScreenUrl = this.apiUrl + 'adhocbuilder/application/screen/download?screenId=';
   getScreenInfoUrl = this.apiUrl + 'adhocbuilder/application/screen?screenId=';
   tableListUrl = this.apiUrl + 'metalyzer/tablesList?workspaceId=';
+  getIAVersionsUrl = this.apiUrl + 'adhocbuilder/ia-versions';
 
   constructor(
     private http: HttpClient,
@@ -45,9 +46,7 @@ export class AdhocService {
 
   createApplication(param): Observable<any> {
     return this.http.post<any>(this.createApplicationUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForSuccess),
-        catchError(this.handleError('createApplication', []))
-      );
+      pipe(map(this.extractDataForSuccess));
   }
 
   getApplication(workspaceId, startIndex): Observable<any> {
@@ -68,16 +67,12 @@ export class AdhocService {
 
   createScreen(param): Observable<any> {
     return this.http.post<any>(this.createScreenUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForSuccess),
-        catchError(this.handleError('createScreen', []))
-      );
+      pipe(map(this.extractDataForSuccess));
   }
 
   updateScreen(param, screenId): Observable<any> {
     return this.http.put<any>(this.createScreenUrl + '?screenId=' + screenId, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForSuccess),
-        catchError(this.handleError('updateScreen', []))
-      );
+      pipe(map(this.extractDataForSuccess));
   }
 
   getScreen(startIndex, workspaceId, appId): Observable<any> {
@@ -124,6 +119,13 @@ export class AdhocService {
       pipe(
         map(this.extractData),
         catchError(this.handleError('tables-getTableList()', []))
+      );
+  }
+
+  getIAVersions(): Observable<any> {
+    return this.http.get<any>(this.getIAVersionsUrl, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData),
+        catchError(this.handleError('getIAVersions', []))
       );
   }
 

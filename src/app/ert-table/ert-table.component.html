@@ -148,13 +148,14 @@
 <div id="add-edit-user-defined-column-modal" class="modal fade" role="dialog">
   <div class="modal-dialog" style="width:915px">
     <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">Add/Edit user defined columns
-        </div>
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <div class="pop-title-ert">Add/Edit user defined columns</div>
+        </h4>
       </div>
       <div class="modal-body">
         <div id="table-name-heading" class="form-group">
-          <input type="text" appNonspecialchar appNonspecialchar class="form-control"
+          <input type="text" appNonspecialchar appOnlyuppercaseallow class="form-control"
             (keyup)="setQueryModeUserDefined()" [disabled]="disabledUserDefinedColName"
             [(ngModel)]="usrDefinedColumnName" name="ucolumnname" id="ucolumnname"
             placeholder="Enter unique column name">
@@ -236,93 +237,6 @@
               </div>
             </mat-expansion-panel>
           </mat-accordion>
-          <!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="headingOne">
-                <h4 style="text-align:left" class="panel-title">
-                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    Combined Column Mode
-                  </a>
-                  <i style="float:right" class="fa fa-chevron-right"></i>
-                </h4>
-              </div>
-              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                  <div id="add-edit-column">
-                    <div class="form-inline" id="add-edit">
-                      <div class="add-edit-heading form-group">
-                        Prefix
-                      </div>
-                      <div class=" add-edit-heading form-group">
-                        Column
-                      </div>
-                      <div class=" add-edit-heading form-group">
-                        Suffix
-                      </div>
-                      <div class=" add-edit-heading form-group">
-                        Action
-                      </div>
-                    </div>
-                    <form class="form-inline" id="add-edit-form" [formGroup]="myForm">
-                      <div formArrayName="addEditColumn">
-                        <div *ngFor="let addEditItem of myForm.controls.addEditColumn['controls']; let i=index">
-                          <div [formGroupName]="i">
-                            <div class="add-edit-form-item form-group">
-                              <input type="text" class="form-control form-control-sm" formControlName="prefix">
-                            </div>
-                            <div class="add-edit-form-item form-group">
-                              <select class="form-control" formControlName="column">
-                                <option [ngValue]="null">Select Column</option>
-                                <option [ngValue]="item" *ngFor="let item of ursDefinedColumnNameList">{{item}}</option>
-                              </select>
-                            </div>
-                            <div class="add-edit-form-item form-group">
-                              <input type="text" class="form-control form-control-sm" formControlName="suffix">
-                            </div>
-                            <div class="add-edit-form-item action form-group">
-                              <a (click)="addColumns(i)"><i class="fa fa-plus"></i></a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <div id="user-defined-table">
-                    <div *ngFor="let item of userDefinedList;let i=index" class="user-defined-box form-inline">
-                      <div class="clearflex add-edit-form-item form-group">{{item.prefix}}</div>
-                      <div class="clearflex add-edit-form-item form-group">{{item.column}}</div>
-                      <div class="clearflex add-edit-form-item form-group">{{item.suffix}}</div>
-                      <div class="clearflex add-edit-form-item form-group"><a
-                          (click)="deleteUsrDefinedCol(i,item.column)"><i class="fa fa-trash"></i></a></div>
-                    </div>
-                  </div>
-                  <div id="query-mode-div">
-                    <label id="lbl-id">Query Mode</label>
-                    <textarea class="form-control" [disabled]="true" [(ngModel)]="usrDefinedQueryView"
-                      style="width: 100%;height: 106px;"></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="headingTwo">
-                <h4 style="text-align:left" class="panel-title">
-                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
-                    aria-expanded="false" aria-controls="collapseTwo">
-                    Query Mode
-                  </a>
-                  <i style="float:right" class="fa fa-chevron-right"></i>
-                </h4>
-              </div>
-              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">
-                  <textarea class="form-control" (keyup)="queryMode()"
-                    [(ngModel)]="usrDefinedQueryViewMode" style="width: 100%;height: 106px;"></textarea>
-                </div>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
       <div class="modal-footer">
@@ -330,8 +244,8 @@
           <a class="close" (click)="closeUserDefinedAlert()" aria-label="close">&times;</a>
           {{usrDefinedAlertMessage}}
         </div>
-        <button type="button" class="btn btn-padding primary-btn-color" id="usr-defined-close"
-          data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding ert-secondary-btn-color" id="usr-defined-close"
+          data-dismiss="modal">Cancel</button>
         <button type="button"
           class="btn btn-padding {{enableUserDefined?'primary-btn-color-disabled':'primary-btn-color'}}"
           [disabled]="enableUserDefined || isUserDefinedColumnInProgress" (click)="saveUsrDefinedColumn()">Save <i
@@ -344,8 +258,10 @@
 <div id="filter-modal" class="modal fade" role="dialog">
   <div class="modal-dialog" style="width:915px">
     <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">Filter/Order Conditions</div>
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <div class="pop-title-ert">Filter/Order Conditions</div>
+        </h4>
       </div>
       <div class="modal-body">
         <section id="tabs">
@@ -460,7 +376,7 @@
         </section>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-padding primary-btn-color" (click)="createFilterColumnConfig()"
           data-dismiss="modal">Save</button>
 
@@ -471,8 +387,10 @@
 <div id="config-modal" class="modal fade" role="dialog">
   <div class="modal-dialog" style="width:915px">
     <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">Column Configuration</div>
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <div class="pop-title-ert">Column Configuration</div>
+        </h4>
       </div>
       <div class="modal-body">
         <div id="table-name-heading" class="form-group">
@@ -522,7 +440,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">CLOSE</button>
       </div>
     </div>
   </div>
@@ -532,8 +450,10 @@
 <div id="ert-available-table-popup" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">Avaliable Ert Table List</div>
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <div class="pop-title-ert">Select Table</div>
+        </h4>
       </div>
       <div class="modal-body">
         <div id="avaliable-table-list">
@@ -549,25 +469,28 @@
         </pagination-controls>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="addSelectTableCreateJob()"
-          data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-padding btn-info-popup-primary-color" (click)="addSelectTableCreateJob()"
+          data-dismiss="modal">Add</button>
       </div>
     </div>
   </div>
 </div>
 <div id="reset_confirm_model" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content" style="width: 430px;">
-      <div class="modal-header">
-        <div class="modal-title">Confirm reset</div>
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header warning-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">warning</i>
+          <div class="pop-title-ert">Confirm reset</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
+        <p class="popup-paragraph-cls">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="refreshColumn()"
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-warning-popup-primary-color" (click)="refreshColumn()"
           data-dismiss="modal">Yes</button>
 
       </div>
@@ -575,17 +498,20 @@
   </div>
 </div>
 <div id="confirm_model" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content" style="width: 430px;">
-      <div class="modal-header">
-        <div class="modal-title">Confirm Cancel</div>
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header warning-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">warning</i>
+          <div class="pop-title-ert">Confirm Cancel</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
+        <p class="popup-paragraph-cls">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()"
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-warning-popup-primary-color" (click)="cancel()"
           data-dismiss="modal">Yes</button>
       </div>
     </div>
@@ -595,17 +521,20 @@
 <button style="display:none" type="button" id="warning-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
   data-target="#success">Open Modal</button>
 <div id="success" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert!</h4>
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Error</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>Filter can only be applied on primary table.</p>
+        <p class="popup-paragraph-cls">Filter can only be applied on primary table.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
-        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-padding btn-error-popup-primary-color"
           data-dismiss="modal">Ok</button>
       </div>
     </div>
@@ -619,7 +548,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header info-popup-header-cls">
-        <div class="modal-title popup-title-cls">Select Table to create job</div>
+        <h4 class="modal-title popup-title-cls">
+          <div class="pop-title-ert">Select Table</div>
+        </h4>
       </div>
       <div class="modal-body">
         <div class='search-original-table'><span style="z-index:1"
@@ -639,8 +570,8 @@
         </pagination-controls>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="addSelectTableCreateJob()"
+        <button type="button" class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-padding btn-info-popup-primary-color" (click)="addSelectTableCreateJob()"
           data-dismiss="modal">Add</button>
       </div>
     </div>

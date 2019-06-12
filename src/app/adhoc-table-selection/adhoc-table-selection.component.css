@@ -8,7 +8,7 @@
   position: relative;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 12px;
   letter-spacing: 0.2
 }
 
@@ -69,7 +69,6 @@ input#tablename {
 
 #ert-tbl-search {
   padding-bottom: 13px;
-  border-bottom: 2px solid #E6E9ED;
 }
 
 .pointer {
@@ -84,7 +83,6 @@ input#tablename {
 
 #select-tbl-list {
   width: 98%;
-  border-bottom: 2px solid #E6E9ED;
   margin-left: 13px;
 }
 
@@ -114,7 +112,7 @@ div.sticky {
   width: 5%;
   float: right;
   margin-top: -16px;
-  color: cornflowerblue;
+  color:#64b5f6;
 }
 
 #select-tbl-list .scroll-div {
@@ -124,7 +122,7 @@ div.sticky {
 
 #tbl-list .scroll-div {
   height: 326px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .well {
@@ -352,8 +350,8 @@ table tr td:nth-child(6) {
 }
 
 #search-box {
-  width: 84%;
-  margin-left: 6%;
+  width: 88%;
+  margin-left: 3%;
   margin-bottom: 0px;
 }
 
@@ -377,24 +375,45 @@ table tr td:nth-child(6) {
 }
 
 .black-heading {
-  font-size: 20px;
-  color: #000000;
+  font-size: 18px;
+  color: rgba(0,0,0,.87);
 }
 
-.graph-heading-div{
+.graph-heading-div {
   display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 53px;
-    line-height: 28.5714px;
-    text-size-adjust: 100%;
-    margin: 0px 0px 8px 0px;
-    padding: 0px 0px 3px 19px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    background-color: #64b5f6
+  flex-direction: row;
+  align-items: center;
+  height: 53px;
+  line-height: 28.5714px;
+  text-size-adjust: 100%;
+  margin: 0px 0px 8px 0px;
+  padding: 0px 0px 3px 19px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: #64b5f6
 }
 
-modal-body .p{
+modal-body .p {
   font-size: 15px;
+}
+
+
+.search-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  pointer-events: none;
+  color: #676767;
+}
+
+::ng-deep .ngx-graph-pagination ul.ngx-pagination {
+  margin-top: 10px;
+  margin-bottom: 0px !important;
+  padding-left: 0px !important
 }
