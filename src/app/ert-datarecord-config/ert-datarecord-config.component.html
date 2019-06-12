@@ -2,34 +2,37 @@
   <div class="row">
     <div class="col-md-3">
       <div class="card" style="height:455px; margin-left: 25px;">
-          <div class="table-list">
-              Table List
-             </div>
-             <div class='body-left'><a href="" style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
-              <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch" (keyup)="searchTablelist()"
-                placeholder="Search Table"></div>
-                
+        <div class="table-list">
+          Table List
+        </div>
+        <div class='body-left'><a href="" style="z-index:1"
+            class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+            (keyup)="searchTablelist()" placeholder="Search Table"></div>
+
 
         <div class="card-body" id="ert-tbl-search">
-            <h4 *ngIf="tableList.length===0" style="margin-top: 19%;" >No tables available</h4>
-            <div id="tbl-list" style="height: 326px;">
+          <h4 *ngIf="tableList.length===0" style="margin-top: 19%;">No tables available</h4>
+          <div id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
-              <div class="well" *ngFor="let i of tableList | paginate: { itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName">
-                <div><input style="float:left" type="radio" [value]="i.tableName" [checked]="i.tableName == selectedPrimaryTable"  name="x" (click)="populategraph(i, $event)"></div>
+              <div class="{{selectedPrimaryTable===i.tableName?'selectTableCls':''}} well"
+                *ngFor="let i of tableList | paginate: { itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName">
+                <div><input style="float:left" type="radio" [value]="i.tableName"
+                    [checked]="i.tableName == selectedPrimaryTable" name="x" (click)="populategraph(i, $event)"></div>
                 <div class="first-div">{{i.tableName}}</div>
-                <div><i class="fa fa-chevron-right icon-div "></i></div>
+                <div><i class="fa fa-angle-right icon-div "></i></div>
               </div>
             </div>
           </div>
           <pagination-controls (pageChange)="getPage(page = $event)"></pagination-controls>
-        </div>       
+        </div>
       </div>
     </div>
     <div class="col-md-9">
       <div class="card" style="height:455px; margin-right: 25px;">
-          <div class="table-list">
-            Data Record Definition
-             </div>
+        <div class="table-list">
+          Data Record Definition
+        </div>
         <!-- <div class="card-body"> 
             <p style="margin-top: 95px;" *ngIf="isRelationNot">
               No relationship  for the selected table
@@ -42,8 +45,10 @@
     </div>
   </div>
   <div class="row" id="nextbtn">
-    <button type="button" class="btn btn-padding primary-btn-color" disabled="{{enableNextBtn ? null : 'disabled'}}" (click)="gotoDataRecFinal()" style="float: right;margin-right: 25px">Next</button>
-    <button class="btn btn-padding primary-btn-color" (click)="gotoJobConfiguration()" style="float:right;margin-right:5px;">
+    <button type="button" class="btn btn-padding primary-btn-color" disabled="{{enableNextBtn ? null : 'disabled'}}"
+      (click)="gotoDataRecFinal()" style="float: right;margin-right: 25px">Next</button>
+    <button class="btn btn-padding primary-btn-color" (click)="gotoJobConfiguration()"
+      style="float:right;margin-right:5px;">
       Back</button>
   </div>
 </div>

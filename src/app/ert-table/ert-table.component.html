@@ -20,12 +20,11 @@
               <div *ngFor="let item of selectedTableList | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)"
                 [ngClass]="item.tableId===selectedTableId ?'selectTableCls well':'well'">
-                <div><input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
-                    (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
-                    type="checkbox"></div>
+                <input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
+                  (click)="selectTable(item.tableId,item.tableName,$event)" [(ngModel)]="item.isSelected"
+                  type="checkbox">
                 <div class="first-div">{{item.tableName}}</div>
-                <div>
-                </div>
+                <div><i *ngIf="item.tableId===selectedTableId" class="fa fa-angle-right icon-div"></i></div>
               </div>
             </div>
           </div>
