@@ -282,6 +282,7 @@ body {
   padding-right: 42px;
   padding-left: 42px;
 }
+
 /* 
 .btn-primary:hover {
   color: #fff;
@@ -1384,7 +1385,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 .adhoc-modal-btn {
   padding-right: 30px;
   padding-left: 30px;
-  transition:0.5s;
+  transition: 0.5s;
 }
 
 .mat-menu-content button.mat-menu-item {
@@ -1584,20 +1585,20 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 
 
 
-.create-app-dialog  .flex-container {
+.create-app-dialog .flex-container {
   display: flex;
   flex-direction: column;
 }
 
-.create-app-dialog  .flex-container>* {
+.create-app-dialog .flex-container>* {
   width: 100%;
 }
 
-.create-app-dialog  .flex-container form {
+.create-app-dialog .flex-container form {
   margin-bottom: 20px;
 }
 
-.create-app-dialog  .flex-container form>* {
+.create-app-dialog .flex-container form>* {
   margin: 5px 0;
 }
 
@@ -1605,7 +1606,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
   background-color: #64b5f6;
 }
 
-.create-app-dialog  .mat-dialog-title {
+.create-app-dialog .mat-dialog-title {
   display: flex;
   background-color: #2879ff;
   padding-left: 26px;
@@ -1614,7 +1615,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
   padding-bottom: 17px;
 }
 
-.create-app-dialog  .mat-dialog-content {
+.create-app-dialog .mat-dialog-content {
   padding: 6px 14px 0px 27px;
   margin: 0px;
 }
@@ -1629,7 +1630,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
   display: block
 }
 
-.create-app-dialog  .mat-dialog-container {
+.create-app-dialog .mat-dialog-container {
   padding-left: 0px;
   padding-right: 0px;
   padding-top: 0px;
@@ -1735,12 +1736,12 @@ mat-checkbox svg {
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
   width: calc(50% - 29px) !important;
   top: 38px !important;
-  border-top-width:2px !important;
+  border-top-width: 2px !important;
 }
 
-.mat-stepper-label-position-bottom .mat-stepper-horizontal-line{
+.mat-stepper-label-position-bottom .mat-stepper-horizontal-line {
   top: 38px !important;
-  border-top-width:2px !important;
+  border-top-width: 2px !important;
 }
 
 .create-app-dialog .flex-container {
@@ -1756,11 +1757,11 @@ mat-checkbox svg {
   margin-bottom: 20px;
 }
 
-.create-app-dialog  .flex-container form>* {
+.create-app-dialog .flex-container form>* {
   margin: 5px 0;
 }
 
-.create-app-dialog  button.mat-button {
+.create-app-dialog button.mat-button {
   background-color: #64b5f6;
 }
 
@@ -1773,7 +1774,7 @@ mat-checkbox svg {
   padding-bottom: 17px;
 }
 
-.create-app-dialog  .mat-dialog-content {
+.create-app-dialog .mat-dialog-content {
   padding: 6px 14px 0px 27px;
   margin: 0px;
 }
@@ -1788,7 +1789,7 @@ mat-checkbox svg {
   display: block
 }
 
-.create-app-dialog  .mat-dialog-container {
+.create-app-dialog .mat-dialog-container {
   padding-left: 0px;
   padding-right: 0px;
   padding-top: 0px;
@@ -1803,7 +1804,7 @@ mat-checkbox svg {
   padding-bottom: 2px;
 }
 
-.create-app-dialog  .material-icons:hover,
+.create-app-dialog .material-icons:hover,
 .material-icons:focus {
   padding-top: 3px;
   padding-right: 4px;
@@ -1812,42 +1813,42 @@ mat-checkbox svg {
   padding-bottom: 2px;
 }
 
-.create-app-dialog  button.invite {
+.create-app-dialog button.invite {
   background-color: #2879ff;
   color: #ffffff;
   text-transform: inherit;
   border-radius: 3px;
-  transition:0.5s;
+  transition: 0.5s;
 }
 
-.create-app-dialog  button.cancel {
+.create-app-dialog button.cancel {
   background-color: #64b5f6;
   color: #1b1b1b;
   margin-right: 10px;
   text-transform: inherit;
   border-radius: 3px;
-  transition:0.5s;
+  transition: 0.5s;
 }
 
 
-.create-app-dialog  button.invite:hover {
+.create-app-dialog button.invite:hover {
   transform: scale(1.1, 1.1);
 
 }
 
-.create-app-dialog  button.cancel:hover {
+.create-app-dialog button.cancel:hover {
   transform: scale(1.1, 1.1);
 }
 
-/* start- common btn css */ 
+/* start- common btn css */
 
- button.secondary-btn-color {
+button.secondary-btn-color {
   background-color: #64b5f6;
   color: #1b1b1b;
-  margin-right: 10px;
   text-transform: inherit;
+  margin-right: 10px;
   border-radius: 3px;
-  transition:0.5s;
+  transition: 0.5s;
 }
 
 button.primary-btn-color {
@@ -1855,7 +1856,7 @@ button.primary-btn-color {
   color: #ffffff;
   text-transform: inherit;
   border-radius: 3px;
-  transition:0.5s;
+  transition: 0.5s;
 }
 
 button.primary-btn-color-disabled {
@@ -1863,7 +1864,7 @@ button.primary-btn-color-disabled {
   color: #ffffff;
   text-transform: inherit;
   border-radius: 3px;
-  cursor:not-allowed;
+  cursor: not-allowed;
 }
 
 button.primary-btn-color:hover {
@@ -1887,13 +1888,14 @@ button.primary-btn-color-disabled:hover {
   color: #ffffff;
 
 }
+
 button.secondary-btn-color-disabled:hover {
   color: #ffffff;
 }
 
-/* ends- common btn css */ 
+/* ends- common btn css */
 
-/* start- ert-selected- table*/ 
+/* start- selected list css */
 
 .selected-table-cls {
   opacity: 0.8 !important;
@@ -1925,9 +1927,44 @@ button.secondary-btn-color-disabled:hover {
   color: #0c0c0c;
 }
 
-/* end- ert-selected- table*/ 
+/*end-  selected list css */
+
+/* start-encypted field,and required icon in adhoc  */
+
+.encypted-icon {
+  font-size: 15px !important;
+  vertical-align: top !important;
+  color: #2879ff !important;
+  padding-left: 3px;
+}
+
+.material-icons.encypted-icon:hover {
+  font-size: 15px !important;
+  vertical-align: top !important;
+  color: #2879ff !important;
+  padding-left: 3px;
+}
+
+a.required-color {
+  color: #dd3c27 !important;
+  font-size: 15px;
+  vertical-align: top;
+  padding-left: 4px;
+}
+
+/* end-encypted field,and required icon in adhoc  */
+/* ends- common btn css */
 
 /* start-popup msg color */
+
+.modal-dialog {
+  margin: 65px auto auto;
+}
+
+.modal-body {
+  position: relative;
+  padding: 15px;
+}
 
 .error-popup-header-cls {
   padding: 4px;
@@ -2025,33 +2062,55 @@ button.btn-info-popup-primary-color:hover {
   transform: scale(1.1, 1.1);
 }
 
-button.btn-secondary-popup{
+button.btn-secondary-popup {
+  margin-right: 5px;
   background-color: #dedede;
-  color: #ffffff;
+  color: #000;
   text-transform: inherit;
   border-radius: 3px;
   transition: 0.5s;
 }
 
 button.btn-secondary-popup:hover {
-  color: #ffffff;
+  color: #000;
   transform: scale(1.1, 1.1);
 }
 
+.pop-title {
+  margin-left: -10px;
+  display: inline-block;
+  vertical-align: middle;
+}
 
 .popup-title-cls {
   margin-top: 12px;
 }
 
-.popup-material-icon-cls {
-  vertical-align: top;
-  color: #ffffff
+.popup-title-cls .popup-material-icon-cls {
+  vertical-align: middle;
+  color: #ffffff;
+  font-size: 22px !important;
+  margin-right: 5px
 }
 
-.popup-paragraph-cls{
+.popup-material-icon-cls:hover {
+  vertical-align: middle;
+  color: #ffffff;
+  font-size: 22px !important;
+  margin-right: 5px
+}
+
+.popup-paragraph-cls {
+  text-align: left;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
-  line-height: 1.71
+  line-height: 1.71;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.modal-body-width {
+  width: 480px;
 }

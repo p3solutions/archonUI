@@ -61,8 +61,8 @@
 <div id="job-detailConfig" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <div class='model-title'><i class="fa fa-tachometer"></i>
+      <div class="modal-header info-popup-header-cls">
+        <div class='model-title popup-title-cls'><i class="fa fa-tachometer job-info-icon"></i>
           <div class='info-r'>Job Dashboard</div>
         </div>
       </div>
@@ -99,24 +99,27 @@
         </tbody>
       </table>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default modal-close" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default modal-close" data-dismiss="modal">CLOSE</button>
       </div>
     </div>
   </div>
 </div>
 <div id="confirm_model" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content" style="width: 430px;">
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm Job Delete</h4>
+    <div class="modal-content modal-body-width">
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title">Confirm Job Delete</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p style="text-align:left">Are you sure ?</p>
+        <p class="popup-paragraph-cls">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteErtJob()"
-          data-dismiss="modal">YES</button>
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="deleteErtJob()"
+          data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
@@ -128,40 +131,42 @@
 <button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
 <div id="successModel" class="modal fade" role="dialog">
   <div class="modal-dialog">
-
-    <div class="modal-content" style="width: 430px;">
-      <div class="modal-header">
-        <div class='model-title'>
-          <div class='info-r'> Message</div>
-        </div>
+    <div class="modal-content modal-body-width">
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+          <div class="pop-title">Success</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p style="text-align:left; size: 18px;"> {{successMsg}}.</p>
-        <p *ngIf="isSuccessMsg" style="text-align:left;">check on Job Status page</p>
+        <p class="popup-paragraph-cls"> {{successMsg}}.</p>
+        <p class="popup-paragraph-cls" *ngIf="isSuccessMsg">check on Job Status page</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default cancel" (click)="close()" data-dismiss="modal">CLOSE</button>
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" (click)="close()"
+          data-dismiss="modal">CLOSE</button>
       </div>
     </div>
-
   </div>
 </div>
 <button style="display:none" type="button" id="warning-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
   data-target="#success">Open Modal</button>
 <div id="success" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert!</h4>
+    <div class="modal-content modal-body-width">
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title">Error</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>In progress and scheduled job can not be edit.</p>
+        <p class="popup-paragraph-cls">In progress and scheduled job can not be edit.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
-          data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

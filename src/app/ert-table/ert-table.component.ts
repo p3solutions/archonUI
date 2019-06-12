@@ -198,7 +198,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   getNextBatchOfERTTable(event) { // When we scroll in edit mode of job then it will fetch the data from BE using index.
-    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+    if (this.ertJobId !== '' && this.ertJobId !== undefined && this.searchTableName === '') {
       if (true && event === 'bottom') {
         this.editErtTableIndex = this.editErtTableIndex + 1;
         this.getEditErtTableList(this.editErtTableIndex);
