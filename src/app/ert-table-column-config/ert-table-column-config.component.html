@@ -62,14 +62,16 @@
     </div>
   </div>
   <div class="row" id="nextbtn" style="margin-top: 15px;">
-    <button type="button" [disabled]="isDisabled"
-      class="btn btn-padding {{isDisabled?'primary-btn-color-disabled':'primary-btn-hover-margin primary-btn-color'}} "
+    <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-margin"
       (click)="saveERTJob('READY')" style="float: right;margin-right: 24px">Mark
-      As Complete <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i></button>
-    <button type="button" [disabled]="issaveDisabled"
-      class="btn btn-padding {{issaveDisabled?'primary-btn-color-disabled':'primary-btn-hover-draft-margin primary-btn-color'}} "
+      As Complete
+      <!-- <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
+    </button>
+    <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-draft-margin"
       (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 5px">Save
-      As Draft <i *ngIf="issaveDisabled" class="fa fa-spinner fa-spin inline-loader"></i></button>
+      As Draft
+      <!-- <i *ngIf="issaveDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
+    </button>
     <button class="btn btn-padding primary-btn-color" (click)="gotoExtractData();"
       style="float:right;margin-right:5px;">
       Back</button>
@@ -88,7 +90,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <p class="popup-paragraph-cls">Are you sure ?</p>
+        <p class="popup-paragraph-cls">Are you sure you want to cancel ?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">NO</button>
@@ -127,7 +129,7 @@
 <button style="display:none" type="button" id="not-saved-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
   data-backdrop="static" data-toggle="modal" data-target="#not-saved-popup">Open Modal</button>
 <div id="not-saved-popup" class="modal fade" role="dialog">
-  <div class="modal-dialog ">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
       <div class="modal-header error-popup-header-cls">
         <h4 class="modal-title popup-title-cls">
@@ -136,11 +138,10 @@
         </h4>
       </div>
       <div class="modal-body">
-        <p class="popup-paragraph-cls">Unable to save job.</p>
+        <p class="popup-paragraph-cls">{{errorMessage!=='' ?errorMessage: 'Unable to save Job'}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding btn-error-popup-primary-color"
-          data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
       </div>

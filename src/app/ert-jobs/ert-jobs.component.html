@@ -43,11 +43,12 @@
     </div><br>
 
     <div class="flex-cards-footer">
-      <div class='foo-icon'><a [class.disabled]="item.madeDisable" matTooltip="{{item.madeDisable? '':'Run Job'}}"
+      <div class='foo-icon'><a [class.disabled-icon]="item.madeDisable" matTooltip="{{item.madeDisable? '':'Run Job'}}"
           (click)="!madeDisable && openScheduleModel(item.jobId,item.jobStatus)" class="cursor-poniter fonticonbelow"><i
             class="fa fa-play" aria-hidden="true"></i></a></div>
       <div class='foo-iconedit'><a (click)="!madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
           matTooltip="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
+
     </div>
   </div>
   <div class="col-md-12" *ngIf="ertJobslist">
@@ -114,7 +115,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <p class="popup-paragraph-cls">Are you sure ?</p>
+        <p class="popup-paragraph-cls">Are you sure you want to delete the job ?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>

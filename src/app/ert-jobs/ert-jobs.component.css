@@ -292,3 +292,21 @@ td.tdr {
   color: #ffffff;
   font-size: 22px !important;
 }
+
+.disabled-icon{
+  background-color: #d0cece !important;
+  cursor: not-allowed;
+}
+
+.fa-pencil-square-o-disabled {
+  text-align: center;
+  font-size: 15px;
+  color: #ffffff;
+  cursor: pointer;
+  background-color: #d0cece;
+  width: 26px;
+  height: 26px;
+  border-radius: 15px;
+  padding-top: 5px;
+  padding-left: 3px;
+}

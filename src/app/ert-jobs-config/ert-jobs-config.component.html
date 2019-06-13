@@ -5,12 +5,13 @@
         <div id="job-config-heading">
           <a (click)="goToJobs()" data-tooltip="Back">
             <i class="fa fa-arrow-left fa-sm" aria-hidden="true"></i>
-          </a>  Job Configurations
+          </a> Job Configurations
         </div>
         <div id="job-name-heading" class="form-group">
           <input type="text" class="form-control" [(ngModel)]="ertJobParams.ertJobTitle" (keyup)="enableJobSelection()"
             name="jobname" id="jobname" placeholder="Enter Job Name">
-          <small *ngIf="ertJobParams.ertJobTitle === ''">* Job name is mandatory fill field to enable job selection.</small>
+          <small *ngIf="ertJobParams.ertJobTitle === ''">* Job name is mandatory fill field to enable job
+            selection.</small>
           <small *ngIf="ertService.mmrVersion === ''">* Metadata Version is required for SIP and Data Record.</small>
         </div>
         <div id="job-section">
@@ -18,7 +19,8 @@
           <div id="job-section-box">
             <div class="select-job">
               <div class="select-job-type">
-                <input type="radio" disabled="true" (click)="goToExtraction($event,'TABLE')" name="selectjob"> Table</div>
+                <input type="radio" disabled="true" (click)="goToExtraction($event,'TABLE')" name="selectjob"> Table
+              </div>
               <div class="job-desc">
                 <i class="fa fa-table"></i> Choose option for table Extraction
               </div>
@@ -39,7 +41,8 @@
             </div>
           </div>
           <div style="float:right">
-            <button type="button" id="cancelBtn" (click)="goToJobs()"  class="btn btn-padding secondary-btn-color">Cancel</button>
+            <button type="button" id="cancelBtn" style="margin-right: -2px" (click)="goToJobs()"
+              class="btn btn-padding secondary-btn-color">Cancel</button>
           </div>
         </div>
       </div>

@@ -188,6 +188,12 @@ export class ErtTableComponent implements OnInit {
           tempObj.tableId = tempTable.tableId;
           tempObj.tableName = tempTable.tableName;
           tempObj.modifiedTableName = tempTable.modifiedTableName;
+          if (tempTable.filterNconfig !== null) {
+            tempObj.filterAndOrderConfig = tempTable.filterNconfig;
+          }
+          if (tempTable.relatedTableDetails !== null) {
+            tempObj.relatedTableDetails = tempTable.relatedTableDetails;
+          }
           tempObj.isSelected = true;
           if (this.selectedTableList.findIndex(a => a.tableId === tempTable.tableId) === -1) {
             this.selectedTableList.push(tempObj);
@@ -293,6 +299,12 @@ export class ErtTableComponent implements OnInit {
       tempObj.tableId = tableId;
       tempObj.tableName = tempOriginalTableObj.tableName;
       tempObj.modifiedTableName = tempOriginalTableObj.modifiedTableName;
+      if (tempOriginalTableObj.filterNconfig !== null) {
+        tempObj.filterAndOrderConfig = tempOriginalTableObj.filterNconfig;
+      }
+      if (tempOriginalTableObj.relatedTableDetails !== null) {
+        tempObj.relatedTableDetails = tempOriginalTableObj.relatedTableDetails;
+      }
       tempObj.isSelected = true;
       const checkInSelectedTableList = this.selectedTableList.filter(a => a.tableId === tableId)[0];
       if (checkInSelectedTableList === undefined) {
@@ -317,6 +329,12 @@ export class ErtTableComponent implements OnInit {
       tempObj.tableName = tempOriginalTableObj.tableName;
       tempObj.modifiedTableName = tempOriginalTableObj.modifiedTableName;
       tempObj.isSelected = true;
+      if (tempOriginalTableObj.filterNconfig !== null) {
+        tempObj.filterAndOrderConfig = tempOriginalTableObj.filterNconfig;
+      }
+      if (tempOriginalTableObj.relatedTableDetails !== null) {
+        tempObj.relatedTableDetails = tempOriginalTableObj.relatedTableDetails;
+      }
       const checkInSelectedTableList = this.selectedTableList.filter(a => a.tableId === tableId)[0];
       if (checkInSelectedTableList === undefined) {
         this.tempOriginalSelectedTable.push(tempObj);
@@ -416,13 +434,17 @@ export class ErtTableComponent implements OnInit {
     this.spinner.show();
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, this.selectedTableId).subscribe((result) => {
-      this.ErtTableColumnList = result;
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList = this.ErtTableColumnList;
-      this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-      this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList = [];
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig = new FilterAndOrderConfig();
-      this.spinner.hide();
+      try {
+        this.ErtTableColumnList = result;
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList = this.ErtTableColumnList;
+        this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+        this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList = [];
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig = new FilterAndOrderConfig();
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
     });
   }
 
