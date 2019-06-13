@@ -89,23 +89,45 @@ export class AdhocSearchCriteriaComponent implements OnInit {
     }
     const tableNames = selectedValues;
     const selectedTables: SelectedTables[] = [];
-    for (const table of tableNames) {
-      const tableId = joinListMap.get(table)[0].primaryTableId;
-      selectedTables.push(this.tableColumnList.filter(a => a.tableId === tableId)[0]);
+    if (selectedValues.length !== 0) {
+      for (const table of tableNames) {
+        const tableId = joinListMap.get(table)[0].primaryTableId;
+        selectedTables.push(this.tableColumnList.filter(a => a.tableId === tableId)[0]);
+      }
+    } else {
+      selectedTables.push(this.tableColumnList.filter(a => a.tableId === this.adhocSavedObjectService.primarytableIdWhenNoRelation)[0]);
     }
     this.tableColumnList = selectedTables;
     this.createTableColumnTree();
   }
 
   getTableColumnList() {
+    let selectedValues = '';
+    let joinListMap: any = '';
+    const tableIds = [];
+    if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues !== '') {
+      selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+      joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    }
     this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
       this.tempHeader = response;
     });
+    const tableNames = selectedValues;
+    for (const table of tableNames) {
+      const tableId = joinListMap.get(table)[0].primaryTableId;
+      tableIds.push(tableId);
+    }
+    if (tableIds.length === 0) {
+      if (this.adhocSavedObjectService.primarytableIdWhenNoRelation !== '') {
+        tableIds.push(this.adhocSavedObjectService.primarytableIdWhenNoRelation);
+      }
+    }
     const param: any = {
-      'mmrVersion': this.tempHeader.metadataVersion,
-      'workspaceId': this.tempHeader.workspaceId
+      'workspaceId': this.tempHeader.workspaceId,
+      'userId': getUserId(),
+      'tableIdList': tableIds
     };
-    this.adhocService.getTableColumnList(param).subscribe(response => {
+    this.adhocService.getTableColumnRelationList(param).subscribe(response => {
       this.tableColumnList = response;
       this.filterOnlySelectedTable();
     });
@@ -114,18 +136,20 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   createTableColumnTree() {
     let tableColumnNode = new TableColumnNode();
     for (const table of this.tableColumnList) {
-      tableColumnNode = new TableColumnNode();
-      tableColumnNode.id = table.tableId;
-      tableColumnNode.type = 'Table';
-      tableColumnNode.name = table.schemaName + '/' + table.tableName;
-      tableColumnNode.visible = true;
-      for (const column of table.columnList) {
-        tableColumnNode.columns.push({
-          'id': column.columnId, 'name': column.name, 'type': 'column', 'visible': true,
-          'dataType': column.type
-        });
+      if (table !== undefined) {
+        tableColumnNode = new TableColumnNode();
+        tableColumnNode.id = table.tableId;
+        tableColumnNode.type = 'Table';
+        tableColumnNode.name = table.schemaName + '/' + table.tableName;
+        tableColumnNode.visible = true;
+        for (const column of table.columnList) {
+          tableColumnNode.columns.push({
+            'id': column.columnId, 'name': column.name, 'type': 'column', 'visible': true,
+            'dataType': column.type
+          });
+        }
+        this.TREE_DATA.push(tableColumnNode);
       }
-      this.TREE_DATA.push(tableColumnNode);
     }
     this.adhocScreenService.updateTreeData(this.TREE_DATA);
     this.dataSource.data = JSON.parse(JSON.stringify(this.TREE_DATA));
@@ -280,156 +304,161 @@ export class AdhocSearchCriteriaComponent implements OnInit {
         this.successMsg = err.error.errorMessage;
       }
     });
-}
+  }
 
-gotoAppScreen() {
-  this.clear();
-  this.adhocScreenService.updateSearchCriteria([]);
-  this.adhocScreenService.updateSearchResult(new SearchResult());
-  this.adhocScreenService.updateSearchCriterion(new SearchCriteria());
-  this.adhocScreenService.updateInlinePanelTabChange(new Tab());
-  this.adhocScreenService.updateSidePanelTabChange(new Tab());
-  this.adhocScreenService.updateResultField(new ResultFields());
-  this.adhocScreenService.updatePanelChanged(0);
-  this.router.navigate(['workspace/adhoc/app-screen-list']);
-}
+  gotoAppScreen() {
+    this.clear();
+    this.adhocScreenService.updateSearchCriteria([]);
+    this.adhocScreenService.updateSearchResult(new SearchResult());
+    this.adhocScreenService.updateSearchCriterion(new SearchCriteria());
+    this.adhocScreenService.updateInlinePanelTabChange(new Tab());
+    this.adhocScreenService.updateSidePanelTabChange(new Tab());
+    this.adhocScreenService.updateResultField(new ResultFields());
+    this.adhocScreenService.updatePanelChanged(0);
+    this.router.navigate(['workspace/adhoc/app-screen-list']);
+  }
 
-addOrder() {
-  this.screenInfoObject.sessionAdhocModel.searchCriteria.forEach((value, index) => {
-    value.ordinal = index + 1;
-  });
-  this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel.forEach((value, index) => {
-    value.ordinal = index + 1;
-  });
-  const inlineTabs: Tab[] = this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel.tabs;
-  const sideTabs: Tab[] = this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel.tabs;
-  for (let i = 0; i < inlineTabs.length; i++) {
-    inlineTabs[i].tabOrder = i + 1;
-    inlineTabs[i].resultFields.forEach((value, index) => {
+  addOrder() {
+    this.screenInfoObject.sessionAdhocModel.searchCriteria.forEach((value, index) => {
       value.ordinal = index + 1;
     });
-  }
-  for (let i = 0; i < sideTabs.length; i++) {
-    sideTabs[i].tabOrder = i + 1;
-    sideTabs[i].resultFields.forEach((value, index) => {
+    this.screenInfoObject.sessionAdhocModel.searchResult.mainPanel.forEach((value, index) => {
       value.ordinal = index + 1;
     });
-  }
-}
-
-addSchemaName(schemaName) {
-  this.screenInfoObject.sessionAdhocModel.linearTableMapOrder.forEach((value, index) => {
-    value.tableName = schemaName + '/' + value.tableName;
-  });
-}
-
-clearSearchCriteria() {
-  document.getElementById('clear-popup-btn').click();
-}
-
-clear() {
-  this.adhocScreenService.updateResultField(new ResultFields());
-  this.adhocScreenService.updateSearchCriteria([]);
-  this.adhocScreenService.updateSearchResult(new SearchResult());
-  this.checkSearchResultLength();
-}
-
-checkSearchResultLength() {
-  this.adhocScreenService.searchResult.subscribe(result => {
-    this.searchResult = JSON.parse(JSON.stringify(result));
-    if (this.searchResult.inLinePanel === null) {
-      this.searchResult.inLinePanel = new InlinePanel();
+    const inlineTabs: Tab[] = this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel.tabs;
+    const sideTabs: Tab[] = this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel.tabs;
+    for (let i = 0; i < inlineTabs.length; i++) {
+      inlineTabs[i].tabOrder = i + 1;
+      inlineTabs[i].resultFields.forEach((value, index) => {
+        value.ordinal = index + 1;
+      });
     }
-    if (this.searchResult.sidePanel === null) {
-      this.searchResult.sidePanel = new SidePanel();
+    for (let i = 0; i < sideTabs.length; i++) {
+      sideTabs[i].tabOrder = i + 1;
+      sideTabs[i].resultFields.forEach((value, index) => {
+        value.ordinal = index + 1;
+      });
     }
-  });
-  let searchResultLength = 0;
-  for (const item of this.searchResult.mainPanel) {
-    searchResultLength = searchResultLength + 1;
   }
-  for (const inlineTab of this.searchResult.inLinePanel.tabs) {
-    for (const item of inlineTab.resultFields) {
+
+  addSchemaName(schemaName) {
+    this.screenInfoObject.sessionAdhocModel.linearTableMapOrder.forEach((value, index) => {
+      value.tableName = schemaName + '/' + value.tableName;
+    });
+  }
+
+  clearSearchCriteria() {
+    document.getElementById('clear-popup-btn').click();
+  }
+
+  clear() {
+    this.adhocScreenService.updateResultField(new ResultFields());
+    this.adhocScreenService.updateSearchCriteria([]);
+    this.adhocScreenService.updateSearchResult(new SearchResult());
+    this.checkSearchResultLength();
+  }
+
+  checkSearchResultLength() {
+    this.adhocScreenService.searchResult.subscribe(result => {
+      this.searchResult = JSON.parse(JSON.stringify(result));
+      if (this.searchResult.inLinePanel === null) {
+        this.searchResult.inLinePanel = new InlinePanel();
+      }
+      if (this.searchResult.sidePanel === null) {
+        this.searchResult.sidePanel = new SidePanel();
+      }
+    });
+    let searchResultLength = 0;
+    for (const item of this.searchResult.mainPanel) {
       searchResultLength = searchResultLength + 1;
     }
-  }
-  for (const sideTab of this.searchResult.sidePanel.tabs) {
-    for (const item of sideTab.resultFields) {
-      searchResultLength = searchResultLength + 1;
-    }
-  }
-  this.searchResultLength = searchResultLength;
-}
-
-removePreviousSearchResultAndCriteria() {
-  let selectedValues = '';
-  let joinListMap: any = '';
-  if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues !== '') {
-    selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
-    joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
-  }
-  const tableNames = selectedValues;
-  const selectedTables: string[] = [];
-  for (const table of tableNames) {
-    const tableId = joinListMap.get(table)[0].primaryTableId;
-    selectedTables.push(tableId);
-  }
-  this.adhocScreenService.updatedSearchResult.subscribe(result => {
-    this.searchResult = JSON.parse(JSON.stringify(result));
-  });
-  this.adhocScreenService.updatedSearchCriteria.subscribe(result => {
-    this.searchCriteria = JSON.parse(JSON.stringify(result));
-  });
-  for (let item = 0; item < this.searchCriteria.length; item++) {
-    if (!selectedTables.includes(this.searchCriteria[item].tableId)) {
-      this.searchCriteria[item].notSelected = true;
-    } else {
-      this.searchCriteria[item].notSelected = false;
-    }
-  }
-
-  this.searchCriteria = this.searchCriteria.filter(a => a.notSelected === false);
-
-  for (let item = 0; item < this.searchResult.mainPanel.length; item++) {
-    if (!selectedTables.includes(this.searchResult.mainPanel[item].tableId)) {
-      this.searchResult.mainPanel[item].notSelected = true;
-    } else {
-      this.searchResult.mainPanel[item].notSelected = false;
-    }
-  }
-  this.searchResult.mainPanel = this.searchResult.mainPanel.filter(a => a.notSelected === false);
-
-  for (const inlineTab of this.searchResult.inLinePanel.tabs) {
-    for (let item = 0; item < inlineTab.resultFields.length; item++) {
-      if (!selectedTables.includes(inlineTab.resultFields[item].tableId)) {
-        inlineTab.resultFields[item].notSelected = true;
-      } else {
-        inlineTab.resultFields[item].notSelected = false;
+    for (const inlineTab of this.searchResult.inLinePanel.tabs) {
+      for (const item of inlineTab.resultFields) {
+        searchResultLength = searchResultLength + 1;
       }
     }
-    inlineTab.resultFields = inlineTab.resultFields.filter(a => a.notSelected === false);
-  }
-
-  for (const sideTab of this.searchResult.sidePanel.tabs) {
-    for (let item = 0; item < sideTab.resultFields.length; item++) {
-      if (!selectedTables.includes(sideTab.resultFields[item].tableId)) {
-        sideTab.resultFields[item].notSelected = true;
-      } else {
-        sideTab.resultFields[item].notSelected = false;
+    for (const sideTab of this.searchResult.sidePanel.tabs) {
+      for (const item of sideTab.resultFields) {
+        searchResultLength = searchResultLength + 1;
       }
     }
-    sideTab.resultFields = sideTab.resultFields.filter(a => a.notSelected === false);
+    this.searchResultLength = searchResultLength;
   }
-  this.adhocScreenService.updateSearchResult(this.searchResult);
-  this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
-}
+
+  removePreviousSearchResultAndCriteria() {
+    let selectedValues = '';
+    let joinListMap: any = '';
+    if (this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues !== '') {
+      selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+      joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+    }
+    const tableNames = selectedValues;
+    const selectedTables: string[] = [];
+    for (const table of tableNames) {
+      const tableId = joinListMap.get(table)[0].primaryTableId;
+      selectedTables.push(tableId);
+    }
+    if (selectedTables.length === 0) {
+      if (this.adhocSavedObjectService.primarytableIdWhenNoRelation !== '') {
+        selectedTables.push(this.adhocSavedObjectService.primarytableIdWhenNoRelation);
+      }
+    }
+    this.adhocScreenService.updatedSearchResult.subscribe(result => {
+      this.searchResult = JSON.parse(JSON.stringify(result));
+    });
+    this.adhocScreenService.updatedSearchCriteria.subscribe(result => {
+      this.searchCriteria = JSON.parse(JSON.stringify(result));
+    });
+    for (let item = 0; item < this.searchCriteria.length; item++) {
+      if (!selectedTables.includes(this.searchCriteria[item].tableId)) {
+        this.searchCriteria[item].notSelected = true;
+      } else {
+        this.searchCriteria[item].notSelected = false;
+      }
+    }
+
+    this.searchCriteria = this.searchCriteria.filter(a => a.notSelected === false);
+
+    for (let item = 0; item < this.searchResult.mainPanel.length; item++) {
+      if (!selectedTables.includes(this.searchResult.mainPanel[item].tableId)) {
+        this.searchResult.mainPanel[item].notSelected = true;
+      } else {
+        this.searchResult.mainPanel[item].notSelected = false;
+      }
+    }
+    this.searchResult.mainPanel = this.searchResult.mainPanel.filter(a => a.notSelected === false);
+
+    for (const inlineTab of this.searchResult.inLinePanel.tabs) {
+      for (let item = 0; item < inlineTab.resultFields.length; item++) {
+        if (!selectedTables.includes(inlineTab.resultFields[item].tableId)) {
+          inlineTab.resultFields[item].notSelected = true;
+        } else {
+          inlineTab.resultFields[item].notSelected = false;
+        }
+      }
+      inlineTab.resultFields = inlineTab.resultFields.filter(a => a.notSelected === false);
+    }
+
+    for (const sideTab of this.searchResult.sidePanel.tabs) {
+      for (let item = 0; item < sideTab.resultFields.length; item++) {
+        if (!selectedTables.includes(sideTab.resultFields[item].tableId)) {
+          sideTab.resultFields[item].notSelected = true;
+        } else {
+          sideTab.resultFields[item].notSelected = false;
+        }
+      }
+      sideTab.resultFields = sideTab.resultFields.filter(a => a.notSelected === false);
+    }
+    this.adhocScreenService.updateSearchResult(this.searchResult);
+    this.adhocScreenService.updateSearchCriteria(this.searchCriteria);
+  }
 
 
-updateAdhocScreen() {
-  if (this.searchCriteria.length === 0) {
-    document.getElementById('withoutSearchField-popup-btn').click();
-  } else {
-    this.gotoNestedScreen();
+  updateAdhocScreen() {
+    if (this.searchCriteria.length === 0) {
+      document.getElementById('withoutSearchField-popup-btn').click();
+    } else {
+      this.gotoNestedScreen();
+    }
   }
-}
 }

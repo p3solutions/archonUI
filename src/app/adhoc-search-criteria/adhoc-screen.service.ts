@@ -36,12 +36,14 @@ export class AdhocScreenService {
     this.searchCriterion.next(_searchCriterion);
   }
   updateSearchCriteria(_searchCriteria: SearchCriteria[]) {
+    console.log(_searchCriteria);
     this.searchCriteria.next(_searchCriteria);
   }
   updateResultField(_resultField: ResultFields) {
     this.resultField.next(_resultField);
   }
   updateSearchResult(_searchResult: SearchResult) {
+    console.log(_searchResult);
     this.searchResult.next(_searchResult);
   }
   updateInlinePanelTabChange(_tab: Tab) {
