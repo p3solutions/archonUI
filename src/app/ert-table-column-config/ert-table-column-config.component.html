@@ -12,9 +12,11 @@
         <div class="card-body" id="ert-tbl-search">
           <div id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
-              <div class="well" (click)="selectTable(item.tableId)"
+              <div class="well {{item.tableId===selectedTableId?'selectTableCls':''}}"
+                (click)="selectTable(item.tableId)"
                 *ngFor="let item of selectedTableList | searchTable:searchTableName">
                 <div class="first-div">{{item.tableName}}</div>
+                <div><i *ngIf="item.tableId===selectedTableId" class="fa fa-angle-right icon-div"></i></div>
               </div>
             </div>
           </div>
@@ -77,17 +79,20 @@
   </div>
 </div>
 <div id="confirm_model" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content" style="width: 430px;">
-      <div class="modal-header">
-        <div class="modal-title">Confirm Cancel</div>
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header warning-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">warning</i>
+          <div class="pop-title-ert">Confirm Cancel</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p style="text-align:left; font-size: 13px;">Are you sure ?</p>
+        <p class="popup-paragraph-cls">Are you sure ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="cancel()"
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-padding btn-warning-popup-primary-color" (click)="cancel()"
           data-dismiss="modal">YES</button>
 
       </div>
@@ -98,16 +103,43 @@
 <button style="display:none" type="button" id="message-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
   data-backdrop="static" data-toggle="modal" data-target="#message-popup">Open Modal</button>
 <div id="message-popup" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert!</h4>
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>{{successMsg}}</p>
+        <p class="popup-paragraph-cls">{{successMsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="cancel()" class="btn btn-padding primary-btn-color"
+        <button type="button" (click)="cancel()" class="btn btn-padding btn-success-popup-primary-color"
+          data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="not-saved-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#not-saved-popup">Open Modal</button>
+<div id="not-saved-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Error</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">Unable to save job.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color"
           data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>

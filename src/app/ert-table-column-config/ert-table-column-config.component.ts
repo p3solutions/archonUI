@@ -164,11 +164,16 @@ export class ErtTableColumnConfigComponent implements OnInit {
       const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
         'Job successfully marked as completed.';
       document.getElementById('message-popup-btn').click();
-      this.successMsg = result.errorMessage !== null ? result.errorMessage : msg;
+      if (result.errorMessage !== null) {
+        document.getElementById('not-saved-popup-btn').click();
+        this.successMsg = result.errorMessage !== null ? result.errorMessage : msg;
+      } else {
+        this.successMsg = msg;
+      }
     }, (err: HttpErrorResponse) => {
       if (err.error instanceof Error) {
       } else {
-        document.getElementById('message-popup-btn').click();
+        document.getElementById('not-saved-popup-btn').click();
         this.successMsg = err.error.errorMessage;
       }
     });

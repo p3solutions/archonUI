@@ -205,7 +205,6 @@ export class ErtTableComponent implements OnInit {
   }
 
   getNextBatchOfERTTable(event) { // When we scroll in edit mode of job then it will fetch the data from BE using index.
-    console.log(this.isEditErtTableLeft, event, this.ertJobId, this.searchTableName);
     if (this.ertJobId !== '' && this.ertJobId !== undefined && (this.searchTableName === '' || this.searchTableName === undefined)) {
       if (this.isEditErtTableLeft && event === 'bottom') {
         this.editErtTableIndex = this.editErtTableIndex + 1;
@@ -900,18 +899,13 @@ export class ErtTableComponent implements OnInit {
     if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
       this.errorMsg = 'Please select a table';
     } else {
-      this.checkForEmptyColumnList();
+      this.selectedTableList = this.selectedTableList.filter(a => a.columnList.length !== 0);
       this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount, this.storeSelectedTables);
       this.ertService.isSIPGraphChange = false;
       this.ertService.isDataRecordGraphChange = false;
       this.navigateToUrl('workspace/ert/ert-extract-ingest');
     }
   }
-
-  checkForEmptyColumnList() {
-    console.log(this.selectedTableList.filter(a => a.columnList.length !== 0));
-  }
-
 
   navigateToUrl(url: string) {
     if (this.from === 'data-record' || this.from === 'SIP') {
