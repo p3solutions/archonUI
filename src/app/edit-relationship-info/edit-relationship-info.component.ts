@@ -99,11 +99,22 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     const mapIndex = this.defaultRelations.get(mapColumnName);
     if (mapColumnName) {
       if (secondaryColumn !== 'select') {
-        this.defaultRelations.set(secondaryColumn, index);
-        this.defaultIndex.set(index, secondaryColumn);
+        if (this.defaultRelations.has(secondaryColumn)) {
+          this.defaultRelations.delete(mapColumnName);
+            this.defaultIndex.delete(index);
+           this.updateenable = true;
+         } else {
+           this.updateenable = false;
+           if (secondaryColumn !== 'select') {
+            this.defaultRelations.delete(mapColumnName);
+            this.defaultIndex.delete(index);
+             this.defaultRelations.set(secondaryColumn, index);
+             this.defaultIndex.set(index, secondaryColumn);
+           }
+         }
       } else {
         this.defaultRelations.delete(mapColumnName);
-        this.defaultIndex.delete(mapIndex);
+        this.defaultIndex.delete(index);
       }
     } else {
       if (this.defaultRelations.has(secondaryColumn)) {
@@ -116,6 +127,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
          }
        }
     }
+    console.log(secondaryColumn ,this.defaultRelations);
     const example = {
       columnId: '',
       columnName: '',
@@ -227,6 +239,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
 
   resetSelection() {
     this.defaultRelations.clear();
+    this.defaultIndex.clear();
     this.populateValues();
     this.resultantValues = [];
     this.removeIndexValue = [];
