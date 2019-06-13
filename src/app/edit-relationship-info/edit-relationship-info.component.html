@@ -72,7 +72,12 @@
             </button>
             <strong>Error!</strong>:{{errorMsg}}
           </div> 
-        </div>        
+        </div>    
+        <div *ngIf="updateenable" id="msg-id"> 
+          <div class="alert alert-danger alert-dismissible m-t-6" role="alert">
+          <strong>Error!</strong>: Secondary Column Cannot be Duplicated
+        </div> 
+      </div>       
           <!-- 
             <div *ngIf="autoColumnMatch" id="msg-id"> 
               <div class="alert alert-success alert-dismissible m-t-6" role="alert">
@@ -97,7 +102,7 @@
           <!-- <button type="button" class="btn btn-primary cancel" id="cancel-btn" (click)="closeErrorMsg();resetSelection()" data-dismiss="modal" style="margin-right: 14px;">Close</button> -->
           <!-- <button type="button" class="btn btn-primary" (click)="autocolumnMatchMode(); closeErrorMsg();">Automatch Column</button> -->
           <button class="save mat-raised-button btn-padding" (click)="resetSelection(); closeErrorMsg();">Reset</button>
-          <button class="save mat-raised-button btn-padding" (click)="updateRelation(); closeErrorMsg();">Update</button>                
+          <button [disabled]="updateenable" class="save mat-raised-button btn-padding" (click)="updateRelation(); closeErrorMsg();">Update</button>                
           </div>
       </div>
       </div>
