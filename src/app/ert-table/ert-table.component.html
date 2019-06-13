@@ -282,7 +282,7 @@
                   <ng-template #nodeTemplateRef let-node>
                     <div class="node" [class.node--selected]="( node === selectedTreeNode )">
                       <div aria-expanded="false" data-toggle="collapse" [attr.href]="'#' + node.id">
-                        {{node.id}}<div class="filter-toogle-div" (click)="showFilterChild($event)"
+                        <div class="filter-toogle-div" (click)="showFilterChild($event)"
                           [style.margin-left.px]="node.margin_left" *ngIf="node.children.length>0"><i
                             class="fa fa-chevron-down"></i>{{node.operation}}</div>
                         <div *ngIf="node.children.length==0" [style.margin-left.px]="node.margin_left"
@@ -303,7 +303,8 @@
                             </select>
                           </div>
                           <div class="form-group">
-                            <select #selectcondition [(ngModel)]="node.condition" class="form-control">
+                            <select #selectcondition (focus)="filterColumnSelectionChange(node.column)"
+                              [(ngModel)]="node.condition" class="form-control">
                               <option [ngValue]="null" selected>Select condition</option>
                               <option [value]="item" *ngFor="let item of filterOperationList">{{item.operation}}
                               </option>
@@ -456,7 +457,8 @@
       </div>
       <div class="modal-body">
         <div id="avaliable-table-list">
-          <div class="form-control {{item.isSelected?'selected-table-cls':''}}"
+          <div [matTooltip]="item.alreadyIsSelected?'Already Present in selected table list':''"
+            class="form-control {{item.isSelected?'selected-table-cls':''}}"
             *ngFor="let item of ertAvillableTableList.erttableList.ertTableList | paginate: { id:'availble-pagination', itemsPerPage: 50, totalItems: avilableTableCount, currentPage: availPage } ">
             <input type="checkbox" [disabled]="item.alreadyIsSelected"
               (click)="addTempEditErtSelectedTable(item.tableId,$event)" [(ngModel)]="item.isSelected">
