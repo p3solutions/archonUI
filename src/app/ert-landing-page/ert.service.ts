@@ -139,6 +139,14 @@ export class ErtService {
       );
   }
 
+  getErtSearchAvailableTable(ertJobId: string, tableName: string, startIndex): Observable<AvilErtTable> {
+    return this.http.get<ErtTableListObj>(this.getErtAvailableTableUrl + ertJobId + '&startIndex=' + startIndex + '&tableName=' + tableName,
+      { headers: this.userInfoService.getHeaders() }).pipe(
+        map(this.extractDataForAvail),
+        catchError(this.handleError('getERTcolumnlist', []))
+      );
+  }
+
   saveErtJob(param: any): Observable<any> {
     return this.http.post<any>(this.saveErtJobUrl, param, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractDataForRunJob));

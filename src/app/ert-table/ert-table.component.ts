@@ -52,7 +52,7 @@ export class ErtTableComponent implements OnInit {
   maxNode = 3;
   ertAvillableTableList: AvilErtTable = new AvilErtTable();
   expressionStack: string[] = [];
-  searchTableName: string;
+  searchTableName = '';
   dataOrderList: DataOrderConfig[] = [];
   dataOrderObj: DataOrderConfig = new DataOrderConfig();
   schemaResultsTableCount = 0;
@@ -95,6 +95,7 @@ export class ErtTableComponent implements OnInit {
   substringEndIndex = null;
   disabledAddColumnConfigBtn = false;
   filterOperationList: FilterOperationList[] = [];
+  searchAvailableTableName = '';
 
 
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
@@ -188,10 +189,13 @@ export class ErtTableComponent implements OnInit {
           tempObj.tableName = tempTable.tableName;
           tempObj.modifiedTableName = tempTable.modifiedTableName;
           tempObj.isSelected = true;
-          this.selectedTableList.push(tempObj);
+          if (this.selectedTableList.findIndex(a => a.tableId === tempTable.tableId) === -1) {
+            this.selectedTableList.push(tempObj);
+          }
           this.selectedTableId = this.selectedTableList[0].tableId;
-          this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-          this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+          const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+          this.modifiedTableName = tempTableObj.modifiedTableName;
+          this.tableName = tempTableObj.tableName;
         }
         this.getEditedERTcolumnlist(tableIds);
       } catch {
@@ -201,8 +205,9 @@ export class ErtTableComponent implements OnInit {
   }
 
   getNextBatchOfERTTable(event) { // When we scroll in edit mode of job then it will fetch the data from BE using index.
-    if (this.ertJobId !== '' && this.ertJobId !== undefined && this.searchTableName === '') {
-      if (true && event === 'bottom') {
+    console.log(this.isEditErtTableLeft, event, this.ertJobId, this.searchTableName);
+    if (this.ertJobId !== '' && this.ertJobId !== undefined && (this.searchTableName === '' || this.searchTableName === undefined)) {
+      if (this.isEditErtTableLeft && event === 'bottom') {
         this.editErtTableIndex = this.editErtTableIndex + 1;
         this.getEditErtTableList(this.editErtTableIndex);
       }
@@ -221,6 +226,21 @@ export class ErtTableComponent implements OnInit {
       this.getOriginalErttableList('1');
     }
   }
+
+  getSearchAvailableTablelist() {  // During creating job when user search table.
+    this.currentPageOfOriginalErtTable = 1;
+    if (this.searchAvailableTableName !== '') {
+      this.ertService.getErtSearchAvailableTable(this.ertJobId, this.searchAvailableTableName.toUpperCase(),
+        '1').subscribe(response => {
+          this.ertAvillableTableList = response;
+          this.inEditCheckForAlreadySelectedTable();
+        });
+    } else {
+      this.getErtAvailableTable(1);
+      this.availPage = 1;
+    }
+  }
+
 
   checkForAlreadySelectedTable() { // Check for a selected table in add case.
     for (const tempTable of this.selectedTableList) {
@@ -880,12 +900,18 @@ export class ErtTableComponent implements OnInit {
     if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
       this.errorMsg = 'Please select a table';
     } else {
+      this.checkForEmptyColumnList();
       this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount, this.storeSelectedTables);
       this.ertService.isSIPGraphChange = false;
       this.ertService.isDataRecordGraphChange = false;
       this.navigateToUrl('workspace/ert/ert-extract-ingest');
     }
   }
+
+  checkForEmptyColumnList() {
+    console.log(this.selectedTableList.filter(a => a.columnList.length !== 0));
+  }
+
 
   navigateToUrl(url: string) {
     if (this.from === 'data-record' || this.from === 'SIP') {
@@ -1206,7 +1232,6 @@ export class ErtTableComponent implements OnInit {
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
       }
     }
-    console.log(this.filterdata);
     if (event !== '') {
       event.stopPropagation();
     }
@@ -1262,7 +1287,6 @@ export class ErtTableComponent implements OnInit {
         attachNode = true;
       }
     }
-    console.log(attachNode);
     if (attachNode === false) {
       if (filterTreeNode3.children[0].id === id) {
         tempNode = filterTreeNode3.children[1];
@@ -1279,7 +1303,6 @@ export class ErtTableComponent implements OnInit {
       } else {
         const filterConfigNode = new FilterConfigNode(1, null, false, false, tempNode.column, tempNode.condition, tempNode.value, 0, 0, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
-        console.log(this.filterdata);
       }
     } else if (attachNode === true) {
       this.filterdata = deleteNode(this.filterdata, filterTreeNode1);
@@ -1293,7 +1316,6 @@ export class ErtTableComponent implements OnInit {
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[0]));
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[1]));
       } else {
-        console.log(this.filterdata);
         const filterConfigNode = new FilterConfigNode(1, filterTreeNode2.children[0].operation,
           false, false, filterTreeNode2.children[0].column,
           filterTreeNode2.children[0].condition, filterTreeNode2.children[0].value, 0, 0, []);
@@ -1304,8 +1326,6 @@ export class ErtTableComponent implements OnInit {
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterTreeNode2.children[0].children[1]));
       }
     }
-
-    console.log(this.filterdata);
   }
 
   addOrder() {

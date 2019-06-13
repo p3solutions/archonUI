@@ -456,6 +456,10 @@
         </h4>
       </div>
       <div class="modal-body">
+          <div class='search-original-table'><span style="z-index:1"
+            class="glyphicon glyphicon-search inner-addon right-addon"></span>
+          <input type="text" class="form-control search-input" [(ngModel)]="searchAvailableTableName" id="listSearch"
+            (keyup)="getSearchAvailableTablelist()" placeholder="Search Table"></div>
         <div id="avaliable-table-list">
           <div [matTooltip]="item.alreadyIsSelected?'Already Present in selected table list':''"
             class="form-control {{item.isSelected?'selected-table-cls':''}}"

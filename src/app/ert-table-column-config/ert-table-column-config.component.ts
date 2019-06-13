@@ -124,7 +124,6 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
-    console.log(this.ertJobId);
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       selectedList = this.ertService.selectedList;
     } else {
@@ -161,7 +160,6 @@ export class ErtTableColumnConfigComponent implements OnInit {
     } else {
       param.isIngest = true;
     }
-    console.log(param);
     this.ertService.saveErtJob(param).subscribe(result => {
       const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
         'Job successfully marked as completed.';
