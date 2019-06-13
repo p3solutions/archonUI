@@ -146,6 +146,7 @@ import { CreateDatabasePageComponent } from './create-database-page/create-datab
 import { ScrollableDirective } from './scrollable.directive';
 import { NonspecialcharDirective } from './nonspecialchar.directive';
 import { OnlyuppercaseallowDirective } from './ert-table/onlyuppercaseallow.directive';
+import { ChangeOverflowDirective } from './change-overflow.directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -249,7 +250,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 CreateDatabasePageComponent,
                 ScrollableDirective,
                 NonspecialcharDirective,
-                OnlyuppercaseallowDirective
+                OnlyuppercaseallowDirective,
+                ChangeOverflowDirective
         ],
         imports: [
                 JwtModule.forRoot({

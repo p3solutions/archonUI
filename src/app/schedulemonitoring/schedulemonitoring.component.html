@@ -155,40 +155,61 @@
 <!-- Modal -->
 <div id="detailsModel" class="modal fade" role="dialog">
   <div class="modal-dialog">
-      <div class="modal-content" style="width: 630px;">
-          <div class="modal-header">
-            <div class='model-title'><div class='info-r'>Job Details</div></div>
-        </div>
+      <div class="modal-content" style="width: 900px;">
+        <div class="info-popup-header-cls">
+          <h4 class="popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">list</i><div class="pop-title" style="margin-left: 0px;">Job Details</div></h4>
+        </div> 
         <div class="modal-body">
-            <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Field</th>
-                    <th>Values</th>
-                  </tr>
-                </thead>
-                <tbody >
-                  <tr *ngFor="let i of common" class="text-left">
-                      <td *ngIf="i.value !== ''">{{i.name}}</td>
-                      <td *ngIf="i.type !== 'Date'">{{i.value}}</td>
-                        <td *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'">{{i.value | date: 'medium'}}</td>
-                        <td *ngIf="i.type == 'Date' && i.value == 'N/A'">{{i.value}}</td>  
-                        <td *ngIf="i.type == 'Date' && i.value == 'null'"></td>    
-                  </tr>
-                  <tr><td colspan="2"><h4><b>Input</b></h4></td></tr>
-                  <tr *ngFor="let i of input" class="text-left">
-                    <td>{{i.name}}</td>
-                    <td>{{i.value}}</td>
-                  </tr>
-                  <tr><td colspan="2"><h4><b>Message</b></h4></td></tr>
-                  <tr><td>{{jobMessage?.name}}</td><td>{{jobMessage?.value}}</td></tr>
-                  <tr *ngIf="jobOutput !== null"><td colspan="2"><h4><b>Output</b></h4></td></tr>
-                  <tr *ngIf="jobOutput !== null"><td>{{jobOutput?.name}}</td><td>{{jobOutput?.value}}</td></tr>
-                </tbody>
-              </table>
+            <div class="col-md-12 ws">           
+                <div class="col-md-6" *ngFor="let i of common">               
+                    <div class="inner-div-l">
+                      <div *ngIf="i.value !== ''" class="inner-bold-item">{{i.name}}</div>
+                      <div *ngIf="i.type !== 'Date'" class="inner-grey-item">{{i.value}}</div>
+                      <div *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'" class="inner-grey-item">{{i.value | date: 'medium'}}</div>
+                      <div *ngIf="i.type == 'Date' && i.value == 'N/A'" class="inner-grey-item">{{i.value}}</div>
+                      <div *ngIf="i.type == 'Date' && i.value == 'null'" class="inner-grey-item">{{i.value}}</div>
+                    </div>                   
+                </div>
+              </div>
+              <div *ngIf="input !== null" class="col-md-12 ws">
+                <div class="bg">Input</div>
+              </div>
+              <div *ngIf="input !== null" class="col-md-12 ws">           
+                  <div class="col-md-6" *ngFor="let i of input">               
+                      <div class="inner-div-l">
+                        <div class="inner-bold-item">{{i.name}}</div>
+                        <div class="inner-grey-item">{{i.value}}</div>
+                      </div>                   
+                  </div>
+                </div>
+                <div class="col-md-12 ws">
+                    <div class="bg">Message</div>
+                  </div>
+                  <div class="col-md-12 ws">           
+                    <div class="col-md-12">               
+                        <div class="inner-div-l">
+                          <div class="inner-bold-item">{{jobMessage?.name}}</div>
+                          <div class="inner-grey-item">{{jobMessage?.value}}</div>
+                        </div>                   
+                    </div>
+                  </div>
+                  <div  *ngIf="jobOutput !== null" class="col-md-12 ws">
+                      <div class="bg">Output</div>
+                    </div>
+                    <div  *ngIf="jobOutput !== null" class="col-md-12 ws">           
+                      <div class="col-md-12">               
+                          <div class="inner-div-l">
+                            <div class="inner-bold-item">{{jobOutput?.name}}</div>
+                            <div class="inner-grey-item">{{jobOutput?.value}}</div>
+                          </div>                   
+                      </div>
+                    </div>
+
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
-      </div>
+      <div class="modal-footer">        
+          <button type="button" class="btn btn-padding btn-info-popup-primary-color"
+            data-dismiss="modal">Close</button>
+        </div>
     </div>
   <button #click data-toggle="modal" href="#detailsModel" [hidden]="true"></button>

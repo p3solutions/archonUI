@@ -42,7 +42,7 @@ export class ManageUserRolesComponent implements OnInit {
   dataSource1: InviteUserDataSource;
   totalUser = 0;
   successMsg = '';
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
     'createdAt', 'updatedAt'];
   disableInviteBtn = true;
   lockedUserAction: string[] = ['Select Action', 'UnLock', 'Revoke Access'];
@@ -105,7 +105,7 @@ export class ManageUserRolesComponent implements OnInit {
         this.invited = true;
         this.revoked = null;
         this.locked = null;
-        this.displayedColumns = ['emailAddress', 'globalGroupName', 'status', 'action', 'businessJustification',
+        this.displayedColumns = ['emailAddress', 'globalGroupName', 'status', 'businessJustification',
           'createdBy', 'createdAt', 'updatedAt'];
         break;
       }
@@ -113,7 +113,7 @@ export class ManageUserRolesComponent implements OnInit {
         this.invited = false;
         this.revoked = false;
         this.locked = false;
-        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
         break;
       }
@@ -121,7 +121,7 @@ export class ManageUserRolesComponent implements OnInit {
         this.revoked = true;
         this.invited = false;
         this.locked = null;
-        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
         break;
       }
@@ -129,7 +129,7 @@ export class ManageUserRolesComponent implements OnInit {
         this.locked = true;
         this.invited = false;
         this.revoked = null;
-        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
         break;
       }
@@ -137,7 +137,7 @@ export class ManageUserRolesComponent implements OnInit {
         this.locked = false;
         this.invited = null;
         this.revoked = null;
-        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'action', 'businessJustification',
+        this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
         break;
       }
@@ -191,7 +191,7 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
       if (item.roleName.toUpperCase().trim().includes('SUPER')) {
         this.disableInviteBtn = false;
         this.displayedColumns = ['id', 'firstName', 'lastName',
-        'emailAddress', 'globalGroup', 'status', 'businessJustification', 'createdAt', 'updatedAt'];
+        'emailAddress', 'globalGroup', 'status', 'businessJustification', 'action', 'createdAt', 'updatedAt'];
         break;
       }
     }
