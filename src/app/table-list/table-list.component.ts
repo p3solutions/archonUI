@@ -207,6 +207,7 @@ export class TableListComponent implements OnInit {
   }
 
   openDataAModal() {
+    this.stepperIndex = 0;
     setTimeout(() => {
       this.changeMatStepIcon();
     }, 800);
@@ -258,6 +259,7 @@ export class TableListComponent implements OnInit {
   gotoBack() {
     this.homeStage = true;
     this.dataAModal = false;
+    this.tablelistService.dataAnalyzerReset = true;
   }
   resetDataAModal() {
     this.enableNextBtn = false;
@@ -269,6 +271,7 @@ export class TableListComponent implements OnInit {
     this.finalSecColMap.clear();
     this.selectedSecTbl.clear();
     this.finalSecColArray = [];
+    console.log(this.selectedSecTbl);
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
@@ -298,6 +301,7 @@ export class TableListComponent implements OnInit {
               secTbl.click();
             }
             this.finalSecColMap.set(secColName, true);
+            console.log(this.selectedSecTbl);
           } else {
             this.selectedSecColMap.delete(secColName);
             this.finalSecColMap.delete(secColName);
@@ -448,6 +452,17 @@ export class TableListComponent implements OnInit {
     this.stepper.selectedIndex = 1;
     this.handleStepIindicator(true);
     this.enableNextBtn = this.finalSecColMap.size > 0;
+    setTimeout(() => {
+      if (this.tablelistService.dataAnalyzerReset) {
+        const inputElements = document.querySelectorAll('.sec-br input');
+        for (let i = 0; i < inputElements.length; i++) {
+            if ((inputElements[i] as HTMLInputElement).type === 'checkbox') {
+              (inputElements[i] as HTMLInputElement).checked = false;
+            }
+        }
+        this.tablelistService.dataAnalyzerReset = false;
+      }
+    }, 100);
   }
   gotoPrimarySel(e, stepper: MatStepper) {
     const steps: MatStepHeader[] = stepper._stepHeader.toArray();
@@ -589,16 +604,16 @@ export class TableListComponent implements OnInit {
     }
   }
   dataAnalyse() {
-    setTimeout(() => {
-      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
-      a[3].classList.add('mat-analyze-psedu-before');
-      a[2].classList.add('mat-analyze-psedu');
-      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
-      b[0].children[5].classList.add('mat-horizental-line');
-      this.value[2].children[1].classList.add('finished-step');
-      this.value[3].children[1].classList.add('active-step');
-    }, 300);
-    this.stepper.selectedIndex = 3;
+    // setTimeout(() => {
+    //   const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+    //   a[3].classList.add('mat-analyze-psedu-before');
+    //   a[2].classList.add('mat-analyze-psedu');
+    //   const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+    //   b[0].children[5].classList.add('mat-horizental-line');
+    //   this.value[2].children[1].classList.add('finished-step');
+    //   this.value[3].children[1].classList.add('active-step');
+    // }, 300);
+    // this.stepper.selectedIndex = 3;
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
       if (res && res.success) {
         this.dataAnalysisjobID = res.data.jobId;
@@ -610,7 +625,8 @@ export class TableListComponent implements OnInit {
   getJobStatus() {
     this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
       this.JobStatus = res.data.jobStatus;
-      document.getElementById('close-analyzer-popup').click();
+      console.log(this.JobStatus);
+      // document.getElementById('close-analyzer-popup').click();
       if (this.JobStatus === 'SUCCESS') {
         this.dataAModal = false;
         this.homeStage = false;
@@ -628,12 +644,16 @@ export class TableListComponent implements OnInit {
         // this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
         // this.JobStatus = '';
       } else {
+        console.log('a');
         setTimeout(() => {
           this.stepper.selectedIndex = 2;
           this.stepperIndex = 2;
           this.value[2].children[1].classList.add('active-step');
+          if (document.getElementById('analyzes').classList.contains('in') === false) {
+            document.getElementById('open-analyzer-popup').click();
+          } else {
+          }
         }, 1000);
-        document.getElementById('open-analyzer-popup').click();
       }
     });
   }
@@ -771,12 +791,20 @@ export class TableListComponent implements OnInit {
       });
   }
 
-  selectAll() {
-    $('input:checkbox:enabled.m-r-10').click();
+  selectAll(event) {
+    if (event.target.checked) {
+      $('input:checkbox:not(:checked).m-r-10').click();
+    } else {
+      $('input:checkbox:checked.m-r-10').click();
+    }
   }
 
-  selectAllSec() {
-    $('input:checkbox:enabled.m-r-10.m-r-sec').click();
+  selectAllSec(event) {
+    if (event.target.checked) {
+      $('input:checkbox:not(:checked).m-r-10.m-r-sec').click();
+    } else {
+      $('input:checkbox:checked.m-r-10.m-r-sec').click();
+    }
   }
 
   togglePanels(index: number) {

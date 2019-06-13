@@ -96,6 +96,8 @@
   }
 
 .modal-dialog{
+  margin: 65px auto auto;
+  width: fit-content;
     overflow-y: initial !important
 }
 .modal-body{
@@ -193,8 +195,41 @@ table.mat-table {
   border-spacing: 0;
   width: 135%;
 }
+.inner-div-l {
+  text-align: left;
+  margin-right: 2%;
+  word-break: break-all;
+  padding: 10px;
+  margin-left: -10px;
+}
+.inner-bold-item {
+  color: #000000;
+  word-break: break-all;
+}
 
-
-
-
+.inner-grey-item {
+  color: #5c5d5e;
+  word-break: break-all;
+}
+.bg {
+  text-align: left;
+  color: #0c0c0c;
+  background-color: #edf3f8;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  border-radius: 2px;
+  padding: 7px;
+  padding-left: 13px;
+  font-weight: bold;
+  }
+  .line {
+    border-top: 1px solid #ddd !important;
+    margin-top: -5px;
+    margin-bottom: 15px;
+  }
+  .ws {
+    /* margin-left: -20px; */
+    padding: 0px;
+    margin-top: -5px;
+  }
 

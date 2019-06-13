@@ -159,7 +159,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
 
 
   updateRelation() {
-    this.removeIndexValue = this.resultantValues;
+    this.removeIndexValue = JSON.parse(JSON.stringify(this.resultantValues));
     for (const i of this.removeIndexValue) {
       if (i.defaultSecondaryColumn) {
         delete i.defaultSecondaryColumn;
@@ -173,15 +173,24 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       .subscribe(res => {
         console.log(res);
         if (res && res.success) {
+          // const close: HTMLButtonElement = document.querySelector('#openEditRelationshipModal .cancel');
+          // close.click();
+          // document.getElementById('editssmsg').click();
           this.removeIndexValue = [];
           this.resultantValues = [];
           this.updateEvent.emit(true);
           this.errorMsg = res.data;
           this.updateNotifSuccess = true;
+          // setTimeout(() => {
+          // const close: HTMLButtonElement = document.querySelector('#openEditRelationshipModal .cancel');
+          // close.click();
+          // }, 1500);
         } else {
-          console.log(res);
+          // console.log(res);
+          // document.getElementById('editermsg').click();
           this.errorMsg = res.errors;
           this.updateNotif = true;
+          console.log(this.resultantValues);
         }
       });
   }

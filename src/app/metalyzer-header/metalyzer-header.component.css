@@ -63,7 +63,7 @@ span {
 }
 #metalyzer {
   margin-bottom: 10px;
-  padding-right: 37px;
+  padding-right: 4.1%;
 }
 
 /* New Header rules for Metalyzer Analysis */
@@ -83,7 +83,9 @@ span {
 }
 
 .container-head{
-  margin: -6px 10px -15px 10px;
+  margin: -6px 0px -25px 0px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .left-flexer{
@@ -141,12 +143,9 @@ span {
   text-align: left
 }
 .wss {
-  margin-left: 10px;
+  margin-left: 35px;
   text-align: left;
   white-space: nowrap; 
-  width: 90%; 
-  overflow: hidden;
-  text-overflow: ellipsis; 
 }
 
 .arch-btnn{
@@ -161,9 +160,6 @@ span {
   transform: scale(1.1, 1.1);
 }
 
-.paginate-sty{
-  margin-top: 3rem;
-}
 .mat-header-cell {
   font-size: 12px;
   font-weight: bold;
@@ -219,4 +215,22 @@ span {
   text-overflow: ellipsis;
   border-bottom: 1px solid;
   width: 100%;
+}
+
+table{
+  width: 100%;
+}
+
+.mat-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+
+#screen-table {
+  margin: 2px -15px 2px 40px;
+}
+
+::ng-deep #screen-table svg {
+  height: 6vh !important;
 }

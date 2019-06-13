@@ -99,27 +99,46 @@ h4 {
 .items-list {
   overflow-x: hidden;
   overflow-y: auto;
-  height: 576px;
+  height: max-content;
   padding-left: 20px;
+  padding-bottom: 2%;
 }
 
 .tablename-list {
   margin-top: 10px;
   margin-left: -5px;
-  width: 95%;
+  width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 280px;
-  /* margin-top: 0px; */
-}
-
-.expansion-outer{
-  margin-top: 12px;
+  max-height:50vh;
 }
 
 .card {
   width: 105%;
-  height: 410px;
+  height: 105%;
+  min-height: 70vh;
+}
+
+#analysis-view .card {
+  background-color: #fff;
+  /* height: 770px; */
+}
+
+#analysis-view .tablename-list {
+  /* height: 625px; */
+}
+
+#analysis-view{
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+}
+
+.expansion-outer{
+  margin-top: 12px;
 }
 
 .default-load {
@@ -147,7 +166,7 @@ h4 {
 }
 
 .sub-headerr {
-  margin-left: 4px;
+  margin-left: -4px;
 }
 
 .sub-headerrs {
@@ -208,7 +227,7 @@ h4 {
   /* margin-right: 50px; */
 }
 .dataA-panel-body-r {
-  margin-left: 0px; 
+  margin-left: 0px;
 }
 
 #panel-r{
@@ -248,15 +267,6 @@ h4 {
 
 .primary-col-chkbx {
   margin: 4px 5px;
-}
-
-#analysis-view .card {
-  background-color: #fff;
-  height: 770px;
-}
-
-#analysis-view .tablename-list {
-  height: 625px;
 }
 
 #analysis-view .search-input {
@@ -339,7 +349,7 @@ input[type='checkbox'] {
 
 .container-tab{
   margin-left: 22px;
-  margin-right: 31px;
+  margin-right: 22px;
 }
 
 #dropdown>li {
@@ -369,20 +379,22 @@ input[type='checkbox'] {
   text-align: left;
   /* margin-left: 10px; */
   font-size: 14px;
+  padding-left: 6%;
 }
 
 .def-width {
   width: 19%;
   text-align: left;
   font-size: 14px;
-  padding-left: 17px;
+  padding-left: 22px;
+  font-weight: bold;
 }
 
 .conf-width {
   width: 18%;
   text-align: left;
   font-size: 14px;
-  padding-left: 0px;
+  padding-left: 12px;
   padding-right: 0px;
 }
 
@@ -390,7 +402,8 @@ input[type='checkbox'] {
   width: 26%;
   text-align: left;
   font-size: 14px;
-  padding-left: 0px
+  padding-left: 0px;
+  margin-left: -4px;
 }
 
 .action-width {
@@ -489,7 +502,8 @@ input[type='checkbox'] {
 
 .glyphicon {
   position: relative;
-  top: 22px;
+  top: 26px;
+  font-size: 14px;
   margin-right: 35px;
   float: right;
   /* display: inline-block; */
@@ -521,9 +535,9 @@ input[type='checkbox'] {
 }
 
 .form-control {
-  font-size: 12px;
-  height: 30px;
-  border-radius: 2px;
+  font-size: 14px;
+  height: 40px;
+  border-radius: 3px;
 }
 
 a {
@@ -565,7 +579,7 @@ a:hover {
 
 .expansion-item-join {
   width: 28%;
-  padding: 0px 15px 0px 15px
+  /* padding: 0px 15px 0px 15px */
 }
 
 .exp-content-outer {
@@ -573,19 +587,39 @@ a:hover {
   display: inline-flex;
   height: 39px;
   padding: 8px 2px 7px 0px;
-  border-bottom: 1px solid #8c8c8c;
+  border-bottom: 1px solid #c8c9ca;
   background-color: #f3f3f3;
 }
 
 .exp-mat-item {
   width: 50%;
-  text-align: center
+  text-align: left;
+  padding-left: 20px;
 }
 
 ::ng-deep #analysis-view .mat-expansion-panel {
-  margin-bottom: 8px;
-  margin-right: 31px;
+  margin-right: 24px;
   margin-left: 24px
+}
+
+::ng-deep #analysis-view .mat-expansion-panel-spacing {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+::ng-deep #analysis-view .mat-expansion-panel-spacing .mat-expansion-panel-header {
+  /* margin-top: -9px; */
+  padding-bottom: 9px;
+}
+::ng-deep #analysis-view .mat-expanded .mat-expansion-indicator {
+  margin-top: 10px;
+}
+
+::ng-deep #analysis-view #mat-expansion-panel-header-0 {
+  border-top: 1px solid #f0f0f0;
+}
+
+::ng-deep #analysis-view .mat-expansion-panel-spacing .mat-expanded#mat-expansion-panel-header-0 {
+  border-top: 1px solid #f0f0f0;
 }
 
 .action-btn {
@@ -593,7 +627,7 @@ a:hover {
 }
 
 .border-top-line {
-  border-top: 1px solid #8c8c8c
+  /* border-top: 1px solid #8c8c8c */
 }
 
 .exp-trash-item {
@@ -610,7 +644,7 @@ a:hover {
 }
 
 .card-title {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .arch-button {
@@ -682,7 +716,7 @@ a:hover {
 
 .plr-0{
   padding-left: 0px;
-  padding-right: 0px 
+  padding-right: 0px
 }
 
 .ana-br {
@@ -739,7 +773,7 @@ a:hover {
   color: #ffffff !important;
 }
 
-::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
   background-color:  #2879ff !important
 }
@@ -753,32 +787,32 @@ a:hover {
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu-before.mat-horizontal-stepper-header:not(:first-child)::before, [dir=rtl] 
+::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu-before.mat-horizontal-stepper-header:not(:first-child)::before, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
   background-color:  #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
   background-color:  #2879ff !important
 }
 
-::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
   border-top-width:2px !important;
 }
@@ -786,18 +820,18 @@ a:hover {
 ::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
  [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
   border-top-width:2px !important ;
-} 
+}
 
 ::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
   border-top-width:2px !important;
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, 
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
 [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
   border-top-width:2px !important;
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
   border-top-width:2px !important;
 }
@@ -820,7 +854,7 @@ a:hover {
  .info-r {
   font-size: 18px;
   padding-left: 10px;
-  display:inline-block;  
+  display:inline-block;
 }
 .action-btn button.save {
   background-color: #2879ff;
@@ -887,6 +921,15 @@ pagination-controls::ng-deep ul.ngx-pagination {
 }
 .msg {
   margin-top: 10px;
+}
+.line {
+  border-top: 1px solid #ddd !important;
+  margin-top: -7px;
+  margin-bottom: 15px;
+}
+
+.m-r-0 {
+margin-right: 0px !important;
 }
 
 

@@ -195,9 +195,11 @@ export class StoredProcViewComponent implements OnInit {
     };
     this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
       if (res && res.errorDetails.length === 0) {
+        document.getElementById('spvsmsg').click();
         this.updateSuccess = true;
         this.storedProcViewService.changeSPVBooleanValue(true);
       } else {
+        document.getElementById('spvemsg').click();
         this.errorMsg = res.errorDetails[0].errors[0].errorMessage;
         this.updateNotif = true;
       }
@@ -215,5 +217,12 @@ export class StoredProcViewComponent implements OnInit {
   closeScreen() {
     this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
     this.storedProcViewService.changeSPVBooleanValue(true);
+  }
+  selectAll(event) {
+    if (event.target.checked) {
+      $('input:checkbox:not(:checked).spvall').click();
+    } else {
+      $('input:checkbox:checked.spvall').click();
+    }
   }
 }
