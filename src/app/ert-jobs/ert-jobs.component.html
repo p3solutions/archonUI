@@ -43,11 +43,13 @@
     </div><br>
 
     <div class="flex-cards-footer">
-      <div class='foo-icon'><a [class.disabled-icon]="item.madeDisable" matTooltip="{{item.madeDisable? '':'Run Job'}}"
-          (click)="!madeDisable && openScheduleModel(item.jobId,item.jobStatus)" class="cursor-poniter fonticonbelow"><i
-            class="fa fa-play" aria-hidden="true"></i></a></div>
-      <div class='foo-iconedit'><a (click)="!madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
-          matTooltip="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
+      <div class='foo-icon'><a matTooltip="{{item.madeDisable? '':'Run Job'}}"
+          (click)="!item.madeDisable && openScheduleModel(item.jobId,item.jobStatus)"
+          class="{{item.madeDisable ?'run-disabled':'fonticonbelow cursor-poniter'}}"><i class="fa fa-play"
+            aria-hidden="true"></i></a></div>
+      <div class='foo-iconedit'><a (click)="!item.madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
+          matTooltip=" {{item.madeDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
+          {{item.madeEditDisable ? 'edit-disabled':''}}" aria-hidden="true"></i></a></div>
 
     </div>
   </div>

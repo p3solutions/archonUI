@@ -93,7 +93,7 @@
   padding-left: 3px;
 }
 
-.fa-pencil-square-o:hover {
+.fa-pencil-square-o:not(.edit-disabled):hover {
   background-color: #0A85F8;
 }
 
@@ -293,20 +293,21 @@ td.tdr {
   font-size: 22px !important;
 }
 
-.disabled-icon{
-  background-color: #d0cece !important;
-  cursor: not-allowed;
-}
-
-.fa-pencil-square-o-disabled {
-  text-align: center;
-  font-size: 15px;
-  color: #ffffff;
-  cursor: pointer;
-  background-color: #d0cece;
+.run-disabled {
+  float: left;
+  color: #cecdcd;
+  padding-top: 4px;
+  padding-left: 3px;
+  background-color: #e5e5e6;
   width: 26px;
   height: 26px;
   border-radius: 15px;
-  padding-top: 5px;
-  padding-left: 3px;
+  text-align: center;
+  cursor: not-allowed;
+}
+
+.edit-disabled {
+  cursor: not-allowed;
+  color: #cecdcd;
+  background-color: #e5e5e6;
 }
