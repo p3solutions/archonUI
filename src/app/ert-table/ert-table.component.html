@@ -15,7 +15,7 @@
           <a *ngIf="showAddTableBtn" (click)="openCreateJobSelectTablePopup('1')"
             matTooltip="Select Table to create job" class="cursor-poniter"><i class="fa fa-plus-circle"></i></a></div>
         <div class="card-body" id="ert-tbl-search">
-          <div *ngIf="!showNoTablesMsg" id="tbl-list" style="height: 326px;">
+          <div *ngIf="selectedTableList.length>0" id="tbl-list" style="height: 326px;">
             <div class="scroll-div border" appScrollable (scrollPosition)="getNextBatchOfERTTable($event)">
               <div *ngFor="let item of selectedTableList | searchTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)"
@@ -28,7 +28,7 @@
               </div>
             </div>
           </div>
-          <h4 *ngIf="showNoTablesMsg" style="margin-top: 50%;">No tables available</h4>
+          <h4 *ngIf="selectedTableList.length===0" style="margin-top: 50%;">Select table to create job.</h4>
         </div>
       </div>
     </div>
@@ -76,7 +76,7 @@
               </div>
             </div>
             <div id="select-tbl-list">
-              <div *ngIf="!showNoTablesMsg" class="scroll-div">
+              <div *ngIf="selectedTableList.length>0" class="scroll-div">
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -128,7 +128,7 @@
             </div>
           </ng-container>
         </div>
-        <h4 *ngIf="showNoTablesMsg" style="margin-top: 19%;">No Columns available</h4>
+        <h4 *ngIf="selectedTableList.length===0" style="margin-top: 12.8%;">No Columns available</h4>
       </div>
     </div>
   </div>
@@ -306,7 +306,8 @@
                             <select #selectcondition (focus)="filterColumnSelectionChange(node.column)"
                               [(ngModel)]="node.condition" class="form-control">
                               <option [ngValue]="null" selected>Select condition</option>
-                              <option [value]="item" *ngFor="let item of filterOperationList">{{item.operation}}
+                              <option [value]="item.operation" *ngFor="let item of filterOperationList">
+                                {{item.operation}}
                               </option>
                             </select>
                           </div>

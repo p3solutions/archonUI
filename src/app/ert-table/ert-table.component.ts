@@ -374,7 +374,7 @@ export class ErtTableComponent implements OnInit {
   getERTtableListForDataRecord() { // For data Record.
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.getERTTableForTableMode(); // During Edit Mode.
-    } else { 
+    } else {
       let tableNameList: string[]; // New data- record Job.
       tableNameList = this.ertService.selectedValues;
       this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
@@ -1082,6 +1082,8 @@ export class ErtTableComponent implements OnInit {
     this.dataOrderList = [];
     this.maxNode = 3;
     let filterMap = new Map();
+    this.filterWhereClause = '';
+    this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === '');
     this.filterConfigColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
     this.orderFilterConfigColumnNameList = this.selectedTableList.filter
@@ -1188,6 +1190,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   createFilterWhereClause(obj, tableName): Observable<string> {
+    console.log(obj);
     const children = obj.children;
     for (const child of children) {
       if (child.children.length === 0) {
