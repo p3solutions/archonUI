@@ -92,8 +92,9 @@ input#tablename {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: pre;
-  margin-left: 27px;
+  margin-left: 19px;
   text-align: left;
+  padding-top: 2px;
 }
 
 div.sticky {
