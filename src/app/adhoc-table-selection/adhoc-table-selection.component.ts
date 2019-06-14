@@ -41,9 +41,11 @@ export class AdhocTableSelectionComponent implements OnInit {
   tempValue = '';
   startIndex = 1;
   searchTableName = '';
+  emptyNested = true;
   page = 1;
   primarytableIdWhenNoRelation = '';
   tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
+
   constructor(public router: Router, private tablelistService: TableListService, private cookieService: CookieService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute, private spinner: NgxSpinnerService,
     private adhocSavedObjectService: AdhocSavedObjectService, private adhocScreenService: AdhocScreenService,
@@ -172,6 +174,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   }
 
   populategraph(value, event) {
+    this.emptyNested = true;
     let tempHeader = new AdhocHeaderInfo();
     this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
       tempHeader = response;
@@ -186,29 +189,40 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.relationshipInfo = [];
       this.tablelistService.getListOfRelationTableMMR(this.workspaceID,
         tempHeader.appMetadataVersion, value.tableName).subscribe(result => {
-          console.log(result, 1);
           if (result.length !== 0) {
-            console.log(this.tableService.booleanNested, 2);
             if (this.tableService.booleanNested) {
               for (const i of result) {
-                console.log(this.includesArray, 'include array');
                 if (this.includesArray.includes(i.secondaryTable.tableName)) {
                   this.relationshipInfo.push(i);
                 }
               }
+              if (this.relationshipInfo.length === 0) {
+              this.emptyNested = false;
+              }
             } else {
               this.relationshipInfo = result;
             }
-            console.log(this.relationshipInfo, 3);
-            this.primaryTable = getPrimaryArray(this.relationshipInfo);
-            this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-            for (const i of this.primaryTable) {
-              this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
-            }
-            this.selectedValues.push(value.tableName);
-            console.log(this.selectedValues, this.joinListMap, 4);
-            this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+            if (this.emptyNested) {
+              this.primaryTable = getPrimaryArray(this.relationshipInfo);
+              this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+              for (const i of this.primaryTable) {
+                this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+              }
+              this.selectedValues.push(value.tableName);
+              this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+              this.createchart();
+            } else {
+              this.primarytableIdWhenNoRelation = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0].tableId;
+              this.relationshipInfo = result;
+              this.data = {
+              color: '#ffffff',
+              enableClick: false,
+              id: 'NoRelation',
+              name: '',
+              visible: true,
+              };
             this.createchart();
+            }
           } else {
             this.primarytableIdWhenNoRelation = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0].tableId;
             this.relationshipInfo = result;
