@@ -316,9 +316,9 @@
                           <div class="panel-body dataA-panel-body-r" id="panel-1">
                               <div class="col-md-4 dataA-scrollable-div-A">
                                   <div class="col-md-12 plr-0">
-                                      <h5 style="font-weight: bold;">Primary Table Columns</h5>
+                                      <h4 style="font-weight: bold;">Primary Table Columns</h4>
                                     </div>
-                                  <div class="col-md-12 plr-0"
+                                  <div class="col-md-12 plr-0" style="margin-top: 12px;"
                                   *ngFor="let x of finalPrimColArray">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
                                       {{x.columnName}}
@@ -327,9 +327,9 @@
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
                                 <div class="col-md-12 plr-0">
-                                    <h5 style="font-weight: bold;">Secondary Tables</h5>
+                                    <h4 style="font-weight: bold;">Secondary Tables</h4>
                                   </div>
-                                <div class="col-md-12 plr-0"
+                                <div class="col-md-12 plr-0" style="margin-top: 12px;"
                                 *ngFor="let x of finalSecondaryTableList; let i = index" (click)="finalSecCol(x,i)">
                                 <div [class.selected]="i == selectedRow" class="col-md-12 cur-p trim-text ana-br da-table" id="list-br" title="{{x.tableName}}">                                  
                                     {{x.tableName}}
@@ -339,9 +339,9 @@
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
                                   <div class="col-md-12 plr-0">
-                                      <h5 style="font-weight: bold;">Secondary Column Names</h5>
+                                      <h4 style="font-weight: bold;">Secondary Column Names</h4>
                                     </div>
-                                  <div class="col-md-12 plr-0"
+                                  <div class="col-md-12 plr-0" style="margin-top: 12px;"
                                   *ngFor="let x of finalSecColArray">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
                                       {{x.columnName}}
@@ -349,7 +349,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="action-btn" style="float: right;">
+                            <div class="action-btn" style="float: right; margin-right: -3%;">
                                 <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn cancel btn-padding matStepperPrevious">Previous</button>
                                 <button data-keyboard="false"
                                 data-backdrop="static" data-toggle="modal" href="#analyzes" (click)="dataAnalyse()" class="btn save btn-padding matStepperNext" >Analyze</button>

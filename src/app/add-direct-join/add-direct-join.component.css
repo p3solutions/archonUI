@@ -7,7 +7,7 @@
 }
 
 .card-title {
-  font-size: 14px;
+  font-size: 16px;
   float: left;
 }
 .back-arrowr {
@@ -306,13 +306,13 @@ input[type='checkbox'] {
   width: 96%;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 12px;
+  font-size: 14px;
 }
 .overflow-text-arrow {
   float: left;
   width: 4%;
   text-align: right;
-  font-size: 12px;
+  font-size: 14px;
 }
 .overflow-textrelation {
   float: left;
@@ -322,7 +322,6 @@ input[type='checkbox'] {
 }
 .ngx-pagination {
   margin-left: -40px;
-  font-size: 9px;
   margin-bottom: 1rem;
   margin-top: 4px;
 }
