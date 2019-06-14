@@ -447,6 +447,10 @@ export class TableListComponent implements OnInit {
         this.value[3].children[1].classList.add('finished-step');
       }
       this.value[1].children[1].classList.add('active-step');
+      if (this.value[1].children[2].classList.contains('inactive-text-color')) {
+        this.value[1].children[2].classList.remove('inactive-text-color');
+      }
+      this.value[1].children[2].classList.add('active-text-color');
     }, 300);
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 1;
@@ -456,9 +460,9 @@ export class TableListComponent implements OnInit {
       if (this.tablelistService.dataAnalyzerReset) {
         const inputElements = document.querySelectorAll('.sec-br input');
         for (let i = 0; i < inputElements.length; i++) {
-            if ((inputElements[i] as HTMLInputElement).type === 'checkbox') {
-              (inputElements[i] as HTMLInputElement).checked = false;
-            }
+          if ((inputElements[i] as HTMLInputElement).type === 'checkbox') {
+            (inputElements[i] as HTMLInputElement).checked = false;
+          }
         }
         this.tablelistService.dataAnalyzerReset = false;
       }
@@ -499,6 +503,10 @@ export class TableListComponent implements OnInit {
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       b[0].children[3].classList.add('mat-horizental-line');
       this.value[2].children[1].classList.add('active-step');
+      if (this.value[2].children[2].classList.contains('inactive-text-color')) {
+        this.value[2].children[2].classList.remove('inactive-text-color');
+      }
+      this.value[2].children[2].classList.add('active-text-color');
       if (steps[1].state === 'edit') {
         this.value[1].children[1].classList.add('finished-step');
       }
@@ -667,6 +675,9 @@ export class TableListComponent implements OnInit {
     this.value[2].children[1].classList.add('unfinished-step');
     this.value[1].children[1].classList.add('unfinished-step');
     this.value[3].children[1].classList.add('unfinished-step');
+    this.value[2].children[2].classList.add('inactive-text-color');
+    this.value[1].children[2].classList.add('inactive-text-color');
+    this.value[3].children[2].classList.add('inactive-text-color');
   }
 
   deleteRelationship(indexOfDelete) {
