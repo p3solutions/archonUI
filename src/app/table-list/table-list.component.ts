@@ -832,4 +832,7 @@ export class TableListComponent implements OnInit {
     this.dataAModal = false;
     this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
   }
+  bgsel(i) {
+    this.selectedRow = i;
+  }
 }

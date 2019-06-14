@@ -209,10 +209,11 @@ h4 {
 
 .selected-sty{
   background: aliceblue;
-  margin-top: 11px;
-  padding-top: 6px;
-  padding-bottom: 4px;
-  padding-left: 19px;
+  margin-top: 14px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  color: #0c0c0c;
 }
 
 .paging{
@@ -223,7 +224,7 @@ h4 {
 
 .dataA-panel-body {
   /* height: 430px; */
-  margin-left: 75px;
+  /* margin-left: 75px; */
   /* margin-right: 50px; */
 }
 .dataA-panel-body-r {

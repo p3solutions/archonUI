@@ -163,36 +163,41 @@
                     <mat-horizontal-stepper [selectedIndex]="stepperIndex" #stepper labelPosition="bottom">
                       <mat-step label="Primary Column">
                         <div class="col-md-12 dataA-panel-body">
-                          <div class="col-md-12" style="margin-left: -32px;">
-                            <div class="col-md-5" style="margin-left: -3px; width: 50%;">
+                         
+                          <div class="col-md-12">                             
+                            <div class="col-md-7" style=" margin-left: 1%">
                               <div class="body-left">
-                                <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
+                                <a style="z-index:1; margin-right:5%;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
                                 <input type="text" class="form-control search-input" [(ngModel)]="searchPrimary" placeholder="Search Column">
                               </div>
                             </div>
-                            <div class="col-md-5" style="margin-left: -48px; width: 47%;">
+                            <div class="col-md-5" style="margin-left: -7%;
+                            width: 43.7%;">
                               <div class="selected-sty">
                                 {{selectedPrimColMap.size}} out of {{primColArray.length}} selected
                               </div>
-                            </div>
+                            </div>                           
                           </div>
                           
                           <div class="col-md-12">
-                            <div class="col-md-10 ana-br p-0" title="Primary Column" style="margin-top: 15px;">
+                            <div class="col-md-10 ana-br p-0" title="Select All" style="margin-top: 15px;margin-left: 6%;
+                            width: 88%; font-weight: 600;">
+                            <!-- <mat-checkbox style="float:left; padding-top: 5px;" (change)="selectAll($event)" ></mat-checkbox> -->
                               <input type="checkbox" style="margin-right: 10px;" (change)="selectAll($event)">
-                              Primary Column
+                             Select All
                               <span class="col-loader"
                                 [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
                             </div>
-                            <div class="col-md-10 dataA-scrollable-div" id="panel-0">
+                            <div class="col-md-10 dataA-scrollable-div" id="panel-0" style="margin-left: 6%;
+                            width: 88%;">
                               <div class="col-md-12">
                               </div>
                               <div class="col-md-12 list-block" style="padding-left: 0px; padding-right: 0px;">
                                 <div class="col-md-12 plr-0"
-                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, currentPage: primaryPage }">
-                                  <div class="col-md-12 trim-text ana-br" id="list-br" title="{{pColumn.column_name}}">
+                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, currentPage: primaryPage } let i=index;">
+                                  <div [class.selected]="i == selectedRow" class="col-md-12 trim-text ana-br da-table" id="list-br" title="{{pColumn.column_name}}">
                                     <input id="{{pColumn}}" type="checkbox" [checked]="pColumn.selected"
-                                      (change)="toggleColSelection($event, true, pColumn)" class="m-r-10">
+                                      (change)="toggleColSelection($event, true, pColumn)" (click)="bgsel(i)" class="m-r-10">
                                     {{pColumn.columnName}}
                                   </div>
                                 </div>
@@ -200,14 +205,15 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-10 paging">
+                        <div class="col-md-11" style="text-align: right;">
+                            <pagination-controls id="dalist0" (pageChange)="primaryPage = $event"></pagination-controls>
+                          </div>
+                        <div class="col-md-10" style="margin-left: 8%;">
                             Percentage of Rows to consider for Analysis 
                             <input mat-input type="number" class="inpt-sty" placeholder="Analysis" [(ngModel)]="analysisRowCount" min="1" max="100">
                           </div>
-                        <div class="col-md-11" style="text-align: right;">
-                          <pagination-controls id="dalist0" (pageChange)="primaryPage = $event"></pagination-controls>
-                        </div>
-                        <div class="col-md-12 action-btn" style="text-align: right;">
+                        
+                        <div class="col-md-12 action-btn" style="text-align: right; width: 105%;">
                           <button type="button" (click)="gotoBack();resetDataAModal()" class="btn cancel btn-padding" style="margin-right: 10px;">Cancel</button>
                           <button type="button"  [disabled]="selectedPrimColMap.size===0" (click)="gotoSecTableAndColSelection($event,stepper)" class="btn save btn-padding matStepperNext">Next</button>
                         </div>
