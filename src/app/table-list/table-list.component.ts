@@ -835,4 +835,7 @@ export class TableListComponent implements OnInit {
   bgsel(i) {
     this.selectedRow = i;
   }
+  bgcol(c) {
+    this.selectedRow = c;
+  }
 }

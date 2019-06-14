@@ -220,7 +220,7 @@
                       </mat-step>
                       <mat-step label="Secondary Table">
                           <div class="dataA-panel-body" id="panel-1" style="margin-left:0px">
-                            <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+                            <div class="col-md-12" style="margin-left: 2%;padding-left: 0px;padding-right: 0px;">
 
                               <div class="col-md-6" style="height: 295px;padding-left: 0px;padding-right: 0px;">
                                 <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
@@ -282,20 +282,20 @@
                                   <div class="col-md-12 p-0 dataA-scrollable-div" id="panel-1" style="margin-left: 4.8%;                                
                                   width: 83%;">
                                     <div class="col-md-12 p-0">
-                                      <div class="col-md-12 column-header ana-br" title="Secondary Column">
-                                        <input type="checkbox" style="margin-right: 10px;" (change)="selectAllSec($event)">
-                                        Secondary Columns
+                                      <div class="col-md-12 column-header ana-br" title="Select All" style="font-weight: 600">
+                                        <input type="checkbox" style="margin-right: 10px; font-weight: 600" (change)="selectAllSec($event)">
+                                        Select All
                                         <span class="col-loader"
                                           [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
                                       </div>
                                     </div>
                                     <div class="col-md-12 p-0"
-                                      *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, currentPage: pageColumn } let i=index;"
+                                      *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, currentPage: pageColumn } let c=index;"
                                       id="secondaryColums">
-                                      <div class="col-md-12  trim-text ana-br" id="list-br" title="{{sColumn.columnName}}">
+                                      <div [class.selected]="c == selectedRow" class="col-md-12  trim-text ana-br da-table" id="list-br" title="{{sColumn.columnName}}">
                                         <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb"
                                           type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
-                                          checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10 m-r-sec" [checked]="sColumn.selected">
+                                          checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10 m-r-sec" [checked]="sColumn.selected" (click)="bgcol(c)">
                                         {{sColumn.columnName}}
                                       </div>
                                     </div>
@@ -307,7 +307,7 @@
                               </div>
                               </div>
                             </div>
-                        <div class="action-btn" style="float: right;">
+                        <div class="action-btn" style="float: right; margin-right: -3%;">
                           <button (click)="gotoPrimarySel($event,stepper)" class="btn cancel btn-padding" >Previous</button>
                           <button (click)="gotoAnalyze($event,stepper)" [disabled]="finalSecColMap.size===0" class="btn save btn-padding matStepperNext">Next</button>
                         </div> 
