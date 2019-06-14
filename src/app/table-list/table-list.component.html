@@ -483,6 +483,7 @@
         </div>
       </div>
     </div>
+    </div>
 
     <button style="display: none"  id="dataanalyze" (click)="openDataAModal()">Data Analyzer</button>
     <button style="display: none"  id="directjoin" (click)="adddirectjoin()" >Direct
@@ -490,3 +491,22 @@
     <button style="display: none"  id="spv" (click)="openStoredProcView($event)">SP/View Join</button>
     <button style="display: none"  id="exxml" (click)="exportxml()">XML</button>
     <button style="display: none"  id="exjson" (click)="exportjson()">JSON</button>
+
+
+<button style="display: none" type="button" id="editsuccess" data-toggle="modal" data-target="#editsuccesstarget">Open Modal</button>
+<div class="modal fade" id="editsuccesstarget" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+    <div class="modal-dialog"  style="width: 480px;">
+      <div class="modal-content">
+          <div class="success-popup-header-cls">
+              <h4 class="popup-title-cls">
+                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div></h4>
+            </div>
+            <div class="modal-body">
+                <p class="popup-paragraph-cls"> New Join Added Successfully </p>
+              </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="closeScreen(); closeErrorMsg(); resetselectedValues()">OK</button>      
+        </div>
+      </div>
+    </div>
+  </div>

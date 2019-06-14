@@ -720,6 +720,7 @@ export class TableListComponent implements OnInit {
   }
   refreshRelation($event) {
     this.loadRelationTable(this.tableCopy);
+    document.getElementById('editsuccess').click();
   }
 
 
