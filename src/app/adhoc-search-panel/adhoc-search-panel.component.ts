@@ -35,7 +35,6 @@ export class AdhocSearchPanelComponent implements OnInit {
   ngOnInit() {
     this.adhocScreenService.searchResult.subscribe(result => {
       this.searchResult = JSON.parse(JSON.stringify(result));
-      console.log(this.searchResult);
       if (this.searchResult.inLinePanel === null) {
         this.searchResult.inLinePanel = new InlinePanel();
       }
