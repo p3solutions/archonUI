@@ -186,9 +186,12 @@ export class AdhocTableSelectionComponent implements OnInit {
       this.relationshipInfo = [];
       this.tablelistService.getListOfRelationTableMMR(this.workspaceID,
         tempHeader.appMetadataVersion, value.tableName).subscribe(result => {
+          console.log(result, 1);
           if (result.length !== 0) {
+            console.log(this.tableService.booleanNested, 2);
             if (this.tableService.booleanNested) {
               for (const i of result) {
+                console.log(this.includesArray, 'include array');
                 if (this.includesArray.includes(i.secondaryTable.tableName)) {
                   this.relationshipInfo.push(i);
                 }
@@ -196,12 +199,14 @@ export class AdhocTableSelectionComponent implements OnInit {
             } else {
               this.relationshipInfo = result;
             }
+            console.log(this.relationshipInfo, 3);
             this.primaryTable = getPrimaryArray(this.relationshipInfo);
             this.secondaryTable = getSecondaryArray(this.relationshipInfo);
             for (const i of this.primaryTable) {
               this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
             }
             this.selectedValues.push(value.tableName);
+            console.log(this.selectedValues, this.joinListMap, 4);
             this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
             this.createchart();
           } else {
