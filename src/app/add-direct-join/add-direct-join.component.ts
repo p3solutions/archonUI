@@ -172,7 +172,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     if (this.resultArray.length > 0) {
       this.addDirectJoinService.addNewJoin(param).subscribe(res => {
         if (res && res.data.errorDetails.length === 0) {
-          document.getElementById('addssmsg').click();
           this.updateEvent.emit(true);
           this.updateSuccess = true;
           this.joinListTemp = [];
