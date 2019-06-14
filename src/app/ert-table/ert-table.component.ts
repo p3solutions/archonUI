@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ɵConsole } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ErtService } from '../ert-landing-page/ert.service';
 import {
@@ -9,9 +9,10 @@ import {
 } from '../ert-landing-page/ert';
 import {
   addFilterNode, FilterConfigNode, Tree, searchTree,
-  getPreorderDFS, ColumnConfigFunction, deleteNode, columnConfigFunctionList
+  getPreorderDFS, ColumnConfigFunction, deleteNode, columnConfigFunctionList, findParentNode, FilterOperationList, filterOperationList
 } from './ert-filter';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
 import { MatAccordion } from '@angular/material';
 import { Observable } from 'rxjs';
 import { of } from "rxjs";
@@ -37,16 +38,21 @@ export class ErtTableComponent implements OnInit {
   orderFilterConfigColumnNameList: string[] = [];
   userDefinedList: { 'prefix': string, 'column': string, 'suffix': string }[] = [];
   ertJobId = '';
-  configColumnObject: { selectedColumnName: string, selectedConfigFunction: string, outputType: string } =
-    { selectedColumnName: '', selectedConfigFunction: null, outputType: '' };
-  configColumnList: { selectedColumnName: string, selectedConfigFunction: string, outputType: string }[] = [];
+  configColumnObject: {
+    selectedColumnName: string, selectedConfigFunction: string, param: string
+    outputType: string, startIndex: number, endIndex: number
+  } =
+    { selectedColumnName: '', selectedConfigFunction: null, outputType: '', startIndex: null, endIndex: null, param: '' };
+  configColumnList: {
+    selectedColumnName: string, selectedConfigFunction: string, outputType: string, startIndex: number, param: string,
+    endIndex: number
+  }[] = [];
   selectedTableId = '';
   configColumnQuery = '';
   maxNode = 3;
   ertAvillableTableList: AvilErtTable = new AvilErtTable();
-  expressionStack: string[] = [];
-  searchTableName: string;
-  parentChildMap: { child: number, parent: number }[] = [];
+  // expressionStack: string[] = [];
+  searchTableName = '';
   dataOrderList: DataOrderConfig[] = [];
   dataOrderObj: DataOrderConfig = new DataOrderConfig();
   schemaResultsTableCount = 0;
@@ -60,7 +66,6 @@ export class ErtTableComponent implements OnInit {
   enableUserDefined = false;
   usrDefinedAlertMessage = '';
   columnConfigFunctionList: ColumnConfigFunction[] = [];
-  ertedittable: boolean;
   lastPage = 1;
   storeSelectedTables: TableDetailsListObj[] = [];
   itemsPerPage = 49;
@@ -77,6 +82,22 @@ export class ErtTableComponent implements OnInit {
   isUserDefinedColumnInProgress = false;
   filterWhereClause = '';
   @ViewChild(MatAccordion) accordion: MatAccordion;
+  originalErttableList: ErtTableListObj = new ErtTableListObj(); // to show ert table list in popup when we create or add job.
+  totalItemOfOriginalErtTable = 50;
+  currentPageOfOriginalErtTable = 1;
+  searchOriginalTableName = '';
+  tempOriginalSelectedTable: TableDetailsListObj[] = [];
+  isEditErtTableLeft = false;
+  editErtTableIndex = 1;
+  totalEditErtTableList = 50;
+  showAddTableBtn = false;
+  substringStartIndex = null;
+  substringEndIndex = null;
+  disabledAddColumnConfigBtn = false;
+  filterOperationList: FilterOperationList[] = [];
+  searchAvailableTableName = '';
+
+
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -84,6 +105,7 @@ export class ErtTableComponent implements OnInit {
 
   ngOnInit() {
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
+    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.myForm = this._fb.group({
       addEditColumn: this._fb.array([
         this.initColumn(),
@@ -93,134 +115,339 @@ export class ErtTableComponent implements OnInit {
       this.ertJobId = requestParam.ertJobId;
     });
     if (this.from !== 'data-record' && this.from !== 'SIP' && this.ertJobId !== '' && this.ertJobId !== undefined) {
-      this.showAvilableBtn = true;
+      this.showAvilableBtn = true; // To add more table if job is in TABLE Mode.
     }
-    if (this.from === 'data-record') {
-      this.getERTtableListForDataRecord();
-    } else if (this.from === 'SIP') {
-      this.getERTtableListForSIP();
-    } else {
-      this.ertedittable = true;
-      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-        document.getElementById('back-to-job-config').classList.add('hide');
-      }
-      if (this.ertJobId !== '' && this.ertService.selectedList.length !== 0) {
-        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-        this.selectedTableList = this.ertService.selectedList;
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.storeSelectedTables = this.ertService.storeSelectedTables;
-        this.getERTcolumnlist(this.selectedTableId, '');
-      } else if (this.ertJobId !== '') {
-        this.getERTtableList();
-      } else if (this.ertService.selectedList.length === 0) {
-        this.getERTtableList();
+    if ((this.from === 'TABLE' || this.from === null) && (this.ertJobId === '' || this.ertJobId === undefined)) {
+      this.showAddTableBtn = true; // Show add Btn if it is TABLE Mode.
+    }
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      document.getElementById('back-to-job-config').classList.add('hide'); // Hide the Back btn if job is on edit mode.
+    }
+    this.checkForMode();
+  }
+
+  checkForMode() {
+    if (this.ertService.selectedList.length !== 0) {
+      if (this.ertService.isDataRecordGraphChange) {
+        this.getERTtableListForDataRecord(); // If it is Data-record job and route from graph page.
+      } else if (this.ertService.isSIPGraphChange) {
+        this.getERTtableListForSIP(); // If it is SIP job and route from graph page.
       } else {
-        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-        this.selectedTableList = this.ertService.selectedList;
-        this.storeSelectedTables = this.ertService.storeSelectedTables;
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.getERTcolumnlist(this.selectedTableId, '');
+        this.getERTTableFromService(); // If data is present in service level then we restore the data from service.
+      }
+    } else if (this.from === 'data-record') {
+      this.getERTtableListForDataRecord(); // If it is Data-record job.
+    } else if (this.from === 'SIP') {
+      this.getERTtableListForSIP(); // If it is SIP job.
+    } else if (this.from === 'TABLE') {
+      this.getERTTableForTableMode(); // If it is TABLE job.
+    }
+  }
+
+  getERTTableFromService() { // to restore the data from service.
+    this.selectedTableList = this.ertService.selectedList;
+    this.selectedTableId = this.selectedTableList[0].tableId;
+    const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+    this.modifiedTableName = tempTableObj.modifiedTableName;
+    this.tableName = tempTableObj.tableName;
+  }
+
+
+  getERTTableForTableMode() { // During edit mode of table then function will call.
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      this.getEditErtTableList(1);
+    }
+  }
+
+  openCreateJobSelectTablePopup(index) { // During creating job when user click on add table btn.
+    document.getElementById('create-job-select-table-popup-btn').click();
+    this.getOriginalErttableList(1);
+    this.currentPageOfOriginalErtTable = 1;
+  }
+
+  getOriginalErttableList(currentIndex) { // During creating job when user click on pagination of add table.
+    this.spinner.show();
+    this.ertService.getERTtableList(this.workspaceId, this.ertJobId, currentIndex).subscribe(response => {
+      try {
+        this.originalErttableList = response;
+        this.totalItemOfOriginalErtTable = this.originalErttableList.sourceTableCount - this.originalErttableList.selectedTableCount;
+        this.checkForAlreadySelectedTable();
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
+    });
+  }
+
+  getEditErtTableList(currentIndex) { // While Editing job, it will get the data from BE.
+    this.spinner.show();
+    this.ertService.getERTtableList(this.workspaceId, this.ertJobId, currentIndex).subscribe(response => {
+      try {
+        this.originalErttableList = response;
+        this.isEditErtTableLeft = response.isSelectedTableLeft;
+        const tableIds = this.originalErttableList.ertTableList.map(function (item) { return item['tableId']; });
+        for (const tempTable of this.originalErttableList.ertTableList) {
+          const tempObj: TableDetailsListObj = new TableDetailsListObj();
+          tempObj.tableId = tempTable.tableId;
+          tempObj.tableName = tempTable.tableName;
+          tempObj.modifiedTableName = tempTable.modifiedTableName;
+          if (tempTable.filterNconfig !== null) {
+            tempObj.filterAndOrderConfig = tempTable.filterNconfig;
+          }
+          if (tempTable.relatedTableDetails !== null) {
+            tempObj.relatedTableDetails = tempTable.relatedTableDetails;
+          }
+          tempObj.isSelected = true;
+          if (this.selectedTableList.findIndex(a => a.tableId === tempTable.tableId) === -1) {
+            this.selectedTableList.push(tempObj);
+          }
+          this.selectedTableId = this.selectedTableList[0].tableId;
+          const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+          this.modifiedTableName = tempTableObj.modifiedTableName;
+          this.tableName = tempTableObj.tableName;
+        }
+        this.getEditedERTcolumnlist(tableIds);
+      } catch {
+        this.spinner.hide();
+      }
+    });
+  }
+
+  getNextBatchOfERTTable(event) { // When we scroll in edit mode of job then it will fetch the data from BE using index.
+    if (this.ertJobId !== '' && this.ertJobId !== undefined && (this.searchTableName === '' || this.searchTableName === undefined)) {
+      if (this.isEditErtTableLeft && event === 'bottom') {
+        this.editErtTableIndex = this.editErtTableIndex + 1;
+        this.getEditErtTableList(this.editErtTableIndex);
       }
     }
+  }
+
+  getSearchoriginalTablelist() {  // During creating job when user search table.
+    this.currentPageOfOriginalErtTable = 1;
+    if (this.searchOriginalTableName !== '') {
+      this.ertService.getERTtablesearchList(this.workspaceId, this.searchOriginalTableName.toUpperCase(),
+        this.ertJobId).subscribe(response => {
+          this.originalErttableList = response;
+          this.checkForAlreadySelectedTable();
+        });
+    } else {
+      this.getOriginalErttableList('1');
+    }
+  }
+
+  getSearchAvailableTablelist() {  // During creating job when user search table.
+    this.currentPageOfOriginalErtTable = 1;
+    if (this.searchAvailableTableName !== '') {
+      this.ertService.getErtSearchAvailableTable(this.ertJobId, this.searchAvailableTableName.toUpperCase(),
+        '1').subscribe(response => {
+          this.ertAvillableTableList = response;
+          this.inEditCheckForAlreadySelectedTable();
+        });
+    } else {
+      this.getErtAvailableTable(1);
+      this.availPage = 1;
+    }
+  }
+
+
+  checkForAlreadySelectedTable() { // Check for a selected table in add case.
+    for (const tempTable of this.selectedTableList) {
+      if (this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
+        const temp = this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0];
+        if (tempTable.isSelected) {
+          temp.isSelected = true;
+          temp.alreadyIsSelected = true;
+        } else {
+          temp.isSelected = false;
+          temp.alreadyIsSelected = true;
+        }
+      }
+    }
+    for (const tempTable of this.tempOriginalSelectedTable) {
+      if (this.originalErttableList.ertTableList === undefined) {
+        this.spinner.hide();
+      } else if (this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
+        this.originalErttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0].isSelected = true;
+      }
+    }
+  }
+
+  inEditCheckForAlreadySelectedTable() { // Check for a selected table in edit case.
+    for (const tempTable of this.selectedTableList) {
+      if (this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
+        const temp = this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0];
+        if (tempTable.isSelected) {
+          temp.isSelected = true;
+          temp.alreadyIsSelected = true;
+        } else {
+          temp.isSelected = false;
+          temp.alreadyIsSelected = true;
+        }
+      }
+    }
+    for (const tempTable of this.tempOriginalSelectedTable) {
+      if (this.ertAvillableTableList.erttableList.ertTableList === undefined) {
+        this.spinner.hide();
+      } else if (this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0] !== undefined) {
+        this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tempTable.tableId)[0].isSelected = true;
+      }
+    }
+  }
+
+  addTempOriginalSelectedTable(tableId, $event) { // when we click on checkbox of original tables
+    let tempOriginalTableObj = new ErtTableObj();
+    if ($event.target.checked) {
+      tempOriginalTableObj = this.originalErttableList.ertTableList.filter(a => a.tableId === tableId)[0];
+      const tempObj: TableDetailsListObj = new TableDetailsListObj();
+      tempObj.tableId = tableId;
+      tempObj.tableName = tempOriginalTableObj.tableName;
+      tempObj.modifiedTableName = tempOriginalTableObj.modifiedTableName;
+      if (tempOriginalTableObj.filterNconfig !== null) {
+        tempObj.filterAndOrderConfig = tempOriginalTableObj.filterNconfig;
+      }
+      if (tempOriginalTableObj.relatedTableDetails !== null) {
+        tempObj.relatedTableDetails = tempOriginalTableObj.relatedTableDetails;
+      }
+      tempObj.isSelected = true;
+      const checkInSelectedTableList = this.selectedTableList.filter(a => a.tableId === tableId)[0];
+      if (checkInSelectedTableList === undefined) {
+        this.tempOriginalSelectedTable.push(tempObj);
+      } else {
+        checkInSelectedTableList.isSelected = true;
+      }
+    } else {
+      const index = this.tempOriginalSelectedTable.findIndex(a => a.tableId === tableId);
+      if (index !== -1) {
+        this.tempOriginalSelectedTable.splice(index, 1);
+      }
+    }
+  }
+
+  addTempEditErtSelectedTable(tableId, $event) { // when we click on checkbox of edit ert tables.
+    let tempOriginalTableObj = new ErtTableObj();
+    if ($event.target.checked) {
+      tempOriginalTableObj = this.ertAvillableTableList.erttableList.ertTableList.filter(a => a.tableId === tableId)[0];
+      const tempObj: TableDetailsListObj = new TableDetailsListObj();
+      tempObj.tableId = tableId;
+      tempObj.tableName = tempOriginalTableObj.tableName;
+      tempObj.modifiedTableName = tempOriginalTableObj.modifiedTableName;
+      tempObj.isSelected = true;
+      if (tempOriginalTableObj.filterNconfig !== null) {
+        tempObj.filterAndOrderConfig = tempOriginalTableObj.filterNconfig;
+      }
+      if (tempOriginalTableObj.relatedTableDetails !== null) {
+        tempObj.relatedTableDetails = tempOriginalTableObj.relatedTableDetails;
+      }
+      const checkInSelectedTableList = this.selectedTableList.filter(a => a.tableId === tableId)[0];
+      if (checkInSelectedTableList === undefined) {
+        this.tempOriginalSelectedTable.push(tempObj);
+      } else {
+        checkInSelectedTableList.isSelected = true;
+      }
+    } else {
+      const index = this.tempOriginalSelectedTable.findIndex(a => a.tableId === tableId);
+      if (index !== -1) {
+        this.tempOriginalSelectedTable.splice(index, 1);
+      }
+    }
+  }
+
+
+  addSelectTableCreateJob() { // when we click on the add of ert tables.
+    if (this.tempOriginalSelectedTable.length !== 0) {
+      Array.prototype.push.apply(this.selectedTableList, this.tempOriginalSelectedTable);
+      this.selectedTableId = this.selectedTableList[0].tableId;
+      const tableIds = this.tempOriginalSelectedTable.map(function (item) { return item['tableId']; });
+      this.spinner.show();
+      this.tempOriginalSelectedTable = [];
+      this.getEditedERTcolumnlist(tableIds);
+    } else {
+      this.spinner.hide();
+    }
+
   }
 
   closeErrorMsg() {
     this.errorMsg = '';
   }
 
-  getERTtableListForDataRecord() {
+  getERTtableListForDataRecord() { // For data Record.
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-      document.getElementById('back-to-job-config').classList.add('hide');
-      if (this.ertJobId !== '' && this.ertService.selectedList.length !== 0) {
-        this.selectedTableList = this.ertService.selectedList;
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.getERTcolumnlist(this.selectedTableId, '');
-      } else {
-        this.getERTtableList();
-      }
+      this.getERTTableForTableMode(); // During Edit Mode.
     } else {
-      if (this.ertService.selectedList.length !== 0) {
-        this.selectedTableList = this.ertService.selectedList;
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.getERTcolumnlist(this.selectedTableId, '');
-      } else {
-        let tableNameList: string[];
-        tableNameList = this.ertService.selectedValues;
-        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-        for (let item = 0; item < tableNameList.length; item++) {
-          const temp = this.ertService.joinListMap.get(tableNameList[item]);
-          const tempObj: TableDetailsListObj = new TableDetailsListObj();
-          tempObj.tableId = temp[0].primaryTableId;
-          tempObj.tableName = temp[0].primaryTableName;
-          tempObj.modifiedTableName = temp[0].primaryTableName;
-          tempObj.isSelected = true;
-          const relatedTable = this.ertService.joinListMap.get(tableNameList[item + 1]);
-          if (relatedTable !== undefined) {
-            tempObj.relatedTableDetails.push({ tableId: relatedTable[0].primaryTableId, tableName: relatedTable[0].primaryTableName });
-          }
-          this.getERTcolumnlistForDataRecord(tempObj.tableId);
-          this.selectedTableList.push(tempObj);
-          this.selectedTableId = this.selectedTableList[0].tableId;
-          this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-          this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+      let tableNameList: string[]; // New data- record Job.
+      tableNameList = this.ertService.selectedValues;
+      this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
+      for (let item = 0; item < tableNameList.length; item++) {
+        const temp = this.ertService.joinListMap.get(tableNameList[item]);
+        const tempObj: TableDetailsListObj = new TableDetailsListObj();
+        tempObj.tableId = temp[0].primaryTableId;
+        tempObj.tableName = temp[0].primaryTableName;
+        tempObj.modifiedTableName = temp[0].primaryTableName;
+        tempObj.isSelected = true;
+        const relatedTable = this.ertService.joinListMap.get(tableNameList[item + 1]);
+        if (relatedTable !== undefined) {
+          tempObj.relatedTableDetails.push({ tableId: relatedTable[0].primaryTableId, tableName: relatedTable[0].primaryTableName });
         }
+        this.selectedTableList.push(tempObj);
       }
+      const tableIds = this.selectedTableList.map(function (item) { return item['tableId']; });
+      this.spinner.show();
+      this.getEditedERTcolumnlist(tableIds);
+      this.selectedTableId = this.selectedTableList[0].tableId;
+      this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
+      this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     }
   }
 
-  getERTtableListForSIP() {
+  getERTtableListForSIP() { // For SIP.
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-      document.getElementById('back-to-job-config').classList.add('hide');
-      if (this.ertJobId !== '' && this.ertService.selectedList.length !== 0) {
-        this.selectedTableList = this.ertService.selectedList;
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.getERTcolumnlist(this.selectedTableId, '');
-      } else {
-        this.getERTtableList();
-      }
+      this.getERTTableForTableMode(); // During Edit Mode.
     } else {
-      if (this.ertService.selectedList.length !== 0) {
-        this.selectedTableList = this.ertService.selectedList;
-        this.selectedTableId = this.selectedTableList[0].tableId;
-        this.getERTcolumnlist(this.selectedTableId, '');
-      } else {
-        let tableNameList: string[];
-        tableNameList = this.ertService.selectedValues;
-        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-        for (let item = 0; item < tableNameList.length; item++) {
-          const temp = this.ertService.joinListMap.get(tableNameList[item]);
-          const tempObj: TableDetailsListObj = new TableDetailsListObj();
-          tempObj.tableId = temp[0].primaryTableId;
-          tempObj.tableName = temp[0].primaryTableName;
-          tempObj.modifiedTableName = temp[0].primaryTableName;
-          tempObj.isSelected = true;
-          const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
-          if (relatedTable !== undefined) {
-            for (const rel of relatedTable) {
-              if (rel !== undefined) {
-                tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
-              }
+      let tableNameList: string[]; // New SIP Job.
+      tableNameList = this.ertService.selectedValues;
+      this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
+      for (let item = 0; item < tableNameList.length; item++) {
+        const temp = this.ertService.joinListMap.get(tableNameList[item]);
+        const tempObj: TableDetailsListObj = new TableDetailsListObj();
+        tempObj.tableId = temp[0].primaryTableId;
+        tempObj.tableName = temp[0].primaryTableName;
+        tempObj.modifiedTableName = temp[0].primaryTableName;
+        tempObj.isSelected = true;
+        const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
+        if (relatedTable !== undefined) {
+          for (const rel of relatedTable) {
+            if (rel !== undefined) {
+              tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
             }
           }
-          this.getERTcolumnlistForDataRecord(tempObj.tableId);
-          this.selectedTableList.push(tempObj);
-          this.selectedTableId = this.selectedTableList[0].tableId;
-          this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-          this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
         }
+        this.selectedTableList.push(tempObj);
       }
+      const tableIds = this.selectedTableList.map(function (item) { return item['tableId']; });
+      this.spinner.show();
+      this.getEditedERTcolumnlist(tableIds);
+      this.selectedTableId = this.selectedTableList[0].tableId;
+      this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
+      this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     }
   }
 
-  refreshColumn() {
+  refreshColumn() {  // To refresh the selected table.
+    this.spinner.show();
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, this.selectedTableId).subscribe((result) => {
-      this.ErtTableColumnList = result;
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList = this.ErtTableColumnList;
-      this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-      this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList = [];
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig = new FilterAndOrderConfig();
+      try {
+        this.ErtTableColumnList = result;
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList = this.ErtTableColumnList;
+        this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+        this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList = [];
+        this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig = new FilterAndOrderConfig();
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
     });
   }
 
@@ -230,103 +457,136 @@ export class ErtTableComponent implements OnInit {
     });
   }
 
-  getErtAvailableTable(page) {
+  openAvailableErtTablePopup(index) { // During creating job when user click on add table btn.
+    document.getElementById('ert-available-table-popup-btn').click();
+    this.getErtAvailableTable(1);
+    this.availPage = 1;
+  }
+
+  getErtAvailableTable(page) { // to get the available ert tables.
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-      this.ertService.getErtAvailableTable(this.ertJobId, this.avilableStartIndex).subscribe(result => {
-        this.ertAvillableTableList = result;
-        this.avilableTableCount = this.ertAvillableTableList.erttableList.sourceTableCount -
-          this.ertAvillableTableList.erttableList.selectedTableCount;
+      this.spinner.show();
+      this.ertService.getErtAvailableTable(this.ertJobId, page).subscribe(result => {
+        try {
+          this.ertAvillableTableList = result;
+          this.avilableTableCount = this.ertAvillableTableList.erttableList.sourceTableCount -
+            this.ertAvillableTableList.erttableList.selectedTableCount;
+          this.inEditCheckForAlreadySelectedTable();
+          this.spinner.hide();
+        } catch {
+          this.spinner.hide();
+        }
       });
     }
   }
 
-  getPage(page: number) {
-    this.selectedTableList = [];
-    this.startIndex = page;
-    this.getERTtableList();
-  }
+  // getPage(page: number) {
+  //   this.selectedTableList = [];
+  //   this.startIndex = page;
+  //   this.getERTtableList();
+  // }
 
-  getERTtableList() {
-    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.ertService.getERTtableList(this.workspaceId, this.ertJobId, this.startIndex).subscribe((result) => {
-      this.ErtTableList = result;
-      if (this.ErtTableList.ertTableList !== undefined) {
-        this.schemaResultsTableCount = result.sourceTableCount;
-        if (result.selectedTableCount !== 0) {
-          this.schemaResultsTableCount = result.selectedTableCount;
-        }
-        for (const item of this.ErtTableList.ertTableList) {
+  // getERTtableList() {
+  //   this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+  //   this.ertService.getERTtableList(this.workspaceId, this.ertJobId, this.startIndex).subscribe((result) => {
+  //     this.ErtTableList = result;
+  //     if (this.ErtTableList.ertTableList !== undefined) {
+  //       this.schemaResultsTableCount = result.sourceTableCount;
+  //       if (result.selectedTableCount !== 0) {
+  //         this.schemaResultsTableCount = result.selectedTableCount;
+  //       }
+  //       for (const item of this.ErtTableList.ertTableList) {
+  //         const tempObj: TableDetailsListObj = new TableDetailsListObj();
+  //         tempObj.tableId = item.tableId;
+  //         tempObj.tableName = item.tableName;
+  //         tempObj.modifiedTableName = item.modifiedTableName;
+  //         if (item.filterNconfig !== null) {
+  //           tempObj.filterAndOrderConfig = item.filterNconfig;
+  //         }
+  //         if (item.relatedTableDetails !== null) {
+  //           tempObj.relatedTableDetails = item.relatedTableDetails;
+  //         }
+  //         if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+  //           tempObj.isSelected = true;
+  //         }
+  //         if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
+  //           this.selectedTableList.push(tempObj);
+  //         }
+  //       }
+  //       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+  //         for (const item of this.selectedTableList) {
+  //           this.getERTcolumnlist(item.tableId, '');
+  //         }
+  //       }
+  //       if (this.selectedTableList.length > 0) {
+  //         this.selectedTableId = this.selectedTableList[0].tableId;
+  //         this.getERTcolumnlist(this.selectedTableId, '');
+  //       }
+  //       if (this.startIndex === 1) {
+  //         this.selectedTableList = this.storeSelectedTables.concat(this.selectedTableList);
+  //         if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+  //           this.storeSelectedTables = this.selectedTableList.filter(a => a.isSelected === true);
+  //         }
+  //         this.itemsPerPage = this.itemsPerPage + this.storeSelectedTables.length;
+  //       } else {
+  //         this.itemsPerPage = 49;
+  //       }
+  //       if (result.selectedTableCount !== 0) {
+  //         this.itemsPerPage = 49;
+  //       }
+  //     } else {
+  //       this.showNoTablesMsg = true;
+  //     }
+  //   });
+  // }
+
+  // searchTablelist() {
+  //   if (this.from !== 'data-record' && this.from !== 'SIP') {
+  //     if (this.searchTableName !== '') {
+  //       this.selectedTableList = [];
+  //       const temp: TableDetailsListObj[] = [];
+  //       this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
+  //         this.ErtTablesearchList = result;
+  //         for (const item of this.ErtTablesearchList.ertTableList) {
+  //           const tempObj: TableDetailsListObj = new TableDetailsListObj();
+  //           tempObj.tableId = item.tableId;
+  //           tempObj.tableName = item.tableName;
+  //           tempObj.modifiedTableName = item.modifiedTableName;
+  //           if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+  //             tempObj.isSelected = true;
+  //           }
+  //           if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
+  //             temp.push(tempObj);
+  //           } else {
+  //             temp.push(this.storeSelectedTables.filter(a => a.tableId === tempObj.tableId)[0]);
+  //           }
+  //         }
+  //         this.selectedTableList = temp;
+  //       });
+  //     } else {
+  //       this.page = 1;
+  //       this.getPage(1);
+  //     }
+  //   }
+  // }
+
+  searchTableOnEdit() {
+    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
+        this.ErtTablesearchList = result;
+        for (const item of this.ErtTablesearchList.ertTableList) {
           const tempObj: TableDetailsListObj = new TableDetailsListObj();
           tempObj.tableId = item.tableId;
           tempObj.tableName = item.tableName;
           tempObj.modifiedTableName = item.modifiedTableName;
-          if (item.filterNconfig !== null) {
-            tempObj.filterAndOrderConfig = item.filterNconfig;
-          }
-          if (item.relatedTableDetails !== null) {
-            tempObj.relatedTableDetails = item.relatedTableDetails;
-          }
           if (this.ertJobId !== '' && this.ertJobId !== undefined) {
             tempObj.isSelected = true;
           }
-          if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
+          if (this.selectedTableList.findIndex(a => a.tableId === tempObj.tableId) === -1) {
             this.selectedTableList.push(tempObj);
           }
         }
-        if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-          for (const item of this.selectedTableList) {
-            this.getERTcolumnlist(item.tableId, '');
-          }
-        }
-        if (this.selectedTableList.length > 0) {
-          this.selectedTableId = this.selectedTableList[0].tableId;
-          this.getERTcolumnlist(this.selectedTableId, '');
-        }
-        if (this.startIndex === 1) {
-          this.selectedTableList = this.storeSelectedTables.concat(this.selectedTableList);
-          if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-            this.storeSelectedTables = this.selectedTableList.filter(a => a.isSelected === true);
-          }
-          this.itemsPerPage = this.itemsPerPage + this.storeSelectedTables.length;
-        } else {
-          this.itemsPerPage = 49;
-        }
-        if (result.selectedTableCount !== 0) {
-          this.itemsPerPage = 49;
-        }
-      } else {
-        this.showNoTablesMsg = true;
-      }
-    });
-  }
-
-  searchTablelist() {
-    if (this.from !== 'data-record' && this.from !== 'SIP') {
-      if (this.searchTableName !== '') {
-        this.selectedTableList = [];
-        const temp: TableDetailsListObj[] = [];
-        this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
-          this.ErtTablesearchList = result;
-          for (const item of this.ErtTablesearchList.ertTableList) {
-            const tempObj: TableDetailsListObj = new TableDetailsListObj();
-            tempObj.tableId = item.tableId;
-            tempObj.tableName = item.tableName;
-            tempObj.modifiedTableName = item.modifiedTableName;
-            if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-              tempObj.isSelected = true;
-            }
-            if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
-              temp.push(tempObj);
-            } else {
-              temp.push(this.storeSelectedTables.filter(a => a.tableId === tempObj.tableId)[0]);
-            }
-          }
-          this.selectedTableList = temp;
-        });
-      } else {
-        this.page = 1;
-        this.getPage(1);
-      }
+      });
     }
   }
 
@@ -338,41 +598,62 @@ export class ErtTableComponent implements OnInit {
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList.length === 0) {
       this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
-        this.spinner.hide();
         this.ErtTableColumnList = result;
         this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
+        this.spinner.hide();
       });
     } else {
       this.spinner.hide();
     }
   }
 
-  getERTcolumnlistForDataRecord(tableId: string) {
+  getEditedERTcolumnlist(tableIds: string[]) { // This will call the column list API for multiple request.
+    const ertTableColumnMap = new Map();
+    let ertColumnList: ErtColumnListObj[] = [];
     this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
-      this.ErtTableColumnList = result;
-      this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
+    this.ertService.getEditedtERTcolumnlist(this.ertJobId, this.workspaceId, tableIds).subscribe(response => {
+      ertColumnList = response;
+      try {
+        for (let item = 0; item < tableIds.length; item++) {
+          ertTableColumnMap.set(tableIds[item], ertColumnList[item]);
+        }
+        for (const tableId of tableIds) {
+          this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = ertTableColumnMap.get(tableId);
+        }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
     });
   }
+
+  // getERTcolumnlistForDataRecord(tableId: string) {
+  //   this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+  //   this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
+  //     this.ErtTableColumnList = result;
+  //     this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
+  //   });
+  // }
 
   selectTable(tableId: string, tableName: string, event) {
     this.selectedTableId = tableId;
     this.getERTcolumnlist(tableId, '');
     if (event.target.checked === true) {
       this.selectedTableList.filter(a => a.tableId === tableId)[0].isSelected = true;
-      this.storeSelectedTables.push(this.selectedTableList.filter(a => a.tableId === tableId)[0]);
     } else {
       this.selectedTableList.filter(a => a.tableId === tableId)[0].isSelected = false;
-      const index = this.storeSelectedTables.findIndex(a => a.tableId === tableId);
-      if (index === -1) {
-        this.storeSelectedTables.splice(index, 1);
-      }
     }
     event.stopPropagation();
   }
 
-  toModifiedTableName() {
-    this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName;
+  toModifiedTableName(modifiedTableName: string) {
+    const tempOriginalTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+    if (this.modifiedTableName.length === 0) {
+      this.modifiedTableName = tempOriginalTableName;
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = tempOriginalTableName;
+    } else {
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName;
+    }
   }
 
   showColumns() {
@@ -456,6 +737,11 @@ export class ErtTableComponent implements OnInit {
 
   setColumnConfigObj(value: string) {
     this.configColumnObject.selectedConfigFunction = value;
+    if (value === 'SUBSTRING' && (this.substringEndIndex === null || this.substringStartIndex === null)) {
+      this.disabledAddColumnConfigBtn = true;
+    } else {
+      this.disabledAddColumnConfigBtn = false;
+    }
   }
 
   openModelForColumnConfig(columnName: string, dataType: string) {
@@ -464,6 +750,18 @@ export class ErtTableComponent implements OnInit {
       this.configColumnQuery = '';
       this.configColumnObject.selectedColumnName = columnName;
       this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
+      if (dataType.trim().toUpperCase() === 'SMALLINT' ||
+        dataType.trim().toUpperCase() === 'INT' || dataType.trim().toUpperCase() === 'BIGINT'
+        || dataType.trim().toUpperCase() === 'DECIMAL') {
+        dataType = 'INT';
+      } else if (dataType.trim().toUpperCase() === 'BIT') {
+        dataType = '';
+      } else {
+        dataType = 'VARCHAR';
+      }
+      if (this.columnConfigFunctionList.length === 0) {
+        this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
+      }
       const temp = this.selectedTableList.filter
         (a => a.tableId === this.selectedTableId)[0].columnList.filter(b => b.originalColumnName === columnName)[0];
       if (temp.userColumnQuery != null && temp.viewQuery) {
@@ -475,29 +773,69 @@ export class ErtTableComponent implements OnInit {
 
   saveColumnConfig() {
     let tempString = '';
+    let outputType = '';
+    this.disabledAddColumnConfigBtn = false;
     if (this.configColumnObject.selectedConfigFunction !== null) {
       this.configColumnObject.outputType = this.columnConfigFunctionList.
         filter(a => a.function === this.configColumnObject.selectedConfigFunction)[0].outputType;
-    }
-    if (this.configColumnObject.selectedConfigFunction !== null) {
       this.configColumnList.push(this.configColumnObject);
     }
     const tempColumnName = this.configColumnObject.selectedColumnName;
-    this.configColumnObject = { selectedColumnName: tempColumnName, selectedConfigFunction: null, outputType: null };
-    for (const item of this.configColumnList) {
-      tempString = tempString + item.selectedConfigFunction + '(';
+    // start- To create query string.
+    for (let item = 0; item < this.configColumnList.length; item++) {
+      if (item === 0 && this.configColumnList[0].selectedConfigFunction.trim().toUpperCase() === 'SUBSTRING') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempColumnName + ',' +
+          this.configColumnList[item].startIndex + ',' + this.configColumnList[item].endIndex + ')';
+      } else if (item === 0 && this.configColumnList[0].selectedConfigFunction.trim().toUpperCase() !== 'SUBSTRING') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempColumnName + ')';
+      } else if (this.configColumnList[item].selectedConfigFunction.trim().toUpperCase() === 'SUBSTRING') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempString + ',' +
+          this.configColumnList[item].startIndex + ',' + this.configColumnList[item].endIndex + ')';
+      } else if (this.configColumnList[item].selectedConfigFunction.trim().toUpperCase() !== 'SUBSTRING') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempString + ')';
+      }
     }
+    if (this.configColumnList.length > 0) {
+      this.configColumnList[this.configColumnList.length - 1].param = tempString;
+    }
+    // end
+    this.configColumnObject = {
+      selectedColumnName: tempColumnName, selectedConfigFunction: null, outputType: null, param: '',
+      startIndex: null, endIndex: null
+    };
     if (this.configColumnList.length !== 0) {
-      tempString = tempString + tempColumnName;
+      // Set function list acc to the last function.
+      outputType = this.configColumnList[this.configColumnList.length - 1].outputType;
+      this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.outputType.trim().toUpperCase() ===
+        outputType.trim().toUpperCase());
+    } else {
+      // set to original function if length is zero.
+      const tempDataType = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0]
+        .columnList.filter(b => b.originalColumnName.trim().toUpperCase() === tempColumnName.trim().toUpperCase())[0].dataType;
+      this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.trim().toUpperCase() ===
+        tempDataType.trim().toUpperCase());
     }
-    for (const item of this.configColumnList) {
-      tempString = tempString + ')';
+    if (outputType.trim().toUpperCase() === 'NUMBER') {
+      // remove length function in case of number.
+      const index = this.columnConfigFunctionList.findIndex(a => a.function === 'LENGTH');
+      if (index !== -1) {
+        this.columnConfigFunctionList.splice(index, 1);
+      }
+    } else if (this.configColumnList.length !== 0) {
+      // insert length function in case of other datatype.
+      this.columnConfigFunctionList.push({ function: 'LENGTH', dataType: 'VARCHAR', outputType: 'NUMBER' });
     }
     this.configColumnQuery = tempString;
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
     const tempColumnList = temp.columnList.filter(a => a.originalColumnName === this.configColumnObject.selectedColumnName)[0];
     tempColumnList.viewQuery = this.configColumnQuery;
     tempColumnList.userColumnQuery = JSON.stringify(this.configColumnList).replace(/"/g, '\'');
+  }
+
+  setSubStringStartEndIndex(value) {
+    if (this.configColumnObject.endIndex !== null && this.configColumnObject.startIndex !== null) {
+      this.disabledAddColumnConfigBtn = false;
+    }
   }
 
   selectColumns(columnName: string, isSelected: boolean) {
@@ -578,18 +916,18 @@ export class ErtTableComponent implements OnInit {
   }
 
   deleteColumnCOnfig(i: number) {
-    this.configColumnList.splice(i, 1);
+    this.configColumnList.length = i;
     this.saveColumnConfig();
   }
 
   gotoExtractDigestExtraction() {
-    if (this.startIndex !== 1) {
-      this.selectedTableList = this.storeSelectedTables.concat(this.selectedTableList.filter(a => a.isSelected === false));
-    }
     if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
       this.errorMsg = 'Please select a table';
     } else {
+      this.selectedTableList = this.selectedTableList.filter(a => a.columnList.length !== 0);
       this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount, this.storeSelectedTables);
+      this.ertService.isSIPGraphChange = false;
+      this.ertService.isDataRecordGraphChange = false;
       this.navigateToUrl('workspace/ert/ert-extract-ingest');
     }
   }
@@ -603,18 +941,26 @@ export class ErtTableComponent implements OnInit {
       }
     } else
       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-        this.router.navigate([url + '/', this.ertJobId]);
+        this.router.navigate([url + '/', this.ertJobId], { queryParams: { from: this.from } });
       } else {
         this.router.navigate([url]);
       }
   }
   saveUsrDefinedColumn() {
-    if (!this.isQueryMode) {
-      this.validateQueryMode();
-      this.setQueryModeUserDefined();
-    } else if (!this.isCombinedQueryMode) {
-      this.validateCombinedColumnQueryMode();
-      this.setQueryModeUserDefined();
+    const isColumnNameExist = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList
+      .filter(b => b.originalColumnName.trim().toUpperCase().includes(this.usrDefinedColumnName.trim().toUpperCase()));
+    const length = isColumnNameExist.length;
+    if (length !== 1) {
+      if (!this.isQueryMode) {
+        this.validateQueryMode();
+        this.setQueryModeUserDefined();
+      } else if (!this.isCombinedQueryMode) {
+        this.validateCombinedColumnQueryMode();
+        this.setQueryModeUserDefined();
+      }
+    } else {
+      this.usrDefinedAlertMessage = 'Kindly provide different column name.';
+      document.getElementById('query-alert').classList.remove('alert-hide');
     }
   }
 
@@ -736,12 +1082,14 @@ export class ErtTableComponent implements OnInit {
     this.dataOrderList = [];
     this.maxNode = 3;
     let filterMap = new Map();
+    this.filterWhereClause = '';
+    this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === '');
     this.filterConfigColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
     this.orderFilterConfigColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-    const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, []);
+    const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, 0, []);
     this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
     if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
       temp.filterAndOrderConfig.filterQuery !== '' && temp.filterAndOrderConfig.filterConfig !== null &&
@@ -842,6 +1190,7 @@ export class ErtTableComponent implements OnInit {
   }
 
   createFilterWhereClause(obj, tableName): Observable<string> {
+    console.log(obj);
     const children = obj.children;
     for (const child of children) {
       if (child.children.length === 0) {
@@ -877,18 +1226,17 @@ export class ErtTableComponent implements OnInit {
     if (operation === null || condition === null || value === '') {
       // alert('Please select all the value');
     } else {
-      const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, []);
+      const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, this.maxNode, []);
       if (id === 1) {
-        const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, []);
+        const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, 1, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
-        const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, []);
+        const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, 1, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
         const filterTreeNode = searchTree(this.filterdata.root, 1);
         filterTreeNode.value = '';
         filterTreeNode.condition = null;
         filterTreeNode.column = null;
         filterTreeNode.operation = operation;
-
       } else {
         const filterTreeNode = searchTree(this.filterdata.root, id);
         filterTreeNode.operation = operation;
@@ -896,62 +1244,110 @@ export class ErtTableComponent implements OnInit {
         filterTreeNode.condition = null;
         filterTreeNode.column = null;
         filterTreeNode.margin_left = 10;
+        const parentId = id;
         this.maxNode = this.maxNode + 1;
-        const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false, column, condition, value, 18, []);
+        const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false,
+          column, condition, value, 18, parentId, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
-
         this.maxNode = this.maxNode + 1;
-        const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, []);
+        const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, parentId, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
-
       }
     }
-    event.stopPropagation();
+    if (event !== '') {
+      event.stopPropagation();
+    }
   }
 
-  constructExpression(postfix: string[]): string {
-    const expressionStack: string[] = [];
-    for (let i = 0; i < postfix.length; i++) {
-      if (postfix[i] !== 'AND' && postfix[i] !== 'OR') {
-        expressionStack.push(postfix[i]);
-      } else {
-        const temp1 = expressionStack.pop();
-        const temp2 = expressionStack.pop();
-        if (temp1 === undefined || temp2 === undefined) {
-          return 'Invalid';
-        } else {
-          const temp = '(' + temp1 + ' ' + postfix[i] + ' ' + temp2 + ')';
-          expressionStack.push(temp);
-        }
-      }
-    }
-    return expressionStack[0].substring(1, expressionStack[0].length - 1);
-  }
+  // constructExpression(postfix: string[]): string {
+  //   const expressionStack: string[] = [];
+  //   for (let i = 0; i < postfix.length; i++) {
+  //     if (postfix[i] !== 'AND' && postfix[i] !== 'OR') {
+  //       expressionStack.push(postfix[i]);
+  //     } else {
+  //       const temp1 = expressionStack.pop();
+  //       const temp2 = expressionStack.pop();
+  //       if (temp1 === undefined || temp2 === undefined) {
+  //         return 'Invalid';
+  //       } else {
+  //         const temp = '(' + temp1 + ' ' + postfix[i] + ' ' + temp2 + ')';
+  //         expressionStack.push(temp);
+  //       }
+  //     }
+  //   }
+  //   return expressionStack[0].substring(1, expressionStack[0].length - 1);
+  // }
 
-  addAvailableTable() {
-    for (const item of this.storeAvaliableTables.filter(a => a.isSelected === true)) {
-      const tempObj: TableDetailsListObj = new TableDetailsListObj();
-      if (item.isSelected) {
-        tempObj.tableId = item.tableId;
-        tempObj.tableName = item.tableName;
-        tempObj.modifiedTableName = item.modifiedTableName;
-        this.selectedTableList.push(tempObj);
-      }
-    }
-    this.storeAvaliableTables = [];
-  }
+  // addAvailableTable() {
+  //   for (const item of this.storeAvaliableTables.filter(a => a.isSelected === true)) {
+  //     const tempObj: TableDetailsListObj = new TableDetailsListObj();
+  //     if (item.isSelected) {
+  //       tempObj.tableId = item.tableId;
+  //       tempObj.tableName = item.tableName;
+  //       tempObj.modifiedTableName = item.modifiedTableName;
+  //       this.selectedTableList.push(tempObj);
+  //     }
+  //   }
+  //   this.storeAvaliableTables = [];
+  // }
 
   deleteFilterConfigTreeNode(id: number) {
-    let id1: number;
-    if (id % 2 === 0) {
-      id1 = id + 1;
-    } else {
-      id1 = id - 1;
-    }
+    let attachNode = false;
+    let tempNode: any = '';
     const filterTreeNode1 = searchTree(this.filterdata.root, id);
-    const filterTreeNode2 = searchTree(this.filterdata.root, id1);
-    this.filterdata = deleteNode(this.filterdata, filterTreeNode1);
-    this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
+    const parentId = filterTreeNode1.parentId;
+    const filterTreeNode3 = findParentNode(this.filterdata.root, parentId);
+    if (filterTreeNode3.children[0].id === id && filterTreeNode3.children[0].children.length === 0) {
+      if (filterTreeNode3.children[1].column === null &&
+        filterTreeNode3.children[1].condition === null && filterTreeNode3.children[1].value === '') {
+        attachNode = true;
+      }
+    }
+    if (filterTreeNode3.children[1].id === id && filterTreeNode3.children[1].children.length === 0) {
+      if (filterTreeNode3.children[0].column === null &&
+        filterTreeNode3.children[0].condition === null && filterTreeNode3.children[0].value === '') {
+        attachNode = true;
+      }
+    }
+    if (attachNode === false) {
+      if (filterTreeNode3.children[0].id === id) {
+        tempNode = filterTreeNode3.children[1];
+        this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[0]);
+      } else {
+        tempNode = filterTreeNode3.children[0];
+        this.filterdata = deleteNode(this.filterdata, filterTreeNode3.children[1]);
+      }
+      this.filterdata = deleteNode(this.filterdata, filterTreeNode3);
+      if (filterTreeNode3.parentId !== 0) {
+        const filterTreeNode2 = searchTree(this.filterdata.root, filterTreeNode3.parentId);
+        tempNode.parentId = filterTreeNode3.parentId;
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2, tempNode));
+      } else {
+        const filterConfigNode = new FilterConfigNode(1, null, false, false, tempNode.column, tempNode.condition, tempNode.value, 0, 0, []);
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
+      }
+    } else if (attachNode === true) {
+      this.filterdata = deleteNode(this.filterdata, filterTreeNode1);
+      const filterTreeNode2 = searchTree(this.filterdata.root, parentId);
+      const grandParentId = filterTreeNode2.parentId;
+      this.filterdata = deleteNode(this.filterdata, filterTreeNode2);
+      if (grandParentId !== 0) {
+        const grandParentNode = searchTree(this.filterdata.root, grandParentId);
+        filterTreeNode2.children[0].parentId = grandParentId;
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, grandParentNode, filterTreeNode2.children[0]));
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[0]));
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[1]));
+      } else {
+        const filterConfigNode = new FilterConfigNode(1, filterTreeNode2.children[0].operation,
+          false, false, filterTreeNode2.children[0].column,
+          filterTreeNode2.children[0].condition, filterTreeNode2.children[0].value, 0, 0, []);
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
+        filterTreeNode2.children[0].children[0].parentId = 1;
+        filterTreeNode2.children[0].children[1].parentId = 1;
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterTreeNode2.children[0].children[0]));
+        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterTreeNode2.children[0].children[1]));
+      }
+    }
   }
 
   addOrder() {
@@ -973,7 +1369,6 @@ export class ErtTableComponent implements OnInit {
 
   getAvilableTablePage(page) {
     this.ertAvillableTableList.erttableList.ertTableList = [];
-    this.avilableStartIndex = page;
     this.getErtAvailableTable(page);
   }
 
@@ -1007,6 +1402,34 @@ export class ErtTableComponent implements OnInit {
       this.isQueryMode = true;
       this.isCombinedQueryMode = false;
     }
+  }
+
+  changeColumnName(originalColumnName, modifiedColumnName) {
+    const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.
+      filter(a => a.originalColumnName === originalColumnName);
+    if (modifiedColumnName.length === 0) {
+      temp[0].modifiedColumnName = originalColumnName;
+    } else {
+      temp[0].modifiedColumnName = modifiedColumnName;
+    }
+  }
+
+
+  filterColumnSelectionChange(columnName) {
+    let type = '';
+    const tempSelectedTableColumns = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
+    const dataType = tempSelectedTableColumns.filter(a => a.originalColumnName === columnName)[0].dataType;
+    if (dataType.trim().toUpperCase() === 'SMALLINT' || dataType.trim().toUpperCase() === 'BIGINT'
+      || dataType.trim().toUpperCase() === 'DECIMAL' || dataType.trim().toUpperCase() === 'INT') {
+      type = 'NUMBER';
+    } else if (dataType.trim().toUpperCase() === 'BIT') {
+      type = 'BOOLEAN';
+    } else if (dataType.trim().toUpperCase() === 'DATE') {
+      type = 'DATE';
+    } else {
+      type = '';
+    }
+    this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === type.trim().toUpperCase());
   }
 }
 

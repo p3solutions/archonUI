@@ -81,7 +81,7 @@
           <div class="info-div">
             <div class="outer-div">
               <div class="inner-div">
-                <div class="inner-bold-item">User Name</div>
+                <div class="inner-bold-item">Profile Name</div>
                 <div class="inner-grey-item">{{databaseConnectionForm.get('profileName').value}}</div>
               </div>
               <div class="inner-div">
@@ -110,7 +110,8 @@
               </div>
             </div>
             <div id="action-btn" style="margin-top: 6%">
-              <button [disabled]="inProgress" class="btn {{inProgress ? 'cancel-disabled': 'cancel'}}  btn-padding" (click)="testConnection()">Test
+              <button [disabled]="inProgress" class="btn {{inProgress ? 'cancel-disabled': 'cancel'}}  btn-padding"
+                (click)="testConnection()">Test
                 Connection<i *ngIf="inProgress" class="fa fa-spinner fa-spin loader"></i> </button>
               <button class="btn cancel btn-padding" (click)="gotoAuthentication(stepper)">Previous</button>
               <button [disabled]="disableCreateBtn" (click)="createDatatbase()"

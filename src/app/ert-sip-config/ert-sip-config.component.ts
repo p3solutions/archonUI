@@ -58,6 +58,7 @@ export class ErtSipConfigComponent implements OnInit {
     const RelationSIP = getRelationshipListForSip(this.data);
     this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
     this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable, RelationSIP);
+    this.ertService.isSIPGraphChange = true;
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'SIP' } });
   }
   gotoJobConfiguration() {

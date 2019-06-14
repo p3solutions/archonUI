@@ -5,6 +5,7 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { TableDetailsListObj, IngestionDataConfig } from '../ert-landing-page/ert';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ert-table-column-config',
@@ -22,7 +23,8 @@ export class ErtTableColumnConfigComponent implements OnInit {
   isDisabled: boolean;
   issaveDisabled: boolean;
   successMsg = '';
-  constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService,
+  errorMessage = '';
+  constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
   ngOnInit() {
@@ -91,89 +93,104 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
 
   saveERTJob(ertJobStatus: string) {
-    this.isDisabled = false;
-    this.issaveDisabled = false;
-    let selectedList: any = '';
-    if (ertJobStatus === 'READY') {
-      this.isDisabled = true;
-    } else if (ertJobStatus === 'DRAFT') {
-      this.issaveDisabled = true;
-    }
-    for (const item of this.ertService.selectedList) {
-      if (item.filterAndOrderConfig.filterConfig === '' && item.filterAndOrderConfig.filterQuery === '') {
-        delete item['filterAndOrderConfig'];
-      } else if (item.filterAndOrderConfig.filterConfig === null && item.filterAndOrderConfig.filterQuery === null) {
-        delete item['filterAndOrderConfig'];
-
+    try {
+      this.errorMessage = '';
+      this.spinner.show();
+      this.isDisabled = false;
+      this.issaveDisabled = false;
+      let selectedList: any = '';
+      if (ertJobStatus === 'READY') {
+        this.isDisabled = true;
+      } else if (ertJobStatus === 'DRAFT') {
+        this.issaveDisabled = true;
       }
-      if (item.usrDefinedColumnList.length === 0) {
-        delete item['usrDefinedColumnList'];
-      }
-      if (item.relatedTableDetails.length === 0) {
-        delete item['relatedTableDetails'];
-      }
-      for (const item1 of item.columnList) {
-        if (item1.userColumnQuery === null) {
-          delete item1['userColumnQuery'];
+      for (const item of this.ertService.selectedList) {
+        if (item.filterAndOrderConfig !== undefined &&
+          item.filterAndOrderConfig.filterConfig === '' && item.filterAndOrderConfig.filterQuery === '') {
+          delete item['filterAndOrderConfig'];
+        } else if (item.filterAndOrderConfig !== undefined
+          && item.filterAndOrderConfig.filterConfig === null && item.filterAndOrderConfig.filterQuery === null) {
+          delete item['filterAndOrderConfig'];
         }
-        if (item1.viewQuery === null) {
-          delete item1['viewQuery'];
+        if (item.usrDefinedColumnList !== undefined && item.usrDefinedColumnList.length === 0) {
+          delete item['usrDefinedColumnList'];
+        }
+        if (item.relatedTableDetails !== undefined && item.relatedTableDetails.length === 0) {
+          delete item['relatedTableDetails'];
+        }
+        for (const item1 of item.columnList) {
+          if (item1.userColumnQuery === null) {
+            delete item1['userColumnQuery'];
+          }
+          if (item1.viewQuery === null) {
+            delete item1['viewQuery'];
+          }
         }
       }
-    }
-    this.activatedRoute.params.subscribe((requestParam) => {
-      this.ertJobId = requestParam.ertJobId;
-    });
-    console.log(this.ertJobId);
-    if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-      selectedList = this.ertService.selectedList;
-    } else {
-      selectedList = this.ertService.selectedList.filter(a => a.isSelected === true);
-    }
-    let param: any = {
-      'userId': this.userinfoService.getUserId(),
-      'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
-      'ertJobStatus': ertJobStatus,
-      'schemaResultsTableCount': this.ertService.schemaResultsTableCount.toString(),
-      'isIngest': false,
-      'databaseConfig': {
-        'databaseId': this.workspaceHeaderService.getDatabaseID()
-      },
-      'ertJobParams': this.ertService.ertJobParams,
-      'tableDetailsList': selectedList,
-      'ingestionDataConfig': this.ertService.ingestionDataConfig,
-      'extractDataConfigInfo': this.ertService.extractDataConfigInfo
-    };
-    if (this.from === 'data-record') {
-      delete param.extractDataConfigInfo['applicationName'];
-      delete param.extractDataConfigInfo['holdingName'];
-    } else if (this.from === 'SIP') {
-      delete param.extractDataConfigInfo['titleName'];
-    } else {
-      delete param.extractDataConfigInfo['titleName'];
-      delete param.extractDataConfigInfo['applicationName'];
-      delete param.extractDataConfigInfo['holdingName'];
-    }
-    param = this.modifiedParamForEdit(param);
-    if (param.ingestionDataConfig.infoArchiveName === '' || param.ingestionDataConfig.infoArchiveSchemaName === ''
-      || param.ingestionDataConfig.infoArchiveUserName === '' || param.ingestionDataConfig.infoArchivePassword === '') {
-      delete param['ingestionDataConfig'];
-    } else {
-      param.isIngest = true;
-    }
-    console.log(param);
-    this.ertService.saveErtJob(param).subscribe(result => {
-      const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
-        'Job successfully marked as completed.';
-      document.getElementById('message-popup-btn').click();
-      this.successMsg = result.errorMessage !== null ? result.errorMessage : msg;
-    }, (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
+      this.activatedRoute.params.subscribe((requestParam) => {
+        this.ertJobId = requestParam.ertJobId;
+      });
+      if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+        selectedList = this.ertService.selectedList;
       } else {
-        document.getElementById('message-popup-btn').click();
-        this.successMsg = err.error.errorMessage;
+        selectedList = this.ertService.selectedList.filter(a => a.isSelected === true);
       }
-    });
+      let param: any = {
+        'userId': this.userinfoService.getUserId(),
+        'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
+        'ertJobStatus': ertJobStatus,
+        'schemaResultsTableCount': this.ertService.schemaResultsTableCount.toString(),
+        'isIngest': false,
+        'databaseConfig': {
+          'databaseId': this.workspaceHeaderService.getDatabaseID()
+        },
+        'ertJobParams': this.ertService.ertJobParams,
+        'tableDetailsList': selectedList,
+        'ingestionDataConfig': this.ertService.ingestionDataConfig,
+        'extractDataConfigInfo': this.ertService.extractDataConfigInfo
+      };
+      if (this.from === 'data-record') {
+        delete param.extractDataConfigInfo['applicationName'];
+        delete param.extractDataConfigInfo['holdingName'];
+      } else if (this.from === 'SIP') {
+        delete param.extractDataConfigInfo['titleName'];
+      } else {
+        delete param.extractDataConfigInfo['titleName'];
+        delete param.extractDataConfigInfo['applicationName'];
+        delete param.extractDataConfigInfo['holdingName'];
+      }
+      param = this.modifiedParamForEdit(param);
+      if (param.ingestionDataConfig.infoArchiveName === '' || param.ingestionDataConfig.infoArchiveSchemaName === ''
+        || param.ingestionDataConfig.infoArchiveUserName === '' || param.ingestionDataConfig.infoArchivePassword === '') {
+        delete param['ingestionDataConfig'];
+      } else {
+        param.isIngest = true;
+      }
+      this.ertService.saveErtJob(param).subscribe(result => {
+        this.spinner.hide();
+        const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
+          'Job successfully marked as completed.';
+        if (result.errorMessage !== null) {
+          this.spinner.hide();
+          document.getElementById('not-saved-popup-btn').click();
+          this.errorMessage = result.errorMessage !== null ? result.errorMessage : 'Unable to save job.';
+        } else {
+          this.spinner.hide();
+          document.getElementById('message-popup-btn').click();
+          this.successMsg = msg;
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          document.getElementById('not-saved-popup-btn').click();
+          this.successMsg = err.error.errorMessage;
+        }
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
 

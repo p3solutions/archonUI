@@ -23,6 +23,7 @@ export class ErtTableObj {
     tableName = '';
     modifiedTableName = '';
     isSelected = false;
+    alreadyIsSelected = false;
     filterNconfig = new FilterAndOrderConfig();
     relatedTableDetails: RelatedTableDetails[];
 }

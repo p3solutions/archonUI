@@ -31,23 +31,23 @@ export class ErtJobsConfigComponent implements OnInit {
     } else if (ertJobMode === 'SIP') {
       this.route.navigate(['/workspace/ert/ert-sip-config']);
     } else {
-      this.route.navigate(['/workspace/ert/ert-table']);
+      this.route.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'TABLE' } });
     }
   }
 
   enableJobSelection() {
-    if (this.ertJobParams.ertJobTitle !== '') {
+    if (this.ertJobParams.ertJobTitle.length >= 3) {
       const radios = document.getElementsByName('selectjob');
       const array: any = Array.from(radios);
       for (let i = 0; i < array.length; i++) {
         if (this.ertService.mmrVersion === '') {
-        if (i === 0) {
-         array[i].disabled = false;
-        }
+          if (i === 0) {
+            array[i].disabled = false;
+          }
         } else {
           array[i].disabled = false;
         }
-        }
+      }
     } else {
       const radios = document.getElementsByName('selectjob');
       const array: any = Array.from(radios);

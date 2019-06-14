@@ -9,9 +9,10 @@ export class FilterConfigNode {
     value: string;
     children: FilterConfigNode[] = [];
     margin_left: number;
+    parentId: number;
 
     constructor(id: number, operation: string, displayAND: boolean, displayOR: boolean, column: string,
-        condition: string, value: string, margin_left: number, children: FilterConfigNode[]) {
+        condition: string, value: string, margin_left: number, parentId: number, children: FilterConfigNode[]) {
         this.id = id;
         this.operation = operation;
         this.displayAND = displayAND;
@@ -21,6 +22,7 @@ export class FilterConfigNode {
         this.value = value;
         children = children;
         margin_left = margin_left;
+        this.parentId = parentId;
     }
 }
 
@@ -32,6 +34,7 @@ function filterNode(data) {
     this.column = data.column;
     this.condition = data.condition;
     this.value = data.value;
+    this.parentId = data.parentId;
     this.children = [];
 }
 
@@ -71,16 +74,19 @@ Tree.prototype.remove = function (data) {
     if (this.root.id === data.id) {
         this.root = null;
     }
-
     const queue = [this.root];
     while (queue.length) {
         const node = queue.shift();
-        for (let i = 0; i < node.children.length; i++) {
-            if (node.children[i].id === data.id) {
-                node.children.splice(i, 1);
-            } else {
-                queue.push(node.children[i]);
+        if (node !== null) {
+            for (let i = 0; i < node.children.length; i++) {
+                if (node.children[i].id === data.id) {
+                    node.children.splice(i, 1);
+                } else {
+                    queue.push(node.children[i]);
+                }
             }
+        } else {
+
         }
     }
 };
@@ -183,6 +189,7 @@ Tree.prototype.printByLevel = function () {
 };
 
 export function addFilterNode(filterConfigTree: FilterConfigTree, parent: FilterConfigNode, child: FilterConfigNode): string {
+    console.log(child, parent);
     const filterTree = new Tree();
     if (filterConfigTree != null) {
         filterTree.root = filterConfigTree.root;
@@ -232,4 +239,50 @@ export const columnConfigFunctionList: ColumnConfigFunction[] = [
     { function: 'LOWER', dataType: 'VARCHAR', outputType: 'STRING' },
     { function: 'SUBSTRING', dataType: 'VARCHAR', outputType: 'STRING' },
     { function: 'REVERSE', dataType: 'VARCHAR', outputType: 'STRING' },
+    { function: 'ADDTIME', dataType: 'TIMESTAMP', outputType: 'DATE' },
+    { function: 'ADDDATE', dataType: 'TIMESTAMP', outputType: 'DATE' }
+];
+
+export function findParentNode(element, id: number) {
+    if (element.id === id) {
+        return element;
+    } else if (element.children != null) {
+        let i;
+        let result = null;
+        for (i = 0; result == null && i < element.children.length; i++) {
+            result = searchTree(element.children[i], id);
+        }
+        return result;
+    }
+    return null;
+}
+
+export class FilterOperationList {
+    operation = '';
+    dataType = '';
+}
+
+export const filterOperationList: FilterOperationList[] = [
+    { operation: '=', dataType: 'NUMBER' },
+    { operation: '!=', dataType: 'NUMBER' },
+    { operation: '>', dataType: 'NUMBER' },
+    { operation: '<', dataType: 'NUMBER' },
+    { operation: '>=', dataType: 'NUMBER' },
+    { operation: '<=', dataType: 'NUMBER' },
+    { operation: '=', dataType: 'DATE' },
+    { operation: '!=', dataType: 'DATE' },
+    { operation: '>', dataType: 'DATE' },
+    { operation: '<', dataType: 'DATE' },
+    { operation: '>=', dataType: 'DATE' },
+    { operation: '<=', dataType: 'DATE' },
+    // { operation: 'between', dataType: 'DATE' },
+    { operation: 'is null', dataType: 'DATE' },
+    { operation: 'is not null', dataType: 'DATE' },
+    { operation: '=', dataType: 'BOOLEAN'},
+    { operation: '!=', dataType: 'BOOLEAN'},
+    { operation: '=', dataType: ''},
+    { operation: '!=', dataType: ''},
+    { operation: 'like', dataType: '' },
+    { operation: 'is null', dataType: '' },
+    { operation: 'is not null', dataType: '' }
 ];
