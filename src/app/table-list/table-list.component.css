@@ -885,7 +885,8 @@ a:hover {
 
 
 pagination-controls::ng-deep ul.ngx-pagination {
-  float: right
+  float: right;
+  padding-right: 4%;
 }
 
 .expand {

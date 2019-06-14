@@ -35,6 +35,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   autoColumnMatchMessage = '';
   defaultRelations = new Map();
   updateenable = false;
+  onloadupdate = true;
 
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumn'];
   defaultIndex = new Map();
@@ -93,6 +94,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryValues, index, secondaryColumn) {
+    this.onloadupdate = false;
     const example = {
       columnId: '',
       columnName: '',

@@ -116,12 +116,13 @@
     <div *ngIf="isSPVAvailable"> 
       <div class="column-one scroll-div border">
         <div class="sticky">
-          <div><mat-checkbox style="float:left; padding-top: 5px;" (change)="selectAll($event)" ></mat-checkbox><!--<input style="float:left" type="checkbox">--></div>
+          <div><!--<mat-checkbox style="float:left; padding-top: 5px;" (change)="selectAll($event)"></mat-checkbox> --><input style="float:left" type="checkbox" (change)="selectAll($event)"></div> 
           <div class="first-div-new">SP / View Name</div>         
         </div>
         <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvInfoListTwo"
           (click)="getTableNameList(item.name)">
-          <div><mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" id="{{item}}" [checked]="item.selected" class="spvall" type="checkbox"></mat-checkbox><!--<input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox">--></div>
+          <div><!--<mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" id="{{item}}" [checked]="item.selected" class="spvall" type="checkbox"></mat-checkbox> -->
+            <input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox"></div>
           <div class="first-div">{{item.name}}</div>
           <div class="second-div">{{item.type}}</div>
           <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div "></i></div>
@@ -134,7 +135,8 @@
         </div>
         <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvTableNameList"
           (click)="showSPVRelatedTableName(item)">
-          <div><mat-checkbox style="float:left; padding-top: 2px;" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)"></mat-checkbox><!--<input style="float:left" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)" type="checkbox">--></div>
+          <div><!-- <mat-checkbox style="float:left; padding-top: 2px;" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)"></mat-checkbox> -->
+          <input style="float:left" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)" type="checkbox"></div>
           <div class="first-div-sec-col">{{item.tableName}}</div>
           <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div"></i></div>
         </div>
