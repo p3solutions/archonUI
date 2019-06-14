@@ -86,6 +86,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       this.value[1].children[1].classList.add('finished-step');
       this.value[2].children[1].classList.add('finished-step');
       this.value[3].children[1].classList.add('active-step');
+      this.value[3].children[2].classList.add('active-text-color');
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       a[1].classList.add('mat-auth-psedu');

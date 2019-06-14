@@ -438,3 +438,7 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
   overflow-y: auto;
   max-height: 318px;
 }
+
+::ng-deep .mat-step-data-analyzer-2 .mat-horizontal-stepper-header-container .active-text-color {
+  color: rgba(0, 0, 0, .87) !important;
+}
