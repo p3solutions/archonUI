@@ -10,7 +10,7 @@
         </div>
 
         <div class='body-left'>
-          <a style="z-index:1; margin-right:0px;text-decoration: none" class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <span style="z-index:1; margin-right:0px;text-decoration: none" class="glyphicon glyphicon-search inner-addon right-addon search-icon"></span>
           <input type="text" style="width: 89%;" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
             (keyup)="searchTablelist()" placeholder="Search Table">
         </div>
@@ -502,7 +502,7 @@
                 <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 15px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 15px;">Success</div></h4>
             </div>
             <div class="modal-body">
-                <p class="popup-paragraph-cls"> New Join Added Successfully </p>
+                <p class="popup-paragraph-cls"> Relationship updated successfully </p>
               </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="closeScreen(); closeErrorMsg(); resetselectedValues()">OK</button>      

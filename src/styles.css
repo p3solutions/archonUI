@@ -2136,5 +2136,8 @@ button.btn-secondary-popup:hover {
   background-color: rgba(255,255,255,0.7);
   opacity: 0.5;
 }
+.search-icon {
+color: #a0a2a4;
+}
 
 

@@ -27,8 +27,12 @@
             <div class="first-div-new">Secondary Table</div>
          
           <div class="container-list">
-            <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" (keyup)="searchTablelist()" placeholder="Search Table" id="listSearch">
-            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            <!-- <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" (keyup)="searchTablelist()" placeholder="Search Table" id="listSearch">
+            <span class="glyphicon glyphicon-search form-control-feedback search-icon"></span> -->
+            <div class='body-left'>
+                <span style="z-index:1; margin-right:0%;text-decoration: none" class="glyphicon glyphicon-search inner-addon right-addon search-icon"></span>
+                <input type="text" style="width: 93%;" class="form-control search-input" [(ngModel)]="searchTableName" (keyup)="searchTablelist()" placeholder="Search Table" id="listSearch">
+              </div>
             <div class="tablename-list da-table-parent">
             <div class="list-group" id="list-tab" role="tablist" *ngFor="let table of tableList |  paginate: {id: 'jointablelist', itemsPerPage: 50, totalItems: schemaResultsTableCount, currentPage: page } | searchTable:searchTableName" [hidden]="table.tableName === primaryTableName">
               <button type="button" class="btn btn-default list-group-item da-table" title="{{table.tableName}}" (click)="secTable($event, table)"><div class="overflow-text">{{table.tableName}}
@@ -69,7 +73,7 @@
         </mat-form-field>
       </td>
     </ng-container>  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <div *ngIf="!secondaryColumns"><span [ngClass]="{'archon-loading-icon' : true}" id="loading-icon"></span></div>
@@ -92,7 +96,7 @@ height: 45px;">
   </div>
   </div>      
   <div class="col-md-5">       
-      <div class="action-btn">
+      <div class="action-btn" style="float: right">
           <button class="mat-raised-button cancel btn-padding" (click)="closeScreen(); closeErrorMsg(); resetselectedValues()" data-dismiss="modal">Close</button>
 <!--    
       <button type="button" (click)="autocolumnMatchMode()" class="btn btn-primary">Automatch Column</button> 
