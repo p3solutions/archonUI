@@ -86,20 +86,27 @@ export class AdhocTableSelectionComponent implements OnInit {
           sessionAdhocModel.graphDetails.selectedPrimaryTable.replace(/'/g, '"'));
         this.createchart();
       }
-    } catch{
+    } catch {
       this.spinner.hide();
     }
   }
 
   checkForSingleTable() {
-    if (this.screenInfoObject.sessionAdhocModel.graphDetails.data !== '') {
-      this.selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
-      this.selectedPrimaryTable = JSON.parse(this.screenInfoObject.
-        sessionAdhocModel.graphDetails.selectedPrimaryTable.replace(/'/g, '"'));
-      if (this.selectedValues.length === 0) {
-        this.primarytableIdWhenNoRelation = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0].tableId;
+    try {
+      if (this.screenInfoObject.sessionAdhocModel.graphDetails.data !== '') {
+        this.selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+        this.selectedPrimaryTable = JSON.parse(this.screenInfoObject.
+          sessionAdhocModel.graphDetails.selectedPrimaryTable.replace(/'/g, '"'));
+        if (this.selectedValues.length === 0) {
+          const temp = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0];
+          if (temp !== undefined) {
+            this.primarytableIdWhenNoRelation = temp.tableId;
+          }
+        }
       }
-    }
+    } catch{
+      this.spinner.hide();
+    };
   }
   gotoDataRecFinal() {
     const graphDetails = new GraphDetails();
@@ -132,11 +139,13 @@ export class AdhocTableSelectionComponent implements OnInit {
     if (this.searchTableName !== '') {
       this.startIndex = page;
       this.searchTablelist();
+      this.checkForSingleTable();
     } else {
       this.tableList = [];
       this.startIndex = page;
       this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
         this.tableList = res.tableList;
+        this.checkForSingleTable();
         if (res.paginationRequired) {
           this.schemaResultsTableCount = (this.startIndex + 1) * 50;
         }

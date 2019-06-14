@@ -246,64 +246,70 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   }
 
   gotoNestedScreen() {
-    let searchCriteria: SearchCriteria[] = [];
-    let searchResult = new SearchResult();
-    this.adhocScreenService.updatedSearchCriteria.subscribe(result => {
-      searchCriteria = JSON.parse(JSON.stringify(result));
-    });
-    this.adhocScreenService.updatedSearchResult.subscribe(result => {
-      searchResult = JSON.parse(JSON.stringify(result));
-    });
-    let tempHeader = new AdhocHeaderInfo();
-    this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
-      tempHeader = response;
-    });
-    this.screenInfoObject.screenId = this.screenInfoObject.id;
-    this.screenInfoObject.sessionAdhocModel.screenId = this.screenInfoObject.id;
-    this.screenInfoObject.metadataVersion = this.tempHeader.appMetadataVersion;
-    this.screenInfoObject.sessionAdhocModel.metadataVersion = this.tempHeader.appMetadataVersion;
-    delete this.screenInfoObject['id'];
-    if (this.screenInfoObject.parentScreenInfo.screenId === '') {
-      this.screenInfoObject['parentScreenInfo'] = null;
-    }
-    if (this.screenInfoObject.childScreenInfo.length === 0) {
-      this.screenInfoObject['childScreenInfo'] = null;
-    }
-    this.screenInfoObject.sessionAdhocModel.searchCriteria = searchCriteria;
-    this.screenInfoObject.userId = getUserId();
-    this.screenInfoObject.sessionAdhocModel.searchResult = searchResult;
-    this.screenInfoObject.sessionAdhocModel.selectedTables = this.tableColumnList;
-    this.addOrder();
-    this.addSchemaName(this.tableColumnList[0].schemaName);
-    this.screenInfoObject.schemaName = this.tableColumnList[0].schemaName;
-    this.screenInfoObject.sessionAdhocModel.primaryTable = this.tableColumnList[0].schemaName + '/' + this.tableColumnList[0].tableName;
-    this.screenInfoObject.sessionAdhoc = this.screenInfoObject.sessionAdhocModel;
-    if (this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel.tabs[0].resultFields.length === 0) {
-      this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
-    }
-    if (this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel.tabs[0].resultFields.length === 0) {
-      this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = null;
-    }
-    delete this.screenInfoObject['sessionAdhocModel'];
-    delete this.screenInfoObject['position'];
-    delete this.screenInfoObject['createdAt'];
-    delete this.screenInfoObject['updatedAt'];
-    this.updateInProgress = true;
-    this.adhocService.updateScreen(this.screenInfoObject, this.screenInfoObject.screenId).subscribe(result => {
-      this.updateInProgress = false;
-      if (result.httpStatus === 200) {
-        document.getElementById('success-popup-btn').click();
-        this.successMsg = 'Screen Updated Successfully.';
-      } else {
-        document.getElementById('error-popup-btn').click();
-        this.successMsg = 'Screen Not Updated Successfully.';
+    try {
+      this.spinner.show();
+      let searchCriteria: SearchCriteria[] = [];
+      let searchResult = new SearchResult();
+      this.adhocScreenService.updatedSearchCriteria.subscribe(result => {
+        searchCriteria = JSON.parse(JSON.stringify(result));
+      });
+      this.adhocScreenService.updatedSearchResult.subscribe(result => {
+        searchResult = JSON.parse(JSON.stringify(result));
+      });
+      let tempHeader = new AdhocHeaderInfo();
+      this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
+        tempHeader = response;
+      });
+      this.screenInfoObject.screenId = this.screenInfoObject.id;
+      this.screenInfoObject.sessionAdhocModel.screenId = this.screenInfoObject.id;
+      this.screenInfoObject.metadataVersion = this.tempHeader.appMetadataVersion;
+      this.screenInfoObject.sessionAdhocModel.metadataVersion = this.tempHeader.appMetadataVersion;
+      delete this.screenInfoObject['id'];
+      if (this.screenInfoObject.parentScreenInfo.screenId === '') {
+        this.screenInfoObject['parentScreenInfo'] = null;
       }
-    }, (err: HttpErrorResponse) => {
-      if (err.error) {
-        document.getElementById('error-popup-btn').click();
-        this.successMsg = err.error.errorMessage;
+      if (this.screenInfoObject.childScreenInfo.length === 0) {
+        this.screenInfoObject['childScreenInfo'] = null;
       }
-    });
+      this.screenInfoObject.sessionAdhocModel.searchCriteria = searchCriteria;
+      this.screenInfoObject.userId = getUserId();
+      this.screenInfoObject.sessionAdhocModel.searchResult = searchResult;
+      this.screenInfoObject.sessionAdhocModel.selectedTables = this.tableColumnList;
+      this.addOrder();
+      this.addSchemaName(this.tableColumnList[0].schemaName);
+      this.screenInfoObject.schemaName = this.tableColumnList[0].schemaName;
+      this.screenInfoObject.sessionAdhocModel.primaryTable = this.tableColumnList[0].schemaName + '/' + this.tableColumnList[0].tableName;
+      this.screenInfoObject.sessionAdhoc = this.screenInfoObject.sessionAdhocModel;
+      if (this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel.tabs[0].resultFields.length === 0) {
+        this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
+      }
+      if (this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel.tabs[0].resultFields.length === 0) {
+        this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = null;
+      }
+      delete this.screenInfoObject['sessionAdhocModel'];
+      delete this.screenInfoObject['position'];
+      delete this.screenInfoObject['createdAt'];
+      delete this.screenInfoObject['updatedAt'];
+      this.adhocService.updateScreen(this.screenInfoObject, this.screenInfoObject.screenId).subscribe(result => {
+        if (result.httpStatus === 200) {
+          document.getElementById('success-popup-btn').click();
+          this.successMsg = 'Screen Updated Successfully.';
+        } else {
+          document.getElementById('error-popup-btn').click();
+          this.successMsg = 'Screen Not Updated Successfully.';
+        }
+        this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        if (err.error) {
+          document.getElementById('error-popup-btn').click();
+          this.successMsg = err.error.errorMessage;
+          this.spinner.hide();
+        }
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
   gotoAppScreen() {

@@ -78,10 +78,9 @@
         </mat-accordion>
         <div class="row" id="nextbtn">
           <button type="button"
-            class="btn btn-padding {{searchResultLength===0 || updateInProgress ? 'primary-btn-color-disabled' : 'primary-btn-color' }}"
-            [disabled]="searchResultLength===0 || updateInProgress" (click)="updateAdhocScreen()"
-            style="float: right;margin-right: 12px">Save <i *ngIf="updateInProgress"
-              class="fa fa-spinner fa-spin loader"></i></button>
+            class="btn btn-padding {{searchResultLength===0 ? 'primary-btn-color-disabled' : 'primary-btn-color' }}"
+            [disabled]="searchResultLength===0" (click)="updateAdhocScreen()"
+            style="float: right;margin-right: 12px">Save</button>
           <button class="btn btn-padding primary-btn-color" (click)="gotoGraph()" style="float:right;margin-right:5px;">
             Back</button>
           <button class="btn btn-padding secondary-btn-color" id="clearBtn" (click)="clearSearchCriteria()"
