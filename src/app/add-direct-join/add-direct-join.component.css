@@ -151,13 +151,13 @@ a {
   margin-left: -20px;
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: 50vh;
+  max-height: 450px;
   /* height: max-content; */
   /* max-height: 500px; */
 }
 
 .card-body {
-  min-height: 92vh;
+  min-height: 760px;
 }
 
 .default-load {

@@ -220,27 +220,27 @@
                       </mat-step>
                       <mat-step label="Secondary Table">
                           <div class="dataA-panel-body" id="panel-1" style="margin-left:0px">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
 
                               <div class="col-md-6" style="height: 295px;padding-left: 0px;padding-right: 0px;">
-                                <div class="col-md-12">
+                                <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
                                   <div class="col-md-6" style="margin-top: 9px; margin-left: 3px;">
-                                    <h4>Secondary Table</h4>
+                                    <h4 style="font-weight: 600">Secondary Table</h4>
                                   </div>
-                                  <div class="col-md-6" style="margin-left: -28px;">
+                                  <div class="col-md-6" style="margin-top: 2px;margin-left: -9%;">
                                     <div class="selected-sty1">
                                       {{selectedSecTbl.size}} out of {{secTblArray.length - 1}} selected
                                     </div>
                                   </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
                                   <div class="body-left" style="margin-bottom: 10px; width: 99%; margin-left: -2px;">
                                     <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
                                     <input type="text" class="form-control search-input " [(ngModel)]="searchSec1" placeholder="Search Table">
                                   </div>
                                 </div>
                                 
-                                <div class="col-md-12" style="padding-left: 33px;padding-right: 54px;">
+                                <div class="col-md-12" style="margin-left: 2px;padding-right: 12%;">
                                   <div class="col-md-12 p-0 dataA-scrollable-div">
                                     <div class="da-table-parent">
                                       <div class="col-md-12 p-0"
@@ -262,24 +262,25 @@
                                 </div>
                               </div>
                               <div class="col-md-6" *ngIf="secColArray.length > 0" style="padding-left: 0px; padding-right: 0px;">                              
-                                  <div class="col-md-12">
+                                  <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
                                     <div class="col-md-6" style="margin-top: 9px; margin-left: 3px;">
-                                      <h4>Column List</h4>
+                                      <h4 style="font-weight: 600">Column List</h4>
                                     </div>
-                                    <div class="col-md-6" style="margin-left: -28px;">
+                                    <div class="col-md-6" style="margin-top: 2px;margin-left: -9%;">
                                       <div class="selected-sty2">
                                         {{selectedSecColMap.size}} out of {{secColArray.length}} selected
                                       </div>
                                     </div>
                                   </div>
-                                  <div class="col-md-12">
+                                  <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
                                       <div class="body-left" style="margin-bottom: 10px; width: 99%; margin-left: -2px;">
                                         <a style="z-index:1; margin-right:12px;" class="glyphicon glyphicon-search inner-addon right-addon"></a>
                                         <input type="text" class="form-control search-input " [(ngModel)]="searchSec2" placeholder="Search Column">
                                       </div>
                                     </div>
                                    
-                                  <div class="col-md-12 p-0 dataA-scrollable-div" id="panel-1" style="padding-left: 33px;padding-right: 0px; width: 85%;">
+                                  <div class="col-md-12 p-0 dataA-scrollable-div" id="panel-1" style="margin-left: 4.8%;                                
+                                  width: 83%;">
                                     <div class="col-md-12 p-0">
                                       <div class="col-md-12 column-header ana-br" title="Secondary Column">
                                         <input type="checkbox" style="margin-right: 10px;" (change)="selectAllSec($event)">
