@@ -42,6 +42,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   columnlength = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  enableAdd = false;
 
   constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService, private router: Router) { }
 
@@ -138,6 +139,15 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     if (insert === 0) {
       this.joinListTemp.push(temp);
     }
+  this.enableAdd = this.checkDuplicateInObject(this.joinListTemp);
+  }
+
+  checkDuplicateInObject(values) {
+    const valueArr = values.map(function(item) { return item.secondaryColumn.columnName; });
+    const isDuplicate = valueArr.some(function(item, idx) {
+    return valueArr.indexOf(item) !== idx ;
+    });
+    return isDuplicate;
   }
 
   addJoins() {

@@ -218,11 +218,18 @@ export class StoredProcViewComponent implements OnInit {
     this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
     this.storedProcViewService.changeSPVBooleanValue(true);
   }
-  selectAll(event) {
+  selectAllSp(event) {
     if (event.target.checked) {
-      $('input:checkbox:not(:checked).spvall').click();
+      $('input:checkbox:not(:checked).sp-select').click();
     } else {
-      $('input:checkbox:checked.spvall').click();
+      $('input:checkbox:checked.sp-select').click();
+    }
+  }
+  selectAllRelation(event) {
+    if (event.target.checked) {
+      $('input:checkbox:not(:checked).relation-select').click();
+    } else {
+      $('input:checkbox:checked.relation-select').click();
     }
   }
 }

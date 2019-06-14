@@ -35,6 +35,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   autoColumnMatchMessage = '';
   defaultRelations = new Map();
   updateenable = false;
+  onloadupdate = true;
 
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumn'];
   defaultIndex = new Map();
@@ -87,47 +88,13 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       for (let index = 0; index < this.joinDetailsArray.length; index++) {
         if (this.joinDetailsArray[index].relationshipId !== '') {
           this.resultantValues.push(JSON.parse(JSON.stringify(this.joinDetailsArray[index])));
-          this.defaultRelations.set(this.joinDetailsArray[index].secondaryColumn.columnName, index);
-          this.defaultIndex.set(index, this.joinDetailsArray[index].secondaryColumn.columnName);
         }
       }
     });
   }
 
   selectedValues(primaryValues, index, secondaryColumn) {
-    const mapColumnName = this.defaultIndex.get(index);
-    const mapIndex = this.defaultRelations.get(mapColumnName);
-    if (mapColumnName) {
-      if (secondaryColumn !== 'select') {
-        if (this.defaultRelations.has(secondaryColumn)) {
-          this.defaultRelations.delete(mapColumnName);
-            this.defaultIndex.delete(index);
-           this.updateenable = true;
-         } else {
-           this.updateenable = false;
-           if (secondaryColumn !== 'select') {
-            this.defaultRelations.delete(mapColumnName);
-            this.defaultIndex.delete(index);
-             this.defaultRelations.set(secondaryColumn, index);
-             this.defaultIndex.set(index, secondaryColumn);
-           }
-         }
-      } else {
-        this.defaultRelations.delete(mapColumnName);
-        this.defaultIndex.delete(index);
-      }
-    } else {
-      if (this.defaultRelations.has(secondaryColumn)) {
-        this.updateenable = true;
-       } else {
-         this.updateenable = false;
-         if (secondaryColumn !== 'select') {
-           this.defaultRelations.set(secondaryColumn, index);
-           this.defaultIndex.set(index, secondaryColumn);
-         }
-       }
-    }
-    console.log(secondaryColumn ,this.defaultRelations);
+    this.onloadupdate = false;
     const example = {
       columnId: '',
       columnName: '',
@@ -193,6 +160,15 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         }
       }
     }
+    this.updateenable = this.checkDuplicateInObject(this.resultantValues);
+  }
+
+  checkDuplicateInObject(values) {
+    const valueArr = values.map(function(item) { return item.secondaryColumn.columnName; });
+    const isDuplicate = valueArr.some(function(item, idx) {
+    return valueArr.indexOf(item) !== idx ;
+    });
+    return isDuplicate;
   }
 
 
@@ -243,6 +219,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     this.populateValues();
     this.resultantValues = [];
     this.removeIndexValue = [];
+    this.updateenable = false;
   }
 
   autocolumnMatchMode() {

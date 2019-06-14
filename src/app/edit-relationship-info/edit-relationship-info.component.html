@@ -102,7 +102,7 @@
           <!-- <button type="button" class="btn btn-primary cancel" id="cancel-btn" (click)="closeErrorMsg();resetSelection()" data-dismiss="modal" style="margin-right: 14px;">Close</button> -->
           <!-- <button type="button" class="btn btn-primary" (click)="autocolumnMatchMode(); closeErrorMsg();">Automatch Column</button> -->
           <button class="save mat-raised-button btn-padding" (click)="resetSelection(); closeErrorMsg();">Reset</button>
-          <button [disabled]="updateenable" class="save mat-raised-button btn-padding" (click)="updateRelation(); closeErrorMsg();">Update</button>                
+          <button [disabled]="updateenable || onloadupdate" class="save mat-raised-button btn-padding" (click)="updateRelation(); closeErrorMsg();">Update</button>                
           </div>
       </div>
       </div>

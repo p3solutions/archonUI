@@ -151,12 +151,13 @@ a {
   margin-left: -20px;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 500px;
+  max-height: 50vh;
+  /* height: max-content; */
   /* max-height: 500px; */
 }
 
-.card {
-    height: 538px;
+.card-body {
+  min-height: 92vh;
 }
 
 .default-load {
@@ -351,7 +352,7 @@ input[type='checkbox'] {
 }
 
 .page-align{
-  padding:0px 20px;
+  padding:0px 10px;
 }
 
 #cancel-btn{
