@@ -7,7 +7,7 @@
 }
 
 .card-title {
-  font-size: 14px;
+  font-size: 16px;
   float: left;
 }
 .back-arrowr {
@@ -94,14 +94,14 @@
   margin-top: 0px;
 } 
 
-.form-control-feedback {
+/* .form-control-feedback {
   position: relative;
   margin-top: -34px;
   margin-left: 169px;
   height: 32px;
-  color: #269af8;
+  color: #a0a2a4;
   line-height: 30px;
-}
+} */
 
 .inner-addon {
   padding-left: 10%;
@@ -253,11 +253,11 @@ input[type='checkbox'] {
 }
 .form-control-feedback {
   position: relative;
-  margin-top: -35px;
+  margin-top: -12%;
   float: right;
-  margin-right: 6%;
+  margin-right: 8%;
   height: 30px;
-  color: #80adf8;
+  color: #a0a2a4;
   line-height: 30px;
 }
 .selwidth {
@@ -277,7 +277,7 @@ input[type='checkbox'] {
   margin-bottom: 32px;
   overflow: auto;
   overflow-y: auto;
-  height: 522px;
+  height: 512px;
 }
 
 #customers {  
@@ -306,13 +306,13 @@ input[type='checkbox'] {
   width: 96%;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 12px;
+  font-size: 14px;
 }
 .overflow-text-arrow {
   float: left;
   width: 4%;
   text-align: right;
-  font-size: 12px;
+  font-size: 14px;
 }
 .overflow-textrelation {
   float: left;
@@ -322,7 +322,6 @@ input[type='checkbox'] {
 }
 .ngx-pagination {
   margin-left: -40px;
-  font-size: 9px;
   margin-bottom: 1rem;
   margin-top: 4px;
 }
@@ -384,17 +383,27 @@ input[type='checkbox'] {
   background-color: #2879ff;
   color: #ffffff;
   text-transform: inherit;
-  margin-right: -30px;
+  margin-right: -25%;
   transition: 0.5s;
-  float: right;
+  border-radius: 3px;
+  /* float: right; */
+}
+
+.action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: -25%;
+  border-radius: 3px;
 }
 
 .action-btn button.cancel {
   background-color: #64b5f6;
   color: #1b1b1b;
-  margin-right: -50px;
+  margin-right: 5%;
   text-transform: inherit;
   transition: 0.5s;
+  border-radius: 3px;
 }
 
 .action-btn button.save:hover {
@@ -458,3 +467,26 @@ border-top: 0.5em solid transparent;
 }
 
 button:focus {outline:0;}
+
+
+.body-left {
+  display: inline-block;
+  margin-bottom: -1%;
+  margin-top: -4%;
+  font-size: 12px;
+  width: 100%;
+}
+
+.glyphicon {
+  position: relative;
+  top: 26px;
+  font-size: 14px;
+  margin-right: 35px;
+  float: right;
+  /* display: inline-block; */
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

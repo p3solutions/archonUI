@@ -10,7 +10,7 @@
         </div>
 
         <div class='body-left'>
-          <a style="z-index:1; margin-right:0px;text-decoration: none" class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <span style="z-index:1; margin-right:0px;text-decoration: none" class="glyphicon glyphicon-search inner-addon right-addon search-icon"></span>
           <input type="text" style="width: 89%;" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
             (keyup)="searchTablelist()" placeholder="Search Table">
         </div>
@@ -316,9 +316,9 @@
                           <div class="panel-body dataA-panel-body-r" id="panel-1">
                               <div class="col-md-4 dataA-scrollable-div-A">
                                   <div class="col-md-12 plr-0">
-                                      <h5 style="font-weight: bold;">Primary Table Columns</h5>
+                                      <h4 style="font-weight: bold;">Primary Table Columns</h4>
                                     </div>
-                                  <div class="col-md-12 plr-0"
+                                  <div class="col-md-12 plr-0" style="margin-top: 12px;"
                                   *ngFor="let x of finalPrimColArray">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
                                       {{x.columnName}}
@@ -327,9 +327,9 @@
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
                                 <div class="col-md-12 plr-0">
-                                    <h5 style="font-weight: bold;">Secondary Tables</h5>
+                                    <h4 style="font-weight: bold;">Secondary Tables</h4>
                                   </div>
-                                <div class="col-md-12 plr-0"
+                                <div class="col-md-12 plr-0" style="margin-top: 12px;"
                                 *ngFor="let x of finalSecondaryTableList; let i = index" (click)="finalSecCol(x,i)">
                                 <div [class.selected]="i == selectedRow" class="col-md-12 cur-p trim-text ana-br da-table" id="list-br" title="{{x.tableName}}">                                  
                                     {{x.tableName}}
@@ -339,9 +339,9 @@
                               </div>
                               <div class="col-md-4 dataA-scrollable-div-A">
                                   <div class="col-md-12 plr-0">
-                                      <h5 style="font-weight: bold;">Secondary Column Names</h5>
+                                      <h4 style="font-weight: bold;">Secondary Column Names</h4>
                                     </div>
-                                  <div class="col-md-12 plr-0"
+                                  <div class="col-md-12 plr-0" style="margin-top: 12px;"
                                   *ngFor="let x of finalSecColArray">
                                   <div class="col-md-12 trim-text ana-br" id="list-br" title="{{x.columnName}}">                                  
                                       {{x.columnName}}
@@ -349,7 +349,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="action-btn" style="float: right;">
+                            <div class="action-btn" style="float: right; margin-right: -3%;">
                                 <button (click)="gotoSecTableAndColSelection($event,stepper)" class="btn cancel btn-padding matStepperPrevious">Previous</button>
                                 <button data-keyboard="false"
                                 data-backdrop="static" data-toggle="modal" href="#analyzes" (click)="dataAnalyse()" class="btn save btn-padding matStepperNext" >Analyze</button>
@@ -483,6 +483,7 @@
         </div>
       </div>
     </div>
+    </div>
 
     <button style="display: none"  id="dataanalyze" (click)="openDataAModal()">Data Analyzer</button>
     <button style="display: none"  id="directjoin" (click)="adddirectjoin()" >Direct
@@ -490,3 +491,22 @@
     <button style="display: none"  id="spv" (click)="openStoredProcView($event)">SP/View Join</button>
     <button style="display: none"  id="exxml" (click)="exportxml()">XML</button>
     <button style="display: none"  id="exjson" (click)="exportjson()">JSON</button>
+
+
+<button style="display: none" type="button" id="editsuccess" data-toggle="modal" data-target="#editsuccesstarget">Open Modal</button>
+<div class="modal fade" id="editsuccesstarget" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+    <div class="modal-dialog"  style="width: 480px;">
+      <div class="modal-content">
+          <div class="success-popup-header-cls">
+              <h4 class="popup-title-cls">
+                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 15px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 15px;">Success</div></h4>
+            </div>
+            <div class="modal-body">
+                <p class="popup-paragraph-cls"> Relationship updated successfully </p>
+              </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="closeScreen(); closeErrorMsg(); resetselectedValues()">OK</button>      
+        </div>
+      </div>
+    </div>
+  </div>
