@@ -76,7 +76,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <div *ngIf="!secondaryColumns"><span [ngClass]="{'archon-loading-icon' : true}" id="loading-icon"></span></div>
+  <!-- <div *ngIf="!secondaryColumns"><span [ngClass]="{'archon-loading-icon' : true}" id="loading-icon"></span></div> -->
   <mat-paginator [length]="columnlength" [pageSize]= "8" [pageSizeOptions]="[8, 10, 20]" showFirstLastButtons></mat-paginator>
   <!-- <mat-paginator [pageSize]="5" [length]="columnlength" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
 </div>
@@ -97,11 +97,11 @@ height: 45px;">
   </div>      
   <div class="col-md-5">       
       <div class="action-btn" style="float: right">
-          <button class="mat-raised-button cancel btn-padding" (click)="closeScreen(); closeErrorMsg(); resetselectedValues()" data-dismiss="modal">Close</button>
+          <button class="btn cancel btn-padding" (click)="closeScreen(); closeErrorMsg(); resetselectedValues()" data-dismiss="modal">Close</button>
 <!--    
       <button type="button" (click)="autocolumnMatchMode()" class="btn btn-primary">Automatch Column</button> 
       -->
-      <button class="save mat-raised-button btn-padding" [disabled]="enableAdd" (click)="addJoins();">Add Joins</button>                
+      <button type="button" [disabled]="joinbtn" class="btn  {{joinbtn? 'save-disabled': 'save'}} btn-padding" (click)="addJoins();">Add Joins</button>                
       </div>       
   </div>
 </div>

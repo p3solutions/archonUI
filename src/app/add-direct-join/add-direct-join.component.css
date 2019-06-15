@@ -385,7 +385,16 @@ input[type='checkbox'] {
   text-transform: inherit;
   margin-right: -25%;
   transition: 0.5s;
+  border-radius: 3px;
   /* float: right; */
+}
+
+.action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: -25%;
+  border-radius: 3px;
 }
 
 .action-btn button.cancel {
@@ -394,6 +403,7 @@ input[type='checkbox'] {
   margin-right: 5%;
   text-transform: inherit;
   transition: 0.5s;
+  border-radius: 3px;
 }
 
 .action-btn button.save:hover {

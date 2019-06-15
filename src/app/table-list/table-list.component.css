@@ -380,14 +380,14 @@ input[type='checkbox'] {
   width: 25%;
   text-align: left;
   /* margin-left: 10px; */
-  font-size: 18px;
+  font-size: 16px;
   padding-left: 6%;
 }
 
 .def-width {
   width: 19%;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   padding-left: 22px;
   font-weight: bold;
 }
@@ -395,7 +395,7 @@ input[type='checkbox'] {
 .conf-width {
   width: 18%;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   padding-left: 12px;
   padding-right: 0px;
 }
@@ -403,7 +403,7 @@ input[type='checkbox'] {
 .join-width {
   width: 26%;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   padding-left: 0px;
   margin-left: -4px;
 }

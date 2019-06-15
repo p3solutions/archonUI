@@ -43,6 +43,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   enableAdd = false;
+  joinbtn = true;
 
   constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService, private router: Router) { }
 
@@ -100,6 +101,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryTable, index, secondaryTableName) {
+    this.joinbtn = false;
     let secObject = {
       columnId: '',
       columnName: '',
@@ -140,6 +142,10 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       this.joinListTemp.push(temp);
     }
   this.enableAdd = this.checkDuplicateInObject(this.joinListTemp);
+  if (this.enableAdd === true) {
+    this.joinbtn = true;
+  }
+
   }
 
   checkDuplicateInObject(values) {
