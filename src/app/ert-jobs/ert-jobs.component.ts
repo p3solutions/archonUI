@@ -4,6 +4,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { UserinfoService } from '../userinfo.service';
 import { ERTJobs, ErtJobParams, ExtractDataConfigInfo, IngestionDataConfig } from '../ert-landing-page/ert';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ert-jobs',
@@ -23,7 +24,7 @@ export class ErtJobsComponent implements OnInit {
   instanceId: any;
   ertJobslist: boolean;
 
-  constructor(public ertService: ErtService, private userInfoService: UserinfoService,
+  constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
 
   ngOnInit() {
@@ -36,23 +37,30 @@ export class ErtJobsComponent implements OnInit {
   }
   getErtJobList() {
     const userId = this.userInfoService.getUserId();
+    this.spinner.hide();
+    this.spinner.show();
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
-      this.ertJobs = result;
-      if (this.ertJobs.length === 0) {
-        this.ertJobslist = true;
-      }
-      for (const item of this.ertJobs) {
-        if (item.jobStatus === 'READY' || item.jobStatus === 'COMPLETED' || item.jobStatus === 'FAILED') {
-          item.madeDisable = false;
-        } else {
-          item.madeDisable = true;
+      try {
+        this.ertJobs = result;
+        if (this.ertJobs.length === 0) {
+          this.ertJobslist = true;
         }
-        if (item.jobStatus.trim().toUpperCase() === 'IN_PROGRESS' || item.jobStatus.trim().toUpperCase() === 'SCHEDULED') {
-          item.madeEditDisable = true;
-        } else {
-          item.madeEditDisable = false;
+        for (const item of this.ertJobs) {
+          if (item.jobStatus === 'READY' || item.jobStatus === 'COMPLETED' || item.jobStatus === 'FAILED') {
+            item.madeDisable = false;
+          } else {
+            item.madeDisable = true;
+          }
+          if (item.jobStatus.trim().toUpperCase() === 'IN_PROGRESS' || item.jobStatus.trim().toUpperCase() === 'SCHEDULED') {
+            item.madeEditDisable = true;
+          } else {
+            item.madeEditDisable = false;
+          }
         }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
       }
     });
   }

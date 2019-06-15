@@ -1496,7 +1496,7 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 }
 
 .stop {
-  color: #FD3000; 
+  color: #FD3000;
 }
 
 
@@ -1895,7 +1895,6 @@ button.secondary-btn-color:hover {
 
 button.primary-btn-color-disabled:hover {
   color: #ffffff;
-
 }
 
 button.secondary-btn-color-disabled:hover {
@@ -1921,13 +1920,13 @@ button.secondary-btn-color-disabled:hover {
 
 .table-list-item-cls {
   min-height: 22px;
-  margin: 9px;
+  margin: 6px;
   border-radius: 4px;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
-  padding: 10px 10px;
+  padding: 6px 6px;
   cursor: pointer;
   opacity: 0.8;
   border-radius: 3px;
@@ -1962,13 +1961,13 @@ a.required-color {
 }
 
 /* end-encypted field,and required icon in adhoc  */
-/* ends- common btn css */ 
-
+/* ends- common btn css */
 /* start-popup msg color */
 
 .modal-dialog {
   margin: 65px auto auto;
 }
+
 .modal-body {
   position: relative;
   padding: 15px;
@@ -2070,7 +2069,7 @@ button.btn-info-popup-primary-color:hover {
   transform: scale(1.1, 1.1);
 }
 
-button.btn-secondary-popup{
+button.btn-secondary-popup {
   margin-right: 5px;
   background-color: #dedede;
   color: #313131;
@@ -2089,6 +2088,7 @@ button.btn-secondary-popup:hover {
   display: inline-block;
   vertical-align: middle;
 }
+
 .popup-title-cls {
   margin-top: 12px;
 }
@@ -2096,7 +2096,7 @@ button.btn-secondary-popup:hover {
 .popup-title-cls .popup-material-icon-cls {
   vertical-align: middle;
   color: #ffffff;
-  font-size: 22px!important;
+  font-size: 22px !important;
   margin-right: 5px
 }
 
@@ -2108,7 +2108,7 @@ button.btn-secondary-popup:hover {
   cursor: default !important;
 }
 
-.popup-paragraph-cls{
+.popup-paragraph-cls {
   text-align: left;
   font-size: 14px;
   font-weight: normal;
@@ -2119,10 +2119,26 @@ button.btn-secondary-popup:hover {
   margin-bottom: 25px;
 }
 
-.modal-body-width{
-  width:480px;
+.modal-body-width {
+  width: 480px;
 }
 
+.pop-title-ert {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+button.ert-secondary-btn-color {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+button.ert-secondary-btn-color:hover {
+  transform: scale(1.1, 1.1);
+}
 .archon-loading-icon-new:before {
   content: "\F110";
   font: normal normal normal 34px/1 FontAwesome;

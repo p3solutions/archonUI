@@ -4,6 +4,7 @@ import { IngestionDataConfig, ExtractDataConfigInfo } from '../ert-landing-page/
 import { ErtService } from '../ert-landing-page/ert.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { Title } from '@angular/platform-browser';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ert-extract-digest',
@@ -13,14 +14,13 @@ import { Title } from '@angular/platform-browser';
 export class ErtExtractDigestComponent implements OnInit {
   ingestionDataConfigObj: IngestionDataConfig = new IngestionDataConfig();
   isDisabledSaveBtn = false;
-  constructor(public router: Router, private commonUtilityService: CommonUtilityService,
+  constructor(public router: Router, private commonUtilityService: CommonUtilityService, private spinner: NgxSpinnerService,
     private ertService: ErtService, public activatedRoute: ActivatedRoute) { }
   ertJobId = '';
   disableIngestData = true;
   from = '';
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
   ngOnInit() {
-    console.log(this.ertService.selectedList.filter(a => a.isSelected === true));
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
     if (this.from === 'data-record' || this.from === 'SIP') {
       this.isDisabledSaveBtn = true;
@@ -53,17 +53,23 @@ export class ErtExtractDigestComponent implements OnInit {
   }
 
   getExtractAndIngestInfo() {
+    this.spinner.show();
     this.ertService.getExtractConfig(this.ertJobId).subscribe(result => {
-      this.extractDataConfigInfo = result.extractDataConfig;
-      const b = document.getElementById('extract-checkbox') as HTMLInputElement;
-      b.checked = true;
-      if (result.ingestionDataConfig !== null) {
-        const a = document.getElementById('ingest-checkbox') as HTMLInputElement;
-        a.checked = true;
-        this.ingestionDataConfigObj = result.ingestionDataConfig;
-        this.disableIngestData = false;
+      try {
+        this.spinner.hide();
+        this.extractDataConfigInfo = result.extractDataConfig;
+        const b = document.getElementById('extract-checkbox') as HTMLInputElement;
+        b.checked = true;
+        if (result.ingestionDataConfig !== null) {
+          const a = document.getElementById('ingest-checkbox') as HTMLInputElement;
+          a.checked = true;
+          this.ingestionDataConfigObj = result.ingestionDataConfig;
+          this.disableIngestData = false;
+        }
+        this.isDisabledSaveBtn = false;
+      } catch {
+        this.spinner.hide();
       }
-      this.isDisabledSaveBtn = false;
     });
   }
 
@@ -115,7 +121,7 @@ export class ErtExtractDigestComponent implements OnInit {
       }
     } else
       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-        this.router.navigate([url + '/', this.ertJobId]);
+        this.router.navigate([url + '/', this.ertJobId], { queryParams: { from: this.from } });
       } else {
         this.router.navigate([url]);
       }
@@ -142,7 +148,7 @@ export class ErtExtractDigestComponent implements OnInit {
   }
   space(event) {
     if (event.which === 32) {
-    return false;
+      return false;
     }
   }
 

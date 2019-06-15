@@ -9,6 +9,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { ManageMasterMetadataService } from '../manage-master-metadata/manage-master-metadata.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 describe('ErtLandingPageComponent', () => {
   let component: ErtLandingPageComponent;
@@ -17,8 +18,9 @@ describe('ErtLandingPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ErtLandingPageComponent],
-      imports: [FormsModule, RouterTestingModule, HttpClientModule],
-      providers: [UserinfoService, WorkspaceHeaderService, ManageMasterMetadataService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      imports: [FormsModule, RouterTestingModule, HttpClientModule, NgxSpinnerModule],
+      providers: [UserinfoService, WorkspaceHeaderService, NgxSpinnerService,
+        ManageMasterMetadataService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

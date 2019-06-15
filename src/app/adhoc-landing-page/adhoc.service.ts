@@ -25,6 +25,7 @@ export class AdhocService {
   getScreenInfoUrl = this.apiUrl + 'adhocbuilder/application/screen?screenId=';
   tableListUrl = this.apiUrl + 'metalyzer/tablesList?workspaceId=';
   getIAVersionsUrl = this.apiUrl + 'adhocbuilder/ia-versions';
+  getTableColumnRelationListUrl = this.apiUrl + 'adhocbuilder/tableColumnList';
 
   constructor(
     private http: HttpClient,
@@ -60,6 +61,13 @@ export class AdhocService {
   getTableColumnList(param): Observable<SelectedTables[]> {
     return this.http.get<SelectedTables[]>(this.getTableColumnListUrl +
       param.mmrVersion + '&workspaceId=' + param.workspaceId, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractDataForTableColumnList),
+        catchError(this.handleError('getTableColumnList', []))
+      );
+  }
+
+  getTableColumnRelationList(param): Observable<SelectedTables[]> {
+    return this.http.post<SelectedTables[]>(this.getTableColumnRelationListUrl, param, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractDataForTableColumnList),
         catchError(this.handleError('getTableColumnList', []))
       );
