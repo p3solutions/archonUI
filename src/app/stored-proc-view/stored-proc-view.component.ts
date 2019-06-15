@@ -15,21 +15,12 @@ import { TableListService } from '../table-list/table-list.service';
 })
 export class StoredProcViewComponent implements OnInit {
   tableName: string;
-  spvRelatedTableList: { tableId: string, tableName: string, pColumn: string, sColumn: string, dataType: string }[] = [];
-  spvTableNameList: { isTableChecked: boolean, tableName: string, isBorderSet: boolean, tableId: string }[] = [];
-  spvInfoListTwo: { isSPVChecked: boolean, type: string, name: string, isBorderSet: boolean }[] = [];
-  spvInfoList: SpvNameList = new SpvNameList();
   tableNameAndRelatingTableObj: TableNameAndRelatingTable = new TableNameAndRelatingTable();
   spvTableId = '';
   spvName = '';
   spvType = '';
   disableSubmitBtn = true;
   primaryTableId = '';
-  selectedSPVJoinList: { type: string, name: string, relatingTableList: SelectedTableNameListObj[] }[] = [];
-  selectedRelatingTableNameList: { tableId: string, tableName: string, }[] = [];
-  selectedSPVName: { type: string, name: string };
-  tempSPVObj: { isSPVChecked: boolean, type: string, name: string, isBorderSet: boolean }
-    = { isSPVChecked: false, type: '', name: '', isBorderSet: false };
   workspaceid = '';
   updateNotif: boolean;
   updateSuccess: boolean;
@@ -66,29 +57,25 @@ export class StoredProcViewComponent implements OnInit {
           this.isSPVAvailable = false;
         }
       }
-      console.log(this.SpvInfoList);
     });
   }
 
 
   getTableNameList(name: string) {
     this.spvName = name;
-    const tempRelatedList = this.SpvInfoList.filter(a => a.name === name)[0].relatingTableList;
+    const tempRelatedList1 = this.SpvInfoList.filter(a => a.name === name)[0].relatingTableList;
     // Request for relatingTable
-    if (tempRelatedList.length === 0) {
+    if (tempRelatedList1.length === 0) {
       this.storedProcViewService.getRelatingTableNameList(this.workspaceid, this.tableName, name).subscribe((result) => {
         this.tableNameAndRelatingTableObj = result;
         let tableName: string;
-        this.spvTableNameList = [];
-        this.spvRelatedTableList = [];
-        this.spvTableId = '';
         let relatedObj = new RelatingTableList();
+        const tempRelatedList = this.SpvInfoList.filter(a => a.name === result.spvInfo.name)[0].relatingTableList;
         for (const item of this.tableNameAndRelatingTableObj.spvInfo.relatingTableList) {
           relatedObj = new RelatingTableList();
           relatedObj.tableId = item.tableId;
           relatedObj.tableName = item.tableName;
           tableName = item.tableName;
-          console.log(item);
           tempRelatedList.push(relatedObj);
           for (const joinItem of item.joinInfoList) {
             relatedObj.spvRelatedTableList.push({
@@ -100,22 +87,6 @@ export class StoredProcViewComponent implements OnInit {
         }
       });
     }
-    console.log(this.SpvInfoList);
-  }
-
-  checkSelectedTables(name) {
-    const selectedTable: { tableId: string, tableName: string }[] = [];
-    if (this.selectedSPVJoinList.length > 0) {
-      const filterTemp = this.selectedSPVJoinList.filter(a => a.name === name)[0];
-      if (filterTemp !== undefined) {
-        const relatedTemp = filterTemp.relatingTableList;
-        for (let item = 0; item < relatedTemp.length; item++) {
-          this.spvTableNameList.filter(i => i.tableId === relatedTemp[item].tableId)[0].isTableChecked = true;
-          selectedTable.push({ tableId: relatedTemp[item].tableId, tableName: relatedTemp[item].tableName });
-        }
-      }
-    }
-    this.selectedRelatingTableNameList = selectedTable;
   }
 
   selectSPVName(spvName: string, evt) {
@@ -124,12 +95,11 @@ export class StoredProcViewComponent implements OnInit {
       this.SpvInfoList.filter(a => a.name === spvName)[0].isSelected = true;
     } else {
       this.SpvInfoList.filter(a => a.name === spvName)[0].isSelected = false;
+      this.SpvInfoList.filter(a => a.name === spvName)[0].relatingTableList.forEach(b => b.isSelected = false);
     }
     this.getTableNameList(spvName);
     this.enableSubmitBtn();
-    console.log('1');
     evt.stopPropagation();
-    console.log('1');
   }
 
   showSPVRelatedTableName(param) {
@@ -144,6 +114,7 @@ export class StoredProcViewComponent implements OnInit {
       spvNameObj.isSelected = true;
       spvNameObj.relatingTableList.filter(a => a.tableId === tableId)[0].isSelected = true;
     } else {
+      spvNameObj.relatingTableList.filter(a => a.tableId === tableId)[0].isSelected = false;
       const length = spvNameObj.relatingTableList.filter(a => a.isSelected === true).length;
       if (length === 0) {
         spvNameObj.isSelected = false;
@@ -166,43 +137,23 @@ export class StoredProcViewComponent implements OnInit {
   }
 
   enableSubmitBtn() {
-    if (this.selectedSPVJoinList.length > 0) {
-      for (const item of this.selectedSPVJoinList) {
-        if (item.relatingTableList.length === 0) {
-          const index = this.selectedSPVJoinList.findIndex(a => a.name === item.name);
-          if (index !== -1) {
-            this.selectedSPVJoinList.splice(index, 1);
-          }
-        }
-      }
-      if (this.selectedSPVJoinList.length > 0) {
-        this.disableSubmitBtn = false;
-      } else {
-        this.disableSubmitBtn = true;
-      }
-    } else {
-      this.disableSubmitBtn = true;
-    }
-  }
-
-  getRelatingTableList() {
-    if (this.spvTableId !== '') {
-      return this.spvRelatedTableList.filter(a => a.tableId === this.spvTableId);
-    } else {
-      return [];
-    }
+    this.disableSubmitBtn = this.SpvInfoList.filter(a => a.isSelected === true).length === 0 ? true : false;
   }
 
   addSPVJoin() {
     this.updateNotif = false;
     this.updateSuccess = false;
+    this.SpvInfoList = this.SpvInfoList.filter(a => a.isSelected === true);
+    for (const spv of this.SpvInfoList) {
+      spv.relatingTableList = spv.relatingTableList.filter(a => a.isSelected === true);
+    }
     const paramObj = {
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
       'primaryTable': {
         'tableId': this.primaryTableId,
         'tableName': this.tableName,
       },
-      'spvInfoList': this.selectedSPVJoinList
+      'spvInfoList': this.SpvInfoList
     };
     this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
       if (res && res.errorDetails.length === 0) {
