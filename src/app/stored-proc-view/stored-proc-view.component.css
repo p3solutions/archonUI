@@ -101,7 +101,7 @@ div.sticky-new {
 
 .first-div {
     display: block;
-    width: 66%;
+    width: 60%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: pre;
@@ -123,7 +123,7 @@ div.sticky-new {
 
 .second-div {
     margin-top: -18px;
-    margin-left: 165px;
+    margin-left: 75%;
     width: 24%;
     overflow: hidden;
     text-align: left;
@@ -240,8 +240,9 @@ table.responsive-table tr>td, table.responsive-table th {
 .icon-div {
     width: 5%;
     float: right;
-    margin-top: -16px;
+    margin-top: -14px;
     color: cornflowerblue;
+    font-size: 9px;
 }
 
 .well {
