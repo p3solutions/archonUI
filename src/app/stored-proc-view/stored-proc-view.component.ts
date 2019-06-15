@@ -7,6 +7,7 @@ import { ConstantPool, isNgTemplate } from '@angular/compiler';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-stored-proc-view',
@@ -36,56 +37,70 @@ export class StoredProcViewComponent implements OnInit {
   selectedTable = '';
   SpvInfoList: SpvInfo[] = [];
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
-    private storedProcViewService: StoredProcViewService, private router: Router, private tablelistService: TableListService) {
+    private storedProcViewService: StoredProcViewService,
+    private spinner: NgxSpinnerService,
+    private router: Router, private tablelistService: TableListService) {
   }
 
   ngOnInit() {
-    this.tableName = this.storedProcViewService.tableName;
-    this.workspaceid = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.storedProcViewService.getSPVNameList(this.workspaceid, this.tableName).subscribe((result) => {
-      if (result.tableId !== null || result.spvInfoList !== null) {
-        this.primaryTableId = result.tableId;
-        let tempObj = new SpvInfo();
-        for (const spvItem of result.spvInfoList) {
-          tempObj = new SpvInfo();
-          tempObj.name = spvItem.name;
-          tempObj.type = spvItem.type;
-          this.SpvInfoList.push(tempObj);
+    this.spinner.show();
+    try {
+      this.tableName = this.storedProcViewService.tableName;
+      this.workspaceid = this.workspaceHeaderService.getSelectedWorkspaceId();
+      this.storedProcViewService.getSPVNameList(this.workspaceid, this.tableName).subscribe((result) => {
+        if (result.tableId !== null || result.spvInfoList !== null) {
+          this.primaryTableId = result.tableId;
+          let tempObj = new SpvInfo();
+          for (const spvItem of result.spvInfoList) {
+            tempObj = new SpvInfo();
+            tempObj.name = spvItem.name;
+            tempObj.type = spvItem.type;
+            this.SpvInfoList.push(tempObj);
+          }
+          this.isSPVAvailable = true;
+          if (this.SpvInfoList.length === 0) {
+            this.isSPVAvailable = false;
+          }
         }
-        this.isSPVAvailable = true;
-        if (this.SpvInfoList.length === 0) {
-          this.isSPVAvailable = false;
-        }
-      }
-    });
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
 
   getTableNameList(name: string) {
-    this.spvName = name;
-    const tempRelatedList1 = this.SpvInfoList.filter(a => a.name === name)[0].relatingTableList;
-    // Request for relatingTable
-    if (tempRelatedList1.length === 0) {
-      this.storedProcViewService.getRelatingTableNameList(this.workspaceid, this.tableName, name).subscribe((result) => {
-        this.tableNameAndRelatingTableObj = result;
-        let tableName: string;
-        let relatedObj = new RelatingTableList();
-        const tempRelatedList = this.SpvInfoList.filter(a => a.name === result.spvInfo.name)[0].relatingTableList;
-        for (const item of this.tableNameAndRelatingTableObj.spvInfo.relatingTableList) {
-          relatedObj = new RelatingTableList();
-          relatedObj.tableId = item.tableId;
-          relatedObj.tableName = item.tableName;
-          tableName = item.tableName;
-          tempRelatedList.push(relatedObj);
-          for (const joinItem of item.joinInfoList) {
-            relatedObj.spvRelatedTableList.push({
-              tableId: item.tableId,
-              tableName: tableName, pColumn: joinItem.primaryColumn.columnName,
-              sColumn: joinItem.secondaryColumn.columnName, dataType: joinItem.primaryColumn.dataType
-            });
+    this.spinner.show();
+    try {
+      this.spvName = name;
+      const tempRelatedList1 = this.SpvInfoList.filter(a => a.name === name)[0].relatingTableList;
+      // Request for relatingTable
+      if (tempRelatedList1.length === 0) {
+        this.storedProcViewService.getRelatingTableNameList(this.workspaceid, this.tableName, name).subscribe((result) => {
+          this.tableNameAndRelatingTableObj = result;
+          let tableName: string;
+          let relatedObj = new RelatingTableList();
+          const tempRelatedList = this.SpvInfoList.filter(a => a.name === result.spvInfo.name)[0].relatingTableList;
+          for (const item of this.tableNameAndRelatingTableObj.spvInfo.relatingTableList) {
+            relatedObj = new RelatingTableList();
+            relatedObj.tableId = item.tableId;
+            relatedObj.tableName = item.tableName;
+            tableName = item.tableName;
+            tempRelatedList.push(relatedObj);
+            for (const joinItem of item.joinInfoList) {
+              relatedObj.spvRelatedTableList.push({
+                tableId: item.tableId,
+                tableName: tableName, pColumn: joinItem.primaryColumn.columnName,
+                sColumn: joinItem.secondaryColumn.columnName, dataType: joinItem.primaryColumn.dataType
+              });
+            }
           }
-        }
-      });
+          this.spinner.hide();
+        });
+      }
+    } catch {
+      this.spinner.hide();
     }
   }
 

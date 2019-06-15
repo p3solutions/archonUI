@@ -325,7 +325,15 @@ table.responsive-table tr>td, table.responsive-table th {
     text-transform: inherit;
     margin-right: 10px;
     transition: 0.5s;
-    border-radius: 4px;
+    border-radius: 3px;
+  }
+
+  .action-btn button.save-disabled {
+    background-color: #2879ff;
+    color: #ffffff;
+    text-transform: inherit;
+    margin-right: 10px;
+    border-radius: 3px;
   }
   
   .action-btn button.cancel {
@@ -334,7 +342,7 @@ table.responsive-table tr>td, table.responsive-table th {
     margin-right: 5px;
     text-transform: inherit;
     transition: 0.5s;
-    border-radius: 4px;
+    border-radius: 3px;
   }
   
   .action-btn button.save:hover {

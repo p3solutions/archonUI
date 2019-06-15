@@ -864,12 +864,33 @@ a:hover {
   display: inline-block;
 }
 
+button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 2px;
+  transition: 0.5s;
+  border-radius: 3px;
+}
+
+button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
 .action-btn button.save {
   background-color: #2879ff;
   color: #ffffff;
   text-transform: inherit;
   margin-right: 10px;
   transition: 0.5s;
+  border-radius: 3px;
+}
+.action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 10px;
   border-radius: 3px;
 }
 

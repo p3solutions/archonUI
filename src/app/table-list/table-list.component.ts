@@ -256,18 +256,24 @@ export class TableListComponent implements OnInit {
       this.secColArray = [];
       // this.secColLoader = true;
     }
-    this.tablelistService.getColumnsByTableId(tableId).subscribe((columns) => {
-      if (isPrime) {
-        this.primColArray = columns;
-        this.tempPrimColArray = columns;
-        // this.primColLoader = false;
-      } else {
-        this.secTblColMap.set(tableId, columns);
-        this.secColArray = columns;
-        // this.secColLoader = false;
-        this.selectedSecColMap.clear();
-      }
-    });
+    this.spinner.show();
+    try {
+      this.tablelistService.getColumnsByTableId(tableId).subscribe((columns) => {
+        if (isPrime) {
+          this.primColArray = columns;
+          this.tempPrimColArray = columns;
+          // this.primColLoader = false;
+        } else {
+          this.secTblColMap.set(tableId, columns);
+          this.secColArray = columns;
+          // this.secColLoader = false;
+          this.selectedSecColMap.clear();
+        }
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
   gotoBack() {

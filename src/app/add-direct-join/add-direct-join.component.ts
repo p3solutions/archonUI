@@ -108,6 +108,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       this.secondaryTableId = table.tableId;
       this.addDirectJoinService.getColumnsByTableId(this.secondaryTableId).subscribe(res => {
         this.secondaryColumns = res;
+        this.dataSource.data = this.primaryColumns;
         this.spinner.hide();
       }
       );

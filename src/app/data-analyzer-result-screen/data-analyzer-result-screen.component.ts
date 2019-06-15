@@ -297,6 +297,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     if (finalSecondaryTableListArray.length > 0) {
       this.addDirectJoinService.addNewJoin(param).subscribe(res => {
         if (res && res.data.errorDetails.length === 0) {
+          document.getElementById('datasuccessmsg').click();
           this.updateSuccess = true;
           this.resultantMap.clear();
           setTimeout(() =>
@@ -305,6 +306,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         } else {
           this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
           this.updateNotif = true;
+          document.getElementById('dataerrormsg').click();
         }
       });
     } else {
