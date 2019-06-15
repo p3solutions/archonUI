@@ -65,9 +65,9 @@
     </ng-container>
     <ng-container matColumnDef="secondaryColumns">
       <th mat-header-cell *matHeaderCellDef style="width: 35%; border-top-right-radius: 3px;"> Secondary Table Column </th>
-      <td mat-cell *matCellDef="let element; let ind=index">
+      <td mat-cell *matCellDef="let element; let ind=index; let model">
         <mat-form-field style="width: 100%;" class="test">
-          <mat-select id="testreset" [(ngModel)]="element.columnName" (ngModelChange)="selectedValues(element,ind, $event)" placeholder="Select">
+          <mat-select id="testreset" [(ngModel)]="model[ind]" (ngModelChange)="selectedValues(element,ind, $event);this.placeholder = ''" placeholder="Select">
             <mat-option value="select">Select</mat-option>
             <mat-option [value]="sec.columnName" *ngFor="let sec of secondaryColumns | secondaryColumn:element.columnDataType">{{sec.columnName}}</mat-option>
           </mat-select>
