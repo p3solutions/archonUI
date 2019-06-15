@@ -8,6 +8,13 @@ export class SelectedTableNameListObj {
     tableName = '';
 }
 
+export class SpvInfo {
+    isSelected = false;
+    type = '';
+    name = '';
+    relatingTableList: RelatingTableList[] = [];
+}
+
 export class TableNameAndRelatingTable {
     workspaceId = '';
     tableId = '';
@@ -15,16 +22,12 @@ export class TableNameAndRelatingTable {
     spvInfo: SpvInfo = new SpvInfo();
 }
 
-export class SpvInfo {
-    type = '';
-    name = '';
-    relatingTableList: RelatingTableList[] = [];
-}
-
 export class RelatingTableList {
     tableId = '';
     tableName = '';
+    isSelected = false;
     joinInfoList: JoinInfoList[] = [];
+    spvRelatedTableList: { tableId: string, tableName: string, pColumn: string, sColumn: string, dataType: string }[] = [];
 }
 
 export class JoinInfoList {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { StoredProcView, SelectedTableNameListObj, TableNameAndRelatingTable, SpvInfo, SpvNameList, ColumnList } from './stored-proc-view';
+import { StoredProcView, SelectedTableNameListObj, TableNameAndRelatingTable, SpvInfo, SpvNameList, ColumnList, RelatingTableList } from './stored-proc-view';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { stringify } from '@angular/compiler/src/util';
 import { StoredProcViewService } from './stored-proc-view.service';
@@ -42,6 +42,8 @@ export class StoredProcViewComponent implements OnInit {
   columnlength = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  selectedTable = '';
+  SpvInfoList: SpvInfo[] = [];
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
     private storedProcViewService: StoredProcViewService, private router: Router, private tablelistService: TableListService) {
   }
@@ -52,42 +54,53 @@ export class StoredProcViewComponent implements OnInit {
     this.storedProcViewService.getSPVNameList(this.workspaceid, this.tableName).subscribe((result) => {
       if (result.tableId !== null || result.spvInfoList !== null) {
         this.primaryTableId = result.tableId;
-        this.spvInfoListTwo = result.spvInfoList.map(obj => ({ isSPVChecked: false, type: obj.type, name: obj.name, isBorderSet: false }));
+        let tempObj = new SpvInfo();
+        for (const spvItem of result.spvInfoList) {
+          tempObj = new SpvInfo();
+          tempObj.name = spvItem.name;
+          tempObj.type = spvItem.type;
+          this.SpvInfoList.push(tempObj);
+        }
         this.isSPVAvailable = true;
-        if (this.spvInfoListTwo.length === 0) {
+        if (this.SpvInfoList.length === 0) {
           this.isSPVAvailable = false;
         }
       }
+      console.log(this.SpvInfoList);
     });
   }
 
 
   getTableNameList(name: string) {
-    this.spvInfoListTwo.forEach(a => a.isBorderSet = false);
-    this.tempSPVObj = this.spvInfoListTwo.filter(a => a.name === name)[0];
-    this.tempSPVObj.isBorderSet = true;
-    this.spvName = this.tempSPVObj.name;
-    this.spvType = this.tempSPVObj.type;
+    this.spvName = name;
+    const tempRelatedList = this.SpvInfoList.filter(a => a.name === name)[0].relatingTableList;
     // Request for relatingTable
-    this.storedProcViewService.getRelatingTableNameList(this.workspaceid, this.tableName, name).subscribe((result) => {
-      this.tableNameAndRelatingTableObj = result;
-      let tableName: string;
-      this.spvTableNameList = [];
-      this.spvRelatedTableList = [];
-      this.spvTableId = '';
-      for (const item of this.tableNameAndRelatingTableObj.spvInfo.relatingTableList) {
-        tableName = item.tableName;
-        this.spvTableNameList.push({ isTableChecked: false, tableName: tableName, isBorderSet: false, tableId: item.tableId });
-        for (const joinItem of item.joinInfoList) {
-          this.spvRelatedTableList.push({
-            tableId: item.tableId,
-            tableName: tableName, pColumn: joinItem.primaryColumn.columnName,
-            sColumn: joinItem.secondaryColumn.columnName, dataType: joinItem.primaryColumn.dataType
-          });
+    if (tempRelatedList.length === 0) {
+      this.storedProcViewService.getRelatingTableNameList(this.workspaceid, this.tableName, name).subscribe((result) => {
+        this.tableNameAndRelatingTableObj = result;
+        let tableName: string;
+        this.spvTableNameList = [];
+        this.spvRelatedTableList = [];
+        this.spvTableId = '';
+        let relatedObj = new RelatingTableList();
+        for (const item of this.tableNameAndRelatingTableObj.spvInfo.relatingTableList) {
+          relatedObj = new RelatingTableList();
+          relatedObj.tableId = item.tableId;
+          relatedObj.tableName = item.tableName;
+          tableName = item.tableName;
+          console.log(item);
+          tempRelatedList.push(relatedObj);
+          for (const joinItem of item.joinInfoList) {
+            relatedObj.spvRelatedTableList.push({
+              tableId: item.tableId,
+              tableName: tableName, pColumn: joinItem.primaryColumn.columnName,
+              sColumn: joinItem.secondaryColumn.columnName, dataType: joinItem.primaryColumn.dataType
+            });
+          }
         }
-      }
-      this.checkSelectedTables(name); // make checkboxes true if they are already selected for add join
-    });
+      });
+    }
+    console.log(this.SpvInfoList);
   }
 
   checkSelectedTables(name) {
@@ -105,52 +118,50 @@ export class StoredProcViewComponent implements OnInit {
     this.selectedRelatingTableNameList = selectedTable;
   }
 
-  selectSPVName(spvName: string, evt: MouseEvent) {
+  selectSPVName(spvName: string, evt) {
     this.spvName = spvName;
-    this.spvType = this.spvInfoListTwo.filter(a => a.name === spvName)[0].type;
-    this.selectedRelatingTableNameList = [];
-    if (this.spvInfoListTwo.filter(a => a.name === spvName)[0].isSPVChecked) {
-      const index = this.selectedSPVJoinList.findIndex(a => a.name === this.spvName);
-      this.spvName = '';
-      this.spvType = '';
-      if (index !== -1) {
-        this.selectedSPVJoinList.splice(index, 1);
-      }
+    if (evt.target.checked) {
+      this.SpvInfoList.filter(a => a.name === spvName)[0].isSelected = true;
+    } else {
+      this.SpvInfoList.filter(a => a.name === spvName)[0].isSelected = false;
     }
+    this.getTableNameList(spvName);
     this.enableSubmitBtn();
-    // evt.stopPropagation();
+    console.log('1');
+    evt.stopPropagation();
+    console.log('1');
   }
 
   showSPVRelatedTableName(param) {
     this.spvTableId = param.tableId;
-    this.spvTableNameList.forEach(a => a.isBorderSet = false);
-    this.spvTableNameList.filter(a => a.tableId === this.spvTableId)[0].isBorderSet = true;
+    this.showTables();
   }
 
-  selectTableNames(tableId) {
-    let tempSPVTableNameObj: { isTableChecked: boolean, tableName: string, isBorderSet: boolean, tableId: string };
-    tempSPVTableNameObj = this.spvTableNameList.filter(a => a.tableId === tableId)[0];
-    if (tempSPVTableNameObj.isTableChecked) {
-      this.selectedRelatingTableNameList.push({ tableId: tempSPVTableNameObj.tableId, tableName: tempSPVTableNameObj.tableName });
+  selectTableNames(tableId, event) {
+    this.spvTableId = tableId;
+    const spvNameObj = this.SpvInfoList.filter(a => a.name === this.spvName)[0];
+    if (event.target.checked) {
+      spvNameObj.isSelected = true;
+      spvNameObj.relatingTableList.filter(a => a.tableId === tableId)[0].isSelected = true;
     } else {
-      this.selectedRelatingTableNameList.splice(this.selectedRelatingTableNameList.findIndex(a => a.tableId === tableId), 1);
+      const length = spvNameObj.relatingTableList.filter(a => a.isSelected === true).length;
+      if (length === 0) {
+        spvNameObj.isSelected = false;
+      } else {
+        spvNameObj.isSelected = true;
+      }
     }
-    const index = this.selectedSPVJoinList.findIndex(a => a.name === this.spvName);
-    if (index !== -1) {
-      this.selectedSPVJoinList.splice(this.selectedSPVJoinList.findIndex(a => a.name === this.spvName), 1);
-    }
-    if (this.spvName !== '' && this.spvType !== '' && this.spvInfoListTwo.filter(a => a.name === this.spvName)[0].isSPVChecked) {
-      this.selectedSPVJoinList.push({ type: this.spvType, name: this.spvName, relatingTableList: this.selectedRelatingTableNameList });
-    } else {
-      this.spvTableNameList.forEach(a => a.isTableChecked = false);
-    }
+    this.showTables();
     this.enableSubmitBtn();
-    this.columnsList = this.getRelatingTableList();
+    event.stopPropagation();
+  }
+
+  showTables() {
+    this.columnsList = this.SpvInfoList.filter(a => a.name === this.spvName)[0].relatingTableList.
+      filter(b => b.tableId === this.spvTableId)[0].spvRelatedTableList;
     this.dataSource = new MatTableDataSource(this.columnsList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    console.log(this.dataSource.data);
-    console.log(this.columnsList);
     this.columnlength = this.columnsList.length;
   }
 
@@ -230,6 +241,14 @@ export class StoredProcViewComponent implements OnInit {
       $('input:checkbox:not(:checked).relation-select').click();
     } else {
       $('input:checkbox:checked.relation-select').click();
+    }
+  }
+
+  getRelatedTable() {
+    if (this.spvName !== '') {
+      return this.SpvInfoList.filter(a => a.name === this.spvName)[0].relatingTableList;
+    } else {
+      return [];
     }
   }
 }
