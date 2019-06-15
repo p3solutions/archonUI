@@ -272,12 +272,15 @@ input[type='checkbox'] {
 }
 
 .table-hight {
-  margin-top: 0px;
-  margin-left: -2px;
-  margin-bottom: 32px;
+  margin-top: 0px;  
   overflow: auto;
   overflow-y: auto;
-  height: 512px;
+  height: 441px;
+}
+.table-hight-div {
+  margin-top: 0px; 
+  margin-bottom: 32px;
+  min-height: 512px;
 }
 
 #customers {  
