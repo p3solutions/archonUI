@@ -67,7 +67,7 @@
       <th mat-header-cell *matHeaderCellDef style="width: 35%; border-top-right-radius: 3px;"> Secondary Table Column </th>
       <td mat-cell *matCellDef="let element; let ind=index">
         <mat-form-field style="width: 100%;" class="test">
-          <mat-select id="testreset" [(ngModel)]="element.columnName" (ngModelChange)="selectedValues(element,ind, $event)">
+          <mat-select id="testreset" [(ngModel)]="element.columnName" (ngModelChange)="selectedValues(element,ind, $event)" placeholder="Select">
             <mat-option value="select">Select</mat-option>
             <mat-option [value]="sec.columnName" *ngFor="let sec of secondaryColumns | secondaryColumn:element.columnDataType">{{sec.columnName}}</mat-option>
           </mat-select>
