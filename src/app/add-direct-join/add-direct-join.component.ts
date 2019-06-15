@@ -20,7 +20,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   primaryTableName: any;
   primaryTableId: any;
   primaryColumns: any[];
-  secondaryColumns: any[];
+  secondaryColumns = [];
   secondaryTableName: any;
   secondaryTableId: any;
   enableRelation: boolean;
@@ -67,6 +67,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       this.workspaceID = this.workspaceID;
       this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
         this.primaryColumns = res;
+        console.log(res);
         this.dataSource.data = this.primaryColumns;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -101,6 +102,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryTable, index, secondaryTableName) {
+    console.log(primaryTable, index, secondaryTableName);
     this.joinbtn = false;
     let secObject = {
       columnId: '',
