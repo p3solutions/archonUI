@@ -184,6 +184,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   checkedPriValues(x, _event, index) {
+    console.log(x, event, index);
     const isChecked = _event.target.checked;
     let joinListInfoArray;
     if (isChecked) {
@@ -225,6 +226,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   checkedSecValues(x, _event, index) {
+    console.log(x, event, index);
     const isChecked = _event.target.checked;
     let joinListInfoArray;
     if (isChecked) {

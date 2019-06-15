@@ -15,6 +15,9 @@
     width: 1050px;
 }
 
+.card-body {
+  min-height: 760px;
+}
 
 .card-header {
   color: #000;

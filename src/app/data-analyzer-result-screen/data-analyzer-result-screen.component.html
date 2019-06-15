@@ -101,9 +101,9 @@
                                     </ng-container>
                                     <ng-container matColumnDef="checked">
                                       <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
-                                      <td mat-cell *matCellDef="let element">
-                                        <mat-checkbox [disabled]="element.matchPercentage == 0"
-                                        (change)="checkedSecValues(x,$event,i)"></mat-checkbox>
+                                      <td mat-cell *matCellDef="let element;let i =index;">
+                                          <input type="checkbox" class="m-r" [disabled]="element.matchPercentage == 0"
+                                          (change)="checkedPriValues(element,$event,i)">
                                       </td>
                                     </ng-container>
                                     
@@ -167,7 +167,7 @@
                           </div> -->
                           <div class="col-md-9" style="width: 73%">
                               <div class="first-div-n">Data Analysis Result</div>
-                              <div class="mat-elevation-z8" style="width:105%">
+                              <div class="mat-elevation-z2" style="width:105%">
                               <table mat-table [dataSource]="dataSource"  style="width:100%">
                                   <ng-container matColumnDef="primaryColumn" >
                                     <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-left-radius: 3px;"> Primary Column </th>
@@ -187,9 +187,9 @@
                                     </ng-container>
                                     <ng-container matColumnDef="checked">
                                       <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
-                                      <td mat-cell *matCellDef="let element">
-                                        <mat-checkbox [disabled]="element.matchPercentage == 0"
-                                        (change)="checkedSecValues(x,$event,i)"></mat-checkbox>
+                                      <td mat-cell *matCellDef="let element; let i = index">
+                                        <input type="checkbox" [disabled]="element.matchPercentage == 0"
+                                        (change)="checkedSecValues(element,$event,i)">
                                       </td>
                                     </ng-container>
                                     
