@@ -217,9 +217,9 @@
         </div>
         <div class="col-md-5" *ngIf="isSPVAvailable">
           <div class="action-btn">
-            <button class="btn mat-raised-button cancel btn-padding" (click)="closeScreen();closeErrorMsg()"
+            <button class="btn cancel btn-padding" (click)="closeScreen();closeErrorMsg()"
               data-dismiss="modal">Close</button>
-            <button class="btn save btn-padding" [disabled]="disableSubmitBtn" (click)="addSPVJoin();">Add Join</button>
+            <button class="btn {{disableSubmitBtn? 'save-disabled': 'save'}} btn-padding" [disabled]="disableSubmitBtn" (click)="addSPVJoin();">Add Join</button>
           </div>
         </div>
       </div>

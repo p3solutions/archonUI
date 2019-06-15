@@ -5,6 +5,7 @@ import { TableListService } from '../table-list/table-list.service';
 import { SecondaryColumnPipe } from '../secondary-column.pipe';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -45,7 +46,9 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   enableAdd = false;
   joinbtn = true;
 
-  constructor(private addDirectJoinService: AddDirectJoinService, private tablelistService: TableListService, private router: Router) { }
+  constructor(private addDirectJoinService: AddDirectJoinService,
+    private spinner: NgxSpinnerService,
+     private tablelistService: TableListService, private router: Router) { }
 
   ngOnInit() {
     this.workspaceID = this.addDirectJoinService.workspaceID;
@@ -61,19 +64,25 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   populateValues() {
-    if (this.directJoin !== undefined) {
-      this.primaryTableName = this.directJoin.tableName;
-      this.primaryTableId = this.directJoin.tableId;
-      this.workspaceID = this.workspaceID;
-      this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
-        this.primaryColumns = res;
-        console.log(res);
-        this.dataSource.data = this.primaryColumns;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.columnlength = this.primaryColumns.length;
+    this.spinner.show();
+    try {
+      if (this.directJoin !== undefined) {
+        this.primaryTableName = this.directJoin.tableName;
+        this.primaryTableId = this.directJoin.tableId;
+        this.workspaceID = this.workspaceID;
+        this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
+          this.primaryColumns = res;
+          console.log(res);
+          this.dataSource.data = this.primaryColumns;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.columnlength = this.primaryColumns.length;
+          this.spinner.hide();
+        }
+        );
       }
-      );
+    } catch {
+      this.spinner.hide();
     }
   }
 
@@ -90,15 +99,21 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     }
   }
   secTable(_event, table) {
-    this.joinListTemp = [];
-    this.toggleTblSelection(_event);
-    this.enableRelation = true;
-    this.secondaryTableName = table.tableName;
-    this.secondaryTableId = table.tableId;
-    this.addDirectJoinService.getColumnsByTableId(this.secondaryTableId).subscribe(res => {
-      this.secondaryColumns = res;
+    this.spinner.show();
+    try {
+      this.joinListTemp = [];
+      this.toggleTblSelection(_event);
+      this.enableRelation = true;
+      this.secondaryTableName = table.tableName;
+      this.secondaryTableId = table.tableId;
+      this.addDirectJoinService.getColumnsByTableId(this.secondaryTableId).subscribe(res => {
+        this.secondaryColumns = res;
+        this.spinner.hide();
+      }
+      );
+    } catch {
+      this.spinner.hide();
     }
-    );
   }
 
   selectedValues(primaryTable, index, secondaryTableName) {

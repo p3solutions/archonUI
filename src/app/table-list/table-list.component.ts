@@ -15,6 +15,7 @@ import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.serv
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
 import { MatStepper, MatStepHeader } from '@angular/material';
 import { StoredProcViewComponent } from '../stored-proc-view/stored-proc-view.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-table-list',
@@ -111,6 +112,7 @@ export class TableListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private addDirectJoinService: AddDirectJoinService,
+    private spinner: NgxSpinnerService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
   ) {
@@ -153,21 +155,27 @@ export class TableListComponent implements OnInit {
   }
 
   getTableList() {
-    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-      this.tableList = res.tableList;
-      if (this.tableList.length === 0) {
-        this.isTablelistAvailable = true;
-        this.tablelistService.selectDropdown(false);
-      } else {
-        this.tablelistService.selectDropdown(true);
-      }
-      this.isAvailable = true;
-      if (res.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-      }
-    });
+    this.spinner.show();
+    try {
+      this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+      this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
+      this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+        this.tableList = res.tableList;
+        if (this.tableList.length === 0) {
+          this.isTablelistAvailable = true;
+          this.tablelistService.selectDropdown(false);
+        } else {
+          this.tablelistService.selectDropdown(true);
+        }
+        this.isAvailable = true;
+        if (res.paginationRequired) {
+          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+        }
+        this.spinner.hide();
+          });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
   getPage(page: number) {
@@ -189,22 +197,28 @@ export class TableListComponent implements OnInit {
   }
 
   loadRelationTable(table: any) {
-    this.defaultModel = false;
-    this.tableCopy = table;
-    this.homeStage = true;
-    this.dataAModal = false;
-    this.selectedPrimTblID = table.tableId;
-    this.selectedPrimTbl = table.tableName;
-    this.resetDataAModal();
-    this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
-      this.relationshipInfo = result;
-      this.isRelationShipAvailable = true;
-      if (this.relationshipInfo.length === 0) {
-        this.isRelationShipAvailable = false;
-      }
-    });
-    this.serviceActionType = this.tablelistService.getServiceActionType();
-  }
+    this.spinner.show();
+    try {
+      this.defaultModel = false;
+      this.tableCopy = table;
+      this.homeStage = true;
+      this.dataAModal = false;
+      this.selectedPrimTblID = table.tableId;
+      this.selectedPrimTbl = table.tableName;
+      this.resetDataAModal();
+      this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
+        this.relationshipInfo = result;
+        this.isRelationShipAvailable = true;
+        if (this.relationshipInfo.length === 0) {
+          this.isRelationShipAvailable = false;
+        }
+        this.spinner.hide();
+      });
+      this.serviceActionType = this.tablelistService.getServiceActionType();
+    } catch {
+      this.spinner.hide();
+    }
+   }
 
   openDataAModal() {
     this.stepperIndex = 0;
