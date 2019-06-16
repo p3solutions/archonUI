@@ -4,9 +4,8 @@ import { AddDirectJoinService } from './add-direct-join.service';
 import { TableListService } from '../table-list/table-list.service';
 import { SecondaryColumnPipe } from '../secondary-column.pipe';
 import { Router } from '@angular/router';
-import { MatTableDataSource, MatSort, MatPaginator, MatSelect } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { FormGroup, FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -46,15 +45,10 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   enableAdd = false;
   joinbtn = true;
-  aForm: FormGroup;
 
   constructor(private addDirectJoinService: AddDirectJoinService,
     private spinner: NgxSpinnerService,
-     private tablelistService: TableListService, private router: Router, private fb: FormBuilder) {
-      this.aForm = this.fb.group({
-        selectForm : [null]
-      });
-     }
+     private tablelistService: TableListService, private router: Router) { }
 
   ngOnInit() {
     this.workspaceID = this.addDirectJoinService.workspaceID;
@@ -78,6 +72,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
         this.workspaceID = this.workspaceID;
         this.addDirectJoinService.getColumnsByTableId(this.primaryTableId).subscribe(res => {
           this.primaryColumns = res;
+          console.log(res);
           this.dataSource.data = this.primaryColumns;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -114,7 +109,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       this.addDirectJoinService.getColumnsByTableId(this.secondaryTableId).subscribe(res => {
         this.secondaryColumns = res;
         this.dataSource.data = this.primaryColumns;
-        this.aForm.setValue({selectForm: 'select'});
         this.spinner.hide();
       }
       );
@@ -124,6 +118,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryTable, index, secondaryTableName) {
+    console.log(primaryTable, index, secondaryTableName);
     this.joinbtn = false;
     let secObject = {
       columnId: '',
@@ -161,7 +156,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
         }
       }
     }
-    if (insert === 0 && secondaryTableName !== 'select' && secondaryTableName !== undefined) {
+    if (insert === 0) {
       this.joinListTemp.push(temp);
     }
   this.enableAdd = this.checkDuplicateInObject(this.joinListTemp);
