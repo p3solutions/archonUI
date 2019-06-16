@@ -7,7 +7,7 @@ import { MetalyzerHeaderService } from './metalyzer-header.service';
 
 export class MetalyzerDataSource implements DataSource<any> {
 
-    totalScreen = 0;
+    totalScreen = 50;
     private metalyzerSubject = new BehaviorSubject<any>([]);
     searchArray = [];
     indexValue;

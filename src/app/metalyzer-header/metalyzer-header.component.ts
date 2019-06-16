@@ -81,13 +81,12 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   datasourceHasValue() {
     let isScreenPresent;
     this.dataSource.connect().subscribe(result => {
-      console.log(result);
+      if (result.length === 0) {
+        isScreenPresent = true;
+      } else {
+        isScreenPresent = false;
+      }
     });
-    if (this.dataSource.totalScreen === 0) {
-      isScreenPresent = true;
-    } else {
-      isScreenPresent = false;
-    }
     return isScreenPresent;
   }
 
