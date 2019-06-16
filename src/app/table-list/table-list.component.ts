@@ -102,6 +102,9 @@ export class TableListComponent implements OnInit {
   primaryPage = 1;
   spview = false;
   stepperIndex = 0;
+  sectableList: string[];
+  schemaResultssecTableCount: number;
+  secstartIndex = 1;
 
   constructor(
     private tablelistService: TableListService,
@@ -161,6 +164,7 @@ export class TableListComponent implements OnInit {
       this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
       this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
         this.tableList = res.tableList;
+        this.sectableList = res.tableList;
         if (this.tableList.length === 0) {
           this.isTablelistAvailable = true;
           this.tablelistService.selectDropdown(false);
@@ -169,6 +173,7 @@ export class TableListComponent implements OnInit {
         }
         this.isAvailable = true;
         if (res.paginationRequired) {
+          this.schemaResultssecTableCount = (this.startIndex + 1) * 50;
           this.schemaResultsTableCount = (this.startIndex + 1) * 50;
         }
         this.spinner.hide();
@@ -185,6 +190,17 @@ export class TableListComponent implements OnInit {
       this.tableList = res.tableList;
       if (res.paginationRequired) {
         this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      }
+    });
+  }
+
+  getsecPage(page: number) {
+    this.sectableList = [];
+    this.secstartIndex = page;
+    this.tablelistService.getTableList(this.workspaceID, this.secstartIndex).subscribe((res: any) => {
+      this.secTblArray = res.tableList;
+      if (res.paginationRequired) {
+        this.schemaResultssecTableCount = (this.secstartIndex + 1) * 50;
       }
     });
   }
@@ -400,7 +416,7 @@ export class TableListComponent implements OnInit {
   // generating secondary table array
   generateSecTblArray() {
     if (this.secTblArray.length === 0) {
-      for (const i of this.tableList) {
+      for (const i of this.sectableList) {
         if (i !== this.selectedPrimTbl) {
           this.secTblArray.push(i);
         }
