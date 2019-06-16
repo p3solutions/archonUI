@@ -68,7 +68,7 @@
         <h4 class="modal-title text-left">Metalyzer Audit</h4>
       </div>
       <div class="modal-body">
-        <div class="mat-elevation-z4 mat-container">
+        <div class="{{datasourceHasValue()?'example-table-container-no-record':'mat-container'}} mat-elevation-z4">
           <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="modifiedBy">
               <th style="text-align: left;" mat-header-cell *matHeaderCellDef> Modified By </th>
@@ -94,7 +94,8 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
-        <mat-paginator id="screen-table" [length]="dataSource.totalScreen" [pageSize]="50">
+        <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Records found.</div>
+        <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}" id="screen-table" [length]="dataSource.totalScreen" [pageSize]="50">
           </mat-paginator>
           
       </div>

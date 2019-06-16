@@ -7,7 +7,7 @@ import { MetalyzerHeaderService } from './metalyzer-header.service';
 
 export class MetalyzerDataSource implements DataSource<any> {
 
-    totalScreen = 50;
+    totalScreen = 0;
     private metalyzerSubject = new BehaviorSubject<any>([]);
     searchArray = [];
     indexValue;
@@ -34,10 +34,9 @@ export class MetalyzerDataSource implements DataSource<any> {
         result.model.forEach((value, index) => {
               value.position = index + 1;
         });
-        console.log(result);
         if (result.paginationRequired) {
           this.totalScreen = (this.indexValue + 1) * 50;
-        }
+        } 
         this.metalyzerSubject.next(result.model);
       });
     }

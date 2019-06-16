@@ -234,3 +234,22 @@ table{
 ::ng-deep #screen-table svg {
   height: 6vh !important;
 }
+
+.mat-paginator-shadow {
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0px rgba(0, 0, 0, 0), 0 12px 9px 2px rgba(0, 0, 0, .12) !important;
+  margin: 0px !important;
+}
+
+.example-table-container-no-record {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.no-record-found {
+  background: white;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    height: 53px;
+    padding: 14px;
+}
