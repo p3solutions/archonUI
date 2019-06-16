@@ -45,6 +45,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   enableAdd = false;
   joinbtn = true;
+  model: any = {};
 
   constructor(private addDirectJoinService: AddDirectJoinService,
     private spinner: NgxSpinnerService,
@@ -74,7 +75,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
           this.primaryColumns = res;
           console.log(res);
           this.dataSource.data = this.primaryColumns;
-          this.dataSource.paginator = this.paginator;
+          setTimeout(() => this.dataSource.paginator = this.paginator);
           this.dataSource.sort = this.sort;
           this.columnlength = this.primaryColumns.length;
           this.spinner.hide();
@@ -102,6 +103,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.spinner.show();
     try {
       this.joinListTemp = [];
+      this.model = {};
       this.toggleTblSelection(_event);
       this.enableRelation = true;
       this.secondaryTableName = table.tableName;
@@ -109,6 +111,9 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       this.addDirectJoinService.getColumnsByTableId(this.secondaryTableId).subscribe(res => {
         this.secondaryColumns = res;
         this.dataSource.data = this.primaryColumns;
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.dataSource.sort = this.sort;
+        this.columnlength = this.primaryColumns.length;
         this.spinner.hide();
       }
       );
