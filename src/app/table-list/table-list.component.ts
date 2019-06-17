@@ -746,7 +746,7 @@ export class TableListComponent implements OnInit {
     this.relationShipIDs = [];
   }
   postDelete() {
-    const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
+    const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal #dismissmodel');
     close.click();
     this.loadRelationTable(this.tableCopy);
   }
