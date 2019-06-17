@@ -1,0 +1,3 @@
+::ng-deep .my-spinner .overlay {
+    position: fixed !important;
+  }
