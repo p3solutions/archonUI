@@ -218,7 +218,7 @@ export class AdhocTableSelectionComponent implements OnInit {
               color: '#ffffff',
               enableClick: false,
               id: 'NoRelation',
-              name: '',
+              name: value.tableName,
               visible: true,
               };
             this.createchart();
@@ -230,7 +230,7 @@ export class AdhocTableSelectionComponent implements OnInit {
               color: '#ffffff',
               enableClick: false,
               id: 'NoRelation',
-              name: '',
+              name: value.tableName,
               visible: true,
             };
             this.createchart();

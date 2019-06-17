@@ -53,6 +53,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   toggleBoolean = false;
   selectedRow: any;
   selectedIndex = 0;
+  pricheckvalueMap = new Map();
+  seccheckvalueMap = new Map();
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -86,6 +88,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       this.value[1].children[1].classList.add('finished-step');
       this.value[2].children[1].classList.add('finished-step');
       this.value[3].children[1].classList.add('active-step');
+      this.value[3].children[2].classList.add('active-text-color');
       const a = document.getElementsByClassName('mat-horizontal-stepper-header');
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       a[1].classList.add('mat-auth-psedu');
@@ -183,9 +186,11 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   checkedPriValues(x, _event, index) {
+    console.log(x, event, index);
     const isChecked = _event.target.checked;
     let joinListInfoArray;
     if (isChecked) {
+      this.pricheckvalueMap.set(index, x.secondaryColumnName);
       const secColumn = {
         'columnId': x.secondaryColumnId,
         'columnName': x.secondaryColumnName,
@@ -213,6 +218,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       };
       joinListInfoArray.push(Obj);
     } else {
+      this.pricheckvalueMap.delete(index);
       joinListInfoArray = this.resultantMap.get(x.tableName);
       for (const i of joinListInfoArray) {
         if (i.indexData === index) {
@@ -224,9 +230,11 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   checkedSecValues(x, _event, index) {
+    console.log(x, event, index);
     const isChecked = _event.target.checked;
     let joinListInfoArray;
     if (isChecked) {
+      this.seccheckvalueMap.set(index, x.secondaryColumnName);
       const secColumn = {
         'columnId': x.secondaryColumnId,
         'columnName': x.secondaryColumnName,
@@ -254,6 +262,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       };
       joinListInfoArray.push(Obj);
     } else {
+      this.seccheckvalueMap.delete(index);
       joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
       for (const i of joinListInfoArray) {
         if (i.indexData === index) {
@@ -294,6 +303,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     if (finalSecondaryTableListArray.length > 0) {
       this.addDirectJoinService.addNewJoin(param).subscribe(res => {
         if (res && res.data.errorDetails.length === 0) {
+          document.getElementById('datasuccessmsg').click();
           this.updateSuccess = true;
           this.resultantMap.clear();
           setTimeout(() =>
@@ -302,6 +312,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         } else {
           this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
           this.updateNotif = true;
+          document.getElementById('dataerrormsg').click();
         }
       });
     } else {

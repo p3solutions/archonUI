@@ -2,7 +2,7 @@ input:focus,
 select:focus,
 textarea:focus,
 button:focus {
-    outline: none;
+  outline: none;
 }
 
 #table-list {
@@ -110,7 +110,7 @@ h4 {
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  max-height:50vh;
+  max-height: 50vh;
 }
 
 .card {
@@ -128,7 +128,7 @@ h4 {
   /* height: 625px; */
 }
 
-#analysis-view{
+#analysis-view {
   overflow: auto;
   display: flex;
   flex-wrap: wrap;
@@ -137,7 +137,7 @@ h4 {
   flex-flow: row wrap;
 }
 
-.expansion-outer{
+.expansion-outer {
   margin-top: 12px;
 }
 
@@ -200,22 +200,23 @@ h4 {
   margin-left: -50px;
 }
 
-.inpt-sty{
+.inpt-sty {
   border-bottom: 1px solid;
   border-top: none;
   border-left: none;
   border-right: none;
 }
 
-.selected-sty{
+.selected-sty {
   background: aliceblue;
-  margin-top: 11px;
-  padding-top: 6px;
-  padding-bottom: 4px;
-  padding-left: 19px;
+  margin-top: 14px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  color: #0c0c0c;
 }
 
-.paging{
+.paging {
   margin-left: 94px;
   margin-bottom: 20px;
   margin-top: 10px;
@@ -223,35 +224,36 @@ h4 {
 
 .dataA-panel-body {
   /* height: 430px; */
-  margin-left: 75px;
+  /* margin-left: 75px; */
   /* margin-right: 50px; */
 }
+
 .dataA-panel-body-r {
   margin-left: 0px;
 }
 
-#panel-r{
+#panel-r {
   height: 438px;
 }
 
-#panel-0{
+#panel-0 {
   height: 190px;
   margin-bottom: 5px;
   padding-left: 0px;
   padding-right: 0px;
 }
 
-.selected-sty1{
+.selected-sty1 {
   padding: 7px;
   background-color: aliceblue;
 }
 
-.selected-sty2{
+.selected-sty2 {
   padding: 7px;
   background-color: aliceblue;
 }
 
-#panel-1{
+#panel-1 {
   height: 385px;
 }
 
@@ -347,7 +349,7 @@ input[type='checkbox'] {
   margin-top: 12px;
 }
 
-.container-tab{
+.container-tab {
   margin-left: 22px;
   margin-right: 22px;
 }
@@ -378,14 +380,14 @@ input[type='checkbox'] {
   width: 25%;
   text-align: left;
   /* margin-left: 10px; */
-  font-size: 14px;
+  font-size: 16px;
   padding-left: 6%;
 }
 
 .def-width {
   width: 19%;
   text-align: left;
-  font-size: 14px;
+  font-size: 16px;
   padding-left: 22px;
   font-weight: bold;
 }
@@ -393,7 +395,7 @@ input[type='checkbox'] {
 .conf-width {
   width: 18%;
   text-align: left;
-  font-size: 14px;
+  font-size: 16px;
   padding-left: 12px;
   padding-right: 0px;
 }
@@ -401,7 +403,7 @@ input[type='checkbox'] {
 .join-width {
   width: 26%;
   text-align: left;
-  font-size: 14px;
+  font-size: 16px;
   padding-left: 0px;
   margin-left: -4px;
 }
@@ -476,7 +478,7 @@ input[type='checkbox'] {
   float: left;
 }
 
-#da-arrow{
+#da-arrow {
   margin-left: 11px;
   margin-right: 13px;
 }
@@ -606,10 +608,12 @@ a:hover {
   margin-bottom: 10px;
   margin-top: 10px;
 }
+
 ::ng-deep #analysis-view .mat-expansion-panel-spacing .mat-expansion-panel-header {
   /* margin-top: -9px; */
   padding-bottom: 9px;
 }
+
 ::ng-deep #analysis-view .mat-expanded .mat-expansion-indicator {
   margin-top: 10px;
 }
@@ -640,11 +644,11 @@ a:hover {
   background-color: #64b5f6;
   padding: 8px;
   border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 .card-title {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .arch-button {
@@ -669,7 +673,7 @@ a:hover {
   padding-top: 4px;
 }
 
-.btn-primary{
+.btn-primary {
   background-color: #2879ff;
   transition: 0.5s;
 }
@@ -701,12 +705,12 @@ a:hover {
   cursor: pointer;
 }
 
-.title-header{
+.title-header {
   font-size: 18px;
 }
 
 
-.container-da{
+.container-da {
   margin: 0px 70px
 }
 
@@ -714,7 +718,7 @@ a:hover {
   padding: 10px;
 }
 
-.plr-0{
+.plr-0 {
   padding-left: 0px;
   padding-right: 0px
 }
@@ -736,11 +740,11 @@ a:hover {
   background-color: #e4eef7;
 }
 
-.exp-content-outer.border-top-line{
+.exp-content-outer.border-top-line {
   background-color: #f3f3f3;
 }
 
-::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header-container{
+::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header-container {
   width: 100% !important;
   padding-top: 15px !important;
   padding-bottom: 15px !important;
@@ -773,95 +777,120 @@ a:hover {
   color: #ffffff !important;
 }
 
-::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
-  background-color:  #2879ff !important
+::ng-deep .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  background-color: #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-k-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
- [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
-  background-color:  #2879ff !important
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color: #2879ff !important
 }
 
-::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
-  background-color:  #2879ff !important
-}
-
-::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
-[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  background-color:  #2879ff !important
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line {
+  background-color: #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
-[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  background-color:  #2879ff !important
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color: #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
-  background-color:  #2879ff !important
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color: #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu-before.mat-horizontal-stepper-header:not(:first-child)::before, [dir=rtl]
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  background-color:  #2879ff !important
+::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  background-color: #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
-  background-color:  #2879ff !important
+::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu-before.mat-horizontal-stepper-header:not(:first-child)::before,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color: #2879ff !important
 }
 
-::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
-  border-top-width:2px !important;
+::ng-deep .mat-stepper-label-position-bottom .mat-analyze-psedu.mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  background-color: #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
- [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
-  border-top-width:2px !important ;
-}
-
-::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
-  border-top-width:2px !important;
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  border-top-width: 2px !important;
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
-[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  border-top-width:2px !important;
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  border-top-width: 2px !important;
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl]
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
-  border-top-width:2px !important;
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line {
+  border-top-width: 2px !important;
 }
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  border-top-width: 2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  border-top-width: 2px !important;
+}
+
 .model-title {
   float: left;
-  display:inline-block;
+  display: inline-block;
   font-size: 20px;
   padding: -1px 15px 10px 15px;
   text-align: left;
   color: #ffffff;
   cursor: none;
 }
+
 .modal-header {
   padding: 10px;
   padding-left: 15px;
   background-color: #2879ff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
- }
- .info-r {
+}
+
+.info-r {
   font-size: 18px;
   padding-left: 10px;
-  display:inline-block;
+  display: inline-block;
 }
+
+button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 2px;
+  transition: 0.5s;
+  border-radius: 3px;
+}
+
+button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
 .action-btn button.save {
   background-color: #2879ff;
   color: #ffffff;
   text-transform: inherit;
   margin-right: 10px;
   transition: 0.5s;
+  border-radius: 3px;
+}
+.action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 10px;
   border-radius: 3px;
 }
 
@@ -885,13 +914,15 @@ a:hover {
 
 
 pagination-controls::ng-deep ul.ngx-pagination {
-  float: right
+  float: right;
+  padding-right: 4%;
 }
 
 .expand {
   margin-right: 20px;
   margin-top: 20px;
 }
+
 .progress-bar-success {
   background-color: #64b5f6 !important;
 }
@@ -905,23 +936,26 @@ pagination-controls::ng-deep ul.ngx-pagination {
   overflow: hidden;
   background-color: #aad1f0;
   border-radius: 2px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 }
+
 .progress-back {
   height: 40px;
-  color:  #2879ff;
+  color: #2879ff;
   line-height: 40px;
-    margin-top: 10PX;
-    margin-left: -30px;
-    margin-right: -30px;
-    width: auto;
-    background-color: #edf3f8;
-    border-radius: 2px;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+  margin-top: 10PX;
+  margin-left: -30px;
+  margin-right: -30px;
+  width: auto;
+  background-color: #edf3f8;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 }
+
 .msg {
   margin-top: 10px;
 }
+
 .line {
   border-top: 1px solid #ddd !important;
   margin-top: -7px;
@@ -929,10 +963,13 @@ pagination-controls::ng-deep ul.ngx-pagination {
 }
 
 .m-r-0 {
-margin-right: 0px !important;
+  margin-right: 0px !important;
 }
 
+::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header-container .active-text-color {
+  color: rgba(0, 0, 0, .87) !important;
+}
 
-
-
-
+::ng-deep .mat-step-data-analyzer .mat-horizontal-stepper-header-container .inactive-text-color {
+  color: rgba(0, 0, 0, .54) !important;
+}

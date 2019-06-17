@@ -7,7 +7,7 @@
   }
   
   .card-title {
-    font-size: 14px;
+    font-size: 16px;
     float: left;
   }
   .back-arrowr {
@@ -101,7 +101,7 @@ div.sticky-new {
 
 .first-div {
     display: block;
-    width: 66%;
+    width: 60%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: pre;
@@ -123,7 +123,7 @@ div.sticky-new {
 
 .second-div {
     margin-top: -18px;
-    margin-left: 165px;
+    margin-left: 75%;
     width: 24%;
     overflow: hidden;
     text-align: left;
@@ -240,8 +240,9 @@ table.responsive-table tr>td, table.responsive-table th {
 .icon-div {
     width: 5%;
     float: right;
-    margin-top: -16px;
+    margin-top: -14px;
     color: cornflowerblue;
+    font-size: 9px;
 }
 
 .well {
@@ -324,7 +325,15 @@ table.responsive-table tr>td, table.responsive-table th {
     text-transform: inherit;
     margin-right: 10px;
     transition: 0.5s;
-    border-radius: 4px;
+    border-radius: 3px;
+  }
+
+  .action-btn button.save-disabled {
+    background-color: #2879ff;
+    color: #ffffff;
+    text-transform: inherit;
+    margin-right: 10px;
+    border-radius: 3px;
   }
   
   .action-btn button.cancel {
@@ -333,7 +342,7 @@ table.responsive-table tr>td, table.responsive-table th {
     margin-right: 5px;
     text-transform: inherit;
     transition: 0.5s;
-    border-radius: 4px;
+    border-radius: 3px;
   }
   
   .action-btn button.save:hover {

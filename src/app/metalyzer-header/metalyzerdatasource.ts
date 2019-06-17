@@ -4,6 +4,7 @@ import {MatSort, Sort} from '@angular/material/sort';
 import {_isNumberValue} from '@angular/cdk/coercion';
 import { map } from 'rxjs/operators';
 import { MetalyzerHeaderService } from './metalyzer-header.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export class MetalyzerDataSource implements DataSource<any> {
 
@@ -13,7 +14,8 @@ export class MetalyzerDataSource implements DataSource<any> {
     indexValue;
     paginationRequired = false;
 
-    constructor(private metalyzerHeaderService: MetalyzerHeaderService) { 
+    constructor(private metalyzerHeaderService: MetalyzerHeaderService,
+      private spinner: NgxSpinnerService) {
     }
 
     connect(): Observable<any> {
@@ -25,20 +27,25 @@ export class MetalyzerDataSource implements DataSource<any> {
     }
 
     getAudit(workspaceID, userid, startIndex) {
-      this.indexValue = startIndex;
-      const param = {
-        'workspaceId': workspaceID,
-        'userId': userid
-      };
-      this.metalyzerHeaderService.getAudit(param, startIndex).subscribe(result => {
-        result.model.forEach((value, index) => {
-              value.position = index + 1;
+      this.spinner.show();
+      try {
+        this.indexValue = startIndex;
+        const param = {
+          'workspaceId': workspaceID,
+          'userId': userid
+        };
+        this.metalyzerHeaderService.getAudit(param, startIndex).subscribe(result => { 
+          result.model.forEach((value, index) => {
+                value.position = index + 1;
+          });
+          if (result.isPaginationRequired) {
+            this.totalScreen = (this.indexValue + 1) * 50;
+          }
+          this.metalyzerSubject.next(result.model);
+          this.spinner.hide();
         });
-        console.log(result);
-        if (result.paginationRequired) {
-          this.totalScreen = (this.indexValue + 1) * 50;
-        }
-        this.metalyzerSubject.next(result.model);
-      });
-    }
+      } catch {
+        this.spinner.hide();
+      }
+}
 }
