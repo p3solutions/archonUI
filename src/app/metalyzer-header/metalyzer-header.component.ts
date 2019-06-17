@@ -4,7 +4,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { MetalyzerHeaderService } from './metalyzer-header.service';
 import { TableListService } from '../table-list/table-list.service';
 import { UserinfoService } from '../userinfo.service';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MetalyzerDataSource } from './metalyzerdatasource';
@@ -36,6 +36,7 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   schemaResultsTableCount = 0;
   disable = true;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   dataSource: MetalyzerDataSource;
 
   constructor(
@@ -71,6 +72,9 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+console.log('hi');
+
     merge(this.paginator.page)
       .pipe(
         tap(() => this.loadPage())
@@ -100,7 +104,9 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.userid = this.userInfoService.getUserId();
     this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService);
-    this.dataSource.getAudit(this.workspaceID, this.userid,this.paginator.pageIndex + 1);
+    this.dataSource.getAudit(this.workspaceID, this.userid, this.paginator.pageIndex + 1);
+    console.log(this.paginator.pageIndex + 1, 'page');
+    
     }
 
 

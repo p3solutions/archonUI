@@ -13,7 +13,7 @@ p {
 }
 
 .modal-dialog {
-  margin: 100px auto auto;
+  margin: 65px auto auto;
   width: 1050px;
 }
 
@@ -228,7 +228,7 @@ table{
 }
 
 #screen-table {
-  margin: 2px -15px 2px 40px;
+  margin: -4px -14px -15px 0px;
 }
 
 ::ng-deep #screen-table svg {

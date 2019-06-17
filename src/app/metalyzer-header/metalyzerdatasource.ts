@@ -26,17 +26,21 @@ export class MetalyzerDataSource implements DataSource<any> {
 
     getAudit(workspaceID, userid, startIndex) {
       this.indexValue = startIndex;
+      console.log(startIndex, 'index');
+      
       const param = {
         'workspaceId': workspaceID,
         'userId': userid
       };
       this.metalyzerHeaderService.getAudit(param, startIndex).subscribe(result => {
+        console.log(result, 'resu');
+        
         result.model.forEach((value, index) => {
               value.position = index + 1;
         });
-        if (result.paginationRequired) {
+        if (result.isPaginationRequired) {
           this.totalScreen = (this.indexValue + 1) * 50;
-        } 
+        }
         this.metalyzerSubject.next(result.model);
       });
     }
