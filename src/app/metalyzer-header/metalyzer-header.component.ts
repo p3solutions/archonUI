@@ -8,6 +8,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MetalyzerDataSource } from './metalyzerdatasource';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-metalyzer-header',
@@ -43,7 +44,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService,
-    private userInfoService: UserinfoService
+    private userInfoService: UserinfoService,
+    private spinner: NgxSpinnerService
   ) {
   }
 
@@ -93,7 +95,7 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   loadPage() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.userid = this.userInfoService.getUserId();
-      this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService);
+      this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService, this.spinner);
     this.dataSource.getAudit(this.workspaceID, this.userid, this.matpaginator.pageIndex + 1);
   }
 
