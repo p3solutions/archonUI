@@ -99,16 +99,6 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.dataSource.getAudit(this.workspaceID, this.userid, this.matpaginator.pageIndex + 1);
   }
 
-  // getStart() {
-  //   this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-  //   this.userid = this.userInfoService.getUserId();
-  //   this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService);
-  //   this.dataSource.getAudit(this.workspaceID, this.userid, this.paginator.pageIndex + 1);
-  //   console.log(this.paginator.pageIndex + 1, 'page');
-    
-  //   }
-
-
   downloadFile(content, fileType) {
     const fileName = this.wsName + '-metadata.xml';
     const type = fileType || 'xml';
