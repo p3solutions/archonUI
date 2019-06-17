@@ -330,6 +330,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   closeScreen() {
     this.addDirectJoinService.clearSession(this.jobId).subscribe();
     this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+    this.tablelistService.dataAnalyzerReset = true;
     this.tablelistService.changeBooleanValue(true);
   }
 
