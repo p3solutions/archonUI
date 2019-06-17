@@ -53,6 +53,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   toggleBoolean = false;
   selectedRow: any;
   selectedIndex = 0;
+  pricheckvalueMap = new Map();
+  seccheckvalueMap = new Map();
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -188,6 +190,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     const isChecked = _event.target.checked;
     let joinListInfoArray;
     if (isChecked) {
+      this.pricheckvalueMap.set(index, x.secondaryColumnName);
       const secColumn = {
         'columnId': x.secondaryColumnId,
         'columnName': x.secondaryColumnName,
@@ -215,6 +218,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       };
       joinListInfoArray.push(Obj);
     } else {
+      this.pricheckvalueMap.delete(index);
       joinListInfoArray = this.resultantMap.get(x.tableName);
       for (const i of joinListInfoArray) {
         if (i.indexData === index) {
@@ -230,6 +234,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     const isChecked = _event.target.checked;
     let joinListInfoArray;
     if (isChecked) {
+      this.seccheckvalueMap.set(index, x.secondaryColumnName);
       const secColumn = {
         'columnId': x.secondaryColumnId,
         'columnName': x.secondaryColumnName,
@@ -257,6 +262,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       };
       joinListInfoArray.push(Obj);
     } else {
+      this.seccheckvalueMap.delete(index);
       joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
       for (const i of joinListInfoArray) {
         if (i.indexData === index) {
