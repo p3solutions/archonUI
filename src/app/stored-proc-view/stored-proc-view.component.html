@@ -86,14 +86,14 @@
     </div>
   </div> -->
 
-  
-  <div class="card-body">
-    <div class="col-md-12 card-header">
-      <div class="col-md-3">
-        <div class="card-title">Relationship Info</div>
-      </div>
-    </div>  
-    <div class="body-row">
+
+<div class="card-body">
+  <div class="col-md-12 card-header">
+    <div class="col-md-3">
+      <div class="card-title">Relationship Info</div>
+    </div>
+  </div>
+  <div class="body-row">
     <div class="col-md-12" style="margin-bottom: 12px;margin-top: 15px;">
       <div class="back-arrowr" id="da-arrow">
         <a class="arrow" (click)="closeScreen();closeErrorMsg()" mat-tooltip="Back">
@@ -101,8 +101,8 @@
         </a>
       </div>
       <div class="title-header">Stored Procedure (SP) / Views</div>
-    </div>    
- 
+    </div>
+
     <div class="container-tab">
       <div class="col-md-12 primary-table">
         <h5 class="card-title sub-headerr">Primary Table :
@@ -110,38 +110,49 @@
         </h5>
       </div>
     </div>
-    <div *ngIf="!isSPVAvailable"><h5 style="margin-top: 35%;">
+    <div *ngIf="!isSPVAvailable">
+      <h5 style="margin-top: 25%;">
         No Stored Procedures and views information available
-      </h5> </div>
-    <div *ngIf="isSPVAvailable"> 
+      </h5>
+    </div>
+    <div *ngIf="isSPVAvailable">
       <div class="column-one scroll-div border">
         <div class="sticky">
-          <div><mat-checkbox style="float:left; padding-top: 5px;" (change)="selectAll($event)" ></mat-checkbox><!--<input style="float:left" type="checkbox">--></div>
-          <div class="first-div-new">SP / View Name</div>         
+          <div>
+            <!--<mat-checkbox style="float:left; padding-top: 5px;" (change)="selectAll($event)"></mat-checkbox> --><input
+              style="float:left;margin: 7px 0 0;" type="checkbox" (change)="selectAllSp($event)"></div>
+          <div class="first-div-new">SP / View Name</div>
         </div>
-        <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvInfoListTwo"
+        <div class="{{item.name===this.spvName? 'well-with-blue well-sm':'well'}}" *ngFor="let item of SpvInfoList"
           (click)="getTableNameList(item.name)">
-          <div><mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" id="{{item}}" [checked]="item.selected" class="spvall" type="checkbox"></mat-checkbox><!--<input style="float:left" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" type="checkbox">--></div>
+          <div>
+            <!--<mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" id="{{item}}" [checked]="item.selected" class="spvall" type="checkbox"></mat-checkbox> -->
+            <input class="sp-select" style="float:left;" name="spv{{item.name}}" [(ngModel)]="item.isSelected"
+              (click)="selectSPVName(item.name,$event)" type="checkbox"></div>
           <div class="first-div">{{item.name}}</div>
           <div class="second-div">{{item.type}}</div>
-          <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div "></i></div>
+          <div *ngIf="item.name===spvName"><i class="fa fa-chevron-right icon-div "></i></div>
         </div>
       </div>
       <div class="column-two scroll-div border">
         <div class="sticky">
-          <div><mat-checkbox style="float:left; padding-top: 5px;" ></mat-checkbox></div>
-          <div class="first-div-new">Relating Tables</div>         
+          <div><input style="float:left; padding-top: 5px;margin: 7px 0 0;" type="checkbox"
+              (change)="selectAllRelation($event)"></div>
+          <div class="first-div-new">Relating Tables</div>
         </div>
-        <div [ngClass]="{'well-with-blue': item.isBorderSet,'well':!item.isBorderSet,'well-sm':true}" *ngFor="let item of spvTableNameList"
-          (click)="showSPVRelatedTableName(item)">
-          <div><mat-checkbox style="float:left; padding-top: 2px;" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)"></mat-checkbox><!--<input style="float:left" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)" type="checkbox">--></div>
+        <div class="{{item.tableId===spvTableId? 'well-with-blue well-sm':'well'}}"
+          *ngFor="let item of getRelatedTable()" (click)="showSPVRelatedTableName(item)">
+          <div>
+            <!-- <mat-checkbox style="float:left; padding-top: 2px;" [(ngModel)]="item.isTableChecked" (change)="selectTableNames(item.tableId)"></mat-checkbox> -->
+            <input class="relation-select" style="float:left;" [(ngModel)]="item.isSelected"
+              (click)="selectTableNames(item.tableId,$event)" type="checkbox"></div>
           <div class="first-div-sec-col">{{item.tableName}}</div>
-          <div [ngClass]="{'display-icon': !item.isBorderSet}"><i class="fa fa-chevron-right icon-div"></i></div>
+          <div *ngIf="item.tableId===spvTableId"><i class="fa fa-chevron-right icon-div"></i></div>
         </div>
       </div>
       <div class="column-three border">
         <div class="sticky-new">
-          <div class="first-div-new" style="margin-left: -8px;">Primary and Secondary Relative Tables</div>         
+          <div class="first-div-new" style="margin-left: -8px;">Primary and Secondary Relative Tables</div>
         </div>
 
         <!-- <div class="mat-elevation-z8">
@@ -167,10 +178,10 @@
         </div>
         <mat-paginator [length]="columnlength" [pageSize]="5" ></mat-paginator>
       </div> -->
-      <div *ngIf="columnlength != 0" class="example-table-container mat-elevation-z8" id="spv-table">
+        <div *ngIf="columnlength != 0" class="example-table-container mat-elevation-z8" id="spv-table">
           <table mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="pColumn">
-              <th style="width:35%" mat-header-cell *matHeaderCellDef mat-sort-header> Primary Column  </th>
+              <th style="width:35%" mat-header-cell *matHeaderCellDef mat-sort-header> Primary Column </th>
               <td mat-cell *matCellDef="let element; let i = index;">{{element.pColumn}}</td>
             </ng-container>
             <ng-container matColumnDef="sColumn">
@@ -184,12 +195,13 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
-          <mat-paginator [length]="columnlength" [pageSize]= "7" [pageSizeOptions]="[7, 10, 20]" showFirstLastButtons></mat-paginator>
+          <mat-paginator [length]="columnlength" [pageSize]="7" [pageSizeOptions]="[7, 10, 20]" showFirstLastButtons>
+          </mat-paginator>
         </div>
-    </div>
-    
-    <div class="modal-footer" *ngIf="isSPVAvailable">
-      <div class="col-md-7">         
+      </div>
+
+      <div class="modal-footer" *ngIf="isSPVAvailable">
+        <div class="col-md-7">
           <!-- <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
               <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -202,56 +214,63 @@
                 </button>
                 <strong>{{errorMsg}}</strong>
               </div>  -->
-            </div>
-    <div class="col-md-5" *ngIf="isSPVAvailable">
-        <div class="action-btn">
-             <button class="btn mat-raised-button cancel btn-padding" (click)="closeScreen();closeErrorMsg()" data-dismiss="modal">Close</button>
-            <button class="btn save btn-padding" [disabled]="disableSubmitBtn" (click)="addSPVJoin();">Add Join</button>
-   </div>
+        </div>
+        <div class="col-md-5" *ngIf="isSPVAvailable">
+          <div class="action-btn">
+            <button class="btn cancel btn-padding" (click)="closeScreen();closeErrorMsg()"
+              data-dismiss="modal">Close</button>
+            <button class="btn {{disableSubmitBtn? 'save-disabled': 'save'}} btn-padding" [disabled]="disableSubmitBtn" (click)="addSPVJoin();">Add Join</button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
   </div>
-</div>
 
 
-  </div>   
-  </div>
-
-  
-<button style="display: none" type="button" id="spvemsg" data-toggle="modal" data-target="#spvermsg">Open Modal</button>
-<div class="modal fade" id="spvermsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
-    <div class="modal-content">
+  <button style="display: none" type="button" id="spvemsg" data-toggle="modal" data-target="#spvermsg">Open
+    Modal</button>
+  <div class="modal fade" id="spvermsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="width: 480px;">
+      <div class="modal-content">
         <div class="error-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
-          </div>
-          <div class="modal-body">
-              <p class="popup-paragraph-cls"> {{errorMsg}} </p>
-            </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">OK</button>      
+          <h4 class="popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i>
+            <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p class="popup-paragraph-cls"> {{errorMsg}} </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">OK</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<button style="display: none" type="button" id="spvsmsg" data-toggle="modal" data-target="#spvssmsg">Open Modal</button>
-<div class="modal fade" id="spvssmsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
-    <div class="modal-content">
+  <button style="display: none" type="button" id="spvsmsg" data-toggle="modal" data-target="#spvssmsg">Open
+    Modal</button>
+  <div class="modal fade" id="spvssmsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="width: 480px;">
+      <div class="modal-content">
         <div class="success-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div></h4>
-          </div>
-          <div class="modal-body">
-              <p class="popup-paragraph-cls"> {{errorMsg}} </p>
-            </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="closeErrorMsg()">OK</button>      
+          <h4 class="popup-title-cls">
+            <i class="material-icons popup-material-icon-cls"
+              style="font-size: 22px;margin-top: 3px;">check_circle_outline</i>
+            <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p class="popup-paragraph-cls"> {{errorMsg}} </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal"
+            (click)="closeErrorMsg()">OK</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-

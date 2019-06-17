@@ -4,7 +4,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { MetalyzerHeaderService } from './metalyzer-header.service';
 import { TableListService } from '../table-list/table-list.service';
 import { UserinfoService } from '../userinfo.service';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator, MatSort } from '@angular/material';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MetalyzerDataSource } from './metalyzerdatasource';
@@ -35,7 +35,7 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   startIndex = 1;
   schemaResultsTableCount = 0;
   disable = true;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) matpaginator: MatPaginator;
   dataSource: MetalyzerDataSource;
 
   constructor(
@@ -66,30 +66,45 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.tablelistService.Dropdownlist.subscribe(data => {
       this.dropdown = data;
     });
-    this.paginator.pageIndex = 0;
-    this.getStart();
+    this.matpaginator.pageIndex = 0;
+    this.loadPage();
   }
 
   ngAfterViewInit() {
-    merge(this.paginator.page)
+    merge(this.matpaginator.page)
       .pipe(
         tap(() => this.loadPage())
       )
       .subscribe();
   }
 
+  datasourceHasValue() {
+    let isScreenPresent;
+    this.dataSource.connect().subscribe(result => {
+      if (result.length === 0) {
+        isScreenPresent = true;
+      } else {
+        isScreenPresent = false;
+      }
+    });
+    return isScreenPresent;
+  }
+
   loadPage() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.userid = this.userInfoService.getUserId();
-    this.dataSource.getAudit(this.workspaceID, this.userid, this.paginator.pageIndex + 1);
+      this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService);
+    this.dataSource.getAudit(this.workspaceID, this.userid, this.matpaginator.pageIndex + 1);
   }
 
-  getStart() {
-    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.userid = this.userInfoService.getUserId();
-    this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService);
-    this.dataSource.getAudit(this.workspaceID, this.userid,this.paginator.pageIndex + 1);
-    }
+  // getStart() {
+  //   this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+  //   this.userid = this.userInfoService.getUserId();
+  //   this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService);
+  //   this.dataSource.getAudit(this.workspaceID, this.userid, this.paginator.pageIndex + 1);
+  //   console.log(this.paginator.pageIndex + 1, 'page');
+    
+  //   }
 
 
   downloadFile(content, fileType) {

@@ -30,12 +30,11 @@ export class MetalyzerDataSource implements DataSource<any> {
         'workspaceId': workspaceID,
         'userId': userid
       };
-      this.metalyzerHeaderService.getAudit(param, startIndex).subscribe(result => {
+      this.metalyzerHeaderService.getAudit(param, startIndex).subscribe(result => { 
         result.model.forEach((value, index) => {
               value.position = index + 1;
         });
-        console.log(result);
-        if (result.paginationRequired) {
+        if (result.isPaginationRequired) {
           this.totalScreen = (this.indexValue + 1) * 50;
         }
         this.metalyzerSubject.next(result.model);

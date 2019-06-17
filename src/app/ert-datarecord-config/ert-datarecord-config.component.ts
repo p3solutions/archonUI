@@ -107,7 +107,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
               color: '#ffffff',
               enableClick: false,
               id: 'NoRelation',
-              name: '',
+              name: value.tableName,
               visible: true,
             };
             this.createchart();
