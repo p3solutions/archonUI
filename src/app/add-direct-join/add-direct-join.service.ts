@@ -16,6 +16,7 @@ export class AddDirectJoinService {
 
   private columnListUrl = this.apiUrl + 'metalyzer/table/columnList?tableId=';
   private addNewJoinUrl = this.apiUrl + 'metalyzer/relationship';
+  private addNewDaJoinUrl = this.apiUrl + 'metalyzer/dataAnalysis/relationship';
   private clearSessionUrl = this.apiUrl + 'dataAnalyzer/stateManagement/closeSession?jobId=';
 
   constructor(private http: HttpClient,
@@ -32,6 +33,11 @@ export class AddDirectJoinService {
   addNewJoin(param): Observable<any> {
     return this.http.post<any>(this.addNewJoinUrl, param, { headers: this.userinfoService.getHeaders() })
       .pipe(catchError(this.handleError('addNewJoin()', [])));
+  }
+
+  addDaNewJoin(param): Observable<any> {
+    return this.http.post<any>(this.addNewDaJoinUrl, param, { headers: this.userinfoService.getHeaders() })
+      .pipe(catchError(this.handleError('addNewDaJoin()', [])));
   }
 
   clearSession(jobId): Observable<any> {
