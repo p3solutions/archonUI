@@ -737,7 +737,7 @@ export class TableListComponent implements OnInit {
           this.postDelete();
         } else {
           this.deleteNotif.show = true;
-          this.deleteNotif.message = res.errorMessage;
+          this.deleteNotif.message = res.errors;
         }
       });
   }
