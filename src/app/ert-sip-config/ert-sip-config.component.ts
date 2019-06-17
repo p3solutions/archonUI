@@ -62,7 +62,7 @@ export class ErtSipConfigComponent implements OnInit {
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'SIP' } });
   }
   gotoJobConfiguration() {
-    this.router.navigate(['workspace/ert/ert-jobs-config']);
+    this.router.navigate(['workspace/ert-jobs-config']);
   }
 
   getPage(page: number) {

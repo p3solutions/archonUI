@@ -1,136 +1,141 @@
 <app-navbar></app-navbar>
 <div class="workspacelist-container">
-    <div class="row">
-        <div id="create-screen-header">
-          <a (click)="gotoDashboard()" data-tooltip="Back">
-            <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-          </a>
-          <h3>Schedule Monitoring<span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span> </h3>
-        </div>
-      </div>
-
-      <div class="row-group" *ngIf="loadStatus" style="padding-right: 15px;">
-          <div class="col-md-6 heading-item">
-              <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
-                  <button type="button" class="close" data-dismiss="alert" (click)="updateSuccess = false" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <strong>{{message}}</strong>
-                </div>
-                <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" (click)="updateNotif = false" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>{{message}}</strong>
-                  </div> 
-          </div>
-          <div class="col-md-2 heading-item">     
-              <mat-form-field>
-                  <mat-select msInfiniteScroll name="jop-select"
-                     placeholder="TOOL : All">
-                    <mat-option appScrollServerCall [value]="" (click)="selectTool('');getStart()">
-                        Tool : All
-                    </mat-option>
-                    <mat-option appScrollServerCall *ngFor="let job of tools" [value]="job" (click)="selectTool(job);getStart()">
-                        {{job}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>     
-          </div>
-          <div class="col-md-2 heading-item">
-              <mat-form-field>
-                  <mat-select msInfiniteScroll name="status-select" [threshold]="'0%'"
-                     placeholder="JOB STATUS : All">
-                    <mat-option appScrollServerCall [value]="" (click)="selectJobStatus('');getStart()">
-                        JOB STATUS : All
-                    </mat-option>
-                    <mat-option appScrollServerCall *ngFor="let i of Status" [value]="i" (click)="selectJobStatus(i);getStart()">
-                        {{i}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>  
-          </div>
-          <div class="col-md-2 heading-item">
-            <mat-form-field>
-                <input matInput #search placeholder="Search" (keyup)="getSearch()">
-            </mat-form-field>
-          </div>         
-        </div>
-
-<div class="row" style="padding-top: 70px;">
-  <div class="example-table-container mat-elevation-z4" id="screen-table">
-    <table mat-table matSort [dataSource]="dataSource"  matSort (matSortChange)="sortData($event)" matSortActive="jobInfo.startTime" matSortDirection="desc">
-      <ng-container matColumnDef="Job Type">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Type </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobType}}</td>
-      </ng-container>
-      <ng-container matColumnDef="Job Origin">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Origin </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.tool}}</td>
-      </ng-container>
-      <ng-container matColumnDef="User">
-        <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
-        <td style="width:8%" mat-cell *matCellDef="let element; let i = index;">{{element.user}}</td>
-      </ng-container>
-      <ng-container matColumnDef="Job Name">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
-      </ng-container>
-      <ng-container matColumnDef="Job Runs">
-        <th style="width:5%;" mat-header-cell *matHeaderCellDef mat-sort-header> Job Runs </th>
-        <td style="width:5%;" mat-cell *matCellDef="let element; let i = index;">{{element.jobRun}}</td>
-      </ng-container>     
-      <ng-container matColumnDef="Schedule Time">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Schedule Time </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.scheduledDate}}</td>
-      </ng-container>
-      <ng-container matColumnDef="Start Time">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.startTime}}</td>
-      </ng-container>
-      <ng-container matColumnDef="End Time">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.endDate}}</td>
-      </ng-container>
-      <ng-container matColumnDef="Last Run Time">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header>Last Run Time </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.lastRuntime}}</td>
-      </ng-container>
-      <ng-container matColumnDef="Next Start Time">
-        <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Next Start Time </th>
-        <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.nextStartTime}}</td>
-      </ng-container>
-      <ng-container matColumnDef="Status">
-        <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
-        <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-          <i class="material-icons success" matTooltip="Success" *ngIf="element.status === 'COMPLETED'">check_circle</i>
-          <i class="material-icons inpro" matTooltip="In_Progress" *ngIf="element.status === 'IN_PROGRESS'">sync</i>
-          <i class="material-icons failure" matTooltip="Failed" *ngIf="element.status === 'FAILED'">error</i>
-          <i class="material-icons sche" matTooltip="Scheduled" *ngIf="element.status === 'SCHEDULED'">schedule</i>
-          <i class="material-icons" style="color: grey" matTooltip="User_or_admin_stopped" *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">stop</i>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Details">
-        <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Details </th>
-        <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-          <i class="material-icons details" matTooltip="View Job Details" *ngIf="element.scheduleId !== null" (click)="openDetail(element.scheduleId)">info</i>
-          <i class="material-icons" style="color: grey" matTooltip="No Job Details" *ngIf="element.scheduleId == null">info</i>
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Stop">
-        <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
-        <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-          <i class="material-icons failure" matTooltip="Stop" *ngIf="element.status !== 'USER_OR_ADMIN_STOPPED'" (click)="stop(element.scheduleId)">stop</i>
-          <i class="material-icons" style="color: grey" matTooltip="Stopped" *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">stop</i>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+  <div class="row">
+    <div id="create-screen-header">
+      <a (click)="gotoDashboard()" data-tooltip="Back">
+        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+      </a>
+      <h3>Schedule Monitoring<span id="loading-icon" [ngClass]="{'archon-loading-icon' : !loadStatus}"></span> </h3>
+    </div>
   </div>
-  <mat-paginator id="screen-table" [length]="dataSource.totalScreen" [pageSize]="50">
-  </mat-paginator>
-</div>
+
+  <div class="row-group" *ngIf="loadStatus" style="padding-right: 15px;">
+    <div class="col-md-6 heading-item">
+      <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+        <button type="button" class="close" data-dismiss="alert" (click)="updateSuccess = false" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>{{message}}</strong>
+      </div>
+      <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
+        <button type="button" class="close" data-dismiss="alert" (click)="updateNotif = false" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>{{message}}</strong>
+      </div>
+    </div>
+    <div class="col-md-2 heading-item">
+      <mat-form-field>
+        <mat-select msInfiniteScroll name="jop-select" placeholder="TOOL : All">
+          <mat-option appScrollServerCall [value]="" (click)="selectTool('');getStart()">
+            Tool : All
+          </mat-option>
+          <mat-option appScrollServerCall *ngFor="let job of tools" [value]="job" (click)="selectTool(job);getStart()">
+            {{job}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2 heading-item">
+      <mat-form-field>
+        <mat-select msInfiniteScroll name="status-select" [threshold]="'0%'" placeholder="JOB STATUS : All">
+          <mat-option appScrollServerCall [value]="" (click)="selectJobStatus('');getStart()">
+            JOB STATUS : All
+          </mat-option>
+          <mat-option appScrollServerCall *ngFor="let i of Status" [value]="i" (click)="selectJobStatus(i);getStart()">
+            {{i}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2 heading-item">
+      <mat-form-field>
+        <input matInput #search placeholder="Search" (keyup)="getSearch()">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row" style="padding-top: 70px;">
+    <div class="example-table-container mat-elevation-z4" id="screen-table">
+      <table mat-table matSort [dataSource]="dataSource" matSort (matSortChange)="sortData($event)"
+        matSortActive="jobInfo.startTime" matSortDirection="desc">
+        <ng-container matColumnDef="Job Type">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Type </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobType}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Job Origin">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Origin </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.tool}}</td>
+        </ng-container>
+        <ng-container matColumnDef="User">
+          <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
+          <td style="width:8%" mat-cell *matCellDef="let element; let i = index;">{{element.user}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Job Name">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Job Runs">
+          <th style="width:5%;" mat-header-cell *matHeaderCellDef mat-sort-header> Job Runs </th>
+          <td style="width:5%;" mat-cell *matCellDef="let element; let i = index;">{{element.jobRun}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Schedule Time">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Schedule Time </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.scheduledDate}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Start Time">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.startTime}}</td>
+        </ng-container>
+        <ng-container matColumnDef="End Time">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.endDate}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Last Run Time">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header>Last Run Time </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.lastRuntime}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Next Start Time">
+          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Next Start Time </th>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.nextStartTime}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+          <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
+          <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+            <i class="material-icons success" matTooltip="Success"
+              *ngIf="element.status === 'COMPLETED'">check_circle</i>
+            <i class="material-icons inpro" matTooltip="In_Progress" *ngIf="element.status === 'IN_PROGRESS'">sync</i>
+            <i class="material-icons failure" matTooltip="Failed" *ngIf="element.status === 'FAILED'">error</i>
+            <i class="material-icons sche" matTooltip="Scheduled" *ngIf="element.status === 'SCHEDULED'">schedule</i>
+            <i class="material-icons" style="color: grey" matTooltip="User_or_admin_stopped"
+              *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">stop</i>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Details">
+          <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Details </th>
+          <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+            <i class="material-icons details" matTooltip="View Job Details" *ngIf="element.scheduleId !== null"
+              (click)="openDetail(element.scheduleId)">info</i>
+            <i class="material-icons" style="color: grey" matTooltip="No Job Details"
+              *ngIf="element.scheduleId == null">info</i>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Stop">
+          <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
+          <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
+            <i class="material-icons failure" matTooltip="Stop" *ngIf="element.status !== 'USER_OR_ADMIN_STOPPED'"
+              (click)="stop(element.scheduleId)">stop</i>
+            <i class="material-icons" style="color: grey" matTooltip="Stopped"
+              *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">stop</i>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator id="screen-table" [length]="dataSource.totalScreen" [pageSize]="50">
+    </mat-paginator>
+  </div>
 
 
 
@@ -152,64 +157,66 @@
 
 
 
-<!-- Modal -->
-<div id="detailsModel" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <!-- Modal -->
+  <div id="detailsModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
       <div class="modal-content" style="width: 900px;">
         <div class="info-popup-header-cls">
           <h4 class="popup-title-cls">
-            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">list</i><div class="pop-title" style="margin-left: 0px;">Job Details</div></h4>
-        </div> 
-        <div class="modal-body">
-            <div class="col-md-12 ws">           
-                <div class="col-md-6" *ngFor="let i of common">               
-                    <div class="inner-div-l">
-                      <div *ngIf="i.value !== ''" class="inner-bold-item">{{i.name}}</div>
-                      <div *ngIf="i.type !== 'Date'" class="inner-grey-item">{{i.value}}</div>
-                      <div *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'" class="inner-grey-item">{{i.value | date: 'medium'}}</div>
-                      <div *ngIf="i.type == 'Date' && i.value == 'N/A'" class="inner-grey-item">{{i.value}}</div>
-                      <div *ngIf="i.type == 'Date' && i.value == 'null'" class="inner-grey-item">{{i.value}}</div>
-                    </div>                   
-                </div>
-              </div>
-              <div *ngIf="input !== null" class="col-md-12 ws">
-                <div class="bg">Input</div>
-              </div>
-              <div *ngIf="input !== null" class="col-md-12 ws">           
-                  <div class="col-md-6" *ngFor="let i of input">               
-                      <div class="inner-div-l">
-                        <div class="inner-bold-item">{{i.name}}</div>
-                        <div class="inner-grey-item">{{i.value}}</div>
-                      </div>                   
-                  </div>
-                </div>
-                <div class="col-md-12 ws">
-                    <div class="bg">Message</div>
-                  </div>
-                  <div class="col-md-12 ws">           
-                    <div class="col-md-12">               
-                        <div class="inner-div-l">
-                          <div class="inner-bold-item">{{jobMessage?.name}}</div>
-                          <div class="inner-grey-item">{{jobMessage?.value}}</div>
-                        </div>                   
-                    </div>
-                  </div>
-                  <div  *ngIf="jobOutput !== null" class="col-md-12 ws">
-                      <div class="bg">Output</div>
-                    </div>
-                    <div  *ngIf="jobOutput !== null" class="col-md-12 ws">           
-                      <div class="col-md-12">               
-                          <div class="inner-div-l">
-                            <div class="inner-bold-item">{{jobOutput?.name}}</div>
-                            <div class="inner-grey-item">{{jobOutput?.value}}</div>
-                          </div>                   
-                      </div>
-                    </div>
-
-      </div>
-      <div class="modal-footer">        
-          <button type="button" class="btn btn-padding btn-info-popup-primary-color"
-            data-dismiss="modal">Close</button>
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">list</i>
+            <div class="pop-title" style="margin-left: 0px;">Job Details</div>
+          </h4>
         </div>
-    </div>
-  <button #click data-toggle="modal" href="#detailsModel" [hidden]="true"></button>
+        <div class="modal-body">
+          <div class="col-md-12 ws">
+            <div class="col-md-6" *ngFor="let i of common">
+              <div class="inner-div-l">
+                <div *ngIf="i.value !== ''" class="inner-bold-item">{{i.name}}</div>
+                <div *ngIf="i.type !== 'Date'" class="inner-grey-item">{{i.value}}</div>
+                <div *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'" class="inner-grey-item">
+                  {{i.value | date: 'medium'}}</div>
+                <div *ngIf="i.type == 'Date' && i.value == 'N/A'" class="inner-grey-item">{{i.value}}</div>
+                <div *ngIf="i.type == 'Date' && i.value == 'null'" class="inner-grey-item">{{i.value}}</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="input !== null" class="col-md-12 ws">
+            <div class="bg">Input</div>
+          </div>
+          <div *ngIf="input !== null" class="col-md-12 ws">
+            <div class="col-md-6" *ngFor="let i of input">
+              <div class="inner-div-l">
+                <div class="inner-bold-item">{{i.name}}</div>
+                <div class="inner-grey-item">{{i.value}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 ws">
+            <div class="bg">Message</div>
+          </div>
+          <div class="col-md-12 ws">
+            <div class="col-md-12">
+              <div class="inner-div-l">
+                <div class="inner-bold-item">{{jobMessage?.name}}</div>
+                <div [innerHTML]="jobMessage?.value" class="inner-grey-item"></div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="jobOutput !== null" class="col-md-12 ws">
+            <div class="bg">Output</div>
+          </div>
+          <div *ngIf="jobOutput !== null" class="col-md-12 ws">
+            <div class="col-md-12">
+              <div class="inner-div-l">
+                <div class="inner-bold-item">{{jobOutput?.name}}</div>
+                <div class="inner-grey-item">{{jobOutput?.value}}</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      <button #click data-toggle="modal" href="#detailsModel" [hidden]="true"></button>

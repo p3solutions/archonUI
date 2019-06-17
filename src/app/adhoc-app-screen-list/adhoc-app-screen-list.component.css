@@ -281,13 +281,13 @@ a.disabled .material-icons {
 
 .no-record-found {
   background: white;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
-    margin-right: 10px;
-    font-size: 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, .2);
-    margin-left: 10px;
-    height: 53px;
-    padding: 14px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+  margin-right: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  margin-left: 10px;
+  height: 53px;
+  padding: 14px;
 }
 
 .mat-paginator-shadow {
@@ -297,4 +297,8 @@ a.disabled .material-icons {
 .example-table-container-no-record {
   max-height: 400px;
   overflow: auto;
+}
+
+::ng-deep .my-spinner .overlay {
+  position: fixed !important;
 }

@@ -8,6 +8,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-stored-proc-view',
@@ -44,25 +45,31 @@ export class StoredProcViewComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
+    this.tableName = this.storedProcViewService.tableName;
+    this.workspaceid = this.workspaceHeaderService.getSelectedWorkspaceId();
     try {
-      this.tableName = this.storedProcViewService.tableName;
-      this.workspaceid = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.storedProcViewService.getSPVNameList(this.workspaceid, this.tableName).subscribe((result) => {
         if (result.tableId !== null || result.spvInfoList !== null) {
           this.primaryTableId = result.tableId;
           let tempObj = new SpvInfo();
-          for (const spvItem of result.spvInfoList) {
-            tempObj = new SpvInfo();
-            tempObj.name = spvItem.name;
-            tempObj.type = spvItem.type;
-            this.SpvInfoList.push(tempObj);
+          if (result.spvInfoList !== undefined) {
+            for (const spvItem of result.spvInfoList) {
+              tempObj = new SpvInfo();
+              tempObj.name = spvItem.name;
+              tempObj.type = spvItem.type;
+              this.SpvInfoList.push(tempObj);
+            }
+            this.isSPVAvailable = true;
           }
-          this.isSPVAvailable = true;
           if (this.SpvInfoList.length === 0) {
             this.isSPVAvailable = false;
           }
         }
         this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        if (err.error) {
+          this.spinner.hide();
+        }
       });
     } catch {
       this.spinner.hide();
@@ -71,12 +78,12 @@ export class StoredProcViewComponent implements OnInit {
 
 
   getTableNameList(name: string) {
-    this.spinner.show();
     try {
       this.spvName = name;
       const tempRelatedList1 = this.SpvInfoList.filter(a => a.name === name)[0].relatingTableList;
       // Request for relatingTable
       if (tempRelatedList1.length === 0) {
+        this.spinner.show();
         this.storedProcViewService.getRelatingTableNameList(this.workspaceid, this.tableName, name).subscribe((result) => {
           this.tableNameAndRelatingTableObj = result;
           let tableName: string;
@@ -156,31 +163,39 @@ export class StoredProcViewComponent implements OnInit {
   }
 
   addSPVJoin() {
-    this.updateNotif = false;
-    this.updateSuccess = false;
-    this.SpvInfoList = this.SpvInfoList.filter(a => a.isSelected === true);
-    for (const spv of this.SpvInfoList) {
-      spv.relatingTableList = spv.relatingTableList.filter(a => a.isSelected === true);
-    }
-    const paramObj = {
-      'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
-      'primaryTable': {
-        'tableId': this.primaryTableId,
-        'tableName': this.tableName,
-      },
-      'spvInfoList': this.SpvInfoList
-    };
-    this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
-      if (res && res.errorDetails.length === 0) {
-        document.getElementById('spvsmsg').click();
-        this.updateSuccess = true;
-        this.storedProcViewService.changeSPVBooleanValue(true);
-      } else {
-        document.getElementById('spvemsg').click();
-        this.errorMsg = res.errorDetails[0].errors[0].errorMessage;
-        this.updateNotif = true;
+    try {
+      this.updateNotif = false;
+      this.updateSuccess = false;
+      const SpvInfoList1 = this.SpvInfoList.filter(a => a.isSelected === true);
+      for (const spv of SpvInfoList1) {
+        spv.relatingTableList = spv.relatingTableList.filter(a => a.isSelected === true);
       }
-    });
+      const paramObj = {
+        'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
+        'primaryTable': {
+          'tableId': this.primaryTableId,
+          'tableName': this.tableName,
+        },
+        'spvInfoList': SpvInfoList1
+      };
+      this.spinner.show();
+      this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
+        if (res && res.errorDetails.length === 0) {
+          document.getElementById('spvsmsg').click();
+          this.updateSuccess = true;
+          this.storedProcViewService.changeSPVBooleanValue(true);
+          this.spinner.hide();
+        } else {
+          document.getElementById('spvemsg').click();
+          this.errorMsg = res.errorDetails[0].errors[0].errorMessage;
+          this.updateNotif = true;
+          this.spinner.hide();
+        }
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.show();
+    }
   }
 
   closeErrorMsg() {

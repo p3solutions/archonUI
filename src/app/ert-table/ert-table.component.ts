@@ -357,6 +357,9 @@ export class ErtTableComponent implements OnInit {
     if (this.tempOriginalSelectedTable.length !== 0) {
       Array.prototype.push.apply(this.selectedTableList, this.tempOriginalSelectedTable);
       this.selectedTableId = this.selectedTableList[0].tableId;
+      const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+      this.modifiedTableName = tempObj.modifiedTableName;
+      this.tableName = tempObj.tableName;
       const tableIds = this.tempOriginalSelectedTable.map(function (item) { return item['tableId']; });
       this.spinner.show();
       this.tempOriginalSelectedTable = [];
@@ -480,96 +483,6 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
-  // getPage(page: number) {
-  //   this.selectedTableList = [];
-  //   this.startIndex = page;
-  //   this.getERTtableList();
-  // }
-
-  // getERTtableList() {
-  //   this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-  //   this.ertService.getERTtableList(this.workspaceId, this.ertJobId, this.startIndex).subscribe((result) => {
-  //     this.ErtTableList = result;
-  //     if (this.ErtTableList.ertTableList !== undefined) {
-  //       this.schemaResultsTableCount = result.sourceTableCount;
-  //       if (result.selectedTableCount !== 0) {
-  //         this.schemaResultsTableCount = result.selectedTableCount;
-  //       }
-  //       for (const item of this.ErtTableList.ertTableList) {
-  //         const tempObj: TableDetailsListObj = new TableDetailsListObj();
-  //         tempObj.tableId = item.tableId;
-  //         tempObj.tableName = item.tableName;
-  //         tempObj.modifiedTableName = item.modifiedTableName;
-  //         if (item.filterNconfig !== null) {
-  //           tempObj.filterAndOrderConfig = item.filterNconfig;
-  //         }
-  //         if (item.relatedTableDetails !== null) {
-  //           tempObj.relatedTableDetails = item.relatedTableDetails;
-  //         }
-  //         if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-  //           tempObj.isSelected = true;
-  //         }
-  //         if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
-  //           this.selectedTableList.push(tempObj);
-  //         }
-  //       }
-  //       if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-  //         for (const item of this.selectedTableList) {
-  //           this.getERTcolumnlist(item.tableId, '');
-  //         }
-  //       }
-  //       if (this.selectedTableList.length > 0) {
-  //         this.selectedTableId = this.selectedTableList[0].tableId;
-  //         this.getERTcolumnlist(this.selectedTableId, '');
-  //       }
-  //       if (this.startIndex === 1) {
-  //         this.selectedTableList = this.storeSelectedTables.concat(this.selectedTableList);
-  //         if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-  //           this.storeSelectedTables = this.selectedTableList.filter(a => a.isSelected === true);
-  //         }
-  //         this.itemsPerPage = this.itemsPerPage + this.storeSelectedTables.length;
-  //       } else {
-  //         this.itemsPerPage = 49;
-  //       }
-  //       if (result.selectedTableCount !== 0) {
-  //         this.itemsPerPage = 49;
-  //       }
-  //     } else {
-  //       this.showNoTablesMsg = true;
-  //     }
-  //   });
-  // }
-
-  // searchTablelist() {
-  //   if (this.from !== 'data-record' && this.from !== 'SIP') {
-  //     if (this.searchTableName !== '') {
-  //       this.selectedTableList = [];
-  //       const temp: TableDetailsListObj[] = [];
-  //       this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
-  //         this.ErtTablesearchList = result;
-  //         for (const item of this.ErtTablesearchList.ertTableList) {
-  //           const tempObj: TableDetailsListObj = new TableDetailsListObj();
-  //           tempObj.tableId = item.tableId;
-  //           tempObj.tableName = item.tableName;
-  //           tempObj.modifiedTableName = item.modifiedTableName;
-  //           if (this.ertJobId !== '' && this.ertJobId !== undefined) {
-  //             tempObj.isSelected = true;
-  //           }
-  //           if (this.storeSelectedTables.findIndex(a => a.tableId === tempObj.tableId) === -1) {
-  //             temp.push(tempObj);
-  //           } else {
-  //             temp.push(this.storeSelectedTables.filter(a => a.tableId === tempObj.tableId)[0]);
-  //           }
-  //         }
-  //         this.selectedTableList = temp;
-  //       });
-  //     } else {
-  //       this.page = 1;
-  //       this.getPage(1);
-  //     }
-  //   }
-  // }
-
   searchTableOnEdit() {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.ertService.getERTtablesearchList(this.workspaceId, this.searchTableName.toUpperCase(), this.ertJobId).subscribe((result) => {
@@ -627,13 +540,6 @@ export class ErtTableComponent implements OnInit {
     });
   }
 
-  // getERTcolumnlistForDataRecord(tableId: string) {
-  //   this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-  //   this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
-  //     this.ErtTableColumnList = result;
-  //     this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
-  //   });
-  // }
 
   selectTable(tableId: string, tableName: string, event) {
     this.selectedTableId = tableId;
@@ -696,16 +602,17 @@ export class ErtTableComponent implements OnInit {
         } else {
           this.usrDefinedQueryView = temp.viewQuery;
         }
-        if (this.userDefinedList.length !== 0) {
-          for (const item of this.userDefinedList) {
-            const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
-              === item.column);
-            if (tempIndex !== -1) {
-              this.ursDefinedColumnNameList.splice(tempIndex, 1);
-            }
+      }
+      if (this.userDefinedList.length !== 0) {
+        for (const item of this.userDefinedList) {
+          const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
+            === item.column);
+          if (tempIndex !== -1) {
+            this.ursDefinedColumnNameList.splice(tempIndex, 1);
           }
         }
       }
+      this.setQueryModeUserDefined();
     } else {
       this.enableUserDefined = true;
     }
@@ -905,7 +812,7 @@ export class ErtTableComponent implements OnInit {
     } else if (this.from === 'SIP') {
       this.router.navigate(['workspace/ert/ert-sip-config']);
     } else {
-      this.router.navigate(['workspace/ert/ert-jobs-config']);
+      this.router.navigate(['workspace/ert-jobs-config']);
     }
   }
 
@@ -950,18 +857,27 @@ export class ErtTableComponent implements OnInit {
     const isColumnNameExist = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList
       .filter(b => b.originalColumnName.trim().toUpperCase().includes(this.usrDefinedColumnName.trim().toUpperCase()));
     const length = isColumnNameExist.length;
-    if (length !== 1) {
-      if (!this.isQueryMode) {
-        this.validateQueryMode();
-        this.setQueryModeUserDefined();
-      } else if (!this.isCombinedQueryMode) {
-        this.validateCombinedColumnQueryMode();
-        this.setQueryModeUserDefined();
+    if (!this.disabledUserDefinedColName) {
+      if (length !== 1) {
+        this.saveUserDefined();
+      } else {
+        this.usrDefinedAlertMessage = 'Kindly provide different column name.';
+        document.getElementById('query-alert').classList.remove('alert-hide');
       }
     } else {
-      this.usrDefinedAlertMessage = 'Kindly provide different column name.';
-      document.getElementById('query-alert').classList.remove('alert-hide');
+      this.saveUserDefined();
     }
+  }
+
+  saveUserDefined() {
+    if (!this.isQueryMode) {
+      this.validateQueryMode();
+      this.setQueryModeUserDefined();
+    } else if (!this.isCombinedQueryMode) {
+      this.validateCombinedColumnQueryMode();
+      this.setQueryModeUserDefined();
+    }
+    this.disabledUserDefinedColName = false;
   }
 
   saveUserDefinedAfterValidate() {
@@ -1098,6 +1014,7 @@ export class ErtTableComponent implements OnInit {
       if (filterMap.get('filterList') !== '') {
         this.filterdata = JSON.parse(filterMap.get('filterList').replace(/'/g, '"'));
       }
+      console.log(filterMap.get('orderLIst'));
       if (filterMap.get('orderLIst') !== '') {
         this.dataOrderList = JSON.parse(filterMap.get('orderList').replace(/'/g, '"'));
       }
@@ -1190,7 +1107,6 @@ export class ErtTableComponent implements OnInit {
   }
 
   createFilterWhereClause(obj, tableName): Observable<string> {
-    console.log(obj);
     const children = obj.children;
     for (const child of children) {
       if (child.children.length === 0) {
@@ -1259,37 +1175,6 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
-  // constructExpression(postfix: string[]): string {
-  //   const expressionStack: string[] = [];
-  //   for (let i = 0; i < postfix.length; i++) {
-  //     if (postfix[i] !== 'AND' && postfix[i] !== 'OR') {
-  //       expressionStack.push(postfix[i]);
-  //     } else {
-  //       const temp1 = expressionStack.pop();
-  //       const temp2 = expressionStack.pop();
-  //       if (temp1 === undefined || temp2 === undefined) {
-  //         return 'Invalid';
-  //       } else {
-  //         const temp = '(' + temp1 + ' ' + postfix[i] + ' ' + temp2 + ')';
-  //         expressionStack.push(temp);
-  //       }
-  //     }
-  //   }
-  //   return expressionStack[0].substring(1, expressionStack[0].length - 1);
-  // }
-
-  // addAvailableTable() {
-  //   for (const item of this.storeAvaliableTables.filter(a => a.isSelected === true)) {
-  //     const tempObj: TableDetailsListObj = new TableDetailsListObj();
-  //     if (item.isSelected) {
-  //       tempObj.tableId = item.tableId;
-  //       tempObj.tableName = item.tableName;
-  //       tempObj.modifiedTableName = item.modifiedTableName;
-  //       this.selectedTableList.push(tempObj);
-  //     }
-  //   }
-  //   this.storeAvaliableTables = [];
-  // }
 
   deleteFilterConfigTreeNode(id: number) {
     let attachNode = false;
@@ -1338,14 +1223,8 @@ export class ErtTableComponent implements OnInit {
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[0]));
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[1]));
       } else {
-        const filterConfigNode = new FilterConfigNode(1, filterTreeNode2.children[0].operation,
-          false, false, filterTreeNode2.children[0].column,
-          filterTreeNode2.children[0].condition, filterTreeNode2.children[0].value, 0, 0, []);
-        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
-        filterTreeNode2.children[0].children[0].parentId = 1;
-        filterTreeNode2.children[0].children[1].parentId = 1;
-        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterTreeNode2.children[0].children[0]));
-        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterTreeNode2.children[0].children[1]));
+        filterTreeNode2.children[0].parentId = 0;
+        this.filterdata.root = filterTreeNode2.children[0];
       }
     }
   }

@@ -165,7 +165,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       }
     }
     this.adhocScreenService.setTreeMap(this.treeMap);
-    this.spinner.hide();
+     this.spinner.hide();
   }
 
   initTab() {
@@ -302,7 +302,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         if (err.error) {
           document.getElementById('error-popup-btn').click();
-          this.successMsg = err.error.errorMessage;
+          this.successMsg = err.error.message;
           this.spinner.hide();
         }
         this.spinner.hide();

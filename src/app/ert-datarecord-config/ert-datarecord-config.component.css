@@ -421,6 +421,8 @@ table tr td:nth-child(6) {
 
 .inner-addon {
   position: relative;
+  color: #676767;
+  cursor: none;
 }
 
 .inner-addon .glyphicon {

@@ -37,7 +37,6 @@ export class ErtJobsComponent implements OnInit {
   }
   getErtJobList() {
     const userId = this.userInfoService.getUserId();
-    this.spinner.hide();
     this.spinner.show();
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
@@ -45,17 +44,18 @@ export class ErtJobsComponent implements OnInit {
         this.ertJobs = result;
         if (this.ertJobs.length === 0) {
           this.ertJobslist = true;
-        }
-        for (const item of this.ertJobs) {
-          if (item.jobStatus === 'READY' || item.jobStatus === 'COMPLETED' || item.jobStatus === 'FAILED') {
-            item.madeDisable = false;
-          } else {
-            item.madeDisable = true;
-          }
-          if (item.jobStatus.trim().toUpperCase() === 'IN_PROGRESS' || item.jobStatus.trim().toUpperCase() === 'SCHEDULED') {
-            item.madeEditDisable = true;
-          } else {
-            item.madeEditDisable = false;
+        } else {
+          for (const item of this.ertJobs) {
+            if (item.jobStatus === 'READY' || item.jobStatus === 'COMPLETED' || item.jobStatus === 'FAILED') {
+              item.madeDisable = false;
+            } else {
+              item.madeDisable = true;
+            }
+            if (item.jobStatus.trim().toUpperCase() === 'IN_PROGRESS' || item.jobStatus.trim().toUpperCase() === 'SCHEDULED') {
+              item.madeEditDisable = true;
+            } else {
+              item.madeEditDisable = false;
+            }
           }
         }
         this.spinner.hide();
