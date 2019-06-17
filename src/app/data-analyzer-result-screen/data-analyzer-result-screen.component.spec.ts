@@ -11,6 +11,7 @@ import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatExpansionModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('DataAnalyzerResultScreenComponent', () => {
   let component: DataAnalyzerResultScreenComponent;
@@ -19,7 +20,7 @@ describe('DataAnalyzerResultScreenComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DataAnalyzerResultScreenComponent ],
-      imports: [NgxPaginationModule, HttpClientModule, RouterTestingModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatExpansionModule],
+      imports: [NgxPaginationModule, HttpClientModule, RouterTestingModule, MatTableModule, MatPaginatorModule, MatSortModule, MatCheckboxModule, MatExpansionModule, BrowserAnimationsModule],
       providers: [TableListService, AddDirectJoinService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ]
     })
