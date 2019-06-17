@@ -9,6 +9,7 @@ export class AdhocSavedObjectService {
   searchResult = new SearchResult();
   graphDetails = new GraphDetails();
   screenInfoObject = new Adhoc();
+  primarytableIdWhenNoRelation = '';
   constructor() { }
   setSearchCriteria(searchCriteria: SearchCriteria[]) {
     this.searchCriteria = searchCriteria;
@@ -24,5 +25,9 @@ export class AdhocSavedObjectService {
 
   setScreenInfoObject(screenInfoObject: Adhoc) {
     this.screenInfoObject = screenInfoObject;
+  }
+
+  setPrimarytableIdWhenNoRelation(primarytableIdWhenNoRelation) {
+    this.primarytableIdWhenNoRelation = primarytableIdWhenNoRelation;
   }
 }

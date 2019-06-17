@@ -16,7 +16,7 @@
   
     <div class="container-tab">
       <div class="col-md-12 primary-table">
-        <h5 class="card-title sub-headerr">Primary Table:
+        <h5 class="card-title sub-headerr">Primary Table :
           <strong>{{primaryTableName}}</strong>
         </h5>
       </div>
@@ -81,7 +81,8 @@
                           </div> -->
                           <div class="col-md-9" style="width: 73%">
                               <div class="first-div-n">Data Analysis Result</div>
-                              <div class="mat-elevation-z8" style="width:105%">
+                              <div class="mat-elevation-z2 table-hight-div" style="width:104%">
+                                  <div class="table-hight">
                               <table mat-table [dataSource]="dataSource1" style="width:100%">
                                   <ng-container matColumnDef="tableName" >
                                     <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-left-radius: 3px;"> Secondary Table </th>
@@ -101,16 +102,17 @@
                                     </ng-container>
                                     <ng-container matColumnDef="checked">
                                       <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
-                                      <td mat-cell *matCellDef="let element">
-                                        <mat-checkbox [disabled]="element.matchPercentage == 0"
-                                        (change)="checkedSecValues(x,$event,i)"></mat-checkbox>
+                                      <td mat-cell *matCellDef="let element;let i =index;">
+                                          <input type="checkbox" class="m-r" [disabled]="element.matchPercentage == 0"
+                                          (change)="checkedPriValues(element,$event,i)">
                                       </td>
                                     </ng-container>
                                     
-                                  <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
                                   <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                                 </table>
-                                <mat-paginator [length]="columnlength1" [pageSize]= "4"></mat-paginator>
+                                </div>
+                                <mat-paginator [length]="columnlength1" [pageSize]= "4" [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons></mat-paginator>
                                 </div>
                             <!-- <table id="customers" class="table table-hover table-bordered primaryPopulate">
                               <thead>
@@ -167,7 +169,8 @@
                           </div> -->
                           <div class="col-md-9" style="width: 73%">
                               <div class="first-div-n">Data Analysis Result</div>
-                              <div class="mat-elevation-z8" style="width:105%">
+                              <div class="mat-elevation-z2 table-hight-div" style="width:104%">
+                                  <div class="table-hight">
                               <table mat-table [dataSource]="dataSource"  style="width:100%">
                                   <ng-container matColumnDef="primaryColumn" >
                                     <th mat-header-cell *matHeaderCellDef style="width: 10%; border-top-left-radius: 3px;"> Primary Column </th>
@@ -187,16 +190,17 @@
                                     </ng-container>
                                     <ng-container matColumnDef="checked">
                                       <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
-                                      <td mat-cell *matCellDef="let element">
-                                        <mat-checkbox [disabled]="element.matchPercentage == 0"
-                                        (change)="checkedSecValues(x,$event,i)"></mat-checkbox>
+                                      <td mat-cell *matCellDef="let element; let i = index">
+                                        <input type="checkbox" [disabled]="element.matchPercentage == 0"
+                                        (change)="checkedSecValues(element,$event,i)">
                                       </td>
                                     </ng-container>
                                     
-                                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
-                                <mat-paginator [length]="columnlength" [pageSize]= "4"></mat-paginator>
+                                </div>
+                                <mat-paginator [length]="columnlength" [pageSize]= "4" [pageSizeOptions]="[4, 10, 20]" showFirstLastButtons></mat-paginator>
                                 </div>
                             <!-- <table id="customers" class="table table-hover table-bordered secondaryPopulate">
                               <thead>
@@ -231,7 +235,7 @@
                       </div>
                       <div class="col-md-12 marginClass">
                         <div class="col-md-7">
-                          <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+                          <!-- <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
                             <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -242,14 +246,14 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                             <strong>{{errorMsg}}</strong>
-                          </div>
+                          </div> -->
                         </div>
                         <div class="col-md-5" style="text-align: right;">
           
                           <div class="action-btn">
-                            <button mat-raised-button class="mat-raised-button cancel btn-padding" data-keyboard="false"
+                            <button class="btn cancel btn-padding" data-keyboard="false"
                               data-backdrop="static" data-toggle="modal" data-target="#confirmClose">Close</button>
-                            <button mat-raised-button class="save mat-raised-button btn-padding" data-keyboard="false"
+                            <button style="margin-right: -1%;" class="btn {{'pricheckvalueMap.size === 0 || seccheckvalueMap.size === 0' ? 'save-disabled': 'save'}} btn-padding" data-keyboard="false" [disabled]="pricheckvalueMap.size === 0 || seccheckvalueMap.size === 0"
                               data-backdrop="static" data-toggle="modal" data-target="#addJoins">Add Selected Joins</button>
                           </div>
                         </div>
@@ -292,40 +296,81 @@
 
 <!-- Close -->
 <div class="modal fade" id="confirmClose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document" style="width: 500px;">
-    <div class="modal-content text-left">
-      <div class="modal-header" style="background: #2879ff; color: #fff;">
-        <h4 class="modal-title">Close Results</h4>
-      </div>
-      <div class="modal-body text-center" style="height: 100px;">
-        Are you sure? The results will be cleared.
-      </div>
-      <div class="modal-footer">
-        <div class="action-btn">
-          <button class="mat-raised-button cancel btn-padding" data-keyboard="false" data-backdrop="static"
-            data-dismiss="modal">Close</button>
-          <button class="save mat-raised-button btn-padding" data-dismiss="modal" data-keyboard="false"
-            data-backdrop="static" (click)="closeScreen();">Confirm</button>
+    <div class="modal-dialog" role="document" style="width: 480px;">
+      <div class="modal-content">
+          <div class="info-popup-header-cls">
+              <h4 class="popup-title-cls">
+                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Close Results</div></h4>
+            </div>
+            <div class="modal-body">
+                <p class="popup-paragraph-cls">  Are you sure? The results will be cleared.</p>
+              </div>
+       
+        <div class="modal-footer">
+            <button type="button" class="btn btn-padding btn-secondary-popup"
+            data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-padding btn-info-popup-primary-color" (click)="closeScreen();" data-dismiss="modal"
+            >Confirm</button>         
         </div>
       </div>
     </div>
   </div>
-</div>
+
 <!-- Add Join Confirmation -->
 <div class="modal fade" id="addJoins" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document" style="width: 500px;">
-    <div class="modal-content text-left">
-      <div class="modal-header" style="background: #2879ff; color: #fff;">
-        <h4 class="modal-title">Add Join Results</h4>
-      </div>
-      <div class="modal-body text-center" style="height: 100px;">
-        Kindly confirm whether you need to join the selected data?
-      </div>
+  <div class="modal-dialog" role="document" style="width: 480px;">
+    <div class="modal-content">
+        <div class="info-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Add Join Results</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls"> Kindly confirm whether you need to join the selected data?</p>
+            </div>
+     
       <div class="modal-footer">
-        <div class="action-btn">
-          <button class="mat-raised-button cancel btn-padding" data-dismiss="modal">Close</button>
-          <button class="save mat-raised-button btn-padding" data-dismiss="modal" (click)="addJoins();">Confirm</button>
-        </div>
+          <button type="button" class="btn btn-padding btn-secondary-popup"
+          data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding btn-info-popup-primary-color" (click)="addJoins();" data-dismiss="modal"
+          >Confirm</button>         
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display: none" type="button" id="dataerrormsg" data-toggle="modal" data-target="#dataermsg">Open Modal</button>
+<div class="modal fade" id="dataermsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+  <div class="modal-dialog"  style="width: 480px;">
+    <div class="modal-content">
+        <div class="error-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls"> {{errorMsg}} </p>
+            </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">OK</button>      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<button style="display: none" type="button" id="datasuccessmsg" data-toggle="modal" data-target="#datassmsg">Open Modal</button>
+<div class="modal fade" id="datassmsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+  <div class="modal-dialog"  style="width: 480px;">
+    <div class="modal-content">
+        <div class="success-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls"> New Join Added Successfully </p>
+            </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="closeScreen();">OK</button>      
       </div>
     </div>
   </div>

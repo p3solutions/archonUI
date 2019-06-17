@@ -9,6 +9,7 @@
 
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  transform: translatey(-10px);
 }
 
 .card {
@@ -93,7 +94,7 @@
   padding-left: 3px;
 }
 
-.fa-pencil-square-o:hover {
+.fa-pencil-square-o:not(.edit-disabled):hover {
   background-color: #0A85F8;
 }
 
@@ -142,11 +143,11 @@ label {
   margin: 2px 7px 2px 7px
 }
 
-.modal-body div {
+/* .modal-body div {
   border-bottom: 2px solid #E6E9ED;
   padding: 4px 2px 0px 3px;
   text-align: left;
-}
+} */
 
 .flex-cards-bar {
   background-color: #efeff0;
@@ -204,13 +205,13 @@ a.disabled {
   background-color: #0A85F8;
 }
 
-.modal-header {
+/* .modal-header {
   padding: 10px;
   padding-left: 15px;
   background-color: #2879ff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-}
+} */
 
 .info-r {
   font-size: 18px;
@@ -218,14 +219,14 @@ a.disabled {
   display: inline-block;
 }
 
-.model-title {
+/* .model-title {
   float: left;
   display: inline-block;
   font-size: 20px;
   padding: -1px 15px 10px 15px;
   text-align: left;
   color: #ffffff;
-}
+} */
 
 .modal-close {
   background-color: #2879ff;
@@ -279,11 +280,35 @@ td.tdr {
   font-size: 12px;
 }
 
-.modal-title {
+/* .modal-title {
   text-align: left;
   color: white
+} */
+
+.material-icons:not(.popup-material-icon-cls) {
+  font-size: 29px !important;
 }
 
-.material-icons {
-  font-size: 29px !important;
+.job-info-icon {
+  color: #ffffff;
+  font-size: 22px !important;
+}
+
+.run-disabled {
+  float: left;
+  color: #cecdcd;
+  padding-top: 4px;
+  padding-left: 3px;
+  background-color: #e5e5e6;
+  width: 26px;
+  height: 26px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: not-allowed;
+}
+
+.edit-disabled {
+  cursor: not-allowed;
+  color: #cecdcd;
+  background-color: #e5e5e6;
 }

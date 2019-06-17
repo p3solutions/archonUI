@@ -1,11 +1,5 @@
 <div id="metalyzer" class="row">
   <div classs="metalyzer-header">
-      <!-- <div *ngIf="updateNotif" class="alert alert-danger alert-dismissible m-t-6" role="alert">
-        <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <strong> Please select a table</strong>
-      </div> -->
       <div class="head-container">
           <div class="flex-head">
             <a class="back-sty" (click)="gotoDashboard()" matTooltip="Back">
@@ -14,14 +8,28 @@
             <h3>Metalyzer</h3>
           </div>
       </div>       
-      <div class="container-head col-md-12">
-        <div class="form-group col-md-3 heading-item wss" style="width: 23%;" id="frm-margin">
-          <b>Workspace Name: </b>{{wsName | uppercase}}
+      <div class="container-head">
+        <div class="form-group heading-item wss" id="frm-margin">
+          <b>Workspace Name: </b>&nbsp;&nbsp;{{wsName | uppercase}}
         </div>
-        <div class="form-group col-md-3 heading-item" style="width: 13%;" id="frm-margin">
-          <b>Phase: </b>{{phase | uppercase}}
+        <div class="form-group heading-item" id="frm-margin">
+          <b>Phase: </b>&nbsp;&nbsp;{{phase | uppercase}}
         </div>
-        <div class="dropdown col-md-2" style="width: 21%;" *ngIf="dropdown">
+        <div class="dropdown" *ngIf="dropdown" style="width: 18%;">
+          <mat-form-field>
+            <mat-label>Add Join</mat-label>
+            <mat-select [disabled]="disable">
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
+                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="adddirectjoin()" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="spvjoin()" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
+                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="dataanalyze()" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
+             
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="dropdown" *ngIf="dropdown" style="width: 18%;">
             <mat-form-field>
                 <mat-label>Export As XML / JSON / PDF</mat-label>
                 <mat-select>
@@ -37,28 +45,11 @@
                 </mat-select>
               </mat-form-field>
         </div>
-        <div class="dropdown col-md-2" style="width: 21%;"  *ngIf="phase == 'Analysis'">
+        <div class="dropdown"   *ngIf="phase == 'Analysis'" style="width: 18%;">
           <mat-form-field>
             <mat-label>View Details</mat-label>
             <mat-select>
-              <!-- <mat-option [disabled]="false">View All Table Relationship</mat-option>
-              <mat-option [disabled]="true">View Selected Table Relationship</mat-option> -->
-              <mat-option data-toggle="modal" data-keyboard="true"  data-target="#myModal" (click)="getAudit()">View Modifications</mat-option>
-             
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="dropdown col-md-2" style="width: 21%;" *ngIf="dropdown">
-          <mat-form-field>
-            <mat-label>Add Join</mat-label>
-            <mat-select [disabled]="disable">
-                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
-                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
-                <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
-                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="adddirectjoin()" style="border-bottom: 1px solid #d6d6d6;">Direct Join</mat-option>
-                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="spvjoin()" style="border-bottom: 1px solid #d6d6d6;">SP/View Join</mat-option>
-                <mat-option *ngIf="disable == false" [disabled]="disable" (click)="dataanalyze()" style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
-             
+              <mat-option data-toggle="modal" data-keyboard="true"  data-target="#myModal">View Modifications</mat-option>   
             </mat-select>
           </mat-form-field>
         </div>
@@ -68,65 +59,48 @@
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog" tabindex='-1'>
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width: 1150px;">
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header arch-hdr">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title text-left">Metalyzer Audit</h4>
-      </div>
+      <div class="info-popup-header-cls">
+          <h4 class="popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 25px!important;vertical-align: middle;
+            color: #ffffff;
+            margin-top: 1px;">list</i><div class="pop-title" style="margin-left: 0px; margin-top: 3px;">Metalyzer Audit</div><button type="button" class="close" style="margin-right: 15px; font-size: 26px;
+  margin-top: 0px;"  data-dismiss="modal" >&times;</button></h4>
+             
+        </div>
       <div class="modal-body">
-        <!-- <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>Modified By</th>
-              <th>Modified At</th>
-              <th>Modification Mode</th>
-              <th>Modification Description</th>
-            </tr>
-          </thead>
-          <tbody >
-            <tr *ngFor="let i of auditArray | paginate: { itemsPerPage: 10, currentPage: p }" class="text-left">
-              <td>{{i.modifiedBy}}</td>
-              <td>{{i.createdAt * 1000 | date: 'medium' }}</td>
-              <td>{{i.modificationMode}}</td>
-              <td>{{i.modificationDescription[0]}}</td>
-            </tr>
-          </tbody>
-        </table> -->
-
-        <div class="mat-elevation-z2">
-          <table mat-table [dataSource]="auditArray | paginate: { id:'paginateControl', itemsPerPage: 50, currentPage: p, totalItems: schemaResultsTableCount }">
-    
+        <div class="{{datasourceHasValue()?'example-table-container-no-record':'mat-container'}} mat-elevation-z4">
+          <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="modifiedBy">
-              <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Modified By </th>
-              <td mat-cell *matCellDef="let element"> {{element.modifiedBy}} </td>
+              <th style="text-align: left; width: 15%" mat-header-cell *matHeaderCellDef> Modified By </th>
+              <td mat-cell *matCellDef="let element" style="text-align: left;"> {{element.modifiedBy}} </td>
             </ng-container>
 
             <ng-container matColumnDef="createdAt">
-              <th style="text-align: center; width: 20%"  mat-header-cell *matHeaderCellDef> Modified At </th>
-              <td mat-cell *matCellDef="let element"> {{element.createdAt * 1000 | date:'medium'}} </td>
+              <th style="text-align: left; width: 20%"  mat-header-cell *matHeaderCellDef> Modified At </th>
+              <td mat-cell *matCellDef="let element" style="text-align: left;"> {{element.createdAt * 1000 | date:'medium'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="modificationMode">
-              <th style="text-align: center; width: 20%"  mat-header-cell *matHeaderCellDef> Modification Mode </th>
-              <td mat-cell *matCellDef="let element"> {{element.modificationMode}} </td>
+              <th style="text-align: left; width: 20%"  mat-header-cell *matHeaderCellDef> Modification Mode </th>
+              <td mat-cell *matCellDef="let element" style="text-align: left;"> {{element.modificationMode}} </td>
             </ng-container>
 
             <ng-container matColumnDef="modificationDescription">
-              <th style="text-align: center;" mat-header-cell *matHeaderCellDef> Modification Description </th>
-              <td mat-cell *matCellDef="let element"> {{element.modificationDescription[0]}} </td>
+              <th style="text-align: left;padding-left: 10px;" mat-header-cell *matHeaderCellDef> Modification Description </th>
+              <td mat-cell *matCellDef="let element" style="text-align: left;padding-left: 10px;">{{element.modificationDescription[0]}} </td>
             </ng-container>
         
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
-
-        <div class="paginate-sty">
-          <pagination-controls id="paginateControl" (pageChange)="getPage(p = $event)"></pagination-controls>
-        </div>
+        <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Records found.</div>
+        <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}" id="screen-table" [length]="datasourceHasValue() ? 0 : dataSource.totalScreen" [pageSize]="50">
+          </mat-paginator>
           
       </div>
       <div class="modal-footer">

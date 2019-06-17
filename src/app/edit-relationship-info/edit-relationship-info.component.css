@@ -81,16 +81,25 @@
   background-color: #2879ff;
   color: #ffffff;
   text-transform: inherit;
-  margin-right: 10px;
+  margin-right: 5px;
   transition: 0.5s;
+  border-radius: 3px;
+}
+.action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 5px;
+  border-radius: 3px;
 }
 
 .action-btn button.cancel {
   background-color: #64b5f6;
   color: #1b1b1b;
-  margin-right: 10px;
+  margin-right: 5px;
   text-transform: inherit;
   transition: 0.5s;
+  border-radius: 3px;
 }
 
 .action-btn button.save:hover {
@@ -103,7 +112,8 @@
 }
 
 .mat-header-cell {
-  font-size: 12px;
+  text-align: left;
+  font-size: 14px;
   font-weight: bold;
   font-style: normal;
   font-stretch: normal;
@@ -128,4 +138,41 @@
   padding: -1px 15px 10px 15px;
   text-align: left;
   color: #ffffff;
+}
+.table-hd {
+  text-align: left;
+  margin-left: -8px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #030303;
+}
+#edit-relationship-table {
+  padding: 20px;
+  padding-top: 0px;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 20px;
+}
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding: 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  text-align: left;
+}
+.Secondary {
+  padding-left: 0px;
+}
+
+::ng-deep .test > div.mat-form-field-wrapper {
+  padding-bottom: 1em !important;
+}
+
+::ng-deep .test > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix {
+border-top: 0.5em solid transparent;
 }

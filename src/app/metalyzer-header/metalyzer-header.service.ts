@@ -9,7 +9,7 @@ export class MetalyzerHeaderService {
   private apiUrl = this.environment.apiUrl;
   workspaceinfoUrl = this.apiUrl + 'workspaces/';
   exportxmlUrl = this.apiUrl + 'metalyzer/exportMetadata/';
-  getAuditUrl = this.apiUrl + 'metalyzer/auditEvents';
+  getAuditUrl = this.apiUrl + 'metalyzer/auditEvents?startIndex=';
   exportpdfUrl = this.apiUrl + 'metalyzer/export/erDiagram?';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
@@ -64,8 +64,8 @@ export class MetalyzerHeaderService {
     return data || [];
   }
 
-  getAudit(param) {
-    return this.http.post(this.getAuditUrl, param, { headers: this.userinfoService.getHeaders() }).pipe(
+  getAudit(param, startIndex) {
+    return this.http.post(this.getAuditUrl + startIndex, param, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractAudit),
       catchError(this.handleError<string>('getAudit'))
     );

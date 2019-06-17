@@ -13,7 +13,7 @@ p {
 }
 
 .modal-dialog {
-  margin: 100px auto auto;
+  margin: 65px auto auto;
   width: 1050px;
 }
 
@@ -63,7 +63,7 @@ span {
 }
 #metalyzer {
   margin-bottom: 10px;
-  padding-right: 37px;
+  padding-right: 4.1%;
 }
 
 /* New Header rules for Metalyzer Analysis */
@@ -83,7 +83,9 @@ span {
 }
 
 .container-head{
-  margin: -6px 10px -15px 10px;
+  margin: -6px 0px -25px 0px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .left-flexer{
@@ -141,12 +143,9 @@ span {
   text-align: left
 }
 .wss {
-  margin-left: 10px;
+  margin-left: 35px;
   text-align: left;
   white-space: nowrap; 
-  width: 90%; 
-  overflow: hidden;
-  text-overflow: ellipsis; 
 }
 
 .arch-btnn{
@@ -161,9 +160,6 @@ span {
   transform: scale(1.1, 1.1);
 }
 
-.paginate-sty{
-  margin-top: 3rem;
-}
 .mat-header-cell {
   font-size: 12px;
   font-weight: bold;
@@ -219,4 +215,41 @@ span {
   text-overflow: ellipsis;
   border-bottom: 1px solid;
   width: 100%;
+}
+
+table{
+  width: 100%;
+}
+
+.mat-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+
+#screen-table {
+  margin: -4px -14px -15px 0px;
+}
+
+::ng-deep #screen-table svg {
+  height: 6vh !important;
+}
+
+.mat-paginator-shadow {
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0px rgba(0, 0, 0, 0), 0 12px 9px 2px rgba(0, 0, 0, .12) !important;
+  margin: 0px !important;
+}
+
+.example-table-container-no-record {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.no-record-found {
+  background: white;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    height: 53px;
+    padding: 14px;
 }

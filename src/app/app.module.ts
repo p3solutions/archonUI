@@ -143,6 +143,10 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
 import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
+import { ScrollableDirective } from './scrollable.directive';
+import { NonspecialcharDirective } from './nonspecialchar.directive';
+import { OnlyuppercaseallowDirective } from './ert-table/onlyuppercaseallow.directive';
+import { ChangeOverflowDirective } from './change-overflow.directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -243,7 +247,11 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 RoleGroupConfigurationComponent,
                 RedirectComponent,
                 CreateWorkspacePageComponent,
-                CreateDatabasePageComponent
+                CreateDatabasePageComponent,
+                ScrollableDirective,
+                NonspecialcharDirective,
+                OnlyuppercaseallowDirective,
+                ChangeOverflowDirective
         ],
         imports: [
                 JwtModule.forRoot({

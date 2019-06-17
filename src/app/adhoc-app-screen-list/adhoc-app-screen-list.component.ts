@@ -301,7 +301,7 @@ export class AdhocAppScreenListComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         if (err.error) {
           document.getElementById('failed-popup-btn').click();
-          this.successMessage = err.error.errorMessage;
+          this.successMessage = err.error.message;
         }
       });
     }
@@ -342,7 +342,7 @@ export class AdhocAppScreenListComponent implements OnInit {
       },(err: HttpErrorResponse) => {
         if (err.error) {
           document.getElementById('failed-popup-btn').click();
-          this.successMessage = err.error.errorMessage;
+          this.successMessage = err.error.message;
         }
       });
       this.screenInfo = new Adhoc();
@@ -468,6 +468,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
     this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable = '';
     this.adhocSavedObjectService.screenInfoObject = this.screenInfoObject;
+    this.adhocSavedObjectService.primarytableIdWhenNoRelation = '';
   }
 
   showActions(adhoc: Adhoc) {

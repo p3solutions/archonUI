@@ -44,18 +44,18 @@
   .primary-table {
     background-color: #edf3f8;
     margin-bottom: 12px;
-    margin-top: 12px;
+    /* margin-top: 12px; */
   }
   
   .container-tab{
     margin-left: 22px;
-    margin-right: 31px;
+    margin-right: 22px;
   }
   .card-title {
     float: left;
   }
   .sub-headerr {
-    margin-left: 4px;
+    margin-left: -4px;
   }
 
   div.sticky {
@@ -80,31 +80,32 @@ div.sticky-new {
 }
 .column-one {
     float: left;
-    width: 27%;
+    width: 26%;
     height: 500px;
 }
 
 .column-two {
     float: left;
-    width: 28%;  
+    width: 25%;  
     height: 500px;
     margin-left: -10px;
 }
 
 .column-three {
   float: left;
-  width: 41%;
+  width: 47%;
   height: 500px;
-  margin-left: 17px;
+  padding-left: 10px;
+    margin-left: 7px;
 }
 
 .first-div {
     display: block;
-    width: 66%;
+    width: 60%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: pre;
-    margin-left: 27px;
+    margin-left: 20px;
     text-align: left;
 }
 .first-div-new {
@@ -113,17 +114,20 @@ div.sticky-new {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: pre;
-  margin-left: 27px;
+  margin-left: 20px;
   text-align: left;
+  font-size: 18px;
   font-weight: bold;
+  color: #0c0c0c;
 }
 
 .second-div {
     margin-top: -18px;
-    margin-left: 165px;
+    margin-left: 75%;
     width: 24%;
     overflow: hidden;
     text-align: left;
+    color: #2879ff;
 }
 
 
@@ -189,7 +193,7 @@ div.sticky-new {
     clear: both;
 }
 .mat-header-cell {
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
@@ -203,9 +207,9 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
 }
 
 .mat-cell, .mat-footer-cell {
-  font-size: 12px;
+  font-size: 14px;
   text-align: left;
-  padding-left: 10px;
+  /* padding-left: 10px; */
 }
 ::ng-deep .mat-paginator-range-label {
   margin: 0px !important;
@@ -236,8 +240,9 @@ table.responsive-table tr>td, table.responsive-table th {
 .icon-div {
     width: 5%;
     float: right;
-    margin-top: -16px;
+    margin-top: -14px;
     color: cornflowerblue;
+    font-size: 9px;
 }
 
 .well {
@@ -269,7 +274,7 @@ table.responsive-table tr>td, table.responsive-table th {
 .first-div-sec-col {
     display: block;
     width: 66%;
-    margin-left: 27px;
+    margin-left: 20px;
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -320,7 +325,15 @@ table.responsive-table tr>td, table.responsive-table th {
     text-transform: inherit;
     margin-right: 10px;
     transition: 0.5s;
-    border-radius: 4px;
+    border-radius: 3px;
+  }
+
+  .action-btn button.save-disabled {
+    background-color: #2879ff;
+    color: #ffffff;
+    text-transform: inherit;
+    margin-right: 10px;
+    border-radius: 3px;
   }
   
   .action-btn button.cancel {
@@ -329,7 +342,7 @@ table.responsive-table tr>td, table.responsive-table th {
     margin-right: 5px;
     text-transform: inherit;
     transition: 0.5s;
-    border-radius: 4px;
+    border-radius: 3px;
   }
   
   .action-btn button.save:hover {

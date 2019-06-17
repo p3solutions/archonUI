@@ -132,9 +132,6 @@ const routes: Routes = [
             path: 'ert-jobs', component: ErtJobsComponent
           },
           {
-            path: 'ert-jobs-config', component: ErtJobsConfigComponent
-          },
-          {
             path: 'ert-table', component: ErtTableComponent
           },
           {
@@ -159,6 +156,9 @@ const routes: Routes = [
             path: 'ert-sip-config', component: ErtSipConfigComponent
           }
         ]
+      },
+      {
+        path: 'ert-jobs-config', component: ErtJobsConfigComponent
       },
       {
         path: 'adhoc', component: AdhocLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -241,12 +241,12 @@ const routes: Routes = [
     path: 'sso', component: SsoSigninFormComponent
   },
   {
-    path: 'landing' , canActivate: [RedirectGuard], component: RedirectComponent
+    path: 'landing', canActivate: [RedirectGuard], component: RedirectComponent
   },
   {
     path: 'sign-in', component: LandingPageComponent, children: [
       {
-        path: '', component: SigninFormComponent , pathMatch: 'full'
+        path: '', component: SigninFormComponent, pathMatch: 'full'
       },
       {
         path: 'forgot-password', component: ForgotpasswordFormComponent

@@ -56,10 +56,11 @@ export class ErtDatarecordConfigComponent implements OnInit {
   gotoDataRecFinal() {
     this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
     this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable, '');
+    this.ertService.isDataRecordGraphChange = true;
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'data-record' } });
   }
   gotoJobConfiguration() {
-    this.router.navigate(['workspace/ert/ert-jobs-config']);
+    this.router.navigate(['workspace/ert-jobs-config']);
   }
 
   getPage(page: number) {
@@ -106,7 +107,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
               color: '#ffffff',
               enableClick: false,
               id: 'NoRelation',
-              name: '',
+              name: value.tableName,
               visible: true,
             };
             this.createchart();

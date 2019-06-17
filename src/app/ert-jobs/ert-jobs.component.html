@@ -2,23 +2,15 @@
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-1">
-        <a (click)="gotoDashboard()" data-tooltip="Back">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
-        </a>
       </div>
       <div class="col-md-8">
-        <h3 style="margin: -2px;text-align: left">ERT</h3>
+        <h3 style="margin: -2px;text-align: left"></h3>
       </div>
     </div>
     <div class="col-md-3" style="text-align:left">
-      <!-- <div id="success-msg" class="alert alert-success alert-dismissible">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Success!</strong> Job has started.
-      </div> -->
     </div>
-
     <div class="col-md-3" style="text-align: right; margin-top: -9px;">
-      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert/ert-jobs-config']"
+      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert-jobs-config']"
         matTooltip="Add Job"> <i class="material-icons">
           add_circle
         </i></a>
@@ -26,12 +18,10 @@
   </div>
   <div *ngFor="let item of ertJobs" class="col-md-3 card">
     <div class="flex-cards-bar">
-      <div class='title'>{{item.jobTitle===''?'No_title':item.jobTitle | titlecase}}<div class='info'><span
+      <div class='title'>{{item.jobTitle === '' ?'No_title':item.jobTitle}}<div class='info'><span
             (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
               aria-hidden="true"></i></span></div>
       </div>
-      <!-- <div class='delete'><span data-toggle="modal" data-target="#confirm_model" (click)="setJobId(item.jobId)" title="Delete Job">X</span></div>  
-   -->
       <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
           (click)="setJobId(item.jobId)" matTooltip="Delete">
           <span aria-hidden="true">&times;</span>
@@ -50,11 +40,14 @@
     </div><br>
 
     <div class="flex-cards-footer">
-      <div class='foo-icon'><a [class.disabled]="item.madeDisable" matTooltip="{{item.madeDisable? '':'Run Job'}}"
-          (click)="!madeDisable && openScheduleModel(item.jobId,item.jobStatus)" class="cursor-poniter fonticonbelow"><i
-            class="fa fa-play" aria-hidden="true"></i></a></div>
-      <div class='foo-iconedit'><a (click)="!madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
-        matTooltip="Edit Job"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></div>
+      <div class='foo-icon'><a matTooltip="{{item.madeDisable? '':'Run Job'}}"
+          (click)="!item.madeDisable && openScheduleModel(item.jobId,item.jobStatus)"
+          class="{{item.madeDisable ?'run-disabled':'fonticonbelow cursor-poniter'}}"><i class="fa fa-play"
+            aria-hidden="true"></i></a></div>
+      <div class='foo-iconedit'><a (click)="!item.madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
+          matTooltip=" {{item.madeDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
+          {{item.madeEditDisable ? 'edit-disabled':''}}" aria-hidden="true"></i></a></div>
+
     </div>
   </div>
   <div class="col-md-12" *ngIf="ertJobslist">
@@ -68,8 +61,8 @@
 <div id="job-detailConfig" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <div class='model-title'><i class="fa fa-tachometer"></i>
+      <div class="modal-header info-popup-header-cls">
+        <div class='model-title popup-title-cls'><i class="fa fa-tachometer job-info-icon"></i>
           <div class='info-r'>Job Dashboard</div>
         </div>
       </div>
@@ -106,23 +99,27 @@
         </tbody>
       </table>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default modal-close" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default modal-close" data-dismiss="modal">CLOSE</button>
       </div>
     </div>
   </div>
 </div>
 <div id="confirm_model" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content" style="width: 430px;">
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm Job Delete</h4>
+    <div class="modal-content modal-body-width">
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Confirm Job Delete</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p style="text-align:left">Are you sure ?</p>
+        <p class="popup-paragraph-cls">Are you sure you want to delete the job ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteErtJob()" data-dismiss="modal">YES</button>
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="deleteErtJob()"
+          data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
@@ -133,41 +130,43 @@
   style="display:none">Schedule</button>
 <button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
 <div id="successModel" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <div class="modal-content" style="width: 430px;">
-      <div class="modal-header">
-        <div class='model-title'>
-          <div class='info-r'> Message</div>
-        </div>
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content ">
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p style="text-align:left; size: 18px;"> {{successMsg}}.</p>
-        <p *ngIf="isSuccessMsg" style="text-align:left;">check on Job Status page</p>
+        <p class="popup-paragraph-cls"> {{successMsg}}.</p>
+        <p class="popup-paragraph-cls" *ngIf="isSuccessMsg">check on Job Status page</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default cancel" (click)="close()" data-dismiss="modal">CLOSE</button>
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" (click)="close()"
+          data-dismiss="modal">CLOSE</button>
       </div>
     </div>
-
   </div>
 </div>
 <button style="display:none" type="button" id="warning-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
   data-target="#success">Open Modal</button>
 <div id="success" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert!</h4>
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Error</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>In progress and scheduled job can not be edit.</p>
+        <p class="popup-paragraph-cls">In progress and scheduled job can not be edit.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
-          data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

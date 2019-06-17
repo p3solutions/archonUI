@@ -58,10 +58,11 @@ export class ErtSipConfigComponent implements OnInit {
     const RelationSIP = getRelationshipListForSip(this.data);
     this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
     this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable, RelationSIP);
+    this.ertService.isSIPGraphChange = true;
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'SIP' } });
   }
   gotoJobConfiguration() {
-    this.router.navigate(['workspace/ert/ert-jobs-config']);
+    this.router.navigate(['workspace/ert-jobs-config']);
   }
 
   getPage(page: number) {
@@ -110,7 +111,7 @@ export class ErtSipConfigComponent implements OnInit {
           color: '#ffffff',
           enableClick: false,
           id: 'NoRelation',
-          name: '',
+          name: value.tableName,
           visible: true,
         };
         this.createchart();

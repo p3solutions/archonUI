@@ -12,6 +12,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { SearchPipe } from '../search.pipe';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { MatTooltipModule } from '@angular/material';
 
 describe('ErtTableComponent', () => {
   let component: ErtTableComponent;
@@ -20,7 +21,7 @@ describe('ErtTableComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ErtTableComponent, SearchPipe],
-      imports: [FormsModule, ReactiveFormsModule, NgxPaginationModule, HttpClientModule, RouterTestingModule],
+      imports: [FormsModule, ReactiveFormsModule, NgxPaginationModule, MatTooltipModule, HttpClientModule, RouterTestingModule],
       providers: [UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

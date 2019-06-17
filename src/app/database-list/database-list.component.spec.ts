@@ -24,7 +24,8 @@ describe('DatabaseListComponent', () => {
       declarations: [DatabaseListComponent, SearchPipe],
       imports: [HttpClientModule, RouterTestingModule, MatProgressBarModule,
         FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, MatTableModule, MatPaginatorModule],
-      providers: [DatabaseListService, UserinfoService, DynamicLoaderService, CommonUtilityService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      providers: [DatabaseListService, UserinfoService, DynamicLoaderService,
+         CommonUtilityService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

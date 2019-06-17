@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserinfoService } from '../userinfo.service';
 import {
@@ -8,6 +8,7 @@ import {
   ErtJobParams, ERTJobs, IngestionDataConfig, ExtractDataConfigInfo, ExtractConfig, AvilErtTable
 } from './ert';
 import { EnvironmentService } from '../environment/environment.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class ErtService {
   constructor(
     private http: HttpClient,
     private userInfoService: UserinfoService,
-    private environment: EnvironmentService
+    private environment: EnvironmentService,
+    private spinner: NgxSpinnerService
   ) { }
   private apiUrl = this.environment.apiUrl;
   getERTtableListUrl = this.apiUrl + 'ert/ertTableList?workspaceId=';
@@ -41,6 +43,24 @@ export class ErtService {
   RelationSIP: any[];
   startIndex: 1;
   storeSelectedTables: TableDetailsListObj[] = [];
+  isDataRecordGraphChange = false;
+  isSIPGraphChange = false;
+  ertJobTypes: BehaviorSubject<any> = new BehaviorSubject<any>([{
+    'ertJobType': 'Table',
+    'description': 'Choose option for table Extraction', 'ertJobImage': 'livearchival.png',
+    'isEnable': false
+  },
+  {
+    'ertJobType': 'Data Record', 'description': 'Choose option for Data Record Extraction',
+    'ertJobImage': 'livearchival.png', 'isEnable': false
+  },
+  { 'ertJobType': 'SIP', 'description': 'Choose option for SIP Extraction', 'ertJobImage': 'livearchival.png', 'isEnable': false }]);
+  updatedSearchCriteria = this.ertJobTypes.asObservable();
+
+  updateErtJobTypes(ertJobTypes: any) {
+    this.ertJobTypes.next(ertJobTypes);
+  }
+
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }
@@ -116,8 +136,27 @@ export class ErtService {
       );
   }
 
+  getEditedtERTcolumnlist(ertJobId = '', workspaceId: string, tableIds: string[] = []): Observable<any[]> {
+    const request: any[] = [];
+    for (const tableId of tableIds) {
+      request.push(this.http.get<ErtColumnListObj[]>(this.getERTcolumnlistUrl + ertJobId +
+        '&workspaceId=' + workspaceId + '&tableId=' + tableId,
+        { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractDataForColumn)));
+    }
+    const combineErtColumnResult = forkJoin(request);
+    return combineErtColumnResult;
+  }
+
   getErtAvailableTable(ertJobId: string, startIndex): Observable<AvilErtTable> {
     return this.http.get<ErtTableListObj>(this.getErtAvailableTableUrl + ertJobId + '&startIndex=' + startIndex,
+      { headers: this.userInfoService.getHeaders() }).pipe(
+        map(this.extractDataForAvail),
+        catchError(this.handleError('getERTcolumnlist', []))
+      );
+  }
+
+  getErtSearchAvailableTable(ertJobId: string, tableName: string, startIndex): Observable<AvilErtTable> {
+    return this.http.get<ErtTableListObj>(this.getErtAvailableTableUrl + ertJobId + '&startIndex=' + startIndex + '&tableName=' + tableName,
       { headers: this.userInfoService.getHeaders() }).pipe(
         map(this.extractDataForAvail),
         catchError(this.handleError('getERTcolumnlist', []))
@@ -172,7 +211,12 @@ export class ErtService {
   }
 
   private extractDataForJobs(res: any) {
-    const body = res.data.ertJobs;
+    let body: any;
+    if (res.data !== null) {
+      body = res.data.ertJobs;
+    } else {
+      body = [];
+    }
     return body || [];
   }
 

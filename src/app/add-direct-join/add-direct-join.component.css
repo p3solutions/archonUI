@@ -44,18 +44,18 @@
 .primary-table {
   background-color: #edf3f8;
   margin-bottom: 12px;
-  margin-top: 12px;
+  /* margin-top: 12px; */
 }
 
 .container-tab{
   margin-left: 22px;
-  margin-right: 31px;
+  margin-right: 22px;
 }
 .card-title {
   float: left;
 }
 .sub-headerr {
-  margin-left: 4px;
+  margin-left: -4px;
 }
 
 .modal-header{
@@ -94,14 +94,14 @@
   margin-top: 0px;
 } 
 
-.form-control-feedback {
+/* .form-control-feedback {
   position: relative;
   margin-top: -34px;
   margin-left: 169px;
   height: 32px;
-  color: #269af8;
+  color: #a0a2a4;
   line-height: 30px;
-}
+} */
 
 .inner-addon {
   padding-left: 10%;
@@ -151,11 +151,13 @@ a {
   margin-left: -20px;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 281px;
+  max-height: 450px;
+  /* height: max-content; */
+  /* max-height: 500px; */
 }
 
-.card {
-    height: 538px;
+.card-body {
+  min-height: 760px;
 }
 
 .default-load {
@@ -243,17 +245,19 @@ input[type='checkbox'] {
 
 /* overriding css */
 .form-control {
-  height: 35px;
+  height: 40px;
   width: 93%;
   margin-top: 7px;
   margin-left: 5px;
+  border-radius: 3px;
 }
 .form-control-feedback {
   position: relative;
-  margin-top: -31px;
-  margin-left: 238px;
-  height: 32px;
-  color: #269af8;
+  margin-top: -12%;
+  float: right;
+  margin-right: 8%;
+  height: 30px;
+  color: #a0a2a4;
   line-height: 30px;
 }
 .selwidth {
@@ -268,12 +272,15 @@ input[type='checkbox'] {
 }
 
 .table-hight {
-  margin-top: 0px;
-  margin-left: -2px;
-  margin-bottom: 32px;
+  margin-top: 0px;  
   overflow: auto;
   overflow-y: auto;
-  height: 522px;
+  height: 441px;
+}
+.table-hight-div {
+  margin-top: 0px; 
+  margin-bottom: 32px;
+  min-height: 512px;
 }
 
 #customers {  
@@ -302,13 +309,13 @@ input[type='checkbox'] {
   width: 96%;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 12px;
+  font-size: 14px;
 }
 .overflow-text-arrow {
   float: left;
   width: 4%;
   text-align: right;
-  font-size: 12px;
+  font-size: 14px;
 }
 .overflow-textrelation {
   float: left;
@@ -318,7 +325,6 @@ input[type='checkbox'] {
 }
 .ngx-pagination {
   margin-left: -40px;
-  font-size: 9px;
   margin-bottom: 1rem;
   margin-top: 4px;
 }
@@ -348,7 +354,7 @@ input[type='checkbox'] {
 }
 
 .page-align{
-  padding:0px 20px;
+  padding:0px 10px;
 }
 
 #cancel-btn{
@@ -380,17 +386,27 @@ input[type='checkbox'] {
   background-color: #2879ff;
   color: #ffffff;
   text-transform: inherit;
-  margin-right: -30px;
+  margin-right: -25%;
   transition: 0.5s;
-  float: right;
+  border-radius: 3px;
+  /* float: right; */
+}
+
+.action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: -25%;
+  border-radius: 3px;
 }
 
 .action-btn button.cancel {
   background-color: #64b5f6;
   color: #1b1b1b;
-  margin-right: -50px;
+  margin-right: 5%;
   text-transform: inherit;
   transition: 0.5s;
+  border-radius: 3px;
 }
 
 .action-btn button.save:hover {
@@ -403,7 +419,7 @@ input[type='checkbox'] {
 }
 
 .mat-header-cell {
-  font-size: 13px;
+  font-size: 14px;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
@@ -427,6 +443,8 @@ tr.mat-header-row, tr.mat-footer-row, tr.mat-row {
   margin-left: 15px;
   text-align: left;
   font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 ::ng-deep .mat-paginator-icon {
   height: unset !important;
@@ -440,5 +458,39 @@ tr.mat-header-row, tr.mat-footer-row, tr.mat-row {
   margin-left: 0px;
   text-align: left;
   font-weight: bold;
-  margin-bottom: 7px;
+  margin-bottom: 10px;
+  font-size: 18px;
 }
+::ng-deep .test > div.mat-form-field-wrapper {
+  padding-bottom: 1em !important;
+}
+
+::ng-deep .test > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix {
+border-top: 0.5em solid transparent;
+}
+
+button:focus {outline:0;}
+
+
+.body-left {
+  display: inline-block;
+  margin-bottom: -1%;
+  margin-top: -4%;
+  font-size: 12px;
+  width: 100%;
+}
+
+.glyphicon {
+  position: relative;
+  top: 26px;
+  font-size: 14px;
+  margin-right: 35px;
+  float: right;
+  /* display: inline-block; */
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

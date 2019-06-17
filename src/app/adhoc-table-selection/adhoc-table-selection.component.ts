@@ -41,46 +41,74 @@ export class AdhocTableSelectionComponent implements OnInit {
   tempValue = '';
   startIndex = 1;
   searchTableName = '';
+  emptyNested = true;
   page = 1;
+  primarytableIdWhenNoRelation = '';
   tempObj: { tableId: string, tableName: string, databaseName: string } = { tableId: '', tableName: '', databaseName: '' };
+
   constructor(public router: Router, private tablelistService: TableListService, private cookieService: CookieService,
     private workspaceHeaderService: WorkspaceHeaderService, public activatedRoute: ActivatedRoute, private spinner: NgxSpinnerService,
     private adhocSavedObjectService: AdhocSavedObjectService, private adhocScreenService: AdhocScreenService,
     private tableService: TableSelectionService, private adhocService: AdhocService) { }
 
   ngOnInit() {
-    const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
-    this.workspaceID = this.cookieService.get('workspaceId');
-    this.spinner.show();
-    this.deleteSearchResult('');
-    this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;
-    if (this.screenInfoObject.sessionAdhocModel.selectedTableListString !== '') {
-      const tempTableList = JSON.parse(this.screenInfoObject.sessionAdhocModel.selectedTableListString);
-      for (const item of tempTableList) {
-        tempTables.push({ 'tableId': item.tableId, 'tableName': item.tableName, 'databaseName': item.schemaName });
-      }
-      this.tableList = tempTables;
-      this.schemaResultsTableCount = this.tableList.length;
-      for (const i of this.tableList) {
-        this.includesArray.push(i.tableName);
-      }
-      this.spinner.hide();
-    } else {
-      this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-        this.tableList = res.tableList;
-        if (res.paginationRequired) {
-          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+    try {
+      const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
+      this.workspaceID = this.cookieService.get('workspaceId');
+      this.spinner.show();
+      this.deleteSearchResult('');
+      this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;
+      if (this.screenInfoObject.sessionAdhocModel.selectedTableListString !== '') { // For Nested Screen.
+        const tempTableList = JSON.parse(this.screenInfoObject.sessionAdhocModel.selectedTableListString);
+        for (const item of tempTableList) {
+          tempTables.push({ 'tableId': item.tableId, 'tableName': item.tableName, 'databaseName': item.schemaName });
+        }
+        this.tableList = tempTables;
+        this.checkForSingleTable();
+        this.schemaResultsTableCount = this.tableList.length;
+        for (const i of this.tableList) {
+          this.includesArray.push(i.tableName);
         }
         this.spinner.hide();
-      });
+      } else { // For Parent Screen.
+        this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+          this.tableList = res.tableList;
+          if (res.paginationRequired) {
+            this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+          }
+          this.checkForSingleTable();
+          this.spinner.hide();
+        });
+      }
+      if (this.screenInfoObject.sessionAdhocModel.graphDetails.data !== '') {
+        this.data = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.data.replace(/'/g, '"'));
+        this.selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+        this.joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
+        this.selectedPrimaryTable = JSON.parse(this.screenInfoObject.
+          sessionAdhocModel.graphDetails.selectedPrimaryTable.replace(/'/g, '"'));
+        this.createchart();
+      }
+    } catch {
+      this.spinner.hide();
     }
-    if (this.screenInfoObject.sessionAdhocModel.graphDetails.data !== '') {
-      this.data = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.data.replace(/'/g, '"'));
-      this.selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
-      this.joinListMap = new Map(JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.joinListMap.replace(/'/g, '"')));
-      this.selectedPrimaryTable = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable.replace(/'/g, '"'));
-      this.createchart();
-    }
+  }
+
+  checkForSingleTable() {
+    try {
+      if (this.screenInfoObject.sessionAdhocModel.graphDetails.data !== '') {
+        this.selectedValues = JSON.parse(this.screenInfoObject.sessionAdhocModel.graphDetails.selectedValues.replace(/'/g, '"'));
+        this.selectedPrimaryTable = JSON.parse(this.screenInfoObject.
+          sessionAdhocModel.graphDetails.selectedPrimaryTable.replace(/'/g, '"'));
+        if (this.selectedValues.length === 0) {
+          const temp = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0];
+          if (temp !== undefined) {
+            this.primarytableIdWhenNoRelation = temp.tableId;
+          }
+        }
+      }
+    } catch{
+      this.spinner.hide();
+    };
   }
   gotoDataRecFinal() {
     const graphDetails = new GraphDetails();
@@ -92,6 +120,7 @@ export class AdhocTableSelectionComponent implements OnInit {
     this.linearTableMapOrder = this.createLinearTableMapOrder(this.selectedValues, this.joinListMap);
     this.screenInfoObject.sessionAdhocModel.linearTableMapOrder = this.linearTableMapOrder;
     this.adhocSavedObjectService.setScreenInfoObject(this.screenInfoObject);
+    this.adhocSavedObjectService.setPrimarytableIdWhenNoRelation(this.primarytableIdWhenNoRelation);
     this.router.navigate(['/workspace/adhoc/screen/search-criteria']);
   }
 
@@ -112,11 +141,13 @@ export class AdhocTableSelectionComponent implements OnInit {
     if (this.searchTableName !== '') {
       this.startIndex = page;
       this.searchTablelist();
+      this.checkForSingleTable();
     } else {
       this.tableList = [];
       this.startIndex = page;
       this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
         this.tableList = res.tableList;
+        this.checkForSingleTable();
         if (res.paginationRequired) {
           this.schemaResultsTableCount = (this.startIndex + 1) * 50;
         }
@@ -127,9 +158,13 @@ export class AdhocTableSelectionComponent implements OnInit {
   createLinearTableMapOrder(selectedValues: string[] = [], joinListMap = new Map): LinearTableMapOrder[] {
     const tableNames = selectedValues;
     const linearTableMapOrder: LinearTableMapOrder[] = [];
-    for (let i = 0; i < tableNames.length; i++) {
-      const tableId = joinListMap.get(tableNames[i])[0].primaryTableId;
-      linearTableMapOrder.push({ 'ordinal': i + 1, 'tableId': tableId, 'tableName': tableNames[i] });
+    if (tableNames.length !== 0) {
+      for (let i = 0; i < tableNames.length; i++) {
+        const tableId = joinListMap.get(tableNames[i])[0].primaryTableId;
+        linearTableMapOrder.push({ 'ordinal': i + 1, 'tableId': tableId, 'tableName': tableNames[i] });
+      }
+    } else {
+      linearTableMapOrder.push({ 'ordinal': 1, 'tableId': this.primarytableIdWhenNoRelation, 'tableName': this.selectedPrimaryTable });
     }
     return linearTableMapOrder;
   }
@@ -139,6 +174,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   }
 
   populategraph(value, event) {
+    this.emptyNested = true;
     let tempHeader = new AdhocHeaderInfo();
     this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
       tempHeader = response;
@@ -160,24 +196,41 @@ export class AdhocTableSelectionComponent implements OnInit {
                   this.relationshipInfo.push(i);
                 }
               }
+              if (this.relationshipInfo.length === 0) {
+              this.emptyNested = false;
+              }
             } else {
               this.relationshipInfo = result;
             }
-            this.primaryTable = getPrimaryArray(this.relationshipInfo);
-            this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-            for (const i of this.primaryTable) {
-              this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
-            }
-            this.selectedValues.push(value.tableName);
-            this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+            if (this.emptyNested) {
+              this.primaryTable = getPrimaryArray(this.relationshipInfo);
+              this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+              for (const i of this.primaryTable) {
+                this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+              }
+              this.selectedValues.push(value.tableName);
+              this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+              this.createchart();
+            } else {
+              this.primarytableIdWhenNoRelation = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0].tableId;
+              this.relationshipInfo = result;
+              this.data = {
+              color: '#ffffff',
+              enableClick: false,
+              id: 'NoRelation',
+              name: value.tableName,
+              visible: true,
+              };
             this.createchart();
+            }
           } else {
+            this.primarytableIdWhenNoRelation = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0].tableId;
             this.relationshipInfo = result;
             this.data = {
               color: '#ffffff',
               enableClick: false,
               id: 'NoRelation',
-              name: '',
+              name: value.tableName,
               visible: true,
             };
             this.createchart();
@@ -199,6 +252,7 @@ export class AdhocTableSelectionComponent implements OnInit {
     this.screenInfoObject.sessionAdhocModel.searchResult.sidePanel = null;
     this.screenInfoObject.sessionAdhocModel.searchResult.inLinePanel = null;
     this.screenInfoObject.sessionAdhocModel.graphDetails.selectedPrimaryTable = '';
+    this.primarytableIdWhenNoRelation = '';
     if (value === 'html') {
       document.getElementById(this.tempValue).click();
     }
@@ -316,12 +370,12 @@ export class AdhocTableSelectionComponent implements OnInit {
         const nodename = d.data.name;
         link.style('visibility', function (d) {
           if (d.parent !== null) {
-          if (d.target.data.visible === false && d.target.parent.data.name === nodename) {
-            return 'visible';
-          } else {
-            return 'none';
+            if (d.target.data.visible === false && d.target.parent.data.name === nodename) {
+              return 'visible';
+            } else {
+              return 'none';
+            }
           }
-        }
         });
         node.style('visibility', function (d) {
           if (d.parent !== null) {
@@ -341,7 +395,7 @@ export class AdhocTableSelectionComponent implements OnInit {
           }
         }
         if (d.data.id === 'NoRelation') {
-            ifSelected = 'No Relationship';
+          ifSelected = 'No Relationship';
         }
         div.transition().duration(200).style('opacity', .9);
         div.html(ifSelected)

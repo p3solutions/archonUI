@@ -5,7 +5,7 @@
 
 #ert-table-id {
   position: relative;
-  
+
   font-weight: 300;
   font-size: 16px;
   letter-spacing: 0.2
@@ -56,6 +56,7 @@ mv-slider::ng-deep .slider-handle {
   border-bottom: 1px solid #2196F3;
   margin-left: 13px;
 }
+
 #ingest-data .form-group div {
   margin: 18px 26px 40px 0px;
 }
@@ -65,11 +66,12 @@ mv-slider::ng-deep .slider-handle {
   float: left;
   padding: 3px 8px 5px 16px;
 }
+
 .note {
   font-size: 12px;
-    float: left;
-    padding: 3px 8px 5px 19px;
-    margin-top: -24px;
+  float: left;
+  padding: 3px 8px 5px 19px;
+  margin-top: -24px;
 }
 
 
@@ -123,6 +125,7 @@ mv-slider::ng-deep .slider-horizontal {
   margin: 14px 19px 26px;
   width: 92%;
 }
+
 .cancelBtn {
   color: #fff;
   background-color: #64b5f6;
@@ -132,6 +135,7 @@ mv-slider::ng-deep .slider-horizontal {
   margin-bottom: 10px;
   text-transform: capitalize;
 }
+
 .next {
   color: #fff;
   background-color: #2879ff;
@@ -140,6 +144,7 @@ mv-slider::ng-deep .slider-horizontal {
   padding-left: 25px;
   text-transform: capitalize;
 }
+
 .back {
   color: #fff;
   background-color: #2879ff;
@@ -148,7 +153,8 @@ mv-slider::ng-deep .slider-horizontal {
   padding-left: 25px;
   text-transform: capitalize;
 }
-.modal-header {
+
+/* .modal-header {
   padding: 4px;
   padding-left: 15px;
   background-color: #2879ff;
@@ -162,7 +168,7 @@ mv-slider::ng-deep .slider-horizontal {
   padding: -1px 15px 10px 15px;
   text-align: left;
   color: #ffffff;
-}
+} */
 .cancelBtnp {
   color: #fff;
   background-color: #64b5f6;

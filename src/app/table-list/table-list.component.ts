@@ -15,6 +15,7 @@ import { StoredProcViewService } from '../stored-proc-view/stored-proc-view.serv
 import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service';
 import { MatStepper, MatStepHeader } from '@angular/material';
 import { StoredProcViewComponent } from '../stored-proc-view/stored-proc-view.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-table-list',
@@ -101,6 +102,9 @@ export class TableListComponent implements OnInit {
   primaryPage = 1;
   spview = false;
   stepperIndex = 0;
+  sectableList: string[];
+  schemaResultssecTableCount: number;
+  secstartIndex = 1;
 
   constructor(
     private tablelistService: TableListService,
@@ -111,6 +115,7 @@ export class TableListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private addDirectJoinService: AddDirectJoinService,
+    private spinner: NgxSpinnerService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
   ) {
@@ -153,21 +158,29 @@ export class TableListComponent implements OnInit {
   }
 
   getTableList() {
-    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
-    this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-      this.tableList = res.tableList;
-      if (this.tableList.length === 0) {
-        this.isTablelistAvailable = true;
-        this.tablelistService.selectDropdown(false);
-      } else {
-        this.tablelistService.selectDropdown(true);
-      }
-      this.isAvailable = true;
-      if (res.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-      }
-    });
+    this.spinner.show();
+    try {
+      this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+      this.metalyzerServiceId = this.workspaceHeaderService.getMetalyzerServiceId(this.userId);
+      this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
+        this.tableList = res.tableList;
+        this.sectableList = res.tableList;
+        if (this.tableList.length === 0) {
+          this.isTablelistAvailable = true;
+          this.tablelistService.selectDropdown(false);
+        } else {
+          this.tablelistService.selectDropdown(true);
+        }
+        this.isAvailable = true;
+        if (res.paginationRequired) {
+          this.schemaResultssecTableCount = (this.startIndex + 1) * 50;
+          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+        }
+        this.spinner.hide();
+          });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
   getPage(page: number) {
@@ -181,6 +194,17 @@ export class TableListComponent implements OnInit {
     });
   }
 
+  getsecPage(page: number) {
+    this.sectableList = [];
+    this.secstartIndex = page;
+    this.tablelistService.getTableList(this.workspaceID, this.secstartIndex).subscribe((res: any) => {
+      this.secTblArray = res.tableList;
+      if (res.paginationRequired) {
+        this.schemaResultssecTableCount = (this.secstartIndex + 1) * 50;
+      }
+    });
+  }
+
   searchTablelist() {
     this.tableList = [];
     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
@@ -189,24 +213,31 @@ export class TableListComponent implements OnInit {
   }
 
   loadRelationTable(table: any) {
-    this.defaultModel = false;
-    this.tableCopy = table;
-    this.homeStage = true;
-    this.dataAModal = false;
-    this.selectedPrimTblID = table.tableId;
-    this.selectedPrimTbl = table.tableName;
-    this.resetDataAModal();
-    this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
-      this.relationshipInfo = result;
-      this.isRelationShipAvailable = true;
-      if (this.relationshipInfo.length === 0) {
-        this.isRelationShipAvailable = false;
-      }
-    });
-    this.serviceActionType = this.tablelistService.getServiceActionType();
-  }
+    this.spinner.show();
+    try {
+      this.defaultModel = false;
+      this.tableCopy = table;
+      this.homeStage = true;
+      this.dataAModal = false;
+      this.selectedPrimTblID = table.tableId;
+      this.selectedPrimTbl = table.tableName;
+      this.resetDataAModal();
+      this.tablelistService.getListOfRelationTable(this.selectedPrimTblID, this.workspaceID).subscribe(result => {
+        this.relationshipInfo = result;
+        this.isRelationShipAvailable = true;
+        if (this.relationshipInfo.length === 0) {
+          this.isRelationShipAvailable = false;
+        }
+        this.spinner.hide();
+      });
+      this.serviceActionType = this.tablelistService.getServiceActionType();
+    } catch {
+      this.spinner.hide();
+    }
+   }
 
   openDataAModal() {
+    this.stepperIndex = 0;
     setTimeout(() => {
       this.changeMatStepIcon();
     }, 800);
@@ -241,23 +272,30 @@ export class TableListComponent implements OnInit {
       this.secColArray = [];
       // this.secColLoader = true;
     }
-    this.tablelistService.getColumnsByTableId(tableId).subscribe((columns) => {
-      if (isPrime) {
-        this.primColArray = columns;
-        this.tempPrimColArray = columns;
-        // this.primColLoader = false;
-      } else {
-        this.secTblColMap.set(tableId, columns);
-        this.secColArray = columns;
-        // this.secColLoader = false;
-        this.selectedSecColMap.clear();
-      }
-    });
+    this.spinner.show();
+    try {
+      this.tablelistService.getColumnsByTableId(tableId).subscribe((columns) => {
+        if (isPrime) {
+          this.primColArray = columns;
+          this.tempPrimColArray = columns;
+          // this.primColLoader = false;
+        } else {
+          this.secTblColMap.set(tableId, columns);
+          this.secColArray = columns;
+          // this.secColLoader = false;
+          this.selectedSecColMap.clear();
+        }
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
   gotoBack() {
     this.homeStage = true;
     this.dataAModal = false;
+    this.tablelistService.dataAnalyzerReset = true;
   }
   resetDataAModal() {
     this.enableNextBtn = false;
@@ -269,6 +307,7 @@ export class TableListComponent implements OnInit {
     this.finalSecColMap.clear();
     this.selectedSecTbl.clear();
     this.finalSecColArray = [];
+    console.log(this.selectedSecTbl);
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
@@ -298,6 +337,7 @@ export class TableListComponent implements OnInit {
               secTbl.click();
             }
             this.finalSecColMap.set(secColName, true);
+            console.log(this.selectedSecTbl);
           } else {
             this.selectedSecColMap.delete(secColName);
             this.finalSecColMap.delete(secColName);
@@ -376,7 +416,7 @@ export class TableListComponent implements OnInit {
   // generating secondary table array
   generateSecTblArray() {
     if (this.secTblArray.length === 0) {
-      for (const i of this.tableList) {
+      for (const i of this.sectableList) {
         if (i !== this.selectedPrimTbl) {
           this.secTblArray.push(i);
         }
@@ -443,11 +483,26 @@ export class TableListComponent implements OnInit {
         this.value[3].children[1].classList.add('finished-step');
       }
       this.value[1].children[1].classList.add('active-step');
+      if (this.value[1].children[2].classList.contains('inactive-text-color')) {
+        this.value[1].children[2].classList.remove('inactive-text-color');
+      }
+      this.value[1].children[2].classList.add('active-text-color');
     }, 300);
     this.currentStepNo = stepper.selectedIndex;
     this.stepper.selectedIndex = 1;
     this.handleStepIindicator(true);
     this.enableNextBtn = this.finalSecColMap.size > 0;
+    setTimeout(() => {
+      if (this.tablelistService.dataAnalyzerReset) {
+        const inputElements = document.querySelectorAll('.sec-br input');
+        for (let i = 0; i < inputElements.length; i++) {
+          if ((inputElements[i] as HTMLInputElement).type === 'checkbox') {
+            (inputElements[i] as HTMLInputElement).checked = false;
+          }
+        }
+        this.tablelistService.dataAnalyzerReset = false;
+      }
+    }, 100);
   }
   gotoPrimarySel(e, stepper: MatStepper) {
     const steps: MatStepHeader[] = stepper._stepHeader.toArray();
@@ -484,6 +539,10 @@ export class TableListComponent implements OnInit {
       const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
       b[0].children[3].classList.add('mat-horizental-line');
       this.value[2].children[1].classList.add('active-step');
+      if (this.value[2].children[2].classList.contains('inactive-text-color')) {
+        this.value[2].children[2].classList.remove('inactive-text-color');
+      }
+      this.value[2].children[2].classList.add('active-text-color');
       if (steps[1].state === 'edit') {
         this.value[1].children[1].classList.add('finished-step');
       }
@@ -589,16 +648,16 @@ export class TableListComponent implements OnInit {
     }
   }
   dataAnalyse() {
-    setTimeout(() => {
-      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
-      a[3].classList.add('mat-analyze-psedu-before');
-      a[2].classList.add('mat-analyze-psedu');
-      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
-      b[0].children[5].classList.add('mat-horizental-line');
-      this.value[2].children[1].classList.add('finished-step');
-      this.value[3].children[1].classList.add('active-step');
-    }, 300);
-    this.stepper.selectedIndex = 3;
+    // setTimeout(() => {
+    //   const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+    //   a[3].classList.add('mat-analyze-psedu-before');
+    //   a[2].classList.add('mat-analyze-psedu');
+    //   const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+    //   b[0].children[5].classList.add('mat-horizental-line');
+    //   this.value[2].children[1].classList.add('finished-step');
+    //   this.value[3].children[1].classList.add('active-step');
+    // }, 300);
+    // this.stepper.selectedIndex = 3;
     this.tablelistService.sendValuesForTableToTableAnalysis(this.selectedTblsColsObj).subscribe(res => {
       if (res && res.success) {
         this.dataAnalysisjobID = res.data.jobId;
@@ -610,7 +669,8 @@ export class TableListComponent implements OnInit {
   getJobStatus() {
     this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
       this.JobStatus = res.data.jobStatus;
-      document.getElementById('close-analyzer-popup').click();
+      console.log(this.JobStatus);
+      // document.getElementById('close-analyzer-popup').click();
       if (this.JobStatus === 'SUCCESS') {
         this.dataAModal = false;
         this.homeStage = false;
@@ -628,12 +688,16 @@ export class TableListComponent implements OnInit {
         // this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
         // this.JobStatus = '';
       } else {
+        console.log('a');
         setTimeout(() => {
           this.stepper.selectedIndex = 2;
           this.stepperIndex = 2;
           this.value[2].children[1].classList.add('active-step');
+          if (document.getElementById('analyzes').classList.contains('in') === false) {
+            document.getElementById('open-analyzer-popup').click();
+          } else {
+          }
         }, 1000);
-        document.getElementById('open-analyzer-popup').click();
       }
     });
   }
@@ -647,6 +711,9 @@ export class TableListComponent implements OnInit {
     this.value[2].children[1].classList.add('unfinished-step');
     this.value[1].children[1].classList.add('unfinished-step');
     this.value[3].children[1].classList.add('unfinished-step');
+    this.value[2].children[2].classList.add('inactive-text-color');
+    this.value[1].children[2].classList.add('inactive-text-color');
+    this.value[3].children[2].classList.add('inactive-text-color');
   }
 
   deleteRelationship(indexOfDelete) {
@@ -670,7 +737,7 @@ export class TableListComponent implements OnInit {
           this.postDelete();
         } else {
           this.deleteNotif.show = true;
-          this.deleteNotif.message = res.errorMessage;
+          this.deleteNotif.message = res.errors;
         }
       });
   }
@@ -679,7 +746,7 @@ export class TableListComponent implements OnInit {
     this.relationShipIDs = [];
   }
   postDelete() {
-    const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
+    const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal #dismissmodel');
     close.click();
     this.loadRelationTable(this.tableCopy);
   }
@@ -689,6 +756,7 @@ export class TableListComponent implements OnInit {
   }
   refreshRelation($event) {
     this.loadRelationTable(this.tableCopy);
+    document.getElementById('editsuccess').click();
   }
 
 
@@ -771,12 +839,20 @@ export class TableListComponent implements OnInit {
       });
   }
 
-  selectAll() {
-    $('input:checkbox:enabled.m-r-10').click();
+  selectAll(event) {
+    if (event.target.checked) {
+      $('input:checkbox:not(:checked).m-r-10').click();
+    } else {
+      $('input:checkbox:checked.m-r-10').click();
+    }
   }
 
-  selectAllSec() {
-    $('input:checkbox:enabled.m-r-10.m-r-sec').click();
+  selectAllSec(event) {
+    if (event.target.checked) {
+      $('input:checkbox:not(:checked).m-r-10.m-r-sec').click();
+    } else {
+      $('input:checkbox:checked.m-r-10.m-r-sec').click();
+    }
   }
 
   togglePanels(index: number) {
@@ -803,5 +879,11 @@ export class TableListComponent implements OnInit {
     this.homeStage = true;
     this.dataAModal = false;
     this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+  }
+  bgsel(i) {
+    this.selectedRow = i;
+  }
+  bgcol(c) {
+    this.selectedRow = c;
   }
 }
