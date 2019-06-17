@@ -669,7 +669,7 @@ export class TableListComponent implements OnInit {
   getJobStatus() {
     this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
       this.JobStatus = res.data.jobStatus;
-      console.log(this.JobStatus);
+      console.log(res);
       // document.getElementById('close-analyzer-popup').click();
       if (this.JobStatus === 'SUCCESS') {
         this.dataAModal = false;
@@ -679,6 +679,8 @@ export class TableListComponent implements OnInit {
           'primaryTableId': res.data.tableId,
           'primaryTableName': res.data.tableName,
           'relationDetails': res.data.relationDetails,
+          'secondaryTableId': res.data.relationDetails[0].secondaryTableList[0].tableId,
+          'secondaryTableName': res.data.relationDetails[0].secondaryTableList[0].tableName,
           'jobId': this.dataAnalysisjobID
         }];
         this.tablelistService.changeArray(this.resultantArray);

@@ -30,6 +30,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   populateSecondaryValuesArray: any;
   primaryTableId: any;
   primaryTableName: any;
+  secodaryTableId: any;
+  secondaryTableName: any;
   workspaceId: any;
   selectedPrimaryColumn: any;
   secondaryTableListArray: any;
@@ -70,6 +72,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         this.primaryTableId = res[0].primaryTableId;
         this.primaryTableName = res[0].primaryTableName;
         this.jobId = res[0].jobId;
+        this.secodaryTableId = res[0].secondaryTableId;
+        this.secondaryTableName = res[0].secondaryTableName;
       }
     });
     this.getPrimaryColumns();
@@ -114,7 +118,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
             secondaryColumnId: z.secondaryColumnId,
             secondaryColumnName: z.secondaryColumnName,
             dataType: z.dataType,
-            matchPercentage: z.matchPercentage
+            matchPercentage: z.matchPercentage,
+            checked : false
           };
           this.finalSecondaryArray.push(temp);
         }
@@ -145,7 +150,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
             secondaryColumnId: k.secondaryColumnId,
             secondaryColumnName: k.secondaryColumnName,
             dataType: k.dataType,
-            matchPercentage: k.matchPercentage
+            matchPercentage: k.matchPercentage,
+            checked : false
           };
           existingPrimCol.push(temp);
         }
@@ -190,6 +196,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     const isChecked = _event.target.checked;
     let joinListInfoArray;
     if (isChecked) {
+      x.checked = true;
       this.pricheckvalueMap.set(index, x.secondaryColumnName);
       const secColumn = {
         'columnId': x.secondaryColumnId,
@@ -219,6 +226,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       joinListInfoArray.push(Obj);
     } else {
       this.pricheckvalueMap.delete(index);
+      x.checked = false;
       joinListInfoArray = this.resultantMap.get(x.tableName);
       for (const i of joinListInfoArray) {
         if (i.indexData === index) {
@@ -234,6 +242,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     const isChecked = _event.target.checked;
     let joinListInfoArray;
     if (isChecked) {
+      x.checked = true;
       this.seccheckvalueMap.set(index, x.secondaryColumnName);
       const secColumn = {
         'columnId': x.secondaryColumnId,
@@ -262,6 +271,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       };
       joinListInfoArray.push(Obj);
     } else {
+      x.checked = false;
       this.seccheckvalueMap.delete(index);
       joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
       for (const i of joinListInfoArray) {
@@ -277,6 +287,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.updateNotif = false;
     this.updateSuccess = false;
     const finalSecondaryTableListArray = [];
+    console.log(this.resultantMap, this.secTableIdMap);
     this.resultantMap.forEach((value, key) => {
       let tempArray = [];
       const secTableId = this.secTableIdMap.get(key);
@@ -286,8 +297,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         delete i.indexData;
       }
       const Obj1 = {
-        'tableId': secTableId,
-        'tableName': secTableName,
+        'tableId': this.secodaryTableId,
+        'tableName': this.secondaryTableName,
         'joinListInfo': tempArray
       };
       finalSecondaryTableListArray.push(Obj1);
@@ -301,14 +312,14 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       secondaryTableList: finalSecondaryTableListArray
     };
     if (finalSecondaryTableListArray.length > 0) {
-      this.addDirectJoinService.addNewJoin(param).subscribe(res => {
+      this.addDirectJoinService.addDaNewJoin(param).subscribe(res => {
         if (res && res.data.errorDetails.length === 0) {
           document.getElementById('datasuccessmsg').click();
           this.updateSuccess = true;
           this.resultantMap.clear();
-          setTimeout(() =>
-            this.closeScreen(), 1000);
-          setTimeout(() => this.tablelistService.changeBooleanValue(true), 1005);
+          // setTimeout(() =>
+          //   this.closeScreen(), 1000);
+          // setTimeout(() => this.tablelistService.changeBooleanValue(true), 1005);
         } else {
           this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
           this.updateNotif = true;
@@ -330,6 +341,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   closeScreen() {
     this.addDirectJoinService.clearSession(this.jobId).subscribe();
     this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+    this.tablelistService.dataAnalyzerReset = true;
     this.tablelistService.changeBooleanValue(true);
   }
 

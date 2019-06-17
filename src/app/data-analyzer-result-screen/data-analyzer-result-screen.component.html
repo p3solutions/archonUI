@@ -103,7 +103,7 @@
                                     <ng-container matColumnDef="checked">
                                       <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
                                       <td mat-cell *matCellDef="let element;let i =index;">
-                                          <input type="checkbox" class="m-r" [disabled]="element.matchPercentage == 0"
+                                          <input type="checkbox" class="m-r" [disabled]="element.matchPercentage == 0" [checked]="element.checked"
                                           (change)="checkedPriValues(element,$event,i)">
                                       </td>
                                     </ng-container>
@@ -191,7 +191,7 @@
                                     <ng-container matColumnDef="checked">
                                       <th mat-header-cell *matHeaderCellDef style="width: 4%">  </th>
                                       <td mat-cell *matCellDef="let element; let i = index">
-                                        <input type="checkbox" [disabled]="element.matchPercentage == 0"
+                                        <input type="checkbox" [disabled]="element.matchPercentage == 0" [checked]="element.checked"
                                         (change)="checkedSecValues(element,$event,i)">
                                       </td>
                                     </ng-container>
@@ -253,7 +253,7 @@
                           <div class="action-btn">
                             <button class="btn cancel btn-padding" data-keyboard="false"
                               data-backdrop="static" data-toggle="modal" data-target="#confirmClose">Close</button>
-                            <button style="margin-right: -1%;" class="btn {{'pricheckvalueMap.size === 0 || seccheckvalueMap.size === 0' ? 'save-disabled': 'save'}} btn-padding" data-keyboard="false" [disabled]="pricheckvalueMap.size === 0 || seccheckvalueMap.size === 0"
+                            <button style="margin-right: -1%;" class="btn {{'pricheckvalueMap.size === 0 && seccheckvalueMap.size === 0' ? 'save-disabled': 'save'}} btn-padding" data-keyboard="false" [disabled]="pricheckvalueMap.size === 0 && seccheckvalueMap.size === 0"
                               data-backdrop="static" data-toggle="modal" data-target="#addJoins">Add Selected Joins</button>
                           </div>
                         </div>
