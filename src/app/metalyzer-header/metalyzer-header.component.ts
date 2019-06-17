@@ -35,8 +35,7 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   startIndex = 1;
   schemaResultsTableCount = 0;
   disable = true;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) matpaginator: MatPaginator;
   dataSource: MetalyzerDataSource;
 
   constructor(
@@ -67,15 +66,12 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.tablelistService.Dropdownlist.subscribe(data => {
       this.dropdown = data;
     });
-    this.paginator.pageIndex = 0;
-    this.getStart();
+    this.matpaginator.pageIndex = 0;
+    this.loadPage();
   }
 
   ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-console.log('hi');
-
-    merge(this.paginator.page)
+    merge(this.matpaginator.page)
       .pipe(
         tap(() => this.loadPage())
       )
@@ -97,17 +93,18 @@ console.log('hi');
   loadPage() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.userid = this.userInfoService.getUserId();
-    this.dataSource.getAudit(this.workspaceID, this.userid, this.paginator.pageIndex + 1);
+      this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService);
+    this.dataSource.getAudit(this.workspaceID, this.userid, this.matpaginator.pageIndex + 1);
   }
 
-  getStart() {
-    this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.userid = this.userInfoService.getUserId();
-    this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService);
-    this.dataSource.getAudit(this.workspaceID, this.userid, this.paginator.pageIndex + 1);
-    console.log(this.paginator.pageIndex + 1, 'page');
+  // getStart() {
+  //   this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+  //   this.userid = this.userInfoService.getUserId();
+  //   this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService);
+  //   this.dataSource.getAudit(this.workspaceID, this.userid, this.paginator.pageIndex + 1);
+  //   console.log(this.paginator.pageIndex + 1, 'page');
     
-    }
+  //   }
 
 
   downloadFile(content, fileType) {
