@@ -357,6 +357,9 @@ export class ErtTableComponent implements OnInit {
     if (this.tempOriginalSelectedTable.length !== 0) {
       Array.prototype.push.apply(this.selectedTableList, this.tempOriginalSelectedTable);
       this.selectedTableId = this.selectedTableList[0].tableId;
+      const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+      this.modifiedTableName = tempObj.modifiedTableName;
+      this.tableName = tempObj.tableName;
       const tableIds = this.tempOriginalSelectedTable.map(function (item) { return item['tableId']; });
       this.spinner.show();
       this.tempOriginalSelectedTable = [];
@@ -599,16 +602,17 @@ export class ErtTableComponent implements OnInit {
         } else {
           this.usrDefinedQueryView = temp.viewQuery;
         }
-        if (this.userDefinedList.length !== 0) {
-          for (const item of this.userDefinedList) {
-            const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
-              === item.column);
-            if (tempIndex !== -1) {
-              this.ursDefinedColumnNameList.splice(tempIndex, 1);
-            }
+      }
+      if (this.userDefinedList.length !== 0) {
+        for (const item of this.userDefinedList) {
+          const tempIndex = this.ursDefinedColumnNameList.findIndex(a => a
+            === item.column);
+          if (tempIndex !== -1) {
+            this.ursDefinedColumnNameList.splice(tempIndex, 1);
           }
         }
       }
+      this.setQueryModeUserDefined();
     } else {
       this.enableUserDefined = true;
     }
@@ -853,18 +857,27 @@ export class ErtTableComponent implements OnInit {
     const isColumnNameExist = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList
       .filter(b => b.originalColumnName.trim().toUpperCase().includes(this.usrDefinedColumnName.trim().toUpperCase()));
     const length = isColumnNameExist.length;
-    if (length !== 1) {
-      if (!this.isQueryMode) {
-        this.validateQueryMode();
-        this.setQueryModeUserDefined();
-      } else if (!this.isCombinedQueryMode) {
-        this.validateCombinedColumnQueryMode();
-        this.setQueryModeUserDefined();
+    if (!this.disabledUserDefinedColName) {
+      if (length !== 1) {
+        this.saveUserDefined();
+      } else {
+        this.usrDefinedAlertMessage = 'Kindly provide different column name.';
+        document.getElementById('query-alert').classList.remove('alert-hide');
       }
     } else {
-      this.usrDefinedAlertMessage = 'Kindly provide different column name.';
-      document.getElementById('query-alert').classList.remove('alert-hide');
+      this.saveUserDefined();
     }
+  }
+
+  saveUserDefined() {
+    if (!this.isQueryMode) {
+      this.validateQueryMode();
+      this.setQueryModeUserDefined();
+    } else if (!this.isCombinedQueryMode) {
+      this.validateCombinedColumnQueryMode();
+      this.setQueryModeUserDefined();
+    }
+    this.disabledUserDefinedColName = false;
   }
 
   saveUserDefinedAfterValidate() {
@@ -1001,6 +1014,7 @@ export class ErtTableComponent implements OnInit {
       if (filterMap.get('filterList') !== '') {
         this.filterdata = JSON.parse(filterMap.get('filterList').replace(/'/g, '"'));
       }
+      console.log(filterMap.get('orderLIst'));
       if (filterMap.get('orderLIst') !== '') {
         this.dataOrderList = JSON.parse(filterMap.get('orderList').replace(/'/g, '"'));
       }
@@ -1093,7 +1107,6 @@ export class ErtTableComponent implements OnInit {
   }
 
   createFilterWhereClause(obj, tableName): Observable<string> {
-    console.log(obj);
     const children = obj.children;
     for (const child of children) {
       if (child.children.length === 0) {
@@ -1210,14 +1223,8 @@ export class ErtTableComponent implements OnInit {
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[0]));
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2.children[0], filterTreeNode2.children[0].children[1]));
       } else {
-        const filterConfigNode = new FilterConfigNode(1, filterTreeNode2.children[0].operation,
-          false, false, filterTreeNode2.children[0].column,
-          filterTreeNode2.children[0].condition, filterTreeNode2.children[0].value, 0, 0, []);
-        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
-        filterTreeNode2.children[0].children[0].parentId = 1;
-        filterTreeNode2.children[0].children[1].parentId = 1;
-        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterTreeNode2.children[0].children[0]));
-        this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterTreeNode2.children[0].children[1]));
+        filterTreeNode2.children[0].parentId = 0;
+        this.filterdata.root = filterTreeNode2.children[0];
       }
     }
   }

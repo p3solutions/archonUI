@@ -211,7 +211,12 @@ export class ErtService {
   }
 
   private extractDataForJobs(res: any) {
-    const body = res.data.ertJobs;
+    let body: any;
+    if (res.data !== null) {
+      body = res.data.ertJobs;
+    } else {
+      body = [];
+    }
     return body || [];
   }
 

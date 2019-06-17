@@ -189,7 +189,6 @@ Tree.prototype.printByLevel = function () {
 };
 
 export function addFilterNode(filterConfigTree: FilterConfigTree, parent: FilterConfigNode, child: FilterConfigNode): string {
-    console.log(child, parent);
     const filterTree = new Tree();
     if (filterConfigTree != null) {
         filterTree.root = filterConfigTree.root;

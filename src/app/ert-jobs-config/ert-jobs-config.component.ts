@@ -53,7 +53,7 @@ export class ErtJobsConfigComponent implements OnInit {
   }
 
   enableJobSelection() {
-    if (this.ertJobParams.ertJobTitle.length >= 3) {
+    if (this.ertJobParams.ertJobTitle.trim().length >= 3) {
       for (let i = 0; i < this.ertJobTypes.length; i++) {
         if (this.ertService.mmrVersion === '') {
           if (i === 0) {

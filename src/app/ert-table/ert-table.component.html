@@ -39,10 +39,9 @@
         </div>
         <div class="card-body">
           <ng-container *ngIf="!showNoTablesMsg">
-            <div class="row">
+            <div *ngIf="selectedTableList.length>0" class="row">
               <div class="col-md-5" id="sel-table-name">
                 <div class='alias-name'>
-
                   <mat-form-field>
                     <input type="text" appNonspecialchar appOnlyuppercaseallow matInput name="tablename" id="tablename"
                       [(ngModel)]="modifiedTableName" placeholder="Table Alias Name"
@@ -271,9 +270,9 @@
                   <a class="nav-item nav-link active-tab" (click)="filterOrderConfig($event)" id="nav-filter-tab"
                     data-toggle="tab" href="#nav-filter" role="tab" aria-controls="nav-filter"
                     aria-selected="true">Filter
-                    Config</a>
+                    config</a>
                   <a class="nav-item nav-link" (click)="filterOrderConfig($event)" id="nav-data-tab" data-toggle="tab"
-                    href="#nav-data" role="tab" aria-controls="nav-data" aria-selected="false">Data Order Config</a>
+                    href="#nav-data" role="tab" aria-controls="nav-data" aria-selected="false">Data order config</a>
                 </div>
               </nav>
               <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
@@ -303,7 +302,7 @@
                             </select>
                           </div>
                           <div class="form-group">
-                            <select #selectcondition (focus)="filterColumnSelectionChange(node.column)"
+                            <select #selectcondition (clc)="filterColumnSelectionChange(node.column)"
                               [(ngModel)]="node.condition" class="form-control">
                               <option [ngValue]="null" selected>Select condition</option>
                               <option [value]="item.operation" *ngFor="let item of filterOperationList">
@@ -433,11 +432,12 @@
             <div class="form-group">{{item.selectedConfigFunction}}</div>
             <div class="form-group" [matTooltip]="item.param">{{item.param}}</div>
             <div class="form-group">{{item.outputType}}</div>
-            <div class="form-group cursor-pointer"><i class="fa fa-trash" (click)="deleteColumnCOnfig(i)"></i></div>
+            <div matTooltip="Delete this function will delete all below functions." class="form-group cursor-poniter"><i
+                class="fa fa-trash" (click)="deleteColumnCOnfig(i)"></i></div>
           </div>
         </div>
-        <div style="font-size:12px; padding-top:8px;">
-          Query preview:{{configColumnQuery}}
+        <div *ngIf="configColumnQuery.length>0" style="font-size:12px; padding-top:8px;">
+          <b style="letter-spacing: 0.6px;color: #000000;">Query preview: </b>{{configColumnQuery}}
         </div>
       </div>
       <div class="modal-footer">

@@ -266,7 +266,7 @@ input#ucolumnname {
   margin: 0px 0px 0px 0px;
   padding: 7px 27px 7px 26px;
   color: white;
-  font-size: 12px;
+  font-size: 13px;
   text-decoration: none;
 }
 
@@ -468,6 +468,7 @@ table tr td:nth-child(6) {
   padding: 3px;
   text-align: left;
   background-color: #2196F3;
+  font-size: 14px;
 }
 
 #avaliable-table-list {
