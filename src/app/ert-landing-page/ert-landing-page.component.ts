@@ -3,6 +3,7 @@ import { ErtService } from './ert.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserinfoService } from '../userinfo.service';
 import { ManageMasterMetadataService } from '../manage-master-metadata/manage-master-metadata.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ert-landing-page',
@@ -13,7 +14,7 @@ export class ErtLandingPageComponent implements OnInit {
   workspaceName = '';
   mmrVersion = '';
   workspaceId = '';
-  constructor(private ertService: ErtService, private userInfoService: UserinfoService,
+  constructor(private ertService: ErtService, private userInfoService: UserinfoService, private router: Router,
     private workspaceHeaderService: WorkspaceHeaderService, private manageMetaService: ManageMasterMetadataService) { }
 
   ngOnInit() {
@@ -25,5 +26,9 @@ export class ErtLandingPageComponent implements OnInit {
       }
       this.ertService.setMMRVersion(this.mmrVersion);
     });
+  }
+
+  gotoDashboard() {
+    this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
 }

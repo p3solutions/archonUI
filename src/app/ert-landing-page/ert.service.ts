@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, forkJoin } from 'rxjs';
+import { Observable, of, forkJoin, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserinfoService } from '../userinfo.service';
 import {
@@ -45,6 +45,22 @@ export class ErtService {
   storeSelectedTables: TableDetailsListObj[] = [];
   isDataRecordGraphChange = false;
   isSIPGraphChange = false;
+  ertJobTypes: BehaviorSubject<any> = new BehaviorSubject<any>([{
+    'ertJobType': 'Table',
+    'description': 'Choose option for table Extraction', 'ertJobImage': 'livearchival.png',
+    'isEnable': false
+  },
+  {
+    'ertJobType': 'Data Record', 'description': 'Choose option for Data Record Extraction',
+    'ertJobImage': 'livearchival.png', 'isEnable': false
+  },
+  { 'ertJobType': 'SIP', 'description': 'Choose option for SIP Extraction', 'ertJobImage': 'livearchival.png', 'isEnable': false }]);
+  updatedSearchCriteria = this.ertJobTypes.asObservable();
+
+  updateErtJobTypes(ertJobTypes: any) {
+    this.ertJobTypes.next(ertJobTypes);
+  }
+
   setErtJobParams(ertJobParams: ErtJobParams) {
     this.ertJobParams = ertJobParams;
   }

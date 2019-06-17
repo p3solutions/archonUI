@@ -165,7 +165,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       }
     }
     this.adhocScreenService.setTreeMap(this.treeMap);
-    this.spinner.hide();
+     this.spinner.hide();
   }
 
   initTab() {

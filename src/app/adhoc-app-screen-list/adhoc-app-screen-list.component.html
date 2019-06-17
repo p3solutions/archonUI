@@ -1,4 +1,8 @@
 <div class="container-fluid">
+  <ngx-spinner class="my-spinner" bdOpacity=0.9 bdColor="rgb(0,0,0,0.35)" size="medium" color="#2879ff"
+    type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+  </ngx-spinner>
   <div class="row">
     <div id="create-app-header">
       <a (click)="gotoDashboard()" data-tooltip="Back">
@@ -180,7 +184,9 @@
     <div class="modal-content">
       <div class="modal-header error-popup-header-cls">
         <h4 class="modal-title popup-title-cls">
-          <i class="material-icons popup-material-icon-cls">error_outline</i><div class="pop-title">Error</div></h4>
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title">Error</div>
+        </h4>
       </div>
       <div class="modal-body">
         <p class="popup-paragraph-cls">Please add metadata version for this workspace.</p>
@@ -202,7 +208,9 @@
     <div class="modal-content">
       <div class="modal-header success-popup-header-cls">
         <h4 class="modal-title popup-title-cls">
-          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">check_circle_outline</i><div class="pop-title">Success</div></h4>
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">check_circle_outline</i>
+          <div class="pop-title">Success</div>
+        </h4>
       </div>
       <div class="modal-body">
         <p class="popup-paragraph-cls">{{successMessage}}</p>
@@ -223,12 +231,14 @@
     <div class="modal-content">
       <div class="modal-header error-popup-header-cls">
         <h4 class="modal-title popup-title-cls">
-          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i><div class="pop-title">Delete</div></h4>
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i>
+          <div class="pop-title">Delete</div>
+        </h4>
       </div>
       <div class="modal-body">
         <p class="popup-paragraph-cls">Are you sure you want to delete the screen?</p>
       </div>
-      <div class="modal-footer">        
+      <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="deleteScreen()"
           data-dismiss="modal">Yes</button>
@@ -244,7 +254,9 @@
     <div class="modal-content">
       <div class="modal-header  error-popup-header-cls">
         <h4 class="modal-title popup-title-cls">
-          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i><div class="pop-title">Error</div></h4>
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i>
+          <div class="pop-title">Error</div>
+        </h4>
       </div>
       <div class="modal-body">
         <p class="popup-paragraph-cls">{{successMessage}}</p>

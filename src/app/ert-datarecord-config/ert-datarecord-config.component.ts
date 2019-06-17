@@ -60,7 +60,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
     this.router.navigate(['/workspace/ert/ert-table'], { queryParams: { from: 'data-record' } });
   }
   gotoJobConfiguration() {
-    this.router.navigate(['workspace/ert/ert-jobs-config']);
+    this.router.navigate(['workspace/ert-jobs-config']);
   }
 
   getPage(page: number) {

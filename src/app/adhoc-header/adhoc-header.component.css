@@ -1,7 +1,7 @@
 #create-app-header {
   display: inline-flex;
-    margin: 2px 2px 11px 17px;
-    float: left;
+  margin: 2px 2px 11px 17px;
+  float: left;
 }
 
 #create-app-header a {
@@ -14,4 +14,8 @@
   justify-content: space-between;
   font-size: larger;
   word-wrap: break-word;
+}
+
+::ng-deep .my-spinner .overlay {
+  position: fixed !important;
 }

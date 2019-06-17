@@ -37,7 +37,6 @@ export class ErtJobsComponent implements OnInit {
   }
   getErtJobList() {
     const userId = this.userInfoService.getUserId();
-    this.spinner.hide();
     this.spinner.show();
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
