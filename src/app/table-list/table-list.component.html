@@ -194,7 +194,7 @@
                               </div>
                               <div class="col-md-12 list-block" style="padding-left: 0px; padding-right: 0px;">
                                 <div class="col-md-12 plr-0"
-                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, currentPage: primaryPage } let i=index;">
+                                  *ngFor="let pColumn of primColArray| searchTable : searchPrimary | paginate: {id: 'dalist0', itemsPerPage: 50, totalItems: primColArray.length, currentPage: primaryPage } let i=index;">
                                   <div [class.selected]="i == selectedRow" class="col-md-12 trim-text ana-br da-table" id="list-br" title="{{pColumn.column_name}}">
                                     <input id="{{pColumn}}" type="checkbox" [checked]="pColumn.selected"
                                       (change)="toggleColSelection($event, true, pColumn)" (click)="bgsel(i)" class="m-r-10">
@@ -244,7 +244,7 @@
                                   <div class="col-md-12 p-0 dataA-scrollable-div">
                                     <div class="da-table-parent">
                                       <div class="col-md-12 p-0"
-                                        *ngFor="let secTbl of secTblArray | searchTable : searchSec1 | paginate: {id: 'dalist1', itemsPerPage: 50, currentPage: pageTable } let i=index;"
+                                        *ngFor="let secTbl of secTblArray | searchTable : searchSec1 | paginate: {id: 'dalist1', itemsPerPage: 50, totalItems: schemaResultssecTableCount, currentPage: pagesec } let i=index;"
                                         [hidden]="secTbl.tableName === selectedPrimTbl">
                                         <div class="col-md-12 cur-p da-table trim-text ana-br sec-br" id="list-br"
                                           title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
@@ -256,8 +256,8 @@
                                       </div>
                                     </div>
                                   </div>
-                                  <div class="col-md-12" style="margin-top: 18px;text-align: right;padding-right: 0px;">
-                                    <pagination-controls id="dalist1" (pageChange)="pageTable = $event"></pagination-controls>
+                                  <div class="col-md-12" style="margin-top: 18px;text-align: right;padding-right: 0px;">                                   
+                                    <pagination-controls id="dalist1" (pageChange)="getsecPage(pagesec = $event)"></pagination-controls>
                                   </div>
                                 </div>
                               </div>
@@ -290,7 +290,7 @@
                                       </div>
                                     </div>
                                     <div class="col-md-12 p-0"
-                                      *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, currentPage: pageColumn } let c=index;"
+                                      *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, totalItems: secColArray.length, currentPage: pageColumn } let c=index;"
                                       id="secondaryColums">
                                       <div [class.selected]="c == selectedRow" class="col-md-12  trim-text ana-br da-table" id="list-br" title="{{sColumn.columnName}}">
                                         <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb"
