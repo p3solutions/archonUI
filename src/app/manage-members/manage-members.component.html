@@ -1,11 +1,6 @@
-<div>
+<!-- <div>
   <div class="row">
-    <div class="col-md-6">
-      <!-- <div class="col-md-1 back-arrow">
-        <a (click)="gotoDashboard()" data-tooltip="Back">
-          <i class="fa fa-arrow-left fa-lg" aria-hidden="true" ></i>
-        </a>
-      </div> -->
+    <div class="col-md-6">      
       <div class="col-md-8">
         <h3 class="workspace-panel-heading">
           Manage Members
@@ -17,17 +12,11 @@
         <a matTooltip="Add Members" style="font-size: 42px" data-toggle="modal"  data-target="#add-member-modal"><i class="material-icons">
           add_circle
           </i></a>
-<!--    
-            <button  data-toggle="modal" data-target="#add-member-modal" class="btn btn-primary pull-right btn-form add-btn">ADD MEMBERS</button> -->
-      <!-- <button data-toggle="modal" data-target="#myModal1" class="btn btn-primary pull-right add-btn-form">ADD MEMBERS</button> -->
-      <!-- <a href="" data-toggle="modal" data-target="#myModal1" (click)="getUserId(user.id)">
-        Change Role
-      </a> -->
     </div> 
   </div>
   <div class="row">
     <div id="manager-members" class="workspace-panel-content manage-members">
-      <!-- <div *ngIf="isAvailable"> -->
+      
         <table id="manage-members-table" class="display" cellspacing="0" width="100%">
           <thead>
             <tr>
@@ -38,7 +27,7 @@
             </tr>
           </thead>
         </table>
-      <!-- </div> -->
+     
     </div>
   </div>
   <div class="row">
@@ -76,5 +65,276 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+<div class="col-md-12">
+    <div class="col-md-6 sub-tittle">      
+          Manage Members         
+      </div>
+       <div class="col-md-6">
+         <div class="sub-left">
+              <mat-form-field >
+              <input matInput placeholder="Search">
+            </mat-form-field>
+          </div> 
+          <div class="sub-right">
+          <a matTooltip="Add Members" style="font-size: 42px" data-toggle="modal"  data-target="#add-member-modal"><i class="material-icons">
+          add_circle
+          </i></a>
+        </div>
+    </div> 
+  </div>
 
+  <div class="col-md-12">
+      <div class="col-md-12 member-header">
+          <div class="ex-mem1" ><i class="material-icons" style="font-size: 23px">delete </i></div>
+          <div class="ex-mem2" >Members</div>
+          <div class="ex-mem3"  >Role</div>
+          <div class="ex-mem4" >Delete</div>
+        </div>
+  </div>
+
+  <div class="col-md-12">
+      <div class="col-md-12 expansion">
+      <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                  <div class="ex-header1" ><mat-checkbox></mat-checkbox></div>
+                  <div class="ex-header2" >GroupUsers</div>
+                  <div class="ex-header3"  >Role Member</div>
+                  <div class="ex-header4" ><i class="material-icons" style="font-size: 23px">delete </i></div>
+              </mat-panel-title>              
+            </mat-expansion-panel-header>
+            <div class="line"></div> 
+            <div class="change-role">Change Role</div>
+            <mat-form-field>
+                <mat-label>Change Role</mat-label>
+                <mat-select >
+                  <mat-option value="option1">Option 1</mat-option>
+                  <mat-option value="option2" >Option 2</mat-option>
+                  <mat-option value="option3">Option 3</mat-option>
+                </mat-select>
+              </mat-form-field>
+                  <div class="acc">Service Access</div>
+            <div class="exp-content-outer-header">
+                <div class="exp-mat-item">
+                  <strong>Services</strong>
+                </div>
+                <div class="exp-mat-item">
+                  <strong>Access</strong>
+                </div>
+                <div class="exp-mat-item">
+                  <strong>Permission</strong>
+                </div>
+              </div>
+              <div class="exp-content-outer">
+                <div class="exp-mat-item">Metalyzer</div>
+                <div class="exp-mat-item"> <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label></div>
+                <div class="exp-mat-item-select"> <mat-form-field class="select-cus">
+                    <!-- <mat-label>Change Role</mat-label> -->
+                    <mat-select>
+                      <mat-option value="option1">Option 1</mat-option>
+                      <mat-option value="option2" >Option 2</mat-option>
+                      <mat-option value="option3">Option 3</mat-option>
+                    </mat-select>
+                  </mat-form-field></div>               
+              </div>
+              <div class="exp-content-outer">
+                  <div class="exp-mat-item">ADDRESS</div>
+                  <div class="exp-mat-item">CITY</div>
+                  <div class="exp-mat-item">ADDRESS</div>               
+                </div>
+                <div class="exp-content-outer">
+                    <div class="exp-mat-item">ADDRESS</div>
+                    <div class="exp-mat-item">CITY</div>
+                    <div class="exp-mat-item">ADDRESS</div>               
+                  </div>
+          </mat-expansion-panel>
+
+
+          <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="ex-header1" ><mat-checkbox></mat-checkbox></div>
+                    <div class="ex-header2" >GroupUsers</div>
+                    <div class="ex-header3"  >Role Member</div>
+                    <div class="ex-header4" ><i class="material-icons" style="font-size: 23px">delete </i></div>
+                </mat-panel-title>              
+              </mat-expansion-panel-header>
+              <div class="line"></div> 
+              <div class="change-role">Change Role</div>
+              <mat-form-field>
+                  <mat-label>Change Role</mat-label>
+                  <mat-select >
+                    <mat-option value="option1">Option 1</mat-option>
+                    <mat-option value="option2" >Option 2</mat-option>
+                    <mat-option value="option3">Option 3</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                    <div class="acc">Service Access</div>
+              <div class="exp-content-outer-header">
+                  <div class="exp-mat-item">
+                    <strong>Services</strong>
+                  </div>
+                  <div class="exp-mat-item">
+                    <strong>Access</strong>
+                  </div>
+                  <div class="exp-mat-item">
+                    <strong>Permission</strong>
+                  </div>
+                </div>
+                <div class="exp-content-outer">
+                  <div class="exp-mat-item">Metalyzer</div>
+                  <div class="exp-mat-item"> <label class="switch">
+                      <input type="checkbox">
+                      <span class="slider round"></span>
+                  </label></div>
+                  <div class="exp-mat-item-select"> <mat-form-field class="select-cus">
+                      <!-- <mat-label>Change Role</mat-label> -->
+                      <mat-select [disabled]="disable">
+                        <mat-option value="option1">Option 1</mat-option>
+                        <mat-option value="option2" >Option 2</mat-option>
+                        <mat-option value="option3">Option 3</mat-option>
+                      </mat-select>
+                    </mat-form-field></div>               
+                </div>
+                <div class="exp-content-outer">
+                    <div class="exp-mat-item">ADDRESS</div>
+                    <div class="exp-mat-item">CITY</div>
+                    <div class="exp-mat-item">ADDRESS</div>               
+                  </div>
+                  <div class="exp-content-outer">
+                      <div class="exp-mat-item">ADDRESS</div>
+                      <div class="exp-mat-item">CITY</div>
+                      <div class="exp-mat-item">ADDRESS</div>               
+                    </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                      <div class="ex-header1" ><mat-checkbox></mat-checkbox></div>
+                      <div class="ex-header2" >GroupUsers</div>
+                      <div class="ex-header3"  >Role Member</div>
+                      <div class="ex-header4" ><i class="material-icons" style="font-size: 23px">delete </i></div>
+                  </mat-panel-title>              
+                </mat-expansion-panel-header>
+                <div class="line"></div> 
+                <div class="change-role">Change Role</div>
+                <mat-form-field>
+                    <mat-label>Change Role</mat-label>
+                    <mat-select >
+                      <mat-option value="option1">Option 1</mat-option>
+                      <mat-option value="option2" >Option 2</mat-option>
+                      <mat-option value="option3">Option 3</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                      <div class="acc">Service Access</div>
+                <div class="exp-content-outer-header">
+                    <div class="exp-mat-item">
+                      <strong>Services</strong>
+                    </div>
+                    <div class="exp-mat-item">
+                      <strong>Access</strong>
+                    </div>
+                    <div class="exp-mat-item">
+                      <strong>Permission</strong>
+                    </div>
+                  </div>
+                  <div class="exp-content-outer">
+                    <div class="exp-mat-item">Metalyzer</div>
+                    <div class="exp-mat-item"> <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label></div>
+                    <div class="exp-mat-item-select"> <mat-form-field class="select-cus">
+                        <!-- <mat-label>Change Role</mat-label> -->
+                        <mat-select [disabled]="disable">
+                          <mat-option value="option1">Option 1</mat-option>
+                          <mat-option value="option2" >Option 2</mat-option>
+                          <mat-option value="option3">Option 3</mat-option>
+                        </mat-select>
+                      </mat-form-field></div>               
+                  </div>
+                  <div class="exp-content-outer">
+                      <div class="exp-mat-item">ADDRESS</div>
+                      <div class="exp-mat-item">CITY</div>
+                      <div class="exp-mat-item">ADDRESS</div>               
+                    </div>
+                    <div class="exp-content-outer">
+                        <div class="exp-mat-item">ADDRESS</div>
+                        <div class="exp-mat-item">CITY</div>
+                        <div class="exp-mat-item">ADDRESS</div>               
+                      </div>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="ex-header1" ><mat-checkbox></mat-checkbox></div>
+                        <div class="ex-header2" >GroupUsers</div>
+                        <div class="ex-header3"  >Role Member</div>
+                        <div class="ex-header4" ><i class="material-icons" style="font-size: 23px">delete </i></div>
+                    </mat-panel-title>              
+                  </mat-expansion-panel-header>
+                  <div class="line"></div> 
+                  <div class="change-role">Change Role</div>
+                  <mat-form-field>
+                      <mat-label>Change Role</mat-label>
+                      <mat-select >
+                        <mat-option value="option1">Option 1</mat-option>
+                        <mat-option value="option2" >Option 2</mat-option>
+                        <mat-option value="option3">Option 3</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                        <div class="acc">Service Access</div>
+                  <div class="exp-content-outer-header">
+                      <div class="exp-mat-item">
+                        <strong>Services</strong>
+                      </div>
+                      <div class="exp-mat-item">
+                        <strong>Access</strong>
+                      </div>
+                      <div class="exp-mat-item">
+                        <strong>Permission</strong>
+                      </div>
+                    </div>
+                    <div class="exp-content-outer">
+                      <div class="exp-mat-item">Metalyzer</div>
+                      <div class="exp-mat-item"> <label class="switch">
+                          <input type="checkbox">
+                          <span class="slider round"></span>
+                      </label></div>
+                      <div class="exp-mat-item-select"> <mat-form-field class="select-cus">
+                          <!-- <mat-label>Change Role</mat-label> -->
+                          <mat-select [disabled]="disable">
+                            <mat-option value="option1">Option 1</mat-option>
+                            <mat-option value="option2" >Option 2</mat-option>
+                            <mat-option value="option3">Option 3</mat-option>
+                          </mat-select>
+                        </mat-form-field></div>               
+                    </div>
+                    <div class="exp-content-outer">
+                        <div class="exp-mat-item">ADDRESS</div>
+                        <div class="exp-mat-item">CITY</div>
+                        <div class="exp-mat-item">ADDRESS</div>               
+                      </div>
+                      <div class="exp-content-outer">
+                          <div class="exp-mat-item">ADDRESS</div>
+                          <div class="exp-mat-item">CITY</div>
+                          <div class="exp-mat-item">ADDRESS</div>               
+                        </div>
+                </mat-expansion-panel>
+
+
+
+
+
+
+
+         
+        </mat-accordion>
+        
+  </div>
+</div>
