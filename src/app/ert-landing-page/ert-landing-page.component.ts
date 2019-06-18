@@ -14,6 +14,8 @@ export class ErtLandingPageComponent implements OnInit {
   workspaceName = '';
   mmrVersion = '';
   workspaceId = '';
+  jobName = '';
+  jobType = '';
   constructor(private ertService: ErtService, private userInfoService: UserinfoService, private router: Router,
     private workspaceHeaderService: WorkspaceHeaderService, private manageMetaService: ManageMasterMetadataService) { }
 
@@ -25,6 +27,12 @@ export class ErtLandingPageComponent implements OnInit {
         this.mmrVersion = result[0].versionNo;
       }
       this.ertService.setMMRVersion(this.mmrVersion);
+    });
+    this.ertService.jobName.subscribe(jobname => {
+      this.jobName = jobname;
+    });
+    this.ertService.jobType.subscribe(jobType => {
+      this.jobType = jobType;
     });
   }
 

@@ -147,6 +147,7 @@ import { ScrollableDirective } from './scrollable.directive';
 import { NonspecialcharDirective } from './nonspecialchar.directive';
 import { OnlyuppercaseallowDirective } from './ert-table/onlyuppercaseallow.directive';
 import { ChangeOverflowDirective } from './change-overflow.directive';
+import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -251,7 +252,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 ScrollableDirective,
                 NonspecialcharDirective,
                 OnlyuppercaseallowDirective,
-                ChangeOverflowDirective
+                ChangeOverflowDirective,
+                ActivityLandingPageComponent
         ],
         imports: [
                 JwtModule.forRoot({

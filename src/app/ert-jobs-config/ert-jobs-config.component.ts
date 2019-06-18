@@ -16,15 +16,15 @@ export class ErtJobsConfigComponent implements OnInit {
   mmrVersion = '';
   ertJobTypes = [{
     'ertJobType': 'Table', 'description': 'Choose option for table Extraction',
-    'ertJobImage': 'livearchival.png', 'enableJobSelection': true
+    'ertJobImage': 'table.png', 'enableJobSelection': true
   },
   {
     'ertJobType': 'Data Record', 'description': 'Choose option for Data Record Extraction',
-    'ertJobImage': 'livearchival.png', 'enableJobSelection': true
+    'ertJobImage': 'record.png', 'enableJobSelection': true
   },
   {
     'ertJobType': 'SIP', 'description': 'Choose option for SIP Extraction',
-    'ertJobImage': 'livearchival.png', 'enableJobSelection': true
+    'ertJobImage': 'sip.png', 'enableJobSelection': true
   }];
   constructor(public route: Router, public ertService: ErtService, private workspaceHeaderService: WorkspaceHeaderService) { }
   ngOnInit() {
@@ -38,10 +38,14 @@ export class ErtJobsConfigComponent implements OnInit {
     this.ertService.selectedValues = [];
     this.mmrVersion = this.ertService.mmrVersion;
     this.workspaceName = this.workspaceHeaderService.getSelectedWorkspaceName();
+    this.ertService.updateJobName('');
+    this.ertService.updatejobType('');
   }
 
   goToExtraction(event, ertJobMode) {
     this.ertJobParams.ertJobMode = ertJobMode;
+    this.ertService.updateJobName(this.ertJobParams.ertJobTitle);
+    this.ertService.updatejobType(this.ertJobParams.ertJobMode);
     this.ertService.setErtJobParams(this.ertJobParams);
     if (ertJobMode.trim() === 'Data Record') {
       this.route.navigate(['/workspace/ert/ert-datarecord-config']);
@@ -64,7 +68,7 @@ export class ErtJobsConfigComponent implements OnInit {
         }
       }
     } else {
-      for (let i = 0; i <  this.ertJobTypes.length; i++) {
+      for (let i = 0; i < this.ertJobTypes.length; i++) {
         this.ertJobTypes[i].enableJobSelection = true;
       }
     }

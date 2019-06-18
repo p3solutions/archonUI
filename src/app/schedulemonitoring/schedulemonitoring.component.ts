@@ -5,6 +5,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ScheduleDataSource } from './scheduledatasource';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-schedulemonitoring',
@@ -15,7 +16,7 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   loadStatus = true;
   isAvailable = false;
   output;
-  Status = ['SCHEDULED', 'IN_PROGRESS', 'COMPLETED', 'FAILED' , 'USER_OR_ADMIN_STOPPED'];
+  Status = ['SCHEDULED', 'IN_PROGRESS', 'COMPLETED', 'FAILED', 'USER_OR_ADMIN_STOPPED'];
   tools = ['RDBMS_EXTRACTION', 'ERT_EXTRACTION'];
   @ViewChild('click') button: ElementRef;
   selectedTool = '';
@@ -27,14 +28,15 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   input;
   jobMessage;
   jobOutput: any;
-  displayedColumns: string[] = ['Job Name', 'User', 'Job Origin', 'Job Type', 
+  displayedColumns: string[] = ['Job Name', 'User', 'Job Origin', 'Job Type',
     'Job Runs', 'Schedule Time', 'Start Time', 'End Time', 'Last Run Time', 'Next Start Time', 'Status', 'Details', 'Stop'];
   dataSource: ScheduleDataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
 
-  constructor(private router: Router, private renderer: Renderer, private service: ScheduleMonitoringService) {
+  constructor(private router: Router, private renderer: Renderer, private spinner: NgxSpinnerService,
+    private service: ScheduleMonitoringService) {
   }
 
 
@@ -67,17 +69,17 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
 
   sortData(sort) {
     this.dataSource.sortfn(sort);
-    }
+  }
 
   loadPage() {
     this.dataSource.getTable(
       this.selectedTool,
-       this.selectedJobStatus,
+      this.selectedJobStatus,
       this.paginator.pageIndex + 1);
   }
 
   getStart() {
-    this.dataSource = new ScheduleDataSource(this.service);
+    this.dataSource = new ScheduleDataSource(this.service, this.spinner);
     this.dataSource.getTable(this.selectedTool, this.selectedJobStatus, this.paginator.pageIndex + 1);
   }
 
@@ -95,22 +97,22 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   stop(id) {
     this.service.stopJob(id).subscribe(result => {
       if (result.success) {
-     this.updateSuccess = true;
-     this.message = result.data;
-     this.getStart();
+        this.updateSuccess = true;
+        this.message = result.data;
+        this.getStart();
       } else if (result.status === 500) {
         this.updateNotif = true;
         this.message = result.message;
       }
-     });
+    });
   }
 
   selectTool(tool) {
-  this.selectedTool = tool;
+    this.selectedTool = tool;
   }
 
   selectJobStatus(status) {
-  this.selectedJobStatus = status;
+    this.selectedJobStatus = status;
   }
 
   gotoDashboard() {
