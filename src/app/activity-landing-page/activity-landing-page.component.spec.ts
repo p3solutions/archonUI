@@ -1,6 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivityLandingPageComponent } from './activity-landing-page.component';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
+import { RouterTestingModule } from '@angular/router/testing';
+import { UserProfileService } from '../user-profile/user-profile.service';
+import { UserinfoService } from '../userinfo.service';
+import { HttpClientModule } from '@angular/common/http';
+import { EnvironmentService } from '../environment/environment.service';
+import { MockEnvironmentService } from '../environment/mock-environment.service';
 
 describe('ActivityLandingPageComponent', () => {
   let component: ActivityLandingPageComponent;
@@ -8,9 +16,11 @@ describe('ActivityLandingPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActivityLandingPageComponent ]
+      declarations: [ActivityLandingPageComponent, NavbarComponent],
+      imports: [NgxSpinnerModule, RouterTestingModule, HttpClientModule],
+      providers: [NgxSpinnerService, UserProfileService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

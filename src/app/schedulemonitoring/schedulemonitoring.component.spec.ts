@@ -17,6 +17,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 describe('SchedulemonitoringComponent', () => {
   let component: SchedulemonitoringComponent;
@@ -24,12 +25,12 @@ describe('SchedulemonitoringComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SchedulemonitoringComponent , NavbarComponent],
+      declarations: [SchedulemonitoringComponent, NavbarComponent],
       imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, DataTablesModule, RouterTestingModule, HttpClientTestingModule, HttpClientModule],
-      providers: [UserinfoService, UserProfileService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      providers: [UserinfoService, UserProfileService, NgxSpinnerService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
