@@ -96,23 +96,32 @@
   <div class="col-md-12">
       <div class="col-md-12 expansion">
       <mat-accordion>
-          <mat-expansion-panel>
+
+
+
+
+
+
+
+
+
+
+
+
+          <mat-expansion-panel *ngFor="let manage of manageMembers;let ind=index;">
             <mat-expansion-panel-header>
               <mat-panel-title>
                   <div class="ex-header1" ><mat-checkbox></mat-checkbox></div>
-                  <div class="ex-header2" >GroupUsers</div>
-                  <div class="ex-header3"  >Role Member</div>
+                    <div class="ex-header2" >{{manage.user.name}}</div>
+                  <div class="ex-header3"  >{{manage.workspaceRole.name}}</div>
                   <div class="ex-header4" ><i class="material-icons" style="font-size: 23px">delete </i></div>
               </mat-panel-title>              
             </mat-expansion-panel-header>
             <div class="line"></div> 
             <div class="change-role">Change Role</div>
             <mat-form-field>
-                <mat-label>Change Role</mat-label>
-                <mat-select >
-                  <mat-option value="option1">Option 1</mat-option>
-                  <mat-option value="option2" >Option 2</mat-option>
-                  <mat-option value="option3">Option 3</mat-option>
+                <mat-select [ngModel]="manage.workspaceRole.name || 'Change Role'" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'">               
+                  <mat-option [disabled]="x.roleName === 'ROLE_OWNER'" [value]="x.roleName" *ngFor="let x of wsRoleList">{{x.roleName}}</mat-option>
                 </mat-select>
               </mat-form-field>
                   <div class="acc">Service Access</div>
@@ -127,32 +136,51 @@
                   <strong>Permission</strong>
                 </div>
               </div>
-              <div class="exp-content-outer">
-                <div class="exp-mat-item">Metalyzer</div>
+              <div class="exp-content-outer" *ngFor="let service of manage.serviceActions">
+                <div class="exp-mat-item">{{service.serviceName}}</div>
                 <div class="exp-mat-item"> <label class="switch">
                     <input type="checkbox">
                     <span class="slider round"></span>
                 </label></div>
                 <div class="exp-mat-item-select"> <mat-form-field class="select-cus">
                     <!-- <mat-label>Change Role</mat-label> -->
-                    <mat-select>
-                      <mat-option value="option1">Option 1</mat-option>
-                      <mat-option value="option2" >Option 2</mat-option>
-                      <mat-option value="option3">Option 3</mat-option>
-                    </mat-select>
+                    <mat-select [ngModel]="service.serviceActionType || 'select'" >
+                      <!-- <mat-option value="{{service.serviceActionType}}">{{service.serviceActionType}}</mat-option> -->
+                      <mat-option [value]="y" *ngFor="let y of permissionList">{{y}}</mat-option>
+                      </mat-select>
                   </mat-form-field></div>               
-              </div>
-              <div class="exp-content-outer">
-                  <div class="exp-mat-item">ADDRESS</div>
-                  <div class="exp-mat-item">CITY</div>
-                  <div class="exp-mat-item">ADDRESS</div>               
-                </div>
-                <div class="exp-content-outer">
-                    <div class="exp-mat-item">ADDRESS</div>
-                    <div class="exp-mat-item">CITY</div>
-                    <div class="exp-mat-item">ADDRESS</div>               
-                  </div>
+              </div>              
           </mat-expansion-panel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
           <mat-expansion-panel>
@@ -326,6 +354,11 @@
                           <div class="exp-mat-item">ADDRESS</div>               
                         </div>
                 </mat-expansion-panel>
+
+
+
+
+
 
 
 
