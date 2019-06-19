@@ -45,6 +45,9 @@ export class ErtJobsConfigComponent implements OnInit {
   goToExtraction(event, ertJobMode) {
     this.ertJobParams.ertJobMode = ertJobMode;
     this.ertService.updateJobName(this.ertJobParams.ertJobTitle);
+    if (ertJobMode.trim() === 'Data Record') {
+      this.ertJobParams.ertJobMode = 'DATA_RECORD';
+    }
     this.ertService.updatejobType(this.ertJobParams.ertJobMode);
     this.ertService.setErtJobParams(this.ertJobParams);
     if (ertJobMode.trim() === 'Data Record') {

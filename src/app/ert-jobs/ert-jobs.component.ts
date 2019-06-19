@@ -71,6 +71,8 @@ export class ErtJobsComponent implements OnInit {
     if (jobStatus.trim().toUpperCase() !== 'IN_PROGRESS' && jobStatus.trim().toUpperCase() !== 'SCHEDULED') {
       const ertJobTitle = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobTitle;
       const ertJobMode = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobMode;
+      this.ertService.updateJobName(ertJobTitle);
+      this.ertService.updatejobType(ertJobMode);
       this.ertService.setErtJobParams({ ertJobMode: ertJobMode, ertJobTitle: ertJobTitle });
       if (ertJobMode === 'DATA_RECORD') {
         this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'data-record' } });
