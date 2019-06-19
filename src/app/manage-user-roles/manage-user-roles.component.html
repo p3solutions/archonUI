@@ -95,7 +95,7 @@
               </option>
             </select>
             <select *ngIf="element.status==='Revoked'" [(ngModel)]="element.action"
-              (change)="changeUserStatus(element.id,$event)" [disabled]="disableInviteBtn">
+              (change)="changeUserStatus(element.id,$event)" [hidden]="disableInviteBtn">
               <option *ngFor="let item of revokedUserAction" [value]="item">
                 {{item}}
               </option>
