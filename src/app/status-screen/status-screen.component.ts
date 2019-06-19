@@ -33,6 +33,7 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   @ViewChild('search') search: ElementRef;
   responsemsg;
   jobArray: { common: any, input: any, message: any, output: any, serverConfiguration: any }[] = [];
+  expandDefault = false;
 
   constructor(
     private router: Router,
@@ -127,9 +128,13 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   }
 
   openDetail(id) {
+    this.expandDefault = false;
     const el: HTMLElement = this.button.nativeElement as HTMLElement;
     this.service.getStatusJobDetails(id).subscribe(result => {
       this.jobArray = result;
+      if (this.jobArray.length === 1) {
+      this.expandDefault = true;
+      }
     });
     el.click();
   }
