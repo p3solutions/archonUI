@@ -66,6 +66,7 @@ import { RedirectComponent } from './redirect/redirect.component';
 import { RedirectGuard } from './redirect/redirect.guard';
 import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
+import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -229,13 +230,20 @@ const routes: Routes = [
       }
     ]
   }, {
-    path: 'status', canActivate: [AuthenticationGuard], component: StatusScreenComponent
-  },
-  {
-    path: 'schedule-monitoring', canActivate: [AuthenticationGuard], component: SchedulemonitoringComponent
-  },
-  {
-    path: 'audit', canActivate: [AuthenticationGuard], component: AuditingComponent
+    path: 'activity', canActivate: [AuthenticationGuard], component: ActivityLandingPageComponent, children: [
+      {
+        path: '', redirectTo: 'status', pathMatch: 'full'
+      },
+      {
+        path: 'status', canActivate: [AuthenticationGuard], component: StatusScreenComponent
+      },
+      {
+        path: 'schedule-monitoring', canActivate: [AuthenticationGuard], component: SchedulemonitoringComponent
+      },
+      {
+        path: 'audit', canActivate: [AuthenticationGuard], component: AuditingComponent
+      }
+    ]
   },
   {
     path: 'sso', component: SsoSigninFormComponent

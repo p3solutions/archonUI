@@ -42,9 +42,7 @@ export class StoredProcViewService {
 
   createSPVAddJoin(param: any): Observable<any> {
     return this.http.post<any>(this.createSPVAddJoinurl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractData),
-        catchError(this.handleError('createSPVAddJoin', []))
-      );
+      pipe(map(this.extractData));
   }
 
   private extractData(res: any) {

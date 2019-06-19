@@ -37,6 +37,7 @@ export class StoredProcViewComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   selectedTable = '';
   SpvInfoList: SpvInfo[] = [];
+  successMsg = '';
   constructor(private workspaceHeaderService: WorkspaceHeaderService,
     private storedProcViewService: StoredProcViewService,
     private spinner: NgxSpinnerService,
@@ -79,6 +80,7 @@ export class StoredProcViewComponent implements OnInit {
 
   getTableNameList(name: string) {
     try {
+      this.columnlength = 0;
       this.spvName = name;
       const tempRelatedList1 = this.SpvInfoList.filter(a => a.name === name)[0].relatingTableList;
       // Request for relatingTable
@@ -105,6 +107,8 @@ export class StoredProcViewComponent implements OnInit {
           }
           this.spinner.hide();
         });
+      } else {
+        this.showTables();
       }
     } catch {
       this.spinner.hide();
@@ -113,6 +117,7 @@ export class StoredProcViewComponent implements OnInit {
 
   selectSPVName(spvName: string, evt) {
     this.spvName = spvName;
+    this.columnlength = 0;
     if (evt.target.checked) {
       this.SpvInfoList.filter(a => a.name === spvName)[0].isSelected = true;
     } else {
@@ -121,11 +126,13 @@ export class StoredProcViewComponent implements OnInit {
     }
     this.getTableNameList(spvName);
     this.enableSubmitBtn();
+    this.columnlength = 0;
     evt.stopPropagation();
   }
 
   showSPVRelatedTableName(param) {
     this.spvTableId = param.tableId;
+    this.columnlength = 0;
     this.showTables();
   }
 
@@ -144,7 +151,9 @@ export class StoredProcViewComponent implements OnInit {
         spvNameObj.isSelected = true;
       }
     }
-    this.showTables();
+    if (event.target.checked) {
+      this.showTables();
+    }
     this.enableSubmitBtn();
     event.stopPropagation();
   }
@@ -159,7 +168,19 @@ export class StoredProcViewComponent implements OnInit {
   }
 
   enableSubmitBtn() {
-    this.disableSubmitBtn = this.SpvInfoList.filter(a => a.isSelected === true).length === 0 ? true : false;
+    const tempSpv = this.SpvInfoList.filter(a => a.isSelected === true);
+    if (tempSpv.length === 0) {
+      this.disableSubmitBtn = true;
+    } else {
+      for (const item of tempSpv) {
+        if (item.relatingTableList.filter(a => a.isSelected === true).length > 0) {
+          this.disableSubmitBtn = false;
+          break;
+        } else {
+          this.disableSubmitBtn = true;
+        }
+      }
+    }
   }
 
   addSPVJoin() {
@@ -182,8 +203,9 @@ export class StoredProcViewComponent implements OnInit {
       this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
         if (res && res.errorDetails.length === 0) {
           document.getElementById('spvsmsg').click();
+          this.successMsg = 'New Join Added Successfully.';
           this.updateSuccess = true;
-          this.storedProcViewService.changeSPVBooleanValue(true);
+          // this.storedProcViewService.changeSPVBooleanValue(true);
           this.spinner.hide();
         } else {
           document.getElementById('spvemsg').click();
@@ -192,7 +214,10 @@ export class StoredProcViewComponent implements OnInit {
           this.spinner.hide();
         }
         this.spinner.hide();
-      });
+      }, (err => {
+        console.log(err);
+        this.spinner.hide();
+      }));
     } catch {
       this.spinner.show();
     }
@@ -211,18 +236,18 @@ export class StoredProcViewComponent implements OnInit {
     this.storedProcViewService.changeSPVBooleanValue(true);
   }
   selectAllSp(event) {
-    if (event.target.checked) {
-      $('input:checkbox:not(:checked).sp-select').click();
-    } else {
-      $('input:checkbox:checked.sp-select').click();
-    }
+    // if (event.target.checked) {
+    //   $('input:checkbox:not(:checked).sp-select').click();
+    // } else {
+    //   $('input:checkbox:checked.sp-select').click();
+    // }
   }
   selectAllRelation(event) {
-    if (event.target.checked) {
-      $('input:checkbox:not(:checked).relation-select').click();
-    } else {
-      $('input:checkbox:checked.relation-select').click();
-    }
+    // if (event.target.checked) {
+    //   $('input:checkbox:not(:checked).relation-select').click();
+    // } else {
+    //   $('input:checkbox:checked.relation-select').click();
+    // }
   }
 
   getRelatedTable() {

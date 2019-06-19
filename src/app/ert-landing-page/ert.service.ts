@@ -45,20 +45,20 @@ export class ErtService {
   storeSelectedTables: TableDetailsListObj[] = [];
   isDataRecordGraphChange = false;
   isSIPGraphChange = false;
-  ertJobTypes: BehaviorSubject<any> = new BehaviorSubject<any>([{
-    'ertJobType': 'Table',
-    'description': 'Choose option for table Extraction', 'ertJobImage': 'livearchival.png',
-    'isEnable': false
-  },
-  {
-    'ertJobType': 'Data Record', 'description': 'Choose option for Data Record Extraction',
-    'ertJobImage': 'livearchival.png', 'isEnable': false
-  },
-  { 'ertJobType': 'SIP', 'description': 'Choose option for SIP Extraction', 'ertJobImage': 'livearchival.png', 'isEnable': false }]);
-  updatedSearchCriteria = this.ertJobTypes.asObservable();
 
-  updateErtJobTypes(ertJobTypes: any) {
-    this.ertJobTypes.next(ertJobTypes);
+
+  jobName: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  updatedJobName = this.jobName.asObservable();
+
+  jobType: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  updatedjobType = this.jobType.asObservable();
+
+  updateJobName(_jobName: string) {
+    this.jobName.next(_jobName);
+  }
+
+  updatejobType(_jobType: string) {
+    this.jobType.next(_jobType);
   }
 
   setErtJobParams(ertJobParams: ErtJobParams) {
