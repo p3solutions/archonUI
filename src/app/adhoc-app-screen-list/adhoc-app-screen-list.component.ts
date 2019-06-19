@@ -151,8 +151,8 @@ export class AdhocAppScreenListComponent implements OnInit {
     const userId = getUserId();
     this.adhocService.downloadScreen(screenId, userId).subscribe(data => {
       if (data === undefined) {
-        document.getElementById('success-popup-btn').click();
-        this.successMessage = 'Download Failed';
+        document.getElementById('failed-popup-btn').click();
+        this.successMessage = 'Download Failed. Please check status monitoring page for details.';
       } else {
         document.getElementById('success-popup-btn').click();
         this.successMessage = 'Download Started';
@@ -339,7 +339,7 @@ export class AdhocAppScreenListComponent implements OnInit {
           document.getElementById('failed-popup-btn').click();
           this.successMessage = 'Screen not Added Successfully.';
         }
-      },(err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         if (err.error) {
           document.getElementById('failed-popup-btn').click();
           this.successMessage = err.error.message;
