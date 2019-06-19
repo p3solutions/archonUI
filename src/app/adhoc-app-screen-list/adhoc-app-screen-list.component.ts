@@ -213,6 +213,12 @@ export class AdhocAppScreenListComponent implements OnInit {
         }
         this.getScreen(0);
         this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        if (err.error) {
+          this.spinner.hide();
+          document.getElementById('failed-popup-btn').click();
+          this.successMessage = err.error.message;
+        }
       });
     } catch{
       this.spinner.hide();
