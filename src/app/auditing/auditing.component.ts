@@ -8,6 +8,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AuditDataSource } from './auditdatasource';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-auditing',
@@ -37,21 +38,21 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   @ViewChild('click') button: ElementRef;
   uniqueService;
   displayedColumns: string[] = ['User Name', 'WorkSpace Name', 'Related Job ID', 'Service Name',
-  'Event Name', 'Event Desc', 'Event Details', 'Event Date', 'Download'];
-dataSource: AuditDataSource;
-@ViewChild(MatPaginator) paginator: MatPaginator;
-@ViewChild(MatSort) sort: MatSort;
-@ViewChild('search') search: ElementRef;
+    'Event Name', 'Event Desc', 'Event Details', 'Event Date', 'Download'];
+  dataSource: AuditDataSource;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('search') search: ElementRef;
 
 
   constructor(private router: Router, private auditService: AuditService, private userWorkspaceService: UserWorkspaceService,
-    private renderer: Renderer, private service: ScheduleMonitoringService) { }
+    private renderer: Renderer, private service: ScheduleMonitoringService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.paginator.pageIndex = 0;
     if (this.selectedEvent !== '' || this.selectedService !== '' || this.selectedWS !== '' || this.startdate !== '' || this.enddate !== '') {
       this.getAudit();
-      } else {
+    } else {
       this.getAudit();
     }
     this.auditService.getEvetns().subscribe(x => {
@@ -74,6 +75,7 @@ dataSource: AuditDataSource;
         tap(() => {
           this.paginator.pageIndex = 0;
           this.getAudit();
+          this.spinner.hide();
         })
       )
       .subscribe();
@@ -90,7 +92,7 @@ dataSource: AuditDataSource;
 
   sortData(sort) {
     this.dataSource.sortfn(sort);
-    }
+  }
 
 
 
@@ -106,10 +108,10 @@ dataSource: AuditDataSource;
   }
 
   downloadJob(releatedJobId) {
-  this.auditService.downloadZip(releatedJobId).subscribe(result => {
-    this.downloadFile(result);
-  });
-}
+    this.auditService.downloadZip(releatedJobId).subscribe(result => {
+      this.downloadFile(result);
+    });
+  }
 
   downloadFile(content) {
     const fileName = 'audit' + '-data.zip';
@@ -147,7 +149,7 @@ dataSource: AuditDataSource;
       'toDate': todate
     };
     this.isAvailable = false;
-    this.dataSource = new AuditDataSource(this.auditService);
+    this.dataSource = new AuditDataSource(this.auditService, this.spinner);
     this.dataSource.getTable(params, this.paginator.pageIndex + 1);
 
   }
@@ -155,7 +157,7 @@ dataSource: AuditDataSource;
   selectWorkspace(param) {
     this.selectedWS = param.workspaceName;
     if (param.id === undefined) {
-    this.selectedWSId = '';
+      this.selectedWSId = '';
     } else {
       this.selectedWSId = param.id;
     }

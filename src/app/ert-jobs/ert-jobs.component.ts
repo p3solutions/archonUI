@@ -38,6 +38,8 @@ export class ErtJobsComponent implements OnInit {
   getErtJobList() {
     const userId = this.userInfoService.getUserId();
     this.spinner.show();
+    this.ertService.updateJobName('');
+    this.ertService.updatejobType('');
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
       try {
@@ -69,6 +71,8 @@ export class ErtJobsComponent implements OnInit {
     if (jobStatus.trim().toUpperCase() !== 'IN_PROGRESS' && jobStatus.trim().toUpperCase() !== 'SCHEDULED') {
       const ertJobTitle = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobTitle;
       const ertJobMode = this.ertJobs.filter(a => a.jobId === ertJobId)[0].jobMode;
+      this.ertService.updateJobName(ertJobTitle);
+      this.ertService.updatejobType(ertJobMode);
       this.ertService.setErtJobParams({ ertJobMode: ertJobMode, ertJobTitle: ertJobTitle });
       if (ertJobMode === 'DATA_RECORD') {
         this.router.navigate(['/workspace/ert/ert-table/', ertJobId], { queryParams: { from: 'data-record' } });
@@ -123,9 +127,9 @@ export class ErtJobsComponent implements OnInit {
   close() {
     if (this.isSuccessMsg) {
       if (this.scheduleNow) {
-        this.router.navigate(['/status']);
+        this.router.navigate(['/activity/status']);
       } else {
-        this.router.navigate(['/schedule-monitoring']);
+        this.router.navigate(['/activity/schedule-monitoring']);
       }
     } else {
       this.router.navigate(['workspace/workspace-dashboard/workspace-services']);

@@ -7,13 +7,14 @@ import { StatusDataSource } from './statusdatasource';
 import { MatPaginator, MatSort } from '@angular/material';
 import { merge, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-status-screen',
   templateUrl: './status-screen.component.html',
   styleUrls: ['./status-screen.component.css']
 })
-export class StatusScreenComponent implements OnInit , AfterViewInit {
+export class StatusScreenComponent implements OnInit, AfterViewInit {
   jobList;
   jobOriginList = [];
   jobStatusList = [];
@@ -31,12 +32,13 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
   responsemsg;
-  jobArray: {common: any, input: any, message: any, output: any, serverConfiguration: any}[] = [];
+  jobArray: { common: any, input: any, message: any, output: any, serverConfiguration: any }[] = [];
 
   constructor(
     private router: Router,
     private statusService: StatusService,
-    private service: AuditService
+    private service: AuditService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -70,10 +72,11 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   sortData(sort) {
-  this.dataSource.sortfn(sort);
+    this.dataSource.sortfn(sort);
   }
 
   loadPage() {
+    this.spinner.show();
     this.dataSource.getTable(
       this.selectedJobOrigin,
       this.selectedJobStatus,
@@ -89,8 +92,8 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   getStart() {
-  this.dataSource = new StatusDataSource(this.statusService);
-  this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
+    this.dataSource = new StatusDataSource(this.statusService, this.spinner);
+    this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
   }
 
   getJobOrigins() {
@@ -105,7 +108,7 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
   }
 
   selectJobStatus(e) {
-  this.selectedJobStatus = e;
+    this.selectedJobStatus = e;
   }
 
   selectJobOrigin(origin) {
@@ -149,27 +152,27 @@ export class StatusScreenComponent implements OnInit , AfterViewInit {
     });
   }
 
-    downloadFile(content) {
-      const fileName = 'Status' + '-data.zip';
-      const type = 'zip';
-      const e = document.createEvent('MouseEvents');
-      const a = document.createElement('a');
-      a.download = fileName;
-      a.href = window.URL.createObjectURL(content);
-      a.dataset.downloadurl = [type, a.download, a.href].join(':');
-      e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-      a.dispatchEvent(e);
-    }
+  downloadFile(content) {
+    const fileName = 'Status' + '-data.zip';
+    const type = 'zip';
+    const e = document.createEvent('MouseEvents');
+    const a = document.createElement('a');
+    a.download = fileName;
+    a.href = window.URL.createObjectURL(content);
+    a.dataset.downloadurl = [type, a.download, a.href].join(':');
+    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    a.dispatchEvent(e);
+  }
 
-    stopJob(id){
-      const el: HTMLElement = this.button1.nativeElement as HTMLElement;
-      this.statusService.terminateJob(id).subscribe(result => {
+  stopJob(id) {
+    const el: HTMLElement = this.button1.nativeElement as HTMLElement;
+    this.statusService.terminateJob(id).subscribe(result => {
       if (result.success) {
         this.responsemsg = result.data;
       } else {
         this.responsemsg = result.errorMessage;
       }
-      });
-      el.click();
-    }
+    });
+    el.click();
+  }
 }
