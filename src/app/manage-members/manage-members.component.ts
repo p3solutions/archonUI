@@ -7,6 +7,7 @@ import { UserinfoService } from '../userinfo.service';
 import { ManageUserRoles } from '../manage-user-roles';
 import { ErrorObject } from '../error-object';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { Logs } from 'selenium-webdriver';
 // import * as $ from 'jquery';
 
 @Component({
@@ -29,6 +30,9 @@ export class ManageMembersComponent implements OnInit {
   deleteNotif = new ErrorObject();
   delProgress = false;
   ownerAlreadyExist = false;
+  workspaceRoleId: any;
+  userId: any;
+  successMsg: string;
 
   constructor(
     private manageMembersService: ManageMembersService,
@@ -66,11 +70,15 @@ export class ManageMembersComponent implements OnInit {
       });
   }
 
+  deletemember(id) {
+  this.deleteMemberId = id;
+  }
+
   confirmDelete(): void {
     this.delProgress = true;
     this.manageMembersService.deleteManageMembersData({ id: this.deleteMemberId }, this.workspaceId).subscribe(res => {
       this.delProgress = false;
-      if (res && res.success) {
+      if (res.success) {
         // tr.remove(); // Removing the row.
         this.postDelete();
       } else {
@@ -83,7 +91,7 @@ export class ManageMembersComponent implements OnInit {
     this.deleteNotif = new ErrorObject();
   }
   postDelete() {
-    const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal .cancel');
+    const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal #dismissmodel');
     close.click();
     this.getManageMembersData(this.workspaceId);
     this.extModifiedExistingUsers = [];
@@ -100,6 +108,7 @@ export class ManageMembersComponent implements OnInit {
     if (!this.wsRoleList || this.wsRoleList.length === 0) {
       this.manageMembersService.getwsRoleList().subscribe(res => {
         this.wsRoleList = res;
+        console.log(this.wsRoleList);
       });
     }
   }
@@ -109,6 +118,53 @@ export class ManageMembersComponent implements OnInit {
         this.permissionList = res;
       });
     }
+  }
+
+  changerole(changerole, userid) {
+    this.workspaceRoleId = changerole;
+    this.userId = userid;
+    document.getElementById('changeroles').click();
+  }
+
+  updateRole() {
+    const params = {
+      userId: this.userId,
+      workspaceId: this.workspaceId,
+      workspaceRoleId: this.workspaceRoleId
+    };
+    this.manageMembersService.updateRole(params).subscribe(res => {
+      if (res) {
+        this.successMsg = 'Change Role Successfully';
+        document.getElementById('addmemssmsg').click();
+      } else {
+        document.getElementById('addmemermsg').click();
+      }
+
+    });
+  }
+
+  resetselectedValues() {
+    this.getManageMembersData(this.workspaceId);
+  }
+
+  updatepermission(type, service, userid) {
+    const params = {
+      userId: userid,
+      workspaceId: this.workspaceId,
+      permissions: [{
+        serviceId: service.serviceId,
+        serviceActionType: type,
+        enableService: service.enableService
+      }],
+    };
+    this.manageMembersService.updateServiceActions(params).subscribe(res => {
+      if (res) {
+        this.successMsg = 'Update Successfully';
+        document.getElementById('addperssmsg').click();
+      } else {
+        document.getElementById('addmemermsg').click();
+      }
+    });
   }
 
   manageMemTable(xData) {

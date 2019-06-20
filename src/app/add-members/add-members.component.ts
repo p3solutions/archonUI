@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, SimpleChanges, OnChanges, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, SimpleChanges, OnChanges, EventEmitter, ViewChild } from '@angular/core';
 import { AddMembersService } from './add-members.service';
 import { ActivatedRoute } from '@angular/router';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { ErrorObject } from '../error-object';
 import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 export let lockeduser = [];
 
@@ -26,6 +27,11 @@ export class AddMembersComponent implements OnInit, OnChanges {
   @Output() updateExistingUsers = new EventEmitter<boolean>(); // child to parent
   @Input() extModifiedExistingUsers: any;
   @Input() ownerAlreadyExist: boolean;
+  dataSource = new MatTableDataSource<any>(this.userList);
+  displayedColumns: string[] = ['select', 'id', 'firstName', 'emailAddress', 'role'];
+  columnlength = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private route: ActivatedRoute,
@@ -61,6 +67,11 @@ export class AddMembersComponent implements OnInit, OnChanges {
           this.userList.push(user);
         }
       });
+      console.log(this.userList);
+      this.dataSource.data = this.userList;
+      setTimeout(() => this.dataSource.paginator = this.paginator);
+        this.dataSource.sort = this.sort;
+      this.columnlength = this.userList.length;
     });
   }
 
@@ -116,6 +127,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
     }
   }
   updateSelectList(user: any, event) {
+    console.log(user, event, 'uu');
     const checked = event.target.checked;
     if (checked) {
       user.roleId = event.target.parentNode.parentNode.children[2].children[0].value; // depends on the html structure order
@@ -130,6 +142,14 @@ export class AddMembersComponent implements OnInit, OnChanges {
   }
   closeErrorMsg() {
     this.errorObject = null;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }

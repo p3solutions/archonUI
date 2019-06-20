@@ -96,32 +96,23 @@
   <div class="col-md-12">
       <div class="col-md-12 expansion">
       <mat-accordion>
-
-
-
-
-
-
-
-
-
-
-
-
           <mat-expansion-panel *ngFor="let manage of manageMembers;let ind=index;">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                  <div class="ex-header1" ><mat-checkbox></mat-checkbox></div>
+                  <div class="ex-header1" ><mat-checkbox (click)="$event.stopPropagation();" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'"></mat-checkbox></div>
                     <div class="ex-header2" >{{manage.user.name}}</div>
                   <div class="ex-header3"  >{{manage.workspaceRole.name}}</div>
-                  <div class="ex-header4" ><i class="material-icons" style="font-size: 23px">delete </i></div>
+                  <div class="ex-header4" >
+                    <a *ngIf="manage.workspaceRole.name !== 'ROLE_OWNER'" data-toggle="modal" data-tooltip="Delete" href="#confirmDelMemModal" (click)="deletemember(manage.user.id)" ><i class="material-icons" style="font-size: 23px" >delete </i></a>
+                    <a *ngIf="manage.workspaceRole.name === 'ROLE_OWNER'" data-toggle="modal" data-tooltip="Not Available"><i class="material-icons" style="font-size: 23px; color: grey; cursor: not-allowed;" >delete </i></a>
+                  </div>
               </mat-panel-title>              
             </mat-expansion-panel-header>
-            <div class="line"></div> 
+            <div class="line"></div>  
             <div class="change-role">Change Role</div>
             <mat-form-field>
-                <mat-select [ngModel]="manage.workspaceRole.name || 'Change Role'" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'">               
-                  <mat-option [disabled]="x.roleName === 'ROLE_OWNER'" [value]="x.roleName" *ngFor="let x of wsRoleList">{{x.roleName}}</mat-option>
+                <mat-select [ngModel]="manage.workspaceRole.name || 'Change Role'" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'" (ngModelChange)="changerole($event,manage.user.id)" >               
+                  <mat-option [disabled]="x.roleName === 'ROLE_OWNER' || manage.workspaceRole.name === x.roleName" [value]="x.id" *ngFor="let x of wsRoleList">{{x.roleName}}</mat-option>
                 </mat-select>
               </mat-form-field>
                   <div class="acc">Service Access</div>
@@ -139,235 +130,131 @@
               <div class="exp-content-outer" *ngFor="let service of manage.serviceActions">
                 <div class="exp-mat-item">{{service.serviceName}}</div>
                 <div class="exp-mat-item"> <label class="switch">
-                    <input type="checkbox">
+                    <input *ngIf="service.enableService == true" type="checkbox" checked (ngModelChange)="service.enableService=$event" [ngModel]="service.enableService">
+                    <input *ngIf="!service.enableService == true" type="checkbox" (ngModelChange)="service.enableService=$event" [ngModel]="service.enableService">
                     <span class="slider round"></span>
                 </label></div>
-                <div class="exp-mat-item-select"> <mat-form-field class="select-cus">
-                    <!-- <mat-label>Change Role</mat-label> -->
-                    <mat-select [ngModel]="service.serviceActionType || 'select'" >
-                      <!-- <mat-option value="{{service.serviceActionType}}">{{service.serviceActionType}}</mat-option> -->
-                      <mat-option [value]="y" *ngFor="let y of permissionList">{{y}}</mat-option>
+                <div class="exp-mat-item-select"> 
+                  <mat-form-field class="select-cus">                   
+                    <mat-select [disabled]="!service.enableService" [ngModel]="service.serviceActionType || 'select'" (selectionChange)="updatepermission($event.value,service,manage.user.id)" >
+                      <mat-option  [value]="y" *ngFor="let y of permissionList">{{y}}</mat-option>
                       </mat-select>
                   </mat-form-field></div>               
               </div>              
-          </mat-expansion-panel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <div class="ex-header1" ><mat-checkbox></mat-checkbox></div>
-                    <div class="ex-header2" >GroupUsers</div>
-                    <div class="ex-header3"  >Role Member</div>
-                    <div class="ex-header4" ><i class="material-icons" style="font-size: 23px">delete </i></div>
-                </mat-panel-title>              
-              </mat-expansion-panel-header>
-              <div class="line"></div> 
-              <div class="change-role">Change Role</div>
-              <mat-form-field>
-                  <mat-label>Change Role</mat-label>
-                  <mat-select >
-                    <mat-option value="option1">Option 1</mat-option>
-                    <mat-option value="option2" >Option 2</mat-option>
-                    <mat-option value="option3">Option 3</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                    <div class="acc">Service Access</div>
-              <div class="exp-content-outer-header">
-                  <div class="exp-mat-item">
-                    <strong>Services</strong>
-                  </div>
-                  <div class="exp-mat-item">
-                    <strong>Access</strong>
-                  </div>
-                  <div class="exp-mat-item">
-                    <strong>Permission</strong>
-                  </div>
-                </div>
-                <div class="exp-content-outer">
-                  <div class="exp-mat-item">Metalyzer</div>
-                  <div class="exp-mat-item"> <label class="switch">
-                      <input type="checkbox">
-                      <span class="slider round"></span>
-                  </label></div>
-                  <div class="exp-mat-item-select"> <mat-form-field class="select-cus">
-                      <!-- <mat-label>Change Role</mat-label> -->
-                      <mat-select [disabled]="disable">
-                        <mat-option value="option1">Option 1</mat-option>
-                        <mat-option value="option2" >Option 2</mat-option>
-                        <mat-option value="option3">Option 3</mat-option>
-                      </mat-select>
-                    </mat-form-field></div>               
-                </div>
-                <div class="exp-content-outer">
-                    <div class="exp-mat-item">ADDRESS</div>
-                    <div class="exp-mat-item">CITY</div>
-                    <div class="exp-mat-item">ADDRESS</div>               
-                  </div>
-                  <div class="exp-content-outer">
-                      <div class="exp-mat-item">ADDRESS</div>
-                      <div class="exp-mat-item">CITY</div>
-                      <div class="exp-mat-item">ADDRESS</div>               
-                    </div>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                      <div class="ex-header1" ><mat-checkbox></mat-checkbox></div>
-                      <div class="ex-header2" >GroupUsers</div>
-                      <div class="ex-header3"  >Role Member</div>
-                      <div class="ex-header4" ><i class="material-icons" style="font-size: 23px">delete </i></div>
-                  </mat-panel-title>              
-                </mat-expansion-panel-header>
-                <div class="line"></div> 
-                <div class="change-role">Change Role</div>
-                <mat-form-field>
-                    <mat-label>Change Role</mat-label>
-                    <mat-select >
-                      <mat-option value="option1">Option 1</mat-option>
-                      <mat-option value="option2" >Option 2</mat-option>
-                      <mat-option value="option3">Option 3</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                      <div class="acc">Service Access</div>
-                <div class="exp-content-outer-header">
-                    <div class="exp-mat-item">
-                      <strong>Services</strong>
-                    </div>
-                    <div class="exp-mat-item">
-                      <strong>Access</strong>
-                    </div>
-                    <div class="exp-mat-item">
-                      <strong>Permission</strong>
-                    </div>
-                  </div>
-                  <div class="exp-content-outer">
-                    <div class="exp-mat-item">Metalyzer</div>
-                    <div class="exp-mat-item"> <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label></div>
-                    <div class="exp-mat-item-select"> <mat-form-field class="select-cus">
-                        <!-- <mat-label>Change Role</mat-label> -->
-                        <mat-select [disabled]="disable">
-                          <mat-option value="option1">Option 1</mat-option>
-                          <mat-option value="option2" >Option 2</mat-option>
-                          <mat-option value="option3">Option 3</mat-option>
-                        </mat-select>
-                      </mat-form-field></div>               
-                  </div>
-                  <div class="exp-content-outer">
-                      <div class="exp-mat-item">ADDRESS</div>
-                      <div class="exp-mat-item">CITY</div>
-                      <div class="exp-mat-item">ADDRESS</div>               
-                    </div>
-                    <div class="exp-content-outer">
-                        <div class="exp-mat-item">ADDRESS</div>
-                        <div class="exp-mat-item">CITY</div>
-                        <div class="exp-mat-item">ADDRESS</div>               
-                      </div>
-              </mat-expansion-panel>
-              <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <div class="ex-header1" ><mat-checkbox></mat-checkbox></div>
-                        <div class="ex-header2" >GroupUsers</div>
-                        <div class="ex-header3"  >Role Member</div>
-                        <div class="ex-header4" ><i class="material-icons" style="font-size: 23px">delete </i></div>
-                    </mat-panel-title>              
-                  </mat-expansion-panel-header>
-                  <div class="line"></div> 
-                  <div class="change-role">Change Role</div>
-                  <mat-form-field>
-                      <mat-label>Change Role</mat-label>
-                      <mat-select >
-                        <mat-option value="option1">Option 1</mat-option>
-                        <mat-option value="option2" >Option 2</mat-option>
-                        <mat-option value="option3">Option 3</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                        <div class="acc">Service Access</div>
-                  <div class="exp-content-outer-header">
-                      <div class="exp-mat-item">
-                        <strong>Services</strong>
-                      </div>
-                      <div class="exp-mat-item">
-                        <strong>Access</strong>
-                      </div>
-                      <div class="exp-mat-item">
-                        <strong>Permission</strong>
-                      </div>
-                    </div>
-                    <div class="exp-content-outer">
-                      <div class="exp-mat-item">Metalyzer</div>
-                      <div class="exp-mat-item"> <label class="switch">
-                          <input type="checkbox">
-                          <span class="slider round"></span>
-                      </label></div>
-                      <div class="exp-mat-item-select"> <mat-form-field class="select-cus">
-                          <!-- <mat-label>Change Role</mat-label> -->
-                          <mat-select [disabled]="disable">
-                            <mat-option value="option1">Option 1</mat-option>
-                            <mat-option value="option2" >Option 2</mat-option>
-                            <mat-option value="option3">Option 3</mat-option>
-                          </mat-select>
-                        </mat-form-field></div>               
-                    </div>
-                    <div class="exp-content-outer">
-                        <div class="exp-mat-item">ADDRESS</div>
-                        <div class="exp-mat-item">CITY</div>
-                        <div class="exp-mat-item">ADDRESS</div>               
-                      </div>
-                      <div class="exp-content-outer">
-                          <div class="exp-mat-item">ADDRESS</div>
-                          <div class="exp-mat-item">CITY</div>
-                          <div class="exp-mat-item">ADDRESS</div>               
-                        </div>
-                </mat-expansion-panel>
-
-
-
-
-
-
-
-
-
-
-
-
-         
+          </mat-expansion-panel>         
         </mat-accordion>
         
   </div>
 </div>
+
+<!-- change role -->  
+<button style="display: none" type="button" id="changeroles" data-toggle="modal" data-target="#confirmchange">Open Modal</button>
+<div class="modal fade" id="confirmchange" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document" style="width: 480px;">
+    <div class="modal-content">
+        <div class="info-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Change Role</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls"> Are you sure you want to change this role?</p>
+            </div>
+     
+      <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-secondary-popup"
+          data-dismiss="modal" (click)="resetselectedValues()">Cancel</button>
+          <button type="button" class="btn btn-padding btn-info-popup-primary-color" (click)="updateRole();" data-dismiss="modal"
+          >Confirm</button>         
+      </div>
+    </div>
+  </div>
+</div>
+<!-- change role -->  
+<!-- member delete -->  
+<div class="modal fade" id="confirmDelMemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+  <div class="modal-dialog"  style="width: 480px;">
+    <div class="modal-content">
+        <div class="error-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Delete</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls"> Are you sure you want to delete this member? </p>
+            </div>
+      <div class="modal-footer">  
+          <div *ngIf="deleteNotif?.show" class="alert alert-danger alert-dismissible m-t-10" role="alert">
+              <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <strong>Error!</strong> {{deleteNotif?.message}}
+            </div>        
+          <button type="button" id="dismissmodel" class="btn btn-padding btn-secondary-popup" (click)="closeErrorMsg();"
+          data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="confirmDelete();"
+          >OK</button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-add-members *ngIf="exisitingUserIds.length > 0" [existingUsers]="exisitingUserIds" (updateExistingUsers)="onUpdateExistingUsers($event)"
+    [extModifiedExistingUsers]="extModifiedExistingUsers" [ownerAlreadyExist]="ownerAlreadyExist" class="modal fade" id="add-member-modal" role="dialog">
+  </app-add-members>
+  <app-manage-user-roles [hidden]="true"></app-manage-user-roles>
+
+  <button style="display: none" type="button" id="addmemermsg" data-toggle="modal" data-target="#addmememsg">Open Modal</button>
+<div class="modal fade" id="addmememsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+  <div class="modal-dialog"  style="width: 480px;">
+    <div class="modal-content">
+        <div class="error-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls"> {{errorMsg}} </p>
+            </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">OK</button>      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<button style="display: none" type="button" id="addmemssmsg" data-toggle="modal" data-target="#addmemsmsg">Open Modal</button>
+<div class="modal fade" id="addmemsmsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+  <div class="modal-dialog"  style="width: 480px;">
+    <div class="modal-content">
+        <div class="success-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls">{{successMsg}} </p>
+            </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="resetselectedValues()">OK</button>      
+      </div>
+    </div>
+  </div>
+</div>
+<button style="display: none" type="button" id="addperssmsg" data-toggle="modal" data-target="#addpersmsg">Open Modal</button>
+<div class="modal fade" id="addpersmsg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+  <div class="modal-dialog"  style="width: 480px;">
+    <div class="modal-content">
+        <div class="success-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls">{{successMsg}} </p>
+            </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">OK</button>      
+      </div>
+    </div>
+  </div>
+</div>
+
+

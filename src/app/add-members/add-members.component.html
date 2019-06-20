@@ -1,4 +1,4 @@
-<div class="modal-dialog" role="document">
+<!-- <div class="modal-dialog" role="document">
   <div class="modal-content">
       <div class="modal-header">
           <div class="modal-title">Add New Members</div>
@@ -41,7 +41,79 @@
           <strong>Error!</strong> {{errorObject?.message}}
         </div>
       </div>
-
     </div>
   </div>
+</div> -->
+
+<div class="modal-dialog" style="width: 880px;">
+  <div class="modal-content">
+      <div class="info-popup-header-cls">
+          <h4 class="popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 25px!important;vertical-align: middle;
+            color: #ffffff;
+            margin-top: 1px;">person_add_outline</i><div class="pop-title" style="margin-left: -200px; margin-top: 3px;">Add New Members</div><button type="button" class="close" style="margin-right: 15px; font-size: 26px;
+  margin-top: 1px;"  data-dismiss="modal" (click)="closeErrorMsg()">&times;</button></h4>
+             
+        </div>
+        <div style="display: flex;justify-content: flex-end">
+            <div class="database-search">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="modal-body row">       
+          <div class="col-md-12">
+              
+              <div class="mat-elevation-z2 table-hight-div">                  
+                  <div class="table-hight">        
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z2" style="width: 100%;">                  
+                <ng-container  matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef>  </th>
+                    <td mat-cell *matCellDef="let element"> <mat-checkbox (change)="updateSelectList(dataSource, $event)" [checked]="element.isChecked"></mat-checkbox></td>
+                </ng-container>
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef> User Id </th>
+                  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>              
+                <ng-container matColumnDef="firstName">
+                  <th mat-header-cell *matHeaderCellDef> User Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="emailAddress">
+                  <th mat-header-cell *matHeaderCellDef> Email </th>
+                  <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
+                </ng-container>
+                <ng-container matColumnDef="role">
+                    <th mat-header-cell *matHeaderCellDef style="width: 35%; border-top-right-radius: 3px;"> Role </th>
+                    <td mat-cell *matCellDef="let element; let ind=index;">
+                      <mat-form-field style="width: 100%;">
+                        <mat-select [ngModel]="'Select'"> 
+                          <!-- <mat-option value="select">Select</mat-option> -->
+                          <mat-option [value]="role.roleName" *ngFor="let role of wsRoleList">{{role.roleName}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>                
+            </div>
+              <mat-paginator [length]="columnlength" [pageSize]= "5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+            </div>
+          </div>            
+         
+  <div class="modal-footer"> 
+    <div class="col-md-12" style="padding-right: 0px;"> 
+      <div class="action-btn">
+      <button class="btn cancel btn-padding"data-dismiss="modal">Cancel</button>
+      <button class="btn save btn-padding" (click)="addMembers()">Add</button>                
+      </div>
+  </div>
+  </div>
 </div>
+</div>
+
+
