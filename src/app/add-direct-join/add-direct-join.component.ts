@@ -229,7 +229,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.errorMsg = '';
     this.updateNotif = false;
     this.updateSuccess = false;
-    this.autoColumnMatch = false;
+    this.autoColumnMode = false;
   }
 
   searchTablelist() {
@@ -271,7 +271,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   closeAutoMatchMessage() {
-    this.autoColumnMatch = false;
+    this.autoColumnMode = false;
   }
 
   closeScreen() {
