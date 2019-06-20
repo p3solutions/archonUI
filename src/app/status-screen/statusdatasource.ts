@@ -28,11 +28,10 @@ export class StatusDataSource implements DataSource<any> {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'jobName': return this.compare(a.jobName.toLowerCase(), b.jobName.toLowerCase(), isAsc);
-        case 'userid': return this.compare(a.userId.toLowerCase(), b.userId.toLowerCase(), isAsc);
         case 'Job Origin': return this.compare(a.jobOrigin.toLowerCase(), b.jobOrigin.toLowerCase(), isAsc);
-        case 'jobInfo.scheduledTime': return this.compare(a.jobInfo.scheduledTime, b.jobInfo.scheduledTime, isAsc);
+        case 'jobInfo.startTime': return this.compare(a.jobInfo.scheduledTime, b.jobInfo.scheduledTime, isAsc);
         case 'Start Time': return this.compare(a.jobInfo.startTime, b.jobInfo.startTime, isAsc);
-        case 'End Time': return this.compare(a.jobInfo.endTime, b.jobInfo.endTimeTime, isAsc);
+        case 'End Time': return this.compare(a.jobInfo.endTime, b.jobInfo.endTime, isAsc);
         default: return 0;
       }
     });
