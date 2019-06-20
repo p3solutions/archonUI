@@ -72,7 +72,7 @@
       </div>
        <div class="col-md-6">
          <div class="sub-left">
-              <mat-form-field >
+              <mat-form-field style="display: none" >
               <input matInput placeholder="Search">
             </mat-form-field>
           </div> 
@@ -86,7 +86,7 @@
 
   <div class="col-md-12">
       <div class="col-md-12 member-header">
-          <div class="ex-mem1" ><i class="material-icons" style="font-size: 23px">delete </i></div>
+          <div class="ex-mem1" style="display: none" ><i class="material-icons" style="font-size: 23px">delete </i></div>
           <div class="ex-mem2" >Members</div>
           <div class="ex-mem3"  >Role</div>
           <div class="ex-mem4" >Delete</div>
@@ -99,7 +99,7 @@
           <mat-expansion-panel *ngFor="let manage of manageMembers;let ind=index;">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                  <div class="ex-header1" ><mat-checkbox (click)="$event.stopPropagation();" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'"></mat-checkbox></div>
+                  <div class="ex-header1" style="display: none" ><mat-checkbox (click)="$event.stopPropagation();" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'"></mat-checkbox></div>
                     <div class="ex-header2" >{{manage.user.name}}</div>
                   <div class="ex-header3"  >{{manage.workspaceRole.name}}</div>
                   <div class="ex-header4" >
