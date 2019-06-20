@@ -36,7 +36,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   paginationRequired: boolean;
   page: number;
   selected = [];
-  autoColumnMatch = false;
+  autoColumnMode = false;
   autoColumnMatchMessage = '';
   dataSource = new MatTableDataSource<any>(this.primaryColumns);
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumns'];
@@ -259,28 +259,14 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
 
   autocolumnMatchMode() {
-    const secondaryColumnNameList = this.secondaryColumns.map(function (item) { return item['columnName']; });
-    let tempIndexOfColumnList = 0;
-    for (const primaryColumn of this.primaryColumns) {
-      if (secondaryColumnNameList.includes(primaryColumn.columnName)) {
-        const index = this.primaryColumns.findIndex(k => k.columnName === primaryColumn.columnName);
-        const primaryValues = this.primaryColumns.find(s => s.columnName === primaryColumn.columnName);
-        const dataType = primaryValues.columnDataType;
-        const tableHTML = document.getElementById('add-join-table');
-        const tableBodyHTML = tableHTML.getElementsByTagName('tbody');
-        const tableRow = tableBodyHTML[0].children[index];
-        const filterSecondaryTable = new SecondaryColumnPipe().transform(this.secondaryColumns, dataType);
-        for (let i = 0; i < filterSecondaryTable.length; i++) {
-          tempIndexOfColumnList = i;
-          if (filterSecondaryTable[i] === primaryColumn.columnName) {
-            break;
-          }
-        }
-        tableRow.children[2].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
-        this.selectedValues(primaryValues, index, primaryColumn.columnName);
-      }
+    for (const i of this.primaryColumns) {
+     for (const j of this.secondaryColumns) {
+     if (i.columnName === j.columnName && i.columnDataType === j.columnDataType) {
+      i.secondaryColumn = j.columnName;
+     }
+     }
     }
-    this.autoColumnMatch = true;
+    this.autoColumnMode = true;
     this.autoColumnMatchMessage = 'Automatch Success';
   }
 

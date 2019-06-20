@@ -46,7 +46,7 @@
                       <th mat-header-cell *matHeaderCellDef style="width: 35%;  border-top-right-radius: 3px;"> Secondary Column </th>
                       <td mat-cell *matCellDef="let element; let ind=index" id="ind">
                         <mat-form-field style="width: 90%;" class="test">
-                          <mat-select [ngModel]="element.secondaryColumn.columnName || 'select'" (ngModelChange)="selectedValues(element,ind, $event)">
+                          <mat-select [(ngModel)]="element.secondaryColumn.columnName" (ngModelChange)="selectedValues(element,ind, $event)" [placeholder]="element.secondaryColumn.columnName === '' ? 'Select' : ''">
                             <mat-option value="select">Select</mat-option>
                             <mat-option [value]="i.columnName" *ngFor="let i of secondaryColumns | secondaryColumn:element.primaryColumn.columnDataType">{{i.columnName}}</mat-option>
                           </mat-select>
@@ -69,23 +69,23 @@
             <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <strong>Error!</strong>:{{errorMsg}}
+            <strong>{{errorMsg}}</strong>
           </div> 
         </div>    
         <div *ngIf="updateenable" id="msg-id"> 
           <div class="alert alert-danger alert-dismissible m-t-6" role="alert">
-          <strong>Error!</strong>: Secondary Column Cannot be Duplicated
+          <strong>Secondary Column Cannot be Duplicated</strong>
         </div> 
       </div>       
-          <!-- 
+          
             <div *ngIf="autoColumnMatch" id="msg-id"> 
               <div class="alert alert-success alert-dismissible m-t-6" role="alert">
               <button type="button" class="close" (click)="closeAutoMatchMessage()" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <strong>Success</strong>: {{autoColumnMatchMessage}}
+              <strong>{{autoColumnMatchMessage}}</strong>
             </div>
-          </div> -->
+          </div>
         
         <div *ngIf="updateNotifSuccess" id="msg-id"> 
         <div class="alert alert-success alert-dismissible m-t-6" role="alert">

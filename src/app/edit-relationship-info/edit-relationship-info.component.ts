@@ -232,31 +232,22 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   autocolumnMatchMode() {
-    const secondaryColumnNameList = this.secondaryColumns.map(function (item) { return item['columnName']; });
-    let tempIndexOfColumnList = 0;
-    for (const primaryColumn of this.primaryColumns) {
-      if (secondaryColumnNameList.includes(primaryColumn.columnName)) {
-        const index = this.joinDetailsArray.findIndex(k => k.secondaryColumn.columnName === primaryColumn.columnName);
-        const primaryValues = this.joinDetailsArray.find(s => s.secondaryColumn.columnName === primaryColumn.columnName);
-        const dataType = primaryValues.primaryColumn.columnDataType;
-        const tableHTML = document.getElementById('edit-relationship-table');
-        const tableBodyHTML = tableHTML.getElementsByTagName('tbody');
-        const tableRow = tableBodyHTML[0].children[index];
-        const filterSecondaryTable = new SecondaryColumnPipe().transform(this.secondaryColumns, dataType);
-        for (let i = 0; i < filterSecondaryTable.length; i++) {
-          tempIndexOfColumnList = i;
-          if (filterSecondaryTable[i] === primaryColumn.columnName) {
-            break;
-          }
-        }
-        if (!primaryValues.defaultSecondaryColumn) {
-          tableRow.children[3].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
-          this.selectedValues(primaryValues, index, primaryColumn.columnName);
-        }
+    for (const i of this.joinDetailsArray) {
+      console.log(i);
+      for (const j of this.secondaryColumns) {
+        console.log(j);
+      if (i.primaryColumn.columnName === j.columnName && i.primaryColumn.columnDataType === j.columnDataType) {
+        i.secondaryColumn.columnName = j.columnName;
+        i.automatchColumn = true;
       }
-    }
-    this.autoColumnMatch = true;
-    this.autoColumnMatchMessage = 'Automatch Success';
+      }
+      if (!i.automatchColumn) {
+       i.secondaryColumn.columnName = '';
+      }
+     }
+     this.autoColumnMatch = true;
+     this.onloadupdate = false;
+     this.autoColumnMatchMessage = 'Automatch Success';
   }
 
   closeAutoMatchMessage() {
