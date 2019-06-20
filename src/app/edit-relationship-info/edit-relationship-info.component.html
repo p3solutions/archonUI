@@ -99,7 +99,7 @@
             <div class="action-btn">
             <button class="btn cancel btn-padding" (click)="closeErrorMsg(); resetSelection()" data-dismiss="modal">Cancel</button>
           <!-- <button type="button" class="btn btn-primary cancel" id="cancel-btn" (click)="closeErrorMsg();resetSelection()" data-dismiss="modal" style="margin-right: 14px;">Close</button> -->
-          <!-- <button type="button" class="btn btn-primary" (click)="autocolumnMatchMode(); closeErrorMsg();">Automatch Column</button> -->
+          <button class="btn btn-padding save" (click)="autocolumnMatchMode(); closeErrorMsg();">Automatch Column</button>
           <button class="btn {{onloadupdate || updateenable? 'save-disabled': 'save'}} btn-padding" [ngStyle]="{'cursor':onloadupdate ? 'not-allowed' : 'pointer'}" [disabled]="onloadupdate" (click)="resetSelection(); closeErrorMsg();">Reset</button>
           <button [disabled]="updateenable || onloadupdate" [ngStyle]="{'cursor':onloadupdate || updateenable ? 'not-allowed' : 'pointer'}" class="btn {{onloadupdate || updateenable? 'save-disabled': 'save'}} btn-padding" (click)="updateRelation(); closeErrorMsg();">Update</button>                
           </div>

@@ -83,28 +83,26 @@
   <!-- <mat-paginator [pageSize]="5" [length]="columnlength" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
 </div>
 <div class="col-md-12" style="margin-top: -15px;
-height: 45px;">
-    <div class="col-md-7"> 
-  <div class="msg-id">
-    <div *ngIf="autoColumnMatch" class="alert alert-success alert-dismissible m-t-6" role="alert">
-        <button type="button" class="close" (click)="closeAutoMatchMessage()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Success</strong>: {{autoColumnMatchMessage}}
-      </div>
-      <div *ngIf="enableAdd" class="alert alert-danger alert-dismissible m-t-6" role="alert">
-          <strong>Error</strong>: Secondary Column Duplicated
+height: 45px;width: 95%">  
+<div class="col-md-5"> 
+    <div class="msg-id">
+      <div *ngIf="autoColumnMatch" class="alert alert-success m-t-6" role="alert">
+          <button type="button" class="close" (click)="closeAutoMatchMessage()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>{{autoColumnMatchMessage}}</strong>
         </div>
-  </div>
-  </div>      
-  <div class="col-md-5">       
+        <div *ngIf="enableAdd" class="alert alert-danger m-t-6" role="alert">
+            <strong>Secondary Column Duplicated</strong>
+          </div>
+    </div>
+    </div>  
+  <div class="col-md-7">    
       <div class="action-btn" style="float: right">
           <button class="btn cancel btn-padding" (click)="closeScreen(); closeErrorMsg(); resetselectedValues()" data-dismiss="modal">Close</button>
-<!--    
-      <button type="button" (click)="autocolumnMatchMode()" class="btn btn-primary">Automatch Column</button> 
-      -->
-      <button type="button" [disabled]="joinbtn || joinListTemp.length == 0" class="btn  {{joinbtn? 'save-disabled': 'save'}} btn-padding" (click)="addJoins();">Add Joins</button>                
-      </div>       
+          <button class="btn btn-padding save" style="margin-right: 5%" (click)="autocolumnMatchMode(); closeErrorMsg();">Automatch Column</button>
+          <button type="button" [disabled]="joinbtn || joinListTemp.length == 0" class="btn  {{joinbtn? 'save-disabled': 'save'}} btn-padding" (click)="addJoins();">Add Joins</button>                
+      </div>        
   </div>
 </div>
 </div>
