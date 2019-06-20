@@ -259,7 +259,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
 
   autocolumnMatchMode() {
-    console.log('in');
     const secondaryColumnNameList = this.secondaryColumns.map(function (item) { return item['columnName']; });
     let tempIndexOfColumnList = 0;
     for (const primaryColumn of this.primaryColumns) {
@@ -282,7 +281,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       }
     }
     this.autoColumnMatch = true;
-    this.autoColumnMatchMessage = 'Success';
+    this.autoColumnMatchMessage = 'Automatch Success';
   }
 
   closeAutoMatchMessage() {
