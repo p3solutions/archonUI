@@ -74,6 +74,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
           this.primaryColumns = res;
           for (const i of this.primaryColumns) {
           i.secondaryColumn = '';
+          i.autoMatch = false;
           }
           this.dataSource.data = this.primaryColumns;
           this.spinner.hide();
@@ -263,7 +264,11 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
      for (const j of this.secondaryColumns) {
      if (i.columnName === j.columnName && i.columnDataType === j.columnDataType) {
       i.secondaryColumn = j.columnName;
+      i.autoMatch = true;
      }
+     }
+     if (!i.autoMatch) {
+      i.secondaryColumn = 'select';
      }
     }
     this.autoColumnMode = true;
