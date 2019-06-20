@@ -58,12 +58,12 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   populateValues() {
     this.spinner.show();
     try {
-      this.primaryTable = this.userValues.primaryTable.tableName;
-      this.secondaryTable = this.userValues.secondaryTable.tableName;
-      this.primaryTableId = this.userValues.primaryTable.tableId;
-      this.secondaryTabelId = this.userValues.secondaryTable.tableId;
-      this.joinName = this.userValues.joinName;
-      this.joinDetails = this.userValues.joinListInfo;
+      this.primaryTable = JSON.parse(JSON.stringify(this.userValues.primaryTable.tableName));
+      this.secondaryTable = JSON.parse(JSON.stringify(this.userValues.secondaryTable.tableName));
+      this.primaryTableId = JSON.parse(JSON.stringify(this.userValues.primaryTable.tableId));
+      this.secondaryTabelId = JSON.parse(JSON.stringify(this.userValues.secondaryTable.tableId));
+      this.joinName = JSON.parse(JSON.stringify(this.userValues.joinName));
+      this.joinDetails = JSON.parse(JSON.stringify(this.userValues.joinListInfo));
       this.editRelationshipInfo.getColumnsByTableId(this.secondaryTabelId).subscribe(x => {
         this.secondaryColumns = x;
       });
@@ -172,9 +172,25 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   checkDuplicateInObject(values) {
-    const valueArr = values.map(function(item) { return item.secondaryColumn.columnName; });
-    const isDuplicate = valueArr.some(function(item, idx) {
-    return valueArr.indexOf(item) !== idx ;
+    const valueArr = values.map(function(item) {
+      console.log(item);
+      let hasIsSelected =  false;
+      if ('isSelected' in item) {
+      hasIsSelected = true;
+      }
+      if (hasIsSelected === false) {
+        return item.secondaryColumn.columnName;
+      } else if (hasIsSelected === true) {
+        if (item.isSelected === true) {
+          return item.secondaryColumn.columnName;
+        }
+      }
+     });
+    console.log(valueArr);
+    const resArr = valueArr.filter(arrayItem => arrayItem !== undefined);
+    console.log(resArr);
+    const isDuplicate = resArr.some(function(item, idx) {
+    return resArr.indexOf(item) !== idx ;
     });
     return isDuplicate;
   }
@@ -242,7 +258,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       }
       }
       if (!i.automatchColumn) {
-       i.secondaryColumn.columnName = '';
+       i.secondaryColumn.columnName = 'select';
       }
      }
      this.autoColumnMatch = true;
