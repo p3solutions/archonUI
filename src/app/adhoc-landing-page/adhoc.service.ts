@@ -112,13 +112,10 @@ export class AdhocService {
       );
   }
 
-
   deleteScreen(screenId, userId): Observable<string> {
     return this.http.delete<string>(this.deleteScreenUrl + screenId + '&userId=' + userId,
       { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractData),
-        catchError(this.handleError('deleteScreen', []))
-      );
+      pipe(map(this.extractData));
   }
 
   getTablesearchList(workspaceId, tablesearchname = '', startIndex): Observable<string[]> {
