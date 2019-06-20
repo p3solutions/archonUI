@@ -45,6 +45,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   enableAdd = false;
   joinbtn = true;
+  editState = new Map();
 
   constructor(private addDirectJoinService: AddDirectJoinService,
     private spinner: NgxSpinnerService,
@@ -125,6 +126,11 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   selectedValues(primaryTable, index, secondaryTableName) {
     console.log(primaryTable, index, secondaryTableName);
+    const isWorthy = this.editState.get(primaryTable.columnId);
+    console.log(isWorthy);
+    if (isWorthy !== secondaryTableName) {
+    this.editState.set(primaryTable.columnId, secondaryTableName);
+    console.log('in');
     this.joinbtn = false;
     let secObject = {
       columnId: '',
@@ -169,6 +175,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   if (this.enableAdd === true) {
     this.joinbtn = true;
   }
+}
 
   }
 
