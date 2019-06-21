@@ -76,7 +76,7 @@ export class ManageMembersComponent implements OnInit {
 
   confirmDelete(): void {
     this.delProgress = true;
-    this.manageMembersService.deleteManageMembersData({ id: this.deleteMemberId }, this.workspaceId).subscribe(res => {
+    this.manageMembersService.deleteManageMembersData({ userIds: [this.deleteMemberId] }, this.workspaceId).subscribe(res => {
       this.delProgress = false;
       if (res.success) {
         // tr.remove(); // Removing the row.

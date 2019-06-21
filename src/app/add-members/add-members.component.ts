@@ -28,10 +28,12 @@ export class AddMembersComponent implements OnInit, OnChanges {
   @Input() extModifiedExistingUsers: any;
   @Input() ownerAlreadyExist: boolean;
   dataSource = new MatTableDataSource<any>(this.userList);
-  displayedColumns: string[] = ['select', 'id', 'firstName', 'emailAddress', 'role'];
+  // displayedColumns: string[] = ['select', 'id', 'firstName', 'emailAddress', 'role'];
+  displayedColumns: string[] = ['id', 'firstName', 'emailAddress', 'role'];
   columnlength = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  addmem: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,13 +67,13 @@ export class AddMembersComponent implements OnInit, OnChanges {
         this.isLoading = false;
         if (!this.existingUsers.includes(user.id) && !lockeduser.includes(user.id)) {
           this.userList.push(user);
-        }
-      });
-      console.log(this.userList);
+          console.log(this.userList);
       this.dataSource.data = this.userList;
       setTimeout(() => this.dataSource.paginator = this.paginator);
         this.dataSource.sort = this.sort;
       this.columnlength = this.userList.length;
+        }
+      });
     });
   }
 
@@ -96,14 +98,22 @@ export class AddMembersComponent implements OnInit, OnChanges {
     }
     return !this.errorObject.show;
   }
+  setRoles (users, index, event) {
+    this.addmem = false;
+    const user = {
+        userId: users.id,
+        workspaceId: this.workspaceId,
+        workspaceRoleId: event
+    };
+    this.selectedUserIdList.push(user);
+  }
   addMembers() {
-    if (this.isAddMemberReady()) {
       this.isProgress = true;
       this.selectedUserIdList.forEach(user => {
         const params = {
-          'userId': user.id,
+          'userId': user.userId,
           'workspaceId': this.workspaceId,
-          'workspaceRoleId': user.roleId
+          'workspaceRoleId': user.workspaceRoleId
         };
         this.addMembersService.addMembers(params)
         .subscribe(res => {
@@ -115,7 +125,6 @@ export class AddMembersComponent implements OnInit, OnChanges {
           }
         });
       });
-    }
   }
 
   setRole(user, event) {

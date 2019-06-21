@@ -66,8 +66,9 @@ export class ManageMembersService {
     );
   }
   deleteManageMembersData(param: AnyObject, wsId: string): Observable<any> {
-    const url = this.apiUrl + this.wsDelAccessUrl + wsId + '/member?userId=' + param.id;
-    return this.http.delete<any>(url, { headers: this.headers })
+    console.log(param);
+    const url = this.apiUrl + this.wsDelAccessUrl + wsId + '/member';
+    return this.http.request<any>('DELETE', url, { body: param, headers: this.headers })
       .pipe(catchError(this.handleError('deleteManageMembersData', []))
         // tap(_ => this.log(`deleted hero id=${id}`)),
         // catchError(this.handleError<Hero>('deleteHero'))

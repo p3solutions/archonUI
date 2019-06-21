@@ -10,6 +10,8 @@ import { ManageMembersService } from '../manage-members/manage-members.service';
 import { UserinfoService } from '../userinfo.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule, MatSelectModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 
 describe('AddMembersComponent', () => {
   let component: AddMembersComponent;
@@ -53,11 +55,12 @@ describe('AddMembersComponent', () => {
       imports: [
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        FormsModule, MatFormFieldModule, MatSelectModule, MatTableModule, MatPaginatorModule, MatSortModule,
       ],
       declarations: [ AddMembersComponent ],
       providers: [
-        AddMembersService, ManageMembersService, UserinfoService, 
+        AddMembersService, ManageMembersService, UserinfoService,
         { provide: EnvironmentService, useClass: MockEnvironmentService }
       ]
     })

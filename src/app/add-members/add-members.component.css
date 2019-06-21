@@ -132,3 +132,9 @@ tbody td:last-child, thead th:last-child {
  ::ng-deep .cdk-overlay-container{
   z-index: 1200 !important;
 }
+.table-hight {
+  margin-top: 0px;  
+  overflow: auto;
+  overflow-y: auto;
+  height: 345px;
+}

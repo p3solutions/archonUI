@@ -94,8 +94,8 @@
   </div>
 
   <div class="col-md-12">
-      <div class="col-md-12 expansion">
-      <mat-accordion>
+      <div class="col-md-12 expansion table-hight">
+      <mat-accordion >
           <mat-expansion-panel *ngFor="let manage of manageMembers;let ind=index;">
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -111,6 +111,7 @@
             <div class="line"></div>  
             <div class="change-role">Change Role</div>
             <mat-form-field>
+                <mat-label>Select</mat-label>
                 <mat-select [ngModel]="manage.workspaceRole.name || 'Change Role'" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'" (ngModelChange)="changerole($event,manage.user.id)" >               
                   <mat-option [disabled]="x.roleName === 'ROLE_OWNER' || manage.workspaceRole.name === x.roleName" [value]="x.id" *ngFor="let x of wsRoleList">{{x.roleName}}</mat-option>
                 </mat-select>

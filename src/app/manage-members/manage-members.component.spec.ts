@@ -13,11 +13,12 @@ import { AddMembersComponent } from '../add-members/add-members.component';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
-import { MatTableModule, MatSortModule, MatDialogModule } from '@angular/material';
+import { MatTableModule, MatSortModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { FormsModule } from '@angular/forms';
 
 describe('ManageMembersComponent', () => {
   let component: ManageMembersComponent;
@@ -41,7 +42,8 @@ describe('ManageMembersComponent', () => {
       imports: [
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule, MatTableModule, MatSortModule, MatDialogModule , BrowserAnimationsModule
+        RouterTestingModule, MatTableModule, MatSortModule, MatDialogModule , BrowserAnimationsModule,
+        FormsModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule,
       ],
       declarations: [ManageMembersComponent, AddMembersComponent, ManageUserRolesComponent],
       providers: [

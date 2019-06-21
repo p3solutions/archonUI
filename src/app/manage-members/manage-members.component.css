@@ -324,5 +324,9 @@ input:checked+.slider:before {
 ::ng-deep .select-cus > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix {
 border-top: 0.5em solid transparent;
 }
-
-
+.table-hight {
+  margin-top: 0px;  
+  overflow: auto;
+  overflow-y: auto;
+  height: 300px;
+}
