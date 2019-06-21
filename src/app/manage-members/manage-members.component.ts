@@ -33,6 +33,7 @@ export class ManageMembersComponent implements OnInit {
   workspaceRoleId: any;
   userId: any;
   successMsg: string;
+  errorMsg: any;
 
   constructor(
     private manageMembersService: ManageMembersService,
@@ -79,11 +80,12 @@ export class ManageMembersComponent implements OnInit {
     this.manageMembersService.deleteManageMembersData({ userIds: [this.deleteMemberId] }, this.workspaceId).subscribe(res => {
       this.delProgress = false;
       if (res.success) {
+        this.successMsg = res.data;
         // tr.remove(); // Removing the row.
         this.postDelete();
       } else {
         this.deleteNotif.show = true;
-        this.deleteNotif.message = res.data;
+        this.errorMsg = res.errorMessage;
       }
     });
   }
@@ -93,6 +95,9 @@ export class ManageMembersComponent implements OnInit {
   postDelete() {
     const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal #dismissmodel');
     close.click();
+    setTimeout(() => {
+      document.getElementById('addperssmsg').click();
+    }, 1000);
     this.getManageMembersData(this.workspaceId);
     this.extModifiedExistingUsers = [];
     this.extModifiedExistingUsers = this.exisitingUserIds;
@@ -137,6 +142,7 @@ export class ManageMembersComponent implements OnInit {
         this.successMsg = 'Change Role Successfully';
         document.getElementById('addmemssmsg').click();
       } else {
+        this.errorMsg = res.errorMessage;
         document.getElementById('addmemermsg').click();
       }
 
@@ -162,6 +168,7 @@ export class ManageMembersComponent implements OnInit {
         this.successMsg = 'Update Successfully';
         document.getElementById('addperssmsg').click();
       } else {
+        this.errorMsg = res.errorMessage;
         document.getElementById('addmemermsg').click();
       }
     });

@@ -136,7 +136,6 @@ export class AddMembersComponent implements OnInit, OnChanges {
     }
   }
   updateSelectList(user: any, event) {
-    console.log(user, event, 'uu');
     const checked = event.target.checked;
     if (checked) {
       user.roleId = event.target.parentNode.parentNode.children[2].children[0].value; // depends on the html structure order
@@ -159,6 +158,18 @@ export class AddMembersComponent implements OnInit, OnChanges {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  datasourceHasValue() {
+    let isScreenPresent;
+    this.dataSource.connect().subscribe(result => {
+      if (result.length === 0) {
+        isScreenPresent = true;
+      } else {
+        isScreenPresent = false;
+      }
+    });
+    return isScreenPresent;
   }
 
 }

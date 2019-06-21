@@ -39,7 +39,7 @@ export class WorkspaceServicesService {
             service.desc = 'To create the screens in a customized way based on user requirements, Custom screen builder will give more options to work on it.';
             break;
           }
-          case 'ERT': {
+          case 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL': {
             service.serviceName = 'ERT';
             service.iconName = 'ert.png';
             service.serviceActionType = 'ALL';
