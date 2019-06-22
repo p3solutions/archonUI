@@ -126,11 +126,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
   selectedValues(primaryTable, index, secondaryTableName) {
     const isWorthy = this.editState.get(primaryTable.columnId);
-    console.log(isWorthy);
     if (isWorthy !== secondaryTableName) {
     this.editState.set(primaryTable.columnId, secondaryTableName);
-    console.log('in');
-    console.log(primaryTable, index, secondaryTableName);
     this.joinbtn = false;
     let secObject = {
       columnId: '',

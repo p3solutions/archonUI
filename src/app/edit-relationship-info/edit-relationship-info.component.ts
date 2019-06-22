@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, OnChanges, SimpleChanges, EventEmitter, Output, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { EditRelationshipInfoService } from './edit-relationship-info.service';
 import { JoinValues, SecondaryColumn, JoinValueColumn } from './edit-relationship-info-object';
 import { SecondaryColumnPipe } from '../secondary-column.pipe';
@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './edit-relationship-info.component.html',
   styleUrls: ['./edit-relationship-info.component.css']
 })
-export class EditRelationshipInfoComponent implements OnInit, OnChanges {
+export class EditRelationshipInfoComponent implements OnInit, OnChanges{
   newWSinfo: any;
   @Input() relation: any;
   @Input() workspaceID: any;
@@ -37,22 +37,29 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   defaultRelations = new Map();
   updateenable = false;
   onloadupdate = true;
-
+  editchangeState = new Map();
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumn'];
   defaultIndex = new Map();
+  load;
 
   constructor(private editRelationshipInfo: EditRelationshipInfoService,
     private spinner: NgxSpinnerService ) { }
 
   ngOnInit() {
-
+    this.load = false;
+    const now = new Date();
+    console.log(now);
   }
 
   ngOnChanges(change: SimpleChanges) {
     console.log(change);
+    this.load = false;
     const value: SimpleChange = change.relation;
     this.userValues = value.currentValue;
     this.populateValues();
+    setTimeout(() => {
+      this.load = true;
+    }, 2000);
   }
 
   populateValues() {
@@ -102,6 +109,13 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryValues, index, secondaryColumn) {
+    if (this.load) {
+    console.log(primaryValues, index, secondaryColumn);
+    const isWorthy = this.editchangeState.get(primaryValues.primaryColumn.columnId);
+    console.log(isWorthy);
+    if (isWorthy !== secondaryColumn) {
+    this.editchangeState.set(primaryValues.primaryColumn.columnId, secondaryColumn);
+    console.log('in');
     this.onloadupdate = false;
     const example = {
       columnId: '',
@@ -170,6 +184,8 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     }
     this.updateenable = this.checkDuplicateInObject(this.resultantValues);
   }
+}
+  }
 
   checkDuplicateInObject(values) {
     const valueArr = values.map(function(item) {
@@ -186,9 +202,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         }
       }
      });
-    console.log(valueArr);
     const resArr = valueArr.filter(arrayItem => arrayItem !== undefined);
-    console.log(resArr);
     const isDuplicate = resArr.some(function(item, idx) {
     return resArr.indexOf(item) !== idx ;
     });
@@ -245,6 +259,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
     this.removeIndexValue = [];
     this.updateenable = false;
     this.onloadupdate = true;
+    this.editchangeState.clear();
+    this.load = false;
+    this.autoColumnMatch = false;
   }
 
   autocolumnMatchMode() {
@@ -258,7 +275,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       }
       }
       if (!i.automatchColumn) {
-       i.secondaryColumn.columnName = 'select';
+       i.secondaryColumn.columnName = '';
       }
      }
      this.autoColumnMatch = true;
