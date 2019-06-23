@@ -265,6 +265,8 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
   }
 
   autocolumnMatchMode() {
+    this.resultantValues = [];
+    this.updateenable = false;
     for (const i of this.joinDetailsArray) {
       console.log(i);
       for (const j of this.secondaryColumns) {
