@@ -190,7 +190,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   (error) => {
     document.getElementById('deletemsg').click();
     this.error = true;
-    this.errormsg = error.error.errorMessage;
+    this.errormsg = error.message;
   }
   );
 }
