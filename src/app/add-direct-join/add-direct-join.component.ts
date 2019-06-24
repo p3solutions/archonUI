@@ -278,7 +278,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
      }
     }
     this.autoColumnMode = true;
-    this.autoColumnMatchMessage = 'Automatch Success';
+    this.autoColumnMatchMessage = 'Automatch Completed';
   }
 
   closeAutoMatchMessage() {

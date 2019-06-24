@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './edit-relationship-info.component.html',
   styleUrls: ['./edit-relationship-info.component.css']
 })
-export class EditRelationshipInfoComponent implements OnInit, OnChanges{
+export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   newWSinfo: any;
   @Input() relation: any;
   @Input() workspaceID: any;
@@ -54,7 +54,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
   }
 
   ngOnChanges(change: SimpleChanges) {
-    console.log(change);
+    console.log(change, 'into edit');
     this.load = false;
     this.removeIndexValue = [];
     this.resultantValues = [];
@@ -62,9 +62,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
     const value: SimpleChange = change.relation;
     this.userValues = value.currentValue;
     this.populateValues();
-    setTimeout(() => {
-      this.load = true;
-    }, 1000);
   }
 
   populateValues() {
@@ -104,9 +101,11 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
         for (let index = 0; index < this.joinDetailsArray.length; index++) {
           if (this.joinDetailsArray[index].relationshipId !== '') {
             this.resultantValues.push(JSON.parse(JSON.stringify(this.joinDetailsArray[index])));
+            this.editchangeState.set(this.joinDetailsArray[index].primaryColumn.columnId, this.joinDetailsArray[index].secondaryColumn.columnName);
+            console.log(this.joinDetailsArray[index]);
           }
         }
-         this.spinner.hide();
+        this.spinner.hide();
       });
     } catch {
       this.spinner.hide();
@@ -114,10 +113,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
   }
 
   selectedValues(primaryValues, index, secondaryColumn) {
-    if (this.load) {
     console.log(primaryValues, index, secondaryColumn);
     const isWorthy = this.editchangeState.get(primaryValues.primaryColumn.columnId);
-    console.log(isWorthy);
+    console.log(isWorthy, this.editchangeState);
     if (isWorthy !== secondaryColumn) {
     this.editchangeState.set(primaryValues.primaryColumn.columnId, secondaryColumn);
     console.log('in');
@@ -187,9 +185,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
         }
       }
     }
+    console.log(this.resultantValues);
     this.updateenable = this.checkDuplicateInObject(this.resultantValues);
   }
-}
   }
 
   checkDuplicateInObject(values) {
@@ -266,10 +264,11 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
     this.editchangeState.clear();
     this.load = false;
     this.autoColumnMatch = false;
+    this.spinner.hide();
   }
 
   autocolumnMatchMode() {
-    this.resultantValues = [];
+    this.editchangeState.clear();
     this.updateenable = false;
     for (const i of this.joinDetailsArray) {
       console.log(i);
@@ -281,11 +280,11 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
       }
       }
       if (!i.automatchColumn) {
-       i.secondaryColumn.columnName = '';
+       i.secondaryColumn.columnName = 'select';
       }
      }
      this.autoColumnMatch = true;
-     this.autoColumnMatchMessage = 'Automatch Success';
+     this.autoColumnMatchMessage = 'Automatch Completed';
   }
 
   closeAutoMatchMessage() {
