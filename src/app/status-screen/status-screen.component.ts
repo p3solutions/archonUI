@@ -142,14 +142,15 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
 
   retryJob(id) {
     this.statusService.setRetryStatus(id).subscribe(res => {
-      if (res && res.success) {
+      if (res) {
         this.getStart();
-      } else {
-        this.errorObject = new ErrorObject;
-        this.errorObject.message = res.errorMessage;
-        this.errorObject.show = true;
       }
-    });
+    }, (err) => {
+      this.errorObject = new ErrorObject;
+        this.errorObject.message = err.error.message;
+        this.errorObject.show = true;
+    }
+    );
   }
 
   downloadJob(releatedJobId) {

@@ -70,13 +70,13 @@ export class ManageMembersComponent implements OnInit {
     this.delProgress = true;
     this.manageMembersService.deleteManageMembersData({ id: this.deleteMemberId }, this.workspaceId).subscribe(res => {
       this.delProgress = false;
-      if (res && res.success) {
+      if (res) {
         // tr.remove(); // Removing the row.
         this.postDelete();
-      } else {
-        this.deleteNotif.show = true;
-        this.deleteNotif.message = res.data;
       }
+    }, (err) => {
+      this.deleteNotif.show = true;
+      this.deleteNotif.message = err.error.message;
     });
   }
   closeErrorMsg() {

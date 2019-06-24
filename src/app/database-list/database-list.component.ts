@@ -214,8 +214,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
           document.getElementById('editmsg').click();
           if (result.success) {
             this.successmsg = 'successfully updated';
-           } else {
-            this.successmsg = result.errorMessage;
            }
             this.success = true;
             this.getConfigDBList();
@@ -223,7 +221,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   (error) => {
     document.getElementById('editmsg').click();
     this.error = true;
-    this.errormsg = error.error.errors[0].code;
+    this.errormsg = error.error.message;
   }
   );
 }
