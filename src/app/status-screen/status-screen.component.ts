@@ -8,6 +8,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-status-screen',
@@ -171,12 +172,12 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
 
   stopJob(id) {
     const el: HTMLElement = this.button1.nativeElement as HTMLElement;
-    this.statusService.terminateJob(id).subscribe(result => {
-      if (result.success) {
+    this.statusService.terminateJob(id).subscribe((result: any) => {
+      if (result) {
         this.responsemsg = result.data;
-      } else {
-        this.responsemsg = result.errorMessage;
       }
+    }, (err: HttpErrorResponse) => {
+      this.responsemsg = err.error.message;
     });
     el.click();
   }

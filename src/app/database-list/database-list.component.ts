@@ -10,6 +10,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { UserinfoService } from '../userinfo.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-database-list',
@@ -187,10 +188,10 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
                this.getConfigDBList();
              }, 15000);
   },
-  (error) => {
+  (err: HttpErrorResponse) => {
     document.getElementById('deletemsg').click();
     this.error = true;
-    this.errormsg = error.message;
+    this.errormsg = err.error.message;
   }
   );
 }

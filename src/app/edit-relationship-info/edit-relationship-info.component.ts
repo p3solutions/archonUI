@@ -5,6 +5,7 @@ import { SecondaryColumnPipe } from '../secondary-column.pipe';
 import { ContentObserver } from '@angular/cdk/observers';
 import { MatTableDataSource } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-relationship-info',
@@ -222,7 +223,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
     this.removeIndexValue = this.removeIndexValue.filter(a => a.isSelected === false || a.isSelected === true);
     console.log(this.removeIndexValue);
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
-      .subscribe(res => {
+      .subscribe((res) => {
         console.log(res);
         if (res && res.success) {
           const close: HTMLButtonElement = document.querySelector('#openEditRelationshipModal .cancel');
@@ -237,12 +238,10 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
           // const close: HTMLButtonElement = document.querySelector('#openEditRelationshipModal .cancel');
           // close.click();
           // }, 1500);
-        } else {
-          // console.log(res);
-          // document.getElementById('editermsg').click();
-          this.errorMsg = res.errors;
-          this.updateNotif = true;
         }
+      }, (err: HttpErrorResponse) => {
+        this.errorMsg = err.error.message;
+        this.updateNotif = true;
       });
   }
   closeErrorMsg() {

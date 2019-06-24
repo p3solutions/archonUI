@@ -81,9 +81,7 @@ export class TableListService {
   deleteRelationInfoData(workspaceID, primaryTableId, joinName, relationShipIDs): Observable<any> {
     const url = this.deleteRelationsUrl + workspaceID + '&tableId=' + primaryTableId;
     const params = { joinName: joinName, relationshipId: relationShipIDs };
-    return this.http.request<any>('DELETE', url, { body: params, headers: this.userinfoService.getHeaders() })
-      .pipe(catchError(this.handleError('deleteRelationInfoData', []))
-      );
+    return this.http.request<any>('DELETE', url, { body: params, headers: this.userinfoService.getHeaders() });
   }
 
   getColumnsByTableId(tableId): Observable<any[]> {

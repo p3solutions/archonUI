@@ -6,6 +6,7 @@ import { SecondaryColumnPipe } from '../secondary-column.pipe';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -203,21 +204,21 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       }],
     };
     if (this.resultArray.length > 0) {
-      this.addDirectJoinService.addNewJoin(param).subscribe(res => {
-        if (res && res.data.errorDetails.length === 0) {
+      this.addDirectJoinService.addNewJoin(param).subscribe((res) => {
+        if (res) {
           document.getElementById('addssmsg').click();
           this.updateEvent.emit(true);
           this.updateSuccess = true;
           this.joinListTemp = [];
           this.resultArray = [];
           this.resetselectedValues();
-        } else {
+        }
+       }, (err: HttpErrorResponse) => {
           document.getElementById('addermsg').click();
-          this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
+          this.errorMsg = err.error.message;
           this.updateNotif = true;
           this.resultArray = [];
-        }
-      });
+       });
     } else {
       document.getElementById('addermsg').click();
       this.errorMsg = 'Please select columns to add joins';
@@ -263,6 +264,8 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
 
   autocolumnMatchMode() {
+    this.joinListTemp = [];
+    this.resultArray = [];
     for (const i of this.primaryColumns) {
      for (const j of this.secondaryColumns) {
      if (i.columnName === j.columnName && i.columnDataType === j.columnDataType) {
