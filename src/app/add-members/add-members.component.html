@@ -57,7 +57,7 @@
         </div>
         <div style="display: flex;justify-content: flex-end">
             <div class="database-search"> 
-                <mat-form-field style="width: 240px;padding-top: 5px;margin-bottom: -15px;">
+                <mat-form-field style="width: 205px;padding-top: 5px;margin-bottom: -15px;">
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
                 </mat-form-field>
             </div>
@@ -66,31 +66,32 @@
           <div class="col-md-12">
               
               <div class="mat-elevation-z2 table-hight-div">                  
-                  <div class="table-hight">        
-              <table mat-table [dataSource]="dataSource" class="{{datasourceHasValue()?'example-table-container-no-record':'mat-container'}} mat-elevation-z2" style="width: 100%;">                  
+                  <div class="table-hight {{datasourceHasValue()?'example-table-container-no-record':'mat-container'}}">        
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z2" style="width: 100%;">                  
                 <!-- <ng-container  matColumnDef="select" >
                     <th mat-header-cell *matHeaderCellDef>  </th>
                     <td mat-cell *matCellDef="let element"> 
                       <mat-checkbox (change)="updateSelectList(element, $event)" [checked]="element.isChecked"></mat-checkbox></td>
                 </ng-container> -->
                 <ng-container matColumnDef="id">
-                  <th mat-header-cell *matHeaderCellDef> User Id </th>
+                  <th style="width:20%" mat-header-cell *matHeaderCellDef> User Id </th>
                   <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                 </ng-container>              
                 <ng-container matColumnDef="firstName">
-                  <th mat-header-cell *matHeaderCellDef> User Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+                  <th style="width:20%" mat-header-cell *matHeaderCellDef> User Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}}  </td>
                 </ng-container>
                 <ng-container matColumnDef="emailAddress">
-                  <th mat-header-cell *matHeaderCellDef> Email </th>
+                  <th style="width:40%" mat-header-cell *matHeaderCellDef> Email </th>
                   <td mat-cell *matCellDef="let element"> {{element.emailAddress}} </td>
                 </ng-container>
                 <ng-container matColumnDef="role">
-                    <th mat-header-cell *matHeaderCellDef style="width: 35%; border-top-right-radius: 3px;"> Role </th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 20%; border-top-right-radius: 3px;"> Role </th>
                     <td mat-cell *matCellDef="let element; let ind=index;">
                       <mat-form-field style="width: 100%;">                         
                           <mat-label>Select</mat-label>
                         <mat-select [(ngModel)]="element.rolenames" (selectionChange)="setRoles(element, ind, $event.value)" [placeholder]="element.rolenames === '' ? 'Select' : ''">                         
+                          <mat-option value="select">Select</mat-option>
                           <mat-option  *ngFor="let role of wsRoleList" [value]="role.id"
                           [disabled]="(ownerAlreadyExist && role.roleName === 'ROLE_OWNER') ? 'true' : null ">{{role.roleName}}</mat-option>
                         </mat-select>
@@ -113,6 +114,7 @@
     <div class="col-md-12" style="padding-right: 0px;"> 
       <div class="action-btn">
       <button class="btn cancel btn-padding"data-dismiss="modal">Cancel</button>
+      <!-- <button class="btn {{selectedUserIdList.length == 0? 'save-disabled': 'save'}} btn-padding" [disabled]="selectedUserIdList.length == 0" (click)="resetSelection(); closeErrorMsg();">Reset</button> -->
       <button [disabled]="selectedUserIdList.length == 0" class="btn {{selectedUserIdList.length == 0? 'save-disabled': 'save'}} btn-padding" (click)="addMembers()">Add</button>                
       </div>
   </div>

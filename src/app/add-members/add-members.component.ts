@@ -172,4 +172,14 @@ export class AddMembersComponent implements OnInit, OnChanges {
     return isScreenPresent;
   }
 
+  resetSelection() {
+    this.userList = [];
+    // this.defaultIndex.clear();
+    // this.populateValues();
+    // this.resultantValues = [];
+    // this.removeIndexValue = [];
+    // this.updateenable = false;
+    // this.onloadupdate = true;
+  }
+
 }

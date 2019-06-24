@@ -8,6 +8,7 @@ import { ManageUserRoles } from '../manage-user-roles';
 import { ErrorObject } from '../error-object';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Logs } from 'selenium-webdriver';
+import { NgxSpinnerService } from 'ngx-spinner';
 // import * as $ from 'jquery';
 
 @Component({
@@ -40,6 +41,7 @@ export class ManageMembersComponent implements OnInit {
     private userinfoService: UserinfoService,
     private route: ActivatedRoute,
     private router: Router,
+    private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService
   ) { }
 
@@ -76,18 +78,26 @@ export class ManageMembersComponent implements OnInit {
   }
 
   confirmDelete(): void {
-    this.delProgress = true;
-    this.manageMembersService.deleteManageMembersData({ userIds: [this.deleteMemberId] }, this.workspaceId).subscribe(res => {
-      this.delProgress = false;
-      if (res.success) {
-        this.successMsg = res.data;
-        // tr.remove(); // Removing the row.
-        this.postDelete();
-      } else {
-        this.deleteNotif.show = true;
-        this.errorMsg = res.errorMessage;
-      }
-    });
+    this.spinner.show();
+    try {
+      this.delProgress = true;
+      this.manageMembersService.deleteManageMembersData({ userIds: [this.deleteMemberId] }, this.workspaceId).subscribe(res => {
+        this.delProgress = false;
+        if (res.success) {
+          this.successMsg = res.data;
+          // tr.remove(); // Removing the row.
+          this.postDelete();
+        } else {
+          this.deleteNotif.show = true;
+          this.errorMsg = res.errorMessage;
+        }
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1000);
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
   closeErrorMsg() {
     this.deleteNotif = new ErrorObject();
@@ -95,9 +105,9 @@ export class ManageMembersComponent implements OnInit {
   postDelete() {
     const close: HTMLButtonElement = document.querySelector('#confirmDelMemModal #dismissmodel');
     close.click();
-    setTimeout(() => {
-      document.getElementById('addperssmsg').click();
-    }, 1000);
+    // setTimeout(() => {
+    //   document.getElementById('addperssmsg').click();
+    // }, 1000);
     this.getManageMembersData(this.workspaceId);
     this.extModifiedExistingUsers = [];
     this.extModifiedExistingUsers = this.exisitingUserIds;
@@ -132,21 +142,29 @@ export class ManageMembersComponent implements OnInit {
   }
 
   updateRole() {
-    const params = {
-      userId: this.userId,
-      workspaceId: this.workspaceId,
-      workspaceRoleId: this.workspaceRoleId
-    };
-    this.manageMembersService.updateRole(params).subscribe(res => {
-      if (res) {
-        this.successMsg = 'Change Role Successfully';
-        document.getElementById('addmemssmsg').click();
-      } else {
-        this.errorMsg = res.errorMessage;
-        document.getElementById('addmemermsg').click();
-      }
-
-    });
+    this.spinner.show();
+    try {
+      const params = {
+        userId: this.userId,
+        workspaceId: this.workspaceId,
+        workspaceRoleId: this.workspaceRoleId
+      };
+      this.manageMembersService.updateRole(params).subscribe(res => {
+        if (res) {
+          this.getManageMembersData(this.workspaceId);
+          // this.successMsg = 'Change Role Successfully';
+          // document.getElementById('addmemssmsg').click();
+        } else {
+          this.errorMsg = res.errorMessage;
+          document.getElementById('addmemermsg').click();
+        }
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 1500);
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
   resetselectedValues() {
@@ -154,6 +172,8 @@ export class ManageMembersComponent implements OnInit {
   }
 
   updatepermission(type, service, userid) {
+    this.spinner.show();
+    try {
     const params = {
       userId: userid,
       workspaceId: this.workspaceId,
@@ -166,12 +186,44 @@ export class ManageMembersComponent implements OnInit {
     this.manageMembersService.updateServiceActions(params).subscribe(res => {
       if (res) {
         this.successMsg = 'Update Successfully';
-        document.getElementById('addperssmsg').click();
+      //  document.getElementById('addperssmsg').click();
       } else {
         this.errorMsg = res.errorMessage;
         document.getElementById('addmemermsg').click();
       }
+      this.spinner.hide();
     });
+  } catch {
+    this.spinner.hide();
+  }
+  }
+
+
+  updateaccess(type, service, userid) {
+    this.spinner.show();
+    try {
+    const params = {
+      userId: userid,
+      workspaceId: this.workspaceId,
+      permissions: [{
+        serviceId: service.serviceId,
+        serviceActionType: service.serviceActionType,
+        enableService: type
+      }],
+    };
+    this.manageMembersService.updateServiceActions(params).subscribe(res => {
+      if (res) {
+        this.successMsg = 'Update Successfully';
+       // document.getElementById('addperssmsg').click();
+      } else {
+        this.errorMsg = res.errorMessage;
+        document.getElementById('addmemermsg').click();
+      }
+      this.spinner.hide();
+    });
+  } catch {
+    this.spinner.hide();
+  }
   }
 
   manageMemTable(xData) {

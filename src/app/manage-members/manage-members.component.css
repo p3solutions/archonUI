@@ -158,18 +158,23 @@ th.disp-bl {
   display: inline-block;
 }
 .ex-mem2 {
-  width: 40.3%; 
+  width: 31.8%; 
   text-align: left;  
   display: inline-block;
 }
 .ex-mem3 {
-  width: 40.3%; 
+  width: 20.3%; 
   text-align: left; 
   display: inline-block; 
 }
 .ex-mem4 {
-  width: 15%; 
-  text-align: center;
+  width: 12%; 
+  text-align: right;
+  display: inline-block;  
+}
+.ex-mem5 {
+  width: 32%; 
+  text-align: left;
   display: inline-block;  
 }
 .expansion {
@@ -188,18 +193,22 @@ th.disp-bl {
   text-align: left;  
 }
 .ex-header2 {
-  width: 41%;
+  width: 32.5%;
   text-align: left;  
 }
 
 .ex-header3 {
-  width: 41%;
+  width: 20%;
   text-align: left;  
 }
 
 .ex-header4 {
-  width: 15%;
-  text-align: center;  
+  width: 12%;
+  text-align: right;  
+}
+.ex-header5 {
+  width: 32.5%;
+  text-align: left;  
 }
 
 .exp-content-outer-header {
