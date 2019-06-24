@@ -48,13 +48,14 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
 
   ngOnInit() {
     this.load = false;
-    const now = new Date();
-    console.log(now);
   }
 
   ngOnChanges(change: SimpleChanges) {
     console.log(change);
     this.load = false;
+    this.removeIndexValue = [];
+    this.resultantValues = [];
+    this.joinDetailsArray = [];
     const value: SimpleChange = change.relation;
     this.userValues = value.currentValue;
     this.populateValues();
@@ -231,6 +232,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
           // document.getElementById('editssmsg').click();
           this.removeIndexValue = [];
           this.resultantValues = [];
+          this.joinDetailsArray = [];
           this.updateEvent.emit(true);
           // this.errorMsg = res.data;
           // this.updateNotifSuccess = true;
