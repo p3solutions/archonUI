@@ -35,8 +35,7 @@ export class AddDirectJoinService {
   }
 
   addDaNewJoin(param): Observable<any> {
-    return this.http.post<any>(this.addNewDaJoinUrl, param, { headers: this.userinfoService.getHeaders() })
-      .pipe(catchError(this.handleError('addNewDaJoin()', [])));
+    return this.http.post<any>(this.addNewDaJoinUrl, param, { headers: this.userinfoService.getHeaders() });
   }
 
   clearSession(jobId): Observable<any> {

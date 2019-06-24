@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { MetalyzerHeaderService } from '../metalyzer-header/metalyzer-header.service';
 import { MatStepper } from '@angular/material';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-data-analyzer-result-screen',
@@ -313,18 +314,18 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     };
     if (finalSecondaryTableListArray.length > 0) {
       this.addDirectJoinService.addDaNewJoin(param).subscribe(res => {
-        if (res && res.data.errorDetails.length === 0) {
+        if (res) {
           document.getElementById('datasuccessmsg').click();
           this.updateSuccess = true;
           this.resultantMap.clear();
           // setTimeout(() =>
           //   this.closeScreen(), 1000);
           // setTimeout(() => this.tablelistService.changeBooleanValue(true), 1005);
-        } else {
-          this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
-          this.updateNotif = true;
-          document.getElementById('dataerrormsg').click();
         }
+      }, (err: HttpErrorResponse) => {
+        this.errorMsg = err.error.message;
+        this.updateNotif = true;
+        document.getElementById('dataerrormsg').click();
       });
     } else {
       this.errorMsg = 'Please select columns to add joins';
