@@ -48,6 +48,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
 
   ngOnInit() {
     this.load = false;
+    this.removeIndexValue = [];
+    this.resultantValues = [];
+    this.joinDetailsArray = [];
   }
 
   ngOnChanges(change: SimpleChanges) {
