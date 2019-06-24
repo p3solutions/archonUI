@@ -61,7 +61,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges{
     this.populateValues();
     setTimeout(() => {
       this.load = true;
-    }, 2000);
+    }, 1000);
   }
 
   populateValues() {
