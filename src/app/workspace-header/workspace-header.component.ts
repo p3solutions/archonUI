@@ -118,10 +118,10 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
-    this.serviceActionsList.push({
-      serviceName: 'ERT', iconName: 'ert.png',
-      serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r', desc: ''
-    });
+    // this.serviceActionsList.push({
+    //   serviceName: 'ERT', iconName: 'ert.png',
+    //   serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r', desc: ''
+    // });
     const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
     this.workspaceService.updateServiceActions(_temp);
 
