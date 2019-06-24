@@ -50,7 +50,7 @@ export class ForgotpasswordFormComponent implements OnInit {
       (err: HttpErrorResponse) => {
         if (err.error) {
           this.errorObject = new ErrorObject;
-          this.errorObject.message = err.error.errorMessage;
+          this.errorObject.message = err.error.message;
           this.errorObject.show = !err.error.success;
         }
       }
