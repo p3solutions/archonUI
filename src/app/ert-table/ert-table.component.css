@@ -747,3 +747,8 @@ a.disabled {
   border: none;
   border-bottom: 1px solid #2196F3
 }
+
+.select-all-checkbox{
+  vertical-align: middle;
+    margin-right: 2px;
+}

@@ -113,6 +113,9 @@ const routes: Routes = [
       }, {
         path: 'db-extractor', component: DbExtractorComponent, canActivate: [AuthenticationGuard], children: [
           {
+            path: '', redirectTo: 'db-extractor-process', pathMatch: 'full'
+          },
+          {
             path: 'db-extractor-process', component: DbExtractorStepOneComponent
           }, {
             path: 'db-extractor-parameter', component: DbExtractorStepTwoComponent

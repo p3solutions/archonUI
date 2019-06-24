@@ -90,9 +90,7 @@ export class ErtService {
 
   getExtractConfig(ertJobId: string): Observable<ExtractConfig> {
     return this.http.get<ExtractConfig>(this.extractConfigUrl + ertJobId,
-      { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractDataForColumn),
-        catchError(this.handleError('getExtractConfig', []))
-      );
+      { headers: this.userInfoService.getHeaders() }).pipe(map(this.extractDataForColumn));
   }
 
   setSelectValueAndDataOfGraph(selectedValues: string[], data: any, joinListMap, selectedPrimaryTable, RelationSIP) {
@@ -123,9 +121,7 @@ export class ErtService {
   getErtJob(userId, workspaceId): Observable<ERTJobs[]> {
     return this.http.get<ERTJobs[]>(this.getErtJobUrl + userId + '&workspaceId=' + workspaceId,
       { headers: this.userInfoService.getHeaders() }).pipe(
-        map(this.extractDataForJobs),
-        catchError(this.handleError('getErtJob', []))
-      );
+        map(this.extractDataForJobs));
   }
 
   getERTcolumnlist(ertJobId = '', workspaceId: string, tableId: string): Observable<ErtColumnListObj[]> {
@@ -170,24 +166,18 @@ export class ErtService {
 
   runJob(param: any): Observable<any> {
     return this.http.put<any>(this.runjobUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForRunJob),
-        catchError(this.handleError('runJob', []))
-      );
+      pipe(map(this.extractDataForRunJob));
   }
 
   deleteErtJob(ertJobId: any): Observable<any> {
     return this.http.delete<any>(this.deleteErtJobUrl + ertJobId, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForRunJob),
-        catchError(this.handleError('deleteErtJob', []))
-      );
+      pipe(map(this.extractDataForRunJob));
   }
 
   validQuery(param: any): Observable<any> {
     param.userId = this.userInfoService.getUserId();
     return this.http.post<any>(this.queryValidationUrl, param, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractDataForRunJob),
-        catchError(this.handleError('deleteErtJob', []))
-      );
+      pipe(map(this.extractDataForRunJob));
   }
 
   private extractData(res: any) {

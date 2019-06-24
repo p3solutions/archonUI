@@ -33,6 +33,7 @@
     "bootstrap": "^3.4.1",
     "core-js": "^2.6.1",
     "d3": "^5.9.1",
+    "d3-graphviz": "^2.6.1",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "flex-layout": "^1.0.1",

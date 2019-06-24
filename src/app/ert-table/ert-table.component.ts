@@ -16,6 +16,7 @@ import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
 import { MatAccordion } from '@angular/material';
 import { Observable } from 'rxjs';
 import { of } from "rxjs";
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
@@ -655,12 +656,12 @@ export class ErtTableComponent implements OnInit {
     if (dataType !== 'USERDEFINED') {
       this.configColumnList = [];
       this.configColumnQuery = '';
+      let outputType = '';
       this.configColumnObject.selectedColumnName = columnName;
       this.configColumnObject = {
         selectedColumnName: columnName, selectedConfigFunction: null, outputType: null, param: '',
         startIndex: 1, endIndex: 1
       };
-      this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
       if (dataType.trim().toUpperCase() === 'SMALLINT' ||
         dataType.trim().toUpperCase() === 'INT' || dataType.trim().toUpperCase() === 'BIGINT'
         || dataType.trim().toUpperCase() === 'DECIMAL') {
@@ -678,6 +679,19 @@ export class ErtTableComponent implements OnInit {
       if (temp.userColumnQuery != null && temp.viewQuery) {
         this.configColumnList = JSON.parse(temp.userColumnQuery.replace(/'/g, '"'));
         this.configColumnQuery = temp.viewQuery;
+      }
+      if (this.configColumnList.length !== 0) {
+        // Set function list acc to the last function.
+        outputType = this.configColumnList[this.configColumnList.length - 1].outputType;
+        this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.outputType.trim().toUpperCase() ===
+          outputType.trim().toUpperCase());
+      }
+      if (outputType.trim().toUpperCase() === 'NUMBER') {
+        // remove length function in case of number.
+        const index = this.columnConfigFunctionList.findIndex(a => a.function === 'LENGTH');
+        if (index !== -1) {
+          this.columnConfigFunctionList.splice(index, 1);
+        }
       }
     }
   }
@@ -721,8 +735,17 @@ export class ErtTableComponent implements OnInit {
         outputType.trim().toUpperCase());
     } else {
       // set to original function if length is zero.
-      const tempDataType = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0]
+      let tempDataType = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0]
         .columnList.filter(b => b.originalColumnName.trim().toUpperCase() === tempColumnName.trim().toUpperCase())[0].dataType;
+      if (tempDataType.trim().toUpperCase() === 'SMALLINT' ||
+        tempDataType.trim().toUpperCase() === 'INT' || tempDataType.trim().toUpperCase() === 'BIGINT'
+        || tempDataType.trim().toUpperCase() === 'DECIMAL') {
+        tempDataType = 'INT';
+      } else if (tempDataType.trim().toUpperCase() === 'BIT') {
+        tempDataType = '';
+      } else {
+        tempDataType = 'VARCHAR';
+      }
       this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.trim().toUpperCase() ===
         tempDataType.trim().toUpperCase());
     }
@@ -939,6 +962,10 @@ export class ErtTableComponent implements OnInit {
         this.toCreateQuery = true;
         this.saveUserDefinedAfterValidate();
       }
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        this.usrDefinedAlertMessage = err.error.message;
+      }
     });
   }
 
@@ -1018,7 +1045,6 @@ export class ErtTableComponent implements OnInit {
       if (filterMap.get('filterList') !== '') {
         this.filterdata = JSON.parse(filterMap.get('filterList').replace(/'/g, '"'));
       }
-      console.log(filterMap.get('orderLIst'));
       if (filterMap.get('orderLIst') !== '') {
         this.dataOrderList = JSON.parse(filterMap.get('orderList').replace(/'/g, '"'));
       }
@@ -1313,6 +1339,14 @@ export class ErtTableComponent implements OnInit {
       type = '';
     }
     this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === type.trim().toUpperCase());
+  }
+
+  selectAllColumns(event) {
+    if (event.target.checked) {
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.forEach(a => a.isSelected = true);
+    } else {
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.forEach(a => a.isSelected = false);
+    }
   }
 }
 

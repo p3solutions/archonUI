@@ -17,7 +17,7 @@ export class DbExtractorComponent implements OnInit {
   ngOnInit() {
     this.dbExtractorService.updatedProgressBarObj.subscribe((progressBarObj) => {
       this.progressBarObj = progressBarObj;
-      this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
+      // this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
     });
   }
 

@@ -3,9 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
-import { TableDetailsListObj, IngestionDataConfig } from '../ert-landing-page/ert';
+import { TableDetailsListObj, IngestionDataConfig, ColumnListObj } from '../ert-landing-page/ert';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { graphviz } from 'd3-graphviz';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'app-ert-table-column-config',
@@ -24,6 +26,10 @@ export class ErtTableColumnConfigComponent implements OnInit {
   issaveDisabled: boolean;
   successMsg = '';
   errorMessage = '';
+  option = {
+    useWorker: false,
+  };
+  dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape=plain]rankdir=LR;';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
@@ -37,6 +43,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
       this.ExpectedTableName = tempTableObj.modifiedTableName;
       tempTableObj.isMainTable = true;
     }
+    this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
   }
 
   showColumns(value) {
@@ -208,8 +215,84 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.router.navigate(['/workspace/ert/ert-jobs']);
   }
   selectTable(tableId) {
+    this.dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape=plain]rankdir=LR;';
     this.selectedTableId = tableId;
     this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
+    d3.selectAll('g > *').remove();
+    graphviz('#graph', this.option).resetZoom(d3.transition());
+    this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
+  }
+
+  createDOTActualTable(columnList: ColumnListObj[]) {
+    this.dotString = this.dotString + this.selectedTableName + 'original' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
+    this.dotString = this.dotString + '<tr><td><i>' + this.selectedTableName + '</i></td></tr>';
+    for (const item of columnList.filter(a => a.dataType !== 'USERDEFINED')) {
+      this.dotString = this.dotString + '<tr><td port = "' +
+        item.originalColumnName + 'start"' + '>' + item.originalColumnName + '</td></tr>';
+    }
+    this.dotString = this.dotString + '</table>>];';
+    this.createDOTExpectedTable(columnList);
+
+  }
+
+  createDOTExpectedTable(columnList: ColumnListObj[]) {
+    this.dotString = this.dotString + this.ExpectedTableName + 'expected' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
+    this.dotString = this.dotString + '<tr><td><i>' + this.ExpectedTableName + '</i></td></tr>';
+    for (const item of columnList.filter(a => a.isSelected === true && a.dataType !== 'USERDEFINED')) {
+      this.dotString = this.dotString + '<tr><td port = "' +
+        item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '</td></tr>';
+    }
+    const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+
+    if (tempObj.usrDefinedColumnList.length !== 0) {
+      for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
+        this.dotString = this.dotString + '<tr><td port = "' +
+          item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '</td></tr>';
+      }
+    } if (tempObj.usrDefinedColumnList.length === 0) {
+      for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
+        this.dotString = this.dotString + '<tr><td port = "' +
+          item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '</td></tr>';
+      }
+    }
+
+    this.dotString = this.dotString + '</table>>];';
+    this.createTableLink(columnList);
+  }
+
+
+  createTableLink(columnList: ColumnListObj[]) {
+    for (const item of columnList.filter(a => a.isSelected === true && a.dataType !== 'USERDEFINED')) {
+      this.dotString = this.dotString + this.selectedTableName + 'original:' + item.originalColumnName + 'start' + ' -> ' +
+        this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end; ';
+    }
+    const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+
+    if (tempObj.usrDefinedColumnList.length !== 0) {
+      for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
+        const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
+        for (const list of a) {
+          this.dotString = this.dotString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+            this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end' + '[label="' + item.viewQuery + '"]' + '; ';
+        }
+      }
+    }
+    if (tempObj.usrDefinedColumnList.length === 0) {
+      for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
+        const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
+        for (const list of a) {
+          this.dotString = this.dotString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+            this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end' + '[label="' + item.viewQuery + '"]' + '; ';
+        }
+      }
+    }
+
+    this.dotString = this.dotString + '}';
+    this.drawTableRelationship();
+  }
+
+  drawTableRelationship() {
+    graphviz('#graph', this.option).renderDot(this.dotString);
   }
 }
