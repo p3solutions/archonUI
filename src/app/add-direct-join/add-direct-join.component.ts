@@ -167,7 +167,9 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       }
     }
     if (insert === 0) {
-      this.joinListTemp.push(temp);
+      if (temp.secondaryColumn.columnName !== '') {
+        this.joinListTemp.push(temp);
+      }
     }
   this.enableAdd = this.checkDuplicateInObject(this.joinListTemp);
   if (this.enableAdd === true) {
