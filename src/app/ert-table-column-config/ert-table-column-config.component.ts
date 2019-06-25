@@ -47,8 +47,8 @@ export class ErtTableColumnConfigComponent implements OnInit {
       this.selectedTableName = tempTableObj.tableName;
       this.ExpectedTableName = tempTableObj.modifiedTableName;
       tempTableObj.isMainTable = true;
+      this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
     }
-    this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
   }
 
   showColumns(value) {
