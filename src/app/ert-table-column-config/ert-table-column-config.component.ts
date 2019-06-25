@@ -34,7 +34,8 @@ export class ErtTableColumnConfigComponent implements OnInit {
     zoomScaleExtent: [0.1, 1.2]
   };
   graphInstance: any = '';
-  dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" padding="0.2" fontsize="5" fontname = "Roboto" pad="0.5" ];edge [shape="plain" fontsize="2" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
+  dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" padding="0.2" fontsize="5" fontname = "Roboto"' + 
+  'pad="0.5" ];edge [shape="plain" fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
@@ -214,7 +215,9 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.router.navigate(['/workspace/ert/ert-jobs']);
   }
   selectTable(tableId) {
-    this.dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" fontname = "Roboto" fontsize ="5" ];edge [shape="plain" fontname = "Roboto" arrowsize="0.3" fontsize ="2" ]rankdir=LR;';
+    this.dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node' +
+      '[shape="plain" fontname = "Roboto" fontsize ="5" ];edge [shape="plain" fontname = "Roboto" ' +
+      'arrowsize="0.3" fontsize ="3" ]rankdir=LR;';
     this.selectedTableId = tableId;
     this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
