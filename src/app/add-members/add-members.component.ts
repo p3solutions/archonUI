@@ -118,6 +118,11 @@ export class AddMembersComponent implements OnInit, OnChanges {
         this.addMembersService.addMembers(params)
         .subscribe(res => {
           if (res.success) {
+    //         const close: HTMLButtonElement = document.querySelector('#addmemberspop #dismissmodel');
+    // close.click();
+    // setTimeout(() => {
+    //   document.getElementById('addperssmsg').click();
+    // }, 1000);
             this.isProgress = false;
             this.selectedUserIdList = [];
             this.errorObject = null;
@@ -173,10 +178,8 @@ export class AddMembersComponent implements OnInit, OnChanges {
   }
 
   resetSelection() {
-    this.userList = [];
-    // this.defaultIndex.clear();
-    // this.populateValues();
-    // this.resultantValues = [];
+    this.selectedUserIdList = [];
+     this.getUserList();
     // this.removeIndexValue = [];
     // this.updateenable = false;
     // this.onloadupdate = true;

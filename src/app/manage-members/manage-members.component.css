@@ -214,6 +214,7 @@ th.disp-bl {
 .exp-content-outer-header {
   width: 100%;
   display: inline-flex;
+  font-size: 16px;
   height: 50px;
   padding: 12px 2px 7px 0px;
   border-bottom: 1px solid #c8c9ca;
@@ -338,4 +339,14 @@ border-top: 0.5em solid transparent;
   overflow: auto;
   overflow-y: auto;
   height: 53vh;
+}
+.col {
+  color: #2879ff;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #2879ff !important;
+}
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #92b8f8 !important;
 }

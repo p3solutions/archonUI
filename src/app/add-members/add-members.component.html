@@ -45,7 +45,7 @@
   </div>
 </div> -->
 
-<div class="modal-dialog" style="width: 880px;">
+<div class="modal-dialog" id="addmemberspop" style="width: 880px;">
   <div class="modal-content">
       <div class="info-popup-header-cls">
           <h4 class="popup-title-cls">
@@ -88,9 +88,9 @@
                 <ng-container matColumnDef="role">
                     <th mat-header-cell *matHeaderCellDef style="width: 20%; border-top-right-radius: 3px;"> Role </th>
                     <td mat-cell *matCellDef="let element; let ind=index;">
-                      <mat-form-field style="width: 100%;">                         
+                      <mat-form-field style="width: 100%;" floatLabel="never"> 
                           <mat-label>Select</mat-label>
-                        <mat-select [(ngModel)]="element.rolenames" (selectionChange)="setRoles(element, ind, $event.value)" [placeholder]="element.rolenames === '' ? 'Select' : ''">                         
+                        <mat-select [(ngModel)]="element.rolenames" (selectionChange)="setRoles(element, ind, $event.value)" placeholder="{{element.rolenames == ' ' ? 'Select' : ''}}">                         
                           <mat-option value="select">Select</mat-option>
                           <mat-option  *ngFor="let role of wsRoleList" [value]="role.id"
                           [disabled]="(ownerAlreadyExist && role.roleName === 'ROLE_OWNER') ? 'true' : null ">{{role.roleName}}</mat-option>
@@ -113,8 +113,8 @@
   <div class="modal-footer"> 
     <div class="col-md-12" style="padding-right: 0px;"> 
       <div class="action-btn">
-      <button class="btn cancel btn-padding"data-dismiss="modal">Cancel</button>
-      <!-- <button class="btn {{selectedUserIdList.length == 0? 'save-disabled': 'save'}} btn-padding" [disabled]="selectedUserIdList.length == 0" (click)="resetSelection(); closeErrorMsg();">Reset</button> -->
+      <button class="btn cancel btn-padding" id="dismissmodel" data-dismiss="modal" (click)="resetSelection();" >Cancel</button>
+      <button class="btn {{selectedUserIdList.length == 0? 'save-disabled': 'save'}} btn-padding" [disabled]="selectedUserIdList.length == 0" (click)="resetSelection(); closeErrorMsg();">Reset</button>
       <button [disabled]="selectedUserIdList.length == 0" class="btn {{selectedUserIdList.length == 0? 'save-disabled': 'save'}} btn-padding" (click)="addMembers()">Add</button>                
       </div>
   </div>

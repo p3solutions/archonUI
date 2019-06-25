@@ -9,6 +9,7 @@ import { ErrorObject } from '../error-object';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { Logs } from 'selenium-webdriver';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 // import * as $ from 'jquery';
 
 @Component({
@@ -81,7 +82,7 @@ export class ManageMembersComponent implements OnInit {
     this.spinner.show();
     try {
       this.delProgress = true;
-      this.manageMembersService.deleteManageMembersData({ userIds: [this.deleteMemberId] }, this.workspaceId).subscribe(res => {
+      this.manageMembersService.deleteManageMembersData({ userIds: [this.deleteMemberId] }, this.workspaceId).subscribe((res) => {
         this.delProgress = false;
         if (res.success) {
           this.successMsg = res.data;
@@ -91,6 +92,10 @@ export class ManageMembersComponent implements OnInit {
           this.deleteNotif.show = true;
           this.errorMsg = res.errorMessage;
         }
+        this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        this.deleteNotif.show = true;
+          this.errorMsg = err.error.message;
         setTimeout(() => {
           this.spinner.hide();
         }, 1000);
@@ -158,6 +163,10 @@ export class ManageMembersComponent implements OnInit {
           this.errorMsg = res.errorMessage;
           document.getElementById('addmemermsg').click();
         }
+        this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        this.errorMsg = err.error.message;
+        document.getElementById('addmemermsg').click();
         setTimeout(() => {
           this.spinner.hide();
         }, 1500);
@@ -192,6 +201,10 @@ export class ManageMembersComponent implements OnInit {
         document.getElementById('addmemermsg').click();
       }
       this.spinner.hide();
+    }, (err: HttpErrorResponse) => {
+      this.errorMsg = err.error.message;
+      document.getElementById('addmemermsg').click();
+      this.spinner.hide();
     });
   } catch {
     this.spinner.hide();
@@ -218,7 +231,9 @@ export class ManageMembersComponent implements OnInit {
       } else {
         this.errorMsg = res.errorMessage;
         document.getElementById('addmemermsg').click();
-      }
+      } this.spinner.hide();
+    }, (err: HttpErrorResponse) => {
+      this.errorMsg = err.error.message;
       this.spinner.hide();
     });
   } catch {
@@ -465,6 +480,9 @@ export class ManageMembersComponent implements OnInit {
 
   onUpdateExistingUsers(e) {
     if (e) {
+      // setTimeout(() => {
+      //   document.getElementById('addmemberssmsg').click();
+      // }, 2000);
       this.getManageMembersData(this.workspaceId);
     }
   }
