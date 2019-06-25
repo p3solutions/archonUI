@@ -5,7 +5,7 @@
         <div class="table-list">
           Table List
         </div>
-        <div class='body-left'><a href="" style="z-index:1"
+        <div class='body-left'><a style="z-index:1"
             class="glyphicon glyphicon-search inner-addon right-addon"></a>
           <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
             placeholder="Search Table"></div>
@@ -25,7 +25,7 @@
     </div>
     <div class="col-md-9">
       <div class="card" style="height:455px; margin-right: 25px;">
-        <div class="card-body">
+        <div class="card-body ert-table-relation-graph">
           <!-- <div class="col-md-6">
             <div class="card" style="height:453px;overflow-y:auto;margin-left: -15px;">
               <div class="card-body" id="ingest-data">
@@ -58,7 +58,7 @@
             </div>
           </div> -->
 
-          <div id="graph"></div>
+          <div id="graph" style="text-align: center"></div>
         </div>
       </div>
     </div>
@@ -143,7 +143,7 @@
         <p class="popup-paragraph-cls">{{errorMessage!=='' ?errorMessage: 'Unable to save Job'}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+        <button type="button" (click)="cancel()" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
       </div>

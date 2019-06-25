@@ -15,10 +15,11 @@
                     <form [formGroup]="firstFormGroup" class="workspace-detail-form">
                         <div class="workspace-detail">
                             <mat-form-field class="form-field-workspace">
-                                <input required maxlength="50" formControlName="workspaceName" matInput placeholder="Workspace Name">
+                                <input trim="blur" required maxlength="50" formControlName="workspaceName" matInput
+                                    placeholder="Workspace Name">
                             </mat-form-field>
                             <mat-form-field class="form-field-workspace-owner">
-                                <input required matInput formControlName="owner" placeholder="Owner"
+                                <input trim="blur" required matInput formControlName="owner" placeholder="Owner"
                                     [attr.disabled]="true">
                             </mat-form-field>
                         </div>
@@ -28,7 +29,7 @@
                                     [attr.disabled]="true">
                             </mat-form-field>
                             <mat-form-field class="form-field-workspace-owner">
-                                <textarea maxlength="250" required matInput formControlName="description"
+                                <textarea trim="blur" maxlength="250" required matInput formControlName="description"
                                     placeholder="Description"></textarea>
                             </mat-form-field>
                         </div>
@@ -46,7 +47,8 @@
                     <div style="display: flex;justify-content: flex-end">
                         <div class="database-search">
                             <mat-form-field>
-                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                                <input matInput trim="blur" (keyup)="applyFilter($event.target.value)"
+                                    placeholder="Search">
                             </mat-form-field>
                         </div>
                     </div>
@@ -90,7 +92,8 @@
                     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                     <div id="comment-database">
                         <mat-form-field hintLabel="Reason for using database(s)">
-                            <input required [(ngModel)]="comment" matInput #input maxlength="256" placeholder="Comment">
+                            <input required trim="blur" [(ngModel)]="comment" matInput #input maxlength="256"
+                                placeholder="Comment">
                             <mat-hint align="end">{{input.value?.length || 0}}/256</mat-hint>
                         </mat-form-field>
                     </div>
@@ -122,7 +125,8 @@
                         </div>
                         <div style="display: flex">
                             <mat-form-field class="form-field-desc">
-                                <textarea maxlength="250" value="{{firstFormGroup.get('description').value}}" matInput
+                                <textarea trim="blur" maxlength="250"
+                                    value="{{firstFormGroup.get('description').value}}" matInput
                                     placeholder="Description"></textarea>
                             </mat-form-field>
                         </div>

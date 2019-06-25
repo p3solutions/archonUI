@@ -8,6 +8,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { graphviz } from 'd3-graphviz';
 import * as d3 from 'd3';
+import { zoom, zoomTransform, zoomIdentity } from "d3-zoom";
+import { interpolate } from "d3-interpolate";
 
 @Component({
   selector: 'app-ert-table-column-config',
@@ -28,7 +30,10 @@ export class ErtTableColumnConfigComponent implements OnInit {
   errorMessage = '';
   option = {
     useWorker: false,
+    zoom: true,
+    zoomScaleExtent: [0.1, 1.2]
   };
+  graphInstance: any = '';
   dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape=plain]rankdir=LR;';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
@@ -177,22 +182,16 @@ export class ErtTableColumnConfigComponent implements OnInit {
         this.spinner.hide();
         const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
           'Job successfully marked as completed.';
-        if (result.errorMessage !== null) {
-          this.spinner.hide();
-          document.getElementById('not-saved-popup-btn').click();
-          this.errorMessage = result.errorMessage !== null ? result.errorMessage : 'Unable to save job.';
-        } else {
-          this.spinner.hide();
-          document.getElementById('message-popup-btn').click();
-          this.successMsg = msg;
-        }
+        this.spinner.hide();
+        document.getElementById('message-popup-btn').click();
+        this.successMsg = msg;
       }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           this.spinner.hide();
         } else {
           this.spinner.hide();
           document.getElementById('not-saved-popup-btn').click();
-          this.successMsg = err.error.errorMessage;
+          this.errorMessage = err.error.message;
         }
       });
     } catch {
@@ -219,8 +218,8 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.selectedTableId = tableId;
     this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-    d3.selectAll('g > *').remove();
-    graphviz('#graph', this.option).resetZoom(d3.transition());
+    // graphviz('#graph', this.option).resetZoom(d3.transition('smooth'));
+    d3.select('svg').remove();
     this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
   }
 
@@ -293,6 +292,46 @@ export class ErtTableColumnConfigComponent implements OnInit {
   }
 
   drawTableRelationship() {
-    graphviz('#graph', this.option).renderDot(this.dotString);
+    this.graphInstance = graphviz('#graph', this.option).attributer(this.attributer).renderDot(this.dotString);
+    console.log(this.graphInstance);
+    console.log(this.graphInstance._originalTransform);
+    d3.select(window).on("click", this.resetZoom());
+    d3.forceSimulation().force('center', d3.forceCenter(1000 / 2, 1000 / 4))
   }
+
+
+  resetZoom() {
+    console.log('1');
+    graphviz('#graph', this.option).resetZoom(d3.transition().duration(1000));
+  }
+
+  attributer(datum, index, nodes) {
+    const selection = d3.select(this);
+    if (datum.tag === 'svg') {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      selection
+        .attr('width', width)
+        .attr('height', height);
+      datum.attributes.width = width - 30;
+      datum.attributes.height = height - 30;
+      console.log(datum);
+    }
+  }
+
+  resizeSVG() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    console.log('resize', width, height);
+    const svg = d3.select('#graph').selectWithoutDataPropagation('svg');
+    svg
+      .transition()
+      .duration(700)
+      .attr('width', width - 40)
+      .attr('height', height - 40);
+    const d = svg.datum();
+    d.attributes['width'] = width - 30;
+    d.attributes['height'] = height - 30;
+    console.log(d);
+  };
 }
