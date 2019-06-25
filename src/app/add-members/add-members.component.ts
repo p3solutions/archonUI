@@ -102,6 +102,11 @@ export class AddMembersComponent implements OnInit, OnChanges {
     return !this.errorObject.show;
   }
   setRoles (users, index, event) {
+ for (const i of this.dataSource.data) {
+   if (i.id === users.id) {
+    index = users.id;
+   }
+ }
    let insert = 0;
     this.addmem = false;
     const user = {
