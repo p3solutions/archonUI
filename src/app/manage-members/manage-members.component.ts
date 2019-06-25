@@ -10,6 +10,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { Logs } from 'selenium-webdriver';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
+import { forEach } from '@angular/router/src/utils/collection';
 // import * as $ from 'jquery';
 
 @Component({
@@ -19,7 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ManageMembersComponent implements OnInit {
   workspaceId: string;
-  manageMembers: ManageMembers[];
+  manageMembers: any[];
   isAvailable = false;
   memberPrivilegeParam: any;
   exisitingUserIds = [];
@@ -65,10 +66,33 @@ export class ManageMembersComponent implements OnInit {
         this.manageMembers = res;
         this.manageMemTable({ data: this.manageMembers });
         this.exisitingUserIds = [];
-        this.manageMembers.forEach((member: MemberObject) => {
+        this.manageMembers.forEach((member) => {
+          console.log(member.serviceActions);
+          for (const i of member.serviceActions ) {
+            console.log(i.serviceName);
+            if (i.serviceName === 'SERVICE_METALYZER') {
+              i.serviceName = 'Metalyzer';
+            }
+            if (i.serviceName === 'SERVICE_DB_EXTRACTOR') {
+              i.serviceName = 'RDBMS Extractor';
+            }
+            if (i.serviceName === 'SERVICE_IA_ADHOC_QUERY_BUILDER') {
+              i.serviceName = 'IA Adhoc Query Builder';
+            }
+            if (i.serviceName === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL') {
+              i.serviceName = 'ERT';
+            }
+          }
           if (member.workspaceRole.name === 'ROLE_OWNER') {
             this.ownerAlreadyExist = true;
+           // member.workspaceRole.name = 'Role Owner';
           }
+          // if (member.workspaceRole.name === 'ROLE_MEMBER') {
+          //   member.workspaceRole.name = 'Role Member';
+          // }
+          // if (member.workspaceRole.name === 'ROLE_APPROVER') {
+          //  member.workspaceRole.name = 'Role Approver';
+          // }
           this.exisitingUserIds.push(member.user.id);
         });
       });
@@ -84,7 +108,7 @@ export class ManageMembersComponent implements OnInit {
       this.delProgress = true;
       this.manageMembersService.deleteManageMembersData({ userIds: [this.deleteMemberId] }, this.workspaceId).subscribe((res) => {
         this.delProgress = false;
-        if (res.success) {
+        if (res) {
           this.successMsg = res.data;
           // tr.remove(); // Removing the row.
           this.postDelete();
@@ -113,11 +137,11 @@ export class ManageMembersComponent implements OnInit {
     // setTimeout(() => {
     //   document.getElementById('addperssmsg').click();
     // }, 1000);
+    // this.extModifiedExistingUsers = [];
+    // this.extModifiedExistingUsers = this.exisitingUserIds;
+    // const index = this.exisitingUserIds.indexOf(this.deleteMemberId);
+    // this.exisitingUserIds.splice(index, 1);
     this.getManageMembersData(this.workspaceId);
-    this.extModifiedExistingUsers = [];
-    this.extModifiedExistingUsers = this.exisitingUserIds;
-    const index = this.exisitingUserIds.indexOf(this.deleteMemberId);
-    this.exisitingUserIds.splice(index, 1);
   }
 
   gotoDashboard() {
@@ -480,9 +504,7 @@ export class ManageMembersComponent implements OnInit {
 
   onUpdateExistingUsers(e) {
     if (e) {
-      // setTimeout(() => {
-      //   document.getElementById('addmemberssmsg').click();
-      // }, 2000);
+      document.getElementById('addmemberssmsg').click();
       this.getManageMembersData(this.workspaceId);
     }
   }

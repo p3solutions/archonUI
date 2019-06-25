@@ -5,6 +5,8 @@ import { ManageMembersService } from '../manage-members/manage-members.service';
 import { ErrorObject } from '../error-object';
 import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export let lockeduser = [];
 
@@ -34,10 +36,12 @@ export class AddMembersComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   addmem: boolean;
+  errorMsg: any;
 
   constructor(
     private route: ActivatedRoute,
     private addMembersService: AddMembersService,
+    private spinner: NgxSpinnerService,
     private manageMembersService: ManageMembersService
    ) {
       this.route.params.subscribe(params => {
@@ -47,7 +51,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.getRoleList();
-    this.getUserList();
+    // this.getUserList();
   }
 
   ngOnChanges(change: SimpleChanges) {
@@ -67,13 +71,12 @@ export class AddMembersComponent implements OnInit, OnChanges {
         this.isLoading = false;
         if (!this.existingUsers.includes(user.id) && !lockeduser.includes(user.id)) {
           this.userList.push(user);
-          console.log(this.userList);
-      this.dataSource.data = this.userList;
-      setTimeout(() => this.dataSource.paginator = this.paginator);
-        this.dataSource.sort = this.sort;
-      this.columnlength = this.userList.length;
         }
       });
+      this.dataSource.data = this.userList;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.columnlength = this.userList.length;
     });
   }
 
@@ -99,37 +102,65 @@ export class AddMembersComponent implements OnInit, OnChanges {
     return !this.errorObject.show;
   }
   setRoles (users, index, event) {
+   let insert = 0;
     this.addmem = false;
     const user = {
+        indexData: index,
         userId: users.id,
         workspaceId: this.workspaceId,
         workspaceRoleId: event
     };
-    this.selectedUserIdList.push(user);
+    for (const i of this.selectedUserIdList) {
+      if (i.indexData === index) {
+        if (event === 'select') {
+          const indexx = this.selectedUserIdList.indexOf(i);
+          this.selectedUserIdList.splice(indexx, 1);
+          insert = 1;
+        } else {
+          const indexx = this.selectedUserIdList.indexOf(i);
+          this.selectedUserIdList.splice(indexx, 1);
+        }
+      }
+    }
+    if (insert === 0) {
+      if (event !== 'select') {
+        this.selectedUserIdList.push(user);
+      }
+    }
   }
   addMembers() {
+    this.spinner.show();
+    try {
       this.isProgress = true;
-      this.selectedUserIdList.forEach(user => {
+      const arrayLength = this.selectedUserIdList.length;
+      this.selectedUserIdList.forEach((user, index) => {
         const params = {
           'userId': user.userId,
           'workspaceId': this.workspaceId,
           'workspaceRoleId': user.workspaceRoleId
         };
         this.addMembersService.addMembers(params)
-        .subscribe(res => {
-          if (res.success) {
-    //         const close: HTMLButtonElement = document.querySelector('#addmemberspop #dismissmodel');
-    // close.click();
-    // setTimeout(() => {
-    //   document.getElementById('addperssmsg').click();
-    // }, 1000);
+        .subscribe((res) => {
+          if (res) {
+            if (arrayLength - 1 === index) {
+              const close: HTMLButtonElement = document.querySelector('#addmemberspop #dismissmodel');
+              close.click();
+              this.updateExistingUsers.emit(true);
+              this.spinner.hide();
+            }
             this.isProgress = false;
             this.selectedUserIdList = [];
             this.errorObject = null;
-            this.updateExistingUsers.emit(true);
           }
+          this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        this.errorMsg = err.error.message;
+        document.getElementById('addmembermsg').click();
         });
       });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
   setRole(user, event) {
