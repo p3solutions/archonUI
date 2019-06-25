@@ -1,7 +1,7 @@
 import { ManageMembersComponent } from './manage-members.component';
 import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from './manage-members.service';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { AddMembersComponent } from '../add-members/add-members.component';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
-import { MatTableModule, MatSortModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule } from '@angular/material';
+import { MatTableModule, MatSortModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.service';
 import { EnvironmentService } from '../environment/environment.service';
@@ -34,7 +34,7 @@ describe('ManageMembersComponent', () => {
     observer.next(managemembers);
     observer.complete();
   });
-  const disposeMe = simpleObservable.subscribe();
+  // const disposeMe = simpleObservable.subscribe();
 
   beforeEach(async(() => {
 
@@ -43,7 +43,7 @@ describe('ManageMembersComponent', () => {
         HttpClientModule,
         HttpClientTestingModule,
         RouterTestingModule, MatTableModule, MatSortModule, MatDialogModule , BrowserAnimationsModule,
-        FormsModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule,
+        FormsModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule, MatInputModule
       ],
       declarations: [ManageMembersComponent, AddMembersComponent, ManageUserRolesComponent],
       providers: [
@@ -58,13 +58,14 @@ describe('ManageMembersComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach(async(()=> {
     fixture = TestBed.createComponent(ManageMembersComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement.query(By.css('#manager-members'));
-    ManageMembersInfoTag = de.nativeElement;
+    // de = fixture.debugElement.query(By.css('#manager-members'));
+    // ManageMembersInfoTag = de.nativeElement;
     manageMembersService = TestBed.get(ManageMembersService);
-  });
+    fixture.detectChanges();
+  }));
 
   // xit('Should display the observable data for manage-members componenet', () => {
   //   spyOn(manageMembersService, 'getManageMembersData').and.returnValue(simpleObservable);
