@@ -34,7 +34,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
     zoomScaleExtent: [0.1, 1.2]
   };
   graphInstance: any = '';
-  dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape=plain]rankdir=LR;';
+  dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" padding="0.2" fontsize="5" fontname = "Roboto" pad="0.5" ];edge [shape="plain" fontsize="2" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
@@ -214,7 +214,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.router.navigate(['/workspace/ert/ert-jobs']);
   }
   selectTable(tableId) {
-    this.dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape=plain]rankdir=LR;';
+    this.dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" fontname = "Roboto" fontsize ="5" ];edge [shape="plain" fontname = "Roboto" arrowsize="0.3" fontsize ="2" ]rankdir=LR;';
     this.selectedTableId = tableId;
     this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
@@ -225,10 +225,10 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
   createDOTActualTable(columnList: ColumnListObj[]) {
     this.dotString = this.dotString + this.selectedTableName + 'original' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
-    this.dotString = this.dotString + '<tr><td><i>' + this.selectedTableName + '</i></td></tr>';
+    this.dotString = this.dotString + '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' + this.selectedTableName + '   </td></tr>';
     for (const item of columnList.filter(a => a.dataType !== 'USERDEFINED')) {
-      this.dotString = this.dotString + '<tr><td port = "' +
-        item.originalColumnName + 'start"' + '>' + item.originalColumnName + '</td></tr>';
+      this.dotString = this.dotString + '<tr><td align="left" port = "' +
+        item.originalColumnName + 'start"' + '> ' + item.originalColumnName + '  </td></tr>';
     }
     this.dotString = this.dotString + '</table>>];';
     this.createDOTExpectedTable(columnList);
@@ -237,22 +237,22 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
   createDOTExpectedTable(columnList: ColumnListObj[]) {
     this.dotString = this.dotString + this.ExpectedTableName + 'expected' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
-    this.dotString = this.dotString + '<tr><td><i>' + this.ExpectedTableName + '</i></td></tr>';
+    this.dotString = this.dotString + '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' + this.ExpectedTableName + '   </td></tr>';
     for (const item of columnList.filter(a => a.isSelected === true && a.dataType !== 'USERDEFINED')) {
-      this.dotString = this.dotString + '<tr><td port = "' +
-        item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '</td></tr>';
+      this.dotString = this.dotString + '<tr><td align="left" port = "' +
+        item.modifiedColumnName + 'end"' + '> ' + item.modifiedColumnName + '  </td></tr>';
     }
     const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
 
     if (tempObj.usrDefinedColumnList.length !== 0) {
       for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
-        this.dotString = this.dotString + '<tr><td port = "' +
-          item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '</td></tr>';
+        this.dotString = this.dotString + '<tr><td align="left" port = "' +
+          item.modifiedColumnName + 'end"' + '> ' + item.modifiedColumnName + '  </td></tr>';
       }
     } if (tempObj.usrDefinedColumnList.length === 0) {
       for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
-        this.dotString = this.dotString + '<tr><td port = "' +
-          item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '</td></tr>';
+        this.dotString = this.dotString + '<tr><td align="left" port = "' +
+          item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '  </td></tr>';
       }
     }
 
@@ -293,15 +293,12 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
   drawTableRelationship() {
     this.graphInstance = graphviz('#graph', this.option).attributer(this.attributer).renderDot(this.dotString);
-    console.log(this.graphInstance);
-    console.log(this.graphInstance._originalTransform);
     d3.select(window).on("click", this.resetZoom());
     d3.forceSimulation().force('center', d3.forceCenter(1000 / 2, 1000 / 4))
   }
 
 
   resetZoom() {
-    console.log('1');
     graphviz('#graph', this.option).resetZoom(d3.transition().duration(1000));
   }
 
@@ -315,14 +312,12 @@ export class ErtTableColumnConfigComponent implements OnInit {
         .attr('height', height);
       datum.attributes.width = width - 30;
       datum.attributes.height = height - 30;
-      console.log(datum);
     }
   }
 
   resizeSVG() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    console.log('resize', width, height);
     const svg = d3.select('#graph').selectWithoutDataPropagation('svg');
     svg
       .transition()
@@ -332,6 +327,5 @@ export class ErtTableColumnConfigComponent implements OnInit {
     const d = svg.datum();
     d.attributes['width'] = width - 30;
     d.attributes['height'] = height - 30;
-    console.log(d);
   };
 }
