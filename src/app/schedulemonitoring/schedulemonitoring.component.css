@@ -1,144 +1,151 @@
 .workspace-header {
-    /* height: 125px; */
-    padding: 20px 0 0;
-    border-bottom: 2px solid #E6E9ED;
-  }
-  
-  .workspace-dropdown {
-    padding: 10px;
-  }
-  
-  .workspace-dropdown select {
-    border-radius: 3px;
-    padding: 5px;
-    background-color: #fff;
-  }
-  
-  .workspace-dropdown option {
-    font-size: 15px;
-    padding: 5px 2px;
-  }
-  
-  .dropdown-toggle::after {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: .3em;
-    vertical-align: middle;
-    content: "";
-    border-top: .3em solid;
-    border-right: .3em solid transparent;
-    border-left: .3em solid transparent;
-  }
-  
-  .dropdown-item {
-    display: block;
-    /* width: 100%; */
-    padding: 3px 25px;
-    clear: both;
-    font-size: 16px;
-    font-weight: 400;
-    color: #292b2c;
-    text-align: inherit;
-    white-space: nowrap;
-    background: 0 0;
-    border: 0;
-    text-decoration: none;
-  }
-  
-  .dropdown-menu,
-  .dropdown-menu a {
-    width: 187px;
-    margin: 0;
-  }
-  .dropdown-menu a:focus,
-  .dropdown-menu a:hover {
-    color: #262626;
-    text-decoration: none;
-    background-color: lightskyblue;
-    cursor: pointer;
-    margin: 0;  
-  }
-  
-  .dropdown-item.selected {
-    background-color: #269AF8;
-  }
-  
-  .dropdown-divider {
-    height: 1px;
-    margin: .5rem 0;
-    overflow: hidden;
-    background-color: #eceeef;
-  }
-  
-  .dropdown-toggle {
-    /* background-color: #fff; */
-    border: 1px solid #ccc;
-    text-align: right;
-    width: 187px;
-  }
-  .searchbox {
-    position: relative;
-    border-radius: 2px;
-    display: inline-block;
-    padding: 5px 21px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    white-space: nowrap;
-    vertical-align: middle;
-  }
+  /* height: 125px; */
+  padding: 20px 0 0;
+  border-bottom: 2px solid #E6E9ED;
+}
 
-  table::ng-deep th {
-    text-align: center;
-    width: 11%;
-  }
+.workspace-dropdown {
+  padding: 10px;
+}
 
-.modal-dialog{
+.workspace-dropdown select {
+  border-radius: 3px;
+  padding: 5px;
+  background-color: #fff;
+}
+
+.workspace-dropdown option {
+  font-size: 15px;
+  padding: 5px 2px;
+}
+
+.dropdown-toggle::after {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: .3em;
+  vertical-align: middle;
+  content: "";
+  border-top: .3em solid;
+  border-right: .3em solid transparent;
+  border-left: .3em solid transparent;
+}
+
+.dropdown-item {
+  display: block;
+  /* width: 100%; */
+  padding: 3px 25px;
+  clear: both;
+  font-size: 16px;
+  font-weight: 400;
+  color: #292b2c;
+  text-align: inherit;
+  white-space: nowrap;
+  background: 0 0;
+  border: 0;
+  text-decoration: none;
+}
+
+.dropdown-menu,
+.dropdown-menu a {
+  width: 187px;
+  margin: 0;
+}
+
+.dropdown-menu a:focus,
+.dropdown-menu a:hover {
+  color: #262626;
+  text-decoration: none;
+  background-color: lightskyblue;
+  cursor: pointer;
+  margin: 0;
+}
+
+.dropdown-item.selected {
+  background-color: #269AF8;
+}
+
+.dropdown-divider {
+  height: 1px;
+  margin: .5rem 0;
+  overflow: hidden;
+  background-color: #eceeef;
+}
+
+.dropdown-toggle {
+  /* background-color: #fff; */
+  border: 1px solid #ccc;
+  text-align: right;
+  width: 187px;
+}
+
+.searchbox {
+  position: relative;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 5px 21px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+table::ng-deep th {
+  text-align: center;
+  width: 11%;
+}
+
+.modal-dialog {
   margin: 65px auto auto;
   width: fit-content;
-    overflow-y: initial !important
+  overflow-y: initial !important
 }
-.modal-body{
-    /* height: 250px; */
-    overflow-y: auto;
+
+.modal-body {
+  /* height: 250px; */
+  overflow-y: auto;
 }
+
 .modal-header {
   padding: 10px;
   padding-left: 15px;
   background-color: #2879ff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
- }
- .info-r {
+}
+
+.info-r {
   font-size: 18px;
   padding-left: 10px;
-  display:inline-block;  
+  display: inline-block;
 }
 
 .model-title {
   float: left;
-  display:inline-block;
+  display: inline-block;
   font-size: 20px;
   padding: -1px 15px 10px 15px;
   text-align: left;
   color: #ffffff;
 }
+
 .cancel {
   background-color: #2879ff;
   border: #2879ff;
   color: #ffffff;
-  transition:0.5s;
+  transition: 0.5s;
 }
 
 .cancel:hover {
-transform:scale(1.1,1.1);
+  transform: scale(1.1, 1.1);
 }
 
 #screen-table {
   margin: 2px 40px 2px 40px;
 }
+
 td,
 th {
   text-align: left;
@@ -174,15 +181,18 @@ th {
 .material-icons:focus {
   font-size: 26px;
 }
+
 #create-screen-header {
   display: inline-flex;
   margin: 2px 2px 11px 24px;
   float: left;
 }
+
 #create-screen-header a {
   padding: 21px 13px 7px 13px;
   text-align: left;
 }
+
 .mat-form-field {
   width: 100%;
 }
@@ -195,6 +205,7 @@ table.mat-table {
   border-spacing: 0;
   width: 135%;
 }
+
 .inner-div-l {
   text-align: left;
   margin-right: 2%;
@@ -202,6 +213,7 @@ table.mat-table {
   padding: 10px;
   margin-left: -10px;
 }
+
 .inner-bold-item {
   color: #000000;
   word-break: break-all;
@@ -211,6 +223,7 @@ table.mat-table {
   color: #5c5d5e;
   word-break: break-all;
 }
+
 .bg {
   text-align: left;
   color: #0c0c0c;
@@ -221,15 +234,21 @@ table.mat-table {
   padding: 7px;
   padding-left: 13px;
   font-weight: bold;
-  }
-  .line {
-    border-top: 1px solid #ddd !important;
-    margin-top: -5px;
-    margin-bottom: 15px;
-  }
-  .ws {
-    /* margin-left: -20px; */
-    padding: 0px;
-    margin-top: -5px;
-  }
+}
 
+.line {
+  border-top: 1px solid #ddd !important;
+  margin-top: -5px;
+  margin-bottom: 15px;
+}
+
+.ws {
+  /* margin-left: -20px; */
+  padding: 0px;
+  margin-top: -5px;
+}
+
+
+::ng-deep .my-spinner .overlay {
+  position: fixed !important;
+}

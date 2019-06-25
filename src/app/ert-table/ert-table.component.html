@@ -406,18 +406,17 @@
         </div>
         <div *ngIf="configColumnObject.selectedConfigFunction==='SUBSTRING'" class="form-group" style="display: flex">
           <div class="startIndex">
-            <input type="number" class="form-control" (keyup)="setSubStringStartEndIndex(selectValue.value)"
-              placeholder="Start Index" [(ngModel)]="configColumnObject.startIndex" id="ucolumnname" name="startindex">
+            <input type="number" class="form-control" min="1" placeholder="Start Index"
+              [(ngModel)]="configColumnObject.startIndex" id="ucolumnname" name="startindex">
           </div>
           <div class="endIndex">
-            <input type="number" class="form-control" (keyup)="setSubStringStartEndIndex(selectValue.value)"
-              placeholder="End Index" [(ngModel)]="configColumnObject.endIndex" id="ucolumnname" name="endindex">
+            <input type="number" class="form-control" min="1" placeholder="End Index"
+              [(ngModel)]="configColumnObject.endIndex" id="ucolumnname" name="endindex">
           </div>
         </div>
         <div class="form-group">
-          <button type="button" [disabled]="selectValue.value===null || disabledAddColumnConfigBtn"
-            (click)="saveColumnConfig()"
-            class="btn btn-padding {{(selectValue.value===null || disabledAddColumnConfigBtn)?'primary-btn-color-disabled' : 'primary-btn-color'}} ">Add</button>
+          <button type="button" [disabled]="selectValue.value===null" (click)="saveColumnConfig()"
+            class="btn btn-padding {{(selectValue.value===null)?'primary-btn-color-disabled' : 'primary-btn-color'}} ">Add</button>
         </div>
         <div class="config-table">
           <div class="form-inline" id="config-table-header">

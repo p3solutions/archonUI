@@ -42,7 +42,7 @@ export class ErtTableComponent implements OnInit {
     selectedColumnName: string, selectedConfigFunction: string, param: string
     outputType: string, startIndex: number, endIndex: number
   } =
-    { selectedColumnName: '', selectedConfigFunction: null, outputType: '', startIndex: null, endIndex: null, param: '' };
+    { selectedColumnName: '', selectedConfigFunction: null, outputType: '', startIndex: 1, endIndex: 1, param: '' };
   configColumnList: {
     selectedColumnName: string, selectedConfigFunction: string, outputType: string, startIndex: number, param: string,
     endIndex: number
@@ -644,11 +644,11 @@ export class ErtTableComponent implements OnInit {
 
   setColumnConfigObj(value: string) {
     this.configColumnObject.selectedConfigFunction = value;
-    if (value === 'SUBSTRING' && (this.substringEndIndex === null || this.substringStartIndex === null)) {
-      this.disabledAddColumnConfigBtn = true;
-    } else {
-      this.disabledAddColumnConfigBtn = false;
-    }
+    // if (value === 'SUBSTRING' && (this.substringEndIndex === null || this.substringStartIndex === null)) {
+    //   this.disabledAddColumnConfigBtn = true;
+    // } else {
+    //   this.disabledAddColumnConfigBtn = false;
+    // }
   }
 
   openModelForColumnConfig(columnName: string, dataType: string) {
@@ -656,6 +656,10 @@ export class ErtTableComponent implements OnInit {
       this.configColumnList = [];
       this.configColumnQuery = '';
       this.configColumnObject.selectedColumnName = columnName;
+      this.configColumnObject = {
+        selectedColumnName: columnName, selectedConfigFunction: null, outputType: null, param: '',
+        startIndex: 1, endIndex: 1
+      };
       this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
       if (dataType.trim().toUpperCase() === 'SMALLINT' ||
         dataType.trim().toUpperCase() === 'INT' || dataType.trim().toUpperCase() === 'BIGINT'
@@ -708,7 +712,7 @@ export class ErtTableComponent implements OnInit {
     // end
     this.configColumnObject = {
       selectedColumnName: tempColumnName, selectedConfigFunction: null, outputType: null, param: '',
-      startIndex: null, endIndex: null
+      startIndex: 1, endIndex: 1
     };
     if (this.configColumnList.length !== 0) {
       // Set function list acc to the last function.

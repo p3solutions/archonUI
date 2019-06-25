@@ -61,7 +61,20 @@ export class ScheduleJobComponent implements OnInit {
         'interval': this.Interval,
         'ins' : this.instances
         };
-  this.ObjectEmit.emit(Obj);
+        const Obj1 = {
+          'jobName': this.jobName,
+          'scheduleNow': scheduleNow,
+          'startDate': Date1.valueOf(),
+          'frequency': this.Frequency,
+          'endDate': this.enddate.setHours(23, 59, 59, 0),
+          'interval': this.Interval,
+          'ins' : this.instances
+          };
+  if (this.jobType === 'Schedule Later') {
+    this.ObjectEmit.emit(Obj1);
+  } else {
+    this.ObjectEmit.emit(Obj);
+  }
   }
 
   getErtInstance() {

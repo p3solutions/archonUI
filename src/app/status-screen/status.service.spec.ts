@@ -9,6 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { environment } from '../../environments/environment';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 describe('StatusService', () => {
   const getJobOriginsUrl = environment.apiUrl + 'jobStatus/jobOrigins';
@@ -70,7 +71,7 @@ describe('StatusService', () => {
       imports: [
         HttpClientModule, RouterTestingModule
       ],
-      providers: [StatusService, UserinfoService, MockBackend, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      providers: [StatusService, NgxSpinnerService, UserinfoService, MockBackend, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     });
   });
 
