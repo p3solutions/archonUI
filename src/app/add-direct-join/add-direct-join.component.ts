@@ -37,7 +37,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   paginationRequired: boolean;
   page: number;
   selected = [];
-  autoColumnMode = false;
+  editColumnMode = false;
   autoColumnMatchMessage = '';
   dataSource = new MatTableDataSource<any>(this.primaryColumns);
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumns'];
@@ -173,6 +173,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     }
   this.enableAdd = this.checkDuplicateInObject(this.joinListTemp);
   if (this.enableAdd === true) {
+    this.editColumnMode = false;
     this.joinbtn = true;
   }
     }
@@ -236,7 +237,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.errorMsg = '';
     this.updateNotif = false;
     this.updateSuccess = false;
-    this.autoColumnMode = false;
+    this.editColumnMode = false;
   }
 
   searchTablelist() {
@@ -266,25 +267,30 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
 
   autocolumnMatchMode() {
+    this.errorMsg = '';
+    this.updateNotif = false;
+    this.updateSuccess = false;
     this.joinListTemp = [];
     this.resultArray = [];
-    for (const i of this.primaryColumns) {
+    for (let i = 0; i < this.primaryColumns.length; i++) {
      for (const j of this.secondaryColumns) {
-     if (i.columnName === j.columnName && i.columnDataType === j.columnDataType) {
-      i.secondaryColumn = j.columnName;
-      i.autoMatch = true;
+     if (this.primaryColumns[i].columnName === j.columnName && this.primaryColumns[i].columnDataType === j.columnDataType) {
+      this.primaryColumns[i].secondaryColumn = j.columnName;
+      this.primaryColumns[i].autoMatch = true;
+      this.selectedValues(this.primaryColumns[i], i , this.primaryColumns[i].secondaryColumn);
      }
      }
-     if (!i.autoMatch) {
-      i.secondaryColumn = '';
+     if (!this.primaryColumns[i].autoMatch) {
+      this.primaryColumns[i].secondaryColumn = '';
+      this.selectedValues(this.primaryColumns[i], i , this.primaryColumns[i].secondaryColumn);
      }
     }
-    this.autoColumnMode = true;
+    this.editColumnMode = true;
     this.autoColumnMatchMessage = 'Automatch Completed';
   }
 
   closeAutoMatchMessage() {
-    this.autoColumnMode = false;
+    this.editColumnMode = false;
   }
 
   closeScreen() {
