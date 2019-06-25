@@ -102,7 +102,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           if (this.joinDetailsArray[index].relationshipId !== '') {
             this.resultantValues.push(JSON.parse(JSON.stringify(this.joinDetailsArray[index])));
             this.editchangeState.set(this.joinDetailsArray[index].primaryColumn.columnId, this.joinDetailsArray[index].secondaryColumn.columnName);
-            console.log(this.joinDetailsArray[index]);
           }
         }
         this.spinner.hide();
@@ -113,12 +112,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryValues, index, secondaryColumn) {
-    console.log(primaryValues, index, secondaryColumn);
     const isWorthy = this.editchangeState.get(primaryValues.primaryColumn.columnId);
-    console.log(isWorthy, this.editchangeState);
     if (isWorthy !== secondaryColumn) {
     this.editchangeState.set(primaryValues.primaryColumn.columnId, secondaryColumn);
-    console.log('in');
     this.onloadupdate = false;
     const example = {
       columnId: '',
@@ -163,7 +159,9 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.resultantValues.splice(arrayIndex, 1);
         }
       } else if (insert === 0) {
-        this.resultantValues.push(test);
+        if (test.secondaryColumn.columnName !== '') {
+          this.resultantValues.push(test);
+        }
       }
     } else {
       for (const i of this.resultantValues) {
@@ -185,14 +183,12 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         }
       }
     }
-    console.log(this.resultantValues);
     this.updateenable = this.checkDuplicateInObject(this.resultantValues);
   }
   }
 
   checkDuplicateInObject(values) {
     const valueArr = values.map(function(item) {
-      console.log(item);
       let hasIsSelected =  false;
       if ('isSelected' in item) {
       hasIsSelected = true;
@@ -220,13 +216,11 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         delete i.defaultSecondaryColumn;
       }
       delete i.indexData;
+      delete i.automatchColumn;
     }
-    console.log(this.removeIndexValue);
     this.removeIndexValue = this.removeIndexValue.filter(a => a.isSelected === false || a.isSelected === true);
-    console.log(this.removeIndexValue);
     this.editRelationshipInfo.updateRealation(this.primaryTableId, this.workspaceID, this.joinName, this.removeIndexValue)
       .subscribe((res) => {
-        console.log(res);
         if (res && res.success) {
           const close: HTMLButtonElement = document.querySelector('#openEditRelationshipModal .cancel');
           close.click();
@@ -270,17 +264,17 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   autocolumnMatchMode() {
     this.editchangeState.clear();
     this.updateenable = false;
-    for (const i of this.joinDetailsArray) {
-      console.log(i);
+    for (let i = 0; i < this.joinDetailsArray.length; i++) {
       for (const j of this.secondaryColumns) {
-        console.log(j);
-      if (i.primaryColumn.columnName === j.columnName && i.primaryColumn.columnDataType === j.columnDataType) {
-        i.secondaryColumn.columnName = j.columnName;
-        i.automatchColumn = true;
+      if (this.joinDetailsArray[i].primaryColumn.columnName === j.columnName && this.joinDetailsArray[i].primaryColumn.columnDataType === j.columnDataType) {
+        this.joinDetailsArray[i].secondaryColumn.columnName = j.columnName;
+        this.joinDetailsArray[i].automatchColumn = true;
+        this.selectedValues(this.joinDetailsArray[i], i, this.joinDetailsArray[i].secondaryColumn.columnName);
       }
       }
-      if (!i.automatchColumn) {
-       i.secondaryColumn.columnName = 'select';
+      if (!this.joinDetailsArray[i].automatchColumn) {
+        this.joinDetailsArray[i].secondaryColumn.columnName = 'select';
+        this.selectedValues(this.joinDetailsArray[i], i, this.joinDetailsArray[i].secondaryColumn.columnName);
       }
      }
      this.autoColumnMatch = true;
