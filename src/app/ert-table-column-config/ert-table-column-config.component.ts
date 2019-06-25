@@ -11,6 +11,9 @@ import * as d3 from 'd3';
 import { zoom, zoomTransform, zoomIdentity } from "d3-zoom";
 import { interpolate } from "d3-interpolate";
 
+import { createZoomBehavior } from "d3-graphviz/src/selection";
+
+
 @Component({
   selector: 'app-ert-table-column-config',
   templateUrl: './ert-table-column-config.component.html',
@@ -31,11 +34,14 @@ export class ErtTableColumnConfigComponent implements OnInit {
   option = {
     useWorker: false,
     zoom: true,
-    zoomScaleExtent: [0.1, 1.2]
+    zoomScaleExtent: [0.1, 3]
   };
   graphInstance: any = '';
-  dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" padding="0.2" fontsize="5" fontname = "Roboto"' + 
-  'pad="0.5" ];edge [shape="plain" fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
+  a = '';
+  b = '';
+  c = '';
+  dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" padding="0.2" fontsize="5" fontname = "Roboto"' +
+    'pad="0.5" ];edge [shape="plain" fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
@@ -296,10 +302,17 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
   drawTableRelationship() {
     this.graphInstance = graphviz('#graph', this.option).attributer(this.attributer).renderDot(this.dotString);
-    d3.select(window).on("click", this.resetZoom());
-    d3.forceSimulation().force('center', d3.forceCenter(1000 / 2, 1000 / 4))
+    const root = this.graphInstance._selection;
+    const svg = d3.select(root.node().querySelector('svg'));
+    function zoomed() {
+      const g = d3.select(svg.node().querySelector('g'));
+      g.attr('transform', d3.event.transform);
+    }
+    const zoomBehavior = zoom().scaleExtent(this.option.zoomScaleExtent)
+      .interpolate(interpolate).on('zoom', zoomed);
+    svg.call(zoomBehavior);
+    zoomTransform(svg.node());
   }
-
 
   resetZoom() {
     graphviz('#graph', this.option).resetZoom(d3.transition().duration(1000));
@@ -317,18 +330,4 @@ export class ErtTableColumnConfigComponent implements OnInit {
       datum.attributes.height = height - 30;
     }
   }
-
-  resizeSVG() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const svg = d3.select('#graph').selectWithoutDataPropagation('svg');
-    svg
-      .transition()
-      .duration(700)
-      .attr('width', width - 40)
-      .attr('height', height - 40);
-    const d = svg.datum();
-    d.attributes['width'] = width - 30;
-    d.attributes['height'] = height - 30;
-  };
 }
