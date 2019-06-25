@@ -32,14 +32,13 @@ export class ErtTableColumnConfigComponent implements OnInit {
   successMsg = '';
   errorMessage = '';
   option = {
+    width: 500,
+    height: 400,
     useWorker: false,
-    zoom: true,
     zoomScaleExtent: [0.1, 3]
   };
   graphInstance: any = '';
-  a = '';
-  b = '';
-  c = '';
+
   dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" padding="0.2" fontsize="5" fontname = "Roboto"' +
     'pad="0.5" ];edge [shape="plain" fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
@@ -228,7 +227,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
     // graphviz('#graph', this.option).resetZoom(d3.transition('smooth'));
-    d3.select('svg').remove();
+    // d3.select('svg').remove();
     this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
   }
 
@@ -302,16 +301,25 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
   drawTableRelationship() {
     this.graphInstance = graphviz('#graph', this.option).attributer(this.attributer).renderDot(this.dotString);
-    const root = this.graphInstance._selection;
-    const svg = d3.select(root.node().querySelector('svg'));
-    function zoomed() {
-      const g = d3.select(svg.node().querySelector('g'));
-      g.attr('transform', d3.event.transform);
-    }
-    const zoomBehavior = zoom().scaleExtent(this.option.zoomScaleExtent)
-      .interpolate(interpolate).on('zoom', zoomed);
-    svg.call(zoomBehavior);
-    zoomTransform(svg.node());
+    this.resetZoom();
+    // const root = this.graphInstance._selection;
+    // const svg = d3.select(root.node().querySelector('svg'));
+    // function zoomed() {
+    //   const g = d3.select(svg.node().querySelector('g'));
+    //   // console.log(d3.event.transform);
+    //   // if (this.firstClick === true) {
+    //   //   g.attr('transform', 'translate(15,120)');
+    //   // } else {
+    //   //   this.firstClick = false;
+    //   //   g.attr('transform', d3.event.transform);
+    //   // }
+    //   g.attr('transform', d3.event.transform);
+    //   console.log(d3.event.transform);
+    // }
+    // const zoomBehavior = zoom().scaleExtent(this.option.zoomScaleExtent)
+    //   .interpolate(interpolate).on('zoom', zoomed);
+    // svg.call(zoomBehavior);
+    // zoomTransform(svg.node());
   }
 
   resetZoom() {
