@@ -5,6 +5,7 @@ import { UserinfoService } from '../userinfo.service';
 import { ERTJobs, ErtJobParams, ExtractDataConfigInfo, IngestionDataConfig } from '../ert-landing-page/ert';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-ert-jobs',
@@ -23,6 +24,7 @@ export class ErtJobsComponent implements OnInit {
   scheduleNow: boolean;
   instanceId: any;
   ertJobslist: boolean;
+  errorMessage = '';
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
@@ -64,6 +66,13 @@ export class ErtJobsComponent implements OnInit {
       } catch {
         this.spinner.hide();
       }
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        this.spinner.hide();
+        this.ertJobslist = true;
+        // document.getElementById('warning-popup-btn').click();
+        // this.errorMessage = err.error.message;
+      }
     });
   }
 
@@ -83,12 +92,19 @@ export class ErtJobsComponent implements OnInit {
       }
     } else {
       document.getElementById('warning-popup-btn').click();
+      this.errorMessage = 'In progress and scheduled job can not be edit.';
     }
   }
 
   deleteErtJob() {
     this.ertService.deleteErtJob(this.ertJobId).subscribe(result => {
       this.getErtJobList();
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        this.getErtJobList();
+        document.getElementById('warning-popup-btn').click();
+        this.errorMessage = err.error.message;
+      }
     });
   }
 
@@ -114,13 +130,19 @@ export class ErtJobsComponent implements OnInit {
     };
     delete param.scheduledConfig['ins'];
     this.ertService.runJob(param).subscribe(result => {
-      el.click();
       if (result.httpStatus === 200) {
+        el.click();
         this.isSuccessMsg = true;
         this.successMsg = 'Your Job has Started';
       } else {
         this.isSuccessMsg = false;
-        this.successMsg = 'Unable to Process Your Job';
+        document.getElementById('warning-popup-btn').click();
+        this.errorMessage = 'Unable to Process Your Job';
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        document.getElementById('warning-popup-btn').click();
+        this.errorMessage = err.error.message;
       }
     });
   }

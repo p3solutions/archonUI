@@ -30,7 +30,8 @@
       </div>
       <div id="mask-div">
         <section class="example-section">
-          <mat-checkbox class="example-margin" formControlName="isMaskField">Mask Field</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="maskFieldCheck()" formControlName="isMaskField">Mask Field
+          </mat-checkbox>
         </section>
         <section class="example-section">
           <mat-radio-group formControlName="maskType">

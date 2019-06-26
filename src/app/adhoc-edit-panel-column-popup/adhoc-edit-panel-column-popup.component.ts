@@ -69,6 +69,7 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
     } else {
       this.editResultFieldsForm.get('todecrypt').disable();
     }
+    this.maskFieldCheck();
   }
 
   update() {
@@ -162,17 +163,14 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
     }
   }
 
-  // nameFormatter(value: string): string {
-  //   value = value.trim().replace('[^_^\\p{Alnum}.]', '_').replace('^', '_').replace('\\s+', '_');
-  //   value = ((value.startsWith('_') && value.endsWith('_') && value.length > 2)
-  //     ? value.substring(1).substring(0, value.length - 2)
-  //     : value);
-  //   return value.length > 0 ? ((value.charAt(0) >= '0' && value.charAt(0) <= '9') ? '_' : '') + value
-  //     : value;
-  // }
-
-  // labelFunction() {
-  //   console.log(1);
-  //   console.log(this.nameFormatter(this.editResultFieldsForm.get('label').value));
-  // }
+  maskFieldCheck() {
+    console.log(this.editResultFieldsForm.get('isMaskField').value);
+    if (!this.editResultFieldsForm.get('isMaskField').value) {
+      this.editResultFieldsForm.get('maskType').disable();
+      this.editResultFieldsForm.get('maskLength').disable();
+    } else {
+      this.editResultFieldsForm.get('maskType').enable();
+      this.editResultFieldsForm.get('maskLength').enable();
+    }
+  }
 }

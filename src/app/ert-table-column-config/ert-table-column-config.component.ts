@@ -3,9 +3,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
-import { TableDetailsListObj, IngestionDataConfig } from '../ert-landing-page/ert';
+import { TableDetailsListObj, IngestionDataConfig, ColumnListObj } from '../ert-landing-page/ert';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { graphviz } from 'd3-graphviz';
+import * as d3 from 'd3';
+import { zoom, zoomTransform, zoomIdentity } from "d3-zoom";
+import { interpolate } from "d3-interpolate";
+
+import { createZoomBehavior } from "d3-graphviz/src/selection";
+
 
 @Component({
   selector: 'app-ert-table-column-config',
@@ -24,6 +31,16 @@ export class ErtTableColumnConfigComponent implements OnInit {
   issaveDisabled: boolean;
   successMsg = '';
   errorMessage = '';
+  option = {
+    width: 500,
+    height: 400,
+    useWorker: false,
+    zoomScaleExtent: [0.1, 3]
+  };
+  graphInstance: any = '';
+
+  dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" padding="0.2" fontsize="5" fontname = "Roboto"' +
+    'pad="0.5" ];edge [shape="plain" fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
@@ -36,6 +53,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
       this.selectedTableName = tempTableObj.tableName;
       this.ExpectedTableName = tempTableObj.modifiedTableName;
       tempTableObj.isMainTable = true;
+      this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
     }
   }
 
@@ -170,22 +188,16 @@ export class ErtTableColumnConfigComponent implements OnInit {
         this.spinner.hide();
         const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
           'Job successfully marked as completed.';
-        if (result.errorMessage !== null) {
-          this.spinner.hide();
-          document.getElementById('not-saved-popup-btn').click();
-          this.errorMessage = result.errorMessage !== null ? result.errorMessage : 'Unable to save job.';
-        } else {
-          this.spinner.hide();
-          document.getElementById('message-popup-btn').click();
-          this.successMsg = msg;
-        }
+        this.spinner.hide();
+        document.getElementById('message-popup-btn').click();
+        this.successMsg = msg;
       }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           this.spinner.hide();
         } else {
           this.spinner.hide();
           document.getElementById('not-saved-popup-btn').click();
-          this.successMsg = err.error.errorMessage;
+          this.errorMessage = err.error.message;
         }
       });
     } catch {
@@ -208,8 +220,122 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.router.navigate(['/workspace/ert/ert-jobs']);
   }
   selectTable(tableId) {
+    this.dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node' +
+      '[shape="plain" fontname = "Roboto" fontsize ="5" ];edge [shape="plain" fontname = "Roboto" ' +
+      'arrowsize="0.3" fontsize ="3" ]rankdir=LR;';
     this.selectedTableId = tableId;
     this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
+    // graphviz('#graph', this.option).resetZoom(d3.transition('smooth'));
+    // d3.select('svg').remove();
+    this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
+  }
+
+  createDOTActualTable(columnList: ColumnListObj[]) {
+    this.dotString = this.dotString + this.selectedTableName + 'original' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
+    this.dotString = this.dotString + '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' + this.selectedTableName + '   </td></tr>';
+    for (const item of columnList.filter(a => a.dataType !== 'USERDEFINED')) {
+      this.dotString = this.dotString + '<tr><td align="left" port = "' +
+        item.originalColumnName + 'start"' + '> ' + item.originalColumnName + '  </td></tr>';
+    }
+    this.dotString = this.dotString + '</table>>];';
+    this.createDOTExpectedTable(columnList);
+
+  }
+
+  createDOTExpectedTable(columnList: ColumnListObj[]) {
+    this.dotString = this.dotString + this.ExpectedTableName + 'expected' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
+    this.dotString = this.dotString + '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' + this.ExpectedTableName + '   </td></tr>';
+    for (const item of columnList.filter(a => a.isSelected === true && a.dataType !== 'USERDEFINED')) {
+      this.dotString = this.dotString + '<tr><td align="left" port = "' +
+        item.modifiedColumnName + 'end"' + '> ' + item.modifiedColumnName + '  </td></tr>';
+    }
+    const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+    if (tempObj.usrDefinedColumnList.length !== 0) {
+      for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true
+        && a.dataType.trim().toUpperCase() === 'USERDEFINED')) {
+        this.dotString = this.dotString + '<tr><td align="left" port = "' +
+          item.modifiedColumnName + 'end"' + '> ' + item.modifiedColumnName + '  </td></tr>';
+      }
+    } if (tempObj.columnList.length !== 0) {
+      for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType.trim().toUpperCase() === 'USERDEFINED')) {
+        this.dotString = this.dotString + '<tr><td align="left" port = "' +
+          item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '  </td></tr>';
+      }
+    }
+
+    this.dotString = this.dotString + '</table>>];';
+    this.createTableLink(columnList);
+  }
+
+
+  createTableLink(columnList: ColumnListObj[]) {
+    for (const item of columnList.filter(a => a.isSelected === true && a.dataType !== 'USERDEFINED')) {
+      this.dotString = this.dotString + this.selectedTableName + 'original:' + item.originalColumnName + 'start' + ' -> ' +
+        this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end; ';
+    }
+    const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+
+    if (tempObj.usrDefinedColumnList.length !== 0) {
+      for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
+        const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
+        for (const list of a) {
+          this.dotString = this.dotString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+            this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end' + '[label="' + item.viewQuery + '"]' + '; ';
+        }
+      }
+    }
+    if (tempObj.columnList.length !== 0) {
+      for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
+        const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
+        for (const list of a) {
+          this.dotString = this.dotString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+            this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end' + '[label="' + item.viewQuery + '"]' + '; ';
+        }
+      }
+    }
+
+    this.dotString = this.dotString + '}';
+    this.drawTableRelationship();
+  }
+
+  drawTableRelationship() {
+    this.graphInstance = graphviz('#graph', this.option).attributer(this.attributer).renderDot(this.dotString);
+    this.resetZoom();
+    // const root = this.graphInstance._selection;
+    // const svg = d3.select(root.node().querySelector('svg'));
+    // function zoomed() {
+    //   const g = d3.select(svg.node().querySelector('g'));
+    //   // console.log(d3.event.transform);
+    //   // if (this.firstClick === true) {
+    //   //   g.attr('transform', 'translate(15,120)');
+    //   // } else {
+    //   //   this.firstClick = false;
+    //   //   g.attr('transform', d3.event.transform);
+    //   // }
+    //   g.attr('transform', d3.event.transform);
+    //   console.log(d3.event.transform);
+    // }
+    // const zoomBehavior = zoom().scaleExtent(this.option.zoomScaleExtent)
+    //   .interpolate(interpolate).on('zoom', zoomed);
+    // svg.call(zoomBehavior);
+    // zoomTransform(svg.node());
+  }
+
+  resetZoom() {
+    graphviz('#graph', this.option).resetZoom(d3.transition().duration(1000));
+  }
+
+  attributer(datum, index, nodes) {
+    const selection = d3.select(this);
+    if (datum.tag === 'svg') {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      selection
+        .attr('width', width)
+        .attr('height', height);
+      datum.attributes.width = width - 30;
+      datum.attributes.height = height - 30;
+    }
   }
 }

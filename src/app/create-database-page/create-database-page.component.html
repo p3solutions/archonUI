@@ -15,7 +15,7 @@
           <form [formGroup]="databaseConnectionForm" class="workspace-detail-form">
             <div class="workspace-detail">
               <mat-form-field class="form-field-profile">
-                <input required maxlength="40" formControlName="profileName" matInput placeholder="Profile Name">
+                <input required maxlength="40" trim="blur" formControlName="profileName" matInput placeholder="Profile Name">
               </mat-form-field>
             </div>
             <div class="workspace-detail">
@@ -38,18 +38,18 @@
             </div>
             <div class="workspace-detail">
               <mat-form-field class="form-field-workspace">
-                <input matInput formControlName="host" required placeholder="Host">
+                <input trim="blur" matInput formControlName="host" required placeholder="Host">
               </mat-form-field>
               <mat-form-field class="form-field-workspace-owner">
-                <input matInput type='number' formControlName="port" required placeholder="port">
+                <input matInput trim="blur" type='number' formControlName="port" required placeholder="port">
               </mat-form-field>
             </div>
             <div class="workspace-detail">
               <mat-form-field class="form-field-workspace">
-                <input matInput required formControlName="databaseName" placeholder="Database Name">
+                <input matInput trim="blur" required formControlName="databaseName" placeholder="Database Name">
               </mat-form-field>
               <mat-form-field class="form-field-workspace-owner">
-                <input matInput required formControlName="schemaName" placeholder="Schema Name">
+                <input matInput trim="blur" required formControlName="schemaName" placeholder="Schema Name">
               </mat-form-field>
             </div>
             <div id="action-btn" class="action-btn-connection">
@@ -63,10 +63,10 @@
           <form [formGroup]="userServerForm" class="workspace-detail-form">
             <div class="workspace-detail">
               <mat-form-field class="form-field-workspace">
-                <input matInput required formControlName="userName" placeholder="User Name">
+                <input matInput trim="blur" required formControlName="userName" placeholder="User Name">
               </mat-form-field>
               <mat-form-field class="form-field-workspace-owner">
-                <input matInput required type="password" formControlName="password" placeholder="Password">
+                <input matInput trim="blur" required type="password" formControlName="password" placeholder="Password">
               </mat-form-field>
             </div>
           </form>
