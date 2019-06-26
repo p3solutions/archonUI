@@ -115,6 +115,10 @@ export class ManageUserRolesComponent implements OnInit {
         this.locked = false;
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
+        if (this.roleOfUser === 'superadmin') {
+          this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
+            'action', 'createdAt', 'updatedAt'];
+        }
         break;
       }
       case 'Revoked': {
@@ -123,6 +127,10 @@ export class ManageUserRolesComponent implements OnInit {
         this.locked = null;
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
+        if (this.roleOfUser === 'superadmin') {
+          this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
+            'action', 'createdAt', 'updatedAt'];
+        }
         break;
       }
       case 'Locked': {
@@ -131,6 +139,10 @@ export class ManageUserRolesComponent implements OnInit {
         this.revoked = null;
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
+        if (this.roleOfUser === 'superadmin') {
+          this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
+            'action', 'createdAt', 'updatedAt'];
+        }
         break;
       }
       case '': {
