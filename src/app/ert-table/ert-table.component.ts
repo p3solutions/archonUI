@@ -580,7 +580,8 @@ export class ErtTableComponent implements OnInit {
     this.disabledUserDefinedColName = false;
     this.closeUserDefinedAlert();
     this.ursDefinedColumnNameList = this.selectedTableList.filter
-      (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
+      (a => a.tableId === this.selectedTableId)[0].columnList.filter(a => a.dataType !== 'USERDEFINED')
+      .map(function (item) { return item['originalColumnName']; });
     if (columnName !== 'addNewColumn') {
       this.enableUserDefined = false;
       this.usrDefinedColumnName = columnName;

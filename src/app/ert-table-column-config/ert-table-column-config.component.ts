@@ -251,14 +251,19 @@ export class ErtTableColumnConfigComponent implements OnInit {
         item.modifiedColumnName + 'end"' + '> ' + item.modifiedColumnName + '  </td></tr>';
     }
     const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-
+    console.log(tempObj);
+    console.log(tempObj.usrDefinedColumnList);
     if (tempObj.usrDefinedColumnList.length !== 0) {
-      for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
+      console.log(1);
+      for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true
+        && a.dataType.trim().toUpperCase() === 'USERDEFINED')) {
         this.dotString = this.dotString + '<tr><td align="left" port = "' +
           item.modifiedColumnName + 'end"' + '> ' + item.modifiedColumnName + '  </td></tr>';
       }
-    } if (tempObj.usrDefinedColumnList.length === 0) {
-      for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
+    } if (tempObj.columnList.length !== 0) {
+      console.log(2);
+      for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType.trim().toUpperCase() === 'USERDEFINED')) {
+        console.log(tempObj.columnList);
         this.dotString = this.dotString + '<tr><td align="left" port = "' +
           item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '  </td></tr>';
       }
@@ -285,7 +290,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
         }
       }
     }
-    if (tempObj.usrDefinedColumnList.length === 0) {
+    if (tempObj.columnList.length !== 0) {
       for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
         const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
         for (const list of a) {
