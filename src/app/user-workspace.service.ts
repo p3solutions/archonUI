@@ -22,7 +22,7 @@ export class UserWorkspaceService {
     this.http = http;
   }
 
-  checkDBConnection(testDbParam: AnyObject, testServerParam: AnyObject ) {
+  checkDBConnection(testDbParam: AnyObject, testServerParam: AnyObject) {
     testDbParam.ownerId = this.userinfoService.getUserId();
     testDbParam.userName = testServerParam.userName;
     testDbParam.password = testServerParam.password;
@@ -70,17 +70,14 @@ export class UserWorkspaceService {
     dbParam.password = btoa(testServerParam.password);
     dbParam.isEncoded = true;
     return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, dbParam, { headers: this.userinfoService.getHeaders() }).pipe(
-      map(this.extractData),
-      catchError(this.handleError<WorkspaceObject>('createNewDBConfig'))
+      map(this.extractData)
     );
   }
 
   createNewWorkspace(params: AnyObject) {
     params.ownerId = this.userinfoService.getUserId();
     return this.http.post<WorkspaceObject>(this.createNewWSurl, params, { headers: this.userinfoService.getHeaders() }).pipe(
-      map(this.extractData),
-      catchError(this.handleError<WorkspaceObject>('createNewWorkspace'))
-    );
+      map(this.extractData));
   }
 
   private extractData(res: any) {
