@@ -5,7 +5,8 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { Router } from '@angular/router';
 import { DatabaseListService } from '../database-list/database-list.service';
 import { ConfiguredDB } from '../workspace-objects';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-create-database-page',
@@ -30,7 +31,7 @@ export class CreateDatabasePageComponent implements OnInit {
   databaseList: ConfiguredDB[] = [];
   errorMessage = '';
   constructor(private _formBuilder: FormBuilder, private userWorkspaceService: UserWorkspaceService
-    , private router: Router, private databaseListService: DatabaseListService) { }
+    , private router: Router, private databaseListService: DatabaseListService, private spinner: NgxSpinnerService) { }
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
@@ -160,21 +161,24 @@ export class CreateDatabasePageComponent implements OnInit {
 
   testConnection() {
     this.inProgress = true;
+    this.spinner.show();
     this.userWorkspaceService.checkDBConnection(this.databaseConnectionForm.value, this.userServerForm.value).subscribe((res: any) => {
       if (res) {
         this.inProgress = false;
+        this.spinner.hide();
         this.dbTestConnectionErrorMsg = '';
         this.errorMessage = res.connection.message;
-        document.getElementById('select-db-btn').click();
+        document.getElementById('connection-popup-btn').click();
         if (res.connection.isConnected) {
           this.disableCreateBtn = false;
         }
       } else {
         this.inProgress = false;
+        this.spinner.hide();
         this.disableCreateBtn = true;
         this.dbTestConnectionSuccessMsg = '';
         this.errorMessage = 'Failed! Try again with correct DB configuration.';
-        document.getElementById('select-db-btn').click();
+        document.getElementById('error-db-btn').click();
       }
     });
   }
@@ -191,23 +195,27 @@ export class CreateDatabasePageComponent implements OnInit {
 
   createDatatbase() {
     this.dbinProgress = true;
+    this.spinner.show();
     this.userWorkspaceService.checkDBConnection(this.databaseConnectionForm.value, this.userServerForm.value).subscribe((res: any) => {
       if (res) {
         if (res.connection.isConnected) {
           this.dbinProgress = true;
+          this.spinner.show();
           this.disableCreateBtn = true;
           this.createNewdb();
         } else {
           this.disableCreateBtn = false;
           this.dbinProgress = false;
+          this.spinner.hide();
           this.errorMessage = 'Unable to Create Database. Please Test Connection.';
-          document.getElementById('select-db-btn').click();
+          document.getElementById('error-db-btn').click();
         }
       } else {
         this.dbinProgress = false;
+        this.spinner.hide();
         this.disableCreateBtn = false;
         this.errorMessage = 'Unable to Create Database. Please Test Connection.';
-        document.getElementById('select-db-btn').click();
+        document.getElementById('error-db-btn').click();
 
       }
     });
@@ -216,8 +224,17 @@ export class CreateDatabasePageComponent implements OnInit {
   createNewdb() {
     this.userWorkspaceService.createNewDBConfig(this.databaseConnectionForm.value, this.userServerForm.value).subscribe(res => {
       if (res) {
+        this.spinner.hide();
         document.getElementById('success-popup-btn').click();
         this.successDatabaseMessage = 'Database profile Created Successfully and pre analysis started.';
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        this.dbinProgress = false;
+        this.spinner.hide();
+        this.disableCreateBtn = false;
+        this.errorMessage = err.error.message;
+        document.getElementById('error-db-btn').click();
       }
     });
   }
@@ -233,7 +250,7 @@ export class CreateDatabasePageComponent implements OnInit {
           if ((db.host === this.databaseConnectionForm.get('host').value) && (db.port ===
             this.databaseConnectionForm.get('port').value) && (db.databaseName === this.databaseConnectionForm.get('databaseName').value)) {
             this.errorMessage = 'Same database Connection exists with different profile name.';
-            document.getElementById('select-db-btn').click();
+            document.getElementById('confirm_model-btn').click();
             break;
           }
         }
