@@ -68,11 +68,8 @@ export class ManageMasterMetadataComponent implements OnInit {
       document.getElementById('successPopUp').click();
       this.getMMRVersionList();
     }, (err: HttpErrorResponse) => {
-      if (err.error instanceof Error) {
-      } else {
         document.getElementById('successPopUp').click();
-        this.successMessage = err.error.errorMessage;
-      }
+        this.successMessage = err.error.message;
     });
   }
 

@@ -63,7 +63,7 @@ export class ChangePasswordComponent implements OnInit {
         console.log(err);
         this.inProgress = false;
           this.errorObject = new ErrorObject;
-          this.errorObject.message = err.error.errorMessage;
+          this.errorObject.message = err.error.message;
           this.errorObject.show = !err.error.success;
       });
   }

@@ -8,6 +8,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-status-screen',
@@ -141,14 +142,15 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
 
   retryJob(id) {
     this.statusService.setRetryStatus(id).subscribe(res => {
-      if (res && res.success) {
+      if (res) {
         this.getStart();
-      } else {
-        this.errorObject = new ErrorObject;
-        this.errorObject.message = res.errorMessage;
-        this.errorObject.show = true;
       }
-    });
+    }, (err) => {
+      this.errorObject = new ErrorObject;
+        this.errorObject.message = err.error.message;
+        this.errorObject.show = true;
+    }
+    );
   }
 
   downloadJob(releatedJobId) {
@@ -171,12 +173,12 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
 
   stopJob(id) {
     const el: HTMLElement = this.button1.nativeElement as HTMLElement;
-    this.statusService.terminateJob(id).subscribe(result => {
-      if (result.success) {
+    this.statusService.terminateJob(id).subscribe((result: any) => {
+      if (result) {
         this.responsemsg = result.data;
-      } else {
-        this.responsemsg = result.errorMessage;
       }
+    }, (err: HttpErrorResponse) => {
+      this.responsemsg = err.error.message;
     });
     el.click();
   }

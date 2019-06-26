@@ -6,6 +6,7 @@ import { SecondaryColumnPipe } from '../secondary-column.pipe';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   paginationRequired: boolean;
   page: number;
   selected = [];
-  autoColumnMatch = false;
+  editColumnMode = false;
   autoColumnMatchMessage = '';
   dataSource = new MatTableDataSource<any>(this.primaryColumns);
   displayedColumns: string[] = ['columnName', 'columnDataType', 'secondaryColumns'];
@@ -45,6 +46,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   enableAdd = false;
   joinbtn = true;
+  editState = new Map();
 
   constructor(private addDirectJoinService: AddDirectJoinService,
     private spinner: NgxSpinnerService,
@@ -74,6 +76,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
           this.primaryColumns = res;
           for (const i of this.primaryColumns) {
           i.secondaryColumn = '';
+          i.autoMatch = false;
           }
           this.dataSource.data = this.primaryColumns;
           this.spinner.hide();
@@ -123,7 +126,9 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryTable, index, secondaryTableName) {
-    console.log(primaryTable, index, secondaryTableName);
+    const isWorthy = this.editState.get(primaryTable.columnId);
+    if (isWorthy !== secondaryTableName) {
+    this.editState.set(primaryTable.columnId, secondaryTableName);
     this.joinbtn = false;
     let secObject = {
       columnId: '',
@@ -162,13 +167,16 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       }
     }
     if (insert === 0) {
-      this.joinListTemp.push(temp);
+      if (temp.secondaryColumn.columnName !== '') {
+        this.joinListTemp.push(temp);
+      }
     }
   this.enableAdd = this.checkDuplicateInObject(this.joinListTemp);
   if (this.enableAdd === true) {
+    this.editColumnMode = false;
     this.joinbtn = true;
   }
-
+    }
   }
 
   checkDuplicateInObject(values) {
@@ -199,21 +207,21 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       }],
     };
     if (this.resultArray.length > 0) {
-      this.addDirectJoinService.addNewJoin(param).subscribe(res => {
-        if (res && res.data.errorDetails.length === 0) {
+      this.addDirectJoinService.addNewJoin(param).subscribe((res) => {
+        if (res) {
           document.getElementById('addssmsg').click();
           this.updateEvent.emit(true);
           this.updateSuccess = true;
           this.joinListTemp = [];
           this.resultArray = [];
           this.resetselectedValues();
-        } else {
+        }
+       }, (err: HttpErrorResponse) => {
           document.getElementById('addermsg').click();
-          this.errorMsg = res.data.errorDetails[0].errors[0].errorMessage;
+          this.errorMsg = err.error.message;
           this.updateNotif = true;
           this.resultArray = [];
-        }
-      });
+       });
     } else {
       document.getElementById('addermsg').click();
       this.errorMsg = 'Please select columns to add joins';
@@ -229,7 +237,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.errorMsg = '';
     this.updateNotif = false;
     this.updateSuccess = false;
-    this.autoColumnMatch = false;
+    this.editColumnMode = false;
   }
 
   searchTablelist() {
@@ -259,33 +267,30 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
 
 
   autocolumnMatchMode() {
-    const secondaryColumnNameList = this.secondaryColumns.map(function (item) { return item['columnName']; });
-    let tempIndexOfColumnList = 0;
-    for (const primaryColumn of this.primaryColumns) {
-      if (secondaryColumnNameList.includes(primaryColumn.columnName)) {
-        const index = this.primaryColumns.findIndex(k => k.columnName === primaryColumn.columnName);
-        const primaryValues = this.primaryColumns.find(s => s.columnName === primaryColumn.columnName);
-        const dataType = primaryValues.columnDataType;
-        const tableHTML = document.getElementById('add-join-table');
-        const tableBodyHTML = tableHTML.getElementsByTagName('tbody');
-        const tableRow = tableBodyHTML[0].children[index];
-        const filterSecondaryTable = new SecondaryColumnPipe().transform(this.secondaryColumns, dataType);
-        for (let i = 0; i < filterSecondaryTable.length; i++) {
-          tempIndexOfColumnList = i;
-          if (filterSecondaryTable[i] === primaryColumn.columnName) {
-            break;
-          }
-        }
-        tableRow.children[2].querySelector('select').selectedIndex = tempIndexOfColumnList + 1;
-        this.selectedValues(primaryValues, index, primaryColumn.columnName);
-      }
+    this.errorMsg = '';
+    this.updateNotif = false;
+    this.updateSuccess = false;
+    this.joinListTemp = [];
+    this.resultArray = [];
+    for (let i = 0; i < this.primaryColumns.length; i++) {
+     for (const j of this.secondaryColumns) {
+     if (this.primaryColumns[i].columnName === j.columnName && this.primaryColumns[i].columnDataType === j.columnDataType) {
+      this.primaryColumns[i].secondaryColumn = j.columnName;
+      this.primaryColumns[i].autoMatch = true;
+      this.selectedValues(this.primaryColumns[i], i , this.primaryColumns[i].secondaryColumn);
+     }
+     }
+     if (!this.primaryColumns[i].autoMatch) {
+      this.primaryColumns[i].secondaryColumn = '';
+      this.selectedValues(this.primaryColumns[i], i , this.primaryColumns[i].secondaryColumn);
+     }
     }
-    this.autoColumnMatch = true;
-    this.autoColumnMatchMessage = 'Automatch column applied successfully';
+    this.editColumnMode = true;
+    this.autoColumnMatchMessage = 'Automatch Completed';
   }
 
   closeAutoMatchMessage() {
-    this.autoColumnMatch = false;
+    this.editColumnMode = false;
   }
 
   closeScreen() {
