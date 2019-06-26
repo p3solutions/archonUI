@@ -19,6 +19,7 @@ import { MaterialModule } from '../material-module';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 describe('WorkspaceDashboardComponent', () => {
   let component: WorkspaceDashboardComponent;
@@ -29,7 +30,7 @@ describe('WorkspaceDashboardComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientModule, BrowserAnimationsModule,
-        HttpClientTestingModule, MatFormFieldModule, FormsModule, MatRadioModule, MaterialModule
+        HttpClientTestingModule, MatFormFieldModule, FormsModule, MatRadioModule, MaterialModule, NgxSpinnerModule
       ],
       providers: [
         RouterTestingModule,

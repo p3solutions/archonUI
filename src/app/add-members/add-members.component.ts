@@ -1,9 +1,12 @@
-import { Component, OnInit, Input, Output, SimpleChanges, OnChanges, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, SimpleChanges, OnChanges, EventEmitter, ViewChild } from '@angular/core';
 import { AddMembersService } from './add-members.service';
 import { ActivatedRoute } from '@angular/router';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { ErrorObject } from '../error-object';
 import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export let lockeduser = [];
 
@@ -26,10 +29,19 @@ export class AddMembersComponent implements OnInit, OnChanges {
   @Output() updateExistingUsers = new EventEmitter<boolean>(); // child to parent
   @Input() extModifiedExistingUsers: any;
   @Input() ownerAlreadyExist: boolean;
+  dataSource = new MatTableDataSource<any>(this.userList);
+  // displayedColumns: string[] = ['select', 'id', 'firstName', 'emailAddress', 'role'];
+  displayedColumns: string[] = ['id', 'firstName', 'emailAddress', 'role'];
+  columnlength = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  addmem: boolean;
+  errorMsg: any;
 
   constructor(
     private route: ActivatedRoute,
     private addMembersService: AddMembersService,
+    private spinner: NgxSpinnerService,
     private manageMembersService: ManageMembersService
    ) {
       this.route.params.subscribe(params => {
@@ -39,7 +51,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.getRoleList();
-    this.getUserList();
+    // this.getUserList();
   }
 
   ngOnChanges(change: SimpleChanges) {
@@ -61,6 +73,10 @@ export class AddMembersComponent implements OnInit, OnChanges {
           this.userList.push(user);
         }
       });
+      this.dataSource.data = this.userList;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.columnlength = this.userList.length;
     });
   }
 
@@ -85,25 +101,70 @@ export class AddMembersComponent implements OnInit, OnChanges {
     }
     return !this.errorObject.show;
   }
+  setRoles (users, index, event) {
+ for (const i of this.dataSource.data) {
+   if (i.id === users.id) {
+    index = users.id;
+   }
+ }
+   let insert = 0;
+    this.addmem = false;
+    const user = {
+        indexData: index,
+        userId: users.id,
+        workspaceId: this.workspaceId,
+        workspaceRoleId: event
+    };
+    for (const i of this.selectedUserIdList) {
+      if (i.indexData === index) {
+        if (event === 'select') {
+          const indexx = this.selectedUserIdList.indexOf(i);
+          this.selectedUserIdList.splice(indexx, 1);
+          insert = 1;
+        } else {
+          const indexx = this.selectedUserIdList.indexOf(i);
+          this.selectedUserIdList.splice(indexx, 1);
+        }
+      }
+    }
+    if (insert === 0) {
+      if (event !== 'select') {
+        this.selectedUserIdList.push(user);
+      }
+    }
+  }
   addMembers() {
-    if (this.isAddMemberReady()) {
+    this.spinner.show();
+    try {
       this.isProgress = true;
-      this.selectedUserIdList.forEach(user => {
+      const arrayLength = this.selectedUserIdList.length;
+      this.selectedUserIdList.forEach((user, index) => {
         const params = {
-          'userId': user.id,
+          'userId': user.userId,
           'workspaceId': this.workspaceId,
-          'workspaceRoleId': user.roleId
+          'workspaceRoleId': user.workspaceRoleId
         };
         this.addMembersService.addMembers(params)
-        .subscribe(res => {
-          if (res.success) {
+        .subscribe((res) => {
+          if (res) {
+            if (arrayLength - 1 === index) {
+              const close: HTMLButtonElement = document.querySelector('#addmemberspop #dismissmodel');
+              close.click();
+              this.updateExistingUsers.emit(true);
+              this.spinner.hide();
+            }
             this.isProgress = false;
             this.selectedUserIdList = [];
             this.errorObject = null;
-            this.updateExistingUsers.emit(true);
           }
+          this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        this.errorMsg = err.error.message;
+        document.getElementById('addmembermsg').click();
         });
       });
+    } catch {
+      this.spinner.hide();
     }
   }
 
@@ -130,6 +191,34 @@ export class AddMembersComponent implements OnInit, OnChanges {
   }
   closeErrorMsg() {
     this.errorObject = null;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  datasourceHasValue() {
+    let isScreenPresent;
+    this.dataSource.connect().subscribe(result => {
+      if (result.length === 0) {
+        isScreenPresent = true;
+      } else {
+        isScreenPresent = false;
+      }
+    });
+    return isScreenPresent;
+  }
+
+  resetSelection() {
+    this.selectedUserIdList = [];
+     this.getUserList();
+    // this.removeIndexValue = [];
+    // this.updateenable = false;
+    // this.onloadupdate = true;
   }
 
 }

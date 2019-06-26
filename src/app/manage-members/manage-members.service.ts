@@ -17,7 +17,7 @@ export class ManageMembersService {
   wSroleListUrl = 'roles/workspace';
   serviceActionsUrl = 'public/roles/actions';
   wsDelAccessUrl = 'workspaces/access/';
-  updateWSRoleUrl = 'workspaces/access/';
+  updateWSRoleUrl = 'workspaces/access';
   headers: HttpHeaders;
 
   constructor(private http: HttpClient,
@@ -51,9 +51,9 @@ export class ManageMembersService {
     );
   }
   updateRole(params: AnyObject) {
-    params.id = this.userinfoService.getUserId(); // loggedIn user id
-    const url = this.apiUrl + this.updateWSRoleUrl + params.id;
-    return this.http.get<any>(url, { headers: this.headers }).pipe(
+   // params.id = this.userinfoService.getUserId(); // loggedIn user id
+    const url = this.apiUrl + this.updateWSRoleUrl;
+    return this.http.patch<any>(url, params, { headers: this.headers }).pipe(
       map(this.extractData),
       catchError(this.handleError('updateRole'))
     );
@@ -66,8 +66,9 @@ export class ManageMembersService {
     );
   }
   deleteManageMembersData(param: AnyObject, wsId: string): Observable<any> {
-    const url = this.apiUrl + this.wsDelAccessUrl + wsId + '/member?userId=' + param.id;
-    return this.http.delete<any>(url, { headers: this.headers })
+    console.log(param);
+    const url = this.apiUrl + this.wsDelAccessUrl + wsId + '/member';
+    return this.http.request<any>('DELETE', url, { body: param, headers: this.headers })
       .pipe(catchError(this.handleError('deleteManageMembersData', []))
         // tap(_ => this.log(`deleted hero id=${id}`)),
         // catchError(this.handleError<Hero>('deleteHero'))
