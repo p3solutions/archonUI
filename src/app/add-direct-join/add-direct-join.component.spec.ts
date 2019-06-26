@@ -21,7 +21,8 @@ describe('AddDirectJoinComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AddDirectJoinComponent, SecondaryColumnPipe, SearchPipe],
-      imports: [HttpClientModule, RouterTestingModule, FormsModule, MatFormFieldModule, MatSelectModule, NgxPaginationModule, MatTableModule, MatPaginatorModule, MatSortModule],
+      imports: [HttpClientModule, RouterTestingModule, FormsModule, MatFormFieldModule,
+        MatSelectModule, NgxPaginationModule, MatTableModule, MatPaginatorModule, MatSortModule],
       providers: [AddDirectJoinService, UserinfoService, TableListService,
         { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
