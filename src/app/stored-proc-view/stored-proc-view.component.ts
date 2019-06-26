@@ -201,23 +201,20 @@ export class StoredProcViewComponent implements OnInit {
       };
       this.spinner.show();
       this.storedProcViewService.createSPVAddJoin(paramObj).subscribe((res) => {
-        if (res && res.errorDetails.length === 0) {
+        if (res) {
           document.getElementById('spvsmsg').click();
           this.successMsg = 'New Join Added Successfully.';
           this.updateSuccess = true;
           // this.storedProcViewService.changeSPVBooleanValue(true);
           this.spinner.hide();
-        } else {
-          document.getElementById('spvemsg').click();
-          this.errorMsg = res.errorDetails[0].errors[0].errorMessage;
-          this.updateNotif = true;
-          this.spinner.hide();
         }
         this.spinner.hide();
-      }, (err => {
-        console.log(err);
-        this.spinner.hide();
-      }));
+      }, (err: HttpErrorResponse) => {
+          document.getElementById('spvemsg').click();
+          this.errorMsg = err.error.message;
+          this.updateNotif = true;
+          this.spinner.hide();
+      });
     } catch {
       this.spinner.show();
     }

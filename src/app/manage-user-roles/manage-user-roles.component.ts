@@ -263,7 +263,7 @@ export class ManageUserRolesComponent implements OnInit {
           if (err.error instanceof Error) {
           } else {
             document.getElementById('success-popup-btn').click();
-            this.successMsg = err.error.errorMessage.replace(/([A-Z])/g, ' $1').charAt(0).toUpperCase() + err.error.errorMessage.slice(1);
+            this.successMsg = err.error.message.replace(/([A-Z])/g, ' $1').charAt(0).toUpperCase() + err.error.message.slice(1);
             this.userInviteInfo = new UserInvite();
             this.getAllUsers(this.invited, this.revoked, this.locked);
           }
@@ -323,7 +323,7 @@ export class ManageUserRolesComponent implements OnInit {
         if (err.error instanceof Error) {
         } else {
           document.getElementById('success-popup-btn').click();
-          this.successMsg = err.error.errorMessage;
+          this.successMsg = err.error.message;
           this.getAllUsers(this.invited, this.revoked, this.locked);
         }
       });
@@ -352,10 +352,10 @@ export class ManageUserRolesComponent implements OnInit {
       document.getElementById('success-popup-btn').click();
       if (response.httpStatus === 200) {
         this.successMsg = 'Status changed successfully';
-      } else {
-        this.successMsg = response.errorMessage;
       }
       this.getAllUsers(this.invited, this.revoked, this.locked);
+    }, (err) => {
+      this.successMsg = err.error.message;
     });
   }
 

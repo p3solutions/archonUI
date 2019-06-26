@@ -60,7 +60,7 @@ export class EnterNewpasswordComponent implements OnInit {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
           this.errorObject = new ErrorObject;
-          this.errorObject.message = err.error.errorMessage;
+          this.errorObject.message = err.error.message;
           this.errorObject.show = !err.error.success;
         }
       }

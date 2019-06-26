@@ -13,6 +13,7 @@ export class JoinValues {
         dataType: string;
     };
     defaultSecondaryColumn = false;
+    automatchColumn = false;
  }
  export class SecondaryColumn {
     columnId: string;

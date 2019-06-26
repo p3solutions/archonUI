@@ -72,3 +72,69 @@ tbody td:last-child, thead th:last-child {
   #manage-members-table_length {
     font-size: 12px;
 }
+.action-btn button.save {
+    background-color: #2879ff;
+    color: #ffffff;
+    text-transform: inherit;
+    margin-right: 5px;
+    transition: 0.5s;
+    border-radius: 3px;
+  }
+  .action-btn button.save-disabled {
+    background-color: #2879ff;
+    color: #ffffff;
+    text-transform: inherit;
+    margin-right: 5px;
+    border-radius: 3px;
+  }
+  
+  .action-btn button.cancel {
+    background-color: #64b5f6;
+    color: #1b1b1b;
+    margin-right: 5px;
+    text-transform: inherit;
+    transition: 0.5s;
+    border-radius: 3px;
+  }
+  
+  .action-btn button.save:hover {
+    transform: scale(1.1, 1.1);
+  
+  }
+  
+  .action-btn button.cancel:hover {
+    transform: scale(1.1, 1.1);
+  }
+
+  .mat-header-cell {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #0c0c0c;
+  }
+  ::ng-deep .mat-paginator-icon {
+    height: unset !important;
+  }
+  td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+    text-align: left;
+}
+  
+.database-search {
+  text-align: right;
+  padding-right: 15px;
+ }
+ 
+ ::ng-deep .cdk-overlay-container{
+  z-index: 1200 !important;
+}
+.table-hight {
+  margin-top: 0px;  
+  overflow: auto;
+  overflow-y: auto;
+  height: 345px;
+}

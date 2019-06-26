@@ -144,7 +144,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             (error) => {
                 document.getElementById('deletemsg').click();
                 this.error = true;
-                this.errormsg = error.error.errorMessage;
+                this.errormsg = error.error.message;
             }
         );
     }
@@ -174,16 +174,14 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             document.getElementById('editmsg').click();
             if (result.success) {
                 this.successmsg = 'successfully updated';
-            } else {
-                this.successmsg = result.errorMessage;
-            }
+            } 
             this.success = true;
             this.getWorkspaceListInfo(this.token_data.user.id);
         },
             (error) => {
                 document.getElementById('editmsg').click();
                 this.error = true;
-                this.errormsg = error.error.errors[0].code;
+                this.errormsg = error.error.message;
             }
         );
     }

@@ -114,7 +114,7 @@ export class RoleGroupConfigurationComponent implements OnInit {
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
             } else {
-              this.successMsg = err.error.errorMessage;
+              this.successMsg = err.error.message;
             }
           });
       }

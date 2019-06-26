@@ -92,7 +92,7 @@ export class SignupFormComponent implements OnInit {
         this.inProgress = false;
         if (err.error) {
           // A client-side or network error occurred. Handle it accordingly.
-          this.errorObject.message = err.error.errorMessage;
+          this.errorObject.message = err.error.message;
           this.errorObject.show = true;
         }
         // else {

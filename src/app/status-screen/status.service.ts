@@ -66,7 +66,7 @@ export class StatusService {
 
   terminateJob(jobId){
     return this.http.put(this.terminateUrl + jobId, { headers: this.getHeaders() })
-    .pipe(catchError(this.handleError<any>('terminateJob')));
+    .pipe();
   }
 
   private extractJobSearch(res) {
