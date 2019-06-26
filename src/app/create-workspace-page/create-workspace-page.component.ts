@@ -5,6 +5,8 @@ import { ConfiguredDB } from '../workspace-objects';
 import { UserWorkspaceService } from '../user-workspace.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router, Route, ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-workspace-page',
@@ -33,7 +35,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(private _formBuilder: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
-    private userWorkspaceService: UserWorkspaceService) {
+    private userWorkspaceService: UserWorkspaceService, private spinner: NgxSpinnerService) {
   }
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
@@ -143,7 +145,7 @@ export class CreateWorkspacePageComponent implements OnInit {
       }, 300);
       this.stepper.selectedIndex = 2;
     } else {
-      document.getElementById('select-db-btn').click();
+      document.getElementById('error-db-btn').click();
       this.errorMessage = 'Please select a database.';
     }
   }
@@ -154,6 +156,7 @@ export class CreateWorkspacePageComponent implements OnInit {
     const selectedDBId = this.configDBList.filter(a => a.isChecked === true)[0].id;
     this.databaseIds.push(selectedDBId);
     this.workspaceInProgress = true;
+    this.spinner.show();
     const param: any = {
       'workspaceName': this.firstFormGroup.get('workspaceName').value,
       'databaseIds': this.databaseIds,
@@ -161,7 +164,7 @@ export class CreateWorkspacePageComponent implements OnInit {
       'comment': this.comment
     };
     this.userWorkspaceService.createNewWorkspace(param).subscribe(res => {
-      this.workspaceInProgress = false;
+      this.spinner.hide();
       if (res) {
         document.getElementById('success-popup-btn').click();
         if (res.workspaceState === 'PENDING') {
@@ -170,8 +173,14 @@ export class CreateWorkspacePageComponent implements OnInit {
           this.successWorkspaceMessage = 'Workspace Created Successfully.';
         }
       } else {
-        document.getElementById('select-db-btn').click();
+        document.getElementById('error-db-btn').click();
         this.errorMessage = 'This Workspace Name already is in use.';
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        this.spinner.hide();
+        this.errorMessage = err.error.message;
+        document.getElementById('error-db-btn').click();
       }
     });
   }

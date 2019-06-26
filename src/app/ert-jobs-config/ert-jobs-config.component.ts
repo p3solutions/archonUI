@@ -48,6 +48,9 @@ export class ErtJobsConfigComponent implements OnInit {
     if (ertJobMode.trim() === 'Data Record') {
       this.ertJobParams.ertJobMode = 'DATA_RECORD';
     }
+    if (ertJobMode.trim() === 'Table') {
+      this.ertJobParams.ertJobMode = 'TABLE';
+    }
     this.ertService.updatejobType(this.ertJobParams.ertJobMode);
     this.ertService.setErtJobParams(this.ertJobParams);
     if (ertJobMode.trim() === 'Data Record') {
