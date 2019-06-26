@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
   <div class="row">
     <div class="col-md-6">
       <div class="col-md-1 back-arrow">
@@ -38,4 +38,147 @@
       </div>
     </div>
   </div>
+</div> -->
+<div class="col-md-12" style="padding-left: 22%; padding-right: 22%">
+    <div class="col-md-12"> 
+            <div class="back-arrow-icon">
+              <a (click)="gotoDashboard()" data-tooltip="Back">
+                <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+              </a>
+            </div>
+              <h3 class="extractor-panel-heading">
+                RDBMS Extractor
+              </h3>
+    </div>
+    <div class="col-md-12"> 
+        <ul class="flex-container flex-end">
+          <li class="flex-item"><strong> Workspace Name:</strong> 34_SQL_CLAIM</li>
+          <li class="flex-item"><strong>Database Profile:</strong> db2  &nbsp; <a><i class="fa fa-info-circle fa-1x"></i></a></li>
+        </ul>                 
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="col-md-12">  
+        <div class="card card-3">    
+          <div class="col-md-12" style="padding-right: 0px; padding-left: 0px;">  
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>Process</mat-label>
+              <mat-select required>
+                  <mat-option value="option1">Extract Data</mat-option>
+                  <mat-option value="option2">Execute Query</mat-option>
+                  <mat-option value="option3">Execute Query</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">           
+          </div>
+          </div>
+
+          
+          <div class="col-md-6">
+              <mat-form-field>
+                  <mat-label>Output format</mat-label>
+                  <mat-select required>
+                      <mat-option value="option1">xml</mat-option>
+                      <mat-option value="option2">csv</mat-option>
+                      <mat-option value="option3">txt</mat-option>
+                  </mat-select>
+                </mat-form-field>
+          </div>
+          <div class="col-md-6">
+              <mat-form-field>
+                  <input matInput placeholder="Table Inclusion Rule" value="">
+                </mat-form-field>
+          </div>
+          <div class="col-md-12">
+              <mat-form-field>
+                  <input matInput placeholder="Query Name" value="" required>
+                </mat-form-field>
+          </div>
+          <div class="col-md-12" style="padding-right: 0px; padding-left: 0px;">  
+              <div class="col-md-6">
+                  <mat-slide-toggle>Read Query from file</mat-slide-toggle>
+              </div>
+              <div class="col-md-6">  
+                  <div class="action-btn" style="float: left">                     
+                      <button class="btn file btn-padding">File Upload</button> 
+                      <button class="btn file-name btn-padding">file name .text <a>x</a></button>                
+                    </div>        
+              </div>
+          </div>
+          <div class="col-md-12">  
+              <mat-form-field class="example-full-width">
+                  <textarea matInput placeholder="Query" required></textarea>
+                </mat-form-field>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="col-md-12">
+          <div class="bg">Modify Default parameters
+            </div>
+        </div>
+        <div class="col-md-12">
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>XML File Split Size(MB)</mat-label>
+                <mat-select>
+                    <mat-option value="option1">xml</mat-option>
+                    <mat-option value="option2">csv</mat-option>
+                    <mat-option value="option3">txt</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>Maximum Parallel Process</mat-label>
+                <mat-select>
+                    <mat-option value="option1">xml</mat-option>
+                    <mat-option value="option2">csv</mat-option>
+                    <mat-option value="option3">txt</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        </div>
+        <div class="col-md-12">
+        <div class="col-md-6"><mat-checkbox>Include Table</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox>Include Views</mat-checkbox></div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-6"><mat-checkbox>Date in XML for XML compability</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox>Extract LOB Within XML</mat-checkbox></div>
+      </div>
+    </div>            
+</div>
+<div class="col-md-12"> 
+    <div class="action-btn">
+    <button class="btn cancel btn-padding" (click)="gotoDashboard();">Cancel</button>
+    <button class="btn save btn-padding">Schedule</button>                
+  </div>
+</div>
 </div>
