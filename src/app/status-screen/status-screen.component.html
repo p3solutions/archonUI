@@ -64,7 +64,7 @@
           <td style="width:25%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
         </ng-container>
         <ng-container matColumnDef="userid">
-          <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
+          <th style="width:10%" mat-header-cell *matHeaderCellDef> User </th>
           <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.userId}}</td>
         </ng-container>
         <ng-container matColumnDef="Job Origin">
@@ -97,6 +97,10 @@
               *ngIf="element.jobInfo.jobStatus === 'FAILED'">error</i>
             <i class="material-icons sche" matTooltip="Scheduled"
               *ngIf="element.jobInfo.jobStatus === 'SCHEDULED'">schedule</i>
+              <i class="material-icons failure" matTooltip="User Cancelled"
+              *ngIf="element.jobInfo.jobStatus === 'USER_ADMIN_CANCELLED'">cancel</i>
+              <i class="material-icons failure" matTooltip="Scheduled for Kill"
+              *ngIf="element.jobInfo.jobStatus === 'SCHEDULED_FOR_KILL'">delete_sweep</i>
           </td>
         </ng-container>
         <ng-container matColumnDef="Details">
@@ -160,7 +164,7 @@
         </div>
         <div class="modal-body">
           <mat-accordion>
-            <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of jobArray;let ind=index;">
+            <mat-expansion-panel #mep="matExpansionPanel" *ngFor="let relation of jobArray;let ind=index;" [expanded]="expandDefault">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <div class="expansion-outer">

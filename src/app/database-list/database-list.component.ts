@@ -10,6 +10,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { UserinfoService } from '../userinfo.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-database-list',
@@ -187,10 +188,10 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
                this.getConfigDBList();
              }, 15000);
   },
-  (error) => {
+  (err: HttpErrorResponse) => {
     document.getElementById('deletemsg').click();
     this.error = true;
-    this.errormsg = error.error.errorMessage;
+    this.errormsg = err.error.message;
   }
   );
 }
@@ -213,8 +214,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
           document.getElementById('editmsg').click();
           if (result.success) {
             this.successmsg = 'successfully updated';
-           } else {
-            this.successmsg = result.errorMessage;
            }
             this.success = true;
             this.getConfigDBList();
@@ -222,7 +221,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   (error) => {
     document.getElementById('editmsg').click();
     this.error = true;
-    this.errormsg = error.error.errors[0].code;
+    this.errormsg = error.error.message;
   }
   );
 }

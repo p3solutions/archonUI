@@ -1,3 +1,6 @@
 <app-workspace-header [userWorkspaceArray]="userWorkspaceArray"></app-workspace-header>
 <router-outlet *ngIf="userWorkspaceArray?.length>0"></router-outlet>
  <app-no-workspace [noWorkspace]="noWorkspace" *ngIf="userWorkspaceArray?.length==0"></app-no-workspace>
+ <ngx-spinner class="my-spinner" bdOpacity=0.9 bdColor="rgb(0,0,0,0.35)" size="medium" color="#2879FF" type="ball-pulse" [fullScreen]="true">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>

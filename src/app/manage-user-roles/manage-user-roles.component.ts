@@ -96,7 +96,7 @@ export class ManageUserRolesComponent implements OnInit {
   }
   sortData(sort) {
     this.dataSource.sortfn(sort);
-    }
+  }
 
   filter(filterValue) {
     this.screenfilter = '';
@@ -115,6 +115,10 @@ export class ManageUserRolesComponent implements OnInit {
         this.locked = false;
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
+        if (this.roleOfUser === 'superadmin') {
+          this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
+            'action', 'createdAt', 'updatedAt'];
+        }
         break;
       }
       case 'Revoked': {
@@ -123,6 +127,10 @@ export class ManageUserRolesComponent implements OnInit {
         this.locked = null;
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
+        if (this.roleOfUser === 'superadmin') {
+          this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
+            'action', 'createdAt', 'updatedAt'];
+        }
         break;
       }
       case 'Locked': {
@@ -131,6 +139,10 @@ export class ManageUserRolesComponent implements OnInit {
         this.revoked = null;
         this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
           'createdAt', 'updatedAt'];
+        if (this.roleOfUser === 'superadmin') {
+          this.displayedColumns = ['id', 'firstName', 'lastName', 'emailAddress', 'globalGroup', 'status', 'businessJustification',
+            'action', 'createdAt', 'updatedAt'];
+        }
         break;
       }
       case '': {
@@ -169,7 +181,7 @@ export class ManageUserRolesComponent implements OnInit {
 
 
   getAllUsers(invited, revoked, locked) {
-this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
+    this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
     this.dataSource.connect().subscribe(result => {
       result.forEach((value: any) => {
         if (value.status === 'Locked') {
@@ -191,7 +203,7 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
       if (item.roleName.toUpperCase().trim().includes('SUPER')) {
         this.disableInviteBtn = false;
         this.displayedColumns = ['id', 'firstName', 'lastName',
-        'emailAddress', 'globalGroup', 'status', 'businessJustification', 'action', 'createdAt', 'updatedAt'];
+          'emailAddress', 'globalGroup', 'status', 'businessJustification', 'action', 'createdAt', 'updatedAt'];
         break;
       }
     }
@@ -251,7 +263,7 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
           if (err.error instanceof Error) {
           } else {
             document.getElementById('success-popup-btn').click();
-            this.successMsg = err.error.errorMessage.replace(/([A-Z])/g, ' $1').charAt(0).toUpperCase() + err.error.errorMessage.slice(1);
+            this.successMsg = err.error.message.replace(/([A-Z])/g, ' $1').charAt(0).toUpperCase() + err.error.message.slice(1);
             this.userInviteInfo = new UserInvite();
             this.getAllUsers(this.invited, this.revoked, this.locked);
           }
@@ -311,7 +323,7 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
         if (err.error instanceof Error) {
         } else {
           document.getElementById('success-popup-btn').click();
-          this.successMsg = err.error.errorMessage;
+          this.successMsg = err.error.message;
           this.getAllUsers(this.invited, this.revoked, this.locked);
         }
       });
@@ -340,10 +352,10 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
       document.getElementById('success-popup-btn').click();
       if (response.httpStatus === 200) {
         this.successMsg = 'Status changed successfully';
-      } else {
-        this.successMsg = response.errorMessage;
       }
       this.getAllUsers(this.invited, this.revoked, this.locked);
+    }, (err) => {
+      this.successMsg = err.error.message;
     });
   }
 
@@ -364,21 +376,21 @@ this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.glo
   }
 
   getUserByEmailId(emailId) {
-   // let response;
+    let response;
     this.dataSource.filter = emailId.trim().toLowerCase();
     // this.getGlobalGroup();
-    // if (this.invited === true && emailId !== '') {
-    //   this.dataSource.connect().subscribe(result => {
-    //     response = result;
-    //   });
-    //   this.dataSource._filterData(response);
-    // } else
-    if (emailId !== '') {
-      this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
-      this.dataSource.getUsersByEmailId(emailId);
-    } else {
-      this.getAllUsers(this.invited, this.revoked, this.locked);
-    }
+    if (this.invited === true && emailId !== '') {
+      this.dataSource.connect().subscribe(result => {
+        response = result;
+      });
+      this.dataSource._filterData(response);
+    } else
+      if (emailId !== '') {
+        this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
+        this.dataSource.getUsersByEmailId(emailId);
+      } else {
+        this.getAllUsers(this.invited, this.revoked, this.locked);
+      }
   }
 }
 

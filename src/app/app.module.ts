@@ -140,7 +140,6 @@ import { RedirectComponent } from './redirect/redirect.component';
 import { EnvironmentService } from './environment/environment.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CookieService } from 'ngx-cookie-service';
-
 import { CreateWorkspacePageComponent } from './create-workspace-page/create-workspace-page.component';
 import { CreateDatabasePageComponent } from './create-database-page/create-database-page.component';
 import { ScrollableDirective } from './scrollable.directive';
@@ -148,6 +147,7 @@ import { NonspecialcharDirective } from './nonspecialchar.directive';
 import { OnlyuppercaseallowDirective } from './ert-table/onlyuppercaseallow.directive';
 import { ChangeOverflowDirective } from './change-overflow.directive';
 import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
+import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -281,7 +281,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 MaterialModule,
                 MatSelectInfiniteScrollModule,
                 FlexLayoutModule,
-                NgxSpinnerModule, MatInputModule, MatSortModule
+                NgxSpinnerModule, MatInputModule, MatSortModule,
+                NgxTrimDirectiveModule
         ],
         providers: [
                   EnvironmentService,

@@ -16,6 +16,7 @@ import { AddDirectJoinService } from '../add-direct-join/add-direct-join.service
 import { MatStepper, MatStepHeader } from '@angular/material';
 import { StoredProcViewComponent } from '../stored-proc-view/stored-proc-view.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-table-list',
@@ -732,15 +733,15 @@ export class TableListComponent implements OnInit {
   confirmDelete(): void {
     this.delProgress = true;
     this.tablelistService.deleteRelationInfoData(this.workspaceID, this.primaryTableId, this.joinName, this.relationShipIDs)
-      .subscribe(res => {
+      .subscribe((res) => {
         this.relationShipIDs = [];
         this.delProgress = false;
         if (res && res.success) {
           this.postDelete();
-        } else {
-          this.deleteNotif.show = true;
-          this.deleteNotif.message = res.errors;
         }
+      }, (err: HttpErrorResponse) => {
+        this.deleteNotif.show = true;
+        this.deleteNotif.message = err.error.message;
       });
   }
   closeErrorMsg() {

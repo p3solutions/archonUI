@@ -25,8 +25,7 @@ export class EditRelationshipInfoService {
   updateRealation(tableId, workspaceId, joinName, resultArray): Observable<any> {
     const url = this.updateTableListUrl + workspaceId + '&tableId=' + tableId;
     const param = { 'joinName': joinName, 'joinListInfo': resultArray };
-    return this.http.put<any>(url, param, { headers: this.userinfoService.getHeaders() })
-      .pipe(catchError(this.handleError<any>('updateRelation')));
+    return this.http.put<any>(url, param, { headers: this.userinfoService.getHeaders() });
   }
 
   private extractTables(res: any) {

@@ -5,6 +5,7 @@ import { ErtService } from '../ert-landing-page/ert.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { Title } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-ert-extract-digest',
@@ -20,6 +21,7 @@ export class ErtExtractDigestComponent implements OnInit {
   disableIngestData = true;
   from = '';
   extractDataConfigInfo: ExtractDataConfigInfo = new ExtractDataConfigInfo();
+  errorMessage = '';
   ngOnInit() {
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
     if (this.from === 'data-record' || this.from === 'SIP') {
@@ -69,6 +71,12 @@ export class ErtExtractDigestComponent implements OnInit {
         this.isDisabledSaveBtn = false;
       } catch {
         this.spinner.hide();
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        this.spinner.hide();
+        document.getElementById('warning-popup-btn').click();
+        this.errorMessage = err.error.message;
       }
     });
   }

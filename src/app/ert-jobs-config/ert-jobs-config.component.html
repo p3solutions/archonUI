@@ -60,8 +60,8 @@
     <div class="form-inline">
       <div id="job-name">
         <mat-form-field class="job-name-width">
-          <input matInput name="screen-filter" required [(ngModel)]="ertJobParams.ertJobTitle" (keyup)="enableJobSelection()"
-            #input placeholder="Job Name">
+          <input matInput name="screen-filter" required [(ngModel)]="ertJobParams.ertJobTitle"
+            (keyup)="enableJobSelection()" #input placeholder="Job Name">
         </mat-form-field>
       </div>
       <div class="form-group">
@@ -81,7 +81,8 @@
         <mat-card-header class="ert-card-header">
           <mat-card-title class="ert-job-type-name">{{ertJobType.ertJobType}}</mat-card-title>
         </mat-card-header>
-        <img class="icon-img" [attr.src]="'assets/' + ertJobType.ertJobImage">
+        <img class="icon-img" id="{{ertJobType.ertJobType ==='Data Record' ?'record-img':''}}"
+          [attr.src]="'assets/' + ertJobType.ertJobImage">
         <mat-card-content class="ert-job-desc-top">
           <h4 class="ert-job-desc">Description</h4>
           <p class="ert-job-para">{{ertJobType.description}}<p>
