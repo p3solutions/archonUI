@@ -10,6 +10,7 @@ import { ProgressBarObj } from '../db-extractor';
 export class DbExtractorComponent implements OnInit {
   progressBarObj: ProgressBarObj;
   zone: any;
+  ExtractData = false;
   constructor(public router: Router, private dbExtractorService: DbExtractorService) {
     this.dbExtractorService.setProcessDetailsObj(null);
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
@@ -19,6 +20,14 @@ export class DbExtractorComponent implements OnInit {
       this.progressBarObj = progressBarObj;
       // this.router.navigate(['/workspace/db-extractor/db-extractor-process']);
     });
+  }
+
+  processChange (type) {
+    if (type === 'Data') {
+      this.ExtractData = false;
+    } else {
+      this.ExtractData = true;
+    }
   }
 
   gotoDashboard() {

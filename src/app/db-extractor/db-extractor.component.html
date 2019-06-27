@@ -73,10 +73,10 @@
           <div class="col-md-6">
             <mat-form-field>
               <mat-label>Process</mat-label>
-              <mat-select required>
-                  <mat-option value="option1">Extract Data</mat-option>
-                  <mat-option value="option2">Execute Query</mat-option>
-                  <mat-option value="option3">Execute Query</mat-option>
+              <mat-select required (selectionChange)="processChange($event.value)">
+                  <mat-option value="Data">Extract Data</mat-option>
+                  <mat-option value="Query">Execute Query</mat-option>
+                  <mat-option value="Count">Get Record Count</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -100,6 +100,10 @@
                   <input matInput placeholder="Table Inclusion Rule" value="">
                 </mat-form-field>
           </div>
+
+
+          <!--view start only query mode-->
+          <div *ngIf="ExtractData">
           <div class="col-md-12">
               <mat-form-field>
                   <input matInput placeholder="Query Name" value="" required>
@@ -121,22 +125,8 @@
                   <textarea matInput placeholder="Query" required></textarea>
                 </mat-form-field>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          </div>
+           <!--view end only query mode -->
 
 
           <div class="col-md-12">
