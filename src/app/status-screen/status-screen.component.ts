@@ -136,8 +136,8 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
       if (this.jobArray.length === 1) {
       this.expandDefault = true;
       }
+      el.click();
     });
-    el.click();
   }
 
   retryJob(id) {

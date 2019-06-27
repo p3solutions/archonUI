@@ -90,9 +90,8 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
       this.input = result.input;
       this.jobMessage = result.message;
       this.jobOutput = result.output;
-      console.log(result);
+      el.click();
     });
-    el.click();
   }
   stop(id) {
     this.service.stopJob(id).subscribe(result => {
