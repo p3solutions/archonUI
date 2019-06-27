@@ -145,7 +145,7 @@ option {
   text-transform: inherit;
   transition: 0.5s;
   border-radius: 3px;
-  margin-right: 10px;
+  margin-left: 20px;
  }
  .mat-slide-toggle {
    float: left;
@@ -170,6 +170,44 @@ textarea.mat-input-element {
   position: relative;
 }
 .card-3 {
-  /* box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.47); */
- box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.47);
+ /* box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); */
 }
+::ng-deep .ace-monokai {
+  background-color: #f0f4f7 !important; 
+  color: #000 !important; 
+}
+::ng-deep .ace-monokai .ace_gutter {
+  background: #e9f1f7 !important; 
+  color: #000 !important; 
+}
+::ng-deep .ace-monokai .ace_gutter-active-line {
+  background-color: #e9f1f7 !important;
+}
+::ng-deep .ace-monokai .ace_marker-layer .ace_active-line {
+   background: #e9f1f7 !important;
+}
+
+::ng-deep .ace-monokai .ace_cursor {
+  color: #000 !important;
+}
+.query {
+  font-family: Roboto;
+  font-size: 14px;
+  text-align: left;
+  color: #121212;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+::ng-deep .mat-slide-toggle .mat-slide-toggle-ripple { 
+  height: 0px !important;
+   width: 0px !important;
+}
+::ng-deep .ace-monokai .ace_print-margin {
+  width: 0px !important;
+  background: #555651;
+}
+ ::ng-deep .ace_editor {
+  font: 14px/normal !important;
+  /* font: 14px/normal 'Roboto' !important; */
+} 
