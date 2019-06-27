@@ -1357,10 +1357,13 @@ export class ErtTableComponent implements OnInit {
   }
 
   selectAllColumns(event) {
+    const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
     if (event.target.checked) {
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.forEach(a => a.isSelected = true);
+      tempObj.forEach(a => a.isSelected = true);
+      this.isAllColumnSelected = tempObj.filter(a => a.isSelected === false).length === 0 ? true : false;
     } else {
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.forEach(a => a.isSelected = false);
+      tempObj.forEach(a => a.isSelected = false);
+      this.isAllColumnSelected = tempObj.filter(a => a.isSelected === false).length === 0 ? true : false;
     }
   }
 
