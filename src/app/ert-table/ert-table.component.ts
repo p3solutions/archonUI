@@ -97,8 +97,7 @@ export class ErtTableComponent implements OnInit {
   disabledAddColumnConfigBtn = false;
   filterOperationList: FilterOperationList[] = [];
   searchAvailableTableName = '';
-
-
+  errorMessagesForSelection = '';
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -505,19 +504,21 @@ export class ErtTableComponent implements OnInit {
   }
 
   getERTcolumnlist(tableId: string, event) {
-    this.spinner.show();
-    this.selectedTableId = tableId;
-    this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-    this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    if (this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList.length === 0) {
-      this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
-        this.ErtTableColumnList = result;
-        this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
+    if (this.checkForColumnSelectValidation()) {
+      this.spinner.show();
+      this.selectedTableId = tableId;
+      this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
+      this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+      this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+      if (this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList.length === 0) {
+        this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
+          this.ErtTableColumnList = result;
+          this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
+          this.spinner.hide();
+        });
+      } else {
         this.spinner.hide();
-      });
-    } else {
-      this.spinner.hide();
+      }
     }
   }
 
@@ -543,14 +544,14 @@ export class ErtTableComponent implements OnInit {
 
 
   selectTable(tableId: string, tableName: string, event) {
-    this.selectedTableId = tableId;
-    this.getERTcolumnlist(tableId, '');
-    if (event.target.checked === true) {
-      this.selectedTableList.filter(a => a.tableId === tableId)[0].isSelected = true;
-    } else {
-      this.selectedTableList.filter(a => a.tableId === tableId)[0].isSelected = false;
-    }
-    event.stopPropagation();
+      this.selectedTableId = tableId;
+      this.getERTcolumnlist(tableId, '');
+      if (event.target.checked === true) {
+        this.selectedTableList.filter(a => a.tableId === tableId)[0].isSelected = true;
+      } else {
+        this.selectedTableList.filter(a => a.tableId === tableId)[0].isSelected = false;
+      }
+      event.stopPropagation();
   }
 
   toModifiedTableName(modifiedTableName: string) {
@@ -856,14 +857,16 @@ export class ErtTableComponent implements OnInit {
   }
 
   gotoExtractDigestExtraction() {
-    if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
-      this.errorMsg = 'Please select a table';
-    } else {
-      this.selectedTableList = this.selectedTableList.filter(a => a.columnList.length !== 0);
-      this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount, this.storeSelectedTables);
-      this.ertService.isSIPGraphChange = false;
-      this.ertService.isDataRecordGraphChange = false;
-      this.navigateToUrl('workspace/ert/ert-extract-ingest');
+    if (this.checkForColumnSelectValidation()) {
+      if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
+        this.errorMsg = 'Please select a table';
+      } else {
+        this.selectedTableList = this.selectedTableList.filter(a => a.columnList.length !== 0);
+        this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount, this.storeSelectedTables);
+        this.ertService.isSIPGraphChange = false;
+        this.ertService.isDataRecordGraphChange = false;
+        this.navigateToUrl('workspace/ert/ert-extract-ingest');
+      }
     }
   }
 
@@ -1020,6 +1023,7 @@ export class ErtTableComponent implements OnInit {
       if (this.selectedTableList[0].tableId === this.selectedTableId) {
         document.getElementById('addFilterModelId').click();
       } else {
+        this.errorMessagesForSelection = 'Filter can only be applied on primary table.';
         document.getElementById('warning-popup-btn').click();
       }
     } else {
@@ -1348,6 +1352,19 @@ export class ErtTableComponent implements OnInit {
     } else {
       this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.forEach(a => a.isSelected = false);
     }
+  }
+
+  checkForColumnSelectValidation(): boolean {
+    let isValid = true;
+    const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
+    if (temp.filter(a => a.isSelected === true).length === 0) {
+      this.errorMessagesForSelection = 'Please select at least one column to proceed.';
+      document.getElementById('warning-popup-btn').click();
+      isValid = false;
+    } else {
+      isValid = true;
+    }
+    return isValid;
   }
 }
 

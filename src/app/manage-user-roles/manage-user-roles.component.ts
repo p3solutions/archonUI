@@ -10,6 +10,7 @@ import { InviteUserDataSource } from './invite-user-data-source';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { lockeduser } from '../add-members/add-members.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 
@@ -67,7 +68,8 @@ export class ManageUserRolesComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router,
-    private userInfoService: UserinfoService
+    private userInfoService: UserinfoService,
+    private spinner: NgxSpinnerService
   ) {
     this.userinfoId = this.userInfoService.getUserId();
   }
@@ -181,7 +183,7 @@ export class ManageUserRolesComponent implements OnInit {
 
 
   getAllUsers(invited, revoked, locked) {
-    this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
+    this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds, this.spinner);
     this.dataSource.connect().subscribe(result => {
       result.forEach((value: any) => {
         if (value.status === 'Locked') {
@@ -375,10 +377,9 @@ export class ManageUserRolesComponent implements OnInit {
     this.getAllUsers(this.invited, this.revoked, this.locked);
   }
 
-  getUserByEmailId(emailId) {
+  getUserByEmailId(emailId, status: string) {
     let response;
     this.dataSource.filter = emailId.trim().toLowerCase();
-    // this.getGlobalGroup();
     if (this.invited === true && emailId !== '') {
       this.dataSource.connect().subscribe(result => {
         response = result;
@@ -386,8 +387,8 @@ export class ManageUserRolesComponent implements OnInit {
       this.dataSource._filterData(response);
     } else
       if (emailId !== '') {
-        this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
-        this.dataSource.getUsersByEmailId(emailId);
+        this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds, this.spinner);
+        this.dataSource.getUsersByEmailId(emailId, status);
       } else {
         this.getAllUsers(this.invited, this.revoked, this.locked);
       }

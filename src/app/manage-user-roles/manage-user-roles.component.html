@@ -18,20 +18,22 @@
     <div id="user-invite">
       <div id="search-user">
         <mat-form-field>
-          <input matInput name="screen-filter" [(ngModel)]="screenfilter"  (keyup)="getUserByEmailId($event.target.value)"  placeholder="Search (Email)">
+          <input matInput name="screen-filter" [(ngModel)]="screenfilter"
+            (keyup)="getUserByEmailId($event.target.value,selectedFilterOption)" placeholder="Search (Email)">
         </mat-form-field>
       </div>
       <div id="search-user">
         <mat-form-field>
-          <mat-select name="filter" [(ngModel)]="selectedFilterOption" (selectionChange)="filter($event.value)" placeholder="Filter">
+          <mat-select name="filter" [(ngModel)]="selectedFilterOption" (selectionChange)="filter($event.value)"
+            placeholder="Filter">
             <mat-option *ngFor="let item of filterOptionAction" [value]="item">
               {{item}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div id="user-invite-btn">
-        <button [hidden]="disableInviteBtn" (click)="openUserInviteDialog()" mat-raised-button color="accent">
+      <div *ngIf="!disableInviteBtn" id="user-invite-btn">
+        <button [disabled]="disableInviteBtn" (click)="openUserInviteDialog()" mat-raised-button color="accent">
           <i class="material-icons">
             mail_outline
           </i>
@@ -42,7 +44,8 @@
   </div>
   <div id="user-table">
     <div class="example-table-container">
-      <table mat-table [dataSource]="dataSource" #matSort1="matSort"  matSort (matSortChange)="sortData($event)" matSortDirection="desc">
+      <table mat-table [dataSource]="dataSource" #matSort1="matSort" matSort (matSortChange)="sortData($event)"
+        matSortDirection="desc">
         <ng-container matColumnDef="id">
           <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
           <td style="width:8%" mat-cell *matCellDef="let element; let i = index;">{{element.id}}</td>
@@ -63,8 +66,7 @@
         <ng-container matColumnDef="globalGroup">
           <th style="width:11%" mat-header-cell *matHeaderCellDef> Global Group </th>
           <td style="width:11%" mat-cell *matCellDef="let element" class="global-select">
-            <select [ngModel]="element.globalGroupId"
-              (change)="changeGlobalGroup(element.id,$event.target.value)">
+            <select [ngModel]="element.globalGroupId" (change)="changeGlobalGroup(element.id,$event.target.value)">
               <option *ngFor="let item of globalGroupList" [value]="item.id">
                 {{item.groupName}}
               </option>
@@ -87,7 +89,8 @@
         <ng-container matColumnDef="action">
           <th style="width:10%" mat-header-cell *matHeaderCellDef> Action </th>
           <td class="action-select" style="width:10%" mat-cell *matCellDef="let element">
-            <button class="btn-transform" (click)="cancelInvite(element.id)" *ngIf="element.status==='Invited'">Cancel Invite</button>
+            <button class="btn-transform" (click)="cancelInvite(element.id)" *ngIf="element.status==='Invited'">Cancel
+              Invite</button>
             <select *ngIf="element.status==='Locked'" [(ngModel)]="element.action"
               (change)="changeUserStatus(element.id,$event)" [disabled]="disableInviteBtn">
               <option *ngFor="let item of lockedUserAction" [value]="item">
@@ -100,7 +103,8 @@
                 {{item}}
               </option>
             </select>
-            <button class="btn-transform" (click)="revokeAccess(element.id)" *ngIf="element.status==='Active'" [disabled]="disableInviteBtn">Revoke
+            <button class="btn-transform" (click)="revokeAccess(element.id)" *ngIf="element.status==='Active'"
+              [disabled]="disableInviteBtn">Revoke
               Access</button>
           </td>
         </ng-container>
@@ -109,7 +113,7 @@
           <td style="width:13%" mat-cell *matCellDef="let element"> {{element.businessJustification}} </td>
         </ng-container>
         <ng-container matColumnDef="createdBy">
-          <th style="width:7%" mat-header-cell *matHeaderCellDef mat-sort-header > Created By </th>
+          <th style="width:7%" mat-header-cell *matHeaderCellDef mat-sort-header> Created By </th>
           <td style="width:7%" mat-cell *matCellDef="let element"> {{element.invitedByUser}} </td>
         </ng-container>
         <ng-container matColumnDef="createdAt">
@@ -127,7 +131,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator #matPagintor1 id="user-table-svg" [length]="totalUser" [pageSize]="50" showFirstLastButtons>
+    <mat-paginator #matPagintor1 id="user-table-svg" [length]="totalUser" [pageSize]="50">
     </mat-paginator>
   </div>
 </div>
@@ -143,7 +147,8 @@
         <p>{{successMsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
       </div>
@@ -163,15 +168,17 @@
         <p>{{confirmMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">No</button>
-        <button type="button" (click)="confirmChangeUserStatus()" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
-          data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+          data-dismiss="modal">No</button>
+        <button type="button" (click)="confirmChangeUserStatus()"
+          class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
 </div>
-<button style="display:none" type="button" id="confirmChangeGlobalRole" class="btn btn-info btn-lg" data-keyboard="false"
-  data-backdrop="static" data-toggle="modal" data-target="#confirmChangeGlobalRoleSuccess">Open Modal</button>
+<button style="display:none" type="button" id="confirmChangeGlobalRole" class="btn btn-info btn-lg"
+  data-keyboard="false" data-backdrop="static" data-toggle="modal" data-target="#confirmChangeGlobalRoleSuccess">Open
+  Modal</button>
 <div id="confirmChangeGlobalRoleSuccess" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -182,9 +189,10 @@
         <p>Are you sure to change the Group?</p>
       </div>
       <div class="modal-footer">
-        <button type="button"  (click)="noGroupChange()" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">No</button>
-        <button type="button" (click)="confirmChangeGlobalGroupStatus()" class="btn btn-padding btn-transform btn-primary adhoc-modal-btn"
-          data-dismiss="modal">Yes</button>
+        <button type="button" (click)="noGroupChange()"
+          class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">No</button>
+        <button type="button" (click)="confirmChangeGlobalGroupStatus()"
+          class="btn btn-padding btn-transform btn-primary adhoc-modal-btn" data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
@@ -202,9 +210,10 @@
         <p>{{confirmMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">No</button>
-        <button type="button" (click)="confirmCancelInviteAndDeleteUser()" class="btn btn-padding btn-transform btn-primary adhoc-modal-btn"
-          data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
+          data-dismiss="modal">No</button>
+        <button type="button" (click)="confirmCancelInviteAndDeleteUser()"
+          class="btn btn-padding btn-transform btn-primary adhoc-modal-btn" data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
