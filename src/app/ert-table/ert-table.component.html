@@ -79,7 +79,7 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th><input class="select-all-checkbox" type="checkbox" checked="true"
+                      <th><input class="select-all-checkbox" type="checkbox" [checked]="isAllColumnSelected"
                           (change)="selectAllColumns($event)">Column</th>
                       <th> Include</th>
                       <th>Column(As required in Output)
