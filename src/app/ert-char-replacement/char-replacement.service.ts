@@ -25,9 +25,7 @@ export class CharReplacementService {
     return this.http.post<any>(this.saveCharRecordUrl + workspaceId + '&codePoint=' + charReplaceInfo.codePoint +
       '&replacementChar=' + charReplaceInfo.replacementChar, null,
       { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractData),
-        catchError(this.handleError('saveCharRecord', []))
-      );
+      pipe(map(this.extractData));
   }
 
   getAllCharRecord(workspaceId): Observable<Charreplacement[]> {
@@ -41,16 +39,12 @@ export class CharReplacementService {
   editCharRecord(id: string, charReplaceInfo: Charreplacement): Observable<any> {
     return this.http.put<any>(this.editCharRecordUrl + id + '&replacementChar=' + charReplaceInfo.replacementChar, null,
       { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractData),
-        catchError(this.handleError('updateCharRecord', []))
-      );
+      pipe(map(this.extractData));
   }
 
   deleteCharRecord(id: any): Observable<any> {
     return this.http.delete<any>(this.deleteCharRecordUrl + id, { headers: this.userInfoService.getHeaders() }).
-      pipe(map(this.extractData),
-        catchError(this.handleError('deleteCharRecord', []))
-      );
+      pipe(map(this.extractData));
   }
 
   private extractData(res: any) {

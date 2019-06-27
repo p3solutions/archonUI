@@ -5,6 +5,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { Router } from '@angular/router';
 import { CharReplacementService } from './char-replacement.service';
 import { NgForm } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-ert-char-replacement',
@@ -22,6 +23,7 @@ export class ErtCharReplacementComponent implements OnInit {
   successMsg = '';
   editCharId = '';
   isDisabled: boolean;
+  deletedId = '';
   constructor(private charReplacementService: CharReplacementService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
 
@@ -57,10 +59,16 @@ export class ErtCharReplacementComponent implements OnInit {
     this.charReplacementService.saveCharRecord(this.workspaceId, this.charReplaceInfo).subscribe(result => {
       if (result.httpStatus === 200) {
         this.successMsg = 'Successfully added the record';
+        document.getElementById('success-popup-btn').click();
       } else {
         this.successMsg = 'Already an entry exists for given code point';
+        document.getElementById('error-popup-btn').click();
       }
-      document.getElementById('openSuccessModelBtn').click();
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        document.getElementById('error-popup-btn').click();
+        this.successMsg = err.error.message;
+      }
     });
   }
 
@@ -68,10 +76,16 @@ export class ErtCharReplacementComponent implements OnInit {
     this.charReplacementService.editCharRecord(this.charReplaceInfo.id, this.charReplaceInfo).subscribe(result => {
       if (result.httpStatus === 200) {
         this.successMsg = 'Successfully updated the record';
+        document.getElementById('success-popup-btn').click();
       } else {
         this.successMsg = 'Already an entry exists for given code point';
+        document.getElementById('error-popup-btn').click();
       }
-      document.getElementById('openSuccessModelBtn').click();
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        document.getElementById('error-popup-btn').click();
+        this.successMsg = err.error.message;
+      }
     });
   }
 
@@ -82,18 +96,27 @@ export class ErtCharReplacementComponent implements OnInit {
     this.charReplaceInfo = Object.assign({}, temp);
   }
 
-  refreshCharRecord(form:NgForm) {
+  refreshCharRecord(form: NgForm) {
     this.isDisabled = false;
     form.form.reset();
   }
 
-  deleteCharRecord(id: string) {
-    this.charReplacementService.deleteCharRecord(id).subscribe(result => {
+  deleteCharRecord() {
+    this.charReplacementService.deleteCharRecord(this.deletedId).subscribe(result => {
       this.successMsg = result.data;
-      document.getElementById('openSuccessModelBtn').click();
       this.dataSource.data = [];
       this.getAllCharRecords();
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        document.getElementById('error-popup-btn').click();
+        this.successMsg = err.error.message;
+      }
     });
+  }
+
+  confirmDeletePopup(id: string) {
+    document.getElementById('delete-popup-btn').click();
+    this.deletedId = id;
   }
 
   checkForNumber() {
@@ -105,7 +128,7 @@ export class ErtCharReplacementComponent implements OnInit {
   createReplacementChar() {
     if (String.fromCharCode(this.charReplaceInfo.codePoint).trim() === '') {
       this.successMsg = 'Invalid Code Point';
-      document.getElementById('openSuccessModelBtn').click();
+      document.getElementById('error-popup-btn').click();
       this.charReplaceInfo = new Charreplacement();
     } else {
       this.charReplaceInfo.replacementChar = this.createHexCode();

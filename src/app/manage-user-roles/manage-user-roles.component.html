@@ -138,17 +138,19 @@
 <button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
   data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
 <div id="success" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert</h4>
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>{{successMsg}}</p>
+        <p class="popup-paragraph-cls">{{successMsg}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
-          data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
       </div>
@@ -159,19 +161,21 @@
 <button style="display:none" type="button" id="confirmDialog" class="btn btn-info btn-lg" data-keyboard="false"
   data-backdrop="static" data-toggle="modal" data-target="#confirmDialogSuccess">Open Modal</button>
 <div id="confirmDialogSuccess" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Confirmation Alert</h4>
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Confirm</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>{{confirmMessage}}</p>
+        <p class="popup-paragraph-cls">{{confirmMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
-          data-dismiss="modal">No</button>
-        <button type="button" (click)="confirmChangeUserStatus()"
-          class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" (click)="confirmChangeUserStatus()" class="btn btn-padding btn-error-popup-primary-color"
+          data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
@@ -180,19 +184,22 @@
   data-keyboard="false" data-backdrop="static" data-toggle="modal" data-target="#confirmChangeGlobalRoleSuccess">Open
   Modal</button>
 <div id="confirmChangeGlobalRoleSuccess" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Confirmation Alert</h4>
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Confirm</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>Are you sure to change the Group?</p>
+        <p class="popup-paragraph-cls">Are you sure to change the Group?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="noGroupChange()"
-          class="btn btn-primary btn-padding btn-transform adhoc-modal-btn" data-dismiss="modal">No</button>
+        <button type="button" (click)="noGroupChange()" class="btn btn-padding btn-secondary-popup"
+          data-dismiss="modal">No</button>
         <button type="button" (click)="confirmChangeGlobalGroupStatus()"
-          class="btn btn-padding btn-transform btn-primary adhoc-modal-btn" data-dismiss="modal">Yes</button>
+          class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>
@@ -201,19 +208,42 @@
 <button style="display:none" type="button" id="confirmCancelInvite" class="btn btn-info btn-lg" data-keyboard="false"
   data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
 <div id="confirmCancelInviteSuccess" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Confirmation Alert</h4>
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Confirm</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>{{confirmMessage}}</p>
+        <p class="popup-paragraph-cls">{{confirmMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-padding btn-transform adhoc-modal-btn"
-          data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
         <button type="button" (click)="confirmCancelInviteAndDeleteUser()"
-          class="btn btn-padding btn-transform btn-primary adhoc-modal-btn" data-dismiss="modal">Yes</button>
+          class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="error-popup" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#error_popup_modal">Open Modal</button>
+<div id="error_popup_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Error</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{successMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
