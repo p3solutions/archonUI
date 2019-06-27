@@ -7,6 +7,11 @@ import { DbExtractorService } from './db-extractor.service';
 import { UserinfoService } from '../userinfo.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { MatFormFieldModule, MatSelectModule, MatInputModule} from '@angular/material';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 describe('DbExtractorComponent', () => {
   let component: DbExtractorComponent;
   let fixture: ComponentFixture<DbExtractorComponent>;
@@ -14,8 +19,9 @@ describe('DbExtractorComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorComponent],
-      imports: [HttpClientModule, RouterTestingModule],
-      providers: [DbExtractorService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatSelectModule, MatButtonToggleModule, MatInputModule, BrowserAnimationsModule],
+      providers: [DbExtractorService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
