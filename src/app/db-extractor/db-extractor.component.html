@@ -103,16 +103,18 @@
                   <input matInput name="tableIncRule" [disabled]="isDisabled" [(ngModel)]="processDetailsObj.tableIncRule" id="tableIncRule" placeholder="Table Inclusion Rule">
                 </mat-form-field>
           </div>
-          <!-- <div class="col-md-6">
+          <div *ngIf="sipData">          
+          <div class="col-md-6">
               <mat-form-field>
-                  <input matInput placeholder="Enter SIP Application Name" value="" required>
+                  <input matInput name="sipApplicationName" [(ngModel)]="processDetailsObj.sipApplicationName" id="sipApplicationName"  placeholder="Enter SIP Application Name" required>
                 </mat-form-field>
           </div>
           <div class="col-md-6">
               <mat-form-field>
-                  <input matInput placeholder="Enter Holding Prefix" value="" required>
+                  <input matInput name="holdingPrefix" [(ngModel)]="processDetailsObj.holdingPrefix" id="holdingPrefix"  placeholder="Enter Holding Prefix" required>
                 </mat-form-field>
-          </div> -->
+          </div>
+          </div>
          
 
           <!--view start only query mode-->

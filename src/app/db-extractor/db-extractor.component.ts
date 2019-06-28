@@ -16,6 +16,7 @@ export class DbExtractorComponent implements OnInit {
   progressBarObj: ProgressBarObj;
   zone: any;
   ExtractData = true;
+  sipData = false;
   text: any;
   workspaceName = '';
   configuredDB = new ConfiguredDB();
@@ -95,6 +96,11 @@ export class DbExtractorComponent implements OnInit {
     } else {
       this.ExtractData = false;
     }
+    if (outputFormat === 'sip') {
+      this.sipData = true;
+    } else {
+      this.sipData = false;
+    }
     this.processDetailsObj.outputFormat = outputFormat;
   }
 
@@ -151,9 +157,14 @@ export class DbExtractorComponent implements OnInit {
         'splitDateInXmlForxDBCompatiblity': this.processDetailsObj.xmlXDBCompability,
         'extractLOBwithinXml': this.processDetailsObj.extractLOBWithXML
       },
+      'sipConfig': {
+        'sipApplicationName': this.processDetailsObj.sipApplicationName,
+       'sipHoldingPrefix': this.processDetailsObj.holdingPrefix
+     },
       'scheduledConfig': $event
     };
     delete param.scheduledConfig['ins'];
+    console.log(param, 'param details');
    // param = this.modifiedParamAccToProcess(param);
     this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload, this.instanceId).subscribe((result) => {
       el.click();
