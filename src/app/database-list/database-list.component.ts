@@ -169,6 +169,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.configDBListService.postDecision(body).subscribe(result => {
       if (result) {
         this.getAllPending();
+        this.reason = '';
       }
     });
   }
