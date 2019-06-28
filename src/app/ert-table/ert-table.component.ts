@@ -381,28 +381,34 @@ export class ErtTableComponent implements OnInit {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.getERTTableForTableMode(); // During Edit Mode.
     } else {
-      let tableNameList: string[]; // New data- record Job.
-      tableNameList = this.ertService.selectedValues;
-      this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-      for (let item = 0; item < tableNameList.length; item++) {
-        const temp = this.ertService.joinListMap.get(tableNameList[item]);
-        const tempObj: TableDetailsListObj = new TableDetailsListObj();
-        tempObj.tableId = temp[0].primaryTableId;
-        tempObj.tableName = temp[0].primaryTableName;
-        tempObj.modifiedTableName = temp[0].primaryTableName;
-        tempObj.isSelected = true;
-        const relatedTable = this.ertService.joinListMap.get(tableNameList[item + 1]);
-        if (relatedTable !== undefined) {
-          tempObj.relatedTableDetails.push({ tableId: relatedTable[0].primaryTableId, tableName: relatedTable[0].primaryTableName });
+      try {
+        let tableNameList: string[]; // New data- record Job.
+        tableNameList = this.ertService.selectedValues;
+        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
+        for (let item = 0; item < tableNameList.length; item++) {
+          const temp = this.ertService.joinListMap.get(tableNameList[item]);
+          const tempObj: TableDetailsListObj = new TableDetailsListObj();
+          tempObj.tableId = temp[0].primaryTableId;
+          tempObj.tableName = temp[0].primaryTableName;
+          tempObj.modifiedTableName = temp[0].primaryTableName;
+          tempObj.isSelected = true;
+          const relatedTable = this.ertService.joinListMap.get(tableNameList[item + 1]);
+          if (relatedTable !== undefined) {
+            tempObj.relatedTableDetails.push({ tableId: relatedTable[0].primaryTableId, tableName: relatedTable[0].primaryTableName });
+          }
+          this.selectedTableList.push(tempObj);
         }
-        this.selectedTableList.push(tempObj);
+        const tableIds = this.selectedTableList.map(function (item) { return item['tableId']; });
+        this.spinner.show();
+        this.getEditedERTcolumnlist(tableIds);
+        this.selectedTableId = this.selectedTableList[0].tableId;
+        const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+        this.modifiedTableName = tempTableObj.modifiedTableName;
+        this.tableName = tempTableObj.tableName;
+        this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
+      } catch {
+        this.spinner.hide();
       }
-      const tableIds = this.selectedTableList.map(function (item) { return item['tableId']; });
-      this.spinner.show();
-      this.getEditedERTcolumnlist(tableIds);
-      this.selectedTableId = this.selectedTableList[0].tableId;
-      this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-      this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     }
   }
 
@@ -410,34 +416,38 @@ export class ErtTableComponent implements OnInit {
     if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.getERTTableForTableMode(); // During Edit Mode.
     } else {
-      let tableNameList: string[]; // New SIP Job.
-      tableNameList = this.ertService.selectedValues;
-      this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
-      for (let item = 0; item < tableNameList.length; item++) {
-        const temp = this.ertService.joinListMap.get(tableNameList[item]);
-        const tempObj: TableDetailsListObj = new TableDetailsListObj();
-        tempObj.tableId = temp[0].primaryTableId;
-        tempObj.tableName = temp[0].primaryTableName;
-        tempObj.modifiedTableName = temp[0].primaryTableName;
-        tempObj.isSelected = true;
-        const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
-        if (relatedTable !== undefined) {
-          for (const rel of relatedTable) {
-            if (rel !== undefined) {
-              tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
+      try {
+        let tableNameList: string[]; // New SIP Job.
+        tableNameList = this.ertService.selectedValues;
+        this.schemaResultsTableCount = this.ertService.schemaResultsTableCount;
+        for (let item = 0; item < tableNameList.length; item++) {
+          const temp = this.ertService.joinListMap.get(tableNameList[item]);
+          const tempObj: TableDetailsListObj = new TableDetailsListObj();
+          tempObj.tableId = temp[0].primaryTableId;
+          tempObj.tableName = temp[0].primaryTableName;
+          tempObj.modifiedTableName = temp[0].primaryTableName;
+          tempObj.isSelected = true;
+          const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
+          if (relatedTable !== undefined) {
+            for (const rel of relatedTable) {
+              if (rel !== undefined) {
+                tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
+              }
             }
           }
+          this.selectedTableList.push(tempObj);
         }
-        this.selectedTableList.push(tempObj);
+        const tableIds = this.selectedTableList.map(function (item) { return item['tableId']; });
+        this.spinner.show();
+        this.getEditedERTcolumnlist(tableIds);
+        this.selectedTableId = this.selectedTableList[0].tableId;
+        const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+        this.modifiedTableName = tempTableObj.modifiedTableName;
+        this.tableName = tempTableObj.tableName;
+        this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
+      } catch {
+        this.spinner.hide();
       }
-      const tableIds = this.selectedTableList.map(function (item) { return item['tableId']; });
-      this.spinner.show();
-      this.getEditedERTcolumnlist(tableIds);
-      this.selectedTableId = this.selectedTableList[0].tableId;
-      const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-      this.modifiedTableName = tempTableObj.modifiedTableName;
-      this.tableName = tempTableObj.tableName;
-      this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
     }
   }
 
