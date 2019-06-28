@@ -20,7 +20,7 @@ ul {
 
 td {
   font-size: 12px;
-  
+
 }
 
 th {
@@ -28,14 +28,13 @@ th {
 }
 
 #mmr-version {
-  
+
   font-weight: 500;
   font-size: 12px;
   letter-spacing: 0.2;
 }
 
 #mmr-version .form-inline {
-  padding: 11px 7px 10px 9px;
   margin: 6px 8px 13px 8px;
   text-align: left;
 }
@@ -48,27 +47,14 @@ th {
 textarea {
   width: 531px;
 }
+
 .manage-members {
   padding: 30px;
   height: 400px;
   overflow-y: auto;
 }
-.modal-header {
-  padding: 4px;
-  padding-left: 15px;
-  background-color: #2879ff;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
- }
- .modal-title {
-  float: left;
-  display:inline-block;
-  font-size: 18px;
-  padding: -1px 15px 10px 15px;
-  text-align: left;
-  color: #ffffff;
-}
-.cancelBtn{
+
+.cancelBtn {
   color: #fff;
   background-color: #64b5f6;
   border-color: #64b5f6;
@@ -76,6 +62,7 @@ textarea {
   padding-left: 25px;
   text-transform: capitalize;
 }
+
 .next {
   color: #fff;
   background-color: #2879ff;
@@ -84,6 +71,7 @@ textarea {
   padding-left: 25px;
   text-transform: capitalize;
 }
+
 .form-control {
   font-size: 12px;
   border-radius: 2px;
@@ -92,8 +80,9 @@ textarea {
 .required-field b {
   font-weight: bold;
 }
+
 .required-field b:after {
   color: #e32;
   content: ' *';
-  display:inline;
+  display: inline;
 }

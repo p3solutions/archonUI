@@ -68,8 +68,8 @@ export class ManageMasterMetadataComponent implements OnInit {
       document.getElementById('successPopUp').click();
       this.getMMRVersionList();
     }, (err: HttpErrorResponse) => {
-        document.getElementById('successPopUp').click();
-        this.successMessage = err.error.message;
+      document.getElementById('error-popup-btn').click();
+      this.successMessage = err.error.message;
     });
   }
 
@@ -91,5 +91,6 @@ export class ManageMasterMetadataComponent implements OnInit {
   openMMRVersionModel() {
     this.versionNo = '';
     this.desc = '';
+    this.enableSaveBtn();
   }
 }

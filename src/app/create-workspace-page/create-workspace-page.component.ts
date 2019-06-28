@@ -168,6 +168,7 @@ export class CreateWorkspacePageComponent implements OnInit {
       if (res) {
         document.getElementById('success-popup-btn').click();
         if (res.workspaceState === 'PENDING') {
+          this.workspaceInProgress = false;
           this.successWorkspaceMessage = 'Workpace is pending for the approval.';
         } else {
           this.successWorkspaceMessage = 'Workspace Created Successfully.';
@@ -175,10 +176,12 @@ export class CreateWorkspacePageComponent implements OnInit {
       } else {
         document.getElementById('error-db-btn').click();
         this.errorMessage = 'This Workspace Name already is in use.';
+        this.workspaceInProgress = false;
       }
     }, (err: HttpErrorResponse) => {
       if (err.error) {
         this.spinner.hide();
+        this.workspaceInProgress = false;
         this.errorMessage = err.error.message;
         document.getElementById('error-db-btn').click();
       }

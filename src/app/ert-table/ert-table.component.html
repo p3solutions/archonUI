@@ -79,7 +79,7 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th><input class="select-all-checkbox" type="checkbox" checked="true"
+                      <th><input class="select-all-checkbox" type="checkbox" [checked]="isAllColumnSelected"
                           (change)="selectAllColumns($event)">Column</th>
                       <th> Include</th>
                       <th>Column(As required in Output)
@@ -536,7 +536,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <p class="popup-paragraph-cls">Filter can only be applied on primary table.</p>
+        <p class="popup-paragraph-cls">{{errorMessagesForSelection}}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
