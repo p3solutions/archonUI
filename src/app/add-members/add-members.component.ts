@@ -159,8 +159,8 @@ export class AddMembersComponent implements OnInit, OnChanges {
           }
           this.spinner.hide();
       }, (err: HttpErrorResponse) => {
+        this.spinner.hide();
         this.errorMsg = err.error.message;
-        document.getElementById('addmembermsg').click();
         });
       });
     } catch {

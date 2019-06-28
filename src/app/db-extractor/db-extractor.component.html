@@ -73,10 +73,13 @@
           <div class="col-md-6">
             <mat-form-field>
               <mat-label>Process</mat-label>
-              <mat-select required (selectionChange)="processChange($event.value)">
-                  <mat-option value="Data">Extract Data</mat-option>
+              <mat-select #processSelector="ngModel" name="process" [(ngModel)]="processDetailsObj.process"
+               required (selectionChange)="getOutputFormatListBySecProcess(processSelector.value)">
+                  <mat-option [value]="null">Select Process To Excecute</mat-option>
+                  <mat-option *ngFor="let item of processList" [value]="item">{{item}}</mat-option>
+                  <!-- <mat-option value="Data">Extract Data</mat-option>
                   <mat-option value="Query">Execute Query</mat-option>
-                  <mat-option value="Count">Get Record Count</mat-option>
+                  <mat-option value="Count">Get Record Count</mat-option> -->
               </mat-select>
             </mat-form-field>
           </div>
@@ -88,19 +91,19 @@
           <div class="col-md-6">
               <mat-form-field>
                   <mat-label>Output format</mat-label>
-                  <mat-select required>
-                      <mat-option value="option1">xml</mat-option>
-                      <mat-option value="option2">csv</mat-option>
-                      <mat-option value="option3">txt</mat-option>
+                  <mat-select required #outputFormatSelector="ngModel" name="outputFormatName" [(ngModel)]="processDetailsObj.outputFormat"
+                  (selectionChange)="setOutputFormat(outputFormatSelector.value)">
+                      <mat-option [value]="null">Select output format</mat-option>
+                      <mat-option *ngFor="let item of outputFormatList" [value]="item">{{item}}</mat-option>                     
                   </mat-select>
                 </mat-form-field>
           </div>
           <div class="col-md-6">
               <mat-form-field>
-                  <input matInput placeholder="Table Inclusion Rule" value="">
+                  <input matInput name="tableIncRule" [disabled]="isDisabled" [(ngModel)]="processDetailsObj.tableIncRule" id="tableIncRule" placeholder="Table Inclusion Rule">
                 </mat-form-field>
           </div>
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
               <mat-form-field>
                   <input matInput placeholder="Enter SIP Application Name" value="" required>
                 </mat-form-field>
@@ -109,11 +112,11 @@
               <mat-form-field>
                   <input matInput placeholder="Enter Holding Prefix" value="" required>
                 </mat-form-field>
-          </div>
+          </div> -->
          
 
           <!--view start only query mode-->
-          <div *ngIf="ExtractData">
+          <div *ngIf="isDisabled">
           <div class="col-md-12">
               <mat-form-field>
                   <input matInput placeholder="Query Name" value="" required>
@@ -150,38 +153,52 @@
         <div class="col-md-6">
             <mat-form-field>
                 <mat-label>XML File Split Size(MB)</mat-label>
-                <mat-select>
-                    <mat-option value="option1">xml</mat-option>
-                    <mat-option value="option2">csv</mat-option>
-                    <mat-option value="option3">txt</mat-option>
+                <mat-select [ngModel]="processDetailsObj?.xmlSplitFileSize" (selectionChange)="setXMLFileSplitSize($event.value)">
+                    <mat-option [value]="100">100</mat-option> 
+                    <mat-option [value]="200">200</mat-option> 
+                    <mat-option [value]="300">300</mat-option> 
+                    <mat-option [value]="400">400</mat-option> 
+                    <mat-option [value]="500">500</mat-option>
+                    <mat-option [value]="600">600</mat-option> 
+                    <mat-option [value]="700">700</mat-option> 
+                    <mat-option [value]="800">800</mat-option> 
+                    <mat-option [value]="900">900</mat-option>  
+                    <mat-option [value]="1000">1000</mat-option>
                 </mat-select>
               </mat-form-field>
         </div>
         <div class="col-md-6">
             <mat-form-field>
                 <mat-label>Maximum Parallel Process</mat-label>
-                <mat-select>
-                    <mat-option value="option1">xml</mat-option>
-                    <mat-option value="option2">csv</mat-option>
-                    <mat-option value="option3">txt</mat-option>
+                <mat-select [ngModel]="processDetailsObj?.maxParallelProcess" (selectionChange)="setMaxParallelProcess($event.value)">
+                    <mat-option [value]="1">1</mat-option> 
+                    <mat-option [value]="2">2</mat-option> 
+                    <mat-option [value]="3">3</mat-option> 
+                    <mat-option [value]="4">4</mat-option> 
+                    <mat-option [value]="5">5</mat-option>
+                    <mat-option [value]="6">6</mat-option> 
+                    <mat-option [value]="7">7</mat-option> 
+                    <mat-option [value]="8">8</mat-option> 
+                    <mat-option [value]="9">9</mat-option> 
+                    <mat-option [value]="10">10</mat-option> 
                 </mat-select>
               </mat-form-field>
         </div>
         </div>
         <div class="col-md-12">
-        <div class="col-md-6"><mat-checkbox>Include Table</mat-checkbox></div>
-        <div class="col-md-6"><mat-checkbox>Include Views</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox (ngModelChange)="processDetailsObj.incTable=$event" [ngModel]="processDetailsObj?.incTable">Include Table</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox (ngModelChange)="processDetailsObj.incView=$event" [ngModel]="processDetailsObj?.incView">Include Views</mat-checkbox></div>
       </div>
       <div class="col-md-12">
-        <div class="col-md-6"><mat-checkbox>Date in XML for XML compability</mat-checkbox></div>
-        <div class="col-md-6"><mat-checkbox>Extract LOB Within XML</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox (ngModelChange)="processDetailsObj.xmlXDBCompability=$event" [ngModel]="processDetailsObj?.xmlXDBCompability">Date in XML for XML compability</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox (ngModelChange)="processDetailsObj.extractLOBWithXML=$event" [ngModel]="processDetailsObj?.extractLOBWithXML">Extract LOB Within XML</mat-checkbox></div>
       </div>
     </div>            
 </div>
 <div class="col-md-12"> 
     <div class="action-btn">
     <button class="btn cancel btn-padding" (click)="gotoDashboard();">Cancel</button>
-    <button class="btn save btn-padding">Schedule</button>                
+    <button class="btn {{ExtractData? 'save-disabled': 'save'}} btn-padding" [disabled]="ExtractData" (click)="gotoLastStep()" data-toggle="modal" href="#openScheduleJob">Schedule</button>                
   </div>
 </div>
 </div>
@@ -242,8 +259,28 @@
         </tbody>
       </table>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+</div>
+
+<app-schedule-job class="modal fade" id="openScheduleJob" role="dialog" (ObjectEmit)="Start($event)"></app-schedule-job>
+<button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
+<div id="successModel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 480px;">
+            <div class="info-popup-header-cls">
+                <h4 class="popup-title-cls">
+                  <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Message</div></h4>
+              </div>
+            <div class="modal-body">
+             <p class="popup-paragraph-cls"> {{successMsg}}</p>
+             <p *ngIf="isSuccessMsg" class="popup-paragraph-cls">Check on Job Status page</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal" (click)="close()">Close</button>
+              </div>
+            </div>
+    </div>
 </div>
