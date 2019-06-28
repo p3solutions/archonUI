@@ -8,24 +8,27 @@
       <div style="display:flex">
         <form class="example-form" #charreplaceform="ngForm">
           <mat-form-field class="example-full-width">
-            <input matInput #codepointSel="ngModel" (change)="createReplacementChar()" (keyup)="checkForNumber()" required [(ngModel)]="charReplaceInfo.codePoint"
-              name="code-point" placeholder="Code Point (Only number)" [disabled]="isDisabled">
+            <input matInput #codepointSel="ngModel" (change)="createReplacementChar()" (keyup)="checkForNumber()"
+              required [(ngModel)]="charReplaceInfo.codePoint" name="code-point" placeholder="Code Point (Only number)"
+              [disabled]="isDisabled">
           </mat-form-field>
           <mat-form-field class="example-full-width">
-            <input matInput #replacementcharSel="ngModel" required [(ngModel)]="charReplaceInfo.replacementChar" name="replacement-char"
-              placeholder="Replacement Char">
+            <input matInput #replacementcharSel="ngModel" required [(ngModel)]="charReplaceInfo.replacementChar"
+              name="replacement-char" placeholder="Replacement Char">
           </mat-form-field>
         </form>
         <div class="add-char-code">
-          <a [class.disabled]="!charreplaceform.form.valid" matTooltip="Add Char Record" (click)="charreplaceform.form.valid && saveCharReplacement(charreplaceform)">
-          <i class="material-icons">
-add_circle
-</i>
+          <a [class.disabled]="!charreplaceform.form.valid" matTooltip="Add Char Record"
+            (click)="charreplaceform.form.valid && saveCharReplacement(charreplaceform)">
+            <i class="material-icons">
+              add_circle
+            </i>
           </a>
-          <a [class.disabled]="!charreplaceform.form.valid" matTooltip="Refresh Current Record" (click)="charreplaceform.form.valid && refreshCharRecord(charreplaceform)">
-              <i class="material-icons">
-                  loop
-                  </i>
+          <a [class.disabled]="!charreplaceform.form.valid" matTooltip="Refresh Current Record"
+            (click)="charreplaceform.form.valid && refreshCharRecord(charreplaceform)">
+            <i class="material-icons">
+              loop
+            </i>
           </a>
         </div>
       </div>
@@ -53,16 +56,18 @@ add_circle
           </ng-container>
           <ng-container matColumnDef="Edit">
             <th style="width:10%" mat-header-cell *matHeaderCellDef> Edit </th>
-            <td style="width:10%" class="cursor-pointer" matTooltip="Edit" mat-cell (click)="editCharRecord(element.id)" *matCellDef="let element"><i class="material-icons">
+            <td style="width:10%" class="cursor-pointer" matTooltip="Edit" mat-cell (click)="editCharRecord(element.id)"
+              *matCellDef="let element"><i class="material-icons">
                 edit
-                </i>
+              </i>
             </td>
           </ng-container>
           <ng-container matColumnDef="Delete">
             <th style="width:10%" mat-header-cell *matHeaderCellDef> Delete </th>
-            <td style="width:10%" class="cursor-pointer" matTooltip="Delete" mat-cell (click)="deleteCharRecord(element.id)" *matCellDef="let element"><i class="material-icons">
+            <td style="width:10%" class="cursor-pointer" matTooltip="Delete" mat-cell
+              (click)="confirmDeletePopup(element.id)" *matCellDef="let element"><i class="material-icons">
                 delete
-                </i>
+              </i>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -70,22 +75,75 @@ add_circle
         </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
       </div>
-      <button type="button" id="openSuccessModelBtn" style="display: none" class="btn btn-info btn-lg" data-toggle="modal"
-        data-target="#char-added-success">Open Modal</button>
-      <div id="char-added-success" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <div class="modal-title">Message</div>
-            </div>
-            <div class="modal-body">
-              <p>{{successMsg}}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary next" data-dismiss="modal">Ok</button>
-            </div>
-          </div>
+    </div>
+  </div>
+
+  <button style="display:none" type="button" id="error-popup-btn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#failed">Open
+    Modal</button>
+  <div id="failed" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 480px;">
+      <div class="modal-content">
+        <div class="modal-header  error-popup-header-cls">
+          <h4 class="modal-title popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i>
+            <div class="pop-title-ert">Error</div>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p class="popup-paragraph-cls">{{successMsg}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+          <button type="button" style="display:none" class="btn btn-padding btn-error-popup-primary-color"
+            data-dismiss="modal">Ok</button>
         </div>
       </div>
     </div>
   </div>
+
+
+  <button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
+    data-target="#success">Open Modal</button>
+  <div id="success" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 480px;">
+      <div class="modal-content">
+        <div class="modal-header success-popup-header-cls">
+          <h4 class="modal-title popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">check_circle_outline</i>
+            <div class="pop-title-ert">Success</div>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p class="popup-paragraph-cls">{{successMsg}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">Ok</button>
+          <button type="button" style="display:none" class="btn btn-padding btn-success-popup-primary-color"
+            data-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button style="display:none" type="button" id="delete-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#delete">Open Modal</button>
+<div id="delete" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i>
+          <div class="pop-title-ert">Delete</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">Are you sure you want to delete the char replacement?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="deleteCharRecord()"
+          data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
