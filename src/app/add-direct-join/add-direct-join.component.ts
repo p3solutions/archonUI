@@ -104,6 +104,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.spinner.show();
     try {
       this.joinListTemp = [];
+      this.editColumnMode = false;
       for (const i of this.primaryColumns) {
       i.secondaryColumn = '';
       }
@@ -172,6 +173,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       }
     }
   this.enableAdd = this.checkDuplicateInObject(this.joinListTemp);
+  console.log(this.enableAdd, this.joinListTemp);
   if (this.enableAdd === true) {
     this.editColumnMode = false;
     this.joinbtn = true;
@@ -270,6 +272,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.errorMsg = '';
     this.updateNotif = false;
     this.updateSuccess = false;
+    this.editState.clear();
     this.joinListTemp = [];
     this.resultArray = [];
     for (let i = 0; i < this.primaryColumns.length; i++) {

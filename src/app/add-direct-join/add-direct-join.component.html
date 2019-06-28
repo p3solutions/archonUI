@@ -99,7 +99,7 @@ height: 45px;width: 95%">
       <div class="action-btn" style="float: right">
           <button class="btn cancel btn-padding" (click)="closeScreen(); closeErrorMsg(); resetselectedValues()" data-dismiss="modal">Close</button>
           <button class="btn btn-padding save" style="margin-right: 5%" (click)="autocolumnMatchMode();">Automatch Column</button>
-          <button type="button" [disabled]="joinbtn || joinListTemp.length == 0" class="btn  {{joinbtn? 'save-disabled': 'save'}} btn-padding" (click)="addJoins();">Add Joins</button>                
+          <button type="button" [disabled]="joinbtn || joinListTemp.length === 0" class="btn  {{joinbtn? 'save-disabled': 'save'}} btn-padding" (click)="addJoins();">Add Joins</button>                
       </div>        
   </div>
 </div>

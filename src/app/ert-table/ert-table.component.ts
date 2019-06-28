@@ -97,8 +97,8 @@ export class ErtTableComponent implements OnInit {
   disabledAddColumnConfigBtn = false;
   filterOperationList: FilterOperationList[] = [];
   searchAvailableTableName = '';
-
-
+  errorMessagesForSelection = '';
+  isAllColumnSelected = true;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -151,6 +151,7 @@ export class ErtTableComponent implements OnInit {
     const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
     this.modifiedTableName = tempTableObj.modifiedTableName;
     this.tableName = tempTableObj.tableName;
+    this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
   }
 
 
@@ -206,6 +207,7 @@ export class ErtTableComponent implements OnInit {
           const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
           this.modifiedTableName = tempTableObj.modifiedTableName;
           this.tableName = tempTableObj.tableName;
+          this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
         }
         this.getEditedERTcolumnlist(tableIds);
       } catch {
@@ -432,8 +434,10 @@ export class ErtTableComponent implements OnInit {
       this.spinner.show();
       this.getEditedERTcolumnlist(tableIds);
       this.selectedTableId = this.selectedTableList[0].tableId;
-      this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-      this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+      const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+      this.modifiedTableName = tempTableObj.modifiedTableName;
+      this.tableName = tempTableObj.tableName;
+      this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
     }
   }
 
@@ -444,8 +448,10 @@ export class ErtTableComponent implements OnInit {
       try {
         this.ErtTableColumnList = result;
         this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList = this.ErtTableColumnList;
-        this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-        this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+        const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+        this.modifiedTableName = tempObj.tableName;
+        this.tableName = tempObj.tableName;
+        this.isAllColumnSelected = tempObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
         this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList = [];
         this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].filterAndOrderConfig = new FilterAndOrderConfig();
         this.spinner.hide();
@@ -505,19 +511,23 @@ export class ErtTableComponent implements OnInit {
   }
 
   getERTcolumnlist(tableId: string, event) {
-    this.spinner.show();
-    this.selectedTableId = tableId;
-    this.modifiedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-    this.tableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    if (this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList.length === 0) {
-      this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
-        this.ErtTableColumnList = result;
-        this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
+    if (this.checkForColumnSelectValidation()) {
+      this.spinner.show();
+      this.selectedTableId = tableId;
+      const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+      this.modifiedTableName = tempObj.modifiedTableName;
+      this.tableName = tempObj.tableName;
+      this.isAllColumnSelected = tempObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
+      this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+      if (this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList.length === 0) {
+        this.ertService.getERTcolumnlist(this.ertJobId, this.workspaceId, tableId).subscribe((result) => {
+          this.ErtTableColumnList = result;
+          this.selectedTableList.filter(a => a.tableId === tableId)[0].columnList = this.ErtTableColumnList;
+          this.spinner.hide();
+        });
+      } else {
         this.spinner.hide();
-      });
-    } else {
-      this.spinner.hide();
+      }
     }
   }
 
@@ -775,6 +785,7 @@ export class ErtTableComponent implements OnInit {
 
   selectColumns(columnName: string, isSelected: boolean) {
     const columnsList = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
+    this.isAllColumnSelected = columnsList.filter(a => a.isSelected === false).length === 0 ? true : false;
     const index = columnsList.findIndex(a => a.columnName === columnName);
     if (isSelected && index !== -1) {
       const temp = columnsList.filter(a => a.columnName === columnName)[0].isSelected = true;
@@ -856,14 +867,16 @@ export class ErtTableComponent implements OnInit {
   }
 
   gotoExtractDigestExtraction() {
-    if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
-      this.errorMsg = 'Please select a table';
-    } else {
-      this.selectedTableList = this.selectedTableList.filter(a => a.columnList.length !== 0);
-      this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount, this.storeSelectedTables);
-      this.ertService.isSIPGraphChange = false;
-      this.ertService.isDataRecordGraphChange = false;
-      this.navigateToUrl('workspace/ert/ert-extract-ingest');
+    if (this.checkForColumnSelectValidation()) {
+      if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
+        this.errorMsg = 'Please select a table';
+      } else {
+        this.selectedTableList = this.selectedTableList.filter(a => a.columnList.length !== 0);
+        this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount, this.storeSelectedTables);
+        this.ertService.isSIPGraphChange = false;
+        this.ertService.isDataRecordGraphChange = false;
+        this.navigateToUrl('workspace/ert/ert-extract-ingest');
+      }
     }
   }
 
@@ -1020,6 +1033,7 @@ export class ErtTableComponent implements OnInit {
       if (this.selectedTableList[0].tableId === this.selectedTableId) {
         document.getElementById('addFilterModelId').click();
       } else {
+        this.errorMessagesForSelection = 'Filter can only be applied on primary table.';
         document.getElementById('warning-popup-btn').click();
       }
     } else {
@@ -1343,13 +1357,34 @@ export class ErtTableComponent implements OnInit {
   }
 
   selectAllColumns(event) {
+    const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
     if (event.target.checked) {
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.forEach(a => a.isSelected = true);
+      tempObj.forEach(a => a.isSelected = true);
+      this.isAllColumnSelected = tempObj.filter(a => a.isSelected === false).length === 0 ? true : false;
     } else {
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.forEach(a => a.isSelected = false);
+      tempObj.forEach(a => a.isSelected = false);
+      this.isAllColumnSelected = tempObj.filter(a => a.isSelected === false).length === 0 ? true : false;
     }
   }
+
+  checkForColumnSelectValidation(): boolean {
+    let isValid = true;
+    const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
+    const temp = tempObj.columnList;
+    if (tempObj.isSelected) {
+      if (temp.filter(a => a.isSelected === true).length === 0) {
+        this.errorMessagesForSelection = 'Please select at least one column to proceed.';
+        document.getElementById('warning-popup-btn').click();
+        isValid = false;
+      } else {
+        isValid = true;
+      }
+    }
+    return isValid;
+  }
 }
+
+
 
 
 
