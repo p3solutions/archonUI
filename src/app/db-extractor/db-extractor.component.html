@@ -52,8 +52,8 @@
     </div>
     <div class="col-md-12"> 
         <ul class="flex-container flex-end">
-          <li class="flex-item"><strong> Workspace Name:</strong> 34_SQL_CLAIM</li>
-          <li class="flex-item"><strong>Database Profile:</strong> db2  &nbsp; <a><i class="fa fa-info-circle fa-1x"></i></a></li>
+          <li class="flex-item"><strong> Workspace Name:</strong> {{workspaceName | uppercase}}</li>
+          <li class="flex-item"><strong>Database Profile:</strong> {{configuredDB.profileName}}  &nbsp; <a data-toggle="modal" href="#RDBMSDB-detailConfig"><i class="fa fa-info-circle fa-1x"></i></a></li>
         </ul>                 
     </div>
 
@@ -184,4 +184,66 @@
     <button class="btn save btn-padding">Schedule</button>                
   </div>
 </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="RDBMSDB-detailConfig" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="info-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Database Profile</div></h4>
+          </div>
+       <table class="table table-hover">
+        <tbody>
+            <tr>
+                <td class="tdl">Database Profile Name</td>
+                <td class="tdr">{{configuredDB.profileName}}</td>
+              </tr>
+              <tr>
+                <td class="tdl">Database Type</td>
+                <td class="tdr">{{configuredDB.type}}</td>
+              </tr>
+              <tr>
+                <td class="tdl">Database Host/Ip</td>
+                <td class="tdr">{{configuredDB.host}}</td>
+              </tr>
+              <tr>
+                <td class="tdl">Database Port</td>
+                <td class="tdr">{{configuredDB.port}}</td>
+              </tr>
+              <tr>
+                <td class="tdl">Database Name</td>
+                <td class="tdr">{{configuredDB.databaseName}}</td>
+              </tr>
+              <tr>
+                <td class="tdl">Database Schema</td>
+                <td class="tdr">{{configuredDB.schemaName}}</td>
+              </tr>
+              <tr>
+                <td class="tdl">Database User Name</td>
+                <td class="tdr">{{configuredDB.userName}}</td>
+              </tr>         
+        </tbody>
+      </table>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
 </div>
