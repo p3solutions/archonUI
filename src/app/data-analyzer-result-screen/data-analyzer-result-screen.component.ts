@@ -360,5 +360,12 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
 
   toggle() {
     this.toggleBoolean = !this.toggleBoolean;
-  }
+    if (this.toggleBoolean === false) {
+      this.activateSecondaryFn();
+    } else {
+    this.activatePrimaryFn();
+    this.selectRow();
+    }
+}
+
 }
