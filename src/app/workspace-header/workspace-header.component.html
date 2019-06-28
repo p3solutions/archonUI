@@ -8,7 +8,7 @@
       <div class="btn-group mt-20 pull-left" id="selectedWorkspace">
       <mat-form-field>
         <!-- <mat-label>Selected Workspace</mat-label> -->
-        <mat-select [(ngModel)]="workspaceHeaderService.selected">
+        <mat-select [(ngModel)]="workspaceHeaderService.selected" [placeholder]="userWorkspaceArray.length === 0 ? 'Create New Worksapce' : ''">
           <mat-option *ngFor="let ws of userWorkspaceArray; let i of index;" [value]="ws.workspaceName" (click)="selectWorkspace(ws)">
             {{ws.workspaceName}}
           </mat-option>
