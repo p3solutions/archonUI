@@ -83,6 +83,39 @@ select {
   width: 107%;
 }
 
+.action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  transition: 0.5s;
+  border-radius: 3px;
+  /* float: right; */
+}
+
+.action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+}
+
+.action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 1%;
+  text-transform: inherit;
+  transition: 0.5s;
+  border-radius: 3px;
+}
+
+.action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
+.action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
 
 
 
