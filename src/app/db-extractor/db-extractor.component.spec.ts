@@ -11,6 +11,8 @@ import { MatFormFieldModule, MatSelectModule, MatInputModule} from '@angular/mat
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 
 describe('DbExtractorComponent', () => {
   let component: DbExtractorComponent;
@@ -19,8 +21,9 @@ describe('DbExtractorComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorComponent],
-      imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatSelectModule, MatButtonToggleModule, MatInputModule, BrowserAnimationsModule],
-      providers: [DbExtractorService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatSelectModule,
+        MatButtonToggleModule, MatInputModule, BrowserAnimationsModule, MatInputModule, FormsModule, ReactiveFormsModule],
+      providers: [DbExtractorService, UserinfoService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
