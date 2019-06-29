@@ -136,6 +136,7 @@ option {
   transition: 0.5s;
   border-radius: 3px;
   margin-right: 10px;
+  margin-bottom: 6px;
  }
 
  .action-btn button.file-name {
@@ -146,6 +147,8 @@ option {
   transition: 0.5s;
   border-radius: 3px;
   margin-left: 20px;
+  margin-bottom: 6px;
+  width: 180px;
  }
  .mat-slide-toggle {
    float: left;

@@ -6,6 +6,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { ConfiguredDB } from '../workspace-objects';
 import { ProcessDetails, ProcessDetailsObj } from '../db-extractor';
 import { UserinfoService } from '../userinfo.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-db-extractor',
@@ -16,6 +17,7 @@ export class DbExtractorComponent implements OnInit {
   progressBarObj: ProgressBarObj;
   zone: any;
   ExtractData = true;
+  uploadData = false;
   sipData = false;
   text: any;
   workspaceName = '';
@@ -34,6 +36,15 @@ export class DbExtractorComponent implements OnInit {
   @ViewChild('click') button: ElementRef;
   scheduleNow: boolean;
   instanceId: any;
+  // query mode
+  showFileUpload = false;
+  executeQueryForm: FormGroup;
+  enableNextBtn = true;
+  isQueryFileExist = false;
+  ProcessDetailsObj: ProcessDetailsObj = new ProcessDetailsObj();
+  queryFileToUpload: File = null;
+  queryFileName = '';
+  errorMessgae = '';
 
   constructor(public router: Router, private dbExtractorService: DbExtractorService,
     private workspaceHeaderService: WorkspaceHeaderService, private userinfoService: UserinfoService) {
@@ -166,7 +177,8 @@ export class DbExtractorComponent implements OnInit {
     delete param.scheduledConfig['ins'];
     console.log(param, 'param details');
    // param = this.modifiedParamAccToProcess(param);
-    this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload, this.instanceId).subscribe((result) => {
+    this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload,
+      this.instanceId).subscribe((result) => {
       el.click();
       if (result.httpStatus === 200) {
         this.isSuccessMsg = true;
@@ -176,6 +188,34 @@ export class DbExtractorComponent implements OnInit {
         this.successMsg = 'Unable to Process Your Job';
       }
     });
+  }
+
+  // query mode
+  setUploadQueryFile(event) {
+    this.showFileUpload = event.source.checked;
+  }
+
+  uploadQueryFile(files: FileList) {
+    this.uploadData = false;
+    const ext = files.item(0).name.match(/\.([^\.]+)$/)[1];
+    this.isQueryFileExist = files != null ? true : false;
+    // if (this.executeQueryForm.value.queryTitle && this.isQueryFileExist
+    //   && this.executeQueryForm.value.isQueryFile === true && ext === 'sql') {
+    //   this.enableNextBtn = false;
+    // }
+    this.queryFileToUpload = files.item(0);
+    if (ext === 'sql') {
+      this.uploadData = true;
+      this.queryFileName = files.item(0).name;
+    } else {
+      this.enableNextBtn = true;
+      this.uploadData = true;
+      this.queryFileName = 'please upload .sql file only';
+    }
+  }
+
+  closeMessage () {
+    this.uploadData = false;
   }
 
   gotoDashboard() {

@@ -125,24 +125,30 @@
                 </mat-form-field>
           </div>
           <div class="col-md-12" style="padding-right: 0px; padding-left: 0px;">  
-              <div class="col-md-6">
-                  <mat-slide-toggle>Read Query from file</mat-slide-toggle>
+              <div class="col-md-6" style="margin-top: 7px;">
+                  <mat-slide-toggle (change)="setUploadQueryFile($event)">Read Query from file</mat-slide-toggle>
               </div>
-              <div class="col-md-6">  
+              <div class="col-md-6" *ngIf="showFileUpload">  
                   <div class="action-btn" style="float: left">                     
-                      <button class="btn file btn-padding">File Upload</button> 
-                      <button class="btn file-name btn-padding">filename.txt <a>x</a></button>                
+                      <button class="btn file btn-padding" onclick="document.getElementById('uploadReadQueryFile').click()">File Upload</button> 
+                      <input type="file" class="hide btn btn-secondary browse-btn" accept=".sql" id="uploadReadQueryFile" (change)="uploadQueryFile($event.target.files)"  >
+                      <button *ngIf="uploadData" class="btn file-name btn-padding" title="{{queryFileName}}" (click)="closeMessage()">
+                        <div style="width: 85%; overflow: hidden; text-overflow: ellipsis; display: inherit; float: left; text-align: left;">{{queryFileName}}</div>
+                        <a><button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></a></button>                
                     </div>        
               </div>
           </div>
-          <div class="col-md-12 query">Query </div>
 
+          <div *ngIf="!showFileUpload">
+          <div class="col-md-12 query">Query </div>
           <div class="col-md-12" style="margin-bottom: 15px">  
               <ace-editor
               #editor [mode]="'sql'"
                style="height:200px;">
               </ace-editor>
           </div>
+          </div>
+
           </div>
            <!--view end only query mode -->
 
