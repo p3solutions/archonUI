@@ -18,7 +18,8 @@
     <!-- <a *ngIf="enableCreate" style="font-size: 42px" matTooltip="Add Workspace" (click)="openCreateWSModal()"><i
         class="material-icons plus col">
       </i></a> -->
-      <a *ngIf="enableCreate" style="font-size: 42px" matTooltip="Add Workspace" (click)="createWorkspace()"><i class="material-icons plus col">
+    <a *ngIf="enableCreate" style="font-size: 42px" matTooltip="Add Workspace" (click)="createWorkspace()"><i
+        class="material-icons plus col">
       </i></a>
   </div>
 </div>
@@ -145,13 +146,13 @@
             </tr>
             <tr>
               <td class="tdl">Workspace Owner</td>
-              <td class="tdr">{{WSListInfo?.owner.name}}</td>
+              <td class="tdr">{{WSListInfo?.owner?.name}}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">CLOSE</button>
       </div>
     </div>
 
@@ -171,7 +172,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">NO</button>
-        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteWS()" data-dismiss="modal">YES</button>
+        <button type="button" class="btn btn-padding primary-btn-color" (click)="deleteWS()"
+          data-dismiss="modal">YES</button>
       </div>
     </div>
   </div>
@@ -203,30 +205,32 @@
 <div id="edit_model" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 500px;">
-      <form #wsForm="ngForm">
-        <div class="modal-header">
-          <div class='model-title'>
-            <div class='info-r'>Edit Workspace</div>
-          </div>
+      <div class="modal-header">
+        <div class='model-title'>
+          <div class='info-r'>Edit Workspace</div>
         </div>
+      </div>
+      <form #wsForm="ngForm">
         <div class="modal-body row">
           <div class="col-md-12 row m-10">
             <mat-form-field class="example-full-width">
-              <input matInput maxlength="40" required [(ngModel)]="wsName" name="wsName" placeholder="Workspace Name">
+              <input matInput maxlength="40" trim="blur" #wsNamea="ngModel" required [(ngModel)]="wsName" name="wsName"
+                placeholder="Workspace Name">
             </mat-form-field>
 
           </div>
           <div class="col-md-12 row m-10">
             <mat-form-field class="example-full-width">
-              <textarea matInput maxlength="250" [(ngModel)]="wsDesc" name="wsDesc" placeholder="Description / Notes"></textarea>
+              <textarea matInput maxlength="250" trim="blur" #wsDesca="ngModel" required [(ngModel)]="wsDesc"
+                name="wsDesc" placeholder="Description / Notes"></textarea>
             </mat-form-field>
-
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-padding primary-btn-color" (click)="updateWS()" data-dismiss="modal"
-            [disabled]="!wsForm.form.valid">Confirm</button>
+          <button type="button" class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal">Cancel</button>
+          <button type="button"
+            class="btn btn-padding {{!wsForm.form.valid?'primary-btn-color-disabled':'primary-btn-color'}}"
+            (click)="updateWS()" data-dismiss="modal" [disabled]="!wsForm.form.valid">Confirm</button>
         </div>
       </form>
     </div>

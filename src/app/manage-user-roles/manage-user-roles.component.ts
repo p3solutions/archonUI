@@ -92,8 +92,8 @@ export class ManageUserRolesComponent implements OnInit {
   loadAllUsers(invited, revoked, locked) {
     this.dataSource.emptyUser();
     this.dataSource.getAllUsers(this.paginator.pageIndex + 1, invited, revoked, locked);
-    this.dataSource.totalUserSubject.subscribe(result => {
-      this.totalUser = result;
+    this.dataSource.inviteUsersSubject.subscribe(result => {
+      this.totalUser = result.length;
     });
   }
   sortData(sort) {
@@ -386,11 +386,17 @@ export class ManageUserRolesComponent implements OnInit {
       this.dataSource.connect().subscribe(result => {
         response = result;
       });
+      this.dataSource.inviteUsersSubject.subscribe(result => {
+        this.totalUser = result.length;
+      });
       this.dataSource._filterData(response);
     } else
       if (emailId !== '') {
         this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds, this.spinner);
         this.dataSource.getUsersByEmailId(emailId, status);
+        this.dataSource.inviteUsersSubject.subscribe(result => {
+          this.totalUser = result.length;
+        });
       } else {
         this.getAllUsers(this.invited, this.revoked, this.locked);
       }

@@ -8,6 +8,7 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { WorkspaceHeaderService } from './workspace-header.service';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { UserProfileService } from '../user-profile/user-profile.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 export let firstload = 0;
 @Component({
   selector: 'app-workspace-header',
@@ -40,6 +41,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
+    private spinner: NgxSpinnerService
   ) {
     this.dynamicLoaderService = dynamicLoaderService;
     this.viewContainerRef = viewContainerRef;
@@ -81,15 +83,20 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   getUserWorkspaceList() {
+    this.spinner.show();
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
-      if (this.workspaceHeaderService.selected === undefined) {
-        for (let i = 0; i <= this.userWorkspaceArray.length; i++) {
-          if (i === 0) {
-            this.workspaceHeaderService.selected = this.userWorkspaceArray[i].workspaceName;
-            this.selectWorkspace(this.userWorkspaceArray[i]);
+      try {
+        if (this.workspaceHeaderService.selected === undefined) {
+          for (let i = 0; i <= this.userWorkspaceArray.length; i++) {
+            if (i === 0) {
+              this.workspaceHeaderService.selected = this.userWorkspaceArray[i].workspaceName;
+              this.selectWorkspace(this.userWorkspaceArray[i]);
+            }
           }
         }
+      } catch {
+        this.spinner.hide();
       }
     });
   }
@@ -129,23 +136,27 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     const route = this.route.firstChild.routeConfig.path;
     if (route === 'manage-master-metadata/:id') {
       const id = this.workspaceHeaderService.getSelectedWorkspaceId();
-      this.router.navigate(['workspace/workspace-dashboard']);
-      setTimeout(() => {
-        this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]);
-      }, 50);
+      this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
+        this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]));
+      // this.router.navigate(['workspace/workspace-dashboard']);
+      // setTimeout(() => {
+
+      // }, 50);
     } else if (route === 'manage-members/:id') {
       const id = this.workspaceHeaderService.getSelectedWorkspaceId();
-      this.router.navigate(['workspace/workspace-dashboard']);
-      setTimeout(() => {
-        this.router.navigate(['workspace/workspace-dashboard/manage-members/' + id]);
-      }, 50);
+      // this.router.navigate(['workspace/workspace-dashboard']);
+      // setTimeout(() => {
+      this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
+        this.router.navigate(['workspace/workspace-dashboard/manage-members/' + id]));
+      // }, 50);
     } else if (route === 'workspace-info/:id') {
       const id = this.workspaceHeaderService.getSelectedWorkspaceId();
-      this.router.navigate(['workspace/workspace-dashboard']);
-      setTimeout(() => {
-        this.router.navigate(['workspace/workspace-dashboard/workspace-info/' + id]);
-      }, 50);
+      this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
+        this.router.navigate(['workspace/workspace-dashboard/workspace-info/' + id]));
     }
+    // this.router.navigate(['workspace/workspace-dashboard']);
+    // setTimeout(() => {
+    // }, 50);
   }
 
   createWorkspace() {
