@@ -46,13 +46,7 @@ export class ScheduleMonitoringService {
   }
 
   stopJob(scheduleId) {
-    return this.http.post<any>(this.stopJobUrl + scheduleId, { headers: this.getHeaders() }).pipe(
-      map(this.extractStop),
-      catchError(this.handleError<any>('StopJob')));
-  }
-
-  private extractStop(res) {
-    return res;
+    return this.http.post<any>(this.stopJobUrl + scheduleId, { headers: this.getHeaders() });
   }
 
   private extractJobOrigins(res: any) {
