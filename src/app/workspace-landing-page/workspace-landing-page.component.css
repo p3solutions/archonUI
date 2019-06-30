@@ -1,8 +1,13 @@
 .page-footer {
-    /* position: absolute; */
-    bottom: 5px;
+  /* position: absolute; */
+  bottom: 5px;
 }
+
 a {
-    margin: 35px;
-    font-size: 18px;
+  margin: 35px;
+  font-size: 18px;
+}
+
+::ng-deep .my-spinner .overlay {
+  position: fixed !important;
 }

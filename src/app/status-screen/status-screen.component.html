@@ -125,7 +125,7 @@
           <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
           <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
             <i class="material-icons stop" matTooltip="Stop" *ngIf="element.isCancellable"
-              (click)="stopJob(element.id)">stop</i>
+              (click)="terminateConfirmation(element.id)">stop</i>
             <i class="material-icons stop" style="color: grey" matTooltip="Nope" *ngIf="!element.isCancellable">stop</i>
           </td>
         </ng-container>
@@ -260,3 +260,29 @@
       </div>
     </div>
   </div>
+
+  <button style="display: none" type="button" #terminateconfirmation data-toggle="modal" data-target="#confirmTerminateModal">Open Modal</button>
+
+  <!-- terminate job confirmation popup-->  
+  <div class="modal fade" id="confirmTerminateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+             
+    <div class="modal-dialog"  style="width: 480px;">
+      <div class="modal-content">
+          <div class="error-popup-header-cls">
+              <h4 class="popup-title-cls">
+                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 1px;">error_outline</i>
+                <div class="pop-title" style="margin-left: 0px;margin-top: 0px;">Termination Alert</div></h4>
+            </div>
+            <div class="modal-body">
+                <p class="popup-paragraph-cls"> Are you sure you want to terminate this job? </p>
+              </div>
+        <div class="modal-footer">
+            <button type="button" id="dismissmodel" class="btn btn-padding btn-secondary-popup"
+            data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="stopJob();"
+            >OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 

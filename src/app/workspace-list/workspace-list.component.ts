@@ -7,6 +7,7 @@ import { DynamicLoaderService } from '../dynamic-loader.service';
 import { CommonUtilityService } from '../common-utility.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserinfoService } from '../userinfo.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -35,8 +36,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     error: boolean;
     successmsg: any;
     errormsg: any;
-    wsName: any;
-    wsDesc: any;
+    wsName = '';
+    wsDesc = '';
     WSeditId: any;
     deleteId: string;
 
@@ -46,7 +47,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         private workspaceListService: WorkspaceListService,
         private workspaceHeaderService: WorkspaceHeaderService,
         private router: Router,
-        private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService
+        private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService,
+        private spinner: NgxSpinnerService
 
     ) {
         this.dynamicLoaderService = dynamicLoaderService;
@@ -74,12 +76,17 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
 
     getWorkspaceListInfo(id: string) {
         this.workspaceListInfo = [];
+        this.spinner.show();
         this.workspaceListService.getList(id).subscribe(result => {
-            this.workspaceListInfo = result;
-            this.isProgress = false;
-            this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
-            this.workspaceActions = this.workspaceListInfo;
-            console.log(this.workspaceActions);
+            try {
+                this.workspaceListInfo = result;
+                this.isProgress = false;
+                this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
+                this.workspaceActions = this.workspaceListInfo;
+                this.spinner.hide();
+            } catch {
+                this.spinner.hide();
+            }
         });
     }
 
@@ -174,7 +181,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             document.getElementById('editmsg').click();
             if (result.success) {
                 this.successmsg = 'successfully updated';
-            } 
+            }
             this.success = true;
             this.getWorkspaceListInfo(this.token_data.user.id);
         },

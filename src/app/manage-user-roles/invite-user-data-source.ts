@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class InviteUserDataSource implements DataSource<UserInviteResponse> {
 
     totalUser: number;
-    private inviteUsersSubject = new BehaviorSubject<UserInviteResponse[]>([]);
+    public inviteUsersSubject = new BehaviorSubject<UserInviteResponse[]>([]);
     public totalUserSubject = new BehaviorSubject<number>(0);
     private readonly _filter = new BehaviorSubject<string>('');
     filteredData: UserInviteResponse[];
@@ -60,6 +60,7 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
                         }
                     });
                     this.inviteUsersSubject.next(result.data.users.usersList.filter(a => a.hide === true));
+                    this.totalUserSubject.next(result.data.model.totalUser);
                     this.spinner.hide();
                 } catch {
                     this.spinner.hide();
@@ -139,7 +140,6 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
 
     sortfn(sort) {
         const data = this.inviteUsersSubject.getValue().slice();
-        console.log(sort, data);
         if (!sort.active || sort.direction === '') {
             const data1 = this.inviteUsersSubject.getValue();
             this.inviteUsersSubject.next(data1);
