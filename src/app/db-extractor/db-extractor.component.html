@@ -121,7 +121,7 @@
           <div *ngIf="isDisabled">
           <div class="col-md-12">
               <mat-form-field>
-                  <input matInput placeholder="Query Name" value="" required>
+                  <input matInput name="queryTitle" [(ngModel)]="processDetailsObj.ExecuteQueryObj.queryTitle" id="queryTitle" placeholder="Query Name" required>
                 </mat-form-field>
           </div>
           <div class="col-md-12" style="padding-right: 0px; padding-left: 0px;">  
@@ -131,7 +131,8 @@
               <div class="col-md-6" *ngIf="showFileUpload">  
                   <div class="action-btn" style="float: left">                     
                       <button class="btn file btn-padding" onclick="document.getElementById('uploadReadQueryFile').click()">File Upload</button> 
-                      <input type="file" class="hide btn btn-secondary browse-btn" accept=".sql" id="uploadReadQueryFile" (change)="uploadQueryFile($event.target.files)"  >
+                      <input type="file" class="hide btn btn-secondary browse-btn" accept=".sql" id="uploadReadQueryFile" (change)="uploadQueryFile($event.target.files)" name="queryFileToUpload" [(ngModel)]="processDetailsObj.ExecuteQueryObj.queryFileToUpload" >
+                     
                       <button *ngIf="uploadData" class="btn file-name btn-padding" title="{{queryFileName}}" (click)="closeMessage()">
                         <div style="width: 85%; overflow: hidden; text-overflow: ellipsis; display: inherit; float: left; text-align: left;">{{queryFileName}}</div>
                         <a><button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></a></button>                
@@ -144,7 +145,8 @@
           <div class="col-md-12" style="margin-bottom: 15px">  
               <ace-editor
               #editor [mode]="'sql'"
-               style="height:200px;">
+               style="height:200px;"
+               name="query" [(ngModel)]="processDetailsObj.ExecuteQueryObj.query" id="query">
               </ace-editor>
           </div>
           </div>

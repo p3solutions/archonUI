@@ -147,7 +147,7 @@ export class DbExtractorComponent implements OnInit {
     } else {
     this.instanceId = $event.ins;
   }
-    const param: any = {
+    let param: any = {
       'ownerId': this.userinfoService.getUserId(),
       'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
       'databaseConfig': {
@@ -176,7 +176,7 @@ export class DbExtractorComponent implements OnInit {
     };
     delete param.scheduledConfig['ins'];
     console.log(param, 'param details');
-   // param = this.modifiedParamAccToProcess(param);
+    param = this.modifiedParamAccToProcess(param);
     this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload,
       this.instanceId).subscribe((result) => {
       el.click();
@@ -189,6 +189,18 @@ export class DbExtractorComponent implements OnInit {
       }
     });
   }
+
+  modifiedParamAccToProcess(param: any): any {
+    if (this.processDetailsObj.process.replace(/\s+/g, '').toLowerCase() === 'executequery') {
+      param.executionConfig.queryMode = {
+        'queryTitle': this.processDetailsObj.ExecuteQueryObj.queryTitle,
+        'query': this.processDetailsObj.ExecuteQueryObj.query,
+        'isQueryFile': this.processDetailsObj.ExecuteQueryObj.isQueryFile
+      };
+    }
+    return param;
+  }
+
 
   // query mode
   setUploadQueryFile(event) {
@@ -207,6 +219,8 @@ export class DbExtractorComponent implements OnInit {
     if (ext === 'sql') {
       this.uploadData = true;
       this.queryFileName = files.item(0).name;
+      this.ProcessDetailsObj.ExecuteQueryObj.queryFileName = this.queryFileName;
+      console.log(this.ProcessDetailsObj.ExecuteQueryObj.queryFileName, 'queryfilename');
     } else {
       this.enableNextBtn = true;
       this.uploadData = true;

@@ -65,6 +65,7 @@ export class DbExtractorService {
 
   setProcessDetailsObj(processDetails: ProcessDetailsObj) {
     this.processDetailsObj = processDetails;
+    console.log(this.processDetailsObj, 'last');
   }
 
   getProcessDetailsObj(): ProcessDetailsObj {
