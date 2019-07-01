@@ -131,7 +131,7 @@
               <div class="col-md-6" *ngIf="showFileUpload">  
                   <div class="action-btn" style="float: left">                     
                       <button class="btn file btn-padding" onclick="document.getElementById('uploadReadQueryFile').click()">File Upload</button> 
-                      <input type="file" class="hide btn btn-secondary browse-btn" accept=".sql" id="uploadReadQueryFile" (change)="uploadQueryFile($event.target.files)" name="queryFileToUpload" [(ngModel)]="processDetailsObj.ExecuteQueryObj.queryFileToUpload" >
+                      <input type="file" class="hide btn btn-secondary browse-btn" accept=".sql" id="uploadReadQueryFile" (change)="uploadQueryFile($event.target.files)" name="queryFileToUpload">
                      
                       <button *ngIf="uploadData" class="btn file-name btn-padding" title="{{queryFileName}}" (click)="closeMessage()">
                         <div style="width: 85%; overflow: hidden; text-overflow: ellipsis; display: inherit; float: left; text-align: left;">{{queryFileName}}</div>

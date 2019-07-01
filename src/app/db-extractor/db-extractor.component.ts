@@ -153,6 +153,8 @@ export class DbExtractorComponent implements OnInit {
 
   gotoLastStep() {
    if (this.showFileUpload) {
+    this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = this.queryFileToUpload ?
+    this.queryFileToUpload : this.processDetailsObj.ExecuteQueryObj.queryFileToUpload;
       this.processDetailsObj.ExecuteQueryObj.query = '';
     } else {
       this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = null;
@@ -208,7 +210,6 @@ export class DbExtractorComponent implements OnInit {
       'scheduledConfig': $event
     };
     delete param.scheduledConfig['ins'];
-    console.log(param, 'param details');
     param = this.modifiedParamAccToProcess(param);
     this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload,
       this.instanceId).subscribe((result) => {
