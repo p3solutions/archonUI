@@ -1033,7 +1033,8 @@ export class ErtTableComponent implements OnInit {
 
   validateCombinedColumnQueryMode() {
     const dbName = this.workspaceHeaderService.getSelectedDatabaseType();
-    if (dbName.trim().toUpperCase() === 'MYSQL') {
+    if (dbName.trim().toUpperCase() === 'MYSQL' || dbName.trim().toUpperCase() === 'ORACLE'
+      || dbName.trim().toUpperCase() === 'TERADATA' || dbName.trim().toUpperCase() === 'DB2' || dbName.trim().toUpperCase() === 'SYBASE') {
       if (this.userDefinedList.length !== 0) {
         if (this.validateMYSQLCombinedColumnQueryMode() <= 1) {
           this.usrDefinedAlertMessage = 'Definition Should join at least column with' +

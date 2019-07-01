@@ -6,6 +6,7 @@ import * as d3 from 'd3';
 import { getSIPGraphData, getRelationshipListForSip } from '../ert-datarecord-config/tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datarecord-config/class';
 import { ErtService } from '../ert-landing-page/ert.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ert-sip-config',
@@ -34,14 +35,20 @@ export class ErtSipConfigComponent implements OnInit {
 
 
   constructor(public router: Router, private tablelistService: TableListService,
-    private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
+    private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.spinner.show();
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-      this.tableList = res.tableList;
-      if (res.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      try {
+        this.tableList = res.tableList;
+        if (res.paginationRequired) {
+          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+        }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
       }
     });
     if (this.ertService.data !== undefined) {
@@ -72,12 +79,19 @@ export class ErtSipConfigComponent implements OnInit {
   getPage(page: number) {
     this.tableList = [];
     this.startIndex = page;
+    this.spinner.show();
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-      this.tableList = res.tableList;
-      if (res.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+      try {
+        this.tableList = res.tableList;
+        if (res.paginationRequired) {
+          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+        }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
       }
     });
+    this.spinner.hide();
   }
 
   searchTablelist() {
