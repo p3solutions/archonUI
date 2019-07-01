@@ -106,12 +106,12 @@
           <div *ngIf="sipData">          
           <div class="col-md-6">
               <mat-form-field>
-                  <input matInput name="sipApplicationName" [(ngModel)]="processDetailsObj.sipApplicationName" id="sipApplicationName"  placeholder="Enter SIP Application Name" required>
+                  <input matInput name="sipApplicationName" [(ngModel)]="processDetailsObj.sipApplicationName" id="sipApplicationName"  placeholder="Enter SIP Application Name" (keyup)="enableNextBtnFn()" required>
                 </mat-form-field>
           </div>
           <div class="col-md-6">
               <mat-form-field>
-                  <input matInput name="holdingPrefix" [(ngModel)]="processDetailsObj.holdingPrefix" id="holdingPrefix"  placeholder="Enter Holding Prefix" required>
+                  <input matInput name="holdingPrefix" [(ngModel)]="processDetailsObj.holdingPrefix" id="holdingPrefix"  placeholder="Enter Holding Prefix" (keyup)="enableNextBtnFn()" required>
                 </mat-form-field>
           </div>
           </div>
@@ -196,8 +196,8 @@
         </div>
         </div>
         <div class="col-md-12">
-        <div class="col-md-6"><mat-checkbox (ngModelChange)="processDetailsObj.incTable=$event" [ngModel]="processDetailsObj?.incTable">Include Table</mat-checkbox></div>
-        <div class="col-md-6"><mat-checkbox (ngModelChange)="processDetailsObj.incView=$event" [ngModel]="processDetailsObj?.incView">Include Views</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox  (ngModelChange)="updateaccess($event);processDetailsObj.incTable=$event" [ngModel]="processDetailsObj?.incTable">Include Table</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox  (ngModelChange)="processDetailsObj.incView=$event" [ngModel]="processDetailsObj?.incView">Include Views</mat-checkbox></div>
       </div>
       <div class="col-md-12">
         <div class="col-md-6"><mat-checkbox (ngModelChange)="processDetailsObj.xmlXDBCompability=$event" [ngModel]="processDetailsObj?.xmlXDBCompability">Date in XML for XML compability</mat-checkbox></div>
@@ -208,7 +208,7 @@
 <div class="col-md-12"> 
     <div class="action-btn">
     <button class="btn cancel btn-padding" (click)="gotoDashboard();">Cancel</button>
-    <button class="btn {{ExtractData? 'save-disabled': 'save'}} btn-padding" [disabled]="ExtractData" (click)="gotoLastStep()" data-toggle="modal" href="#openScheduleJob">Schedule</button>                
+    <button class="btn {{ExtractData? 'save-disabled': 'save' || ExtractDatacheck? 'save-disabled': 'save'}} btn-padding" [disabled]="ExtractData || ExtractDatacheck" (click)="gotoLastStep()" data-toggle="modal" href="#openScheduleJob">Schedule</button>                
   </div>
 </div>
 </div>

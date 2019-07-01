@@ -45,6 +45,7 @@ export class DbExtractorComponent implements OnInit {
   queryFileToUpload: File = null;
   queryFileName = '';
   errorMessgae = '';
+  ExtractDatacheck: boolean;
 
   constructor(public router: Router, private dbExtractorService: DbExtractorService,
     private workspaceHeaderService: WorkspaceHeaderService, private userinfoService: UserinfoService) {
@@ -108,11 +109,38 @@ export class DbExtractorComponent implements OnInit {
       this.ExtractData = false;
     }
     if (outputFormat === 'sip') {
+      this.ExtractData = true;
+      if (this.processDetailsObj.sipApplicationName === '' && this.processDetailsObj.holdingPrefix === '') {
+        this.ExtractData = true;
+      } else {
+        this.ExtractData = false;
+      }
       this.sipData = true;
     } else {
       this.sipData = false;
     }
     this.processDetailsObj.outputFormat = outputFormat;
+  }
+
+  enableNextBtnFn() {
+    if (this.processDetailsObj.outputFormat === 'sip') {
+      this.ExtractData = true;
+      if (this.processDetailsObj.sipApplicationName === '' || this.processDetailsObj.holdingPrefix === '') {
+        this.ExtractData = true;
+      } else {
+        this.ExtractData = false;
+      }
+    }
+  }
+  updateaccess() {
+    if (this.processDetailsObj.incTable === true) {
+      console.log(this.processDetailsObj.incTable, 'test');
+      this.ExtractDatacheck = true;
+    }  else {
+      console.log(this.processDetailsObj.incTable, 'test3');
+      this.ExtractDatacheck = false;
+    }
+
   }
 
   setXMLFileSplitSize(xmlSliderObj: any) {
