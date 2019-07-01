@@ -124,6 +124,11 @@ export class DbExtractorComponent implements OnInit {
   }
 
   gotoLastStep() {
+   if (this.showFileUpload) {
+      this.processDetailsObj.ExecuteQueryObj.query = '';
+    } else {
+      this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = null;
+    }
     this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);
   }
 
@@ -205,6 +210,7 @@ export class DbExtractorComponent implements OnInit {
   // query mode
   setUploadQueryFile(event) {
     this.showFileUpload = event.source.checked;
+    this.processDetailsObj.ExecuteQueryObj.isQueryFile = this.showFileUpload;
   }
 
   uploadQueryFile(files: FileList) {
@@ -220,7 +226,6 @@ export class DbExtractorComponent implements OnInit {
       this.uploadData = true;
       this.queryFileName = files.item(0).name;
       this.ProcessDetailsObj.ExecuteQueryObj.queryFileName = this.queryFileName;
-      console.log(this.ProcessDetailsObj.ExecuteQueryObj.queryFileName, 'queryfilename');
     } else {
       this.enableNextBtn = true;
       this.uploadData = true;
@@ -230,6 +235,7 @@ export class DbExtractorComponent implements OnInit {
 
   closeMessage () {
     this.uploadData = false;
+    this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = null;
   }
 
   gotoDashboard() {
