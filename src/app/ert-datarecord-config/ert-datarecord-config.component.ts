@@ -6,6 +6,7 @@ import * as d3 from 'd3';
 import { toJson } from './tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from './class';
 import { ErtService } from '../ert-landing-page/ert.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -34,15 +35,21 @@ export class ErtDatarecordConfigComponent implements OnInit {
 
 
   constructor(public router: Router, private tablelistService: TableListService,
-    private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
+    private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.spinner.show();
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-      this.tableList = res.tableList;
-      if (res.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      try {
+        this.tableList = res.tableList;
+        if (res.paginationRequired) {
+          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+        }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
     });
     if (this.ertService.data !== undefined) {
       this.data = this.ertService.data;
@@ -66,17 +73,23 @@ export class ErtDatarecordConfigComponent implements OnInit {
   getPage(page: number) {
     this.tableList = [];
     this.startIndex = page;
+    this.spinner.show();
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-      this.tableList = res.tableList;
-      if (res.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      try {
+        this.tableList = res.tableList;
+        if (res.paginationRequired) {
+          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+        }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
     });
   }
 
   searchTablelist() {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
+    this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
       this.tableList = res.tableList;
     });
   }
@@ -93,35 +106,35 @@ export class ErtDatarecordConfigComponent implements OnInit {
         this.isRelationNot = true;
         this.enableNextBtn = false;
       }
-       if (this.relationshipInfo.length > 0) {
-            this.primaryTable = getPrimaryArray(this.relationshipInfo);
-            this.secondaryTable = getSecondaryArray(this.relationshipInfo);
-            for (const i of this.primaryTable) {
-              this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
-            }
-            this.selectedValues.push(value.tableName);
-            this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
-            this.createchart();
-          } else {
-            this.data = {
-              color: '#ffffff',
-              enableClick: false,
-              id: 'NoRelation',
-              name: value.tableName,
-              visible: true,
-            };
-            const TableList = [];
-            const obj = {
-                       'primaryTableId' : value.tableId,
-                       'primaryTableName' : value.tableName,
-                       'childTable' : ''
-                       };
-            TableList.push(obj);
-            this.joinListMap.set(value.tableName, TableList);
-            this.enableNextBtn = true;
-            this.selectedValues.push(value.tableName);
-            this.createchart();
-          }
+      if (this.relationshipInfo.length > 0) {
+        this.primaryTable = getPrimaryArray(this.relationshipInfo);
+        this.secondaryTable = getSecondaryArray(this.relationshipInfo);
+        for (const i of this.primaryTable) {
+          this.joinListMap.set(i.primaryTableName, CompleteArray(i.primaryTableId, i.primaryTableName, this.secondaryTable));
+        }
+        this.selectedValues.push(value.tableName);
+        this.data = JSON.parse(toJson(this.selectedValues, this.joinListMap));
+        this.createchart();
+      } else {
+        this.data = {
+          color: '#ffffff',
+          enableClick: false,
+          id: 'NoRelation',
+          name: value.tableName,
+          visible: true,
+        };
+        const TableList = [];
+        const obj = {
+          'primaryTableId': value.tableId,
+          'primaryTableName': value.tableName,
+          'childTable': ''
+        };
+        TableList.push(obj);
+        this.joinListMap.set(value.tableName, TableList);
+        this.enableNextBtn = true;
+        this.selectedValues.push(value.tableName);
+        this.createchart();
+      }
     });
   }
 
@@ -227,13 +240,13 @@ export class ErtDatarecordConfigComponent implements OnInit {
       nodeEnter.on('mouseover', function (d) {
         const nodename = d.data.name;
         link.style('visibility', function (d) {
-        if (d.parent !== null) {
-          if (d.target.data.visible === false && d.target.parent.data.name === nodename) {
-            return 'visible';
-          } else {
-            return 'none';
+          if (d.parent !== null) {
+            if (d.target.data.visible === false && d.target.parent.data.name === nodename) {
+              return 'visible';
+            } else {
+              return 'none';
+            }
           }
-        }
         });
         node.style('visibility', function (d) {
           if (d.parent !== null) {
@@ -254,7 +267,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
         }
         if (d.data.id === 'NoRelation') {
           ifSelected = 'No Relationship';
-      }
+        }
         div.transition().duration(200).style('opacity', .9);
         div.html(ifSelected)
           .style('left', (d3.event.pageX - 350) + 'px')
