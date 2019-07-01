@@ -415,6 +415,13 @@
               [(ngModel)]="configColumnObject.endIndex" id="ucolumnname" name="endindex">
           </div>
         </div>
+        <div *ngIf="configColumnObject.selectedConfigFunction==='ADDTIME' || configColumnObject.selectedConfigFunction==='ADDDATE'"
+          class="form-group" style="display: flex">
+          <div class="startIndex">
+            <input type="number" class="form-control" min="1" placeholder="Number of Days"
+              [(ngModel)]="configColumnObject.addDateTimeNumber" id="ucolumnname" name="numberdays">
+          </div>
+        </div>
         <div class="form-group">
           <button type="button" [disabled]="selectValue.value===null" (click)="saveColumnConfig()"
             class="btn btn-padding {{(selectValue.value===null)?'primary-btn-color-disabled' : 'primary-btn-color'}} ">Add</button>
