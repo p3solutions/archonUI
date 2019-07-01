@@ -427,11 +427,13 @@ export class ErtTableComponent implements OnInit {
           tempObj.tableName = temp[0].primaryTableName;
           tempObj.modifiedTableName = temp[0].primaryTableName;
           tempObj.isSelected = true;
-          const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
-          if (relatedTable !== undefined) {
-            for (const rel of relatedTable) {
-              if (rel !== undefined) {
-                tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
+          if (this.ertService.RelationSIP) {
+            const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
+            if (relatedTable !== undefined) {
+              for (const rel of relatedTable) {
+                if (rel !== undefined) {
+                  tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
+                }
               }
             }
           }
@@ -1066,7 +1068,6 @@ export class ErtTableComponent implements OnInit {
       }
     }
     const result = tempQueryString.split(',');
-    console.log(result, result.length);
     return result.filter(a => a !== '').length;
   }
 

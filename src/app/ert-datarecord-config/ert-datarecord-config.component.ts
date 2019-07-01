@@ -119,7 +119,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
             TableList.push(obj);
             this.joinListMap.set(value.tableName, TableList);
             this.enableNextBtn = true;
-            console.log(this.joinListMap);
+            this.selectedValues.push(value.tableName);
             this.createchart();
           }
     });
