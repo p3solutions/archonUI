@@ -11,7 +11,7 @@
 
   <div class="row-group" *ngIf="loadStatus" style="padding-right: 15px;">
     <div class="col-md-6 heading-item">
-      <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
+      <!-- <div *ngIf="updateSuccess" class="alert alert-success alert-dismissible m-t-6" role="alert">
         <button type="button" class="close" data-dismiss="alert" (click)="updateSuccess = false" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -22,7 +22,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <strong>{{message}}</strong>
-      </div>
+      </div> -->
     </div>
     <div class="col-md-2 heading-item">
       <mat-form-field>
@@ -59,23 +59,23 @@
     <div class="example-table-container mat-elevation-z4" id="screen-table">
       <table mat-table matSort [dataSource]="dataSource" matSort (matSortChange)="sortData($event)"
         matSortActive="jobInfo.startTime" matSortDirection="desc">
-        <ng-container matColumnDef="Job Type">
+        <ng-container matColumnDef="Job Type" sticky> 
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Type </th>
           <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobType}}</td>
         </ng-container>
-        <ng-container matColumnDef="Job Origin">
+        <ng-container matColumnDef="Job Origin" sticky>
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Origin </th>
           <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.tool}}</td>
         </ng-container>
-        <ng-container matColumnDef="User">
+        <ng-container matColumnDef="User" sticky>
           <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
           <td style="width:8%" mat-cell *matCellDef="let element; let i = index;">{{element.user}}</td>
         </ng-container>
-        <ng-container matColumnDef="Job Name">
+        <ng-container matColumnDef="Job Name" sticky>
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Job Name </th>
           <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.jobName}}</td>
         </ng-container>
-        <ng-container matColumnDef="Job Runs">
+        <ng-container matColumnDef="Job Runs" sticky>
           <th style="width:5%;" mat-header-cell *matHeaderCellDef mat-sort-header> Job Runs </th>
           <td style="width:5%;" mat-cell *matCellDef="let element; let i = index;">{{element.jobRun}}</td>
         </ng-container>
@@ -124,7 +124,7 @@
           <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
           <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
             <i class="material-icons failure" matTooltip="Stop" *ngIf="element.status !== 'USER_OR_ADMIN_STOPPED'"
-              (click)="stop(element.scheduleId)">stop</i>
+              (click)="terminateConfirmation(element.scheduleId)">stop</i>
             <i class="material-icons" style="color: grey" matTooltip="Stopped"
               *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">stop</i>
           </td>
@@ -138,25 +138,30 @@
   </div>
 
 
+  <button style="display: none" type="button" #terminateconfirmation data-toggle="modal" data-target="#confirmTerminateModal">Open Modal</button>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <!-- terminate job confirmation popup-->  
+  <div class="modal fade" id="confirmTerminateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+             
+    <div class="modal-dialog"  style="width: 480px;">
+      <div class="modal-content">
+          <div class="error-popup-header-cls">
+              <h4 class="popup-title-cls">
+                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 1px;">error_outline</i>
+                <div class="pop-title" style="margin-left: 0px;margin-top: 0px;">Termination Alert</div></h4>
+            </div>
+            <div class="modal-body">
+                <p class="popup-paragraph-cls"> Are you sure you want to terminate this job? </p>
+              </div>
+        <div class="modal-footer">
+            <button type="button" id="dismissmodel" class="btn btn-padding btn-secondary-popup"
+            data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="stop();"
+            >OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Modal -->
   <div id="detailsModel" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -219,4 +224,53 @@
           <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal">Close</button>
         </div>
       </div>
-      <button #click data-toggle="modal" href="#detailsModel" [hidden]="true"></button>
+    </div>
+    </div>
+    <button #click data-toggle="modal" href="#detailsModel" [hidden]="true"></button>
+
+ 
+<!-- Notification pop-up-->
+      <button #notification data-toggle="modal" data-target="#notificationModal" [hidden]="true"></button>
+
+      <div id="notificationModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width: 480px;">
+          <div class="modal-content">
+            <div class="info-popup-header-cls">
+              <h4 class="popup-title-cls">
+                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">info_outline</i>
+                <div class="pop-title" style="margin-left: 0px;">Notification</div>
+              </h4>
+            </div>
+            <div class="modal-body">
+              <p class="popup-paragraph-cls">{{message}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- error popup--> 
+      <button style="display: none" type="button" #errornotification data-toggle="modal" data-target="#errorPopModal">Open Modal</button>
+ 
+      <div class="modal fade" id="errorPopModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                 
+        <div class="modal-dialog"  style="width: 480px;">
+          <div class="modal-content">
+              <div class="error-popup-header-cls">
+                  <h4 class="popup-title-cls">
+                    <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 1px;">error_outline</i>
+                    <div class="pop-title" style="margin-left: 0px;margin-top: 0px;">Error</div></h4>
+                </div>
+                <div class="modal-body">
+                    <p class="popup-paragraph-cls">{{message}}</p>
+                  </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
+                >OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
