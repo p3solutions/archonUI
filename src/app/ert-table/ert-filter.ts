@@ -293,9 +293,9 @@ export const filterOperationList: FilterOperationList[] = [
     { operation: 'is not null', dataType: 'DATE' },
     { operation: '=', dataType: 'BOOLEAN' },
     { operation: '!=', dataType: 'BOOLEAN' },
-    { operation: '=', dataType: '' },
-    { operation: '!=', dataType: '' },
-    { operation: 'like', dataType: '' },
-    { operation: 'is null', dataType: '' },
-    { operation: 'is not null', dataType: '' }
+    { operation: '=', dataType: 'STRING' },
+    { operation: '!=', dataType: 'STRING' },
+    { operation: 'like', dataType: 'STRING' },
+    { operation: 'is null', dataType: 'STRING' },
+    { operation: 'is not null', dataType: 'STRING' }
 ];

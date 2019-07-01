@@ -168,7 +168,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     editWS(workspace) {
         this.WSListInfo = workspace;
         this.wsName = workspace.workspaceName;
-        this.wsDesc = workspace.requestMessage;
+        this.wsDesc = workspace.description;
         this.WSeditId = workspace.id;
     }
     updateWS() {

@@ -303,7 +303,7 @@
                             </select>
                           </div>
                           <div class="form-group">
-                            <select #selectcondition (clc)="filterColumnSelectionChange(node.column)"
+                            <select #selectcondition
                               [(ngModel)]="node.condition" class="form-control">
                               <option [ngValue]="null" selected>Select condition</option>
                               <option [value]="item.operation" *ngFor="let item of filterOperationList">
