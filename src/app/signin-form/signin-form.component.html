@@ -19,6 +19,9 @@
           <input type="password" matInput name="signin-password" formControlName="password" placeholder="Password" (keyup)="enableSignIn()">
         </mat-form-field>
         </div>
+        <div id="recaptcha">
+        <re-captcha (resolved)="resolved($event)" siteKey="6LcOuyYTAAAAAHTjFuqhA52fmfJ_j5iFk5PsfXaU"></re-captcha>
+        </div>
         <div id="error-block" class="col-md-12 form-group">
           <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close"  (click)="closeErrorMsg()" aria-label="Close">

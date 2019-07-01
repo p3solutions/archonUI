@@ -19,6 +19,8 @@ export class SigninFormComponent implements OnInit {
   inProgress = false;
   enableSignInBtn = false;
   workspaceUrl = '/workspace';
+  recaptchaModel = '';
+
   constructor(
     private signinService: SigninFormService,
     private router: Router
@@ -67,7 +69,7 @@ export class SigninFormComponent implements OnInit {
     this.errorObject = null;
   }
   enableSignIn() {
-    if (this.signInForm.value.userId && this.signInForm.value.password) {
+    if (this.signInForm.value.userId && this.signInForm.value.password && this.recaptchaModel !== '') {
       this.enableSignInBtn = true;
     } else {
       this.enableSignInBtn = false;
@@ -81,4 +83,9 @@ export class SigninFormComponent implements OnInit {
     }
     this.router.navigateByUrl(redirectUrl);
   }
+
+  resolved(captchaResponse: string) {
+    this.recaptchaModel = captchaResponse;
+    this.enableSignIn();
+}
 }

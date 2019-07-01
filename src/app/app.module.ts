@@ -148,6 +148,7 @@ import { OnlyuppercaseallowDirective } from './ert-table/onlyuppercaseallow.dire
 import { ChangeOverflowDirective } from './change-overflow.directive';
 import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -282,7 +283,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 MatSelectInfiniteScrollModule,
                 FlexLayoutModule,
                 NgxSpinnerModule, MatInputModule, MatSortModule,
-                NgxTrimDirectiveModule
+                NgxTrimDirectiveModule,
+                RecaptchaModule.forRoot()
         ],
         providers: [
                   EnvironmentService,
