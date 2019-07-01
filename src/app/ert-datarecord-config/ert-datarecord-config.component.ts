@@ -110,6 +110,16 @@ export class ErtDatarecordConfigComponent implements OnInit {
               name: value.tableName,
               visible: true,
             };
+            const TableList = [];
+            const obj = {
+                       'primaryTableId' : value.tableId,
+                       'primaryTableName' : value.tableName,
+                       'childTable' : ''
+                       };
+            TableList.push(obj);
+            this.joinListMap.set(value.tableName, TableList);
+            this.enableNextBtn = true;
+            console.log(this.joinListMap);
             this.createchart();
           }
     });
