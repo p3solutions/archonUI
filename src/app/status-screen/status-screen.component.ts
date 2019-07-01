@@ -25,6 +25,7 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   errorObject: ErrorObject;
   @ViewChild('click') button: ElementRef;
   @ViewChild('click1') button1: ElementRef;
+  @ViewChild('terminateconfirmation') terminate: ElementRef;
   startIndex = 1;
   displayedColumns: string[] = ['jobName', 'userid', 'Job Origin', 'jobInfo.startTime', 'Start Time',
     'End Time', 'Status', 'Details', 'Retry', 'Stop', 'Download'];
@@ -35,6 +36,8 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   responsemsg;
   jobArray: { common: any, input: any, message: any, output: any, serverConfiguration: any }[] = [];
   expandDefault = false;
+  terminateJobID;
+
 
   constructor(
     private router: Router,
@@ -171,15 +174,22 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
     a.dispatchEvent(e);
   }
 
-  stopJob(id) {
+  stopJob() {
     const el: HTMLElement = this.button1.nativeElement as HTMLElement;
-    this.statusService.terminateJob(id).subscribe((result: any) => {
+    this.statusService.terminateJob(this.terminateJobID).subscribe((result: any) => {
       if (result) {
         this.responsemsg = result.data;
+        el.click();
       }
     }, (err: HttpErrorResponse) => {
       this.responsemsg = err.error.message;
+      el.click();
     });
-    el.click();
+  }
+
+  terminateConfirmation(id) {
+   this.terminateJobID = id;
+   const el: HTMLElement = this.terminate.nativeElement as HTMLElement;
+   el.click();
   }
 }

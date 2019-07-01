@@ -53,7 +53,9 @@ export class WorkspaceInfoComponent implements OnInit {
     this.workspaceinfoservice.getWorkSpaceInfo(workspaceId).subscribe(data => {
       this.isAvailable = true;
       this.workspaceInfoData = data;
-      this.userinfoservice.getUserRole(data.loggedInUserRole.name);
+      if (data.loggedInUserRole !== undefined) {
+        this.userinfoservice.getUserRole(data.loggedInUserRole.name);
+      }
       this.setLoggedInUserRole(this.workspaceInfoData.members);
     });
   }
