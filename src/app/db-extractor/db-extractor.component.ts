@@ -173,11 +173,11 @@ export class DbExtractorComponent implements OnInit {
         }
       }
   }
-  updateaccess(event) {
-    if (event === true) {
-      this.ExtractDatacheck = false;
-    }  else {
+  updateaccess() {
+    if (this.processDetailsObj.incTable === false && this.processDetailsObj.incView === false) {
       this.ExtractDatacheck = true;
+    }  else {
+      this.ExtractDatacheck = false;
     }
 
   }

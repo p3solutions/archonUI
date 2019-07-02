@@ -194,8 +194,8 @@
         </div>
         </div>
         <div class="col-md-12">
-        <div class="col-md-6"><mat-checkbox (change)="enableNextBtnFn()" name="incTable" [(ngModel)]="processDetailsObj.incTable">Include Table</mat-checkbox></div>
-        <div class="col-md-6"><mat-checkbox (change)="enableNextBtnFn()" name="incView" [(ngModel)]="processDetailsObj.incView">Include Views</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox (change)="updateaccess()" name="incTable" [(ngModel)]="processDetailsObj.incTable">Include Table</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox (change)="updateaccess()" name="incView" [(ngModel)]="processDetailsObj.incView">Include Views</mat-checkbox></div>
       </div>
       <div class="col-md-12">
         <div class="col-md-6"><mat-checkbox  name="xmlXDBCompability" [(ngModel)]="processDetailsObj.xmlXDBCompability">Date in XML for XML compability</mat-checkbox></div>
