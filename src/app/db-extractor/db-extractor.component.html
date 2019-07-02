@@ -77,10 +77,7 @@
                required (selectionChange)="getOutputFormatListBySecProcess(processSelector.value)">
                   <mat-option [value]="null">Select Process To Excecute</mat-option>
                   <mat-option *ngFor="let item of processList" [value]="item">{{item}}</mat-option>
-                  <!-- <mat-option value="Data">Extract Data</mat-option>
-                  <mat-option value="Query">Execute Query</mat-option>
-                  <mat-option value="Count">Get Record Count</mat-option> -->
-              </mat-select>
+                </mat-select>
             </mat-form-field>
           </div>
           <div class="col-md-6">           
@@ -163,8 +160,9 @@
         <div class="col-md-6">
             <mat-form-field>
                 <mat-label>XML File Split Size(MB)</mat-label>
-                <mat-select [ngModel]="processDetailsObj?.xmlSplitFileSize" (selectionChange)="setXMLFileSplitSize($event.value)">
-                    <mat-option [value]="100">100</mat-option> 
+                <mat-select [ngModel]="processDetailsObj?.xmlSplitFileSize" name="xmlSplitFileSize" (selectionChange)="setXMLFileSplitSize($event.value)">
+                    <!-- <mat-option *ngFor="let item of outputFormatList" [value]="item">{{item}}</mat-option>    -->
+                  <mat-option [value]="100">100</mat-option> 
                     <mat-option [value]="200">200</mat-option> 
                     <mat-option [value]="300">300</mat-option> 
                     <mat-option [value]="400">400</mat-option> 
@@ -180,7 +178,7 @@
         <div class="col-md-6">
             <mat-form-field>
                 <mat-label>Maximum Parallel Process</mat-label>
-                <mat-select [ngModel]="processDetailsObj?.maxParallelProcess" (selectionChange)="setMaxParallelProcess($event.value)">
+                <mat-select [ngModel]="processDetailsObj?.maxParallelProcess" name="maxParallelProcess" (selectionChange)="setMaxParallelProcess($event.value)">
                     <mat-option [value]="1">1</mat-option> 
                     <mat-option [value]="2">2</mat-option> 
                     <mat-option [value]="3">3</mat-option> 
@@ -196,12 +194,12 @@
         </div>
         </div>
         <div class="col-md-12">
-        <div class="col-md-6"><mat-checkbox  (ngModelChange)="updateaccess($event);processDetailsObj.incTable=$event" [ngModel]="processDetailsObj?.incTable">Include Table</mat-checkbox></div>
-        <div class="col-md-6"><mat-checkbox  (ngModelChange)="processDetailsObj.incView=$event" [ngModel]="processDetailsObj?.incView">Include Views</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox (change)="enableNextBtnFn()" name="incTable" [(ngModel)]="processDetailsObj.incTable">Include Table</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox (change)="enableNextBtnFn()" name="incView" [(ngModel)]="processDetailsObj.incView">Include Views</mat-checkbox></div>
       </div>
       <div class="col-md-12">
-        <div class="col-md-6"><mat-checkbox (ngModelChange)="processDetailsObj.xmlXDBCompability=$event" [ngModel]="processDetailsObj?.xmlXDBCompability">Date in XML for XML compability</mat-checkbox></div>
-        <div class="col-md-6"><mat-checkbox (ngModelChange)="processDetailsObj.extractLOBWithXML=$event" [ngModel]="processDetailsObj?.extractLOBWithXML">Extract LOB Within XML</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox  name="xmlXDBCompability" [(ngModel)]="processDetailsObj.xmlXDBCompability">Date in XML for XML compability</mat-checkbox></div>
+        <div class="col-md-6"><mat-checkbox  name="extractLOBWithXML" [(ngModel)]="processDetailsObj.extractLOBWithXML">Extract LOB Within XML</mat-checkbox></div>
       </div>
     </div>            
 </div>

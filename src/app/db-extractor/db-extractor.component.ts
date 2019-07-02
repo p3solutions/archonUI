@@ -70,7 +70,6 @@ export class DbExtractorComponent implements OnInit {
   getProcessDetails() {
     this.dbExtractorService.getProcessDetails().subscribe((processDetailsList) => {
       this.processDetailsList = processDetailsList;
-      console.log(this.processDetailsList, 'detatils');
       for (const item of this.processDetailsList) {
         this.processDetailsMap.set(item['process'], item['supportedOutputFormats']);
       }
@@ -89,10 +88,21 @@ export class DbExtractorComponent implements OnInit {
     this.isDisabled = false;
     if (process != null) {
       this.processDetailsObj.process = process;
+      if (process === 'Extract Data') {
+      if (this.processDetailsObj.outputFormat != null ) {
+        this.ExtractData = false;
+      } else {
+        this.ExtractData = true;
+      }
+    }
+    if (this.processDetailsObj.outputFormat === 'sip' && process === 'Get Record Count') {
+      this.sipData = false;
+      this.ExtractData = true;
+    }
       if (process === 'Execute Query') {
         this.isDisabled = true;
         if (this.processDetailsObj.process === 'Execute Query') {
-          if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' && this.processDetailsObj.outputFormat === null
+          if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' && this.processDetailsObj.outputFormat != null
           && this.processDetailsObj.ExecuteQueryObj.query  === '') {
             this.ExtractData = true;
           } else {
@@ -113,18 +123,24 @@ export class DbExtractorComponent implements OnInit {
   }
 
   setOutputFormat(outputFormat: string) {
-    this.ExtractData = true;
+     this.ExtractData = true;
     if (!outputFormat) {
       this.ExtractData = true;
-    } else {
+    }
+    if (this.processDetailsObj.process === 'Get Record Count' && outputFormat != null ) {
       this.ExtractData = false;
     }
-    // if (this.processDetailsObj.process === 'Extract Data' ) {
-    //   this.ExtractData = false;
-    // }
-    // if (this.processDetailsObj.process === 'Get Record Count' ) {
-    //   this.ExtractData = false;
-    // }
+    if (this.processDetailsObj.process === 'Extract Data' || outputFormat != null ) {
+      this.ExtractData = false;
+    }
+    if (this.processDetailsObj.process === 'Execute Query') {
+      if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' && this.processDetailsObj.outputFormat != null
+      && this.processDetailsObj.ExecuteQueryObj.query  === '') {
+        this.ExtractData = true;
+      } else {
+        this.ExtractData = false;
+      }
+    }
     if (outputFormat === 'sip') {
       this.ExtractData = true;
       if (this.processDetailsObj.sipApplicationName === '' && this.processDetailsObj.holdingPrefix === '') {
