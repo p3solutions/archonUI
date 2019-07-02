@@ -23,7 +23,8 @@ describe('DbExtractorComponent', () => {
       declarations: [DbExtractorComponent],
       imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatSelectModule,
         MatButtonToggleModule, MatInputModule, BrowserAnimationsModule, MatInputModule, FormsModule, ReactiveFormsModule],
-      providers: [DbExtractorService, UserinfoService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      providers: [DbExtractorService, UserinfoService, WorkspaceHeaderService,
+        { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

@@ -46,6 +46,7 @@ export class DbExtractorComponent implements OnInit {
   queryFileName = '';
   errorMessgae = '';
   ExtractDatacheck: boolean;
+  queryvalidate: boolean;
 
   constructor(public router: Router, private dbExtractorService: DbExtractorService,
     private workspaceHeaderService: WorkspaceHeaderService, private userinfoService: UserinfoService) {
@@ -84,11 +85,20 @@ export class DbExtractorComponent implements OnInit {
   }
 
   getOutputFormatListBySecProcess(process: string) {
+    this.showFileUpload = false;
     this.isDisabled = false;
     if (process != null) {
       this.processDetailsObj.process = process;
       if (process === 'Execute Query') {
         this.isDisabled = true;
+        if (this.processDetailsObj.process === 'Execute Query') {
+          if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' && this.processDetailsObj.outputFormat === null
+          && this.processDetailsObj.ExecuteQueryObj.query  === '') {
+            this.ExtractData = true;
+          } else {
+            this.ExtractData = false;
+          }
+        }
       }
       this.outputFormatList = this.processDetailsMap.get(process);
       this.processDetailsObj.includeTableRelationship
@@ -103,9 +113,14 @@ export class DbExtractorComponent implements OnInit {
   }
 
   setOutputFormat(outputFormat: string) {
+    this.ExtractData = true;
     if (!outputFormat) {
       this.ExtractData = true;
-    } else {
+    }
+    if (this.processDetailsObj.process === 'Extract Data' ) {
+      this.ExtractData = false;
+    }
+    if (this.processDetailsObj.process === 'Get Record Count' ) {
       this.ExtractData = false;
     }
     if (outputFormat === 'sip') {
@@ -131,14 +146,20 @@ export class DbExtractorComponent implements OnInit {
         this.ExtractData = false;
       }
     }
+    if (this.processDetailsObj.process === 'Execute Query') {
+    if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' || this.processDetailsObj.ExecuteQueryObj.query  === '' ||
+    this.processDetailsObj.outputFormat === null) {
+         this.ExtractData = true;
+        } else {
+          this.ExtractData = false;
+        }
+      }
   }
-  updateaccess() {
-    if (this.processDetailsObj.incTable === true) {
-      console.log(this.processDetailsObj.incTable, 'test');
-      this.ExtractDatacheck = true;
-    }  else {
-      console.log(this.processDetailsObj.incTable, 'test3');
+  updateaccess(event) {
+    if (event === true) {
       this.ExtractDatacheck = false;
+    }  else {
+      this.ExtractDatacheck = true;
     }
 
   }
@@ -152,12 +173,20 @@ export class DbExtractorComponent implements OnInit {
   }
 
   gotoLastStep() {
+    this.queryvalidate = true;
    if (this.showFileUpload) {
     this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = this.queryFileToUpload ?
     this.queryFileToUpload : this.processDetailsObj.ExecuteQueryObj.queryFileToUpload;
       this.processDetailsObj.ExecuteQueryObj.query = '';
     } else {
       this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = null;
+    }
+    if (this.showFileUpload === false && this.processDetailsObj.ExecuteQueryObj.queryTitle !== '' &&
+    this.processDetailsObj.ExecuteQueryObj.query !== '') {
+      this.queryvalidate = false;
+      if (this.validateQuery()) {
+        this.queryvalidate = true;
+      }
     }
     this.dbExtractorService.setProcessDetailsObj(this.processDetailsObj);
   }
@@ -239,35 +268,73 @@ export class DbExtractorComponent implements OnInit {
   // query mode
   setUploadQueryFile(event) {
     this.showFileUpload = event.source.checked;
+    if (this.showFileUpload) {
+      this.ExtractData = true;
+    }
     this.processDetailsObj.ExecuteQueryObj.isQueryFile = this.showFileUpload;
   }
 
   uploadQueryFile(files: FileList) {
     this.uploadData = false;
+    this.ExtractData = true;
     const ext = files.item(0).name.match(/\.([^\.]+)$/)[1];
     this.isQueryFileExist = files != null ? true : false;
-    // if (this.executeQueryForm.value.queryTitle && this.isQueryFileExist
-    //   && this.executeQueryForm.value.isQueryFile === true && ext === 'sql') {
-    //   this.enableNextBtn = false;
-    // }
+    if (this.processDetailsObj.ExecuteQueryObj.queryTitle && this.isQueryFileExist && this.processDetailsObj.outputFormat != null
+      && this.processDetailsObj.ExecuteQueryObj.isQueryFile === true && ext === 'sql') {
+      this.ExtractData = false;
+    }
     this.queryFileToUpload = files.item(0);
     if (ext === 'sql') {
       this.uploadData = true;
       this.queryFileName = files.item(0).name;
       this.ProcessDetailsObj.ExecuteQueryObj.queryFileName = this.queryFileName;
     } else {
-      this.enableNextBtn = true;
+      this.ExtractData = true;
       this.uploadData = true;
       this.queryFileName = 'please upload .sql file only';
     }
   }
 
   closeMessage () {
+    this.ExtractData = true;
     this.uploadData = false;
     this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = null;
   }
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
+
+  validateQuery(): boolean {
+    let isValid = true;
+    const queryTitleList: string[] = [];
+    let queryTitles: string[] = [];
+    let query: string[] = [];
+    query = this.processDetailsObj.ExecuteQueryObj.query.split(';');
+    queryTitles = this.processDetailsObj.ExecuteQueryObj.queryTitle.split(';');
+    for (const queryTitle of queryTitles) {
+      if (queryTitleList.length === 0) {
+        queryTitleList.push(queryTitle);
+        isValid = true;
+      } else {
+        if (!queryTitleList.includes(queryTitle)) {
+          queryTitleList.push(queryTitle);
+          isValid = true;
+        } else {
+          document.getElementById('success-popup-btn').click();
+          this.errorMessgae = 'Duplicate query title is present.';
+          isValid = false;
+          break;
+        }
+      }
+    }
+    if (isValid) {
+      if (queryTitles.length !== query.length) {
+        isValid = false;
+        this.errorMessgae = 'No. of query title is not equal to no. of query, please check.';
+        document.getElementById('success-popup-btn').click();
+      }
+    }
+    return isValid;
   }
 }
