@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
-import { browserRefresh } from '../app.component';
+// import { browserRefresh } from '../app.component';
 
 
 @Component({
@@ -54,9 +54,9 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
      private tablelistService: TableListService, private router: Router) { }
 
   ngOnInit() {
-    if (browserRefresh) {
-      this.router.navigate(['/workspace/workspace-dashboard']);
-    }
+    // if (browserRefresh) {
+    //   this.router.navigate(['/workspace/workspace-dashboard']);
+    // }
     this.workspaceID = this.addDirectJoinService.workspaceID;
     this.directJoin = this.addDirectJoinService.directJoin;
     this.getTableList();
