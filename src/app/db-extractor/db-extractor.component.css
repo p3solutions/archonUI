@@ -18,12 +18,13 @@
 
 .back-arrow-icon {
   margin-top: 20px;
+  margin-bottom: 10px;
   float: left;
-  padding-right: 81px;
 }
 
 .extractor-panel-heading {
-  float: left
+  float: left;
+  padding-left: 20px;
 }
 
 option {
@@ -32,4 +33,213 @@ option {
   font-size: 16px;
   letter-spacing: 0.2
 }
+.sub-right { 
+  float: right;
+  margin-top: 0.7%;  
+  display: -webkit-inline-box;
+}
+.sub-left {  
+  display: inline-block;
+  text-align: right;   
+  margin-top: 10px;
+}
 
+.flex-end {
+  justify-content: flex-end;  
+}
+.flex-container {
+  padding: 0px;
+  margin-bottom: 11px;
+  list-style: none;
+  display: flex;
+}
+
+.flex-item {
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #030303;
+  margin-left: 35px;
+}
+.bg {
+  text-align: left;
+  color: #0c0c0c;
+  background-color: #edf3f8;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  border-radius: 2px;
+  padding: 7px;
+  padding-left: 13px;
+  font-weight: bold;
+}
+.mat-form-field {
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  float: left;
+  width: 100%;
+}
+.mat-checkbox {
+  float: left;
+}
+.action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  transition: 0.5s;
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+ }
+
+.action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  text-transform: inherit;
+  transition: 0.5s;
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
+.action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+.card-height {
+  height: 500px;
+}
+.action-btn button.file {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  transition: 0.5s;
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-bottom: 6px;
+ }
+
+ .action-btn button.file-name {
+  background-color: #edf3f8;
+  border: solid 1px #dddddd;
+  color: #1d1d1d;
+  text-transform: inherit;
+  transition: 0.5s;
+  border-radius: 3px;
+  margin-left: 20px;
+  margin-bottom: 6px;
+  width: 180px;
+ }
+ .mat-slide-toggle {
+   float: left;
+ }
+textarea.mat-input-element {
+  background-color: aliceblue;
+  height: 200px;
+}
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #2879ff !important;
+}
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #92b8f8 !important;
+}
+
+.card {
+  background: #fff;
+  border-radius: 4px;
+  display: inline-block;
+  height: auto;
+  padding: 16px;
+  position: relative;
+}
+.card-3 {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.47);
+ /* box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); */
+}
+::ng-deep .ace-monokai {
+  background-color: #f0f4f7 !important; 
+  color: #000 !important; 
+}
+::ng-deep .ace-monokai .ace_gutter {
+  background: #e9f1f7 !important; 
+  color: #000 !important; 
+}
+::ng-deep .ace-monokai .ace_gutter-active-line {
+  background-color: #e9f1f7 !important;
+}
+::ng-deep .ace-monokai .ace_marker-layer .ace_active-line {
+   background: #e9f1f7 !important;
+}
+
+::ng-deep .ace-monokai .ace_cursor {
+  color: #000 !important;
+}
+.query {
+  font-family: Roboto;
+  font-size: 14px;
+  text-align: left;
+  color: #121212;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+::ng-deep .mat-slide-toggle .mat-slide-toggle-ripple { 
+  height: 0px !important;
+   width: 0px !important;
+}
+::ng-deep .ace-monokai .ace_print-margin {
+  width: 0px !important;
+  background: #555651;
+}
+ ::ng-deep .ace_editor {
+  font: 14px/normal !important;
+  /* font: 14px/normal 'Roboto' !important; */
+} 
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 0px;
+}
+
+.table>tbody>tr>td {
+  text-align: left;
+  padding: 10px 18px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+
+.table-hover>tbody>tr:hover {
+  background-color: #f0f3f7;
+}
+
+td.tdl {
+  color: #121212;
+  font-weight: bold;
+  font-size: 14px;
+  width: 50%;
+}
+
+td.tdr {
+  color: #767676;
+  font-size: 14px;
+}

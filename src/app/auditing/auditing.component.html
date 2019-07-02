@@ -96,7 +96,7 @@
         <ng-container matColumnDef="WorkSpace Name">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> WorkSpace Name </th>
           <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">
-            {{element.workspaceName !== null ? element.workspaceName : 'N/A'}}</td>
+            {{element.workspaceName}}</td>
         </ng-container>
         <ng-container matColumnDef="Related Job ID">
           <th style="width:10%" mat-header-cell *matHeaderCellDef> Related Job ID </th>
@@ -110,7 +110,7 @@
         <ng-container matColumnDef="Service Name">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Service Name</th>
           <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">
-            {{element.serviceId !== null ? element.serviceId : 'N/A'}}</td>
+            {{element.serviceId}}</td>
         </ng-container>
         <ng-container matColumnDef="Event Name">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Event Name </th>

@@ -6,6 +6,7 @@ import * as $ from 'jquery';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NavbarService } from './navbar.service';
 import { UserinfoService } from '../userinfo.service';
+import { browserRefresh } from '../app.component';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,6 @@ import { UserinfoService } from '../userinfo.service';
 })
 export class NavbarComponent implements OnInit {
   info: Info;
-  private router: Router;
   userChangeName: string;
   rolesForManage: string[] = ['ADMIN', 'MANAGE_DB', 'SUPER'];
   enableAuditArray = ['ROLE_AUDIT'];
@@ -26,8 +26,11 @@ export class NavbarComponent implements OnInit {
   loadfirst = 0;
   userid;
 
-  constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService) { }
+  constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService, private router: Router) { }
   ngOnInit() {
+    if (browserRefresh) {
+      this.router.navigate(['/workspace/workspace-dashboard']);
+    }
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
      if (this.enableAuditArray.includes(i)) {

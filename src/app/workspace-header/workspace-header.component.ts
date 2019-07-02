@@ -138,25 +138,15 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
       const id = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
         this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]));
-      // this.router.navigate(['workspace/workspace-dashboard']);
-      // setTimeout(() => {
-
-      // }, 50);
     } else if (route === 'manage-members/:id') {
       const id = this.workspaceHeaderService.getSelectedWorkspaceId();
-      // this.router.navigate(['workspace/workspace-dashboard']);
-      // setTimeout(() => {
       this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
         this.router.navigate(['workspace/workspace-dashboard/manage-members/' + id]));
-      // }, 50);
     } else if (route === 'workspace-info/:id') {
       const id = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
         this.router.navigate(['workspace/workspace-dashboard/workspace-info/' + id]));
     }
-    // this.router.navigate(['workspace/workspace-dashboard']);
-    // setTimeout(() => {
-    // }, 50);
   }
 
   createWorkspace() {
