@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { TableListService } from '../table-list/table-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import * as d3 from 'd3';
-import { getSIPGraphData, getRelationshipListForSip} from '../ert-datarecord-config/tree';
+import { getSIPGraphData, getRelationshipListForSip } from '../ert-datarecord-config/tree';
 import { CompleteArray, getPrimaryArray, getSecondaryArray } from '../ert-datarecord-config/class';
 import { ErtService } from '../ert-landing-page/ert.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-ert-sip-config',
@@ -34,15 +35,21 @@ export class ErtSipConfigComponent implements OnInit {
 
 
   constructor(public router: Router, private tablelistService: TableListService,
-    private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService) { }
+    private workspaceHeaderService: WorkspaceHeaderService, private ertService: ErtService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.spinner.show();
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-      this.tableList = res.tableList;
-      if (res.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      try {
+        this.tableList = res.tableList;
+        if (res.paginationRequired) {
+          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+        }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
     });
     if (this.ertService.data !== undefined) {
       this.data = this.ertService.data;
@@ -51,11 +58,15 @@ export class ErtSipConfigComponent implements OnInit {
       this.selectedPrimaryTable = this.ertService.selectedPrimaryTable;
       this.enableNextBtn = true;
       this.createchart();
-      }
+    }
   }
 
   gotoDataRecFinal() {
-    const RelationSIP = getRelationshipListForSip(this.data);
+    const temp = this.joinListMap.get(this.selectedPrimaryTable);
+    let RelationSIP: any = '';
+    if (temp[0].childTable !== '') {
+      RelationSIP = getRelationshipListForSip(this.data);
+    }
     this.ertService.setschemaResultsTableCount(this.schemaResultsTableCount);
     this.ertService.setSelectValueAndDataOfGraph(this.selectedValues, this.data, this.joinListMap, this.selectedPrimaryTable, RelationSIP);
     this.ertService.isSIPGraphChange = true;
@@ -68,17 +79,24 @@ export class ErtSipConfigComponent implements OnInit {
   getPage(page: number) {
     this.tableList = [];
     this.startIndex = page;
+    this.spinner.show();
     this.tablelistService.getTableList(this.workspaceID, this.startIndex).subscribe((res: any) => {
-      this.tableList = res.tableList;
-      if (res.paginationRequired) {
-        this.schemaResultsTableCount = (this.startIndex + 1) * 50;
-    }
+      try {
+        this.tableList = res.tableList;
+        if (res.paginationRequired) {
+          this.schemaResultsTableCount = (this.startIndex + 1) * 50;
+        }
+        this.spinner.hide();
+      } catch {
+        this.spinner.hide();
+      }
     });
+    this.spinner.hide();
   }
 
   searchTablelist() {
     this.tableList = [];
-     this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
+    this.tablelistService.getTablesearchList(this.workspaceID, this.searchTableName).subscribe((res: any) => {
       this.tableList = res.tableList;
     });
   }
@@ -114,6 +132,16 @@ export class ErtSipConfigComponent implements OnInit {
           name: value.tableName,
           visible: true,
         };
+        const TableList = [];
+        const obj = {
+          'primaryTableId': value.tableId,
+          'primaryTableName': value.tableName,
+          'childTable': ''
+        };
+        TableList.push(obj);
+        this.joinListMap.set(value.tableName, TableList);
+        this.enableNextBtn = true;
+        this.selectedValues.push(value.tableName);
         this.createchart();
       }
     });
@@ -162,7 +190,7 @@ export class ErtSipConfigComponent implements OnInit {
         .append('line')
         .attr('class', 'link')
         .style('stroke', '#000')
-        .style('stroke-dasharray', function(d) { if (d.target.data.color === '#e0e0e0') {return '4,2'; }})
+        .style('stroke-dasharray', function (d) { if (d.target.data.color === '#e0e0e0') { return '4,2'; } })
         .style('opacity', '0.2')
         .style('stroke-width', 2).attr('marker-end', 'url(#end)');
       svg.append('svg:defs').selectAll('marker')
@@ -225,7 +253,7 @@ export class ErtSipConfigComponent implements OnInit {
         }
         if (d.data.id === 'NoRelation') {
           ifSelected = 'No Relationship';
-      }
+        }
         div.transition().duration(200).style('opacity', .9);
         div.html(ifSelected)
           .style('left', (d3.event.pageX - 350) + 'px')
@@ -238,7 +266,7 @@ export class ErtSipConfigComponent implements OnInit {
       });
       nodeEnter.on('mouseout', function () {
         div.transition().duration(500).style('opacity', 0);
-        link.style('stroke-dasharray', function(d) { if (d.target.data.color === '#e0e0e0') {return '4,2'; }});
+        link.style('stroke-dasharray', function (d) { if (d.target.data.color === '#e0e0e0') { return '4,2'; } });
       });
       node = nodeEnter.merge(node);
       simulation.nodes(nodes);
@@ -296,9 +324,9 @@ export class ErtSipConfigComponent implements OnInit {
             const children = d.data.children;
             let eligibleForDeselect = true;
             for (let i of children) {
-            if (i.enableClick) {
-            eligibleForDeselect = false;
-            }
+              if (i.enableClick) {
+                eligibleForDeselect = false;
+              }
             }
             // currentColor = 'white';
             // d.data.enableClick = false;
@@ -318,7 +346,7 @@ export class ErtSipConfigComponent implements OnInit {
     }
 
     function onClickChangeGraph(value) {
-      self.tablelistService.getListOfRelationTableMMR(self.workspaceID, self.ertService.mmrVersion , value.name).subscribe(result => {
+      self.tablelistService.getListOfRelationTableMMR(self.workspaceID, self.ertService.mmrVersion, value.name).subscribe(result => {
         self.relationshipInfo = result;
         self.primaryTable = getPrimaryArray(self.relationshipInfo);
         self.secondaryTable = getSecondaryArray(self.relationshipInfo);

@@ -197,7 +197,7 @@ export class AdhocTableSelectionComponent implements OnInit {
                 }
               }
               if (this.relationshipInfo.length === 0) {
-              this.emptyNested = false;
+                this.emptyNested = false;
               }
             } else {
               this.relationshipInfo = result;
@@ -215,16 +215,25 @@ export class AdhocTableSelectionComponent implements OnInit {
               this.primarytableIdWhenNoRelation = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0].tableId;
               this.relationshipInfo = result;
               this.data = {
-              color: '#ffffff',
-              enableClick: false,
-              id: 'NoRelation',
-              name: value.tableName,
-              visible: true,
+                color: '#ffffff',
+                enableClick: false,
+                id: 'NoRelation',
+                name: value.tableName,
+                visible: true,
               };
-            this.createchart();
+              const TableList = [];
+              const obj = {
+                'primaryTableId': value.tableId,
+                'primaryTableName': value.tableName,
+                'childTable': ''
+              };
+              TableList.push(obj);
+              this.joinListMap.set(value.tableName, TableList);
+              this.selectedValues.push(value.tableName);
+              this.createchart();
             }
           } else {
-            this.primarytableIdWhenNoRelation = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0].tableId;
+          //  this.primarytableIdWhenNoRelation = this.tableList.filter(a => a.tableName === this.selectedPrimaryTable)[0].tableId;
             this.relationshipInfo = result;
             this.data = {
               color: '#ffffff',
@@ -233,6 +242,15 @@ export class AdhocTableSelectionComponent implements OnInit {
               name: value.tableName,
               visible: true,
             };
+            const TableList = [];
+            const obj = {
+              'primaryTableId': value.tableId,
+              'primaryTableName': value.tableName,
+              'childTable': ''
+            };
+            TableList.push(obj);
+            this.joinListMap.set(value.tableName, TableList);
+            this.selectedValues.push(value.tableName);
             this.createchart();
           }
         });

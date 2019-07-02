@@ -34,6 +34,9 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/bootstrap-slider/dist/bootstrap-slider.min.js",
+              "node_modules/ace-builds/src-min/ace.js",
+              "node_modules/ace-builds/src-min/mode-sql.js",
+              "node_modules/ace-builds/src-min/theme-eclipse.js",
               "src/scripts.js"
             ]
           },

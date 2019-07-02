@@ -149,6 +149,7 @@ import { ChangeOverflowDirective } from './change-overflow.directive';
 import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { AceEditorModule } from 'ng2-ace-editor';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -284,7 +285,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 FlexLayoutModule,
                 NgxSpinnerModule, MatInputModule, MatSortModule,
                 NgxTrimDirectiveModule,
-                RecaptchaModule.forRoot()
+                RecaptchaModule.forRoot(),
+                AceEditorModule
         ],
         providers: [
                   EnvironmentService,

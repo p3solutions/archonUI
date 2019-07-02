@@ -21,6 +21,8 @@ export class ProcessDetailsObj {
   process: string = null;
   outputFormat: string = null;
   tableIncRule = '';
+  sipApplicationName = '';
+  holdingPrefix = '';
   includeTableRelationship = false;
   xmlSplitFileSize = 100;
   maxParallelProcess = 3;

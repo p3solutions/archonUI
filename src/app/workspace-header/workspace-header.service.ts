@@ -17,7 +17,7 @@ export class WorkspaceHeaderService {
   }
   getSelectedWorkspaceName() {
     if (this.workspace !== undefined) {
-    return this.workspace.workspaceName;
+      return this.workspace.workspaceName;
     } else {
       return '';
     }
@@ -76,7 +76,15 @@ export class WorkspaceHeaderService {
 
   getDatabaseID() {
     if (this.workspace !== undefined) {
-    return this.workspace.databases[0].id;
+      return this.workspace.databases[0].id;
+    } else {
+      return '';
+    }
+  }
+
+  getSelectedDatabaseType() {
+    if (this.workspace !== undefined) {
+      return this.workspace.databases[0].type;
     } else {
       return '';
     }
