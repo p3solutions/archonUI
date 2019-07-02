@@ -1,8 +1,10 @@
   <div class="modal-dialog" role="schedulejob">
     <div class="modal-content">
-      <div class="modal-header">       
-        <div class="modal-title"><i class="fa fa-clock-o fa-lg" aria-hidden="true"></i><div class="info-r">Schedule Job</div></div>
-      </div>
+        <div class="info-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="fa fa-clock-o fa-lg popup-material-icon-cls" style="font-size: 22px;margin-top: 5px;"></i><div class="pop-title" style="margin-left: 0px;margin-top: -3px;">Schedule Job</div></h4>
+          </div>
+     
       <div class="modal-body">
           <mat-form-field class="example-full-width">
               <input matInput required [(ngModel)]="jobName" placeholder="Job Name">
@@ -53,8 +55,9 @@
             </mat-form-field>
         </div>  
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next" data-dismiss="modal" (click)="emitObject()" [disabled]="jobName == ''">Schedule</button>
-      </div>
+          <div class="action-btn">
+        <button type="button" class="btn cancel btn-padding" data-dismiss="modal">Close</button>
+        <button type="button" class="btn  {{jobName == ''? 'save-disabled': 'save'}} btn-padding" data-dismiss="modal" (click)="emitObject()" [disabled]="jobName == ''">Schedule</button>
+      </div></div>
   </div>
   </div>

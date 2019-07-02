@@ -12,6 +12,7 @@ import { SearchPipe } from '../search.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 
 describe('ErtSipConfigComponent', () => {
   let component: ErtSipConfigComponent;
@@ -20,8 +21,9 @@ describe('ErtSipConfigComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ErtSipConfigComponent, SearchPipe],
-      imports: [FormsModule, RouterTestingModule, HttpClientModule, NgxPaginationModule],
-      providers: [WorkspaceHeaderService, ErtService, TableListService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      imports: [FormsModule, RouterTestingModule, HttpClientModule, NgxPaginationModule, NgxSpinnerModule],
+      providers: [WorkspaceHeaderService, ErtService, TableListService, UserinfoService, NgxSpinnerService,
+         { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ErtService } from '../ert-landing-page/ert.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserinfoService } from '../userinfo.service';
@@ -27,7 +27,7 @@ export class ErtJobsComponent implements OnInit {
   errorMessage = '';
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
-    private workspaceHeaderService: WorkspaceHeaderService, private router: Router) { }
+    private workspaceHeaderService: WorkspaceHeaderService, private router: Router, public cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.ertService.ertJobParams = new ErtJobParams();
@@ -74,6 +74,11 @@ export class ErtJobsComponent implements OnInit {
         // this.errorMessage = err.error.message;
       }
     });
+  }
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterViewInit() {
+    this.cdRef.detectChanges();
   }
 
   gotoEditJob(ertJobId: string, jobStatus: string) {

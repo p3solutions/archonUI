@@ -300,26 +300,9 @@ export class ErtTableColumnConfigComponent implements OnInit {
   }
 
   drawTableRelationship() {
-    this.graphInstance = graphviz('#graph', this.option).attributer(this.attributer).renderDot(this.dotString);
+    this.graphInstance = graphviz('#graph', this.option).transition(this.transitionFactory)
+      .tweenShapes(false).attributer(this.attributer).renderDot(this.dotString);
     this.resetZoom();
-    // const root = this.graphInstance._selection;
-    // const svg = d3.select(root.node().querySelector('svg'));
-    // function zoomed() {
-    //   const g = d3.select(svg.node().querySelector('g'));
-    //   // console.log(d3.event.transform);
-    //   // if (this.firstClick === true) {
-    //   //   g.attr('transform', 'translate(15,120)');
-    //   // } else {
-    //   //   this.firstClick = false;
-    //   //   g.attr('transform', d3.event.transform);
-    //   // }
-    //   g.attr('transform', d3.event.transform);
-    //   console.log(d3.event.transform);
-    // }
-    // const zoomBehavior = zoom().scaleExtent(this.option.zoomScaleExtent)
-    //   .interpolate(interpolate).on('zoom', zoomed);
-    // svg.call(zoomBehavior);
-    // zoomTransform(svg.node());
   }
 
   resetZoom() {
@@ -331,11 +314,23 @@ export class ErtTableColumnConfigComponent implements OnInit {
     if (datum.tag === 'svg') {
       const width = window.innerWidth;
       const height = window.innerHeight;
+      const x = 200;
+      const y = 20;
+      const scale = 2;
       selection
-        .attr('width', width)
-        .attr('height', height);
-      datum.attributes.width = width - 30;
-      datum.attributes.height = height - 30;
+        .attr('width', width + 'pt')
+        .attr('height', height + 'pt')
+        .attr('viewBox', -x + ' ' + -y + ' ' + (width / scale) + ' ' + (height / scale));
+      datum.attributes.width = width + 'pt';
+      datum.attributes.height = height + 'pt';
+      datum.attributes.viewBox = -x + ' ' + -y + ' ' + (width / scale) + ' ' + (height / scale);
     }
+  }
+
+  transitionFactory() {
+    return d3.transition("main")
+      .ease(d3.easeLinear)
+      .delay(40)
+      .duration(300 * 3);
   }
 }
