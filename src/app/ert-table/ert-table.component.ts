@@ -41,12 +41,12 @@ export class ErtTableComponent implements OnInit {
   ertJobId = '';
   configColumnObject: {
     selectedColumnName: string, selectedConfigFunction: string, param: string
-    outputType: string, startIndex: number, endIndex: number
+    outputType: string, startIndex: number, endIndex: number, addDateTimeNumber: number
   } =
-    { selectedColumnName: '', selectedConfigFunction: null, outputType: '', startIndex: 1, endIndex: 1, param: '' };
+    { selectedColumnName: '', selectedConfigFunction: null, outputType: '', startIndex: 1, endIndex: 1, param: '', addDateTimeNumber: 1 };
   configColumnList: {
     selectedColumnName: string, selectedConfigFunction: string, outputType: string, startIndex: number, param: string,
-    endIndex: number
+    endIndex: number, addDateTimeNumber: number;
   }[] = [];
   selectedTableId = '';
   configColumnQuery = '';
@@ -427,11 +427,13 @@ export class ErtTableComponent implements OnInit {
           tempObj.tableName = temp[0].primaryTableName;
           tempObj.modifiedTableName = temp[0].primaryTableName;
           tempObj.isSelected = true;
-          const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
-          if (relatedTable !== undefined) {
-            for (const rel of relatedTable) {
-              if (rel !== undefined) {
-                tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
+          if (this.ertService.RelationSIP) {
+            const relatedTable = this.ertService.RelationSIP.filter(a => a.id === tempObj.tableId)[0].children;
+            if (relatedTable !== undefined) {
+              for (const rel of relatedTable) {
+                if (rel !== undefined) {
+                  tempObj.relatedTableDetails.push({ tableId: rel.id, tableName: rel.name });
+                }
               }
             }
           }
@@ -666,34 +668,24 @@ export class ErtTableComponent implements OnInit {
 
   setColumnConfigObj(value: string) {
     this.configColumnObject.selectedConfigFunction = value;
-    // if (value === 'SUBSTRING' && (this.substringEndIndex === null || this.substringStartIndex === null)) {
-    //   this.disabledAddColumnConfigBtn = true;
-    // } else {
-    //   this.disabledAddColumnConfigBtn = false;
-    // }
   }
 
-  openModelForColumnConfig(columnName: string, dataType: string) {
-    if (dataType !== 'USERDEFINED') {
+  openModelForColumnConfig(columnName: string, inputType: string) {
+    if (inputType !== 'USERDEFINED') {
+      const dbName = this.workspaceHeaderService.getSelectedDatabaseType();
       this.configColumnList = [];
       this.configColumnQuery = '';
       let outputType = '';
       this.configColumnObject.selectedColumnName = columnName;
       this.configColumnObject = {
         selectedColumnName: columnName, selectedConfigFunction: null, outputType: null, param: '',
-        startIndex: 1, endIndex: 1
+        startIndex: 1, endIndex: 1, addDateTimeNumber: 1
       };
-      if (dataType.trim().toUpperCase() === 'SMALLINT' ||
-        dataType.trim().toUpperCase() === 'INT' || dataType.trim().toUpperCase() === 'BIGINT'
-        || dataType.trim().toUpperCase() === 'DECIMAL') {
-        dataType = 'INT';
-      } else if (dataType.trim().toUpperCase() === 'BIT') {
-        dataType = '';
-      } else {
-        dataType = 'VARCHAR';
-      }
+      this.columnConfigFunctionList = [];
+      inputType = this.getInputType(columnName);
       if (this.columnConfigFunctionList.length === 0) {
-        this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.toUpperCase() === dataType.trim().toUpperCase());
+        this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.inputType.toUpperCase() === inputType.trim().toUpperCase()
+          && a.dbName.trim().toUpperCase() === dbName.trim().toUpperCase());
       }
       const temp = this.selectedTableList.filter
         (a => a.tableId === this.selectedTableId)[0].columnList.filter(b => b.originalColumnName === columnName)[0];
@@ -704,15 +696,8 @@ export class ErtTableComponent implements OnInit {
       if (this.configColumnList.length !== 0) {
         // Set function list acc to the last function.
         outputType = this.configColumnList[this.configColumnList.length - 1].outputType;
-        this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.outputType.trim().toUpperCase() ===
-          outputType.trim().toUpperCase());
-      }
-      if (outputType.trim().toUpperCase() === 'NUMBER') {
-        // remove length function in case of number.
-        const index = this.columnConfigFunctionList.findIndex(a => a.function === 'LENGTH');
-        if (index !== -1) {
-          this.columnConfigFunctionList.splice(index, 1);
-        }
+        this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.inputType.trim().toUpperCase() ===
+          outputType.trim().toUpperCase() && a.dbName.trim().toUpperCase() === dbName.trim().toUpperCase());
       }
     }
   }
@@ -721,6 +706,7 @@ export class ErtTableComponent implements OnInit {
     let tempString = '';
     let outputType = '';
     this.disabledAddColumnConfigBtn = false;
+    const dbName = this.workspaceHeaderService.getSelectedDatabaseType();
     if (this.configColumnObject.selectedConfigFunction !== null) {
       this.configColumnObject.outputType = this.columnConfigFunctionList.
         filter(a => a.function === this.configColumnObject.selectedConfigFunction)[0].outputType;
@@ -732,11 +718,23 @@ export class ErtTableComponent implements OnInit {
       if (item === 0 && this.configColumnList[0].selectedConfigFunction.trim().toUpperCase() === 'SUBSTRING') {
         tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempColumnName + ',' +
           this.configColumnList[item].startIndex + ',' + this.configColumnList[item].endIndex + ')';
+      } else if (item === 0 && this.configColumnList[0].selectedConfigFunction.trim().toUpperCase() === 'ADDDATE') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempColumnName + ',' +
+          this.configColumnList[item].addDateTimeNumber + ')';
+      } else if (item === 0 && this.configColumnList[0].selectedConfigFunction.trim().toUpperCase() === 'ADDTIME') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempColumnName + ',' +
+          this.configColumnList[item].addDateTimeNumber + ')';
       } else if (item === 0 && this.configColumnList[0].selectedConfigFunction.trim().toUpperCase() !== 'SUBSTRING') {
         tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempColumnName + ')';
       } else if (this.configColumnList[item].selectedConfigFunction.trim().toUpperCase() === 'SUBSTRING') {
         tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempString + ',' +
           this.configColumnList[item].startIndex + ',' + this.configColumnList[item].endIndex + ')';
+      } else if (this.configColumnList[item].selectedConfigFunction.trim().toUpperCase() === 'ADDDATE') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempString + ',' +
+          this.configColumnList[item].addDateTimeNumber + ')';
+      } else if (this.configColumnList[item].selectedConfigFunction.trim().toUpperCase() === 'ADDTIME') {
+        tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempString + ',' +
+          this.configColumnList[item].addDateTimeNumber + ')';
       } else if (this.configColumnList[item].selectedConfigFunction.trim().toUpperCase() !== 'SUBSTRING') {
         tempString = this.configColumnList[item].selectedConfigFunction + '(' + tempString + ')';
       }
@@ -747,38 +745,18 @@ export class ErtTableComponent implements OnInit {
     // end
     this.configColumnObject = {
       selectedColumnName: tempColumnName, selectedConfigFunction: null, outputType: null, param: '',
-      startIndex: 1, endIndex: 1
+      startIndex: 1, endIndex: 1, addDateTimeNumber: 1
     };
     if (this.configColumnList.length !== 0) {
       // Set function list acc to the last function.
       outputType = this.configColumnList[this.configColumnList.length - 1].outputType;
-      this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.outputType.trim().toUpperCase() ===
-        outputType.trim().toUpperCase());
+      this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.inputType.trim().toUpperCase() ===
+        outputType.trim().toUpperCase() && a.dbName.trim().toUpperCase() === dbName.trim().toUpperCase());
     } else {
       // set to original function if length is zero.
-      let tempDataType = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0]
-        .columnList.filter(b => b.originalColumnName.trim().toUpperCase() === tempColumnName.trim().toUpperCase())[0].dataType;
-      if (tempDataType.trim().toUpperCase() === 'SMALLINT' ||
-        tempDataType.trim().toUpperCase() === 'INT' || tempDataType.trim().toUpperCase() === 'BIGINT'
-        || tempDataType.trim().toUpperCase() === 'DECIMAL') {
-        tempDataType = 'INT';
-      } else if (tempDataType.trim().toUpperCase() === 'BIT') {
-        tempDataType = '';
-      } else {
-        tempDataType = 'VARCHAR';
-      }
-      this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.dataType.trim().toUpperCase() ===
-        tempDataType.trim().toUpperCase());
-    }
-    if (outputType.trim().toUpperCase() === 'NUMBER') {
-      // remove length function in case of number.
-      const index = this.columnConfigFunctionList.findIndex(a => a.function === 'LENGTH');
-      if (index !== -1) {
-        this.columnConfigFunctionList.splice(index, 1);
-      }
-    } else if (this.configColumnList.length !== 0) {
-      // insert length function in case of other datatype.
-      this.columnConfigFunctionList.push({ function: 'LENGTH', dataType: 'VARCHAR', outputType: 'NUMBER' });
+      const tempInputType = this.getInputType(tempColumnName);
+      this.columnConfigFunctionList = columnConfigFunctionList.filter(a => a.inputType.trim().toUpperCase() ===
+        tempInputType.trim().toUpperCase() && a.dbName.trim().toUpperCase() === dbName.trim().toUpperCase());
     }
     this.configColumnQuery = tempString;
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
@@ -787,10 +765,51 @@ export class ErtTableComponent implements OnInit {
     tempColumnList.userColumnQuery = JSON.stringify(this.configColumnList).replace(/"/g, '\'');
   }
 
-  setSubStringStartEndIndex(value) {
-    if (this.configColumnObject.endIndex !== null && this.configColumnObject.startIndex !== null) {
-      this.disabledAddColumnConfigBtn = false;
+  getInputType(columnName): string {
+    let tempInputType = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0]
+      .columnList.filter(b => b.originalColumnName.trim().toUpperCase() === columnName.trim().toUpperCase())[0].dataType;
+    if (tempInputType.trim().toUpperCase() === 'SMALLINT'
+      || tempInputType.trim().toUpperCase() === 'INT'
+      || tempInputType.trim().toUpperCase() === 'BIGINT'
+      || tempInputType.trim().toUpperCase() === 'DECIMAL'
+      || tempInputType.trim().toUpperCase() === 'LONG'
+      || tempInputType.trim().toUpperCase() === 'INTEGER'
+      || tempInputType.trim().toUpperCase() === 'FLOAT'
+      || tempInputType.trim().toUpperCase() === 'DOUBLE'
+      || tempInputType.trim().toUpperCase() === 'SINGLE'
+      || tempInputType.trim().toUpperCase() === 'CURRENCY'
+      || tempInputType.trim().toUpperCase() === 'AUTONUMBER'
+      || tempInputType.trim().toUpperCase() === 'SMALLINT'
+      || tempInputType.trim().toUpperCase() === 'BIGINT'
+      || tempInputType.trim().toUpperCase() === 'DECIMAL'
+      || tempInputType.trim().toUpperCase() === 'NUMERIC'
+      || tempInputType.trim().toUpperCase() === 'REAL'
+      || tempInputType.trim().toUpperCase() === 'DEC'
+      || tempInputType.trim().toUpperCase() === 'DOUBLE PRECISION'
+      || tempInputType.trim().toUpperCase() === 'BINARY_FLOAT'
+      || tempInputType.trim().toUpperCase() === 'BINARY_DOUBLE'
+      || tempInputType.trim().toUpperCase() === 'MONEY'
+      || tempInputType.trim().toUpperCase() === 'TINYINT'
+      || tempInputType.trim().toUpperCase() === 'SMALLMONEY') {
+      tempInputType = 'NUMBER';
+    } else if (tempInputType.trim().toUpperCase() === 'BIT' || tempInputType.trim().toUpperCase() === 'BOOLEAN') {
+      tempInputType = 'BOOLEAN';
+    } else if (tempInputType.trim().toUpperCase() === 'TIMESTAMP' || tempInputType.trim().toUpperCase() === 'DATETIME'
+      || tempInputType.trim().toUpperCase() === 'DATE'
+      || tempInputType.trim().toUpperCase() === 'TIMESTAMP'
+      || tempInputType.trim().toUpperCase() === 'INTERVAL'
+      || tempInputType.trim().toUpperCase() === 'TIMESTAMP WITH LOCAL TIME ZONE'
+      || tempInputType.trim().toUpperCase() === 'TIMESTAMP WITH TIME ZONE'
+      || tempInputType.trim().toUpperCase() === 'DATETIME'
+      || tempInputType.trim().toUpperCase() === 'DATETIME2'
+      || tempInputType.trim().toUpperCase() === 'SMALLDATETIME'
+      || tempInputType.trim().toUpperCase() === 'DATETIMEOFFSET'
+    ) {
+      tempInputType = 'DATE';
+    } else {
+      tempInputType = 'STRING';
     }
+    return tempInputType;
   }
 
   selectColumns(columnName: string, isSelected: boolean) {
@@ -836,21 +855,38 @@ export class ErtTableComponent implements OnInit {
 
   createUsrDefinedCONCATString() {
     let tempQueryString = '';
-    for (const item of this.userDefinedList) {
-      if (item.prefix !== '') {
-        tempQueryString = tempQueryString + '\'' + item.prefix + '\',';
+    const dbName = this.workspaceHeaderService.getSelectedDatabaseType();
+    if (dbName === 'MYSQL' || dbName === 'ORACLE' || dbName === 'TERADATA' || dbName === 'DB2' || dbName === 'SYBASE') {
+      for (const item of this.userDefinedList) {
+        if (item.prefix !== '') {
+          tempQueryString = tempQueryString + '\'' + item.prefix + '\',';
+        }
+        if (item.column !== '') {
+          tempQueryString = tempQueryString + item.column + ',';
+        }
+        if (item.suffix !== '') {
+          tempQueryString = tempQueryString + '\'' + item.suffix + '\',';
+        }
       }
-      if (item.column !== '') {
-        tempQueryString = tempQueryString + item.column + ',';
+      if (tempQueryString.length > 1) {
+        this.usrDefinedQueryView = 'CONCAT(' + tempQueryString.trim().toUpperCase().
+          substring(0, tempQueryString.trim().toUpperCase().length - 1) + ')';
+      } else {
+        this.usrDefinedQueryView = '';
       }
-      if (item.suffix !== '') {
-        tempQueryString = tempQueryString + '\'' + item.suffix + '\',';
-      }
-    }
-    if (tempQueryString.length > 1) {
-      this.usrDefinedQueryView = 'CONCAT(' + tempQueryString.substring(0, tempQueryString.length - 1) + ')';
     } else {
-      this.usrDefinedQueryView = '';
+      for (const item of this.userDefinedList) {
+        if (item.prefix !== '') {
+          tempQueryString = tempQueryString + 'CAST(\'' + item.prefix + '\' AS VARCHAR) + ';
+        }
+        if (item.column !== '') {
+          tempQueryString = tempQueryString + 'CAST(' + item.column + ' AS VARCHAR) + ';
+        }
+        if (item.suffix !== '') {
+          tempQueryString = tempQueryString + 'CAST(\'' + item.suffix + '\' AS VARCHAR) + ';
+        }
+      }
+      this.usrDefinedQueryView = tempQueryString.trim().toUpperCase().substring(0, tempQueryString.trim().toUpperCase().length - 1);
     }
     this.setQueryModeUserDefined();
   }
@@ -879,7 +915,8 @@ export class ErtTableComponent implements OnInit {
   gotoExtractDigestExtraction() {
     if (this.checkForColumnSelectValidation()) {
       if (this.selectedTableList.filter(a => a.isSelected === true).length === 0) {
-        this.errorMsg = 'Please select a table';
+        this.errorMessagesForSelection = 'Please select at least one table to proceed.';
+        document.getElementById('warning-popup-btn').click();
       } else {
         this.selectedTableList = this.selectedTableList.filter(a => a.columnList.length !== 0);
         this.ertService.setSelectedList(this.selectedTableList, this.schemaResultsTableCount, this.storeSelectedTables);
@@ -910,7 +947,15 @@ export class ErtTableComponent implements OnInit {
     const length = isColumnNameExist.length;
     if (!this.disabledUserDefinedColName) {
       if (length !== 1) {
-        this.saveUserDefined();
+        const checkUndefinedColumnExist = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList
+          .filter(b => b.originalColumnName.trim().toUpperCase().includes(this.usrDefinedColumnName.trim().toUpperCase()));
+        const lengthuserdefined = checkUndefinedColumnExist.length;
+        if (lengthuserdefined !== 1) {
+          this.saveUserDefined();
+        } else {
+          this.usrDefinedAlertMessage = 'Kindly provide different column name.';
+          document.getElementById('query-alert').classList.remove('alert-hide');
+        }
       } else {
         this.usrDefinedAlertMessage = 'Kindly provide different column name.';
         document.getElementById('query-alert').classList.remove('alert-hide');
@@ -928,7 +973,7 @@ export class ErtTableComponent implements OnInit {
       this.validateCombinedColumnQueryMode();
       this.setQueryModeUserDefined();
     }
-    this.disabledUserDefinedColName = false;
+    // this.disabledUserDefinedColName =  false;
   }
 
   saveUserDefinedAfterValidate() {
@@ -995,15 +1040,44 @@ export class ErtTableComponent implements OnInit {
 
 
   validateCombinedColumnQueryMode() {
-    if (this.userDefinedList.length < 2) {
-      this.usrDefinedAlertMessage = 'Invalid Query, please add two columns to create combined column query.';
-      this.toCreateQuery = false;
-      document.getElementById('query-alert').classList.remove('alert-hide');
+    const dbName = this.workspaceHeaderService.getSelectedDatabaseType();
+    if (dbName.trim().toUpperCase() === 'MYSQL' || dbName.trim().toUpperCase() === 'ORACLE'
+      || dbName.trim().toUpperCase() === 'TERADATA' || dbName.trim().toUpperCase() === 'DB2' || dbName.trim().toUpperCase() === 'SYBASE') {
+      if (this.userDefinedList.length !== 0) {
+        if (this.validateMYSQLCombinedColumnQueryMode() <= 1) {
+          this.usrDefinedAlertMessage = 'Definition Should join at least column with' +
+            ' a suffix or prefix or another column or a combination of all.';
+          this.toCreateQuery = false;
+          document.getElementById('query-alert').classList.remove('alert-hide');
+        } else {
+          this.usrDefinedAlertMessage = '';
+          this.toCreateQuery = true;
+          this.saveUserDefinedAfterValidate();
+        }
+      }
     } else {
       this.usrDefinedAlertMessage = '';
       this.toCreateQuery = true;
       this.saveUserDefinedAfterValidate();
     }
+  }
+
+
+  validateMYSQLCombinedColumnQueryMode(): number {
+    let tempQueryString = '';
+    for (const item of this.userDefinedList) {
+      if (item.prefix !== '') {
+        tempQueryString = tempQueryString + '\'' + item.prefix + '\',';
+      }
+      if (item.column !== '') {
+        tempQueryString = tempQueryString + item.column + ',';
+      }
+      if (item.suffix !== '') {
+        tempQueryString = tempQueryString + '\'' + item.suffix + '\',';
+      }
+    }
+    const result = tempQueryString.split(',');
+    return result.filter(a => a !== '').length;
   }
 
   closeUserDefinedAlert() {
@@ -1055,11 +1129,11 @@ export class ErtTableComponent implements OnInit {
     this.maxNode = 3;
     let filterMap = new Map();
     this.filterWhereClause = '';
-    this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === '');
-    this.filterConfigColumnNameList = this.selectedTableList.filter
-      (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
-    this.orderFilterConfigColumnNameList = this.selectedTableList.filter
-      (a => a.tableId === this.selectedTableId)[0].columnList.map(function (item) { return item['originalColumnName']; });
+    this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === 'STRING');
+    const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.
+      filter(a => a.dataType.trim().toUpperCase() !== 'USERDEFINED');
+    this.filterConfigColumnNameList = tempObj.map(function (item) { return item['originalColumnName']; });
+    this.orderFilterConfigColumnNameList = tempObj.map(function (item) { return item['originalColumnName']; });
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
     const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, 0, []);
     this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
@@ -1351,19 +1425,10 @@ export class ErtTableComponent implements OnInit {
 
   filterColumnSelectionChange(columnName) {
     let type = '';
-    const tempSelectedTableColumns = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList;
-    const dataType = tempSelectedTableColumns.filter(a => a.originalColumnName === columnName)[0].dataType;
-    if (dataType.trim().toUpperCase() === 'SMALLINT' || dataType.trim().toUpperCase() === 'BIGINT'
-      || dataType.trim().toUpperCase() === 'DECIMAL' || dataType.trim().toUpperCase() === 'INT') {
-      type = 'NUMBER';
-    } else if (dataType.trim().toUpperCase() === 'BIT') {
-      type = 'BOOLEAN';
-    } else if (dataType.trim().toUpperCase() === 'DATE') {
-      type = 'DATE';
-    } else {
-      type = '';
+    type = this.getInputType(columnName);
+    if (columnName !== null) {
+      this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === type.trim().toUpperCase());
     }
-    this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === type.trim().toUpperCase());
   }
 
   selectAllColumns(event) {
@@ -1380,12 +1445,21 @@ export class ErtTableComponent implements OnInit {
   checkForColumnSelectValidation(): boolean {
     let isValid = true;
     const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-    const temp = tempObj.columnList;
+    const tempColumnList = tempObj.columnList;
+    const tempUserDefinedList = tempObj.usrDefinedColumnList;
     if (tempObj.isSelected) {
-      if (temp.filter(a => a.isSelected === true).length === 0) {
-        this.errorMessagesForSelection = 'Please select at least one column to proceed.';
-        document.getElementById('warning-popup-btn').click();
-        isValid = false;
+      if (tempColumnList.filter(a => a.isSelected === true).length === 0) {
+        if (tempUserDefinedList.length > 0) {
+          if (tempUserDefinedList.filter(a => a.isSelected === true).length === 0) {
+            this.errorMessagesForSelection = 'Please select at least one column to proceed.';
+            document.getElementById('warning-popup-btn').click();
+            isValid = false;
+          }
+        } else {
+          this.errorMessagesForSelection = 'Please select at least one column to proceed.';
+          document.getElementById('warning-popup-btn').click();
+          isValid = false;
+        }
       } else {
         isValid = true;
       }
