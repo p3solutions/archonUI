@@ -36,9 +36,7 @@ export class AddMembersService {
     );
   }
   addMembers(params: any): Observable<any> {
-    return this.http.post(this.addMembersUrl, params, { headers: this.headers }).pipe(
-      catchError(this.handleError('addmembers', {}))
-    );
+    return this.http.post(this.addMembersUrl, params, { headers: this.headers });
   }
 
   // * Handle HttpClient operation that failed.
