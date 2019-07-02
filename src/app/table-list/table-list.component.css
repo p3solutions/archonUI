@@ -570,6 +570,8 @@ a:hover {
 .expansion-item-sec {
   width: 30%;
   font-size: 14px;
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
 
@@ -581,6 +583,8 @@ a:hover {
 
 .expansion-item-join {
   width: 28%;
+  overflow: hidden; 
+  text-overflow: ellipsis;
   /* padding: 0px 15px 0px 15px */
 }
 

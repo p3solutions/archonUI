@@ -44,6 +44,7 @@
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "ng-mat-select-infinite-scroll": "^1.0.1",
+    "ng-recaptcha": "^4.3.0",
     "ng2-ace-editor": "^0.3.9",
     "ngx-bootstrap": "^3.2.0",
     "ngx-bootstrap-slider": "^1.7.0",
