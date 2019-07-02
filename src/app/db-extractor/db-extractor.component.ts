@@ -116,13 +116,15 @@ export class DbExtractorComponent implements OnInit {
     this.ExtractData = true;
     if (!outputFormat) {
       this.ExtractData = true;
-    }
-    if (this.processDetailsObj.process === 'Extract Data' ) {
+    } else {
       this.ExtractData = false;
     }
-    if (this.processDetailsObj.process === 'Get Record Count' ) {
-      this.ExtractData = false;
-    }
+    // if (this.processDetailsObj.process === 'Extract Data' ) {
+    //   this.ExtractData = false;
+    // }
+    // if (this.processDetailsObj.process === 'Get Record Count' ) {
+    //   this.ExtractData = false;
+    // }
     if (outputFormat === 'sip') {
       this.ExtractData = true;
       if (this.processDetailsObj.sipApplicationName === '' && this.processDetailsObj.holdingPrefix === '') {

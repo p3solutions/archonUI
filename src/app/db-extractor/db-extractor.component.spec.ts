@@ -13,6 +13,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
+import { CommonModule } from '@angular/common';
 
 describe('DbExtractorComponent', () => {
   let component: DbExtractorComponent;
@@ -21,7 +22,7 @@ describe('DbExtractorComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorComponent],
-      imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatSelectModule,
+      imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatSelectModule, CommonModule,
         MatButtonToggleModule, MatInputModule, BrowserAnimationsModule, MatInputModule, FormsModule, ReactiveFormsModule],
       providers: [DbExtractorService, UserinfoService, WorkspaceHeaderService,
         { provide: EnvironmentService, useClass: MockEnvironmentService }],
