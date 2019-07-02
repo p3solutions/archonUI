@@ -4,36 +4,39 @@
       <div class="pull-left margin-0 pl-22 ws-title color-black">Workspace</div>
     </div>
     <div class="col-md-3 pl-37" style="margin-top: -10px">
-     
+
       <div class="btn-group mt-20 pull-left" id="selectedWorkspace">
-      <mat-form-field>
-        <!-- <mat-label>Selected Workspace</mat-label> -->
-        <mat-select [(ngModel)]="workspaceHeaderService.selected">
-          <mat-option *ngFor="let ws of userWorkspaceArray; let i of index;" [value]="ws.workspaceName" (click)="selectWorkspace(ws)">
-            {{ws.workspaceName}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field>
+          <!-- <mat-label>Selected Workspace</mat-label> -->
+          <mat-select [(ngModel)]="workspaceHeaderService.selected"
+            [placeholder]="userWorkspaceArray?.length === 0 ? 'Create New Worksapce' : ''">
+            <mat-option *ngFor="let ws of userWorkspaceArray; let i of index;" [value]="ws.workspaceName"
+              (click)="selectWorkspace(ws)">
+              {{ws.workspaceName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
       <div class="col-md-1 mt-29 pull-left pull-more" *ngIf="enableCreate">
-          <!-- <span matTooltip="Create New Workspace" (click)="openCreateWSModal()">
+        <!-- <span matTooltip="Create New Workspace" (click)="openCreateWSModal()">
             <i class="material-icons plus">
               </i>
         </span> -->
         <span matTooltip="Create New Workspace" (click)="createWorkspace()">
-            <i class="material-icons plus">
-              </i>
+          <i class="material-icons plus">
+          </i>
         </span>
       </div>
     </div>
- 
+
 
     <div class="col-md-12" style="padding-top: 10px">
-      <app-workspace-mgmt-panel *ngIf="userWorkspaceArray?.length>0" [workspaceId]="(currentWorkspace ? currentWorkspace.id : 'id')" [role]="workspaceHeaderService.getSelectedWorkspaceWorkspaceRole()"></app-workspace-mgmt-panel>
+      <app-workspace-mgmt-panel *ngIf="userWorkspaceArray?.length>0"
+        [workspaceId]="(currentWorkspace ? currentWorkspace.id : workspaceHeaderService.getSelectedWorkspaceId())"
+        [role]="workspaceHeaderService.getSelectedWorkspaceWorkspaceRole()"></app-workspace-mgmt-panel>
     </div>
 
   </div>
 </div>
 <ng-template #createNewWorkspace></ng-template>
-

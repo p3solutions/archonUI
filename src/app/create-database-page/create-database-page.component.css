@@ -37,8 +37,8 @@
 }
 
 .cancel:hover {
-  transform:scale(1.1,1.1);
-  }
+  transform: scale(1.1, 1.1);
+}
 
 #action-btn button.save:hover {
   transform: scale(1.1, 1.1);
@@ -56,7 +56,7 @@
   color: #ffffff;
   text-transform: inherit;
   border-radius: 3px;
-  transition:0.5s;
+  transition: 0.5s;
 }
 
 #action-btn button.cancel {
@@ -65,7 +65,7 @@
   margin-right: 10px;
   text-transform: inherit;
   border-radius: 3px;
-  transition:0.5s;
+  transition: 0.5s;
 }
 
 #action-btn button.cancel-disabled {
@@ -178,52 +178,52 @@ mat-card {
   color: #ffffff !important;
 }
 
-::ng-deep  .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
-  background-color:  #2879ff !important
+::ng-deep .mat-stepper-label-position-bottom .mat-psedu.mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  background-color: #2879ff !important
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-k-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
- [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
-  background-color:  #2879ff !important
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color: #2879ff !important
 }
 
-::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
-  background-color:  #2879ff !important
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line {
+  background-color: #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before, 
-[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  background-color:  #2879ff !important
+::ng-deep .mat-stepper-label-position-bottom .mat-review-psedu.mat-horizontal-stepper-header:not(:first-child)::before,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  background-color: #2879ff !important
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
-  background-color:  #2879ff !important
+::ng-deep .mat-stepper-label-position-bottom .mat-auth-psedu.mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  background-color: #2879ff !important
 }
 
-::ng-deep  .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after  {
-  border-top-width:2px !important;
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  border-top-width: 2px !important;
 }
 
 ::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
- [dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
-  border-top-width:2px !important ;
-} 
-
-::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line{
-  border-top-width:2px !important;
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  border-top-width: 2px !important;
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, 
-[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before{
-  border-top-width:2px !important;
+::ng-deep .mat-horizontal-stepper-header-container .mat-horizental-line.mat-stepper-horizontal-line {
+  border-top-width: 2px !important;
 }
 
-::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, [dir=rtl] 
-.mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after{
-  border-top-width:2px !important;
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+  border-top-width: 2px !important;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after,
+[dir=rtl] .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after {
+  border-top-width: 2px !important;
 }
 
 .outer-div {
@@ -287,26 +287,26 @@ mat-card {
   color: #0c0c0c;
 }
 
-.modal-header {
+/* .modal-header {
   padding: 10px;
   padding-left: 15px;
   background-color: #2879ff;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-}
+} */
 
-.modal-close {
+/* .modal-close {
   background-color: #2879ff;
   border: #2879ff;
   color: #ffffff;
-}
+} */
 
-.modal-body {
+/* .modal-body {
   min-height: 55px;
   border-bottom: 0px solid #E6E9ED;
   padding: 20px 2px 0px 3px;
   text-align: center
-}
+} */
 
 .btn.modal-cancel {
   background-color: #2879ff;
@@ -319,7 +319,11 @@ mat-card {
   transform: scale(1.1, 1.1);
 }
 
-.modal-title {
+/* .modal-title {
   color: white;
   text-align: left
+} */
+
+::ng-deep .my-spinner .overlay {
+  position: fixed !important;
 }

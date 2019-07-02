@@ -262,6 +262,7 @@ td.mat-cell:first-of-type {
   padding-left: 14px !important;
 }
 
+/* 
 .modal-header {
   padding: 10px;
   padding-left: 15px;
@@ -281,7 +282,7 @@ td.mat-cell:first-of-type {
   border-bottom: 0px solid #E6E9ED;
   padding: 20px 2px 0px 3px;
   text-align: center
-}
+} */
 
 .btn.modal-cancel {
   background-color: #2879ff;
@@ -301,4 +302,8 @@ td.mat-cell:first-of-type {
 
 .loader {
   margin-left: 3px;
+}
+
+::ng-deep .my-spinner .overlay {
+  position: fixed !important;
 }

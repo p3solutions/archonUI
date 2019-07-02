@@ -103,8 +103,8 @@ export class AuditingComponent implements OnInit, AfterViewInit {
       this.input = result.input;
       this.jobMessage = result.message;
       this.jobOutput = result.output;
+      el.click();
     });
-    el.click();
   }
 
   downloadJob(releatedJobId) {

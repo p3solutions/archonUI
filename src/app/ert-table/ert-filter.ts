@@ -226,20 +226,34 @@ export function deleteNode(filterTree: FilterConfigTree, NodeToDelete: FilterCon
 
 export class ColumnConfigFunction {
     function = '';
-    dataType = '';
+    inputType = '';
     outputType = '';
+    dbName = '';
 }
 
 export const columnConfigFunctionList: ColumnConfigFunction[] = [
-    { function: 'CEIL', dataType: 'INT', outputType: 'NUMBER' },
-    { function: 'FLOOR', dataType: 'INT', outputType: 'NUMBER' },
-    { function: 'LENGTH', dataType: 'VARCHAR', outputType: 'NUMBER' },
-    { function: 'UPPER', dataType: 'VARCHAR', outputType: 'STRING' },
-    { function: 'LOWER', dataType: 'VARCHAR', outputType: 'STRING' },
-    { function: 'SUBSTRING', dataType: 'VARCHAR', outputType: 'STRING' },
-    { function: 'REVERSE', dataType: 'VARCHAR', outputType: 'STRING' },
-    { function: 'ADDTIME', dataType: 'TIMESTAMP', outputType: 'DATE' },
-    { function: 'ADDDATE', dataType: 'TIMESTAMP', outputType: 'DATE' }
+    // Start - MYSQL,ORACLE,DB2,TERADATA,SYBASE
+    { function: 'CEIL', inputType: 'NUMBER', outputType: 'NUMBER', dbName: 'MYSQL' },
+    { function: 'FLOOR', inputType: 'NUMBER', outputType: 'NUMBER', dbName: 'MYSQL' },
+    { function: 'LENGTH', inputType: 'STRING', outputType: 'NUMBER', dbName: 'MYSQL' },
+    { function: 'UPPER', inputType: 'STRING', outputType: 'STRING', dbName: 'MYSQL' },
+    { function: 'LOWER', inputType: 'STRING', outputType: 'STRING', dbName: 'MYSQL' },
+    { function: 'SUBSTRING', inputType: 'STRING', outputType: 'STRING', dbName: 'MYSQL' },
+    { function: 'REVERSE', inputType: 'STRING', outputType: 'STRING', dbName: 'MYSQL' },
+    { function: 'ADDTIME', inputType: 'DATE', outputType: 'DATE', dbName: 'MYSQL' },
+    { function: 'ADDDATE', inputType: 'DATE', outputType: 'DATE', dbName: 'MYSQL' },
+    // End
+    // Start - SQL
+    { function: 'CEILING', inputType: 'NUMBER', outputType: 'NUMBER', dbName: 'SQL' },
+    { function: 'FLOOR', inputType: 'NUMBER', outputType: 'NUMBER', dbName: 'SQL' },
+    { function: 'LEN', inputType: 'STRING', outputType: 'NUMBER', dbName: 'SQL' },
+    { function: 'UPPER', inputType: 'STRING', outputType: 'STRING', dbName: 'SQL' },
+    { function: 'LOWER', inputType: 'STRING', outputType: 'STRING', dbName: 'SQL' },
+    { function: 'SUBSTRING', inputType: 'STRING', outputType: 'STRING', dbName: 'SQL' },
+    { function: 'REVERSE', inputType: 'STRING', outputType: 'STRING', dbName: 'SQL' },
+    { function: 'ADDTIME', inputType: 'DATE', outputType: 'DATE', dbName: 'SQL' },
+    { function: 'ADDDATE', inputType: 'DATE', outputType: 'DATE', dbName: 'SQL' }
+    // End
 ];
 
 export function findParentNode(element, id: number) {
@@ -277,11 +291,11 @@ export const filterOperationList: FilterOperationList[] = [
     // { operation: 'between', dataType: 'DATE' },
     { operation: 'is null', dataType: 'DATE' },
     { operation: 'is not null', dataType: 'DATE' },
-    { operation: '=', dataType: 'BOOLEAN'},
-    { operation: '!=', dataType: 'BOOLEAN'},
-    { operation: '=', dataType: ''},
-    { operation: '!=', dataType: ''},
-    { operation: 'like', dataType: '' },
-    { operation: 'is null', dataType: '' },
-    { operation: 'is not null', dataType: '' }
+    { operation: '=', dataType: 'BOOLEAN' },
+    { operation: '!=', dataType: 'BOOLEAN' },
+    { operation: '=', dataType: 'STRING' },
+    { operation: '!=', dataType: 'STRING' },
+    { operation: 'like', dataType: 'STRING' },
+    { operation: 'is null', dataType: 'STRING' },
+    { operation: 'is not null', dataType: 'STRING' }
 ];

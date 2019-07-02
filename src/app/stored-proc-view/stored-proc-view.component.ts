@@ -187,7 +187,7 @@ export class StoredProcViewComponent implements OnInit {
     try {
       this.updateNotif = false;
       this.updateSuccess = false;
-      const SpvInfoList1 = this.SpvInfoList.filter(a => a.isSelected === true);
+      const SpvInfoList1 = JSON.parse(JSON.stringify(this.SpvInfoList.filter(a => a.isSelected === true)));
       for (const spv of SpvInfoList1) {
         spv.relatingTableList = spv.relatingTableList.filter(a => a.isSelected === true);
       }
@@ -210,13 +210,13 @@ export class StoredProcViewComponent implements OnInit {
         }
         this.spinner.hide();
       }, (err: HttpErrorResponse) => {
-          document.getElementById('spvemsg').click();
-          this.errorMsg = err.error.message;
-          this.updateNotif = true;
-          this.spinner.hide();
+        document.getElementById('spvemsg').click();
+        this.errorMsg = err.error.message;
+        this.updateNotif = true;
+        this.spinner.hide();
       });
     } catch {
-      this.spinner.show();
+      this.spinner.hide();
     }
   }
 

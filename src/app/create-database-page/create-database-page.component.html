@@ -15,7 +15,8 @@
           <form [formGroup]="databaseConnectionForm" class="workspace-detail-form">
             <div class="workspace-detail">
               <mat-form-field class="form-field-profile">
-                <input required maxlength="40" trim="blur" formControlName="profileName" matInput placeholder="Profile Name">
+                <input required maxlength="40" trim="blur" formControlName="profileName" matInput
+                  placeholder="Profile Name">
               </mat-form-field>
             </div>
             <div class="workspace-detail">
@@ -111,12 +112,14 @@
             </div>
             <div id="action-btn" style="margin-top: 6%">
               <button [disabled]="inProgress" class="btn {{inProgress ? 'cancel-disabled': 'cancel'}}  btn-padding"
-                (click)="testConnection()">Test
-                Connection<i *ngIf="inProgress" class="fa fa-spinner fa-spin loader"></i> </button>
+                (click)="testConnection()">Test Connection
+                <!-- <i *ngIf="inProgress" class="fa fa-spinner fa-spin loader"></i>  -->
+              </button>
               <button class="btn cancel btn-padding" (click)="gotoAuthentication(stepper)">Previous</button>
               <button [disabled]="disableCreateBtn" (click)="createDatatbase()"
-                class="btn btn-padding {{disableCreateBtn ? 'save-disabled': 'save'}}"> <i *ngIf="dbinProgress"
-                  class="fa fa-spinner fa-spin loader"></i> Create</button>
+                class="btn btn-padding {{disableCreateBtn ? 'save-disabled': 'save'}}">
+                <!-- <i *ngIf="dbinProgress" class="fa fa-spinner fa-spin loader"></i>  -->
+                Create</button>
             </div>
           </div>
         </mat-step>
@@ -124,43 +127,98 @@
     </mat-card>
   </div>
 </div>
-<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
-  data-target="#success">Open Modal</button>
-<div id="success" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Alert</h4>
-      </div>
-      <div class="modal-body">
-        <p>{{successDatabaseMessage}}</p>
-      </div>
-      <div class="modal-footer">
-        <button (click)="navigateToPrevious()" type="button" class="btn modal-cancel" data-dismiss="modal">Ok</button>
-        <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
-          data-dismiss="modal">Ok</button>
-      </div>
-    </div>
-  </div>
-</div>
 <button id="remove-square-hover" style="display:none"></button>
 
-<button style="display:none" type="button" id="select-db-btn" class="btn btn-info btn-lg" data-toggle="modal"
-  data-target="#select-success">Open Modal</button>
-<div id="select-success" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+<button style="display:none" type="button" id="error-db-btn" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#error-success">Open Modal</button>
+<div id="error-success" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Alert</h4>
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i>
+          <div class="pop-title-ert">Error</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>{{errorMessage}}</p>
+        <p class="popup-paragraph-cls">{{errorMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn modal-cancel " data-dismiss="modal">Ok</button>
-        <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-padding btn-error-popup-primary-color"
           data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
 </div>
+
+<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
+  data-keyboard="false" data-backdrop="static" data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{successDatabaseMessage}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="navigateToPrevious()" class="btn btn-padding btn-success-popup-primary-color"
+          data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-padding btn-success-popup-primary-color"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button style="display:none" type="button" id="confirm_model-btn" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#confirm_model">Open Modal</button>
+<div id="confirm_model" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Already Exist</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{errorMessage}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="connection-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#connection">Open Modal</button>
+<div id="connection" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{errorMessage}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-padding btn-info-popup-primary-color"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner class="my-spinner" bdOpacity=0.9 bdColor="rgb(0,0,0,0.35)" size="medium" color="#2879ff" type="ball-pulse"
+  [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>

@@ -10,6 +10,7 @@ import { InviteUserDataSource } from './invite-user-data-source';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { lockeduser } from '../add-members/add-members.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 
@@ -67,7 +68,8 @@ export class ManageUserRolesComponent implements OnInit {
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router,
-    private userInfoService: UserinfoService
+    private userInfoService: UserinfoService,
+    private spinner: NgxSpinnerService
   ) {
     this.userinfoId = this.userInfoService.getUserId();
   }
@@ -90,8 +92,8 @@ export class ManageUserRolesComponent implements OnInit {
   loadAllUsers(invited, revoked, locked) {
     this.dataSource.emptyUser();
     this.dataSource.getAllUsers(this.paginator.pageIndex + 1, invited, revoked, locked);
-    this.dataSource.totalUserSubject.subscribe(result => {
-      this.totalUser = result;
+    this.dataSource.inviteUsersSubject.subscribe(result => {
+      this.totalUser = result.length;
     });
   }
   sortData(sort) {
@@ -181,7 +183,7 @@ export class ManageUserRolesComponent implements OnInit {
 
 
   getAllUsers(invited, revoked, locked) {
-    this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
+    this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds, this.spinner);
     this.dataSource.connect().subscribe(result => {
       result.forEach((value: any) => {
         if (value.status === 'Locked') {
@@ -262,7 +264,7 @@ export class ManageUserRolesComponent implements OnInit {
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
           } else {
-            document.getElementById('success-popup-btn').click();
+            document.getElementById('error-popup').click();
             this.successMsg = err.error.message.replace(/([A-Z])/g, ' $1').charAt(0).toUpperCase() + err.error.message.slice(1);
             this.userInviteInfo = new UserInvite();
             this.getAllUsers(this.invited, this.revoked, this.locked);
@@ -322,7 +324,7 @@ export class ManageUserRolesComponent implements OnInit {
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
         } else {
-          document.getElementById('success-popup-btn').click();
+          document.getElementById('error-popup').click();
           this.successMsg = err.error.message;
           this.getAllUsers(this.invited, this.revoked, this.locked);
         }
@@ -331,7 +333,7 @@ export class ManageUserRolesComponent implements OnInit {
 
   changeGlobalGroup(userId, globalGroupId) {
     if (userId.trim() === this.userInfoService.getUserId().trim()) {
-      document.getElementById('success-popup-btn').click();
+      document.getElementById('error-popup').click();
       this.successMsg = 'You are not allowed to change your group.';
     } else {
       document.getElementById('confirmChangeGlobalRole').click();
@@ -349,22 +351,24 @@ export class ManageUserRolesComponent implements OnInit {
 
   confirmChangeUserStatus() {
     this.manageUserRolesService.changeUserStatus(this.changeUserStatusUrl).subscribe(response => {
-      document.getElementById('success-popup-btn').click();
       if (response.httpStatus === 200) {
+        document.getElementById('success-popup-btn').click();
         this.successMsg = 'Status changed successfully';
       }
       this.getAllUsers(this.invited, this.revoked, this.locked);
     }, (err) => {
+      document.getElementById('error-popup').click();
       this.successMsg = err.error.message;
     });
   }
 
   confirmChangeGlobalGroupStatus() {
     this.manageUserRolesService.changeGlobalGroup(this.tempChangeGlobalGroupUrl, this.param).subscribe(response => {
-      document.getElementById('success-popup-btn').click();
       if (response.httpStatus === 200) {
+        document.getElementById('success-popup-btn').click();
         this.successMsg = 'Global Group changed Successfully';
       } else {
+        document.getElementById('error-popup').click();
         this.successMsg = 'Access is Denied. Please Check Permission Level.';
       }
       this.getAllUsers(this.invited, this.revoked, this.locked);
@@ -375,19 +379,24 @@ export class ManageUserRolesComponent implements OnInit {
     this.getAllUsers(this.invited, this.revoked, this.locked);
   }
 
-  getUserByEmailId(emailId) {
+  getUserByEmailId(emailId, status: string) {
     let response;
     this.dataSource.filter = emailId.trim().toLowerCase();
-    // this.getGlobalGroup();
     if (this.invited === true && emailId !== '') {
       this.dataSource.connect().subscribe(result => {
         response = result;
       });
+      this.dataSource.inviteUsersSubject.subscribe(result => {
+        this.totalUser = result.length;
+      });
       this.dataSource._filterData(response);
     } else
       if (emailId !== '') {
-        this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds);
-        this.dataSource.getUsersByEmailId(emailId);
+        this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds, this.spinner);
+        this.dataSource.getUsersByEmailId(emailId, status);
+        this.dataSource.inviteUsersSubject.subscribe(result => {
+          this.totalUser = result.length;
+        });
       } else {
         this.getAllUsers(this.invited, this.revoked, this.locked);
       }

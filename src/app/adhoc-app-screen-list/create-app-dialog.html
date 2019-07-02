@@ -14,13 +14,13 @@
         placeholder="IA Version">
         <mat-option *ngFor="let item of appInfo.iaVersionList" [value]="item">
           {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions>
   <button class="btn btn-padding secondary-btn-color" (click)="onNoClick()">Cancel</button>
   <button class="btn btn-padding {{!createAppForm.form.valid?'primary-btn-color-disabled':'primary-btn-color'}}"
-          [disabled]="!createAppForm.form.valid" [mat-dialog-close]="appInfo">Create</button>
+    [disabled]="!createAppForm.form.valid" [mat-dialog-close]="appInfo">Create</button>
 </div>

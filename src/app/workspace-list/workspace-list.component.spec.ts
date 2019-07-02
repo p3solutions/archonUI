@@ -17,6 +17,7 @@ import { MatFormFieldModule, MatCardModule, MatInputModule, MatProgressBarModule
 import { FormsModule } from '@angular/forms';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 // Reason: Object Event Error Thrown
 describe('WorkspaceListComponent', () => {
@@ -26,9 +27,10 @@ describe('WorkspaceListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [WorkspaceListComponent, SearchPipe],
-      imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, FormsModule, MatProgressBarModule],
+      imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule,
+        MatCardModule, MatInputModule, BrowserAnimationsModule, FormsModule, MatProgressBarModule],
       providers: [WorkspaceListService, DynamicLoaderService, UserinfoService,
-         WorkspaceHeaderService, CommonUtilityService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+        WorkspaceHeaderService, CommonUtilityService, NgxSpinnerService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

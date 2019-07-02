@@ -21,6 +21,7 @@ import { MaterialModule } from '../material-module';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 describe('WorkspaceHeaderComponent', () => {
   let component: WorkspaceHeaderComponent;
@@ -47,13 +48,13 @@ describe('WorkspaceHeaderComponent', () => {
     users: [11, 12, 13] // user-ids --> info.id
   };
   const workspaceList = {
-  11: [
+    11: [
       workspace1,
       workspace2,
       workspace1,
       workspace2
-      ]
-    };
+    ]
+  };
   const simpleObservable = new Observable<object>((observer) => {
     // observable execution
     observer.next(workspaceList);
@@ -85,9 +86,10 @@ describe('WorkspaceHeaderComponent', () => {
         WorkspaceServicesService,
         WorkspaceHeaderService,
         UserProfileService,
+        NgxSpinnerService,
         DynamicLoaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
-      schemas:[NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));

@@ -6,6 +6,7 @@ import { merge, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ScheduleDataSource } from './scheduledatasource';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-schedulemonitoring',
@@ -19,6 +20,8 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   Status = ['SCHEDULED', 'IN_PROGRESS', 'COMPLETED', 'FAILED', 'USER_OR_ADMIN_STOPPED'];
   tools = ['RDBMS_EXTRACTION', 'ERT_EXTRACTION'];
   @ViewChild('click') button: ElementRef;
+  @ViewChild('notification') notification1: ElementRef;
+  @ViewChild('errornotification') errornotification1: ElementRef;
   selectedTool = '';
   selectedJobStatus = '';
   message: any;
@@ -34,6 +37,8 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
+  @ViewChild('terminateconfirmation') terminate: ElementRef;
+  terminateJobID;
 
   constructor(private router: Router, private renderer: Renderer, private spinner: NgxSpinnerService,
     private service: ScheduleMonitoringService) {
@@ -90,20 +95,23 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
       this.input = result.input;
       this.jobMessage = result.message;
       this.jobOutput = result.output;
-      console.log(result);
+      el.click();
     });
-    el.click();
   }
-  stop(id) {
-    this.service.stopJob(id).subscribe(result => {
-      if (result.success) {
+  stop() {
+    const elNotification: HTMLElement = this.notification1.nativeElement as HTMLElement;
+    const elErrNotification: HTMLElement = this.errornotification1.nativeElement as HTMLElement;
+    this.service.stopJob(this.terminateJobID).subscribe(result => {
+      if (result) {
         this.updateSuccess = true;
         this.message = result.data;
+        elNotification.click();
         this.getStart();
-      } else if (result.status === 500) {
-        this.updateNotif = true;
-        this.message = result.message;
       }
+    }, (err: HttpErrorResponse) => {
+      this.updateNotif = true;
+      this.message = err.error.message;
+      elErrNotification.click();
     });
   }
 
@@ -122,5 +130,11 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   getSearch() {
     this.dataSource.filter(this.paginator.pageIndex + 1, this.search.nativeElement.value);
   }
+
+  terminateConfirmation(id) {
+    this.terminateJobID = id;
+    const el: HTMLElement = this.terminate.nativeElement as HTMLElement;
+    el.click();
+   }
 
 }
