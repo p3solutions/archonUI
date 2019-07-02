@@ -92,10 +92,10 @@
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   <div class="expansion-outer">
-                    <div class="expansion-item-sec">{{relation.secondaryTable.tableName}}</div>
+                    <div title="{{relation.secondaryTable.tableName}}" class="expansion-item-sec">{{relation.secondaryTable.tableName}}</div>
                     <div class="expansion-item-def"> {{relation.definitionType}}</div>
                     <div class="expansion-item-def"> {{relation.analysisMode}}</div>
-                    <div class="expansion-item-join">{{relation.joinName}}</div>
+                    <div title="{{relation.joinName}}" class="expansion-item-join">{{relation.joinName}}</div>
                     <div class="exp-trash-item">
                       <a data-toggle="modal" href="#confirmDelMemModal" (click)="deleteRelationship(ind)">
                         <i class="material-icons" style="font-size: 23px"
