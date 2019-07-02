@@ -7,9 +7,9 @@ import { DbExtractorService } from './db-extractor.service';
 import { UserinfoService } from '../userinfo.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
-import { MatFormFieldModule, MatSelectModule, MatInputModule} from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatInputModule, MatCheckboxModule} from '@angular/material';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
@@ -23,10 +23,10 @@ describe('DbExtractorComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DbExtractorComponent],
       imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule, MatSelectModule, CommonModule,
-        MatButtonToggleModule, MatInputModule, BrowserAnimationsModule, MatInputModule, FormsModule, ReactiveFormsModule],
+        MatButtonToggleModule, MatInputModule, BrowserAnimationsModule, MatCheckboxModule, FormsModule, ReactiveFormsModule],
       providers: [DbExtractorService, UserinfoService, WorkspaceHeaderService, FormBuilder,
         { provide: EnvironmentService, useClass: MockEnvironmentService }],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
