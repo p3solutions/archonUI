@@ -947,7 +947,15 @@ export class ErtTableComponent implements OnInit {
     const length = isColumnNameExist.length;
     if (!this.disabledUserDefinedColName) {
       if (length !== 1) {
-        this.saveUserDefined();
+        const checkUndefinedColumnExist = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].usrDefinedColumnList
+          .filter(b => b.originalColumnName.trim().toUpperCase().includes(this.usrDefinedColumnName.trim().toUpperCase()));
+        const lengthuserdefined = checkUndefinedColumnExist.length;
+        if (lengthuserdefined !== 1) {
+          this.saveUserDefined();
+        } else {
+          this.usrDefinedAlertMessage = 'Kindly provide different column name.';
+          document.getElementById('query-alert').classList.remove('alert-hide');
+        }
       } else {
         this.usrDefinedAlertMessage = 'Kindly provide different column name.';
         document.getElementById('query-alert').classList.remove('alert-hide');
