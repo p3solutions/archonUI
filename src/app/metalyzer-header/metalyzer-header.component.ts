@@ -9,6 +9,7 @@ import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MetalyzerDataSource } from './metalyzerdatasource';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PermissionService } from '../permission-utility-functions/permission.service';
 
 @Component({
   selector: 'app-metalyzer-header',
@@ -38,14 +39,15 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   disable = true;
   @ViewChild(MatPaginator) matpaginator: MatPaginator;
   dataSource: MetalyzerDataSource;
-
+  permissionToUser = '';
   constructor(
     private router: Router,
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService,
     private userInfoService: UserinfoService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private permissionService: PermissionService
   ) {
   }
 
@@ -78,6 +80,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
         tap(() => this.loadPage())
       )
       .subscribe();
+
+      this.permissionToUser = this.permissionService.getMetalyzerPermission();
   }
 
   datasourceHasValue() {
