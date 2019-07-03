@@ -64,9 +64,8 @@ export class StatusService {
       .pipe(catchError(this.handleError<any>('download')));
   }
 
-  terminateJob(jobId){
-    return this.http.put(this.terminateUrl + jobId, { headers: this.getHeaders() })
-    .pipe();
+  terminateJob(jobId) {
+    return this.http.put(this.terminateUrl + jobId, '', { headers: this.userinfoService.getHeaders() });
   }
 
   private extractJobSearch(res) {
