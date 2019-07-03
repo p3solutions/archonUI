@@ -267,21 +267,33 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   autocolumnMatchMode() {
     this.editchangeState.clear();
     this.updateenable = false;
+    this.spinner.show();
+    const length = this.joinDetailsArray.length;
+    let ifAutomatch = false;
     for (let i = 0; i < this.joinDetailsArray.length; i++) {
       for (const j of this.secondaryColumns) {
       if (this.joinDetailsArray[i].primaryColumn.columnName === j.columnName && this.joinDetailsArray[i].primaryColumn.columnDataType === j.columnDataType) {
         this.joinDetailsArray[i].secondaryColumn.columnName = j.columnName;
         this.joinDetailsArray[i].automatchColumn = true;
         this.selectedValues(this.joinDetailsArray[i], i, this.joinDetailsArray[i].secondaryColumn.columnName);
+        ifAutomatch = true;
       }
       }
       if (!this.joinDetailsArray[i].automatchColumn) {
         this.joinDetailsArray[i].secondaryColumn.columnName = 'select';
         this.selectedValues(this.joinDetailsArray[i], i, this.joinDetailsArray[i].secondaryColumn.columnName);
       }
+      if (length - 1 === i) {
+        this.spinner.hide();
+        }
      }
      this.autoColumnMatch = true;
-     this.autoColumnMatchMessage = 'Automatch Completed';
+     if (ifAutomatch) {
+      this.autoColumnMatchMessage = 'Automatch Completed';
+    } else {
+      this.autoColumnMatchMessage = 'No Automatch Found';
+      this.updateenable = false;
+    }
   }
 
   closeAutoMatchMessage() {
