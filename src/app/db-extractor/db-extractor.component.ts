@@ -7,6 +7,7 @@ import { ConfiguredDB } from '../workspace-objects';
 import { ProcessDetails, ProcessDetailsObj } from '../db-extractor';
 import { UserinfoService } from '../userinfo.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-db-extractor',
@@ -47,9 +48,10 @@ export class DbExtractorComponent implements OnInit {
   errorMessgae = '';
   ExtractDatacheck: boolean;
   queryvalidate: boolean;
+  splitSize = [];
 
   constructor(public router: Router, private dbExtractorService: DbExtractorService,
-    private workspaceHeaderService: WorkspaceHeaderService, private userinfoService: UserinfoService) {
+    private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService, private userinfoService: UserinfoService) {
     this.dbExtractorService.setProcessDetailsObj(null);
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
   }
@@ -65,23 +67,36 @@ export class DbExtractorComponent implements OnInit {
       }
     );
     this.getProcessDetails();
+    this.xmlsplitsize();
   }
 
   getProcessDetails() {
-    this.dbExtractorService.getProcessDetails().subscribe((processDetailsList) => {
-      this.processDetailsList = processDetailsList;
-      for (const item of this.processDetailsList) {
-        this.processDetailsMap.set(item['process'], item['supportedOutputFormats']);
-      }
-      this.processList = Array.from(this.processDetailsMap.keys());
-      if (this.dbExtractorService.getProcessDetailsObj() != null) {
-        this.processDetailsObj = this.dbExtractorService.getProcessDetailsObj();
-        this.outputFormatList = this.processDetailsMap.get(this.processDetailsObj.process);
-      }  else {
-        this.processDetailsObj = new ProcessDetailsObj();
-      }
-    });
+    this.spinner.show();
+    try {
+      this.dbExtractorService.getProcessDetails().subscribe((processDetailsList) => {
+        this.processDetailsList = processDetailsList;
+        for (const item of this.processDetailsList) {
+          this.processDetailsMap.set(item['process'], item['supportedOutputFormats']);
+        }
+        this.processList = Array.from(this.processDetailsMap.keys());
+        if (this.dbExtractorService.getProcessDetailsObj() != null) {
+          this.processDetailsObj = this.dbExtractorService.getProcessDetailsObj();
+          this.outputFormatList = this.processDetailsMap.get(this.processDetailsObj.process);
+        }  else {
+          this.processDetailsObj = new ProcessDetailsObj();
+        }
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
+  xmlsplitsize () {
+  for (let i = 1; i < 101; i++) {
+    this.splitSize.push(i * 10);
+  }
+  return this.splitSize;
+}
 
   getOutputFormatListBySecProcess(process: string) {
     this.showFileUpload = false;
@@ -293,6 +308,7 @@ export class DbExtractorComponent implements OnInit {
   }
 
   uploadQueryFile(files: FileList) {
+    console.log('file test');
     this.uploadData = false;
     this.ExtractData = true;
     const ext = files.item(0).name.match(/\.([^\.]+)$/)[1];
@@ -309,11 +325,12 @@ export class DbExtractorComponent implements OnInit {
     } else {
       this.ExtractData = true;
       this.uploadData = true;
-      this.queryFileName = 'please upload .sql file only';
+      this.queryFileName = 'Please upload .sql file only';
     }
   }
 
   closeMessage () {
+    this.queryFileToUpload = null;
     this.ExtractData = true;
     this.uploadData = false;
     this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = null;
@@ -349,7 +366,7 @@ export class DbExtractorComponent implements OnInit {
     if (isValid) {
       if (queryTitles.length !== query.length) {
         isValid = false;
-        this.errorMessgae = 'No. of query title is not equal to no. of query, please check.';
+        this.errorMessgae = 'Number of query title is not equal to number of query.';
         document.getElementById('success-popup-btn').click();
       }
     }

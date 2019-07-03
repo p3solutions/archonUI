@@ -53,7 +53,7 @@
     <div class="col-md-12"> 
         <ul class="flex-container flex-end">
           <li class="flex-item"><strong> Workspace Name:</strong> {{workspaceName | uppercase}}</li>
-          <li class="flex-item"><strong>Database Profile:</strong> {{configuredDB.profileName}}  &nbsp; <a data-toggle="modal" href="#RDBMSDB-detailConfig"><i class="fa fa-info-circle fa-1x"></i></a></li>
+          <li class="flex-item"><strong>Database Profile:</strong> {{configuredDB.profileName}} <a data-toggle="modal" href="#RDBMSDB-detailConfig"><i class="fa fa-info-circle fa-1x"></i></a></li>
         </ul>                 
     </div>
 
@@ -128,11 +128,11 @@
               <div class="col-md-6" *ngIf="showFileUpload">  
                   <div class="action-btn" style="float: left">                     
                       <button class="btn file btn-padding" onclick="document.getElementById('uploadReadQueryFile').click()">File Upload</button> 
-                      <input type="file" class="hide btn btn-secondary browse-btn" accept=".sql" id="uploadReadQueryFile" (change)="uploadQueryFile($event.target.files)" name="queryFileToUpload">
+                      <input type="file" class="hide btn btn-secondary browse-btn" accept=".sql" id="uploadReadQueryFile" (change)="uploadQueryFile($event.target.files)" (click)="$event.target.value = ''" name="queryFileToUpload">
                      
-                      <button *ngIf="uploadData" class="btn file-name btn-padding" title="{{queryFileName}}" (click)="closeMessage()">
+                      <button *ngIf="uploadData" style="cursor: default;" class="btn file-name btn-padding" title="{{queryFileName}}">
                         <div style="width: 85%; overflow: hidden; text-overflow: ellipsis; display: inherit; float: left; text-align: left;">{{queryFileName}}</div>
-                        <a><button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></a></button>                
+                        <a><button  (click)="closeMessage()" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></a></button>                
                     </div>        
               </div>
           </div>
@@ -161,17 +161,7 @@
             <mat-form-field>
                 <mat-label>XML File Split Size(MB)</mat-label>
                 <mat-select [ngModel]="processDetailsObj?.xmlSplitFileSize" name="xmlSplitFileSize" (selectionChange)="setXMLFileSplitSize($event.value)">
-                    <!-- <mat-option *ngFor="let item of outputFormatList" [value]="item">{{item}}</mat-option>    -->
-                  <mat-option [value]="100">100</mat-option> 
-                    <mat-option [value]="200">200</mat-option> 
-                    <mat-option [value]="300">300</mat-option> 
-                    <mat-option [value]="400">400</mat-option> 
-                    <mat-option [value]="500">500</mat-option>
-                    <mat-option [value]="600">600</mat-option> 
-                    <mat-option [value]="700">700</mat-option> 
-                    <mat-option [value]="800">800</mat-option> 
-                    <mat-option [value]="900">900</mat-option>  
-                    <mat-option [value]="1000">1000</mat-option>
+                    <mat-option *ngFor="let item of splitSize" [value]="item">{{item}}</mat-option>  
                 </mat-select>
               </mat-form-field>
         </div>
@@ -273,7 +263,7 @@
   </div>
 </div>
 <div *ngIf="queryvalidate">
-<app-schedule-job class="modal fade" id="openScheduleJob" role="dialog" (ObjectEmit)="Start($event)"></app-schedule-job>
+<app-schedule-job class="modal fade" id="openScheduleJob" role="dialog" tabindex="-1" (ObjectEmit)="Start($event)"></app-schedule-job>
 </div>
 <button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
 <div id="successModel" class="modal fade" role="dialog">
@@ -285,7 +275,7 @@
               </div>
             <div class="modal-body">
              <p class="popup-paragraph-cls"> {{successMsg}}</p>
-             <p *ngIf="isSuccessMsg" class="popup-paragraph-cls">Check on Job Status page</p>
+             <p *ngIf="isSuccessMsg" class="popup-paragraph-cls">Check on Job Status page.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal" (click)="close()">Close</button>
@@ -295,7 +285,7 @@
 </div>
 
 <button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-toggle="modal" data-target="#success">Open Modal</button>
-<div id="success" class="modal fade" role="dialog">
+<div id="success" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 480px;">
       <div class="error-popup-header-cls">
@@ -303,7 +293,7 @@
             <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
         </div>
       <div class="modal-body">
-          <p class="popup-paragraph-cls"> {{errorMessgae}}</p>
+          <p class="popup-paragraph-cls"> {{errorMessgae}}<br> Please check.</p> 
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>  
