@@ -15,7 +15,7 @@ export class WorkspaceServicesService {
     this.serviceActionsUpdated.next(serviceActionList);
   }
 
-  updateServiceActionsList(serviceActions: ServiceActionsObject[]): ServiceActionsObject[] {
+  updateServiceActionsList(serviceActions: ServiceActionsObject[], userServiceActions: any): ServiceActionsObject[] {
     this.spinner.show();
     try {
       if (serviceActions) {
@@ -25,6 +25,8 @@ export class WorkspaceServicesService {
               service.serviceName = 'Metalyzer';
               service.iconName = 'metalyzer.png';
               service.serviceActionType = 'ALL';
+              service.enableService = userServiceActions.filter(a => a.serviceName === 'SERVICE_METALYZER')[0].enableService;
+              // tslint:disable-next-line:max-line-length
               service.desc = 'Relationship analyzing tool for any relational database. It helps user to find the relationship among tables from the relational databases.';
               break;
             }
@@ -32,6 +34,7 @@ export class WorkspaceServicesService {
               service.serviceName = 'RDBMS Extractor';
               service.iconName = 'rdbmsextractor.png';
               service.serviceActionType = 'ALL';
+              service.enableService = userServiceActions.filter(a => a.serviceName === 'SERVICE_DB_EXTRACTOR')[0].enableService;
               service.desc = 'Extraction tool with unique capability to understand and connect database system.';
               break;
             }
@@ -39,6 +42,8 @@ export class WorkspaceServicesService {
               service.serviceName = 'IA Adhoc Query Builder';
               service.iconName = 'querybuilder.png';
               service.serviceActionType = 'ALL';
+              service.enableService = userServiceActions.filter(a => a.serviceName === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0].enableService;
+              // tslint:disable-next-line:max-line-length
               service.desc = 'To create the screens in a customized way based on user requirements, Custom screen builder will give more options to work on it.';
               break;
             }
@@ -46,6 +51,9 @@ export class WorkspaceServicesService {
               service.serviceName = 'ERT';
               service.iconName = 'ert.png';
               service.serviceActionType = 'ALL';
+              service.enableService = userServiceActions.filter(a => a.serviceName
+                === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0].enableService;
+              // tslint:disable-next-line:max-line-length
               service.desc = 'Customize and extract selective data along with manipulation for Table, Data Record and SIP type archival for relational databases.';
               break;
             }

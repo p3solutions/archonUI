@@ -1,32 +1,32 @@
 <div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="col-md-8">
-          <div class="workspace-panel-heading" style="padding-top: 10px; margin-bottom: -4px">
-            Services
-          </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-8">
+        <div class="workspace-panel-heading" style="padding-top: 10px; margin-bottom: -4px">
+          Services
         </div>
       </div>
     </div>
-    
-    <div class="centre-all">
+  </div>
 
-                      <div *ngFor="let service of serviceActions;" class="flex-container">
-                        <mat-card class="example-card"  (click)="gotoMetalyzer(service)">
-                          <mat-card-header class="centre">
-                            <mat-card-title>{{service?.serviceName}}</mat-card-title>
-                          </mat-card-header>
-                          <img class="icon-img"  [attr.src]="'assets/' + service.iconName" />
-                          <mat-card-content class="content">
-                            <div class='body-left'>Permission</div><div class='body-center'>:</div><div class='body-right'>{{service?.serviceActionType}}</div>
-                            <div class='body-left'>Description</div><div class='body-center'>:</div><div class='body-right'>{{service?.desc}}</div>
-                          </mat-card-content>
-                        </mat-card> 
-                      </div>
-                  
+  <div class="centre-all">
+    <ng-container *ngFor="let service of serviceActions;">
+      <div *ngIf="service?.enableService" class="flex-container">
+        <mat-card class="example-card" (click)="gotoMetalyzer(service)">
+          <mat-card-header class="centre">
+            <mat-card-title>{{service?.serviceName}}</mat-card-title>
+          </mat-card-header>
+          <img class="icon-img" [attr.src]="'assets/' + service.iconName" />
+          <mat-card-content class="content">
+            <div class='body-left'>Permission</div>
+            <div class='body-center'>:</div>
+            <div class='body-right'>{{service?.serviceActionType}}</div>
+            <div class='body-left'>Description</div>
+            <div class='body-center'>:</div>
+            <div class='body-right'>{{service?.desc}}</div>
+          </mat-card-content>
+        </mat-card>
       </div>
-  
+    </ng-container>
+  </div>
 </div>
-  
-  
-  

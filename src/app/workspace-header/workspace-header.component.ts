@@ -9,6 +9,8 @@ import { WorkspaceHeaderService } from './workspace-header.service';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ManageMembersService } from '../manage-members/manage-members.service';
+import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 export let firstload = 0;
 @Component({
   selector: 'app-workspace-header',
@@ -120,16 +122,15 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
+    const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
+      filter(a => a.user.id === getUserId())[0].serviceActions));
     this.workspaceHeaderService.selected = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
-    // this.serviceActionsList.push({
-    //   serviceName: 'ERT', iconName: 'ert.png',
-    //   serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r', desc: ''
-    // });
-    const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
+
+    const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList, userServiceActions);
     this.workspaceService.updateServiceActions(_temp);
 
     // to route to the same page of workspace
