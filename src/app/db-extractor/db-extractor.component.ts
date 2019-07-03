@@ -366,7 +366,7 @@ export class DbExtractorComponent implements OnInit {
     if (isValid) {
       if (queryTitles.length !== query.length) {
         isValid = false;
-        this.errorMessgae = 'Number of query title is not equal to number of query.';
+        this.errorMessgae = 'Number of query title is not equal to number of query. Please check.';
         document.getElementById('success-popup-btn').click();
       }
     }
