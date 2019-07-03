@@ -237,53 +237,59 @@ export class DbExtractorComponent implements OnInit {
   }
 
   Start($event) {
-    const el: HTMLElement = this.button.nativeElement as HTMLElement;
-    this.scheduleNow = $event.scheduleNow;
-    if ($event.ins === 'Local') {
-      this.instanceId = '';
-    } else {
-    this.instanceId = $event.ins;
-  }
-    let param: any = {
-      'ownerId': this.userinfoService.getUserId(),
-      'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
-      'databaseConfig': {
-        'databaseId': this.workspaceHeaderService.getDatabaseID()
-      },
-      'executionConfig': {
-        'process': this.processDetailsObj.process,
-        'outputFormat': this.processDetailsObj.outputFormat,
-        'tableInclusionRule': this.processDetailsObj.tableIncRule,
-        'tableInclusionRelationship': this.processDetailsObj.includeTableRelationship
-      },
-      'jobParams': {
-        'fileSize': this.processDetailsObj.xmlSplitFileSize,
-        'maxparallelProcess': this.processDetailsObj.maxParallelProcess,
-        'includeTables': this.processDetailsObj.incTable,
-        'includeViews': this.processDetailsObj.incView,
-        'includeRecordsCount': this.processDetailsObj.incRecordCount,
-        'splitDateInXmlForxDBCompatiblity': this.processDetailsObj.xmlXDBCompability,
-        'extractLOBwithinXml': this.processDetailsObj.extractLOBWithXML
-      },
-      'sipConfig': {
-        'sipApplicationName': this.processDetailsObj.sipApplicationName,
-       'sipHoldingPrefix': this.processDetailsObj.holdingPrefix
-     },
-      'scheduledConfig': $event
-    };
-    delete param.scheduledConfig['ins'];
-    param = this.modifiedParamAccToProcess(param);
-    this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload,
-      this.instanceId).subscribe((result) => {
-      el.click();
-      if (result.httpStatus === 200) {
-        this.isSuccessMsg = true;
-        this.successMsg = 'Your Job has Started';
+    this.spinner.show();
+    try {
+      const el: HTMLElement = this.button.nativeElement as HTMLElement;
+      this.scheduleNow = $event.scheduleNow;
+      if ($event.ins === 'Local') {
+        this.instanceId = '';
       } else {
-        this.isSuccessMsg = false;
-        this.successMsg = 'Unable to Process Your Job';
-      }
-    });
+      this.instanceId = $event.ins;
+    }
+      let param: any = {
+        'ownerId': this.userinfoService.getUserId(),
+        'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
+        'databaseConfig': {
+          'databaseId': this.workspaceHeaderService.getDatabaseID()
+        },
+        'executionConfig': {
+          'process': this.processDetailsObj.process,
+          'outputFormat': this.processDetailsObj.outputFormat,
+          'tableInclusionRule': this.processDetailsObj.tableIncRule,
+          'tableInclusionRelationship': this.processDetailsObj.includeTableRelationship
+        },
+        'jobParams': {
+          'fileSize': this.processDetailsObj.xmlSplitFileSize,
+          'maxparallelProcess': this.processDetailsObj.maxParallelProcess,
+          'includeTables': this.processDetailsObj.incTable,
+          'includeViews': this.processDetailsObj.incView,
+          'includeRecordsCount': this.processDetailsObj.incRecordCount,
+          'splitDateInXmlForxDBCompatiblity': this.processDetailsObj.xmlXDBCompability,
+          'extractLOBwithinXml': this.processDetailsObj.extractLOBWithXML
+        },
+        'sipConfig': {
+          'sipApplicationName': this.processDetailsObj.sipApplicationName,
+         'sipHoldingPrefix': this.processDetailsObj.holdingPrefix
+       },
+        'scheduledConfig': $event
+      };
+      delete param.scheduledConfig['ins'];
+      param = this.modifiedParamAccToProcess(param);
+      this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload,
+        this.instanceId).subscribe((result) => {
+        el.click();
+        if (result.httpStatus === 200) {
+          this.isSuccessMsg = true;
+          this.successMsg = 'Your Job has Started';
+        } else {
+          this.isSuccessMsg = false;
+          this.successMsg = 'Unable to Process Your Job';
+        }
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
   modifiedParamAccToProcess(param: any): any {
