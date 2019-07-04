@@ -17,20 +17,26 @@ export class PermissionService {
   }
 
   getAdhocPermission() {
+    let returnPermission: any = '';
     this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      console.log(response);
+      returnPermission = response.filter(a => a.serviceName === 'Metalyzer')[0].serviceActionType;
     });
+    return returnPermission;
   }
 
   getRdbmsPermission() {
+    let returnPermission: any = '';
     this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      console.log(response);
+      returnPermission = response.filter(a => a.serviceName === 'Metalyzer')[0].serviceActionType;
     });
+    return returnPermission;
   }
 
   getERTPermission() {
+    let returnPermission: any = '';
     this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      console.log(response);
+      returnPermission = response.filter(a => a.serviceName === 'ERT')[0].serviceActionType;
     });
+    return returnPermission;
   }
 }
