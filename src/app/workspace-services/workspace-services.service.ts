@@ -34,14 +34,15 @@ export class WorkspaceServicesService {
               service.serviceName = 'RDBMS Extractor';
               service.iconName = 'rdbmsextractor.png';
               service.enableService = userServiceActions.filter(a => a.serviceName === 'SERVICE_DB_EXTRACTOR')[0].enableService;
-              service.serviceActionType = userServiceActions.filter(a => a.serviceName === 'SERVICE_METALYZER')[0].serviceActionType;
+              service.serviceActionType = userServiceActions.filter(a => a.serviceName === 'SERVICE_DB_EXTRACTOR')[0].serviceActionType;
               service.desc = 'Extraction tool with unique capability to understand and connect database system.';
               break;
             }
             case 'SERVICE_IA_ADHOC_QUERY_BUILDER': {
               service.serviceName = 'IA Adhoc Query Builder';
               service.iconName = 'querybuilder.png';
-              service.serviceActionType = userServiceActions.filter(a => a.serviceName === 'SERVICE_METALYZER')[0].serviceActionType;
+              service.serviceActionType = userServiceActions.filter(a => a.serviceName
+                 === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0].serviceActionType;
               service.enableService = userServiceActions.filter(a => a.serviceName === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0].enableService;
               // tslint:disable-next-line:max-line-length
               service.desc = 'To create the screens in a customized way based on user requirements, Custom screen builder will give more options to work on it.';
@@ -52,7 +53,8 @@ export class WorkspaceServicesService {
               service.iconName = 'ert.png';
               service.enableService = userServiceActions.filter(a => a.serviceName
                 === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0].enableService;
-              service.serviceActionType = userServiceActions.filter(a => a.serviceName === 'SERVICE_METALYZER')[0].serviceActionType;
+              service.serviceActionType = userServiceActions.filter(a => a.serviceName
+                 === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0].serviceActionType;
               // tslint:disable-next-line:max-line-length
               service.desc = 'Customize and extract selective data along with manipulation for Table, Data Record and SIP type archival for relational databases.';
               break;

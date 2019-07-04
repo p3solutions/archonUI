@@ -25,14 +25,15 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div>
-        <span class="fa-stack open-app" (click)="openAppDialog()" matTooltip="Create Application">
-          <i class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-circle-thin fa-stack-2x"></i>
-          <i class="fa fa-plus fa-stack-1x"></i>
-        </span>
-      </div>
-
+      <ng-container *ngIf="permissionToUser!=='READ'">
+        <div>
+          <span class="fa-stack open-app" (click)="openAppDialog()" matTooltip="Create Application">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-circle-thin fa-stack-2x"></i>
+            <i class="fa fa-plus fa-stack-1x"></i>
+          </span>
+        </div>
+      </ng-container>
     </div>
     <div class="col-md-3 heading-item">
       <div>
@@ -66,19 +67,22 @@
     <mat-form-field>
       <input matInput name="screen-filter" #input placeholder="Search">
     </mat-form-field>
-    <span class="fa-stack" *ngIf="applicationInfoList.length!==0"
-      (click)="!(applicationInfoList.length===0) && addScreen()"
-      matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
-      <i class="fa fa-circle fa-stack-2x"></i>
-      <i class="fa fa-circle-thin fa-stack-2x"></i>
-      <i class="fa fa-plus fa-stack-1x"></i>
-    </span>
-    <span class="fa-stack-disabled" *ngIf="applicationInfoList.length===0"
-      matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
-      <i class="fa fa-circle fa-stack-2x"></i>
-      <i class="fa fa-circle-thin fa-stack-2x"></i>
-      <i class="fa fa-plus fa-stack-1x"></i>
-    </span>
+    <ng-container *ngIf="permissionToUser!=='READ'">
+      <span class="fa-stack" *ngIf="applicationInfoList.length!==0"
+        (click)="!(applicationInfoList.length===0) && addScreen()"
+        matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-circle-thin fa-stack-2x"></i>
+        <i class="fa fa-plus fa-stack-1x"></i>
+      </span>
+      <span class="fa-stack-disabled" *ngIf="applicationInfoList.length===0"
+        matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-circle-thin fa-stack-2x"></i>
+        <i class="fa fa-plus fa-stack-1x"></i>
+      </span>
+    </ng-container>
+    <span style="margin-right: 13px" *ngIf="permissionToUser==='READ'"></span>
   </div>
   <div class=" {{datasourceHasValue()?'example-table-container-no-record':'example-table-container'}} mat-elevation-z8"
     id="screen-table">
@@ -143,29 +147,31 @@
   </button>
 </mat-menu>
 <mat-menu #actionmenu="matMenu" yPosition="below">
-  <button (click)="gotoScreen(menuActionData.id, menuActionData)" mat-menu-item>
-    <i class="material-icons">
-      edit
-    </i>
-    <span>
-      Edit</span>
-  </button>
-  <button class="{{menuActionData.madeDownlaodDisabled?'disabled-mat-option mat-menu-item':'mat-menu-item'}}"
-    *ngIf="menuActionData.parentScreenInfo?.screenName===''"
-    [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to create nested screen': ''"
-    (click)="!menuActionData.madeDownlaodDisabled && (menuActionData.parentScreenInfo?.screenName==='') && addNestedLink(menuActionData.id)"
-    mat-menu-item>
-    <i class="material-icons {{menuActionData.madeDownlaodDisabled?'disabled-mat-option-icon':''}}">
-      add
-    </i>
-    <span>Add Nested Link</span>
-  </button>
-  <button (click)="deleteScreenPopUp(menuActionData.id)" mat-menu-item>
-    <i class="material-icons">
-      delete
-    </i>
-    <span>Delete</span>
-  </button>
+  <ng-container *ngIf="permissionToUser!=='READ'">
+    <button (click)="gotoScreen(menuActionData.id, menuActionData)" mat-menu-item>
+      <i class="material-icons">
+        edit
+      </i>
+      <span>
+        Edit</span>
+    </button>
+    <button class="{{menuActionData.madeDownlaodDisabled?'disabled-mat-option mat-menu-item':'mat-menu-item'}}"
+      *ngIf="menuActionData.parentScreenInfo?.screenName===''"
+      [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to create nested screen': ''"
+      (click)="!menuActionData.madeDownlaodDisabled && (menuActionData.parentScreenInfo?.screenName==='') && addNestedLink(menuActionData.id)"
+      mat-menu-item>
+      <i class="material-icons {{menuActionData.madeDownlaodDisabled?'disabled-mat-option-icon':''}}">
+        add
+      </i>
+      <span>Add Nested Link</span>
+    </button>
+    <button (click)="deleteScreenPopUp(menuActionData.id)" mat-menu-item>
+      <i class="material-icons">
+        delete
+      </i>
+      <span>Delete</span>
+    </button>
+  </ng-container>
   <button class="{{menuActionData.madeDownlaodDisabled?'disabled-mat-option mat-menu-item':'mat-menu-item'}}"
     [matTooltip]="menuActionData.madeDownlaodDisabled?'Edit screen to download': 'Download'"
     (click)="!menuActionData.madeDownlaodDisabled && downloadScreen(menuActionData.id,menuActionData.screenName)"

@@ -12,6 +12,6 @@ export class AdhocLandingPageComponent implements OnInit {
   constructor(private adhocService: AdhocService, public router: Router) { }
 
   ngOnInit() {
-    this.router.navigate(['/workspace/adhoc']);
+    // this.router.navigate(['/workspace/adhoc']);
   }
 }
