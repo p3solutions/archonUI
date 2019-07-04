@@ -17,14 +17,14 @@
 }
 
 .back-arrow-icon {
-  margin-top: 20px;
+  margin-top: 21.8px;
   margin-bottom: 10px;
   float: left;
 }
 
 .extractor-panel-heading {
   float: left;
-  padding-left: 20px;
+  padding-left: 15px;
 }
 
 option {
@@ -138,6 +138,10 @@ option {
   margin-right: 10px;
   margin-bottom: 6px;
  }
+ .action-btn button.file:hover {
+  transform: scale(1.1, 1.1);
+
+}
 
  .action-btn button.file-name {
   background-color: #edf3f8;
@@ -169,7 +173,7 @@ textarea.mat-input-element {
   border-radius: 4px;
   display: inline-block;
   height: auto;
-  padding: 16px;
+  padding: 16px 5px;
   position: relative;
 }
 .card-3 {
@@ -242,4 +246,7 @@ td.tdl {
 td.tdr {
   color: #767676;
   font-size: 14px;
+}
+::ng-deep .mat-form-field-required-marker {
+  color: #F44336 !important;
 }
