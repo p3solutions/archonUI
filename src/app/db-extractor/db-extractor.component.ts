@@ -7,6 +7,7 @@ import { ConfiguredDB } from '../workspace-objects';
 import { ProcessDetails, ProcessDetailsObj } from '../db-extractor';
 import { UserinfoService } from '../userinfo.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-db-extractor',
@@ -47,9 +48,10 @@ export class DbExtractorComponent implements OnInit {
   errorMessgae = '';
   ExtractDatacheck: boolean;
   queryvalidate: boolean;
+  splitSize = [];
 
   constructor(public router: Router, private dbExtractorService: DbExtractorService,
-    private workspaceHeaderService: WorkspaceHeaderService, private userinfoService: UserinfoService) {
+    private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService, private userinfoService: UserinfoService) {
     this.dbExtractorService.setProcessDetailsObj(null);
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
   }
@@ -65,23 +67,36 @@ export class DbExtractorComponent implements OnInit {
       }
     );
     this.getProcessDetails();
+    this.xmlsplitsize();
   }
 
   getProcessDetails() {
-    this.dbExtractorService.getProcessDetails().subscribe((processDetailsList) => {
-      this.processDetailsList = processDetailsList;
-      for (const item of this.processDetailsList) {
-        this.processDetailsMap.set(item['process'], item['supportedOutputFormats']);
-      }
-      this.processList = Array.from(this.processDetailsMap.keys());
-      if (this.dbExtractorService.getProcessDetailsObj() != null) {
-        this.processDetailsObj = this.dbExtractorService.getProcessDetailsObj();
-        this.outputFormatList = this.processDetailsMap.get(this.processDetailsObj.process);
-      }  else {
-        this.processDetailsObj = new ProcessDetailsObj();
-      }
-    });
+    this.spinner.show();
+    try {
+      this.dbExtractorService.getProcessDetails().subscribe((processDetailsList) => {
+        this.processDetailsList = processDetailsList;
+        for (const item of this.processDetailsList) {
+          this.processDetailsMap.set(item['process'], item['supportedOutputFormats']);
+        }
+        this.processList = Array.from(this.processDetailsMap.keys());
+        if (this.dbExtractorService.getProcessDetailsObj() != null) {
+          this.processDetailsObj = this.dbExtractorService.getProcessDetailsObj();
+          this.outputFormatList = this.processDetailsMap.get(this.processDetailsObj.process);
+        }  else {
+          this.processDetailsObj = new ProcessDetailsObj();
+        }
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
+  xmlsplitsize () {
+  for (let i = 1; i < 101; i++) {
+    this.splitSize.push(i * 10);
+  }
+  return this.splitSize;
+}
 
   getOutputFormatListBySecProcess(process: string) {
     this.showFileUpload = false;
@@ -222,53 +237,59 @@ export class DbExtractorComponent implements OnInit {
   }
 
   Start($event) {
-    const el: HTMLElement = this.button.nativeElement as HTMLElement;
-    this.scheduleNow = $event.scheduleNow;
-    if ($event.ins === 'Local') {
-      this.instanceId = '';
-    } else {
-    this.instanceId = $event.ins;
-  }
-    let param: any = {
-      'ownerId': this.userinfoService.getUserId(),
-      'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
-      'databaseConfig': {
-        'databaseId': this.workspaceHeaderService.getDatabaseID()
-      },
-      'executionConfig': {
-        'process': this.processDetailsObj.process,
-        'outputFormat': this.processDetailsObj.outputFormat,
-        'tableInclusionRule': this.processDetailsObj.tableIncRule,
-        'tableInclusionRelationship': this.processDetailsObj.includeTableRelationship
-      },
-      'jobParams': {
-        'fileSize': this.processDetailsObj.xmlSplitFileSize,
-        'maxparallelProcess': this.processDetailsObj.maxParallelProcess,
-        'includeTables': this.processDetailsObj.incTable,
-        'includeViews': this.processDetailsObj.incView,
-        'includeRecordsCount': this.processDetailsObj.incRecordCount,
-        'splitDateInXmlForxDBCompatiblity': this.processDetailsObj.xmlXDBCompability,
-        'extractLOBwithinXml': this.processDetailsObj.extractLOBWithXML
-      },
-      'sipConfig': {
-        'sipApplicationName': this.processDetailsObj.sipApplicationName,
-       'sipHoldingPrefix': this.processDetailsObj.holdingPrefix
-     },
-      'scheduledConfig': $event
-    };
-    delete param.scheduledConfig['ins'];
-    param = this.modifiedParamAccToProcess(param);
-    this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload,
-      this.instanceId).subscribe((result) => {
-      el.click();
-      if (result.httpStatus === 200) {
-        this.isSuccessMsg = true;
-        this.successMsg = 'Your Job has Started';
+    this.spinner.show();
+    try {
+      const el: HTMLElement = this.button.nativeElement as HTMLElement;
+      this.scheduleNow = $event.scheduleNow;
+      if ($event.ins === 'Local') {
+        this.instanceId = '';
       } else {
-        this.isSuccessMsg = false;
-        this.successMsg = 'Unable to Process Your Job';
-      }
-    });
+      this.instanceId = $event.ins;
+    }
+      let param: any = {
+        'ownerId': this.userinfoService.getUserId(),
+        'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
+        'databaseConfig': {
+          'databaseId': this.workspaceHeaderService.getDatabaseID()
+        },
+        'executionConfig': {
+          'process': this.processDetailsObj.process,
+          'outputFormat': this.processDetailsObj.outputFormat,
+          'tableInclusionRule': this.processDetailsObj.tableIncRule,
+          'tableInclusionRelationship': this.processDetailsObj.includeTableRelationship
+        },
+        'jobParams': {
+          'fileSize': this.processDetailsObj.xmlSplitFileSize,
+          'maxparallelProcess': this.processDetailsObj.maxParallelProcess,
+          'includeTables': this.processDetailsObj.incTable,
+          'includeViews': this.processDetailsObj.incView,
+          'includeRecordsCount': this.processDetailsObj.incRecordCount,
+          'splitDateInXmlForxDBCompatiblity': this.processDetailsObj.xmlXDBCompability,
+          'extractLOBwithinXml': this.processDetailsObj.extractLOBWithXML
+        },
+        'sipConfig': {
+          'sipApplicationName': this.processDetailsObj.sipApplicationName,
+         'sipHoldingPrefix': this.processDetailsObj.holdingPrefix
+       },
+        'scheduledConfig': $event
+      };
+      delete param.scheduledConfig['ins'];
+      param = this.modifiedParamAccToProcess(param);
+      this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload,
+        this.instanceId).subscribe((result) => {
+        el.click();
+        if (result.httpStatus === 200) {
+          this.isSuccessMsg = true;
+          this.successMsg = 'Your Job has Started';
+        } else {
+          this.isSuccessMsg = false;
+          this.successMsg = 'Unable to Process Your Job';
+        }
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 
   modifiedParamAccToProcess(param: any): any {
@@ -293,6 +314,7 @@ export class DbExtractorComponent implements OnInit {
   }
 
   uploadQueryFile(files: FileList) {
+    console.log('file test');
     this.uploadData = false;
     this.ExtractData = true;
     const ext = files.item(0).name.match(/\.([^\.]+)$/)[1];
@@ -309,11 +331,12 @@ export class DbExtractorComponent implements OnInit {
     } else {
       this.ExtractData = true;
       this.uploadData = true;
-      this.queryFileName = 'please upload .sql file only';
+      this.queryFileName = 'Please upload .sql file only';
     }
   }
 
   closeMessage () {
+    this.queryFileToUpload = null;
     this.ExtractData = true;
     this.uploadData = false;
     this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = null;
@@ -349,7 +372,7 @@ export class DbExtractorComponent implements OnInit {
     if (isValid) {
       if (queryTitles.length !== query.length) {
         isValid = false;
-        this.errorMessgae = 'No. of query title is not equal to no. of query, please check.';
+        this.errorMessgae = 'Number of query title is not equal to number of query. Please check.';
         document.getElementById('success-popup-btn').click();
       }
     }
