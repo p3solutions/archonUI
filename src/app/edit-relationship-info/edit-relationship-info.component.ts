@@ -165,14 +165,15 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       }
     } else {
       for (const i of this.resultantValues) {
-        if (i.primaryColumn.columnName === test.primaryColumn.columnName) {
+        const condtionIndex = this.resultantValues.indexOf(i);
+        if (i.primaryColumn.columnName === test.primaryColumn.columnName && condtionIndex === index) {
           if (secondaryColumn === 'select') {
             i.isSelected = false;
           } else {
             i.isSelected = true;
           }
         }
-        if (i.isSelected && i.defaultSecondaryColumn) {
+        if (i.isSelected && i.defaultSecondaryColumn && condtionIndex === index) {
           i.relationshipId = test.relationshipId;
           if (i.defaultSecondaryColumn.columnName === secondaryColumn) {
             i.secondaryColumn = i.defaultSecondaryColumn;
@@ -183,6 +184,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         }
       }
     }
+    console.log(this.resultantValues);
     this.updateenable = this.checkDuplicateInObject(this.resultantValues);
     if (this.updateenable === true) {
     this.autoColumnMatch = false;
@@ -231,6 +233,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.removeIndexValue = [];
           this.resultantValues = [];
           this.joinDetailsArray = [];
+          this.editchangeState.clear();
           this.updateEvent.emit(true);
           // this.errorMsg = res.data;
           // this.updateNotifSuccess = true;
