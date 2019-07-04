@@ -184,7 +184,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         }
       }
     }
-    console.log(this.resultantValues);
     this.updateenable = this.checkDuplicateInObject(this.resultantValues);
     if (this.updateenable === true) {
     this.autoColumnMatch = false;
