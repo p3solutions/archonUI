@@ -37,6 +37,7 @@ export class ManageMembersComponent implements OnInit {
   userId: any;
   successMsg: string;
   errorMsg: any;
+  role: any;
 
   constructor(
     private manageMembersService: ManageMembersService,
@@ -56,6 +57,7 @@ export class ManageMembersComponent implements OnInit {
     this.workspaceHeaderService.updateCheckActiveTab('Manage Members');
     this.getRoleList();
     this.getPermissionList();
+    this.role = this.workspaceHeaderService.getSelectedWorkspaceWorkspaceRole();
   }
 
   getManageMembersData(workspaceId) {
