@@ -15,31 +15,30 @@
       <div class="form-group heading-item" id="frm-margin">
         <b>Phase: </b>&nbsp;&nbsp;{{phase | uppercase}}
       </div>
-      <div class="dropdown" *ngIf="dropdown" style="width: 18%;">
-        <mat-form-field>
-          <mat-label>Add Join</mat-label>
-          <mat-select [disabled]="disable">
-            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Direct
-              Join</mat-option>
-            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">SP/View
-              Join</mat-option>
-            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Data
-              Analyzer</mat-option>
-            <mat-option [matTooltip]="permissionToUser==='READ'?'Permission Denied':''" *ngIf="disable == false"
-              [disabled]="disable || permissionToUser==='READ'"
-              (click)="!(permissionToUser==='READ') && adddirectjoin()" style="border-bottom: 1px solid #d6d6d6;">Direct
-              Join</mat-option>
-            <mat-option [matTooltip]="permissionToUser==='READ'?'Permission Denied':''" *ngIf="disable == false"
-              [disabled]="disable || permissionToUser==='READ'" (click)="!(permissionToUser==='READ') && spvjoin()"
-              style="border-bottom: 1px solid #d6d6d6;">SP/View Join
-            </mat-option>
-            <mat-option [matTooltip]="permissionToUser==='READ'?'Permission Denied':''" *ngIf="disable == false"
-              [disabled]="disable || permissionToUser==='READ'" (click)="!(permissionToUser==='READ') && dataanalyze()"
-              style="border-bottom: 1px solid #d6d6d6;">Data
-              Analyzer</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <ng-container *ngIf="permissionToUser!=='READ'">
+
+        <div class="dropdown" *ngIf="dropdown" style="width: 18%;">
+          <mat-form-field>
+            <mat-label>Add Join</mat-label>
+            <mat-select [disabled]="disable">
+              <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Direct
+                Join</mat-option>
+              <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">SP/View
+                Join</mat-option>
+              <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Data
+                Analyzer</mat-option>
+              <mat-option *ngIf="disable == false" [disabled]="disable" (click)="adddirectjoin()"
+                style="border-bottom: 1px solid #d6d6d6;">
+                Direct Join</mat-option>
+              <mat-option *ngIf="disable == false" [disabled]="disable" (click)="spvjoin()"
+                style="border-bottom: 1px solid #d6d6d6;">SP/View Join
+              </mat-option>
+              <mat-option *ngIf="disable == false" [disabled]="disable" (click)="dataanalyze()"
+                style="border-bottom: 1px solid #d6d6d6;">Data Analyzer</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </ng-container>
       <div class="dropdown" *ngIf="dropdown" style="width: 18%;">
         <mat-form-field>
           <mat-label>Export As XML / JSON / PDF</mat-label>
