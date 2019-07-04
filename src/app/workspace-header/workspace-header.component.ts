@@ -124,6 +124,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
     const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
       filter(a => a.user.id === getUserId())[0].serviceActions));
+    const userWorkspaceRole = JSON.parse(JSON.stringify(selectedWorkspace.members.
+      filter(a => a.user.id === getUserId())[0].workspaceRole.name));
     this.workspaceHeaderService.selected = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
@@ -136,13 +138,21 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     // to route to the same page of workspace
     const route = this.route.firstChild.routeConfig.path;
     if (route === 'manage-master-metadata/:id') {
-      const id = this.workspaceHeaderService.getSelectedWorkspaceId();
-      this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
-        this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]));
+      if (userWorkspaceRole !== 'ROLE_APPROVER' && userWorkspaceRole !== 'ROLE_OWNER') {
+        this.router.navigate(['workspace/workspace-dashboard']);
+      } else {
+        const id = this.workspaceHeaderService.getSelectedWorkspaceId();
+        this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
+          this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]));
+      }
     } else if (route === 'manage-members/:id') {
-      const id = this.workspaceHeaderService.getSelectedWorkspaceId();
-      this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
-        this.router.navigate(['workspace/workspace-dashboard/manage-members/' + id]));
+      if (userWorkspaceRole !== 'ROLE_APPROVER' && userWorkspaceRole !== 'ROLE_OWNER') {
+        this.router.navigate(['workspace/workspace-dashboard']);
+      } else {
+        const id = this.workspaceHeaderService.getSelectedWorkspaceId();
+        this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
+          this.router.navigate(['workspace/workspace-dashboard/manage-members/' + id]));
+      }
     } else if (route === 'workspace-info/:id') {
       const id = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
