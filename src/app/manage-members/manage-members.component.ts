@@ -61,15 +61,15 @@ export class ManageMembersComponent implements OnInit {
   getManageMembersData(workspaceId) {
     this.manageMembersService.getWSMembers(workspaceId)
       .subscribe(res => {
-        console.log(res);
+        // console.log(res);
         this.isAvailable = true;
         this.manageMembers = res;
         this.manageMemTable({ data: this.manageMembers });
         this.exisitingUserIds = [];
         this.manageMembers.forEach((member) => {
-          console.log(member.serviceActions);
-          for (const i of member.serviceActions ) {
-            console.log(i.serviceName);
+          // console.log(member.serviceActions);
+          for (const i of member.serviceActions) {
+            // console.log(i.serviceName);
             if (i.serviceName === 'SERVICE_METALYZER') {
               i.serviceName = 'Metalyzer';
             }
@@ -85,7 +85,7 @@ export class ManageMembersComponent implements OnInit {
           }
           if (member.workspaceRole.name === 'ROLE_OWNER') {
             this.ownerAlreadyExist = true;
-           // member.workspaceRole.name = 'Role Owner';
+            // member.workspaceRole.name = 'Role Owner';
           }
           // if (member.workspaceRole.name === 'ROLE_MEMBER') {
           //   member.workspaceRole.name = 'Role Member';
@@ -99,7 +99,7 @@ export class ManageMembersComponent implements OnInit {
   }
 
   deletemember(id) {
-  this.deleteMemberId = id;
+    this.deleteMemberId = id;
   }
 
   confirmDelete(): void {
@@ -119,7 +119,7 @@ export class ManageMembersComponent implements OnInit {
         this.spinner.hide();
       }, (err: HttpErrorResponse) => {
         this.deleteNotif.show = true;
-          this.errorMsg = err.error.message;
+        this.errorMsg = err.error.message;
         setTimeout(() => {
           this.spinner.hide();
         }, 1000);
@@ -152,7 +152,7 @@ export class ManageMembersComponent implements OnInit {
     if (!this.wsRoleList || this.wsRoleList.length === 0) {
       this.manageMembersService.getwsRoleList().subscribe(res => {
         this.wsRoleList = res;
-        console.log(this.wsRoleList);
+        // console.log(this.wsRoleList);
       });
     }
   }
@@ -207,62 +207,62 @@ export class ManageMembersComponent implements OnInit {
   updatepermission(type, service, userid) {
     this.spinner.show();
     try {
-    const params = {
-      userId: userid,
-      workspaceId: this.workspaceId,
-      permissions: [{
-        serviceId: service.serviceId,
-        serviceActionType: type,
-        enableService: service.enableService
-      }],
-    };
-    this.manageMembersService.updateServiceActions(params).subscribe(res => {
-      if (res) {
-        this.successMsg = 'Update Successfully';
-      //  document.getElementById('addperssmsg').click();
-      } else {
-        this.errorMsg = res.errorMessage;
+      const params = {
+        userId: userid,
+        workspaceId: this.workspaceId,
+        permissions: [{
+          serviceId: service.serviceId,
+          serviceActionType: type,
+          enableService: service.enableService
+        }],
+      };
+      this.manageMembersService.updateServiceActions(params).subscribe(res => {
+        if (res) {
+          this.successMsg = 'Update Successfully';
+          //  document.getElementById('addperssmsg').click();
+        } else {
+          this.errorMsg = res.errorMessage;
+          document.getElementById('addmemermsg').click();
+        }
+        this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        this.errorMsg = err.error.message;
         document.getElementById('addmemermsg').click();
-      }
+        this.spinner.hide();
+      });
+    } catch {
       this.spinner.hide();
-    }, (err: HttpErrorResponse) => {
-      this.errorMsg = err.error.message;
-      document.getElementById('addmemermsg').click();
-      this.spinner.hide();
-    });
-  } catch {
-    this.spinner.hide();
-  }
+    }
   }
 
 
   updateaccess(type, service, userid) {
     this.spinner.show();
     try {
-    const params = {
-      userId: userid,
-      workspaceId: this.workspaceId,
-      permissions: [{
-        serviceId: service.serviceId,
-        serviceActionType: service.serviceActionType,
-        enableService: type
-      }],
-    };
-    this.manageMembersService.updateServiceActions(params).subscribe(res => {
-      if (res) {
-        this.successMsg = 'Update Successfully';
-       // document.getElementById('addperssmsg').click();
-      } else {
-        this.errorMsg = res.errorMessage;
-        document.getElementById('addmemermsg').click();
-      } this.spinner.hide();
-    }, (err: HttpErrorResponse) => {
-      this.errorMsg = err.error.message;
+      const params = {
+        userId: userid,
+        workspaceId: this.workspaceId,
+        permissions: [{
+          serviceId: service.serviceId,
+          serviceActionType: service.serviceActionType,
+          enableService: type
+        }],
+      };
+      this.manageMembersService.updateServiceActions(params).subscribe(res => {
+        if (res) {
+          this.successMsg = 'Update Successfully';
+          // document.getElementById('addperssmsg').click();
+        } else {
+          this.errorMsg = res.errorMessage;
+          document.getElementById('addmemermsg').click();
+        } this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        this.errorMsg = err.error.message;
+        this.spinner.hide();
+      });
+    } catch {
       this.spinner.hide();
-    });
-  } catch {
-    this.spinner.hide();
-  }
+    }
   }
 
   manageMemTable(xData) {
