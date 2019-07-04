@@ -54,7 +54,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges) {
-    console.log(change, 'into edit');
     this.load = false;
     this.removeIndexValue = [];
     this.resultantValues = [];
