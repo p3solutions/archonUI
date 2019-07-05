@@ -16,6 +16,7 @@ import { UserWorkspaceService } from '../user-workspace.service';
 import { addAllToArray } from '@angular/core/src/render3/util';
 import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 import { PermissionService } from '../permission-utility-functions/permission.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -46,7 +47,8 @@ export class WorkspaceServicesComponent implements OnInit {
     private userinfoService: UserinfoService,
     private cookieService: CookieService,
     private userWorkspaceService: UserWorkspaceService,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private spinner: NgxSpinnerService
   ) {
     activatedRouter.params.subscribe(val => {
       this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
@@ -104,30 +106,36 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   getUpdatedService() {
-    const selectedWorkspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
-    this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
-      if (res && selectedWorkspaceId) {
-        const selectedWorkspace = res.filter(a => a.id === selectedWorkspaceId)[0];
-        if (selectedWorkspace) {
-          const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
-            filter(a => a.user.id === getUserId())[0].serviceActions));
-          const metalyzerAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
-            === 'SERVICE_METALYZER')[0].enableService;
-          const adhocAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
-            === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0].enableService;
-          const ertAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
-            === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0].enableService;
-          const rdbmsAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
-            === 'SERVICE_DB_EXTRACTOR')[0].enableService;
-          this.serviceActions.filter(a => a.serviceName.trim() === 'Metalyzer')[0].enableService = metalyzerAccess;
-          this.serviceActions.filter(a => a.serviceName.trim() === 'IA Adhoc Query Builder')[0].enableService = adhocAccess;
-          this.serviceActions.filter(a => a.serviceName.trim() === 'ERT')[0].enableService = ertAccess;
-          this.serviceActions.filter(a => a.serviceName.trim() === 'RDBMS Extractor')[0].enableService = rdbmsAccess;
-          this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
-          this.permissionService.updateSelectedWorkspaceObj(JSON.parse(JSON.stringify(selectedWorkspace.members.
-            filter(a => a.user.id === getUserId())[0])));
+    try {
+      this.spinner.show();
+      const selectedWorkspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+      this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
+        if (res && selectedWorkspaceId) {
+          const selectedWorkspace = res.filter(a => a.id === selectedWorkspaceId)[0];
+          if (selectedWorkspace) {
+            const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
+              filter(a => a.user.id === getUserId())[0].serviceActions));
+            const metalyzerAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_METALYZER')[0].enableService;
+            const adhocAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0].enableService;
+            const ertAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0].enableService;
+            const rdbmsAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_DB_EXTRACTOR')[0].enableService;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'Metalyzer')[0].enableService = metalyzerAccess;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'IA Adhoc Query Builder')[0].enableService = adhocAccess;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'ERT')[0].enableService = ertAccess;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'RDBMS Extractor')[0].enableService = rdbmsAccess;
+            this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
+            this.permissionService.updateSelectedWorkspaceObj(JSON.parse(JSON.stringify(selectedWorkspace.members.
+              filter(a => a.user.id === getUserId())[0])));
+          }
         }
-      }
-    });
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 }
