@@ -21,7 +21,9 @@ describe('MetalyzerHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MetalyzerHeaderComponent ],
-      imports: [RouterTestingModule, HttpClientModule, NgxPaginationModule, MatTooltipModule, MatTableModule ,MatFormFieldModule, FormsModule, MatSelectModule, BrowserAnimationsModule, MatPaginatorModule],
+
+      imports: [RouterTestingModule, HttpClientModule, NgxPaginationModule, MatTableModule ,MatFormFieldModule, FormsModule, MatSelectModule, BrowserAnimationsModule, MatPaginatorModule, MatTooltipModule],
+
       providers: [WorkspaceHeaderService, MetalyzerHeaderService, UserinfoService, TableListService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();

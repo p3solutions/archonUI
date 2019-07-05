@@ -45,9 +45,8 @@ export class StatusService {
       map(this.extractJobStatusList),
       catchError(this.handleError<any>('getUserInfo')));
   }
-  setRetryStatus(jobId): Observable<any> {
+  setRetryStatus(param): Observable<any> {
     const url = this.getRetryStatusUrl;
-    const param = { 'userId': this.userinfoService.getUserId(), 'jobId': jobId };
     return this.http.post<any>(url, param, { headers: this.getHeaders() })
       .pipe(catchError(this.handleError<any>('getUserInfo')));
   }
@@ -64,9 +63,8 @@ export class StatusService {
       .pipe(catchError(this.handleError<any>('download')));
   }
 
-  terminateJob(jobId){
-    return this.http.put(this.terminateUrl + jobId, { headers: this.getHeaders() })
-    .pipe();
+  terminateJob(jobId) {
+    return this.http.put(this.terminateUrl + jobId, '', { headers: this.userinfoService.getHeaders() });
   }
 
   private extractJobSearch(res) {

@@ -287,3 +287,16 @@ table.mat-table {
 ::ng-deep .my-spinner .overlay {
   position: fixed !important;
 }
+
+#cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 1%;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+}
+
+#cancel:hover {
+  transform: scale(1.1, 1.1);
+}

@@ -54,7 +54,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges) {
-    console.log(change, 'into edit');
     this.load = false;
     this.removeIndexValue = [];
     this.resultantValues = [];
@@ -165,14 +164,15 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       }
     } else {
       for (const i of this.resultantValues) {
-        if (i.primaryColumn.columnName === test.primaryColumn.columnName) {
+        const condtionIndex = this.resultantValues.indexOf(i);
+        if (i.primaryColumn.columnName === test.primaryColumn.columnName && condtionIndex === index) {
           if (secondaryColumn === 'select') {
             i.isSelected = false;
           } else {
             i.isSelected = true;
           }
         }
-        if (i.isSelected && i.defaultSecondaryColumn) {
+        if (i.isSelected && i.defaultSecondaryColumn && condtionIndex === index) {
           i.relationshipId = test.relationshipId;
           if (i.defaultSecondaryColumn.columnName === secondaryColumn) {
             i.secondaryColumn = i.defaultSecondaryColumn;
@@ -231,6 +231,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           this.removeIndexValue = [];
           this.resultantValues = [];
           this.joinDetailsArray = [];
+          this.editchangeState.clear();
           this.updateEvent.emit(true);
           // this.errorMsg = res.data;
           // this.updateNotifSuccess = true;
@@ -267,21 +268,33 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   autocolumnMatchMode() {
     this.editchangeState.clear();
     this.updateenable = false;
+    this.spinner.show();
+    const length = this.joinDetailsArray.length;
+    let ifAutomatch = false;
     for (let i = 0; i < this.joinDetailsArray.length; i++) {
       for (const j of this.secondaryColumns) {
       if (this.joinDetailsArray[i].primaryColumn.columnName === j.columnName && this.joinDetailsArray[i].primaryColumn.columnDataType === j.columnDataType) {
         this.joinDetailsArray[i].secondaryColumn.columnName = j.columnName;
         this.joinDetailsArray[i].automatchColumn = true;
         this.selectedValues(this.joinDetailsArray[i], i, this.joinDetailsArray[i].secondaryColumn.columnName);
+        ifAutomatch = true;
       }
       }
       if (!this.joinDetailsArray[i].automatchColumn) {
         this.joinDetailsArray[i].secondaryColumn.columnName = 'select';
         this.selectedValues(this.joinDetailsArray[i], i, this.joinDetailsArray[i].secondaryColumn.columnName);
       }
+      if (length - 1 === i) {
+        this.spinner.hide();
+        }
      }
      this.autoColumnMatch = true;
-     this.autoColumnMatchMessage = 'Automatch Completed';
+     if (ifAutomatch) {
+      this.autoColumnMatchMessage = 'Automatch Completed';
+    } else {
+      this.autoColumnMatchMessage = 'No Matches Found';
+      this.updateenable = false;
+    }
   }
 
   closeAutoMatchMessage() {
