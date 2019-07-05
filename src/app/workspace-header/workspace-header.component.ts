@@ -11,6 +11,7 @@ import { UserProfileService } from '../user-profile/user-profile.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
+import { PermissionService } from '../permission-utility-functions/permission.service';
 export let firstload = 0;
 @Component({
   selector: 'app-workspace-header',
@@ -43,7 +44,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private permissionService: PermissionService
   ) {
     this.dynamicLoaderService = dynamicLoaderService;
     this.viewContainerRef = viewContainerRef;
@@ -125,7 +127,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
       filter(a => a.user.id === getUserId())[0].serviceActions));
     const userWorkspaceRole = JSON.parse(JSON.stringify(selectedWorkspace.members.
-      filter(a => a.user.id === getUserId())[0].workspaceRole.name));
+      filter(a => a.user.id === getUserId())[0]));
+      this.permissionService.updateSelectedWorkspaceObj(userWorkspaceRole);
     this.workspaceHeaderService.selected = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
@@ -138,7 +141,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     // to route to the same page of workspace
     const route = this.route.firstChild.routeConfig.path;
     if (route === 'manage-master-metadata/:id') {
-      if (userWorkspaceRole !== 'ROLE_APPROVER' && userWorkspaceRole !== 'ROLE_OWNER') {
+      if (userWorkspaceRole.workspaceRole.name !== 'ROLE_APPROVER' && userWorkspaceRole.workspaceRole.name !== 'ROLE_OWNER') {
         this.router.navigate(['workspace/workspace-dashboard']);
       } else {
         const id = this.workspaceHeaderService.getSelectedWorkspaceId();
@@ -146,7 +149,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
           this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]));
       }
     } else if (route === 'manage-members/:id') {
-      if (userWorkspaceRole !== 'ROLE_APPROVER' && userWorkspaceRole !== 'ROLE_OWNER') {
+      if (userWorkspaceRole.workspaceRole.name !== 'ROLE_APPROVER' && userWorkspaceRole.workspaceRole.name !== 'ROLE_OWNER') {
         this.router.navigate(['workspace/workspace-dashboard']);
       } else {
         const id = this.workspaceHeaderService.getSelectedWorkspaceId();

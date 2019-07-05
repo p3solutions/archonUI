@@ -11,6 +11,7 @@ import { Logs } from 'selenium-webdriver';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
 import { forEach } from '@angular/router/src/utils/collection';
+import { PermissionService } from '../permission-utility-functions/permission.service';
 // import * as $ from 'jquery';
 
 @Component({
@@ -37,6 +38,8 @@ export class ManageMembersComponent implements OnInit {
   userId: any;
   successMsg: string;
   errorMsg: any;
+  roleOfUserInWorkspace = '';
+
 
   constructor(
     private manageMembersService: ManageMembersService,
@@ -44,7 +47,8 @@ export class ManageMembersComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private workspaceHeaderService: WorkspaceHeaderService
+    private workspaceHeaderService: WorkspaceHeaderService,
+    private permissionService: PermissionService
   ) { }
 
   ngOnInit() {
@@ -56,6 +60,10 @@ export class ManageMembersComponent implements OnInit {
     this.workspaceHeaderService.updateCheckActiveTab('Manage Members');
     this.getRoleList();
     this.getPermissionList();
+    this.roleOfUserInWorkspace = this.permissionService.getRoleOfUserInWorkspace();
+    if (this.roleOfUserInWorkspace !== 'ROLE_APPROVER' && this.roleOfUserInWorkspace !== 'ROLE_OWNER') {
+      this.router.navigate(['workspace/workspace-dashboard']);
+    }
   }
 
   getManageMembersData(workspaceId) {
