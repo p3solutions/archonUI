@@ -82,3 +82,7 @@ body {
     width: 100%;
   }
   button:focus {outline:0 !important;}
+  
+  ::ng-deep .mat-form-field-required-marker {
+    color: #F44336 !important;
+  }

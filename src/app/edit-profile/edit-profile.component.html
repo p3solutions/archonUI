@@ -3,19 +3,19 @@
       <div class="modal-content" style="width: 480px;">
           <div class="info-popup-header-cls">
               <h4 class="popup-title-cls">
-                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">edit</i><div class="pop-title" style="margin-left: 0px;margin-top: 5px;"> Edit Profile</div></h4>
+                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">edit</i><div class="pop-title" style="margin-left: 0px;margin-top: 5px;"> Edit Name</div></h4>
             </div>
 
    
       <div class="modal-body row">
           <div class="col-md-12"> 
               <mat-form-field>
-                  <input id="firstName" name="userName" id="firstName" value="{{firstName}}"   matInput placeholder="First Name" >
+                  <input id="firstName" name="userName" id="firstName" value="{{firstName}}"   matInput placeholder="First Name" (keyup)="enablebutton()" required>
                 </mat-form-field>
               </div>
               <div class="col-md-12"> 
                   <mat-form-field>
-                      <input id="firstName" name="userName" id="lastName" value="{{lastName}}"   matInput placeholder="Last Name" >
+                      <input id="firstName" name="userName" id="lastName" value="{{lastName}}"   matInput placeholder="Last Name" (keyup)="enablebutton()" required>
                     </mat-form-field>
                   </div>
         <!-- <div class="col-md-12 row m-10">
@@ -60,7 +60,7 @@
               </div>
           <div class="action-btn">
               <button class="btn cancel btn-padding" data-dismiss="modal" (click)="closeErrorMsg()">Cancel</button>
-              <button class="btn save btn-padding" (click)="updateUserInfo()" data-toggle="modal"> Confirm </button>                
+              <button class="btn {{enableBtn? 'save-disabled': 'save'}} btn-padding" [disabled]="enableBtn"  (click)="updateUserInfo()" data-toggle="modal"> Confirm </button>                
             </div>
       </div>
     </div>
