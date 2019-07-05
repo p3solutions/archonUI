@@ -117,11 +117,6 @@
       </table>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-11 pull-right">
-      <button (click)="gotoDashboard()" type="submit" class="m-10 btn btn-primary pull-right btn-form">Back</button>
-    </div>
-  </div>
 </div>
 <app-edit-profile [userid]="userInfo?.id" [firstName]="userInfo?.firstName" [lastName]="userInfo?.lastName" [useremail]="userInfo?.email"
  (UpdateProfile)="onUpdateProfile($event)"></app-edit-profile>
