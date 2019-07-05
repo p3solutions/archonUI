@@ -39,7 +39,7 @@ export class ManageMembersComponent implements OnInit {
   successMsg: string;
   errorMsg: any;
   roleOfUserInWorkspace = '';
-
+  role: any;
 
   constructor(
     private manageMembersService: ManageMembersService,
@@ -64,6 +64,7 @@ export class ManageMembersComponent implements OnInit {
     if (this.roleOfUserInWorkspace !== 'ROLE_APPROVER' && this.roleOfUserInWorkspace !== 'ROLE_OWNER') {
       this.router.navigate(['workspace/workspace-dashboard']);
     }
+    this.role = this.workspaceHeaderService.getSelectedWorkspaceWorkspaceRole();
   }
 
   getManageMembersData(workspaceId) {

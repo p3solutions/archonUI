@@ -37,6 +37,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   addmem: boolean;
   errorMsg: any;
+  updateNotif: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -161,6 +162,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
       }, (err: HttpErrorResponse) => {
         this.spinner.hide();
         this.errorMsg = err.error.message;
+        this.updateNotif = true;
         });
       });
     } catch {
@@ -190,6 +192,8 @@ export class AddMembersComponent implements OnInit, OnChanges {
     }
   }
   closeErrorMsg() {
+    this.errorMsg = '';
+    this.updateNotif = false;
     this.errorObject = null;
   }
 
@@ -216,6 +220,7 @@ export class AddMembersComponent implements OnInit, OnChanges {
   resetSelection() {
     this.selectedUserIdList = [];
      this.getUserList();
+     this.updateNotif = false;
     // this.removeIndexValue = [];
     // this.updateenable = false;
     // this.onloadupdate = true;

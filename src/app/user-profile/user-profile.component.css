@@ -15,7 +15,7 @@
 }
 
 #user-info .table-hover {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   margin-left: 75px;
   width: 72%;
   text-align: left;
@@ -23,6 +23,10 @@
 
 .text-overflow-hid {
   overflow: hidden;
+}
+.table-hover1 {
+  margin-left: 75px;
+  width: 73%;
 }
 
 
@@ -66,3 +70,17 @@ header,
 a {
   cursor: pointer;
 }
+.action-btn button.save {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  transition: 0.5s;
+  border-radius: 3px; 
+ }
+ .action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+}
+.workspace-panel-heading {
+  margin-left: -15px;
+}
+button:focus {outline:0 !important;}

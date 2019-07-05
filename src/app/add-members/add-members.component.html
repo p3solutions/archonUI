@@ -111,6 +111,14 @@
           </div>            
          
   <div class="modal-footer"> 
+      <div *ngIf="updateNotif" id="msg-id"> 
+          <div class="alert alert-danger alert-dismissible m-t-6" role="alert">
+          <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>{{errorMsg}}</strong>
+        </div> 
+      </div> 
     <div class="col-md-12" style="padding-right: 0px;"> 
       <div class="action-btn">
       <button class="btn cancel btn-padding" id="dismissmodel" data-dismiss="modal" (click)="resetSelection();" >Cancel</button>
