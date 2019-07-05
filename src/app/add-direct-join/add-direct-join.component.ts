@@ -177,7 +177,6 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
       }
     }
   this.enableAdd = this.checkDuplicateInObject(this.joinListTemp);
-  console.log(this.enableAdd, this.joinListTemp);
   if (this.enableAdd === true) {
     this.editColumnMode = false;
     this.joinbtn = true;
@@ -279,21 +278,33 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
     this.editState.clear();
     this.joinListTemp = [];
     this.resultArray = [];
+    this.spinner.show();
+    const length = this.primaryColumns.length;
+    let ifAutomatch = false;
     for (let i = 0; i < this.primaryColumns.length; i++) {
      for (const j of this.secondaryColumns) {
      if (this.primaryColumns[i].columnName === j.columnName && this.primaryColumns[i].columnDataType === j.columnDataType) {
       this.primaryColumns[i].secondaryColumn = j.columnName;
       this.primaryColumns[i].autoMatch = true;
       this.selectedValues(this.primaryColumns[i], i , this.primaryColumns[i].secondaryColumn);
+      ifAutomatch = true;
      }
      }
      if (!this.primaryColumns[i].autoMatch) {
       this.primaryColumns[i].secondaryColumn = '';
       this.selectedValues(this.primaryColumns[i], i , this.primaryColumns[i].secondaryColumn);
      }
+     if (length - 1 === i) {
+     this.spinner.hide();
+     }
     }
     this.editColumnMode = true;
-    this.autoColumnMatchMessage = 'Automatch Completed';
+    if (ifAutomatch) {
+      this.autoColumnMatchMessage = 'Automatch Completed';
+    } else {
+      this.autoColumnMatchMessage = 'No Matches Found';
+      this.joinbtn = true;
+    }
   }
 
   closeAutoMatchMessage() {
