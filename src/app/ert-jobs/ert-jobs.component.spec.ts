@@ -15,6 +15,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 
 describe('ErtJobsComponent', () => {
   let component: ErtJobsComponent;
@@ -23,9 +24,12 @@ describe('ErtJobsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ErtJobsComponent, ScheduleJobComponent],
-      providers: [UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      providers: [UserinfoService, WorkspaceHeaderService, ErtService, WorkspaceServicesService,
+        { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [HttpClientModule, RouterTestingModule, MatTooltipModule,
-        BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule]
+        BsDatepickerModule.forRoot(), TimepickerModule.forRoot(), FormsModule,
+        MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, BrowserAnimationsModule,
+        MatDatepickerModule, MatNativeDateModule]
     })
       .compileComponents();
   }));

@@ -15,6 +15,8 @@ import { EnvironmentService } from '../environment/environment.service';
 import { ApplicationInitStatus } from '@angular/core';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { CookieService } from 'ngx-cookie-service';
+import { UserWorkspaceService } from '../user-workspace.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 describe('WorkspaceServicesComponent', () => {
   let component: WorkspaceServicesComponent;
@@ -22,12 +24,12 @@ describe('WorkspaceServicesComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, MatCardModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, MatCardModule, NgxSpinnerModule],
       declarations: [WorkspaceServicesComponent],
       providers: [
         { provide: EnvironmentService, useClass: MockEnvironmentService }
-        , CookieService,
-        WorkspaceServicesService, UserinfoService,
+        , CookieService, NgxSpinnerService,
+        WorkspaceServicesService, UserinfoService, UserWorkspaceService,
         WorkspaceHeaderService, MetalyzerHeaderService, TableListService, CommonUtilityService, UserProfileService]
     })
       .compileComponents();

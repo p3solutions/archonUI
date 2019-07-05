@@ -18,6 +18,7 @@ export class GlobalGroup {
     updatedAt = '';
     groupName = '';
     rank = '';
+    disabled = false;
     globalRoles: GlobalRolesList[] = [];
 }
 

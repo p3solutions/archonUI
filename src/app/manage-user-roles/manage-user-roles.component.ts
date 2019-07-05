@@ -65,6 +65,7 @@ export class ManageUserRolesComponent implements OnInit {
   userinfoId: any;
   globalGroupIds: string[] = [];
   screenfilter = '';
+  loginUserGlobalgroup = '';
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router,
@@ -169,6 +170,21 @@ export class ManageUserRolesComponent implements OnInit {
     }
   }
 
+  disabledGroup() {
+    this.userInfoService.getUserInfo().subscribe(res => {
+      if (res.data && res.success && res.data.user) {
+        this.loginUserGlobalgroup = res.data.groupName;
+        // if (this.loginUserGlobalgroup.trim().toUpperCase() === 'GROUP_DB_ADMIN') {
+        //   this.globalGroupList.forEach(a => a.disabled = true);
+        //   this.globalGroupList.filter(a => a.groupName.trim().toUpperCase() === 'GROUP_DB_ADMIN')[0].disabled = ;
+        // }
+        if (this.loginUserGlobalgroup.trim().toUpperCase() === 'GROUP_ADMIN') {
+          this.globalGroupList.filter(a => a.groupName.trim().toUpperCase() === 'GROUP_DB_ADMIN')[0].disabled = true;
+        }
+      }
+    });
+  }
+
 
   getGlobalGroup() {
     if (this.roleOfUser !== '') {
@@ -177,6 +193,7 @@ export class ManageUserRolesComponent implements OnInit {
         this.globalGroupList = result.data.globalRoles;
         this.globalGroupIds = this.globalGroupList.map(function (item) { return item['id']; });
         this.getAllUsers(false, false, false);
+        this.disabledGroup();
       });
     }
   }

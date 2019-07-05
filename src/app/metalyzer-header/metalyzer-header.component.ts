@@ -9,6 +9,7 @@ import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MetalyzerDataSource } from './metalyzerdatasource';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PermissionService } from '../permission-utility-functions/permission.service';
 
 @Component({
   selector: 'app-metalyzer-header',
@@ -38,14 +39,15 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   disable = true;
   @ViewChild(MatPaginator) matpaginator: MatPaginator;
   dataSource: MetalyzerDataSource;
-
+  permissionToUser = '';
   constructor(
     private router: Router,
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private metalyzerHeaderService: MetalyzerHeaderService,
     private userInfoService: UserinfoService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private permissionService: PermissionService
   ) {
   }
 
@@ -70,6 +72,7 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     });
     this.matpaginator.pageIndex = 0;
     this.loadPage();
+    this.permissionToUser = this.permissionService.getMetalyzerPermission();
   }
 
   ngAfterViewInit() {
@@ -78,6 +81,7 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
         tap(() => this.loadPage())
       )
       .subscribe();
+
   }
 
   datasourceHasValue() {
@@ -94,8 +98,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
 
   loadPage() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-      this.userid = this.userInfoService.getUserId();
-      this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService, this.spinner);
+    this.userid = this.userInfoService.getUserId();
+    this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService, this.spinner);
     this.dataSource.getAudit(this.workspaceID, this.userid, this.matpaginator.pageIndex + 1);
   }
 
