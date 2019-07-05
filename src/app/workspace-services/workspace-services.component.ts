@@ -33,6 +33,7 @@ export class WorkspaceServicesComponent implements OnInit {
   workspaceID: any;
   startIndex = 1;
   isAnyServiceEnable = true;
+  showMessage = '';
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -115,21 +116,36 @@ export class WorkspaceServicesComponent implements OnInit {
           if (selectedWorkspace) {
             const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
               filter(a => a.user.id === getUserId())[0].serviceActions));
-            const metalyzerAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
-              === 'SERVICE_METALYZER')[0].enableService;
-            const adhocAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
-              === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0].enableService;
-            const ertAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
-              === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0].enableService;
-            const rdbmsAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
-              === 'SERVICE_DB_EXTRACTOR')[0].enableService;
+            const metalyzerObj = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_METALYZER')[0];
+            const metalyzerAccess = metalyzerObj.enableService;
+            const metalyzerPermission = metalyzerObj.serviceActionType;
+            const adhocObj = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0];
+            const adhocAccess = adhocObj.enableService;
+            const adhocPermission = adhocObj.serviceActionType;
+            const ertObj = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0];
+            const ertAccess = ertObj.enableService;
+            const ertPermission = ertObj.serviceActionType;
+            const rdbmsObj = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_DB_EXTRACTOR')[0];
+            const rdbmsPermission = rdbmsObj.serviceActionType;
+            const rdbmsAccess = rdbmsObj.enableService;
             this.serviceActions.filter(a => a.serviceName.trim() === 'Metalyzer')[0].enableService = metalyzerAccess;
             this.serviceActions.filter(a => a.serviceName.trim() === 'IA Adhoc Query Builder')[0].enableService = adhocAccess;
             this.serviceActions.filter(a => a.serviceName.trim() === 'ERT')[0].enableService = ertAccess;
             this.serviceActions.filter(a => a.serviceName.trim() === 'RDBMS Extractor')[0].enableService = rdbmsAccess;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'Metalyzer')[0].serviceActionType = metalyzerPermission;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'IA Adhoc Query Builder')[0].serviceActionType = adhocPermission;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'ERT')[0].serviceActionType = ertPermission;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'RDBMS Extractor')[0].serviceActionType = rdbmsPermission;
             this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
             this.permissionService.updateSelectedWorkspaceObj(JSON.parse(JSON.stringify(selectedWorkspace.members.
               filter(a => a.user.id === getUserId())[0])));
+            if (!this.isAnyServiceEnable) {
+              this.showMessage = 'No access to any services. Please contact owner of workspace to get access.';
+            }
           }
         }
         this.spinner.hide();
