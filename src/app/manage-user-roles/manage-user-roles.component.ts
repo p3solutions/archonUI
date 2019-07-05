@@ -174,7 +174,6 @@ export class ManageUserRolesComponent implements OnInit {
     this.userInfoService.getUserInfo().subscribe(res => {
       if (res.data && res.success && res.data.user) {
         this.loginUserGlobalgroup = res.data.groupName;
-        console.log(this.loginUserGlobalgroup, this.globalGroupList);
         // if (this.loginUserGlobalgroup.trim().toUpperCase() === 'GROUP_DB_ADMIN') {
         //   this.globalGroupList.forEach(a => a.disabled = true);
         //   this.globalGroupList.filter(a => a.groupName.trim().toUpperCase() === 'GROUP_DB_ADMIN')[0].disabled = ;

@@ -12,6 +12,10 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NavbarService } from '../navbar/navbar.service';
 import { CookieService } from 'ngx-cookie-service';
+import { UserWorkspaceService } from '../user-workspace.service';
+import { addAllToArray } from '@angular/core/src/render3/util';
+import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
+import { PermissionService } from '../permission-utility-functions/permission.service';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -40,15 +44,17 @@ export class WorkspaceServicesComponent implements OnInit {
     private userProfileService: UserProfileService,
     private navService: NavbarService,
     private userinfoService: UserinfoService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private userWorkspaceService: UserWorkspaceService,
+    private permissionService: PermissionService
   ) {
     activatedRouter.params.subscribe(val => {
       this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
         const serviceActionsList = this.workspaceService.updateServiceActionsList(serviceActions, '');
         this.serviceActions = serviceActionsList;
-        this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({ 'interval': false });
+        this.getUpdatedService();
       });
     });
   }
@@ -98,6 +104,30 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   getUpdatedService() {
-
+    const selectedWorkspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+    this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
+      if (res && selectedWorkspaceId) {
+        const selectedWorkspace = res.filter(a => a.id === selectedWorkspaceId)[0];
+        if (selectedWorkspace) {
+          const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
+            filter(a => a.user.id === getUserId())[0].serviceActions));
+          const metalyzerAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+            === 'SERVICE_METALYZER')[0].enableService;
+          const adhocAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+            === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0].enableService;
+          const ertAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+            === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0].enableService;
+          const rdbmsAccess = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+            === 'SERVICE_DB_EXTRACTOR')[0].enableService;
+          this.serviceActions.filter(a => a.serviceName.trim() === 'Metalyzer')[0].enableService = metalyzerAccess;
+          this.serviceActions.filter(a => a.serviceName.trim() === 'IA Adhoc Query Builder')[0].enableService = adhocAccess;
+          this.serviceActions.filter(a => a.serviceName.trim() === 'ERT')[0].enableService = ertAccess;
+          this.serviceActions.filter(a => a.serviceName.trim() === 'RDBMS Extractor')[0].enableService = rdbmsAccess;
+          this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
+          this.permissionService.updateSelectedWorkspaceObj(JSON.parse(JSON.stringify(selectedWorkspace.members.
+            filter(a => a.user.id === getUserId())[0])));
+        }
+      }
+    });
   }
 }

@@ -72,6 +72,7 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     });
     this.matpaginator.pageIndex = 0;
     this.loadPage();
+    this.permissionToUser = this.permissionService.getMetalyzerPermission();
   }
 
   ngAfterViewInit() {
@@ -81,7 +82,6 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
       )
       .subscribe();
 
-      this.permissionToUser = this.permissionService.getMetalyzerPermission();
   }
 
   datasourceHasValue() {
@@ -98,8 +98,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
 
   loadPage() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
-      this.userid = this.userInfoService.getUserId();
-      this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService, this.spinner);
+    this.userid = this.userInfoService.getUserId();
+    this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService, this.spinner);
     this.dataSource.getAudit(this.workspaceID, this.userid, this.matpaginator.pageIndex + 1);
   }
 

@@ -159,11 +159,9 @@ export class TableListComponent implements OnInit {
       this.wsName = result;
     });
     this.tablelistService.selectTables(true);
+    this.permissionToUser = this.permissionService.getMetalyzerPermission();
   }
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngAfterViewInit() {
-      this.permissionToUser = this.permissionService.getMetalyzerPermission();
-  }
+ 
 
   getTableList() {
     this.spinner.show();

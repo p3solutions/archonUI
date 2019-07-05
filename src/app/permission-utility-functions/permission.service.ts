@@ -9,7 +9,7 @@ import { WorkspaceObject } from '../workspace-objects';
 export class PermissionService {
 
   constructor(private workspaceService: WorkspaceServicesService) { }
-  selectedWorkspaceObj: BehaviorSubject<WorkspaceObject> = new BehaviorSubject<WorkspaceObject>(new WorkspaceObject());
+  selectedWorkspaceObj: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   updatedSelectedWorkspaceObj = this.selectedWorkspaceObj.asObservable();
 
 
@@ -30,9 +30,12 @@ export class PermissionService {
 
   getMetalyzerPermission(): any {
     let returnPermission: any = '';
-    this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      if (response.filter(a => a.serviceName === 'Metalyzer')[0] !== undefined) {
-        returnPermission = response.filter(a => a.serviceName === 'Metalyzer')[0].serviceActionType;
+    this.selectedWorkspaceObj.subscribe(response => {
+      if (response) {
+        if (response.serviceActions.filter(a => a.serviceName.trim().toUpperCase() === 'SERVICE_METALYZER')[0] !== undefined) {
+          returnPermission = response.serviceActions.filter(a => a.serviceName.trim().toUpperCase()
+            === 'SERVICE_METALYZER')[0].serviceActionType;
+        }
       }
     });
     return returnPermission;
@@ -40,9 +43,12 @@ export class PermissionService {
 
   getAdhocPermission() {
     let returnPermission: any = '';
-    this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      if (response.filter(a => a.serviceName === 'IA Adhoc Query Builder')[0] !== undefined) {
-        returnPermission = response.filter(a => a.serviceName === 'IA Adhoc Query Builder')[0].serviceActionType;
+    this.selectedWorkspaceObj.subscribe(response => {
+      if (response) {
+        if (response.serviceActions.filter(a => a.serviceName.trim().toUpperCase() === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0] !== undefined) {
+          returnPermission = response.serviceActions.filter(a => a.serviceName.trim().toUpperCase()
+            === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0].serviceActionType;
+        }
       }
     });
     return returnPermission;
@@ -50,19 +56,28 @@ export class PermissionService {
 
   getRdbmsPermission() {
     let returnPermission: any = '';
-    this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      if (response.filter(a => a.serviceName === 'RDBMS Extractor')[0] !== undefined) {
-        returnPermission = response.filter(a => a.serviceName === 'RDBMS Extractor')[0].serviceActionType;
+    this.selectedWorkspaceObj.subscribe(response => {
+      if (response) {
+        if (response.serviceActions.filter(a => a.serviceName.trim().toUpperCase() ===
+          'SERVICE_DB_EXTRACTOR')[0] !== undefined) {
+          returnPermission = response.serviceActions.filter(a => a.serviceName.trim().toUpperCase() ===
+            'SERVICE_DB_EXTRACTOR')[0].serviceActionType;
+        }
       }
+
     });
     return returnPermission;
   }
 
   getERTPermission() {
     let returnPermission: any = '';
-    this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      if (response.filter(a => a.serviceName === 'ERT')[0] !== undefined) {
-        returnPermission = response.filter(a => a.serviceName === 'ERT')[0].serviceActionType;
+    this.selectedWorkspaceObj.subscribe(response => {
+      if (response) {
+        if (response.serviceActions.filter(a => a.serviceName.trim().toUpperCase() ===
+          'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0] !== undefined) {
+          returnPermission = response.serviceActions.filter(a => a.serviceName.trim().toUpperCase() ===
+            'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0].serviceActionType;
+        }
       }
     });
     return returnPermission;
