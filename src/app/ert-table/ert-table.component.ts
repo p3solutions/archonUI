@@ -165,6 +165,7 @@ export class ErtTableComponent implements OnInit {
     document.getElementById('create-job-select-table-popup-btn').click();
     this.getOriginalErttableList(1);
     this.currentPageOfOriginalErtTable = 1;
+    this.tempOriginalSelectedTable = [];
   }
 
   getOriginalErttableList(currentIndex) { // During creating job when user click on pagination of add table.
@@ -481,6 +482,7 @@ export class ErtTableComponent implements OnInit {
 
   openAvailableErtTablePopup(index) { // During creating job when user click on add table btn.
     document.getElementById('ert-available-table-popup-btn').click();
+    this.tempOriginalSelectedTable = [];
     this.getErtAvailableTable(1);
     this.availPage = 1;
   }
@@ -924,6 +926,9 @@ export class ErtTableComponent implements OnInit {
         this.ertService.isDataRecordGraphChange = false;
         this.navigateToUrl('workspace/ert/ert-extract-ingest');
       }
+    } else {
+      this.errorMessagesForSelection = 'Please select at least one table to proceed.';
+      document.getElementById('warning-popup-btn').click();
     }
   }
 
@@ -1445,24 +1450,28 @@ export class ErtTableComponent implements OnInit {
   checkForColumnSelectValidation(): boolean {
     let isValid = true;
     const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-    const tempColumnList = tempObj.columnList;
-    const tempUserDefinedList = tempObj.usrDefinedColumnList;
-    if (tempObj.isSelected) {
-      if (tempColumnList.filter(a => a.isSelected === true).length === 0) {
-        if (tempUserDefinedList.length > 0) {
-          if (tempUserDefinedList.filter(a => a.isSelected === true).length === 0) {
+    if (tempObj !== undefined) {
+      const tempColumnList = tempObj.columnList;
+      const tempUserDefinedList = tempObj.usrDefinedColumnList;
+      if (tempObj.isSelected) {
+        if (tempColumnList.filter(a => a.isSelected === true).length === 0) {
+          if (tempUserDefinedList.length > 0) {
+            if (tempUserDefinedList.filter(a => a.isSelected === true).length === 0) {
+              this.errorMessagesForSelection = 'Please select at least one column to proceed.';
+              document.getElementById('warning-popup-btn').click();
+              isValid = false;
+            }
+          } else {
             this.errorMessagesForSelection = 'Please select at least one column to proceed.';
             document.getElementById('warning-popup-btn').click();
             isValid = false;
           }
         } else {
-          this.errorMessagesForSelection = 'Please select at least one column to proceed.';
-          document.getElementById('warning-popup-btn').click();
-          isValid = false;
+          isValid = true;
         }
-      } else {
-        isValid = true;
       }
+    } else {
+      isValid = false;
     }
     return isValid;
   }

@@ -83,7 +83,6 @@ export class ErtJobsComponent implements OnInit {
   ngAfterViewInit() {
     this.cdRef.detectChanges();
     this.permissionToUser = this.permissionService.getERTPermission();
-    console.log(this.permissionToUser);
   }
 
   gotoEditJob(ertJobId: string, jobStatus: string) {
