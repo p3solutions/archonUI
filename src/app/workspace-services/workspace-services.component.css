@@ -1,4 +1,3 @@
-
 .flex-container {
   display: flex;
   width: 453px;
@@ -11,10 +10,12 @@
 .icon-img {
   height: 100px;
 }
+
 .reveal .card-reveal {
   top: 0;
 }
-.card-toggle{
+
+.card-toggle {
   cursor: pointer;
   padding: 0px 10px 0 0;
 }
@@ -22,14 +23,14 @@
 .example-card {
   height: 100%;
   width: 100%;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.43);
-  transition:0.5s;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.43);
+  transition: 0.5s;
   cursor: pointer;
 }
 
-.example-card:hover{
-  box-shadow: rgba(0,0,0,0.43) 0px 0px 20px 0px;
-  transform:translatey(-10px);
+.example-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.43) 0px 0px 20px 0px;
+  transform: translatey(-10px);
 }
 
 .example-header-image {
@@ -47,29 +48,35 @@
 }
 
 .body-left {
-  display:inline-flex;  
+  display: inline-flex;
   font-size: 14px;
-  width: 22%; 
+  width: 22%;
   padding-left: 5px;
   color: #000101;
 }
+
 .body-center {
-  display:inline-block;  
+  display: inline-block;
   padding: 10px 0px 0px 0px;
   font-size: 14px;
 }
+
 .body-right {
-  display:inline-flex;
+  display: inline-flex;
   padding: 10px 15px 0px 15px;
   font-size: 14px;
-  width: 77%; 
+  width: 77%;
   color: #3d3d3e;
   text-align: justify;
 }
 
-.centre{
+.centre {
   justify-content: center;
   font-size: 18px;
   color: #000000;
 }
 
+.noServiceMsg {
+  margin-top: 90px;
+  font-size: 18px;
+}

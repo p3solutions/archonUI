@@ -67,7 +67,7 @@
           <th style="width:11%" mat-header-cell *matHeaderCellDef> Global Group </th>
           <td style="width:11%" mat-cell *matCellDef="let element" class="global-select">
             <select [ngModel]="element.globalGroupId" (change)="changeGlobalGroup(element.id,$event.target.value)">
-              <option *ngFor="let item of globalGroupList" [value]="item.id">
+              <option *ngFor="let item of globalGroupList" [disabled]="item.disabled" [value]="item.id">
                 {{item.groupName}}
               </option>
             </select>

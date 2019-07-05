@@ -27,6 +27,7 @@ export class WorkspaceServicesComponent implements OnInit {
   private tableList: any;
   workspaceID: any;
   startIndex = 1;
+  isAnyServiceEnable = true;
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -45,6 +46,7 @@ export class WorkspaceServicesComponent implements OnInit {
       this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
         const serviceActionsList = this.workspaceService.updateServiceActionsList(serviceActions, '');
         this.serviceActions = serviceActionsList;
+        this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({ 'interval': false });
       });
@@ -56,6 +58,7 @@ export class WorkspaceServicesComponent implements OnInit {
     test.loadfirst = 0;
     test.getNotification();
     this.workspaceHeaderService.updateCheckActiveTab('Services');
+    this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
   }
 
   gotoMetalyzer(service: any) {
@@ -92,5 +95,9 @@ export class WorkspaceServicesComponent implements OnInit {
 
   toggleCard(cardId, toShow, _event) {
     this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
+  }
+
+  getUpdatedService() {
+
   }
 }
