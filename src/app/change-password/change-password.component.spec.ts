@@ -8,9 +8,11 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatError, MatFormFieldModule } from '@angular/material';
+import { MatError, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
@@ -37,16 +39,17 @@ describe('ChangePasswordComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule, MatFormFieldModule
+        RouterTestingModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule
       ],
       providers: [
         // reference the new instance of formBuilder from above
         ChangePasswordService,
         UserinfoService,
         JwtHelperService,
-        { provide: FormBuilder, useValue: formBuilder } , 
+        { provide: FormBuilder, useValue: formBuilder } ,
         { provide: EnvironmentService, useClass: MockEnvironmentService }
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
