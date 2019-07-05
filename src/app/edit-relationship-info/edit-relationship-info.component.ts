@@ -292,7 +292,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
      if (ifAutomatch) {
       this.autoColumnMatchMessage = 'Automatch Completed';
     } else {
-      this.autoColumnMatchMessage = 'No Automatch Found';
+      this.autoColumnMatchMessage = 'No Matches Found';
       this.updateenable = false;
     }
   }

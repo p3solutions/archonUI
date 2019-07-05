@@ -203,6 +203,7 @@ continueRetryJob() {
     this.statusService.terminateJob(this.terminateJobID).subscribe((result: any) => {
       if (result) {
         this.responsemsg = result.data;
+        this.getStart();
         el.click();
       }
     }, (err: HttpErrorResponse) => {
