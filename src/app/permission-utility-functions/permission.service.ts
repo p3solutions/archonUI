@@ -20,8 +20,10 @@ export class PermissionService {
   getRoleOfUserInWorkspace(): string {
     let returnPermission: any = '';
     this.selectedWorkspaceObj.subscribe(response => {
-      if (response.workspaceRole !== undefined) {
-        returnPermission = response.workspaceRole.name;
+      if (response) {
+        if (response.workspaceRole !== undefined) {
+          returnPermission = response.workspaceRole.name;
+        }
       }
     });
     return returnPermission;

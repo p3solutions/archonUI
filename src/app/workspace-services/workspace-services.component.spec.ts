@@ -15,6 +15,7 @@ import { EnvironmentService } from '../environment/environment.service';
 import { ApplicationInitStatus } from '@angular/core';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { CookieService } from 'ngx-cookie-service';
+import { UserWorkspaceService } from '../user-workspace.service';
 
 describe('WorkspaceServicesComponent', () => {
   let component: WorkspaceServicesComponent;
@@ -27,7 +28,7 @@ describe('WorkspaceServicesComponent', () => {
       providers: [
         { provide: EnvironmentService, useClass: MockEnvironmentService }
         , CookieService,
-        WorkspaceServicesService, UserinfoService,
+        WorkspaceServicesService, UserinfoService, UserWorkspaceService,
         WorkspaceHeaderService, MetalyzerHeaderService, TableListService, CommonUtilityService, UserProfileService]
     })
       .compileComponents();
