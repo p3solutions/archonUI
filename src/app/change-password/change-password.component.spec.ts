@@ -8,7 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { UserinfoService } from '../userinfo.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatError, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatError, MatFormFieldModule, MatInputModule, MatTooltipModule } from '@angular/material';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
@@ -39,7 +39,7 @@ describe('ChangePasswordComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule
+        RouterTestingModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, MatTooltipModule
       ],
       providers: [
         // reference the new instance of formBuilder from above
