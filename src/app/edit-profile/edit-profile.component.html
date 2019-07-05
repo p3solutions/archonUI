@@ -1,11 +1,24 @@
 <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
-    <div class="modal-content text-left">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Edit Profile</h4>
-      </div>
+      <div class="modal-content" style="width: 480px;">
+          <div class="info-popup-header-cls">
+              <h4 class="popup-title-cls">
+                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">edit</i><div class="pop-title" style="margin-left: 0px;margin-top: 5px;"> Edit Name</div></h4>
+            </div>
+
+   
       <div class="modal-body row">
-        <div class="col-md-12 row m-10">
+          <div class="col-md-12"> 
+              <mat-form-field>
+                  <input id="firstName" name="userName" id="firstName" value="{{firstName}}"   matInput placeholder="First Name" (keyup)="enablebutton()" required>
+                </mat-form-field>
+              </div>
+              <div class="col-md-12"> 
+                  <mat-form-field>
+                      <input id="firstName" name="userName" id="lastName" value="{{lastName}}"   matInput placeholder="Last Name" (keyup)="enablebutton()" required>
+                    </mat-form-field>
+                  </div>
+        <!-- <div class="col-md-12 row m-10">
           <div class="col-md-4">First Name</div>
           <div class="col-md-8">
             <input value="{{firstName}}" class="form-control" name="userName" id="firstName" />
@@ -18,7 +31,7 @@
             <input value="{{lastName}}" class="form-control" name="userName" id="lastName" />
             <i class="fa fa-spinner fa-spin loading" *ngIf="nameLoader"></i>
           </div>
-        </div>
+        </div> -->
         <div class="col-md-12 row m-10" style="display: none;">
           <div class="col-md-4">Change Email Address</div>
           <div class="col-md-8">
@@ -27,20 +40,28 @@
           </div>
         </div>
         <input hidden value="{{userid}}" name="userId" id="userId" />
-        <div class="col-md-8 form-group edit-profile-error">
+        <!-- <div class="col-md-8 form-group edit-profile-error">
           <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
             <strong>Error!</strong> {{errorObject?.message}}
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn-padding btn-to-cancel btn-transform btn btn-secondary cancel"
-          data-dismiss="modal">Cancel</button>
-        <button type="button" class=" btn-padding btn-transform btn btn-primary"
-          (click)="updateUserInfo()">Confirm</button>
+          <div *ngIf="errorObject?.show" class="col-md-12"> 
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                  <button type="button" class="close" (click)="closeErrorMsg()" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <strong>Error!</strong> {{errorObject?.message}}
+                </div>
+              </div>
+          <div class="action-btn">
+              <button class="btn cancel btn-padding" data-dismiss="modal" (click)="closeErrorMsg()">Cancel</button>
+              <button class="btn {{enableBtn? 'save-disabled': 'save'}} btn-padding" [disabled]="enableBtn"  (click)="updateUserInfo()" data-toggle="modal"> Confirm </button>                
+            </div>
       </div>
     </div>
   </div>

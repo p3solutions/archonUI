@@ -78,9 +78,10 @@
             </mat-form-field>
           </div> 
           <div class="sub-right">            
-          <a matTooltip="Add Members" style="font-size: 42px" data-toggle="modal"  data-target="#add-member-modal"><i class="material-icons plus col">
+          <a *ngIf="role?.name == 'ROLE_OWNER'" matTooltip="Add Members" style="font-size: 42px" data-toggle="modal"  data-target="#add-member-modal"><i class="material-icons plus col">
             </i></a>
-         
+            <a *ngIf="role?.name !== 'ROLE_OWNER'" matTooltip="Only Workspace Owner Can Access" style="font-size: 42px;" data-toggle="modal" ><i class="material-icons plus col" style="color: grey; cursor: not-allowed;">
+            </i></a>
         </div>
     </div> 
   </div>
@@ -98,17 +99,20 @@
   <div class="col-md-12">
       <div class="col-md-12 expansion">
       <mat-accordion >
-          <mat-expansion-panel *ngFor="let manage of manageMembers;let ind=index;">
+          <mat-expansion-panel [disabled]="role?.name !== 'ROLE_OWNER'" *ngFor="let manage of manageMembers;let ind=index;">
             <mat-expansion-panel-header>
               <mat-panel-title>
                   <div class="ex-header1" style="display: none" ><mat-checkbox (click)="$event.stopPropagation();" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'"></mat-checkbox></div>
                     <div class="ex-header2" >{{manage.user.id}}</div>
                     <div class="ex-header5" >{{manage.user.name}}</div>
                   <div class="ex-header3"  >{{manage.workspaceRole.name}}</div>
-                  <div class="ex-header4" >
+                  <div *ngIf="role?.name == 'ROLE_OWNER'" class="ex-header4" >
                     <a *ngIf="manage.workspaceRole.name !== 'ROLE_OWNER'" data-toggle="modal" data-tooltip="Delete" href="#confirmDelMemModal" (click)="deletemember(manage.user.id)" ><i class="material-icons" style="font-size: 23px" >delete </i></a>
                     <a *ngIf="manage.workspaceRole.name === 'ROLE_OWNER'" data-toggle="modal" data-tooltip="Not Available"><i class="material-icons" style="font-size: 23px; color: grey; cursor: not-allowed;" >delete </i></a>
                   </div>
+                  <div *ngIf="role?.name !== 'ROLE_OWNER'" class="ex-header4" >
+                     <a data-toggle="modal" data-tooltip="Not Available"><i class="material-icons" style="font-size: 23px; color: grey; cursor: not-allowed;" >delete </i></a>
+                    </div>
               </mat-panel-title>              
             </mat-expansion-panel-header>
             <div class="line"></div>  

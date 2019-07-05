@@ -21,10 +21,12 @@ export class EditProfileComponent implements OnInit {
   oldUserInfo: object;
   errorObject: ErrorObject;
   thisComponent = this;
+  enableBtn: boolean;
 
   constructor(private userinfoService: UserinfoService, private router: Router, private userProfileService: UserProfileService) { }
 
   ngOnInit() {
+    this.enableBtn = true;
     this.nameLoader = this.emailLoader = false;
   }
 
@@ -58,6 +60,7 @@ export class EditProfileComponent implements OnInit {
     } */
     this.userinfoService.updateUserProfile(params).subscribe(res => {
       if (res.success) {
+        this.enableBtn = true;
         this.firstName = res.data.firstName,
         this.lastName = res.data.lastName,
         this.useremail = res.data.emailAddress;
@@ -71,6 +74,22 @@ export class EditProfileComponent implements OnInit {
 
   closeErrorMsg() {
     this.errorObject = null;
+  }
+  enablebutton () {
+    this.oldUserInfo = {
+      id: this.userid,
+      // username: this.username,
+      firstName : this.firstName,
+      lastName : this.lastName,
+      useremail: this.useremail
+    };
+    this.errorObject = this.userinfoService.isInvalidEditValues(this.oldUserInfo);
+    if (this.errorObject) {
+      this.enableBtn = true;
+      return false;
+    } else {
+      this.enableBtn = false;
+    }
   }
 
 }
