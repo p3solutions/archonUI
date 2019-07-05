@@ -1,6 +1,4 @@
-#editProfileModal .modal-dialog {
-    margin-top: 15%;
-}
+
 
 .edit-profile-error {
     margin-left: 25px;
@@ -43,5 +41,44 @@ body {
     border-color: transparent;
     border-top-color: rgba(0, 0, 0, 0.9);
     border-width: 0.5em 0.5em 0 0.5em;
+  }
+  .action-btn button.save {
+    background-color: #2879ff;
+    color: #ffffff;
+    text-transform: inherit;
+    transition: 0.5s;
+    border-radius: 3px; 
+   }
+  
+  .action-btn button.save-disabled {
+    background-color: #2879ff;
+    color: #ffffff;
+    text-transform: inherit;
+    border-radius: 3px; 
+  }
+  
+  .action-btn button.cancel {
+    background-color: #64b5f6;
+    color: #1b1b1b;
+    text-transform: inherit;
+    transition: 0.5s;
+    border-radius: 3px;
+    margin-right: 5px; 
+  }
+  
+  .action-btn button.save:hover {
+    transform: scale(1.1, 1.1);
+  
+  }
+  
+  .action-btn button.cancel:hover {
+    transform: scale(1.1, 1.1);
+  }
+  .mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    float: left;
+    width: 100%;
   }
   
