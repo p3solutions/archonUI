@@ -116,7 +116,7 @@
           <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Retry </th>
           <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
             <i class="material-icons replay" matTooltip="Retry" *ngIf="element.jobInfo.jobStatus === 'FAILED'"
-              (click)="retryJob(element.id)">replay</i>
+              (click)="retryJob(element.id, element.isResumable)">replay</i>
             <i class="material-icons replay" style="color: grey" matTooltip="Nope"
               *ngIf="element.jobInfo.jobStatus !== 'FAILED'">replay</i>
           </td>
@@ -281,6 +281,30 @@
             data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="stopJob();"
             >OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button #retryClick data-toggle="modal" data-target="#retryPopupModal" hidden></button>
+
+   <!-- Retry Popup -->
+   <div id="retryPopupModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 665px;">
+      <div class="modal-content">
+        <div class="info-popup-header-cls">
+          <h4 class="popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">replay</i>
+            <div class="pop-title" style="margin-left: 0px;">Retry</div>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p class="popup-paragraph-cls">Please choose if you wish to Start from the beginning or Resume from the last point</p>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel" class="btn btn-padding" data-dismiss="modal">Cancel</button>
+          <button type="button" style="margin-right: 1%" data-dismiss="modal" class="btn btn-padding btn-info-popup-primary-color" (click)="retryJob(jobId, false)">Start from the beginning</button>
+          <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal" (click)="continueRetryJob()">Resume from the last point</button>
         </div>
       </div>
     </div>

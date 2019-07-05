@@ -150,6 +150,7 @@ import { ActivityLandingPageComponent } from './activity-landing-page/activity-l
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { AceEditorModule } from 'ng2-ace-editor';
+import { NoDblClickDirective } from './no-dbl-click.directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -255,7 +256,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 NonspecialcharDirective,
                 OnlyuppercaseallowDirective,
                 ChangeOverflowDirective,
-                ActivityLandingPageComponent
+                ActivityLandingPageComponent,
+                NoDblClickDirective
         ],
         imports: [
                 JwtModule.forRoot({

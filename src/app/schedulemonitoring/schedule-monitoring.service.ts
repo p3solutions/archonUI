@@ -46,7 +46,7 @@ export class ScheduleMonitoringService {
   }
 
   stopJob(scheduleId) {
-    return this.http.post<any>(this.stopJobUrl + scheduleId, { headers: this.getHeaders() });
+    return this.http.post<any>(this.stopJobUrl + scheduleId, '', { headers: this.userinfoService.getHeaders() });
   }
 
   private extractJobOrigins(res: any) {
