@@ -45,7 +45,7 @@ export class ManageMembersComponent implements OnInit {
     private manageMembersService: ManageMembersService,
     private userinfoService: UserinfoService,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService,
     private permissionService: PermissionService

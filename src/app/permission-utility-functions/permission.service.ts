@@ -20,7 +20,9 @@ export class PermissionService {
   getRoleOfUserInWorkspace(): string {
     let returnPermission: any = '';
     this.selectedWorkspaceObj.subscribe(response => {
-      returnPermission = response.workspaceRole.name;
+      if (response.workspaceRole !== undefined) {
+        returnPermission = response.workspaceRole.name;
+      }
     });
     return returnPermission;
   }
@@ -29,7 +31,9 @@ export class PermissionService {
   getMetalyzerPermission(): any {
     let returnPermission: any = '';
     this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      returnPermission = response.filter(a => a.serviceName === 'Metalyzer')[0].serviceActionType;
+      if (response.filter(a => a.serviceName === 'Metalyzer')[0] !== undefined) {
+        returnPermission = response.filter(a => a.serviceName === 'Metalyzer')[0].serviceActionType;
+      }
     });
     return returnPermission;
   }
@@ -37,7 +41,9 @@ export class PermissionService {
   getAdhocPermission() {
     let returnPermission: any = '';
     this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      returnPermission = response.filter(a => a.serviceName === 'Metalyzer')[0].serviceActionType;
+      if (response.filter(a => a.serviceName === 'IA Adhoc Query Builder')[0] !== undefined) {
+        returnPermission = response.filter(a => a.serviceName === 'IA Adhoc Query Builder')[0].serviceActionType;
+      }
     });
     return returnPermission;
   }
@@ -45,7 +51,9 @@ export class PermissionService {
   getRdbmsPermission() {
     let returnPermission: any = '';
     this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      returnPermission = response.filter(a => a.serviceName === 'Metalyzer')[0].serviceActionType;
+      if (response.filter(a => a.serviceName === 'RDBMS Extractor')[0] !== undefined) {
+        returnPermission = response.filter(a => a.serviceName === 'RDBMS Extractor')[0].serviceActionType;
+      }
     });
     return returnPermission;
   }
@@ -53,7 +61,9 @@ export class PermissionService {
   getERTPermission() {
     let returnPermission: any = '';
     this.workspaceService.userSelectedWorkspace.subscribe(response => {
-      returnPermission = response.filter(a => a.serviceName === 'ERT')[0].serviceActionType;
+      if (response.filter(a => a.serviceName === 'ERT')[0] !== undefined) {
+        returnPermission = response.filter(a => a.serviceName === 'ERT')[0].serviceActionType;
+      }
     });
     return returnPermission;
   }

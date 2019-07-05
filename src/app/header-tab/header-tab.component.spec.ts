@@ -16,6 +16,7 @@ import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.s
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 
 describe('HeaderTabComponent', () => {
   let component: HeaderTabComponent;
@@ -35,12 +36,12 @@ describe('HeaderTabComponent', () => {
       providers: [
         ManageMembersService,
         AddMembersService,
-        UserinfoService,
+        UserinfoService, WorkspaceServicesService,
         WorkspaceHeaderService, ManageUserRolesService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
-      schemas:[NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
