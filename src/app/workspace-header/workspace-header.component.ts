@@ -9,6 +9,9 @@ import { WorkspaceHeaderService } from './workspace-header.service';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ManageMembersService } from '../manage-members/manage-members.service';
+import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
+import { PermissionService } from '../permission-utility-functions/permission.service';
 export let firstload = 0;
 @Component({
   selector: 'app-workspace-header',
@@ -41,7 +44,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private permissionService: PermissionService
   ) {
     this.dynamicLoaderService = dynamicLoaderService;
     this.viewContainerRef = viewContainerRef;
@@ -120,28 +124,38 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
+    const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
+      filter(a => a.user.id === getUserId())[0].serviceActions));
+    const userWorkspaceRole = JSON.parse(JSON.stringify(selectedWorkspace.members.
+      filter(a => a.user.id === getUserId())[0]));
+      this.permissionService.updateSelectedWorkspaceObj(userWorkspaceRole);
     this.workspaceHeaderService.selected = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
     this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
     // Assigning Serviceactions of first member as it is common for all
     this.serviceActionsList = JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
-    // this.serviceActionsList.push({
-    //   serviceName: 'ERT', iconName: 'ert.png',
-    //   serviceActionType: 'ALL', serviceId: 'dssa432cdxcwr43r5r', desc: ''
-    // });
-    const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList);
+
+    const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList, userServiceActions);
     this.workspaceService.updateServiceActions(_temp);
 
     // to route to the same page of workspace
     const route = this.route.firstChild.routeConfig.path;
     if (route === 'manage-master-metadata/:id') {
-      const id = this.workspaceHeaderService.getSelectedWorkspaceId();
-      this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
-        this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]));
+      if (userWorkspaceRole.workspaceRole.name !== 'ROLE_APPROVER' && userWorkspaceRole.workspaceRole.name !== 'ROLE_OWNER') {
+        this.router.navigate(['workspace/workspace-dashboard']);
+      } else {
+        const id = this.workspaceHeaderService.getSelectedWorkspaceId();
+        this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
+          this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]));
+      }
     } else if (route === 'manage-members/:id') {
-      const id = this.workspaceHeaderService.getSelectedWorkspaceId();
-      this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
-        this.router.navigate(['workspace/workspace-dashboard/manage-members/' + id]));
+      if (userWorkspaceRole.workspaceRole.name !== 'ROLE_APPROVER' && userWorkspaceRole.workspaceRole.name !== 'ROLE_OWNER') {
+        this.router.navigate(['workspace/workspace-dashboard']);
+      } else {
+        const id = this.workspaceHeaderService.getSelectedWorkspaceId();
+        this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>
+          this.router.navigate(['workspace/workspace-dashboard/manage-members/' + id]));
+      }
     } else if (route === 'workspace-info/:id') {
       const id = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.router.navigateByUrl('/workspace/workspace-dashboard', { skipLocationChange: true }).then(() =>

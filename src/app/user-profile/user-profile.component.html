@@ -19,14 +19,21 @@
       </button>
       <strong>Name Changed Successfully.</strong>
     </div>
-    <div class="col-md-3 m-10 pull-right">
+    <!-- <div class="col-md-3 m-10 pull-right">
       <button data-toggle="modal" data-target="#changePasswordModal" class="btn btn-primary pull-right btn-form">Change
         Password</button>
       <app-change-password [userId]="userInfo?.id"></app-change-password>
-    </div>
+    </div> -->
   </div>
 
   <div class="row">
+      <div class="table-hover1">
+         <div class="action-btn" style="float: right">       
+          <button data-toggle="modal" data-target="#changePasswordModal" class="btn save btn-padding"> Change
+              Password </button>  
+              <app-change-password [userId]="userInfo?.id"></app-change-password>              
+        </div>
+      </div>
     <div *ngIf="onUpdate" id="user-info" class="workspace-panel-content col-md-12 text-left"
       [attr.data-user-id]="userInfo?.id">
       <table class="table table-hover">
@@ -115,11 +122,6 @@
           </tr>          
         </tbody>
       </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-11 pull-right">
-      <button (click)="gotoDashboard()" type="submit" class="m-10 btn btn-primary pull-right btn-form">Back</button>
     </div>
   </div>
 </div>

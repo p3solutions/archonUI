@@ -17,6 +17,7 @@ import { MatStepper, MatStepHeader } from '@angular/material';
 import { StoredProcViewComponent } from '../stored-proc-view/stored-proc-view.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PermissionService } from '../permission-utility-functions/permission.service';
 
 @Component({
   selector: 'app-table-list',
@@ -106,6 +107,7 @@ export class TableListComponent implements OnInit {
   sectableList: string[];
   schemaResultssecTableCount: number;
   secstartIndex = 1;
+  permissionToUser = '';
 
   constructor(
     private tablelistService: TableListService,
@@ -119,6 +121,7 @@ export class TableListComponent implements OnInit {
     private spinner: NgxSpinnerService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
+    private permissionService: PermissionService
   ) {
     this.dynamicLoaderService = dynamicLoaderService;
     this.storedprocViewRef = viewContainerRef;
@@ -156,7 +159,9 @@ export class TableListComponent implements OnInit {
       this.wsName = result;
     });
     this.tablelistService.selectTables(true);
+    this.permissionToUser = this.permissionService.getMetalyzerPermission();
   }
+ 
 
   getTableList() {
     this.spinner.show();

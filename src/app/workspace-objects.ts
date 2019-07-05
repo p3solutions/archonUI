@@ -29,6 +29,7 @@ export class ServiceActionsObject {
     serviceId: string;
     serviceActionType: string;
     desc: string;
+    enableService = true;
 }
 export class MemberObject {
     id: string;

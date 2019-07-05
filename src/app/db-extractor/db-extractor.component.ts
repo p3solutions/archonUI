@@ -8,6 +8,7 @@ import { ProcessDetails, ProcessDetailsObj } from '../db-extractor';
 import { UserinfoService } from '../userinfo.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PermissionService } from '../permission-utility-functions/permission.service';
 
 @Component({
   selector: 'app-db-extractor',
@@ -49,8 +50,9 @@ export class DbExtractorComponent implements OnInit {
   ExtractDatacheck: boolean;
   queryvalidate: boolean;
   splitSize = [];
+  permissionToUser = '';
 
-  constructor(public router: Router, private dbExtractorService: DbExtractorService,
+  constructor(public router: Router, private dbExtractorService: DbExtractorService, private permissionService: PermissionService,
     private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService, private userinfoService: UserinfoService) {
     this.dbExtractorService.setProcessDetailsObj(null);
     this.dbExtractorService.setProgressBarObj({ stepTwoProgBarValue: 0, stepThreeProgBarValue: 0 });
@@ -68,6 +70,7 @@ export class DbExtractorComponent implements OnInit {
     );
     this.getProcessDetails();
     this.xmlsplitsize();
+    this.permissionToUser = this.permissionService.getRdbmsPermission();
   }
 
   getProcessDetails() {
@@ -82,7 +85,7 @@ export class DbExtractorComponent implements OnInit {
         if (this.dbExtractorService.getProcessDetailsObj() != null) {
           this.processDetailsObj = this.dbExtractorService.getProcessDetailsObj();
           this.outputFormatList = this.processDetailsMap.get(this.processDetailsObj.process);
-        }  else {
+        } else {
           this.processDetailsObj = new ProcessDetailsObj();
         }
         this.spinner.hide();
@@ -91,12 +94,12 @@ export class DbExtractorComponent implements OnInit {
       this.spinner.hide();
     }
   }
-  xmlsplitsize () {
-  for (let i = 1; i < 101; i++) {
-    this.splitSize.push(i * 10);
+  xmlsplitsize() {
+    for (let i = 1; i < 101; i++) {
+      this.splitSize.push(i * 10);
+    }
+    return this.splitSize;
   }
-  return this.splitSize;
-}
 
   getOutputFormatListBySecProcess(process: string) {
     this.showFileUpload = false;
@@ -104,21 +107,21 @@ export class DbExtractorComponent implements OnInit {
     if (process != null) {
       this.processDetailsObj.process = process;
       if (process === 'Extract Data') {
-      if (this.processDetailsObj.outputFormat != null ) {
-        this.ExtractData = false;
-      } else {
+        if (this.processDetailsObj.outputFormat != null) {
+          this.ExtractData = false;
+        } else {
+          this.ExtractData = true;
+        }
+      }
+      if (this.processDetailsObj.outputFormat === 'sip' && process === 'Get Record Count') {
+        this.sipData = false;
         this.ExtractData = true;
       }
-    }
-    if (this.processDetailsObj.outputFormat === 'sip' && process === 'Get Record Count') {
-      this.sipData = false;
-      this.ExtractData = true;
-    }
       if (process === 'Execute Query') {
         this.isDisabled = true;
         if (this.processDetailsObj.process === 'Execute Query') {
           if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' && this.processDetailsObj.outputFormat != null
-          && this.processDetailsObj.ExecuteQueryObj.query  === '') {
+            && this.processDetailsObj.ExecuteQueryObj.query === '') {
             this.ExtractData = true;
           } else {
             this.ExtractData = false;
@@ -127,7 +130,7 @@ export class DbExtractorComponent implements OnInit {
       }
       this.outputFormatList = this.processDetailsMap.get(process);
       this.processDetailsObj.includeTableRelationship
-       = this.processDetailsList.filter(a => a.process === process)[0].includeTableRelationship;
+        = this.processDetailsList.filter(a => a.process === process)[0].includeTableRelationship;
     } else if (process == null) {
       this.outputFormatList = [];
       this.processDetailsObj.includeTableRelationship = false;
@@ -138,19 +141,19 @@ export class DbExtractorComponent implements OnInit {
   }
 
   setOutputFormat(outputFormat: string) {
-     this.ExtractData = true;
+    this.ExtractData = true;
     if (!outputFormat) {
       this.ExtractData = true;
     }
-    if (this.processDetailsObj.process === 'Get Record Count' && outputFormat != null ) {
+    if (this.processDetailsObj.process === 'Get Record Count' && outputFormat != null) {
       this.ExtractData = false;
     }
-    if (this.processDetailsObj.process === 'Extract Data' || outputFormat != null ) {
+    if (this.processDetailsObj.process === 'Extract Data' || outputFormat != null) {
       this.ExtractData = false;
     }
     if (this.processDetailsObj.process === 'Execute Query') {
       if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' && this.processDetailsObj.outputFormat != null
-      && this.processDetailsObj.ExecuteQueryObj.query  === '') {
+        && this.processDetailsObj.ExecuteQueryObj.query === '') {
         this.ExtractData = true;
       } else {
         this.ExtractData = false;
@@ -180,18 +183,18 @@ export class DbExtractorComponent implements OnInit {
       }
     }
     if (this.processDetailsObj.process === 'Execute Query') {
-    if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' || this.processDetailsObj.ExecuteQueryObj.query  === '' ||
-    this.processDetailsObj.outputFormat === null) {
-         this.ExtractData = true;
-        } else {
-          this.ExtractData = false;
-        }
+      if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' || this.processDetailsObj.ExecuteQueryObj.query === '' ||
+        this.processDetailsObj.outputFormat === null) {
+        this.ExtractData = true;
+      } else {
+        this.ExtractData = false;
       }
+    }
   }
   updateaccess() {
     if (this.processDetailsObj.incTable === false && this.processDetailsObj.incView === false) {
       this.ExtractDatacheck = true;
-    }  else {
+    } else {
       this.ExtractDatacheck = false;
     }
 
@@ -207,15 +210,15 @@ export class DbExtractorComponent implements OnInit {
 
   gotoLastStep() {
     this.queryvalidate = true;
-   if (this.showFileUpload) {
-    this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = this.queryFileToUpload ?
-    this.queryFileToUpload : this.processDetailsObj.ExecuteQueryObj.queryFileToUpload;
+    if (this.showFileUpload) {
+      this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = this.queryFileToUpload ?
+        this.queryFileToUpload : this.processDetailsObj.ExecuteQueryObj.queryFileToUpload;
       this.processDetailsObj.ExecuteQueryObj.query = '';
     } else {
       this.processDetailsObj.ExecuteQueryObj.queryFileToUpload = null;
     }
     if (this.showFileUpload === false && this.processDetailsObj.ExecuteQueryObj.queryTitle !== '' &&
-    this.processDetailsObj.ExecuteQueryObj.query !== '') {
+      this.processDetailsObj.ExecuteQueryObj.query !== '') {
       this.queryvalidate = false;
       if (this.validateQuery()) {
         this.queryvalidate = true;
@@ -244,8 +247,8 @@ export class DbExtractorComponent implements OnInit {
       if ($event.ins === 'Local') {
         this.instanceId = '';
       } else {
-      this.instanceId = $event.ins;
-    }
+        this.instanceId = $event.ins;
+      }
       let param: any = {
         'ownerId': this.userinfoService.getUserId(),
         'workspaceId': this.workspaceHeaderService.getSelectedWorkspaceId(),
@@ -269,24 +272,24 @@ export class DbExtractorComponent implements OnInit {
         },
         'sipConfig': {
           'sipApplicationName': this.processDetailsObj.sipApplicationName,
-         'sipHoldingPrefix': this.processDetailsObj.holdingPrefix
-       },
+          'sipHoldingPrefix': this.processDetailsObj.holdingPrefix
+        },
         'scheduledConfig': $event
       };
       delete param.scheduledConfig['ins'];
       param = this.modifiedParamAccToProcess(param);
       this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload,
         this.instanceId).subscribe((result) => {
-        el.click();
-        if (result.httpStatus === 200) {
-          this.isSuccessMsg = true;
-          this.successMsg = 'Your Job has Started';
-        } else {
-          this.isSuccessMsg = false;
-          this.successMsg = 'Unable to Process Your Job';
-        }
-        this.spinner.hide();
-      });
+          el.click();
+          if (result.httpStatus === 200) {
+            this.isSuccessMsg = true;
+            this.successMsg = 'Your Job has Started';
+          } else {
+            this.isSuccessMsg = false;
+            this.successMsg = 'Unable to Process Your Job';
+          }
+          this.spinner.hide();
+        });
     } catch {
       this.spinner.hide();
     }
@@ -335,7 +338,7 @@ export class DbExtractorComponent implements OnInit {
     }
   }
 
-  closeMessage () {
+  closeMessage() {
     this.queryFileToUpload = null;
     this.ExtractData = true;
     this.uploadData = false;

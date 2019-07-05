@@ -171,7 +171,7 @@ export class CreateWorkspacePageComponent implements OnInit {
           this.workspaceInProgress = false;
           this.successWorkspaceMessage = 'Workpace is pending for the approval.';
         } else {
-          this.successWorkspaceMessage = 'Workspace Created Successfully.';
+          this.successWorkspaceMessage = 'Workspace creation is in progress. Please check status monitoring page.';
         }
       } else {
         document.getElementById('error-db-btn').click();

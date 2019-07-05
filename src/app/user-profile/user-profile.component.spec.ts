@@ -12,9 +12,10 @@ import { WorkspaceListService } from '../workspace-list/workspace-list.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserProfileService } from './user-profile.service';
 import { ChangePasswordService } from '../change-password/change-password.service';
-import { MatFormFieldModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -24,7 +25,7 @@ describe('UserProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserProfileComponent, EditProfileComponent, NavbarComponent, ChangePasswordComponent ],
       providers: [UserinfoService, WorkspaceListService, WorkspaceHeaderService, UserProfileService, ChangePasswordService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
-      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, MatFormFieldModule]
+      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule]
     })
     .compileComponents();
   }));

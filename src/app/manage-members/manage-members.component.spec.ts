@@ -19,6 +19,7 @@ import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.s
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { FormsModule } from '@angular/forms';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 
 describe('ManageMembersComponent', () => {
   let component: ManageMembersComponent;
@@ -42,7 +43,7 @@ describe('ManageMembersComponent', () => {
       imports: [
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule, MatTableModule, MatSortModule, MatDialogModule , BrowserAnimationsModule,
+        RouterTestingModule, MatTableModule, MatSortModule, MatDialogModule, BrowserAnimationsModule,
         FormsModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule, MatInputModule
       ],
       declarations: [ManageMembersComponent, AddMembersComponent, ManageUserRolesComponent],
@@ -51,18 +52,20 @@ describe('ManageMembersComponent', () => {
         ManageMembersService,
         HttpClientModule,
         UserinfoService,
-        WorkspaceHeaderService, ManageUserRolesService, { provide: EnvironmentService, useClass: MockEnvironmentService }
+        WorkspaceHeaderService, ManageUserRolesService, WorkspaceServicesService,
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
-      schemas:[NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));
 
-  beforeEach(async(()=> {
+  beforeEach(async(() => {
     fixture = TestBed.createComponent(ManageMembersComponent);
     component = fixture.componentInstance;
     // de = fixture.debugElement.query(By.css('#manager-members'));
     // ManageMembersInfoTag = de.nativeElement;
+    spyOn(component.router, 'navigate');
     manageMembersService = TestBed.get(ManageMembersService);
     fixture.detectChanges();
   }));

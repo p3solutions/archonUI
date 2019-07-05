@@ -12,6 +12,11 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NavbarService } from '../navbar/navbar.service';
 import { CookieService } from 'ngx-cookie-service';
+import { UserWorkspaceService } from '../user-workspace.service';
+import { addAllToArray } from '@angular/core/src/render3/util';
+import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
+import { PermissionService } from '../permission-utility-functions/permission.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -27,6 +32,8 @@ export class WorkspaceServicesComponent implements OnInit {
   private tableList: any;
   workspaceID: any;
   startIndex = 1;
+  isAnyServiceEnable = true;
+  showMessage = '';
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -39,26 +46,18 @@ export class WorkspaceServicesComponent implements OnInit {
     private userProfileService: UserProfileService,
     private navService: NavbarService,
     private userinfoService: UserinfoService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private userWorkspaceService: UserWorkspaceService,
+    private permissionService: PermissionService,
+    private spinner: NgxSpinnerService
   ) {
     activatedRouter.params.subscribe(val => {
-
       this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
-        //   // hard-coded values for adhoc-query-builder,
-        //   // NOTE: whenever this function is called it adds a duplicate of this hard-coded service object
-        //   // serviceActions.push(
-        //   //   {
-        //   //     iconName: 'querybuilder.png',
-        //   //     serviceActionType: 'ALL',
-        //   //     serviceId: '5ac5c6d0a54d7503ad946537',
-        //   //     serviceName: 'Adhoc Query Builder'
-        //   //   }
-        //   // );
-        const serviceActionsList = this.workspaceService.updateServiceActionsList(serviceActions);
+        const serviceActionsList = this.workspaceService.updateServiceActionsList(serviceActions, '');
         this.serviceActions = serviceActionsList;
         const carousel: any = $('#serviceCarousel');
         carousel.carousel({ 'interval': false });
-
+        this.getUpdatedService();
       });
     });
   }
@@ -68,6 +67,7 @@ export class WorkspaceServicesComponent implements OnInit {
     test.loadfirst = 0;
     test.getNotification();
     this.workspaceHeaderService.updateCheckActiveTab('Services');
+    this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
   }
 
   gotoMetalyzer(service: any) {
@@ -104,5 +104,54 @@ export class WorkspaceServicesComponent implements OnInit {
 
   toggleCard(cardId, toShow, _event) {
     this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
+  }
+
+  getUpdatedService() {
+    try {
+      this.spinner.show();
+      const selectedWorkspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+      this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
+        if (res && selectedWorkspaceId) {
+          const selectedWorkspace = res.filter(a => a.id === selectedWorkspaceId)[0];
+          if (selectedWorkspace) {
+            const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
+              filter(a => a.user.id === getUserId())[0].serviceActions));
+            const metalyzerObj = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_METALYZER')[0];
+            const metalyzerAccess = metalyzerObj.enableService;
+            const metalyzerPermission = metalyzerObj.serviceActionType;
+            const adhocObj = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_IA_ADHOC_QUERY_BUILDER')[0];
+            const adhocAccess = adhocObj.enableService;
+            const adhocPermission = adhocObj.serviceActionType;
+            const ertObj = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_ENTERPRISE_DATA_RETRIEVAL_TOOL')[0];
+            const ertAccess = ertObj.enableService;
+            const ertPermission = ertObj.serviceActionType;
+            const rdbmsObj = userServiceActions.filter(a => a.serviceName.trim().toUpperCase()
+              === 'SERVICE_DB_EXTRACTOR')[0];
+            const rdbmsPermission = rdbmsObj.serviceActionType;
+            const rdbmsAccess = rdbmsObj.enableService;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'Metalyzer')[0].enableService = metalyzerAccess;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'IA Adhoc Query Builder')[0].enableService = adhocAccess;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'ERT')[0].enableService = ertAccess;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'RDBMS Extractor')[0].enableService = rdbmsAccess;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'Metalyzer')[0].serviceActionType = metalyzerPermission;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'IA Adhoc Query Builder')[0].serviceActionType = adhocPermission;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'ERT')[0].serviceActionType = ertPermission;
+            this.serviceActions.filter(a => a.serviceName.trim() === 'RDBMS Extractor')[0].serviceActionType = rdbmsPermission;
+            this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
+            this.permissionService.updateSelectedWorkspaceObj(JSON.parse(JSON.stringify(selectedWorkspace.members.
+              filter(a => a.user.id === getUserId())[0])));
+            if (!this.isAnyServiceEnable) {
+              this.showMessage = 'No access to any services. Please contact owner of workspace to get access.';
+            }
+          }
+        }
+        this.spinner.hide();
+      });
+    } catch {
+      this.spinner.hide();
+    }
   }
 }

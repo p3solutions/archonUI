@@ -7,6 +7,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { MatInputModule, MatFormFieldModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('EditProfileComponent', () => {
   let component: EditProfileComponent;
@@ -15,7 +17,7 @@ describe('EditProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditProfileComponent ],
-      imports: [HttpClientModule, RouterTestingModule],
+      imports: [HttpClientModule, RouterTestingModule, MatInputModule, MatFormFieldModule, BrowserAnimationsModule],
       providers: [UserinfoService, UserProfileService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
     .compileComponents();
