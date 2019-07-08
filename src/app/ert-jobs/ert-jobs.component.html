@@ -1,21 +1,35 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <div class="col-md-1">
       </div>
       <div class="col-md-8">
         <h3 style="margin: -2px;text-align: left"></h3>
       </div>
     </div>
-    <div class="col-md-3" style="text-align:left">
+    <div class="col-md-3 one one-width">
+      <div class="button-wrap">
+        <div class="button-bg">
+          <div class="button-out index">My Jobs</div>
+          <div class="button-in index">All Jobs</div>
+          <div class="button-switch"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" style="text-align:left">
+    </div>
+  </div>
+  <div class="search-add-div">
+    <div class="search-div">
+      <mat-form-field class="mat-form-field-search">
+        <input matInput #searchinput (keyup)="searchErtJobs($event.target.value)" placeholder="Search">
+      </mat-form-field>
     </div>
     <ng-container *ngIf="permissionToUser!=='READ'">
-      <div class="col-md-3" style="text-align: right; margin-top: -9px;">
-        <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert-jobs-config']"
-          matTooltip="Add Job"> <i class="material-icons">
-            add_circle
-          </i></a>
-      </div>
+      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert-jobs-config']"
+        matTooltip="Add Job"> <i class="material-icons">
+          add_circle
+        </i></a>
     </ng-container>
   </div>
   <div *ngFor="let item of ertJobs" class="col-md-3 card">

@@ -27,6 +27,7 @@ export class ErtJobsComponent implements OnInit {
   ertJobslist: boolean;
   errorMessage = '';
   permissionToUser = '';
+  tempErtJobs: ERTJobs[] = [];
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router, public cdRef: ChangeDetectorRef,
@@ -65,6 +66,7 @@ export class ErtJobsComponent implements OnInit {
             }
           }
         }
+        this.tempErtJobs = JSON.parse(JSON.stringify(this.ertJobs));
         this.spinner.hide();
       } catch {
         this.spinner.hide();
@@ -179,5 +181,13 @@ export class ErtJobsComponent implements OnInit {
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
+
+  searchErtJobs(searchInput) {
+    if (searchInput !== '') {
+      this.ertJobs = this.tempErtJobs.filter(a => a.jobTitle.trim().toUpperCase().includes(searchInput.trim().toUpperCase()));
+    } else {
+      this.ertJobs = JSON.parse(JSON.stringify(this.tempErtJobs));
+    }
   }
 }
