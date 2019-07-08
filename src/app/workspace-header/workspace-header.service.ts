@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { WorkspaceObject } from '../workspace-objects';
 
 @Injectable()
 export class WorkspaceHeaderService {
@@ -10,11 +11,21 @@ export class WorkspaceHeaderService {
   updatedCheckActive = this.checkActive.asObservable();
   selected;
 
+  workspaceList: BehaviorSubject<WorkspaceObject[]> = new BehaviorSubject<WorkspaceObject[]>([]);
+  updatedWorkspaceList = this.workspaceList.asObservable();
+
   constructor() { }
   private workspace: any;
+
+
+  updateWorkspaceList(_workspaces: WorkspaceObject[]) {
+    this.workspaceList.next(_workspaces);
+  }
+
   setSelectedWorkspace(workspace: any) {
     this.workspace = workspace;
   }
+
   getSelectedWorkspaceName() {
     if (this.workspace !== undefined) {
       return this.workspace.workspaceName;
