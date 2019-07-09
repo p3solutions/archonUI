@@ -313,7 +313,10 @@ export class AdhocTableSelectionComponent implements OnInit {
       .force('link', d3.forceLink().id(function (d: any) { return d.id; }).distance(100).strength(1)) // distance & strength added
       .force('charge', d3.forceManyBody().distanceMax(300).strength(-1000)) // added min, stength default:-15
       .force('center', d3.forceCenter(width / 2, height / 4))
+      // .force('collide', d3.forceCollide())
       .on('tick', ticked);
+      // .force('x', d3.forceX(width / 2).strength(0.015))
+      // .force('y', d3.forceY(width / 2).strength(0.015));
 
 
     // update starts
@@ -434,6 +437,9 @@ export class AdhocTableSelectionComponent implements OnInit {
       node = nodeEnter.merge(node);
       simulation.nodes(nodes);
       simulation.force<any>('link').links(links);
+      // const k = nodes.length * 2;
+      // console.log(k);
+      // simulation.force('charge').strength(-1000).distanceMax(k * 16);
     }
     // end of update
 
@@ -447,6 +453,9 @@ export class AdhocTableSelectionComponent implements OnInit {
 
 
     function ticked() {
+      for (let i = 0; i < 100; i++) {
+        simulation.tick();
+      }
       link
         .attr('x1', function (d) { return d.source.x; })
         .attr('y1', function (d) { return d.source.y; })

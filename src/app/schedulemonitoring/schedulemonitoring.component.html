@@ -108,7 +108,7 @@
             <i class="material-icons failure" matTooltip="Failed" *ngIf="element.status === 'FAILED'">error</i>
             <i class="material-icons sche" matTooltip="Scheduled" *ngIf="element.status === 'SCHEDULED'">schedule</i>
             <i class="material-icons" style="color: grey" matTooltip="User_or_admin_stopped"
-              *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">stop</i>
+              *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">cancel</i>
           </td>
         </ng-container>
         <ng-container matColumnDef="Details">
@@ -123,10 +123,10 @@
         <ng-container matColumnDef="Stop">
           <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Stop </th>
           <td style="width:3%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
-            <i class="material-icons failure" matTooltip="Stop" *ngIf="element.status !== 'USER_OR_ADMIN_STOPPED'"
+            <i class="material-icons failure" matTooltip="Stop" *ngIf="element.isActive"
               (click)="terminateConfirmation(element.scheduleId)">stop</i>
             <i class="material-icons" style="color: grey" matTooltip="Stopped"
-              *ngIf="element.status === 'USER_OR_ADMIN_STOPPED'">stop</i>
+              *ngIf="!element.isActive">stop</i>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
