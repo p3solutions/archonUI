@@ -40,6 +40,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     wsDesc = '';
     WSeditId: any;
     deleteId: string;
+    userinfoId: any;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -51,6 +52,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         private spinner: NgxSpinnerService
 
     ) {
+        this.userinfoId = this.userinfoService.getUserId();
         this.dynamicLoaderService = dynamicLoaderService;
         this.viewContainerRef = viewContainerRef;
     }

@@ -50,10 +50,7 @@ export class DbExtractorService {
     formData.append('RdbmsDto', JSON.stringify(params));
     formData.append('instanceId', JSON.stringify(instanceID));
 
-    return this.http.post(this.postProcessDetailsUrl, formData, { headers: this.headers }).pipe(
-      map(this.extractDataForSuccess),
-      catchError(this.handleError('dbExtractor', {}))
-    );
+    return this.http.post(this.postProcessDetailsUrl, formData, { headers: this.headers });
   }
 
   getDBInfoByID(databaseId: string): Observable<ConfiguredDB> {
@@ -65,7 +62,6 @@ export class DbExtractorService {
 
   setProcessDetailsObj(processDetails: ProcessDetailsObj) {
     this.processDetailsObj = processDetails;
-    console.log(this.processDetailsObj, 'last');
   }
 
   getProcessDetailsObj(): ProcessDetailsObj {

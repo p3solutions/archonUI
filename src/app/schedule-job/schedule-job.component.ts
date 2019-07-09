@@ -72,9 +72,23 @@ export class ScheduleJobComponent implements OnInit {
           };
   if (this.jobType === 'Schedule Later') {
     this.ObjectEmit.emit(Obj1);
+    this.clearvalues();
   } else {
     this.ObjectEmit.emit(Obj);
+    this.clearvalues();
   }
+  }
+  clearvalues() {
+    setTimeout(() => {
+      this.jobName = '';
+      this.mytime = new Date();
+      this.enddate = new Date();
+      this.startdate = new Date();
+      this.restrict = new Date();
+      this.input.nativeElement.value = 'Once';
+      this.Interval = 'Once';
+      this.Frequency = 0;
+    }, 2000);
   }
 
   getErtInstance() {
