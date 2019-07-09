@@ -89,7 +89,7 @@
                             </tr>
                         </table>
                     </div>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                     <div id="comment-database">
                         <mat-form-field hintLabel="Reason for using database(s)">
                             <input required trim="blur" [(ngModel)]="comment" matInput #input maxlength="256"
