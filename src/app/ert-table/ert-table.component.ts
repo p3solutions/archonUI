@@ -52,7 +52,6 @@ export class ErtTableComponent implements OnInit {
   configColumnQuery = '';
   maxNode = 3;
   ertAvillableTableList: AvilErtTable = new AvilErtTable();
-  // expressionStack: string[] = [];
   searchTableName = '';
   dataOrderList: DataOrderConfig[] = [];
   dataOrderObj: DataOrderConfig = new DataOrderConfig();

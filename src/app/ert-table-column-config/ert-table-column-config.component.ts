@@ -8,11 +8,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { graphviz } from 'd3-graphviz';
 import * as d3 from 'd3';
-import { zoom, zoomTransform, zoomIdentity } from "d3-zoom";
-import { interpolate } from "d3-interpolate";
-
-import { createZoomBehavior } from "d3-graphviz/src/selection";
-
 
 @Component({
   selector: 'app-ert-table-column-config',
@@ -328,7 +323,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
   }
 
   transitionFactory() {
-    return d3.transition("main")
+    return d3.transition('main')
       .ease(d3.easeLinear)
       .delay(40)
       .duration(300 * 3);

@@ -210,12 +210,40 @@ export class ErtJobsComponent implements OnInit {
 
   createClone(ertJobId: string = '') {
     const tempObj = this.allJobList.find(a => a.jobId.trim() === ertJobId.trim());
+    const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (tempObj !== undefined) {
-      console.log(tempObj);
+      this.spinner.show();
+      let ertJobName = '';
+      this.ertService.updatedJobName.subscribe(jobName => {
+        ertJobName = jobName;
+      });
+      const param: any = {
+        'userId': getUserId(),
+        'workspaceId': workspaceId,
+        'ertJobName': ertJobName,
+        'ertJobId': ertJobId
+      };
+      this.ertService.createCloneJob(param).subscribe(res => {
+        this.spinner.hide();
+        document.getElementById('clone-popup-btn').click();
+        this.successMsg = 'Job Clone Created Successfully.';
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          document.getElementById('warning-popup-btn').click();
+          this.errorMessage = err.error.message;
+        }
+      });
     }
-
   }
-  viewOtherUserJob(ertJobId: string = '') {
 
+  viewOtherUserJob(ertJobId: string = '') {
+    this.router.navigate(['/workspace/ert/clone/', ertJobId]);
+    const ertJobTitle = this.allJobList.filter(a => a.jobId === ertJobId)[0].jobTitle;
+    const ertJobMode = this.allJobList.filter(a => a.jobId === ertJobId)[0].jobMode;
+    this.ertService.updateJobName('Clone_' + ertJobTitle);
+    this.ertService.updatejobType(ertJobMode);
   }
 }

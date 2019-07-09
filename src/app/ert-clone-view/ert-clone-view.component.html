@@ -1,54 +1,109 @@
 <div id="ert-table-id">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="card" style="height:455px; margin-left: 25px;">
-          <div class="table-list">
-            Table List
-          </div>
-          <div class='body-left'><a style="z-index:1"
-              class="glyphicon glyphicon-search inner-addon right-addon"></a>
-            <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
-              placeholder="Search Table"></div>
-          <div class="card-body" id="ert-tbl-search">
-            <div id="tbl-list" style="height: 326px;">
-              <div class="scroll-div border">
-                <div class="well {{item.tableId===selectedTableId?'selectTableCls':''}}"
-                  (click)="selectTable(item.tableId)"
-                  *ngFor="let item of selectedTableList | searchTable:searchTableName">
-                  <div class="first-div">{{item.tableName}}</div>
-                  <div><i *ngIf="item.tableId===selectedTableId" class="fa fa-angle-right icon-div"></i></div>
-                </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card" style="height:455px; margin-left: 25px;">
+        <div class="table-list">
+          Table List
+        </div>
+        <div class='body-left'><a style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+            placeholder="Search Table"></div>
+        <div class="card-body" id="ert-tbl-search">
+          <div id="tbl-list" style="height: 326px;">
+            <div class="scroll-div border">
+              <div class="well {{item.tableId===selectedTableId?'selectTableCls':''}}"
+                (click)="selectTable(item.tableId)"
+                *ngFor="let item of selectedTableList | searchTable:searchTableName">
+                <div class="first-div">{{item.tableName}}</div>
+                <div><i *ngIf="item.tableId===selectedTableId" class="fa fa-angle-right icon-div"></i></div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-9">
-        <div class="card" style="height:455px; margin-right: 25px;">
-          <div class="card-body ert-table-relation-graph">
-          
-  
-            <div id="graph" style="text-align: center"></div>
-          </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card" style="height:455px; margin-right: 25px;">
+        <div class="card-body ert-table-relation-graph">
+
+
+          <div id="graph" style="text-align: center"></div>
         </div>
       </div>
     </div>
-    <div class="row" id="nextbtn" style="margin-top: 15px;">
-      <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-margin"
-        (click)="saveERTJob('READY')" style="float: right;margin-right: 24px">Mark
-        As Complete
-        <!-- <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
-      </button>
-      <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-draft-margin"
-        (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 5px">Save
-        As Draft
-        <!-- <i *ngIf="issaveDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
-      </button>
-      <button class="btn btn-padding primary-btn-color" (click)="gotoExtractData();"
-        style="float:right;margin-right:5px;">
-        Back</button>
-      <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
-        style="float:right;margin-right:5px;">
-        Cancel</button>
+  </div>
+  <div class="row" id="nextbtn" style="margin-top: 15px;">
+    <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-margin" (click)="createClone()"
+      style="float: right;margin-right: 24px"> Create Clone
+      <!-- <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
+    </button>
+    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
+      style="float:right;margin-right:5px;">
+      Cancel</button>
+  </div>
+</div>
+
+<div id="confirm_model" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-body-width">
+      <div class="modal-content">
+        <div class="modal-header warning-popup-header-cls">
+          <h4 class="modal-title popup-title-cls">
+            <i class="material-icons popup-material-icon-cls">warning</i>
+            <div class="pop-title-ert">Confirm Cancel</div>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p class="popup-paragraph-cls">Are you sure you want to cancel ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">NO</button>
+          <button type="button" class="btn btn-padding btn-warning-popup-primary-color" (click)="cancel()"
+            data-dismiss="modal">YES</button>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button style="display:none" type="button" id="message-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+    data-backdrop="static" data-toggle="modal" data-target="#message-popup">Open Modal</button>
+  <div id="message-popup" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-body-width">
+      <div class="modal-content">
+        <div class="modal-header success-popup-header-cls">
+          <h4 class="modal-title popup-title-cls">
+            <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+            <div class="pop-title-ert">Success</div>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p class="popup-paragraph-cls">{{successMsg}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="cancel()" class="btn btn-padding btn-success-popup-primary-color"
+            data-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button style="display:none" type="button" id="not-saved-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+    data-backdrop="static" data-toggle="modal" data-target="#not-saved-popup">Open Modal</button>
+  <div id="not-saved-popup" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-body-width">
+      <div class="modal-content">
+        <div class="modal-header error-popup-header-cls">
+          <h4 class="modal-title popup-title-cls">
+            <i class="material-icons popup-material-icon-cls">error_outline</i>
+            <div class="pop-title-ert">Error</div>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p class="popup-paragraph-cls">{{errorMessage!=='' ?errorMessage: 'Unable to save Job'}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="cancel()" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+        </div>
+      </div>
     </div>
   </div>

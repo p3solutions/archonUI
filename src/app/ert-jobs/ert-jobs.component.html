@@ -22,7 +22,8 @@
   <div class="search-add-div">
     <div class="search-div">
       <mat-form-field class="mat-form-field-search">
-        <input matInput #searchinput (keyup)="searchErtJobs($event.target.value)" placeholder="Search">
+        <input matInput [disabled]="ertJobslist" #searchinput (keyup)="searchErtJobs($event.target.value)"
+          placeholder="Search">
       </mat-form-field>
     </div>
     <ng-container *ngIf="permissionToUser!=='READ'">
@@ -79,12 +80,6 @@
               (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
                 aria-hidden="true"></i></span></div>
         </div>
-        <!-- <ng-container *ngIf="permissionToUser!=='READ'">
-          <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
-              (click)="setJobId(item.jobId)" matTooltip="Delete">
-              <span aria-hidden="true">&times;</span>
-            </button></div>
-        </ng-container> -->
       </div>
       <div class="flex-cards-body">
         <div class='body-left'>Job Status</div>
@@ -98,7 +93,7 @@
         <div class='body-right'> {{item.createdDate | date}}</div>
       </div><br>
 
-      <div class="flex-cards-footer">
+      <div class="flex-cards-footer padding-right">
         <ng-container *ngIf="permissionToUser!=='READ'">
           <div class='foo-iconedit'><a class="fonticonbelow copy-view-i cursor-poniter"
               (click)="createClone(item.jobId)" matTooltip="Create Copy"><i class="material-icons"
@@ -230,4 +225,26 @@
       </div>
     </div>
   </div>
+</div>
+
+<button style="display:none" type="button" id="clone-popup-btn" class="btn btn-info btn-lg"
+ data-toggle="modal" data-target="#clone-popup">Open Modal</button>
+<div id="clone-popup" class="modal fade" role="dialog">
+<div class="modal-dialog modal-body-width">
+  <div class="modal-content">
+    <div class="modal-header success-popup-header-cls">
+      <h4 class="modal-title popup-title-cls">
+        <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+        <div class="pop-title-ert">Success</div>
+      </h4>
+    </div>
+    <div class="modal-body">
+      <p class="popup-paragraph-cls">{{successMsg}}</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-padding btn-success-popup-primary-color"
+        data-dismiss="modal">Ok</button>
+    </div>
+  </div>
+</div>
 </div>
