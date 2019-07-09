@@ -34,7 +34,8 @@ export class MetalyzerDataSource implements DataSource<any> {
           'workspaceId': workspaceID,
           'userId': userid
         };
-        this.metalyzerHeaderService.getAudit(param, startIndex).subscribe(result => { 
+        this.metalyzerHeaderService.getAudit(param, startIndex).subscribe(result => {
+          console.log(result);
           result.model.forEach((value, index) => {
                 value.position = index + 1;
           });

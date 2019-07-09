@@ -59,9 +59,10 @@ export class StatusDataSource implements DataSource<any> {
         result.list.forEach((value, index) => {
           value.position = index + 1;
         });
-        if (result.paginationRequired) {
-          this.totalScreen = (this.indexValue + 1) * 50;
-        }
+        // if (result.paginationRequired) {
+        //   this.totalScreen = (this.indexValue + 1) * 50;
+        // }
+        this.totalScreen = result.totalCount;
         this.adhocSubject.next(result.list);
         this.spinner.hide();
       } catch {
