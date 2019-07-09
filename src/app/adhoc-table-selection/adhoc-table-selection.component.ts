@@ -310,7 +310,7 @@ export class AdhocTableSelectionComponent implements OnInit {
       .style('opacity', 0);
 
     const simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id(function (d: any) { return d.id; }).distance(100).strength(1)) // distance & strength added
+      .force('link', d3.forceLink().id(function (d: any) { return d.id; }).distance(100).strength(0.5)) // distance & strength added
       .force('charge', d3.forceManyBody().distanceMax(300).strength(-1000)) // added min, stength default:-15
       .force('center', d3.forceCenter(width / 2, height / 4))
       // .force('collide', d3.forceCollide())
