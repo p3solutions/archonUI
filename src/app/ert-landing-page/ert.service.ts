@@ -180,6 +180,11 @@ export class ErtService {
       pipe(map(this.extractDataForRunJob));
   }
 
+  createClone(param: any): Observable<any> {
+    return this.http.post<any>(this.saveErtJobUrl, param, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractDataForRunJob));
+  }
+
   private extractData(res: any) {
     const body = res.data.ERTTableList;
     return body || [];

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PermissionService } from '../permission-utility-functions/permission.service';
+import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 
 @Component({
   selector: 'app-ert-jobs',
@@ -29,6 +30,7 @@ export class ErtJobsComponent implements OnInit {
   permissionToUser = '';
   tempErtJobs: ERTJobs[] = [];
   isAllJobActive = false;
+  allJobList: ERTJobs[] = [];
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router, public cdRef: ChangeDetectorRef,
@@ -68,6 +70,8 @@ export class ErtJobsComponent implements OnInit {
           }
         }
         this.tempErtJobs = JSON.parse(JSON.stringify(this.ertJobs));
+        this.allJobList = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.createdBy.trim() !== getUserId())));
+        this.ertJobs = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.createdBy.trim() === getUserId())));
         this.spinner.hide();
       } catch {
         this.spinner.hide();
@@ -176,7 +180,11 @@ export class ErtJobsComponent implements OnInit {
   }
 
   showJobDetails(jobId: string) {
-    this.ertJobDetail = this.ertJobs.filter(a => a.jobId === jobId)[0];
+    if (!this.isAllJobActive) {
+      this.ertJobDetail = this.ertJobs.filter(a => a.jobId === jobId)[0];
+    } else {
+      this.ertJobDetail = this.allJobList.filter(a => a.jobId === jobId)[0];
+    }
     document.getElementById('opneDetailPopup').click();
   }
 
@@ -198,5 +206,16 @@ export class ErtJobsComponent implements OnInit {
 
   getAllJobs() {
     this.isAllJobActive = true;
+  }
+
+  createClone(ertJobId: string = '') {
+    const tempObj = this.allJobList.find(a => a.jobId.trim() === ertJobId.trim());
+    if (tempObj !== undefined) {
+      console.log(tempObj);
+    }
+
+  }
+  viewOtherUserJob(ertJobId: string = '') {
+
   }
 }

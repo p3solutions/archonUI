@@ -73,18 +73,18 @@
   </ng-container>
 
   <ng-container *ngIf="isAllJobActive">
-    <div *ngFor="let item of tempErtJobs" class="col-md-3 card">
+    <div *ngFor="let item of allJobList" class="col-md-3 card">
       <div class="flex-cards-bar">
         <div class='title'>{{item.jobTitle === '' ?'No_title':item.jobTitle}}<div class='info'><span
               (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
                 aria-hidden="true"></i></span></div>
         </div>
-        <ng-container *ngIf="permissionToUser!=='READ'">
+        <!-- <ng-container *ngIf="permissionToUser!=='READ'">
           <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
               (click)="setJobId(item.jobId)" matTooltip="Delete">
               <span aria-hidden="true">&times;</span>
             </button></div>
-        </ng-container>
+        </ng-container> -->
       </div>
       <div class="flex-cards-body">
         <div class='body-left'>Job Status</div>
@@ -100,10 +100,12 @@
 
       <div class="flex-cards-footer">
         <ng-container *ngIf="permissionToUser!=='READ'">
-          <div class='foo-iconedit'><a class="fonticonbelow copy-view-i cursor-poniter" matTooltip="Create Copy"><i
-                class="material-icons" aria-hidden="true">file_copy</i></a></div>
-          <div class='foo-icon'><a matTooltip="view" class="fonticonbelow copy-view-i"><i class="material-icons"
-                aria-hidden="true">remove_red_eye</i></a></div>
+          <div class='foo-iconedit'><a class="fonticonbelow copy-view-i cursor-poniter"
+              (click)="createClone(item.jobId)" matTooltip="Create Copy"><i class="material-icons"
+                aria-hidden="true">file_copy</i></a></div>
+          <div class='foo-icon'><a matTooltip="view" (click)="viewOtherUserJob(item.jobId)"
+              class="fonticonbelow copy-view-i"><i class="material-icons" aria-hidden="true">remove_red_eye</i></a>
+          </div>
         </ng-container>
       </div>
     </div>
@@ -128,31 +130,31 @@
         <tbody>
           <tr>
             <td class="tdl">Job Name</td>
-            <td class="tdr">{{ertJobDetail.jobTitle | titlecase}}</td>
+            <td class="tdr">{{ertJobDetail?.jobTitle | titlecase}}</td>
           </tr>
           <tr>
             <td class="tdl">Job Type</td>
-            <td class="tdr">{{ertJobDetail.jobMode}}</td>
+            <td class="tdr">{{ertJobDetail?.jobMode}}</td>
           </tr>
           <tr>
             <td class="tdl">Job Status</td>
-            <td class="tdr">{{ertJobDetail.jobStatus}}</td>
+            <td class="tdr">{{ertJobDetail?.jobStatus}}</td>
           </tr>
           <tr>
             <td class="tdl">Created By</td>
-            <td class="tdr">{{ertJobDetail.createdBy}}</td>
+            <td class="tdr">{{ertJobDetail?.createdBy}}</td>
           </tr>
           <tr>
             <td class="tdl">Created Date</td>
-            <td class="tdr"> {{ertJobDetail.createdDate | date}}</td>
+            <td class="tdr"> {{ertJobDetail?.createdDate | date}}</td>
           </tr>
           <tr>
             <td class="tdl">Last Accessed By</td>
-            <td class="tdr">{{ertJobDetail.lastAccessedBy}}</td>
+            <td class="tdr">{{ertJobDetail?.lastAccessedBy}}</td>
           </tr>
           <tr>
             <td class="tdl">Last Accessed Date</td>
-            <td class="tdr">{{ertJobDetail.lastAccessedDate | date }}</td>
+            <td class="tdr">{{ertJobDetail?.lastAccessedDate | date }}</td>
           </tr>
         </tbody>
       </table>
