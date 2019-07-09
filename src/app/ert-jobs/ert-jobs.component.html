@@ -65,8 +65,13 @@
               (click)="!item.madeDisable && openScheduleModel(item.jobId,item.jobStatus)"
               class="{{item.madeDisable ?'run-disabled':'fonticonbelow cursor-poniter'}}"><i class="fa fa-play"
                 aria-hidden="true"></i></a></div>
+          <div class='foo-icon no-padding'><a matTooltip="{{item.madeDisable? '':'Analysis'}}"
+              (click)="!item.madeDisable && openAnaysisPopup(item.jobId)"
+              class="{{item.madeDisable ?'disable-analysis-Be':'fonticonbelow cursor-poniter'}} copy-view-i"><i
+                class="material-icons {{item.madeDisable ?'disable-analysis':''}}"
+                aria-hidden="true">find_replace</i></a></div>
           <div class='foo-iconedit'><a (click)="!item.madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
-              matTooltip=" {{item.madeDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
+              matTooltip=" {{item.madeEditDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
           {{item.madeEditDisable ? 'edit-disabled':''}}" aria-hidden="true"></i></a></div>
         </ng-container>
       </div>
@@ -96,7 +101,7 @@
       <div class="flex-cards-footer padding-right">
         <ng-container *ngIf="permissionToUser!=='READ'">
           <div class='foo-iconedit'><a class="fonticonbelow copy-view-i cursor-poniter"
-              (click)="createClone(item.jobId)" matTooltip="Create Copy"><i class="material-icons"
+              (click)="createClone(item.jobId,item.jobTitle)" matTooltip="Create Copy"><i class="material-icons"
                 aria-hidden="true">file_copy</i></a></div>
           <div class='foo-icon'><a matTooltip="view" (click)="viewOtherUserJob(item.jobId)"
               class="fonticonbelow copy-view-i"><i class="material-icons" aria-hidden="true">remove_red_eye</i></a>
@@ -227,24 +232,29 @@
   </div>
 </div>
 
-<button style="display:none" type="button" id="clone-popup-btn" class="btn btn-info btn-lg"
- data-toggle="modal" data-target="#clone-popup">Open Modal</button>
+<button style="display:none" type="button" id="clone-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#clone-popup">Open Modal</button>
 <div id="clone-popup" class="modal fade" role="dialog">
-<div class="modal-dialog modal-body-width">
-  <div class="modal-content">
-    <div class="modal-header success-popup-header-cls">
-      <h4 class="modal-title popup-title-cls">
-        <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
-        <div class="pop-title-ert">Success</div>
-      </h4>
-    </div>
-    <div class="modal-body">
-      <p class="popup-paragraph-cls">{{successMsg}}</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-padding btn-success-popup-primary-color"
-        data-dismiss="modal">Ok</button>
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{successMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">Ok</button>
+      </div>
     </div>
   </div>
 </div>
-</div>
+
+<app-schedule-job class="modal fade" id="startAnalysispopup" [insid]="ERT" role="dialog"
+  (ObjectEmit)="startAnalysis($event)">
+</app-schedule-job>
+<button data-toggle="modal" id="startAnalysisId" href="#startAnalysispopup" data-keyboard="false" data-backdrop="static"
+  style="display:none">Schedule</button>

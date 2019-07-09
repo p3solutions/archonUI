@@ -417,3 +417,35 @@ td.tdr {
 .padding-right {
   padding-right: 7px
 }
+
+.no-padding {
+  padding-right: 0px !important;
+}
+
+.disable-analysis {
+  color: #cecdcd !important;
+  cursor: not-allowed !important;
+}
+
+.disable-analysis-Be {
+  background-color: #e5e5e6 !important;
+  float: left;
+  color: #ffffff;
+  padding-top: 4px;
+  padding-left: 3px;
+  background-color: #e5e5e6;
+  width: 26px;
+  height: 26px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 13px;
+  cursor: not-allowed;
+}
+
+/* .disable-analysis :hover {
+  color: #cecdcd !important;
+} */
+
+.disable-analysis-Be:hover {
+  background-color: #e5e5e6 !important;
+}

@@ -194,9 +194,19 @@ export class ErtJobsComponent implements OnInit {
 
   searchErtJobs(searchInput) {
     if (searchInput !== '') {
-      this.ertJobs = this.tempErtJobs.filter(a => a.jobTitle.trim().toUpperCase().includes(searchInput.trim().toUpperCase()));
+      if (this.isAllJobActive) {
+        this.allJobList = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.jobTitle.trim().toUpperCase().
+          includes(searchInput.trim().toUpperCase()) && a.createdBy !== getUserId())));
+      } else {
+        this.ertJobs = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.jobTitle.trim().toUpperCase().
+          includes(searchInput.trim().toUpperCase()) && a.createdBy === getUserId())));
+      }
     } else {
-      this.ertJobs = JSON.parse(JSON.stringify(this.tempErtJobs));
+      if (this.isAllJobActive) {
+        this.allJobList = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.createdBy.trim() !== getUserId())));
+      } else {
+        this.ertJobs = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.createdBy.trim() === getUserId())));
+      }
     }
   }
 
@@ -208,19 +218,15 @@ export class ErtJobsComponent implements OnInit {
     this.isAllJobActive = true;
   }
 
-  createClone(ertJobId: string = '') {
+  createClone(ertJobId: string = '', ertJobName: string = '') {
     const tempObj = this.allJobList.find(a => a.jobId.trim() === ertJobId.trim());
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (tempObj !== undefined) {
       this.spinner.show();
-      let ertJobName = '';
-      this.ertService.updatedJobName.subscribe(jobName => {
-        ertJobName = jobName;
-      });
       const param: any = {
         'userId': getUserId(),
         'workspaceId': workspaceId,
-        'ertJobName': ertJobName,
+        'ertJobName': 'Clone_' + ertJobName,
         'ertJobId': ertJobId
       };
       this.ertService.createCloneJob(param).subscribe(res => {
@@ -245,5 +251,43 @@ export class ErtJobsComponent implements OnInit {
     const ertJobMode = this.allJobList.filter(a => a.jobId === ertJobId)[0].jobMode;
     this.ertService.updateJobName('Clone_' + ertJobTitle);
     this.ertService.updatejobType(ertJobMode);
+  }
+
+  openAnaysisPopup(ertJobId) {
+    this.scheduledeErtJobId = ertJobId;
+    document.getElementById('startAnalysisId').click();
+  }
+
+  startAnalysis(scheduleObject) {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.scheduleNow = scheduleObject.scheduleNow;
+    if (scheduleObject.ins === 'Local') {
+      this.instanceId = '';
+    } else {
+      this.instanceId = scheduleObject.ins;
+    }
+    const param: any = {
+      'ertJobId': this.scheduledeErtJobId,
+      'scheduledConfig': scheduleObject,
+      'instanceId': this.instanceId,
+      'isAnalysisJob': true,
+    };
+    delete param.scheduledConfig['ins'];
+    this.ertService.runJob(param).subscribe(result => {
+      if (result.httpStatus === 200) {
+        el.click();
+        this.isSuccessMsg = true;
+        this.successMsg = 'Analysis has Started';
+      } else {
+        this.isSuccessMsg = false;
+        document.getElementById('warning-popup-btn').click();
+        this.errorMessage = 'Unable to process analysis';
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        document.getElementById('warning-popup-btn').click();
+        this.errorMessage = err.error.message;
+      }
+    });
   }
 }
