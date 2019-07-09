@@ -8,10 +8,10 @@
       </div>
     </div>
     <div class="col-md-3 one one-width">
-      <div class="button-wrap">
+      <div class="button-wrap {{ isAllJobActive ? 'button-active':''}}">
         <div class="button-bg">
-          <div class="button-out index">My Jobs</div>
-          <div class="button-in index">All Jobs</div>
+          <div (click)="getMyJobs()" class="button-out index">My Jobs</div>
+          <div (click)="getAllJobs()" class="button-in index">All Jobs</div>
           <div class="button-switch"></div>
         </div>
       </div>
@@ -32,43 +32,82 @@
         </i></a>
     </ng-container>
   </div>
-  <div *ngFor="let item of ertJobs" class="col-md-3 card">
-    <div class="flex-cards-bar">
-      <div class='title'>{{item.jobTitle === '' ?'No_title':item.jobTitle}}<div class='info'><span
-            (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
-              aria-hidden="true"></i></span></div>
+  <ng-container *ngIf="!isAllJobActive">
+    <div *ngFor="let item of ertJobs" class="col-md-3 card">
+      <div class="flex-cards-bar">
+        <div class='title'>{{item.jobTitle === '' ?'No_title':item.jobTitle}}<div class='info'><span
+              (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
+                aria-hidden="true"></i></span></div>
+        </div>
+        <ng-container *ngIf="permissionToUser!=='READ'">
+          <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
+              (click)="setJobId(item.jobId)" matTooltip="Delete">
+              <span aria-hidden="true">&times;</span>
+            </button></div>
+        </ng-container>
       </div>
-      <ng-container *ngIf="permissionToUser!=='READ'">
-        <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
-            (click)="setJobId(item.jobId)" matTooltip="Delete">
-            <span aria-hidden="true">&times;</span>
-          </button></div>
-      </ng-container>
-    </div>
-    <div class="flex-cards-body">
-      <div class='body-left'>Job Status</div>
-      <div class='body-center'>:</div>
-      <div class='body-right'> {{item.jobStatus}}</div>
-      <div class='body-left'>Job Mode</div>
-      <div class='body-center'>:</div>
-      <div class='body-right'>{{item.jobMode}}</div>
-      <div class='body-left'>Created Date</div>
-      <div class='body-center'>:</div>
-      <div class='body-right'> {{item.createdDate | date}}</div>
-    </div><br>
+      <div class="flex-cards-body">
+        <div class='body-left'>Job Status</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.jobStatus}}</div>
+        <div class='body-left'>Job Mode</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'>{{item.jobMode}}</div>
+        <div class='body-left'>Created Date</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.createdDate | date}}</div>
+      </div><br>
 
-    <div class="flex-cards-footer">
-      <ng-container *ngIf="permissionToUser!=='READ'">
-        <div class='foo-icon'><a matTooltip="{{item.madeDisable? '':'Run Job'}}"
-            (click)="!item.madeDisable && openScheduleModel(item.jobId,item.jobStatus)"
-            class="{{item.madeDisable ?'run-disabled':'fonticonbelow cursor-poniter'}}"><i class="fa fa-play"
-              aria-hidden="true"></i></a></div>
-        <div class='foo-iconedit'><a (click)="!item.madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
-            matTooltip=" {{item.madeDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
+      <div class="flex-cards-footer">
+        <ng-container *ngIf="permissionToUser!=='READ'">
+          <div class='foo-icon'><a matTooltip="{{item.madeDisable? '':'Run Job'}}"
+              (click)="!item.madeDisable && openScheduleModel(item.jobId,item.jobStatus)"
+              class="{{item.madeDisable ?'run-disabled':'fonticonbelow cursor-poniter'}}"><i class="fa fa-play"
+                aria-hidden="true"></i></a></div>
+          <div class='foo-iconedit'><a (click)="!item.madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
+              matTooltip=" {{item.madeDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
           {{item.madeEditDisable ? 'edit-disabled':''}}" aria-hidden="true"></i></a></div>
-      </ng-container>
+        </ng-container>
+      </div>
     </div>
-  </div>
+  </ng-container>
+
+  <ng-container *ngIf="isAllJobActive">
+    <div *ngFor="let item of tempErtJobs" class="col-md-3 card">
+      <div class="flex-cards-bar">
+        <div class='title'>{{item.jobTitle === '' ?'No_title':item.jobTitle}}<div class='info'><span
+              (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
+                aria-hidden="true"></i></span></div>
+        </div>
+        <ng-container *ngIf="permissionToUser!=='READ'">
+          <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
+              (click)="setJobId(item.jobId)" matTooltip="Delete">
+              <span aria-hidden="true">&times;</span>
+            </button></div>
+        </ng-container>
+      </div>
+      <div class="flex-cards-body">
+        <div class='body-left'>Job Status</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.jobStatus}}</div>
+        <div class='body-left'>Job Mode</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'>{{item.jobMode}}</div>
+        <div class='body-left'>Created Date</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.createdDate | date}}</div>
+      </div><br>
+
+      <div class="flex-cards-footer">
+        <ng-container *ngIf="permissionToUser!=='READ'">
+          <div class='foo-iconedit'><a class="fonticonbelow copy-view-i cursor-poniter" matTooltip="Create Copy"><i
+                class="material-icons" aria-hidden="true">file_copy</i></a></div>
+          <div class='foo-icon'><a matTooltip="view" class="fonticonbelow copy-view-i"><i class="material-icons"
+                aria-hidden="true">remove_red_eye</i></a></div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
   <div class="col-md-12" *ngIf="ertJobslist">
     <h5 style="text-align: center; margin-top: 50px;">
       Currently no job configurations (Click on + icon to add job configuration)

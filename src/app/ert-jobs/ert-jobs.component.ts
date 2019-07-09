@@ -28,6 +28,7 @@ export class ErtJobsComponent implements OnInit {
   errorMessage = '';
   permissionToUser = '';
   tempErtJobs: ERTJobs[] = [];
+  isAllJobActive = false;
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router, public cdRef: ChangeDetectorRef,
@@ -189,5 +190,13 @@ export class ErtJobsComponent implements OnInit {
     } else {
       this.ertJobs = JSON.parse(JSON.stringify(this.tempErtJobs));
     }
+  }
+
+  getMyJobs() {
+    this.isAllJobActive = false;
+  }
+
+  getAllJobs() {
+    this.isAllJobActive = true;
   }
 }

@@ -45,7 +45,7 @@
                   <mat-form-field>
                     <input type="text" appNonspecialchar appOnlyuppercaseallow matInput name="tablename" id="tablename"
                       [(ngModel)]="modifiedTableName" placeholder="Table Alias Name"
-                      (keyup)="toModifiedTableName($event)">
+                      (keyup)="toModifiedTableName($event)" (blur)="checkModifiedEmptyTableName()">
                   </mat-form-field>
                 </div>
               </div>
@@ -94,8 +94,10 @@
                       <td><input (change)="selectColumns(item?.originalColumnName,item?.isSelected)"
                           [(ngModel)]="item.isSelected" type="checkbox"></td>
                       <td>{{item?.originalColumnName}} <i [ngClass]="{'fa fa-key':item?.isKey}"></i></td>
-                      <td><input class="form-control" type="text" required="true" appNonspecialchar
-                          appOnlyuppercaseallow (ngModelChange)="changeColumnName(item?.originalColumnName,$event)"
+                      <td><input class="form-control" trim="blur"
+                          (blur)="checkEmptyColumnName(item?.originalColumnName,$event)" type="text" required="true"
+                          appNonspecialchar appOnlyuppercaseallow
+                          (ngModelChange)="changeColumnName(item?.originalColumnName,$event)"
                           [ngModel]="item?.modifiedColumnName"></td>
                       <td>{{item?.dataType}}</td>
                       <td><a *ngIf="item.dataType!=='USERDEFINED'" href="" data-toggle="modal"
