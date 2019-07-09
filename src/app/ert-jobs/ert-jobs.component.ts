@@ -148,8 +148,8 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.runJob(param).subscribe(result => {
       if (result.httpStatus === 200) {
         el.click();
-        this.isSuccessMsg = true;
-        this.successMsg = 'Your Job has Started';
+        this.isSuccessMsg = false;
+        this.successMsg = 'Your Job has Started. Please check Status Monitoring page to know the status.';
       } else {
         this.isSuccessMsg = false;
         document.getElementById('warning-popup-btn').click();
@@ -276,8 +276,8 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.runJob(param).subscribe(result => {
       if (result.httpStatus === 200) {
         el.click();
-        this.isSuccessMsg = true;
-        this.successMsg = 'Analysis has Started';
+        this.isSuccessMsg = false;
+        this.successMsg = 'Analysis has started. Please check Status Monitoring page to know the status.';
       } else {
         this.isSuccessMsg = false;
         document.getElementById('warning-popup-btn').click();
