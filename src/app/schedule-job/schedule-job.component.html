@@ -56,7 +56,7 @@
         </div>  
       <div class="modal-footer">
           <div class="action-btn">
-        <button type="button" class="btn cancel btn-padding" data-dismiss="modal">Close</button>
+        <button type="button" class="btn cancel btn-padding" data-dismiss="modal" (click)="clearvalues()">Close</button>
         <button type="button" class="btn  {{jobName == ''? 'save-disabled': 'save'}} btn-padding" data-dismiss="modal" (click)="emitObject()" [disabled]="jobName == ''">Schedule</button>
       </div></div>
   </div>

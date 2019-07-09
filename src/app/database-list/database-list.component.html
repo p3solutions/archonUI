@@ -217,19 +217,19 @@
           <div class="reason" style="padding-top: 10px;">
             <div class="col-md-12" *ngIf="heading == 'Rejection Confirmation'">
                 <mat-form-field class="search-wid">
-                    <textarea matInput placeholder="Reason for Rejection" [(ngModel)]="reason"></textarea>
+                    <textarea matInput placeholder="Reason for Rejection" [(ngModel)]="reason" required></textarea>
                   </mat-form-field>
             </div>
             <div class="col-md-12" *ngIf="heading == 'Approval Confirmation'">
                 <mat-form-field class="search-wid">
-                    <textarea matInput placeholder="Reason for Approval" [(ngModel)]="reason"></textarea>
+                    <textarea matInput placeholder="Reason for Approval" [(ngModel)]="reason" required></textarea>
                   </mat-form-field>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal" (click)="submit('REJECTED')" *ngIf="heading == 'Rejection Confirmation'">Reject</button>
+          <button type="button" class="btn btn-padding {{reason == ''?'primary-btn-color-disabled':'primary-btn-color'}}" data-dismiss="modal" (click)="submit('REJECTED')" *ngIf="heading == 'Rejection Confirmation'" [disabled]="reason == ''">Reject</button>
           <button type="button" class="btn btn-padding {{reason == ''?'primary-btn-color-disabled':'primary-btn-color'}}" data-dismiss="modal" (click)="submit('APPROVED')" *ngIf="heading == 'Approval Confirmation'" [disabled]="reason == ''">Approve</button>
           <button type="button" style="display: none" id="reload" (click)="getConfigDBList()"></button>
         </div>

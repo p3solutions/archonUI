@@ -36,6 +36,10 @@ export class UserWorkspaceService {
     return this.apiUrl + 'workspaces/approvedWorkspaces?userId=' + this.userinfoService.getUserId();
   }
 
+  getAuditWorkspaceUrl() {
+    return this.apiUrl + 'workspaces/approvedWorkspaces';
+  }
+
   getWorkspaceByOwnerIdUrl() {
     return this.apiUrl + 'workspaces?ownerId=' + this.userinfoService.getUserId();
   }
@@ -44,6 +48,13 @@ export class UserWorkspaceService {
     return this.http.get<WorkspaceObject[]>(this.getUserWorkspaceUrl(), { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractWorkspaces),
       catchError(this.handleError<WorkspaceObject[]>('getUserWorkspaces'))
+    );
+  }
+
+  getAuditWorkspaceList(): Observable<WorkspaceObject[]> {
+    return this.http.get<WorkspaceObject[]>(this.getAuditWorkspaceUrl(), { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractWorkspaces),
+      catchError(this.handleError<WorkspaceObject[]>('getAuditWorkspaces'))
     );
   }
 
