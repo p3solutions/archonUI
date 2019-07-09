@@ -79,12 +79,20 @@
           <div class='body-right'>{{ws?.workspaceState}}</div>
         </mat-card-content>
         <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
-          <a (click)="editWS(ws)" data-toggle="modal" href="#edit_model" data-tooltip="Edit"><i
+          <a *ngIf="ws?.owner?.id === userinfoId" (click)="editWS(ws)" data-toggle="modal" href="#edit_model" data-tooltip="Edit"><i
               class="material-icons ws">
               edit
             </i></a>
-          <a (click)="WSdelete(ws?.id)" data-toggle="modal" href="#confirm_model" data-tooltip="Delete"><i
+            <a *ngIf="ws?.owner?.id !== userinfoId"  data-toggle="modal" data-tooltip="Edit"><i
+              class="material-icons ws" style="color: grey; cursor: not-allowed;">
+              edit
+            </i></a>
+          <a *ngIf="ws?.owner?.id === userinfoId" (click)="WSdelete(ws?.id)" data-toggle="modal" href="#confirm_model" data-tooltip="Delete"><i
               class="material-icons ws">
+              delete
+            </i></a>
+            <a *ngIf="ws?.owner?.id !== userinfoId"  data-toggle="modal" data-tooltip="Delete"><i
+              class="material-icons ws" style="color: grey; cursor: not-allowed;">
               delete
             </i></a>
         </mat-card-footer>

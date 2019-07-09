@@ -9,6 +9,7 @@ import { UserinfoService } from '../userinfo.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PermissionService } from '../permission-utility-functions/permission.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-db-extractor',
@@ -280,15 +281,21 @@ export class DbExtractorComponent implements OnInit {
       param = this.modifiedParamAccToProcess(param);
       this.dbExtractorService.dbExtractor(param, this.processDetailsObj.ExecuteQueryObj.queryFileToUpload,
         this.instanceId).subscribe((result) => {
-          el.click();
           if (result.httpStatus === 200) {
+            el.click();
             this.isSuccessMsg = true;
             this.successMsg = 'Your Job has Started';
           } else {
+            document.getElementById('warning-popup-job').click();
             this.isSuccessMsg = false;
             this.successMsg = 'Unable to Process Your Job';
           }
           this.spinner.hide();
+        }, (err: HttpErrorResponse) => {
+          this.spinner.hide();
+          this.successMsg = err.error.message;
+          this.isSuccessMsg = false;
+          document.getElementById('warning-popup-job').click();
         });
     } catch {
       this.spinner.hide();
@@ -317,7 +324,6 @@ export class DbExtractorComponent implements OnInit {
   }
 
   uploadQueryFile(files: FileList) {
-    console.log('file test');
     this.uploadData = false;
     this.ExtractData = true;
     const ext = files.item(0).name.match(/\.([^\.]+)$/)[1];

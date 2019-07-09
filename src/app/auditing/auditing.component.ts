@@ -62,7 +62,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
       }
       this.uniqueService = Array.from(new Set(this.Service));
     });
-    this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
+    this.userWorkspaceService.getAuditWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
     });
   }

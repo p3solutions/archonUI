@@ -50,7 +50,7 @@
                 {{member?.user?.name}}{{isLast ? '' : ','}}
               </span>
               <a  *ngIf="role?.name == 'ROLE_OWNER'" data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-members',workspaceInfoData?.id]">
-                <i class="material-icons">
+                <i class="material-icons" style="font-size: 17px">
                     edit
                     </i>
               </a>
@@ -68,7 +68,7 @@
             </td>
             <td class="ws-info-data">{{workspaceInfoData?.masterMetadataVersion}}
               <a  *ngIf="role?.name == 'ROLE_OWNER'" data-tooltip="Edit" [routerLink]="['/workspace/workspace-dashboard/manage-master-metadata',workspaceInfoData?.id]">
-                <i class="material-icons">
+                <i class="material-icons" style="font-size: 17px">
                     edit
                     </i>
               </a>
@@ -78,10 +78,10 @@
       </table>
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <div class="workspace-panel-content">
       <button (click)="gotoDashboard()" type="submit" class="btn btn-primary pull-right btn-form back">Back</button>
     </div>
-  </div>
+  </div> -->
 </div>
 <!-- <app-workspace-dashboard [serviceActions] = "serviceActionsList"></app-workspace-dashboard> -->

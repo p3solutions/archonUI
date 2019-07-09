@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ManageMembersService } from '../manage-members/manage-members.service';
 import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 import { PermissionService } from '../permission-utility-functions/permission.service';
+import { response } from '../table-list/responemmr';
 export let firstload = 0;
 @Component({
   selector: 'app-workspace-header',
@@ -63,8 +64,8 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
     // if user selects workspace from profile.
     this.userProfileService.userSelectedWorkspace.subscribe(data => {
       this.userSelectedWorkspace = data;
-    }
-    );
+    });
+
     if (this.userSelectedWorkspace) {
       this.loadUserSelectedWorkspace(this.userSelectedWorkspace);
     } else {
@@ -79,7 +80,13 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
         break;
       }
     }
+
+    // Update the workspace list because service permission will update in workspace service component.
+    this.workspaceHeaderService.updatedWorkspaceList.subscribe(res => {
+      this.userWorkspaceArray = res;
+    });
   }
+
   ngOnDestroy() {
     if (this.viewContainerRef) {
       this.viewContainerRef.remove(0);
@@ -87,17 +94,17 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   getUserWorkspaceList() {
-    this.spinner.show();
     this.userWorkspaceService.getUserWorkspaceList().subscribe(res => {
       this.userWorkspaceArray = res;
+      this.workspaceHeaderService.updateWorkspaceList(this.userWorkspaceArray);
       try {
         if (this.workspaceHeaderService.selected === undefined) {
-          for (let i = 0; i <= this.userWorkspaceArray.length; i++) {
-            if (i === 0) {
-              this.workspaceHeaderService.selected = this.userWorkspaceArray[i].workspaceName;
-              this.selectWorkspace(this.userWorkspaceArray[i]);
-            }
-          }
+          // for (let i = 0; i <= this.userWorkspaceArray.length; i++) {
+          //   if (i === 0) {
+          this.workspaceHeaderService.selected = this.userWorkspaceArray[0].workspaceName;
+          this.selectWorkspace(this.userWorkspaceArray[0]);
+          //   }
+          // }
         }
       } catch {
         this.spinner.hide();
@@ -124,24 +131,30 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
   }
 
   selectWorkspace(selectedWorkspace: WorkspaceObject) {
-    const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspace.members.
-      filter(a => a.user.id === getUserId())[0].serviceActions));
-    const userWorkspaceRole = JSON.parse(JSON.stringify(selectedWorkspace.members.
+
+    const selectedWorkspaceForUser = JSON.parse(JSON.stringify(selectedWorkspace.members.
       filter(a => a.user.id === getUserId())[0]));
-      this.permissionService.updateSelectedWorkspaceObj(userWorkspaceRole);
+
+    const userServiceActions = JSON.parse(JSON.stringify(selectedWorkspaceForUser.serviceActions));
+    // update for the workspace permission.
+
+    this.permissionService.updateSelectedWorkspaceObj(selectedWorkspaceForUser);
+
     this.workspaceHeaderService.selected = selectedWorkspace.workspaceName;
     this.currentWorkspace = selectedWorkspace;
-    this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
-    // Assigning Serviceactions of first member as it is common for all
-    this.serviceActionsList = JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
 
-    const _temp = this.workspaceService.updateServiceActionsList(this.serviceActionsList, userServiceActions);
+    this.workspaceHeaderService.setSelectedWorkspace(this.currentWorkspace);
+    // Assigning Serviceactions of first member as it is common for all (Not Required.)
+    // Commented below line because now workspace permission of service to user is implemented.
+    // this.serviceActionsList = JSON.parse(JSON.stringify(selectedWorkspace.members[0].serviceActions));
+
+    const _temp = this.workspaceService.updateServiceActionsList(userServiceActions);
     this.workspaceService.updateServiceActions(_temp);
 
     // to route to the same page of workspace
     const route = this.route.firstChild.routeConfig.path;
     if (route === 'manage-master-metadata/:id') {
-      if (userWorkspaceRole.workspaceRole.name !== 'ROLE_APPROVER' && userWorkspaceRole.workspaceRole.name !== 'ROLE_OWNER') {
+      if (selectedWorkspaceForUser.workspaceRole.name !== 'ROLE_APPROVER' && selectedWorkspaceForUser.workspaceRole.name !== 'ROLE_OWNER') {
         this.router.navigate(['workspace/workspace-dashboard']);
       } else {
         const id = this.workspaceHeaderService.getSelectedWorkspaceId();
@@ -149,7 +162,7 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
           this.router.navigate(['workspace/workspace-dashboard/manage-master-metadata/' + id]));
       }
     } else if (route === 'manage-members/:id') {
-      if (userWorkspaceRole.workspaceRole.name !== 'ROLE_APPROVER' && userWorkspaceRole.workspaceRole.name !== 'ROLE_OWNER') {
+      if (selectedWorkspaceForUser.workspaceRole.name !== 'ROLE_APPROVER' && selectedWorkspaceForUser.workspaceRole.name !== 'ROLE_OWNER') {
         this.router.navigate(['workspace/workspace-dashboard']);
       } else {
         const id = this.workspaceHeaderService.getSelectedWorkspaceId();
