@@ -510,7 +510,7 @@ alert1 {
   margin-left: 10px;
   font-size: 12px;
   width: 80%;
-  color: #121212;
+  color: #a0a2a4;
 }
 
 .body-right {
@@ -748,7 +748,13 @@ a.disabled {
   border-bottom: 1px solid #2196F3
 }
 
-.select-all-checkbox{
+.select-all-checkbox {
   vertical-align: middle;
-    margin-right: 2px;
+  margin-right: 2px;
+}
+
+.add-time-div{
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #2196F3
 }
