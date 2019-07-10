@@ -172,7 +172,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
             i.isSelected = true;
           }
         }
-        if (i.isSelected && i.defaultSecondaryColumn) {
+        if (i.isSelected && i.defaultSecondaryColumn && i.primaryColumn.columnId === test.primaryColumn.columnId) {
           i.relationshipId = test.relationshipId;
           if (i.defaultSecondaryColumn.columnName === secondaryColumn && i.primaryColumn.columnId === test.primaryColumn.columnId) {
             i.secondaryColumn = i.defaultSecondaryColumn;
