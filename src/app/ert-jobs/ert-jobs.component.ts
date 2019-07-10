@@ -31,6 +31,8 @@ export class ErtJobsComponent implements OnInit {
   tempErtJobs: ERTJobs[] = [];
   isAllJobActive = false;
   allJobList: ERTJobs[] = [];
+  cloneJobName = '';
+  cloneJobId = '';
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router, public cdRef: ChangeDetectorRef,
@@ -218,16 +220,30 @@ export class ErtJobsComponent implements OnInit {
     this.isAllJobActive = true;
   }
 
-  createClone(ertJobId: string = '', ertJobName: string = '') {
-    const tempObj = this.allJobList.find(a => a.jobId.trim() === ertJobId.trim());
+  openCloneJobpopup(ertJobId: string = '', ertJobName: string = '') {
+    this.cloneJobId = ertJobId;
+    this.cloneJobName = 'Clone_' + ertJobName;
+    document.getElementById('clone-edit-name').click();
+  }
+
+  checkForEmptyName() {
+    if (this.cloneJobName.length === 0) {
+      const tempObj = this.allJobList.find(a => a.jobId.trim() === this.cloneJobId.trim());
+      this.cloneJobName = 'Clone_' + tempObj.jobTitle;
+    }
+  }
+
+
+  createClone() {
+    const tempObj = this.allJobList.find(a => a.jobId.trim() === this.cloneJobId.trim());
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (tempObj !== undefined) {
       this.spinner.show();
       const param: any = {
         'userId': getUserId(),
         'workspaceId': workspaceId,
-        'ertJobName': 'Clone_' + ertJobName,
-        'ertJobId': ertJobId
+        'ertJobName': this.cloneJobName,
+        'ertJobId': this.cloneJobId
       };
       this.ertService.createCloneJob(param).subscribe(res => {
         this.spinner.hide();

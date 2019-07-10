@@ -36,7 +36,7 @@ export class ErtCloneViewComponent implements OnInit {
     zoomScaleExtent: [0.1, 3]
   };
   graphInstance: any = '';
-
+  cloneJobName = '';
   dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" padding="0.2" fontsize="5" fontname = "Roboto"' +
     'pad="0.5" ];edge [shape="plain" fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
   constructor(private workspaceHeaderService: WorkspaceHeaderService, public router: Router,
@@ -48,6 +48,9 @@ export class ErtCloneViewComponent implements OnInit {
       this.ertJobId = requestParam.ertJobId;
     });
     this.getEditErtTableList(this.workspaceId, this.ertJobId, 1);
+    this.ertService.updatedJobName.subscribe(jobName => {
+      this.cloneJobName = jobName;
+    });
   }
 
   getEditErtTableList(workspaceId, ertJobId, currentIndex) {
@@ -224,16 +227,25 @@ export class ErtCloneViewComponent implements OnInit {
       .delay(40)
       .duration(300 * 3);
   }
+
+  openCloneJobpopup() {
+    document.getElementById('clone-edit-name').click();
+  }
+
+  checkForEmptyName() {
+    if (this.cloneJobName.length === 0) {
+      this.ertService.updatedJobName.subscribe(jobName => {
+        this.cloneJobName = jobName;
+      });
+    }
+  }
+
   createClone() {
     this.spinner.show();
-    let ertJobName = '';
-    this.ertService.updatedJobName.subscribe(jobName => {
-      ertJobName = jobName;
-    });
     const param: any = {
       'userId': getUserId(),
       'workspaceId': this.workspaceId,
-      'ertJobName': ertJobName,
+      'ertJobName': this.cloneJobName,
       'ertJobId': this.ertJobId
     };
     this.ertService.createCloneJob(param).subscribe(res => {

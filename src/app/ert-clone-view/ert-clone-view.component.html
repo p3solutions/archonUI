@@ -37,8 +37,8 @@
     </div>
   </div>
   <div class="row" id="nextbtn" style="margin-top: 15px;">
-    <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-margin" (click)="createClone()"
-      style="float: right;margin-right: 24px"> Create Clone
+    <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-margin"
+      (click)="openCloneJobpopup()" style="float: right;margin-right: 24px"> Create Clone
       <!-- <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
     </button>
     <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
@@ -108,6 +108,33 @@
       <div class="modal-footer">
         <button type="button" (click)="cancel()" class="btn btn-padding btn-error-popup-primary-color"
           data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="clone-edit-name" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#clone-edit-popup">Open Modal</button>
+<div id="clone-edit-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <div class="pop-title-ert">Clone Job Name</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="text-align: left">
+        <mat-form-field style="width: 40%">
+          <input type="text" matInput name="Clone Job Name" id="tablename" [(ngModel)]="cloneJobName"
+            placeholder="Clone Job Name" trim="blur" (blur)="checkForEmptyName()">
+        </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding ert-secondary-btn-color" id="usr-defined-close"
+          data-dismiss="modal">Cancel</button>
+        <button type="button" data-dismiss="modal"
+          class="btn btn-padding {{cloneJobName===''?'primary-btn-color-disabled':'primary-btn-color'}}"
+          [disabled]="cloneJobName===''" (click)="createClone()">Confirm</button>
       </div>
     </div>
   </div>

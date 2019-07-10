@@ -36,11 +36,11 @@
   padding: 13px 49px 5px 1px;
 }
 
-input#tablename {
+/* input#tablename {
   border: none;
   border-bottom: 1px solid #2196F3;
   margin-left: 13px;
-}
+} */
 
 #lbl-alias {
   float: left;

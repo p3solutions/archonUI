@@ -101,7 +101,7 @@
       <div class="flex-cards-footer padding-right">
         <ng-container *ngIf="permissionToUser!=='READ'">
           <div class='foo-iconedit'><a class="fonticonbelow copy-view-i cursor-poniter"
-              (click)="createClone(item.jobId,item.jobTitle)" matTooltip="Create Copy"><i class="material-icons"
+              (click)="openCloneJobpopup(item.jobId,item.jobTitle)" matTooltip="Create Clone"><i class="material-icons"
                 aria-hidden="true">file_copy</i></a></div>
           <div class='foo-icon'><a matTooltip="view" (click)="viewOtherUserJob(item.jobId)"
               class="fonticonbelow copy-view-i"><i class="material-icons" aria-hidden="true">remove_red_eye</i></a>
@@ -258,3 +258,29 @@
 </app-schedule-job>
 <button data-toggle="modal" id="startAnalysisId" href="#startAnalysispopup" data-keyboard="false" data-backdrop="static"
   style="display:none">Schedule</button>
+<button style="display:none" type="button" id="clone-edit-name" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#clone-edit-popup">Open Modal</button>
+<div id="clone-edit-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <div class="pop-title-ert">Job Name</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="text-align: left">
+        <mat-form-field style="width: 40%">
+          <input type="text" matInput name="Clone Job Name" id="tablename" [(ngModel)]="cloneJobName"
+            placeholder="Clone Job Name" trim="blur" (blur)="checkForEmptyName()">
+        </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding ert-secondary-btn-color" id="usr-defined-close"
+          data-dismiss="modal">Cancel</button>
+        <button type="button" data-dismiss="modal"
+          class="btn btn-padding {{cloneJobName===''?'primary-btn-color-disabled':'primary-btn-color'}}"
+          [disabled]="cloneJobName===''" (click)="createClone()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
