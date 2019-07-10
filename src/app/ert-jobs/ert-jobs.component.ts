@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PermissionService } from '../permission-utility-functions/permission.service';
+import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 
 @Component({
   selector: 'app-ert-jobs',
@@ -27,6 +28,11 @@ export class ErtJobsComponent implements OnInit {
   ertJobslist: boolean;
   errorMessage = '';
   permissionToUser = '';
+  tempErtJobs: ERTJobs[] = [];
+  isAllJobActive = false;
+  allJobList: ERTJobs[] = [];
+  cloneJobName = '';
+  cloneJobId = '';
 
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router, public cdRef: ChangeDetectorRef,
@@ -65,6 +71,9 @@ export class ErtJobsComponent implements OnInit {
             }
           }
         }
+        this.tempErtJobs = JSON.parse(JSON.stringify(this.ertJobs));
+        this.allJobList = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.createdBy.trim() !== getUserId())));
+        this.ertJobs = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.createdBy.trim() === getUserId())));
         this.spinner.hide();
       } catch {
         this.spinner.hide();
@@ -141,8 +150,8 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.runJob(param).subscribe(result => {
       if (result.httpStatus === 200) {
         el.click();
-        this.isSuccessMsg = true;
-        this.successMsg = 'Your Job has Started';
+        this.isSuccessMsg = false;
+        this.successMsg = 'Your Job has Started. Please check Status Monitoring page to know the status.';
       } else {
         this.isSuccessMsg = false;
         document.getElementById('warning-popup-btn').click();
@@ -173,11 +182,128 @@ export class ErtJobsComponent implements OnInit {
   }
 
   showJobDetails(jobId: string) {
-    this.ertJobDetail = this.ertJobs.filter(a => a.jobId === jobId)[0];
+    if (!this.isAllJobActive) {
+      this.ertJobDetail = this.ertJobs.filter(a => a.jobId === jobId)[0];
+    } else {
+      this.ertJobDetail = this.allJobList.filter(a => a.jobId === jobId)[0];
+    }
     document.getElementById('opneDetailPopup').click();
   }
 
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
+  }
+
+  searchErtJobs(searchInput) {
+    if (searchInput !== '') {
+      if (this.isAllJobActive) {
+        this.allJobList = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.jobTitle.trim().toUpperCase().
+          includes(searchInput.trim().toUpperCase()) && a.createdBy !== getUserId())));
+      } else {
+        this.ertJobs = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.jobTitle.trim().toUpperCase().
+          includes(searchInput.trim().toUpperCase()) && a.createdBy === getUserId())));
+      }
+    } else {
+      if (this.isAllJobActive) {
+        this.allJobList = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.createdBy.trim() !== getUserId())));
+      } else {
+        this.ertJobs = JSON.parse(JSON.stringify(this.tempErtJobs.filter(a => a.createdBy.trim() === getUserId())));
+      }
+    }
+  }
+
+  getMyJobs() {
+    this.isAllJobActive = false;
+  }
+
+  getAllJobs() {
+    this.isAllJobActive = true;
+  }
+
+  openCloneJobpopup(ertJobId: string = '', ertJobName: string = '') {
+    this.cloneJobId = ertJobId;
+    this.cloneJobName = 'Clone_' + ertJobName;
+    document.getElementById('clone-edit-name').click();
+  }
+
+  checkForEmptyName() {
+    if (this.cloneJobName.length === 0) {
+      const tempObj = this.allJobList.find(a => a.jobId.trim() === this.cloneJobId.trim());
+      this.cloneJobName = 'Clone_' + tempObj.jobTitle;
+    }
+  }
+
+
+  createClone() {
+    const tempObj = this.allJobList.find(a => a.jobId.trim() === this.cloneJobId.trim());
+    const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+    if (tempObj !== undefined) {
+      this.spinner.show();
+      const param: any = {
+        'userId': getUserId(),
+        'workspaceId': workspaceId,
+        'ertJobName': this.cloneJobName,
+        'ertJobId': this.cloneJobId
+      };
+      this.ertService.createCloneJob(param).subscribe(res => {
+        this.spinner.hide();
+        document.getElementById('clone-popup-btn').click();
+        this.successMsg = 'Job Clone Created Successfully.';
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          this.spinner.hide();
+        } else {
+          this.spinner.hide();
+          document.getElementById('warning-popup-btn').click();
+          this.errorMessage = err.error.message;
+        }
+      });
+    }
+  }
+
+  viewOtherUserJob(ertJobId: string = '') {
+    this.router.navigate(['/workspace/ert/clone/', ertJobId]);
+    const ertJobTitle = this.allJobList.filter(a => a.jobId === ertJobId)[0].jobTitle;
+    const ertJobMode = this.allJobList.filter(a => a.jobId === ertJobId)[0].jobMode;
+    this.ertService.updateJobName('Clone_' + ertJobTitle);
+    this.ertService.updatejobType(ertJobMode);
+  }
+
+  openAnaysisPopup(ertJobId) {
+    this.scheduledeErtJobId = ertJobId;
+    document.getElementById('startAnalysisId').click();
+  }
+
+  startAnalysis(scheduleObject) {
+    const el: HTMLElement = this.button.nativeElement as HTMLElement;
+    this.scheduleNow = scheduleObject.scheduleNow;
+    if (scheduleObject.ins === 'Local') {
+      this.instanceId = '';
+    } else {
+      this.instanceId = scheduleObject.ins;
+    }
+    const param: any = {
+      'ertJobId': this.scheduledeErtJobId,
+      'scheduledConfig': scheduleObject,
+      'instanceId': this.instanceId,
+      'isAnalysisJob': true,
+    };
+    delete param.scheduledConfig['ins'];
+    this.ertService.runJob(param).subscribe(result => {
+      if (result.httpStatus === 200) {
+        el.click();
+        this.isSuccessMsg = false;
+        this.successMsg = 'Analysis has started. Please check Status Monitoring page to know the status.';
+      } else {
+        this.isSuccessMsg = false;
+        document.getElementById('warning-popup-btn').click();
+        this.errorMessage = 'Unable to process analysis';
+      }
+    }, (err: HttpErrorResponse) => {
+      if (err.error) {
+        document.getElementById('warning-popup-btn').click();
+        this.errorMessage = err.error.message;
+      }
+    });
   }
 }

@@ -52,7 +52,6 @@ export class ErtTableComponent implements OnInit {
   configColumnQuery = '';
   maxNode = 3;
   ertAvillableTableList: AvilErtTable = new AvilErtTable();
-  // expressionStack: string[] = [];
   searchTableName = '';
   dataOrderList: DataOrderConfig[] = [];
   dataOrderObj: DataOrderConfig = new DataOrderConfig();
@@ -579,11 +578,14 @@ export class ErtTableComponent implements OnInit {
 
   toModifiedTableName(modifiedTableName: string) {
     const tempOriginalTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName;
+  }
+
+  checkModifiedEmptyTableName() {
+    const tempOriginalTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
     if (this.modifiedTableName.length === 0) {
       this.modifiedTableName = tempOriginalTableName;
       this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = tempOriginalTableName;
-    } else {
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName;
     }
   }
 
@@ -1420,10 +1422,14 @@ export class ErtTableComponent implements OnInit {
   changeColumnName(originalColumnName, modifiedColumnName) {
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.
       filter(a => a.originalColumnName === originalColumnName);
-    if (modifiedColumnName.length === 0) {
+    temp[0].modifiedColumnName = modifiedColumnName;
+  }
+
+  checkEmptyColumnName(originalColumnName, $event) {
+    const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.
+      filter(a => a.originalColumnName === originalColumnName);
+    if ($event.target.value.length === 0) {
       temp[0].modifiedColumnName = originalColumnName;
-    } else {
-      temp[0].modifiedColumnName = modifiedColumnName;
     }
   }
 

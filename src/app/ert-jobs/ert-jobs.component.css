@@ -285,8 +285,10 @@ td.tdr {
   color: white
 } */
 
-.material-icons:not(.popup-material-icon-cls) {
-  font-size: 29px !important;
+.flex-cards-footer .material-icons:not(.popup-material-icon-cls) {
+  font-size: 19px !important;
+  color: #f3f5f7;
+  padding-left: 0px !important;
 }
 
 .job-info-icon {
@@ -311,4 +313,139 @@ td.tdr {
   cursor: not-allowed;
   color: #cecdcd;
   background-color: #e5e5e6;
+}
+
+
+/* Toggle Button */
+.one *,
+.one *:before,
+.one *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.one .button-wrap {
+  /* width: 120px; */
+  /* margin: 10px auto 0; */
+  cursor: pointer;
+}
+
+.one .button-bg {
+  width: 76%;
+  height: 100%;
+  background-color: #cfd7e3;
+  border-radius: 40px;
+  color: #595959;
+  transition: all 0.2s ease;
+}
+
+.one .button-switch {
+  position: relative;
+  left: 0px;
+  width: 125px;
+  height: 44px;
+  border: solid 22px;
+  border-radius: 36px;
+  transition: all 0.2s ease;
+  border-color: #2879ff;
+}
+
+.one .button-active .button-switch {
+  left: 116px;
+  width: 172px;
+  border-color: #2879ff;
+}
+
+.one .button-in,
+.one .button-out {
+  position: absolute;
+  transition: all 0.2s ease;
+  padding-top: 10px;
+  font-family: Roboto;
+  font-size: 18px;
+}
+
+.one .button-in {
+  margin-left: 132px;
+}
+
+.one .button-out {
+  margin-left: 20px;
+  margin-right: 20px;
+  color: #ffffff;
+}
+
+.one .button-active .button-out {
+  color: #595959;
+}
+
+.one .button-active .button-in {
+  color: #ffffff;
+  margin-left: 132px;
+}
+
+.one .button-active .button-bg {
+  background-color: #cfd7e3;
+}
+
+.index {
+  z-index: 1;
+}
+
+.one-width {
+  width: 350px;
+}
+
+.search-add-div {
+  display: flex;
+}
+
+.search-div {
+  margin-left: auto;
+  width: 27%
+}
+
+.mat-form-field-search {
+  width: 100%;
+}
+
+.copy-view-i {
+  padding-left: 1px !important;
+}
+
+.padding-right {
+  padding-right: 7px
+}
+
+.no-padding {
+  padding-right: 0px !important;
+}
+
+.disable-analysis {
+  color: #cecdcd !important;
+  cursor: not-allowed !important;
+}
+
+.disable-analysis-Be {
+  background-color: #e5e5e6 !important;
+  float: left;
+  color: #ffffff;
+  padding-top: 4px;
+  padding-left: 3px;
+  background-color: #e5e5e6;
+  width: 26px;
+  height: 26px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 13px;
+  cursor: not-allowed;
+}
+
+/* .disable-analysis :hover {
+  color: #cecdcd !important;
+} */
+
+.disable-analysis-Be:hover {
+  background-color: #e5e5e6 !important;
 }
