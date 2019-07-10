@@ -752,3 +752,9 @@ a.disabled {
   vertical-align: middle;
   margin-right: 2px;
 }
+
+.add-time-div{
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #2196F3
+}
