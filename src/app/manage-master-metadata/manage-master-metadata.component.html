@@ -28,6 +28,7 @@
             <th>SL.No</th>
             <th>Version</th>
             <th>Description</th>
+            <th>Created By</th>
             <th>Created Date</th>
             <th>Status</th>
             <!-- <th>Action</th> -->
@@ -40,6 +41,7 @@
             <td class="man-mast-data">{{item+1}}</td>
             <td class="man-mast-data">{{rec.versionNo}}</td>
             <td class="man-mast-data word-breaker">{{rec.description}}</td>
+            <td class="man-mast-data word-breaker">{{rec.createdBy}}</td>
             <td class="man-mast-data">{{rec.createdAt * 1000|  date: 'medium'}}</td>
             <td class="man-mast-data">{{rec.status}}</td>
             <!-- <td>

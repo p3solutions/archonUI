@@ -25,6 +25,7 @@
   margin: 5px 0px 0px 24px;
 }
 
+
 .icon-list {
   margin: -4px -10px 0px 0px;
   font-size: 16px;
@@ -35,11 +36,11 @@
   padding: 13px 49px 5px 1px;
 }
 
-input#tablename {
+/* input#tablename {
   border: none;
   border-bottom: 1px solid #2196F3;
   margin-left: 13px;
-}
+} */
 
 #lbl-alias {
   float: left;
@@ -264,8 +265,8 @@ input#ucolumnname {
 }
 
 /* .save-extract-heading div {
-    margin: 24px 350px 10px 0px;
-  } */
+      margin: 24px 350px 10px 0px;
+    } */
 
 .save-extract-heading label {
   padding: 4px;
@@ -420,7 +421,6 @@ button.primary-btn-hover-draft-margin:hover {
   margin-left: 11px;
 }
 
-
 .body-left {
   display: inline-block;
   padding: -1px 0px 0px 10px;
@@ -433,34 +433,34 @@ button.primary-btn-hover-draft-margin:hover {
 
 
 .glyphicon {
-position: relative;
-top: 22px;
-margin-right: 10px;
-float: right;
-display: inline-block;
-font-style: normal;
-font-weight: 400;
-line-height: 1;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
+  position: relative;
+  top: 22px;
+  margin-right: 10px;
+  float: right;
+  display: inline-block;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .inner-addon {
-position: relative;
+  position: relative;
 }
 
 .inner-addon .glyphicon {
-position: absolute;
-padding: 10px;
-pointer-events: none;
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
 }
 
 .right-addon .glyphicon {
-right: 29px;
-bottom: 53px;
-top: 56px
+  right: 29px;
+  bottom: 53px;
+  top: 56px
 }
 
 .right-addon input {
-padding-right: 30px;
+  padding-right: 30px;
 }

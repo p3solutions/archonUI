@@ -151,6 +151,7 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { NoDblClickDirective } from './no-dbl-click.directive';
+import { ErtCloneViewComponent } from './ert-clone-view/ert-clone-view.component';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -257,7 +258,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 OnlyuppercaseallowDirective,
                 ChangeOverflowDirective,
                 ActivityLandingPageComponent,
-                NoDblClickDirective
+                NoDblClickDirective,
+                ErtCloneViewComponent
         ],
         imports: [
                 JwtModule.forRoot({

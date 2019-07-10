@@ -67,6 +67,7 @@ import { RedirectGuard } from './redirect/redirect.guard';
 import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.component';
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
+import { ErtCloneViewComponent } from './ert-clone-view/ert-clone-view.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -158,6 +159,9 @@ const routes: Routes = [
           },
           {
             path: 'ert-sip-config', component: ErtSipConfigComponent
+          },
+          {
+            path: 'clone/:ertJobId', component: ErtCloneViewComponent
           }
         ]
       },

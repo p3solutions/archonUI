@@ -5,10 +5,13 @@
         <div class="table-list">
           Table List
         </div>
+        <!-- <div class='body-left'><a style="z-index:1" class="glyphicon glyphicon-search inner-addon right-addon"></a>
+          <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
+            placeholder="Search Table"></div> -->
         <div class='body-left'><span style="z-index:1"
             class="glyphicon glyphicon-search inner-addon right-addon"></span>
-          <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
-            placeholder="Search Table"></div>
+          <input type="text" class="form-control search-input"
+            [(ngModel)]="searchTableName" id="listSearch" placeholder="Search Table"></div>
         <div class="card-body" id="ert-tbl-search">
           <div id="tbl-list" style="height: 326px;">
             <div class="scroll-div border">
@@ -26,7 +29,7 @@
     <div class="col-md-9">
       <div class="card" style="height:455px; margin-right: 25px;">
         <div class="card-body ert-table-relation-graph">
-        
+
 
           <div id="graph" style="text-align: center"></div>
         </div>
@@ -35,23 +38,15 @@
   </div>
   <div class="row" id="nextbtn" style="margin-top: 15px;">
     <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-margin"
-      (click)="saveERTJob('READY')" style="float: right;margin-right: 24px">Mark
-      As Complete
+      (click)="openCloneJobpopup()" style="float: right;margin-right: 24px"> Create Clone
       <!-- <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
     </button>
-    <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-draft-margin"
-      (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 5px">Save
-      As Draft
-      <!-- <i *ngIf="issaveDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
-    </button>
-    <button class="btn btn-padding primary-btn-color" (click)="gotoExtractData();"
-      style="float:right;margin-right:5px;">
-      Back</button>
     <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
       style="float:right;margin-right:5px;">
       Cancel</button>
   </div>
 </div>
+
 <div id="confirm_model" class="modal fade" role="dialog">
   <div class="modal-dialog modal-body-width">
     <div class="modal-content">
@@ -91,8 +86,6 @@
       <div class="modal-footer">
         <button type="button" (click)="cancel()" class="btn btn-padding btn-success-popup-primary-color"
           data-dismiss="modal">Ok</button>
-        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
-          data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
@@ -113,9 +106,35 @@
         <p class="popup-paragraph-cls">{{errorMessage!=='' ?errorMessage: 'Unable to save Job'}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="cancel()" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
-        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
+        <button type="button" (click)="cancel()" class="btn btn-padding btn-error-popup-primary-color"
           data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="clone-edit-name" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#clone-edit-popup">Open Modal</button>
+<div id="clone-edit-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <div class="pop-title-ert">Job Name</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="text-align: left">
+        <mat-form-field style="width: 40%">
+          <input type="text" matInput name="Clone Job Name" id="tablename" [(ngModel)]="cloneJobName"
+            placeholder="Clone Job Name" trim="blur" (blur)="checkForEmptyName()">
+        </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding ert-secondary-btn-color" id="usr-defined-close"
+          data-dismiss="modal">Cancel</button>
+        <button type="button" data-dismiss="modal"
+          class="btn btn-padding {{cloneJobName===''?'primary-btn-color-disabled':'primary-btn-color'}}"
+          [disabled]="cloneJobName===''" (click)="createClone()">Confirm</button>
       </div>
     </div>
   </div>

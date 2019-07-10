@@ -1,60 +1,121 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <div class="col-md-1">
       </div>
       <div class="col-md-8">
         <h3 style="margin: -2px;text-align: left"></h3>
       </div>
     </div>
-    <div class="col-md-3" style="text-align:left">
+    <div class="col-md-3 one one-width">
+      <div class="button-wrap {{ isAllJobActive ? 'button-active':''}}">
+        <div class="button-bg">
+          <div (click)="getMyJobs()" class="button-out index">My Jobs</div>
+          <div (click)="getAllJobs()" class="button-in index">All Jobs</div>
+          <div class="button-switch"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" style="text-align:left">
+    </div>
+  </div>
+  <div class="search-add-div">
+    <div class="search-div">
+      <mat-form-field class="mat-form-field-search">
+        <input matInput [disabled]="ertJobslist" #searchinput (keyup)="searchErtJobs($event.target.value)"
+          placeholder="Search">
+      </mat-form-field>
     </div>
     <ng-container *ngIf="permissionToUser!=='READ'">
-      <div class="col-md-3" style="text-align: right; margin-top: -9px;">
-        <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert-jobs-config']"
-          matTooltip="Add Job"> <i class="material-icons">
-            add_circle
-          </i></a>
-      </div>
+      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert-jobs-config']"
+        matTooltip="Add Job"> <i class="material-icons">
+          add_circle
+        </i></a>
     </ng-container>
   </div>
-  <div *ngFor="let item of ertJobs" class="col-md-3 card">
-    <div class="flex-cards-bar">
-      <div class='title'>{{item.jobTitle === '' ?'No_title':item.jobTitle}}<div class='info'><span
-            (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
-              aria-hidden="true"></i></span></div>
+  <ng-container *ngIf="!isAllJobActive">
+    <div *ngFor="let item of ertJobs" class="col-md-3 card">
+      <div class="flex-cards-bar">
+        <div class='title'>{{item.jobTitle === '' ?'No_title':item.jobTitle}}<div class='info'><span
+              (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
+                aria-hidden="true"></i></span></div>
+        </div>
+        <ng-container *ngIf="permissionToUser!=='READ'">
+          <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
+              (click)="setJobId(item.jobId)" matTooltip="Delete">
+              <span aria-hidden="true">&times;</span>
+            </button></div>
+        </ng-container>
       </div>
-      <ng-container *ngIf="permissionToUser!=='READ'">
-        <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
-            (click)="setJobId(item.jobId)" matTooltip="Delete">
-            <span aria-hidden="true">&times;</span>
-          </button></div>
-      </ng-container>
-    </div>
-    <div class="flex-cards-body">
-      <div class='body-left'>Job Status</div>
-      <div class='body-center'>:</div>
-      <div class='body-right'> {{item.jobStatus}}</div>
-      <div class='body-left'>Job Mode</div>
-      <div class='body-center'>:</div>
-      <div class='body-right'>{{item.jobMode}}</div>
-      <div class='body-left'>Created Date</div>
-      <div class='body-center'>:</div>
-      <div class='body-right'> {{item.createdDate | date}}</div>
-    </div><br>
+      <div class="flex-cards-body">
+        <div class='body-left'>Job Status</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.jobStatus}}</div>
+        <div class='body-left'>Job Mode</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'>{{item.jobMode}}</div>
+        <div class='body-left'>Created By</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.createdBy}}</div>
+        <div class='body-left'>Created Date</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.createdDate | date}}</div>
+      </div><br>
 
-    <div class="flex-cards-footer">
-      <ng-container *ngIf="permissionToUser!=='READ'">
-        <div class='foo-icon'><a matTooltip="{{item.madeDisable? '':'Run Job'}}"
-            (click)="!item.madeDisable && openScheduleModel(item.jobId,item.jobStatus)"
-            class="{{item.madeDisable ?'run-disabled':'fonticonbelow cursor-poniter'}}"><i class="fa fa-play"
-              aria-hidden="true"></i></a></div>
-        <div class='foo-iconedit'><a (click)="!item.madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
-            matTooltip=" {{item.madeDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
+      <div class="flex-cards-footer">
+        <ng-container *ngIf="permissionToUser!=='READ'">
+          <div class='foo-icon'><a matTooltip="{{item.madeDisable? '':'Run Job'}}"
+              (click)="!item.madeDisable && openScheduleModel(item.jobId,item.jobStatus)"
+              class="{{item.madeDisable ?'run-disabled':'fonticonbelow cursor-poniter'}}"><i class="fa fa-play"
+                aria-hidden="true"></i></a></div>
+          <div class='foo-icon no-padding'><a matTooltip="{{item.madeDisable? '':'Character Analysis'}}"
+              (click)="!item.madeDisable && openAnaysisPopup(item.jobId)"
+              class="{{item.madeDisable ?'disable-analysis-Be':'fonticonbelow cursor-poniter'}} copy-view-i"><i
+                class="material-icons {{item.madeDisable ?'disable-analysis':''}}"
+                aria-hidden="true">find_replace</i></a></div>
+          <div class='foo-iconedit'><a (click)="!item.madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
+              matTooltip=" {{item.madeEditDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
           {{item.madeEditDisable ? 'edit-disabled':''}}" aria-hidden="true"></i></a></div>
-      </ng-container>
+        </ng-container>
+      </div>
     </div>
-  </div>
+  </ng-container>
+
+  <ng-container *ngIf="isAllJobActive">
+    <div *ngFor="let item of allJobList" class="col-md-3 card">
+      <div class="flex-cards-bar">
+        <div class='title'>{{item.jobTitle === '' ?'No_title':item.jobTitle}}<div class='info'><span
+              (click)="showJobDetails(item.jobId)" matTooltip="Click for more info"><i class="fa fa-info-circle"
+                aria-hidden="true"></i></span></div>
+        </div>
+      </div>
+      <div class="flex-cards-body">
+        <div class='body-left'>Job Status</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.jobStatus}}</div>
+        <div class='body-left'>Job Mode</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'>{{item.jobMode}}</div>
+        <div class='body-left'>Created By</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.createdBy}}</div>
+        <div class='body-left'>Created Date</div>
+        <div class='body-center'>:</div>
+        <div class='body-right'> {{item.createdDate | date}}</div>
+      </div><br>
+
+      <div class="flex-cards-footer padding-right">
+        <ng-container *ngIf="permissionToUser!=='READ'">
+          <div class='foo-iconedit'><a class="fonticonbelow copy-view-i cursor-poniter"
+              (click)="openCloneJobpopup(item.jobId,item.jobTitle)" matTooltip="Create Clone"><i class="material-icons"
+                aria-hidden="true">file_copy</i></a></div>
+          <div class='foo-icon'><a matTooltip="view" (click)="viewOtherUserJob(item.jobId)"
+              class="fonticonbelow copy-view-i"><i class="material-icons" aria-hidden="true">remove_red_eye</i></a>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
   <div class="col-md-12" *ngIf="ertJobslist">
     <h5 style="text-align: center; margin-top: 50px;">
       Currently no job configurations (Click on + icon to add job configuration)
@@ -75,31 +136,31 @@
         <tbody>
           <tr>
             <td class="tdl">Job Name</td>
-            <td class="tdr">{{ertJobDetail.jobTitle | titlecase}}</td>
+            <td class="tdr">{{ertJobDetail?.jobTitle | titlecase}}</td>
           </tr>
           <tr>
             <td class="tdl">Job Type</td>
-            <td class="tdr">{{ertJobDetail.jobMode}}</td>
+            <td class="tdr">{{ertJobDetail?.jobMode}}</td>
           </tr>
           <tr>
             <td class="tdl">Job Status</td>
-            <td class="tdr">{{ertJobDetail.jobStatus}}</td>
+            <td class="tdr">{{ertJobDetail?.jobStatus}}</td>
           </tr>
           <tr>
             <td class="tdl">Created By</td>
-            <td class="tdr">{{ertJobDetail.createdBy}}</td>
+            <td class="tdr">{{ertJobDetail?.createdBy}}</td>
           </tr>
           <tr>
             <td class="tdl">Created Date</td>
-            <td class="tdr"> {{ertJobDetail.createdDate | date}}</td>
+            <td class="tdr"> {{ertJobDetail?.createdDate | date}}</td>
           </tr>
           <tr>
             <td class="tdl">Last Accessed By</td>
-            <td class="tdr">{{ertJobDetail.lastAccessedBy}}</td>
+            <td class="tdr">{{ertJobDetail?.lastAccessedBy}}</td>
           </tr>
           <tr>
             <td class="tdl">Last Accessed Date</td>
-            <td class="tdr">{{ertJobDetail.lastAccessedDate | date }}</td>
+            <td class="tdr">{{ertJobDetail?.lastAccessedDate | date }}</td>
           </tr>
         </tbody>
       </table>
@@ -172,6 +233,59 @@
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="clone-popup-btn" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#clone-popup">Open Modal</button>
+<div id="clone-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{successMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-schedule-job class="modal fade" id="startAnalysispopup" [insid]="ERT" role="dialog"
+  (ObjectEmit)="startAnalysis($event)">
+</app-schedule-job>
+<button data-toggle="modal" id="startAnalysisId" href="#startAnalysispopup" data-keyboard="false" data-backdrop="static"
+  style="display:none">Schedule</button>
+<button style="display:none" type="button" id="clone-edit-name" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#clone-edit-popup">Open Modal</button>
+<div id="clone-edit-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header info-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <div class="pop-title-ert">Job Name</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="text-align: left">
+        <mat-form-field style="width: 40%">
+          <input type="text" matInput name="Clone Job Name" id="tablename" [(ngModel)]="cloneJobName"
+            placeholder="Clone Job Name" trim="blur" (blur)="checkForEmptyName()">
+        </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding ert-secondary-btn-color" id="usr-defined-close"
+          data-dismiss="modal">Cancel</button>
+        <button type="button" data-dismiss="modal"
+          class="btn btn-padding {{cloneJobName===''?'primary-btn-color-disabled':'primary-btn-color'}}"
+          [disabled]="cloneJobName===''" (click)="createClone()">Confirm</button>
       </div>
     </div>
   </div>
