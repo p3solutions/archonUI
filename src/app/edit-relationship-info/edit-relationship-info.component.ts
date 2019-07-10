@@ -164,7 +164,6 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       }
     } else {
       for (const i of this.resultantValues) {
-        console.log(this.resultantValues);
         if (i.primaryColumn.columnName === test.primaryColumn.columnName) {
           if (secondaryColumn === 'select') {
             i.isSelected = false;
