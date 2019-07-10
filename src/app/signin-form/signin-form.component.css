@@ -24,9 +24,48 @@
   margin-top:30px !important;
 }
 
-#recaptcha {
+/* #recaptcha {
   padding: 11%;
   transform: scale(1.19);
   margin-top: -5%;
+} */
+
+.capt{
+  /* background-color: grey; */
+  background: url(../../assets/loginBg.jpg);
+  width: 365px;
+  height: 160px;
+  /* margin-right: 1%; */
+  margin-left: 3%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border: 1px solid #E6E9ED;
+  padding-top: 3%;
+}
+
+/* #mainCaptcha{
+	position: relative;
+	left : 60px;
+	top: 5px;
+	
+} */
+
+/* #refresh{
+	position:relative;
+	left:230px;
+	width:30px;
+	height:30px;
+	bottom:45px;
+	background-image: url(rpt.jpg);
+} */
+
+#Button1{
+	position: relative;
+  top: 10px;
+}
+
+::ng-deep mat-card > mat-card-header > .mat-card-header-text {
+  /* background: url(../../assets/loginBg.jpg); */
+  /* background-color: yellowgreen; */
 }
 
