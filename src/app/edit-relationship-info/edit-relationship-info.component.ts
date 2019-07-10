@@ -164,7 +164,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
       }
     } else {
       for (const i of this.resultantValues) {
-        // const condtionIndex = this.resultantValues.indexOf(i);
+        console.log(this.resultantValues);
         if (i.primaryColumn.columnName === test.primaryColumn.columnName) {
           if (secondaryColumn === 'select') {
             i.isSelected = false;
@@ -174,14 +174,15 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
         }
         if (i.isSelected && i.defaultSecondaryColumn) {
           i.relationshipId = test.relationshipId;
-          if (i.defaultSecondaryColumn.columnName === secondaryColumn) {
+          if (i.defaultSecondaryColumn.columnName === secondaryColumn && i.primaryColumn.columnId === test.primaryColumn.columnId) {
             i.secondaryColumn = i.defaultSecondaryColumn;
             delete i.isSelected;
-          } else {
+          } else if (i.primaryColumn.columnId === test.primaryColumn.columnId) {
             i.secondaryColumn = test.secondaryColumn;
           }
         }
       }
+      console.log(this.resultantValues);
     }
     this.updateenable = this.checkDuplicateInObject(this.resultantValues);
     if (this.updateenable === true) {
