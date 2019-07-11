@@ -353,7 +353,7 @@ td.tdr {
 
 .one .button-active .button-switch {
   left: 116px;
-  width: 172px;
+  width: 127px;
   border-color: #2879ff;
 }
 
@@ -367,11 +367,11 @@ td.tdr {
 }
 
 .one .button-in {
-  margin-left: 132px;
+  margin-left: 145px;
 }
 
 .one .button-out {
-  margin-left: 20px;
+  margin-left: 29px;
   margin-right: 20px;
   color: #ffffff;
 }
@@ -382,7 +382,7 @@ td.tdr {
 
 .one .button-active .button-in {
   color: #ffffff;
-  margin-left: 132px;
+  margin-left: 144px;
 }
 
 .one .button-active .button-bg {
