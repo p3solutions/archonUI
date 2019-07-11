@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SignUp } from '../sign-up';
 import { EnvironmentService } from '../environment/environment.service';
 
@@ -13,8 +13,10 @@ export class SignupFormService {
   constructor(
     private http: HttpClient,
     private environment: EnvironmentService
-    ) { }
+  ) { }
   signUp(signup_info: SignUp): Observable<SignUp> {
+    signup_info.password = btoa(signup_info.password);
+    signup_info.confirmPassword = btoa(signup_info.confirmPassword);
     return this.http.post<SignUp>(this.signupUrl, signup_info, { headers: this.headers });
   }
 
