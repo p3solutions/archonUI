@@ -13,7 +13,6 @@ import { MatInputModule, MatFormFieldModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
-import { RecaptchaModule } from 'ng-recaptcha';
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
@@ -24,7 +23,7 @@ describe('SigninFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormsModule, RouterTestingModule, MatFormFieldModule,
-        MatInputModule, BrowserAnimationsModule, RecaptchaModule,
+        MatInputModule, BrowserAnimationsModule,
         JwtModule.forRoot({
           config: {
                   tokenGetter: tokenGetter

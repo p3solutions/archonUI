@@ -19,7 +19,6 @@ export class SigninFormComponent implements OnInit {
   inProgress = false;
   enableSignInBtn = false;
   workspaceUrl = '/workspace';
-  // recaptchaModel = '';
   count = 0;
   code;
   captcha;
@@ -93,13 +92,6 @@ export class SigninFormComponent implements OnInit {
     }
     this.router.navigateByUrl(redirectUrl);
   }
-
-//   resolved(captchaResponse) {
-//     console.log(captchaResponse);
-//     this.recaptchaModel = captchaResponse;
-//     this.enableSignIn();
-// }
-
 
 Captcha() {
   const alpha = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',

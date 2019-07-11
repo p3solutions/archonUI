@@ -148,7 +148,6 @@ import { OnlyuppercaseallowDirective } from './ert-table/onlyuppercaseallow.dire
 import { ChangeOverflowDirective } from './change-overflow.directive';
 import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
-import { RecaptchaModule } from 'ng-recaptcha';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { NoDblClickDirective } from './no-dbl-click.directive';
 import { ErtCloneViewComponent } from './ert-clone-view/ert-clone-view.component';
@@ -291,7 +290,6 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 FlexLayoutModule,
                 NgxSpinnerModule, MatInputModule, MatSortModule,
                 NgxTrimDirectiveModule,
-                RecaptchaModule.forRoot(),
                 AceEditorModule
         ],
         providers: [
