@@ -92,6 +92,9 @@ export class SigninFormComponent implements OnInit {
     } else {
       this.enableSignInBtn = false;
     }
+    if (this.signInForm.value.captcha.length > 6 && !this.valid) {
+    this.errorObject.show = false;
+    }
   }
   handleRedirection() {
     const sessionTimedOutUrl = localStorage.getItem('sessionTimedOutUrl');
