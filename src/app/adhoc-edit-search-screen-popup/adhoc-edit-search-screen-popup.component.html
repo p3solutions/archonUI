@@ -39,7 +39,7 @@
           </mat-select>
         </mat-form-field>
         <a (click)="getInfo()">
-            <i class="material-icons {{editSearchCriteriaForm.get('inputFunction').value==='' ? 'info-function-icon':''}}"
+          <i class="material-icons {{editSearchCriteriaForm.get('inputFunction').value==='' ? 'info-function-icon':''}}"
             aria-hidden="true">info</i></a>
       </div>
       <mat-form-field *ngIf="!isOptionFieldDisable">
@@ -50,16 +50,17 @@
           <mat-checkbox class="example-margin" formControlName="isRequired">Mandatory Field</mat-checkbox>
         </section>
         <section class="example-section check_box-section" id="mandatory-div">
-          <mat-checkbox (change)="makeFieldEncrypted()" class="example-margin" formControlName="isEncrypted">Encrypted Field In Infoarchive
+          <mat-checkbox (change)="makeFieldEncrypted()" class="example-margin" formControlName="isEncrypted">Encrypted
+            Field In Infoarchive
           </mat-checkbox>
         </section>
       </div>
       <div *ngIf="editSearchCriteriaForm.get('fieldType').value=='DATE'" class="margin-bottom-date check-div">
-          <mat-radio-group (change)="setDateField()" formControlName="isDateRange">
-            <mat-radio-button style="margin-right: 72px;" name="dateField" [value]="false">Single Date</mat-radio-button>
-            <mat-radio-button name="dateField" [value]="true">Date Range</mat-radio-button>
-          </mat-radio-group>
-        </div>
+        <mat-radio-group (change)="setDateField()" formControlName="isDateRange">
+          <mat-radio-button style="margin-right: 72px;" name="dateField" [value]="false">Single Date</mat-radio-button>
+          <mat-radio-button name="dateField" [value]="true">Date Range</mat-radio-button>
+        </mat-radio-group>
+      </div>
     </form>
   </div>
   <div class="row" id="nextbtn">
@@ -92,7 +93,10 @@
           <div>{{inputFunctionInfo?.functionDesc}}</div>
         </div>
         <div id="function-info">
-          <pre>{{inputFunctionInfo?.text}}</pre>
+          <ace-editor #editor [mode]="'sql'" style="height:247px;" name="query" [readOnly]="true"
+            [ngModel]="inputFunctionInfo?.text" id="query">
+          </ace-editor>
+          <!-- <pre>{{t}}</pre> -->
         </div>
         <div class="row info">
           <b>Example:</b>

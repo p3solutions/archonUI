@@ -19,6 +19,7 @@ import { AdhocHeaderInfo } from '../adhoc-landing-page/adhoc';
 import { AdhocService } from '../adhoc-landing-page/adhoc.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { AceEditorModule } from 'ng2-ace-editor';
 describe('AdhocSearchCriteriaComponent', () => {
   let component: AdhocSearchCriteriaComponent;
   let fixture: ComponentFixture<AdhocSearchCriteriaComponent>;
@@ -35,7 +36,7 @@ describe('AdhocSearchCriteriaComponent', () => {
         AdhocSearchScreenComponent, AdhocEditPanelColumnPopupComponent,
         AdhocEditSearchScreenPopupComponent],
       imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatCardModule, MatTreeModule, MatRadioModule, MatExpansionModule
-        , MatOptionModule, RouterTestingModule, HttpClientTestingModule, MatDatepickerModule, MatCheckboxModule,
+        , MatOptionModule, RouterTestingModule, HttpClientTestingModule, MatDatepickerModule, MatCheckboxModule, AceEditorModule,
         MatSelectModule, MatInputModule, DragDropModule, MatCheckboxModule, MatTabsModule, BrowserAnimationsModule],
       providers: [UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
 

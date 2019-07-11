@@ -202,3 +202,50 @@ modal-body .p {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
 }
+
+
+::ng-deep .ace-monokai {
+  background-color: #f0f4f7 !important;
+  color: #000 !important;
+}
+
+::ng-deep .ace-monokai .ace_gutter {
+  background: #e9f1f7 !important;
+  color: #000 !important;
+}
+
+::ng-deep .ace-monokai .ace_gutter-active-line {
+  background-color: #e9f1f7 !important;
+}
+
+::ng-deep .ace-monokai .ace_marker-layer .ace_active-line {
+  background: #e9f1f7 !important;
+}
+
+::ng-deep .ace-monokai .ace_cursor {
+  color: #000 !important;
+}
+
+.query {
+  font-family: Roboto;
+  font-size: 14px;
+  text-align: left;
+  color: #121212;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+
+::ng-deep .mat-slide-toggle .mat-slide-toggle-ripple {
+  height: 0px !important;
+  width: 0px !important;
+}
+
+::ng-deep .ace-monokai .ace_print-margin {
+  width: 0px !important;
+  background: #555651;
+}
+
+::ng-deep .ace_editor {
+  font: 14px/normal !important;
+  /* font: 14px/normal 'Roboto' !important; */
+}

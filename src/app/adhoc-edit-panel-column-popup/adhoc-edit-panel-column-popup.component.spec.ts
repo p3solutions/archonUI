@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { AceEditorModule } from 'ng2-ace-editor';
 
 describe('AdhocEditPanelColumnPopupComponent', () => {
   let component: AdhocEditPanelColumnPopupComponent;
@@ -15,9 +16,9 @@ describe('AdhocEditPanelColumnPopupComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AdhocEditPanelColumnPopupComponent],
-      imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule,
-        MatOptionModule, MatSelectModule, MatInputModule, MatRadioModule, MatCheckboxModule, BrowserAnimationsModule] ,
-        providers: [{ provide: EnvironmentService, useClass: MockEnvironmentService }]
+      imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, AceEditorModule,
+        MatOptionModule, MatSelectModule, MatInputModule, MatRadioModule, MatCheckboxModule, BrowserAnimationsModule],
+      providers: [{ provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();
   }));
