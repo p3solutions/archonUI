@@ -152,6 +152,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { NoDblClickDirective } from './no-dbl-click.directive';
 import { ErtCloneViewComponent } from './ert-clone-view/ert-clone-view.component';
+import { PreventcopyDirective } from './preventcopy.directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -259,7 +260,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 ChangeOverflowDirective,
                 ActivityLandingPageComponent,
                 NoDblClickDirective,
-                ErtCloneViewComponent
+                ErtCloneViewComponent,
+                PreventcopyDirective
         ],
         imports: [
                 JwtModule.forRoot({

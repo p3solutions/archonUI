@@ -33,7 +33,7 @@
 .capt{
   /* background-color: grey; */
   background: url(../../assets/loginBg.jpg);
-  width: 365px;
+  width: 362px;
   height: 160px;
   /* margin-right: 1%; */
   margin-left: 3%;
@@ -65,7 +65,8 @@
 }
 
 ::ng-deep mat-card > mat-card-header > .mat-card-header-text {
-  /* background: url(../../assets/loginBg.jpg); */
+  background: url(../../assets/captchaBackground.jpg);
+  width: 110%;
   /* background-color: yellowgreen; */
 }
 

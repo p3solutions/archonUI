@@ -20,7 +20,7 @@ export class SigninFormComponent implements OnInit {
   enableSignInBtn = false;
   workspaceUrl = '/workspace';
   // recaptchaModel = '';
-  count = 4;
+  count = 0;
   code;
   captcha;
   valid;

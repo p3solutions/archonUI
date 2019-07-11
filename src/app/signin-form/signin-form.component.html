@@ -22,20 +22,12 @@
         <div class="col-md-12 capt" *ngIf="count > 3">
           <div class="col-md-12">
                 <mat-card> <mat-card-header><i class="material-icons" style="padding-left: 7%"  (click)="Captcha()">refresh</i>
-                  <mat-card-title style="margin-bottom: 0px"><b><i>{{code}}</i></b></mat-card-title></mat-card-header></mat-card></div>
-                <!-- <h2 type="text" id="mainCaptcha"></h2> -->
-                <!-- <input type="text" id="txtInput"/>   -->
+                  <mat-card-title appPreventcopy style="margin-bottom: 0px"><b><i>{{code}}</i></b></mat-card-title></mat-card-header></mat-card></div>
                 <div class="col-md-12 form-group" style="padding-top: 5.5%;padding-left: 6.5%;">
                     <mat-form-field>
-                        <input matInput placeholder="Type Captcha Here" (keyup)="enableSignIn()" formControlName="captcha">
-                        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+                        <input matInput appPreventcopy placeholder="{{signInForm.value.captcha === '' ?  'Prove you are not a bot' : 'Letters are Case Sensitive' }}" (keyup)="enableSignIn()" formControlName="captcha">
                       </mat-form-field>
                 </div>
-                <!-- <div class="col-md-4">
-                <button type="submit" id="Button1" class="btn pull-right btn-primary" value="Check" (click)="ValidCaptcha()" >Check</button> 
-                </div>  -->
-                <!-- <input id="Button1" type="button" value="Check" onclick="alert(ValidCaptcha());"/> -->
-        <!-- <re-captcha (resolved)="resolved($event)" siteKey="6Le48qwUAAAAAJSCjWPfEBot4JeQFWqOLmjfkJDe"></re-captcha> -->
         </div>
         <div id="error-block" class="col-md-12 form-group">
           <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible" role="alert">
@@ -43,6 +35,9 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <strong>Error!</strong> {{errorObject?.message}}
+          </div>
+          <div *ngIf="signInForm.value.captcha.length > 6 && !valid" style="margin-left: -1%;" class="alert alert-danger alert-dismissible" role="alert">
+            <strong>Oops! Those aren't correct</strong>
           </div>
         </div>
       </div>
