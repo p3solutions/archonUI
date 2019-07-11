@@ -93,7 +93,10 @@
           <div>{{outputFunctionInfo?.functionDesc}}</div>
         </div>
         <div id="function-info">
-          <pre>{{outputFunctionInfo?.text}}</pre>
+          <ace-editor #editor [mode]="'sql'" style="height:247px;" name="query" [readOnly]="true"
+            [ngModel]="outputFunctionInfo?.text" id="query">
+          </ace-editor>
+          <!-- <pre>{{}}</pre> -->
         </div>
         <div class="row info">
           <b>Example:</b>
