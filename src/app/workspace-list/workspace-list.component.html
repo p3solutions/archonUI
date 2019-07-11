@@ -59,7 +59,7 @@
       <mat-card class="example-card">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title class="header">{{ws?.workspaceName}} </mat-card-title>
+          <mat-card-title matTooltip="{{ws?.workspaceName}}" class="header">{{ws?.workspaceName}} </mat-card-title>
           <div class="spacer"></div>
           <a (click)="viewWSmodal(ws)" data-toggle="modal" href="#db-profile-model" data-tooltip="Details"><i
               class="fa fa-info-circle fa-2x" aria-hidden="true"></i></a>

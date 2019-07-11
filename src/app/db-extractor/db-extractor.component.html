@@ -203,7 +203,7 @@
       </div>
       <div class="col-md-12">
         <div class="col-md-6">
-          <mat-checkbox (change)="updateaccess()" name="incTable" [(ngModel)]="processDetailsObj.incTable">Include Table
+          <mat-checkbox (change)="updateaccess()" name="incTable" [(ngModel)]="processDetailsObj.incTable">Include Tables
           </mat-checkbox>
         </div>
         <div class="col-md-6">
@@ -300,7 +300,7 @@
   </div>
 </div>
 <div *ngIf="queryvalidate">
-  <app-schedule-job class="modal fade" id="openScheduleJob" role="dialog" tabindex="-1" (ObjectEmit)="Start($event)">
+  <app-schedule-job class="modal fade" id="openScheduleJob" role="dialog" data-keyboard="false" data-backdrop="static" (ObjectEmit)="Start($event)">
   </app-schedule-job>
 </div>
 <button #click data-toggle="modal" href="#successModel" [hidden]="true"></button>
@@ -318,8 +318,11 @@
         <p *ngIf="isSuccessMsg" class="popup-paragraph-cls">Check on Job Status page.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal"
-          (click)="close()">Close</button>
+          <div class="action-btn">
+          <button style="margin-right: 5px" class="btn cancel btn-padding" data-dismiss="modal" (click)="gotoDashboard();">Close</button>
+        <button style="margin-right: 5px" type="button" class="btn save btn-padding" data-dismiss="modal"
+          (click)="close()">Check Status</button>
+          </div>
       </div>
     </div>
   </div>
