@@ -79,4 +79,7 @@ export class ChangePasswordComponent implements OnInit {
   gotoDashboard() {
     this.router.navigate(['workspace/workspace-dashboard/workspace-services']);
   }
+  closereset() {
+    this.createForm();
+  }
 }
