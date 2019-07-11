@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -34,13 +34,14 @@ export class SigninFormComponent implements OnInit {
     this.createForm();
     setTimeout(() => this.enableSignIn(), 3000);
     this.Captcha();
+    console.log(this.signInForm.value.captcha);
   }
 
   createForm() {
     this.signInForm = new FormGroup({
       userId: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      captcha: new FormControl( '', [Validators.required])
+      captcha: new FormControl( '' , [Validators.required])
     });
   }
 
@@ -64,6 +65,8 @@ export class SigninFormComponent implements OnInit {
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
+          this.Captcha();
+          this.signInForm.controls['captcha'].setValue('');
           this.errorObject = new ErrorObject;
           this.errorObject.message = err.error.message;
           this.errorObject.show = !err.error.success;

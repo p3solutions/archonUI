@@ -35,6 +35,10 @@
   transition: 0.3s;
   border: 1px solid #E6E9ED;
   padding-top: 3%;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none;   /* Firefox all */
+  -ms-user-select: none;  /* IE 10+ */
+  user-select: none;  /* Likely future */ 
 }
 
 /* #mainCaptcha{
@@ -58,7 +62,7 @@
   top: 10px;
 }
 
-::ng-deep mat-card > mat-card-header > .mat-card-header-text {
+::ng-deep mat-card#signinComp > mat-card-header > .mat-card-header-text {
   background: url(../../assets/captchaBackground.jpg);
   width: 110%;
   /* background-color: yellowgreen; */
