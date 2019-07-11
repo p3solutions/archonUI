@@ -38,8 +38,9 @@ body {
   font-weight: 500;
   font-size: 16px;
   text-align: right;
+  width: 90%;
   letter-spacing: 0.2;
-  margin: 0px 17px 2px 14px;
+  margin: 16px 17px 2px 14px;
 }
 
 .form-group {
@@ -49,13 +50,12 @@ body {
 #create-app-header {
   display: flex;
   align-items: center;
-  padding-left: 12px;
-  height: 40px;
 }
 
 .back-arrow-cls {
-  margin-top: 6px;
+  margin-top: 21px;
   margin-right: 12px;
+  height: 20px;
 }
 
 #job-name {
@@ -72,3 +72,8 @@ body {
   position: fixed !important;
 }
 
+.header-back{
+  display: flex;
+  text-align: center;
+  width: 10%
+}

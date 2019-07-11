@@ -113,6 +113,10 @@ div.sticky {
   padding-right: 15px;
 }
 
+#tbl-list {
+  height: 326px;
+}
+
 
 .well {
   min-height: 30px;
@@ -433,34 +437,44 @@ button.primary-btn-hover-draft-margin:hover {
 
 
 .glyphicon {
-position: relative;
-top: 22px;
-margin-right: 10px;
-float: right;
-display: inline-block;
-font-style: normal;
-font-weight: 400;
-line-height: 1;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
+  position: relative;
+  top: 22px;
+  margin-right: 10px;
+  float: right;
+  display: inline-block;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .inner-addon {
-position: relative;
+  position: relative;
 }
 
 .inner-addon .glyphicon {
-position: absolute;
-padding: 10px;
-pointer-events: none;
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
 }
 
 .right-addon .glyphicon {
-right: 29px;
-bottom: 53px;
-top: 56px
+  right: 29px;
+  bottom: 53px;
+  top: 56px
 }
 
 .right-addon input {
-padding-right: 30px;
+  padding-right: 30px;
+}
+
+.card-height {
+  height: 455px;
+  margin-left: 25px;
+}
+
+.btn-css {
+  float: right !important;
+  margin-right: 5px !important;
 }

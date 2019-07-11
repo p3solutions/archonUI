@@ -367,11 +367,11 @@ td.tdr {
 }
 
 .one .button-in {
-  margin-left: 145px;
+  margin-left: 149px;
 }
 
 .one .button-out {
-  margin-left: 29px;
+  margin-left: 28.5px;
   margin-right: 20px;
   color: #ffffff;
 }
@@ -382,7 +382,7 @@ td.tdr {
 
 .one .button-active .button-in {
   color: #ffffff;
-  margin-left: 144px;
+  margin-left: 147px;
 }
 
 .one .button-active .button-bg {
@@ -448,4 +448,35 @@ td.tdr {
 
 .disable-analysis-Be:hover {
   background-color: #e5e5e6 !important;
+}
+
+
+.fa-stack {
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.fa-stack .fa {
+  color: #269AF8;
+}
+
+.fa-stack .fa.fa-circle-thin {
+  color: #269AF8;
+}
+
+.fa-stack .fa.fa-circle {
+  opacity: 0.0;
+  color: #2879ff;
+}
+
+.fa-stack:hover .fa.fa-plus {
+  color: white;
+}
+
+.fa-stack:hover .fa.fa-circle-thin {
+  color: #2879ff;
+}
+
+.fa-stack:hover .fa.fa-circle {
+  opacity: 1.0
 }

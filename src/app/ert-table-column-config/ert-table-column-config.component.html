@@ -1,7 +1,7 @@
 <div id="ert-table-id">
   <div class="row">
     <div class="col-md-3">
-      <div class="card" style="height:455px; margin-left: 25px;">
+      <div class="card card-height">
         <div class="table-list">
           Table List
         </div>
@@ -10,7 +10,7 @@
           <input type="text" class="form-control search-input" [(ngModel)]="searchTableName" id="listSearch"
             placeholder="Search Table"></div>
         <div class="card-body" id="ert-tbl-search">
-          <div id="tbl-list" style="height: 326px;">
+          <div id="tbl-list">
             <div class="scroll-div border">
               <div class="well {{item.tableId===selectedTableId?'selectTableCls':''}}"
                 (click)="selectTable(item.tableId)"
@@ -24,11 +24,12 @@
       </div>
     </div>
     <div class="col-md-9">
-      <div class="card" style="height:455px; margin-right: 25px;">
+      <div class="card card-height">
         <div class="card-body ert-table-relation-graph">
-        
+          <button type="button" (click)="showDataRecordAndSIPGrapgh()" class="btn btn-padding primary-btn-color">Show
+            PDI Graph</button>
 
-          <div id="graph" style="text-align: center"></div>
+          <div *ngIf="ShowDiagram" id="graph" style="text-align: center"></div>
         </div>
       </div>
     </div>
@@ -39,16 +40,15 @@
       As Complete
       <!-- <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
     </button>
-    <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-draft-margin"
-      (click)="saveERTJob('DRAFT')" style="float: right;margin-right: 5px">Save
+    <button type="button" class="btn btn-padding btn-css primary-btn-color primary-btn-hover-draft-margin"
+      (click)="saveERTJob('DRAFT')">Save
       As Draft
       <!-- <i *ngIf="issaveDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
     </button>
-    <button class="btn btn-padding primary-btn-color" (click)="gotoExtractData();"
-      style="float:right;margin-right:5px;">
+    <button class="btn btn-padding primary-btn-color btn-css" (click)="gotoExtractData();">
       Back</button>
-    <button class="btn btn-padding secondary-btn-color" id="cancelBtn" data-toggle="modal" data-target="#confirm_model"
-      style="float:right;margin-right:5px;">
+    <button class="btn btn-padding secondary-btn-color btn-css" id="cancelBtn" data-toggle="modal"
+      data-target="#confirm_model">
       Cancel</button>
   </div>
 </div>
@@ -113,7 +113,8 @@
         <p class="popup-paragraph-cls">{{errorMessage!=='' ?errorMessage: 'Unable to save Job'}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" (click)="cancel()" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+        <button type="button" (click)="cancel()" class="btn btn-padding btn-error-popup-primary-color"
+          data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
       </div>

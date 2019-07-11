@@ -27,10 +27,15 @@
       </mat-form-field>
     </div>
     <ng-container *ngIf="permissionToUser!=='READ'">
-      <a style="font-size: 34px; margin-right: 19px;" [routerLink]="['/workspace/ert-jobs-config']"
+      <span class="fa-stack open-app" [routerLink]="['/workspace/ert-jobs-config']" matTooltip="Add Job">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-circle-thin fa-stack-2x"></i>
+        <i class="fa fa-plus fa-stack-1x"></i>
+      </span>
+      <!-- <a style="font-size: 34px; margin-right: 19px;" 
         matTooltip="Add Job"> <i class="material-icons">
           add_circle
-        </i></a>
+        </i></a> -->
     </ng-container>
   </div>
   <ng-container *ngIf="!isAllJobActive">
