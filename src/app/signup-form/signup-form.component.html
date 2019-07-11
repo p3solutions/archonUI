@@ -1,3 +1,7 @@
+<ngx-spinner class="my-spinner" bdOpacity=0.9 bdColor="rgb(0,0,0,0.35)" size="medium" color="#2879ff" type="ball-pulse"
+  [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>
 <div id="landing-card">
   <div class="x_title">
     <h3>Sign Up</h3>
@@ -5,42 +9,49 @@
   </div>
   <div class="x_content">
     <br />
-    <form class="form-horizontal form-label-left input_mask" [formGroup]="signUpForm">
+    <form #formDirective="ngForm" class="form-horizontal form-label-left input_mask" [formGroup]="signUpForm">
       <div class="row form-fields">
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="text" matInput name="id" formControlName="userId" placeholder="User Id">
+            <input type="text" trim="blur" matInput name="id" formControlName="userId" placeholder="User ID">
           </mat-form-field>
 
         </div>
         <div class="col-md-12 form-group has-feedback" style="display:inline-flex">
           <mat-form-field style="margin-right:7px">
-            <input type="text" matInput name="firstName" formControlName="firstName" placeholder="First Name">
+            <input type="text" trim="blur" matInput name="firstName" formControlName="firstName"
+              placeholder="First Name">
           </mat-form-field>
           <mat-form-field>
-            <input type="text" matInput name="lastName" formControlName="lastName" placeholder="Last Name">
-          </mat-form-field>
-        </div>
-        <div class="col-md-12 form-group has-feedback">
-          <mat-form-field>
-            <input type="email" matInput name="signin-email" formControlName="emailAddress" placeholder="Email">
+            <input type="text" trim="blur" matInput name="lastName" formControlName="lastName" placeholder="Last Name">
           </mat-form-field>
         </div>
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="password" matInput name="signin-password" formControlName="password" placeholder="Password">
+            <input type="email" trim="blur" matInput name="signin-email" formControlName="emailAddress"
+              placeholder="Email">
           </mat-form-field>
-          <mat-hint *ngIf="signUpForm.get('password').invalid && showHint == true" style="text-align:left">
-            Password must contain atleast 8 characters, 1 lower case letter [a-z], 1 upper case letter [A-Z], 1 numeric character [0-9] and 1 special character.
-           </mat-hint>
-          <mat-error *ngIf="signUpForm.get('password').invalid && showHint == false" style="text-align:left">
-            *Password must contain atleast 8 characters, 1 lower case letter [a-z], 1 upper case letter [A-Z], 1 numeric character [0-9] and 1 special character.
-           </mat-error>
         </div>
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="password" (keyup)="onKeyPressOfConfirmPassword()" matInput name="signin-confirm-password" formControlName="confirmPassword"
-              placeholder="Confirm Password">
+            <input type="password"
+              matTooltip="Password must contain atleast 8 characters, 1 lower case letter [a-z], 1 upper case letter [A-Z], 1 numeric character [0-9] and 1 special character."
+              matInput name="signin-password" trim="blur" (blur)="checkForValidPassword()" formControlName="password"
+              placeholder="Password">
+          </mat-form-field>
+          <!-- <mat-hint *ngIf="signUpForm.get('password').invalid && showHint == true" style="text-align:left">
+            Password must contain atleast 8 characters, 1 lower case letter [a-z], 1 upper case letter [A-Z], 1 numeric
+            character [0-9] and 1 special character.
+          </mat-hint>-->
+          <mat-error *ngIf="!showHint" style="text-align:left">
+            *Password must contain atleast 8 characters, 1 lower case letter [a-z], 1 upper case letter [A-Z], 1 numeric
+            character [0-9] and 1 special character.
+          </mat-error>
+        </div>
+        <div class="col-md-12 form-group has-feedback">
+          <mat-form-field>
+            <input type="password" trim="blur" (keyup)="onKeyPressOfConfirmPassword()" matInput
+              name="signin-confirm-password" formControlName="confirmPassword" placeholder="Confirm Password">
           </mat-form-field>
           <mat-error *ngIf="passwordNotMatch" style="text-align:left">
             Password and Confirm Password doesn't match.
@@ -55,7 +66,8 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <strong>Error!</strong> {{errorObject?.message}}
+            <!-- <strong>Error!</strong>  -->
+            {{errorObject?.message}}
           </div>
           <div *ngIf="successMessage" class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -70,10 +82,10 @@
           <a routerLink="/sign-in">Sign In</a>
         </div>
         <div class="col-md-6 form-group">
-          <button type="submit" (click)="onSignUp()" class="btn pull-right btn-form btn-primary {{ enableSignUpBtn ? '' : 'bg-disabled'}}"
+          <button type="submit" (click)="onSignUp(signUpForm)"
+            class="btn pull-right btn-form btn-primary {{ enableSignUpBtn ? '' : 'bg-disabled'}}"
             [disabled]="!signUpForm.valid">
             SIGN UP
-            <i *ngIf="inProgress" class="fa fa-spinner fa-spin inline-loader"></i>
           </button>
           <!-- <button type="submit" class="btn btn-primary pull-right btn-form">SIGN UP</button> -->
         </div>

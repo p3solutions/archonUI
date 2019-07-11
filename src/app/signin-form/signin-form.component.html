@@ -7,24 +7,26 @@
   <div class="x_content">
     <br />
     <form class="form-horizontal form-label-left input_mask" (ngSubmit)="onSignIn()" [formGroup]="signInForm">
-      
+
       <div class="row form-fields">
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-          <input type="text" matInput name="signin-email" formControlName="userId" placeholder="UserID" (keyup)="enableSignIn()">
-        </mat-form-field>
+            <input type="text" matInput trim="blur" name="signin-email" formControlName="userId" placeholder="User ID"
+              (keyup)="enableSignIn()">
+          </mat-form-field>
         </div>
         <div class="col-md-12 form-group has-feedback">
-            <mat-form-field>
-          <input type="password" matInput name="signin-password" formControlName="password" placeholder="Password" (keyup)="enableSignIn()">
-        </mat-form-field>
+          <mat-form-field>
+            <input type="password" trim="blur" matInput name="signin-password" formControlName="password"
+              placeholder="Password" (keyup)="enableSignIn()">
+          </mat-form-field>
         </div>
         <div id="recaptcha" class="col-md-12" *ngIf="count > 3">
-        <re-captcha (resolved)="resolved($event)" siteKey="6LcOuyYTAAAAAHTjFuqhA52fmfJ_j5iFk5PsfXaU"></re-captcha>
+          <re-captcha (resolved)="resolved($event)" siteKey="6LcOuyYTAAAAAHTjFuqhA52fmfJ_j5iFk5PsfXaU"></re-captcha>
         </div>
         <div id="error-block" class="col-md-12 form-group">
           <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close"  (click)="closeErrorMsg()" aria-label="Close">
+            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
             <strong>Error!</strong> {{errorObject?.message}}
@@ -36,10 +38,11 @@
           <a routerLink="/forgot-password">Forgot Password</a>
         </div>
         <div class="col-md-6 form-group">
-          <button type="submit" class="btn pull-right btn-primary {{ enableSignInBtn ? '' : 'bg-disabled'}}" [disabled]="!enableSignInBtn">
+          <button type="submit" class="btn pull-right btn-primary {{ enableSignInBtn ? '' : 'bg-disabled'}}"
+            [disabled]="!enableSignInBtn">
             Login
-             <i *ngIf="inProgress" class="fa fa-spinner fa-spin inline-loader"></i>
-            </button>
+            <i *ngIf="inProgress" class="fa fa-spinner fa-spin inline-loader"></i>
+          </button>
         </div>
       </div>
     </form>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SignUp } from '../sign-up';
 import { EnvironmentService } from '../environment/environment.service';
 
@@ -13,7 +13,7 @@ export class SignupFormService {
   constructor(
     private http: HttpClient,
     private environment: EnvironmentService
-    ) { }
+  ) { }
   signUp(signup_info: SignUp): Observable<SignUp> {
     return this.http.post<SignUp>(this.signupUrl, signup_info, { headers: this.headers });
   }
@@ -22,7 +22,7 @@ export class SignupFormService {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      // console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
@@ -33,6 +33,6 @@ export class SignupFormService {
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
+    // console.log(message);
   }
 }

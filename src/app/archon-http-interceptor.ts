@@ -34,7 +34,7 @@ export class ArchonHttpInterceptor implements HttpInterceptor {
     redirectHandler(response: ArchonResponse) {
         if (response) {
             if (response.error) {
-                console.log(`HttpClient error message "${response.error.message}"`);
+                // console.log(`HttpClient error message "${response.error.message}"`);
             }
             if (response.status === 500 && response.error.message === 'Token is expired') {
                 this.userinfoService.redirectOnSessionTimedOut();
