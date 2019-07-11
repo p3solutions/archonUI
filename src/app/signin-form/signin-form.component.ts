@@ -19,7 +19,7 @@ export class SigninFormComponent implements OnInit {
   inProgress = false;
   enableSignInBtn = false;
   workspaceUrl = '/workspace';
-  count = 0;
+  count: any = 0;
   code;
   captcha;
   valid;
@@ -34,7 +34,10 @@ export class SigninFormComponent implements OnInit {
     this.createForm();
     setTimeout(() => this.enableSignIn(), 3000);
     this.Captcha();
-    console.log(this.signInForm.value.captcha);
+    const test = localStorage.getItem('count');
+    if (test !== null) {
+    this.count =  parseInt(localStorage.getItem('count'));
+    }
   }
 
   createForm() {
@@ -53,6 +56,8 @@ export class SigninFormComponent implements OnInit {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
         localStorage.setItem('accessToken', data.data.accessToken);
+        this.count = 0;
+        localStorage.setItem('count', this.count);
         // localStorage.setItem('refreshToken', data.data.refreshToken);
         this.router.navigateByUrl(this.workspaceUrl);
         // this.handleRedirection();
@@ -60,6 +65,7 @@ export class SigninFormComponent implements OnInit {
       (err: HttpErrorResponse) => {
         this.count = this.count + 1;
         this.inProgress = false;
+        localStorage.setItem('count', this.count);
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
         } else {
@@ -112,10 +118,9 @@ Captcha() {
       g = alpha[Math.floor(Math.random() * alpha.length)];
       }
   let code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' ' + f + ' ' + g;
-  // document.getElementById('mainCaptcha').innerHTML = code;
-  // (document.getElementById('mainCaptcha')as HTMLInputElement).value = code;
   this.code = code;
     }
+
 ValidCaptcha() {
   const string1 = this.removeSpaces(this.code);
   const string2 = this.removeSpaces(this.signInForm.value.captcha);
