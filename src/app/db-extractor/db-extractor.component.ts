@@ -116,6 +116,15 @@ export class DbExtractorComponent implements OnInit {
           this.ExtractData = true;
         }
       }
+      if (process === 'Get Record Count') {
+        this.processDetailsObj.ExecuteQueryObj.queryTitle = '';
+        this.processDetailsObj.ExecuteQueryObj.query = '';
+        if (this.processDetailsObj.outputFormat != null) {
+          this.ExtractData = false;
+        } else {
+          this.ExtractData = true;
+        }
+      }
       if (this.processDetailsObj.outputFormat === 'sip' && process === 'Get Record Count') {
         this.sipData = false;
         this.ExtractData = true;
@@ -125,8 +134,8 @@ export class DbExtractorComponent implements OnInit {
         this.isDisabled = true;
         this.processDetailsObj.tableIncRule = '';
         if (this.processDetailsObj.process === 'Execute Query') {
-          if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' && this.processDetailsObj.outputFormat != null
-            && this.processDetailsObj.ExecuteQueryObj.query === '') {
+          if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' || this.processDetailsObj.outputFormat === null
+            || this.processDetailsObj.ExecuteQueryObj.query === '') {
             this.ExtractData = true;
           } else {
             this.ExtractData = false;
@@ -163,8 +172,8 @@ export class DbExtractorComponent implements OnInit {
       this.ExtractData = false;
     }
     if (this.processDetailsObj.process === 'Execute Query') {
-      if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' && this.processDetailsObj.outputFormat != null
-        && this.processDetailsObj.ExecuteQueryObj.query === '') {
+      if (this.processDetailsObj.ExecuteQueryObj.queryTitle === '' || this.processDetailsObj.outputFormat === null
+        || this.processDetailsObj.ExecuteQueryObj.query === '') {
         this.ExtractData = true;
       } else {
         this.ExtractData = false;
