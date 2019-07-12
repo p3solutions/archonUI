@@ -1040,7 +1040,9 @@ export class ErtTableComponent implements OnInit {
       }
     }, (err: HttpErrorResponse) => {
       if (err.error) {
+        this.isUserDefinedColumnInProgress = false;
         this.usrDefinedAlertMessage = err.error.message;
+        document.getElementById('query-alert').classList.remove('alert-hide');
       }
     });
   }

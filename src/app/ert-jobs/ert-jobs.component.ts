@@ -249,6 +249,7 @@ export class ErtJobsComponent implements OnInit {
         this.spinner.hide();
         document.getElementById('clone-popup-btn').click();
         this.successMsg = 'Job Clone Created Successfully.';
+        this.getErtJobList();
       }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           this.spinner.hide();

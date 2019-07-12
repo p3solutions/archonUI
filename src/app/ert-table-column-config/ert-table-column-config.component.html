@@ -38,12 +38,13 @@
     <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-margin"
       (click)="saveERTJob('READY')" style="float: right;margin-right: 24px">Mark
       As Complete
-      <!-- <i *ngIf="isDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
     </button>
     <button type="button" class="btn btn-padding btn-css primary-btn-color primary-btn-hover-draft-margin"
       (click)="saveERTJob('DRAFT')">Save
       As Draft
-      <!-- <i *ngIf="issaveDisabled" class="fa fa-spinner fa-spin inline-loader"></i> -->
+    </button>
+    <button type="button" class="btn btn-padding btn-css primary-btn-color primary-btn-hover-draft-margin"
+      (click)="saveERTJob('Download')"> Download
     </button>
     <button class="btn btn-padding primary-btn-color btn-css" (click)="gotoExtractData();">
       Back</button>
@@ -117,6 +118,74 @@
           data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
           data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="message-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#message-popup">Open Modal</button>
+<div id="message-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{successMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="cancel()" class="btn btn-padding btn-success-popup-primary-color"
+          data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="download_btn_error" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#download_btn_error-popup">Open Modal</button>
+<div id="download_btn_error-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Error</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{downloadErrorMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-default adhoc-modal-btn"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="message-download-popup-btn" class="btn btn-info btn-lg"
+  data-toggle="modal" data-target="#message-download-popup">Open Modal</button>
+<div id="message-download-popup" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{downloadSuccessMsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
