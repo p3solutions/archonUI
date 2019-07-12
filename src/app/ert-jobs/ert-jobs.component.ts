@@ -39,12 +39,18 @@ export class ErtJobsComponent implements OnInit {
     private permissionService: PermissionService) { }
 
   ngOnInit() {
+    this.clearServiceLevelValue();
+    this.getErtJobList();
+    console.log(this.ertService.data);
+  }
+
+  clearServiceLevelValue() {
     this.ertService.ertJobParams = new ErtJobParams();
     this.ertService.selectedList = [];
     this.ertService.extractDataConfigInfo = new ExtractDataConfigInfo();
     this.ertService.ingestionDataConfig = new IngestionDataConfig();
     this.ertService.schemaResultsTableCount = 0;
-    this.getErtJobList();
+    this.ertService.data = '';
   }
   getErtJobList() {
     const userId = this.userInfoService.getUserId();

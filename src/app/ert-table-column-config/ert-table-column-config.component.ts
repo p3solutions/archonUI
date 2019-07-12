@@ -41,12 +41,18 @@ export class ErtTableColumnConfigComponent implements OnInit {
     'pad="0.5" ];edge [shape="plain" fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
   downloadErrorMsg = '';
   downloadSuccessMsg = '';
+  JobMode = '';
+
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
   ngOnInit() {
     this.selectedTableList = this.ertService.selectedList.filter(a => a.isSelected === true);
     this.from = this.activatedRoute.snapshot.queryParamMap.get('from');
+    this.ertService.updatedjobType.subscribe(res => {
+      this.JobMode = res;
+    });
+    console.log(this.JobMode);
     if (this.selectedTableList[0] !== undefined) {
       this.selectedTableId = this.selectedTableList[0].tableId;
       const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
@@ -54,6 +60,11 @@ export class ErtTableColumnConfigComponent implements OnInit {
       this.ExpectedTableName = tempTableObj.modifiedTableName;
       tempTableObj.isMainTable = true;
       this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
+      if (this.JobMode.trim().toUpperCase() !== 'TABLE') {
+        this.selectedTableId = '';
+        this.showDataRecordAndSIPGraph();
+        this.ShowDiagram = false;
+      }
     }
   }
 
@@ -112,7 +123,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
   saveERTJob(ertJobStatus: string) {
     if (this.ertService.data !== undefined) {
-      this.graphDetails.data = JSON.stringify(this.ertService.data).replace(/"/g, '\'');;
+      this.graphDetails.data = JSON.stringify(this.ertService.data).replace(/"/g, '\'');
     }
     try {
       this.errorMessage = '';
@@ -149,6 +160,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
         console.log(param);
         this.saveDraftAndCompleteJob(param, ertJobStatus);
       } else {
+        console.log(param);
         this.downloadPDI(param);
       }
     } catch {
@@ -195,12 +207,14 @@ export class ErtTableColumnConfigComponent implements OnInit {
   downloadPDI(param) {
     this.ertService.downloadMetadata(param).subscribe(data => {
       if (data === undefined) {
+        this.spinner.hide();
         document.getElementById('download_btn_error').click();
         this.downloadErrorMsg = 'Download Failed. Please check status monitoring page for details.';
       } else {
         document.getElementById('message-download-popup-btn').click();
         this.downloadSuccessMsg = 'Download Started';
         this.downloadFile(data, param);
+        this.spinner.hide();
       }
     });
   }
@@ -208,11 +222,10 @@ export class ErtTableColumnConfigComponent implements OnInit {
   downloadFile(content, param) {
     let fileName = '';
     let type = '';
-    if (param.ertJobParams.ertJobTitle.trim().toUpperCase() === 'DATA_RECORD') {
+    if (param.ertJobParams.ertJobMode.trim().toUpperCase() === 'DATA_RECORD') {
       fileName = param.ertJobParams.ertJobTitle + '.xml';
       type = 'xml';
-    }
-    if (param.ertJobParams.ertJobTitle.trim().toUpperCase() === 'SIP') {
+    } else if (param.ertJobParams.ertJobMode.trim().toUpperCase() === 'SIP') {
       fileName = param.ertJobParams.ertJobTitle + '.xsd';
       type = 'xsd';
     }
@@ -227,6 +240,9 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
 
   saveDraftAndCompleteJob(param, ertJobStatus) {
+    if (this.JobMode.trim().toUpperCase() !== 'TABLE') {
+      d3.select('svg').remove();
+    }
     this.ertService.saveErtJob(param).subscribe(result => {
       this.spinner.hide();
       const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
@@ -274,31 +290,30 @@ export class ErtTableColumnConfigComponent implements OnInit {
   // Diagram for Graph column Mode.
 
   selectTable(tableId) {
-    this.ShowDiagram = true;
-    d3.select('svg').remove();
-    this.dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node' +
-      '[shape="plain" fontname = "Roboto" fontsize ="5" ];edge [shape="plain" fontname = "Roboto" ' +
-      'arrowsize="0.3" fontsize ="3" ]rankdir=LR;';
-    this.selectedTableId = tableId;
-    this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-    this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-    // graphviz('#graph', this.option).resetZoom(d3.transition('smooth'));
-    // d3.select('svg').remove();
-    setTimeout(() => {
+    if (this.JobMode.trim().toUpperCase() === 'TABLE') {
+      this.ShowDiagram = true;
+      this.dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node' +
+        '[shape="plain" fontname = "Roboto" fontsize ="5" ];edge [shape="plain" fontname = "Roboto" ' +
+        'arrowsize="0.3" fontsize ="3" ]rankdir=LR;';
+      this.selectedTableId = tableId;
+      this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
+      this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
       this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
-    }, 2000);
+    }
   }
 
   createDOTActualTable(columnList: ColumnListObj[]) {
-    this.dotString = this.dotString + this.selectedTableName + 'original' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
-    this.dotString = this.dotString + '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' + this.selectedTableName + '   </td></tr>';
-    for (const item of columnList.filter(a => a.dataType !== 'USERDEFINED')) {
-      this.dotString = this.dotString + '<tr><td align="left" port = "' +
-        item.originalColumnName + 'start"' + '> ' + item.originalColumnName + '  </td></tr>';
+    if (this.JobMode.trim().toUpperCase() === 'TABLE') {
+      this.dotString = this.dotString + this.selectedTableName + 'original' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
+      this.dotString = this.dotString + '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' +
+        this.selectedTableName + '   </td></tr>';
+      for (const item of columnList.filter(a => a.dataType !== 'USERDEFINED')) {
+        this.dotString = this.dotString + '<tr><td align="left" port = "' +
+          item.originalColumnName + 'start"' + '> ' + item.originalColumnName + '  </td></tr>';
+      }
+      this.dotString = this.dotString + '</table>>];';
+      this.createDOTExpectedTable(columnList);
     }
-    this.dotString = this.dotString + '</table>>];';
-    this.createDOTExpectedTable(columnList);
-
   }
 
   createDOTExpectedTable(columnList: ColumnListObj[]) {
@@ -392,7 +407,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
       .duration(300 * 3);
   }
 
-  showDataRecordAndSIPGrapgh() {
+  showDataRecordAndSIPGraph() {
     this.data = this.ertService.data;
     this.ShowDiagram = false;
     this.createchart();

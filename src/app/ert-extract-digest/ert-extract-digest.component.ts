@@ -60,6 +60,7 @@ export class ErtExtractDigestComponent implements OnInit {
       try {
         this.spinner.hide();
         this.extractDataConfigInfo = result.extractDataConfig;
+        console.log(this.ertService.data);
         const b = document.getElementById('extract-checkbox') as HTMLInputElement;
         b.checked = true;
         if (result.ingestionDataConfig !== null) {

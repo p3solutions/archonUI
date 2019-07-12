@@ -26,8 +26,6 @@
     <div class="col-md-9">
       <div class="card card-height">
         <div class="card-body ert-table-relation-graph">
-          <button type="button" (click)="showDataRecordAndSIPGrapgh()" class="btn btn-padding primary-btn-color">Show
-            PDI Graph</button>
 
           <div *ngIf="ShowDiagram" id="graph" style="text-align: center"></div>
         </div>
@@ -43,8 +41,9 @@
       (click)="saveERTJob('DRAFT')">Save
       As Draft
     </button>
-    <button type="button" class="btn btn-padding btn-css primary-btn-color primary-btn-hover-draft-margin"
-      (click)="saveERTJob('Download')"> Download
+    <button *ngIf="JobMode==='DATA_RECORD' || JobMode==='SIP'" type="button"
+      class="btn btn-padding btn-css primary-btn-color primary-btn-hover-draft-margin" (click)="saveERTJob('Download')">
+      {{JobMode==='DATA_RECORD'?'Download Metadata':'Download PDI Schema'}}
     </button>
     <button class="btn btn-padding primary-btn-color btn-css" (click)="gotoExtractData();">
       Back</button>
