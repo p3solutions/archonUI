@@ -21,15 +21,25 @@
               placeholder="Password" (keyup)="enableSignIn()">
           </mat-form-field>
         </div>
-        <div id="recaptcha" class="col-md-12" *ngIf="count > 3">
-        <re-captcha (resolved)="resolved($event)" siteKey="6Le48qwUAAAAAJSCjWPfEBot4JeQFWqOLmjfkJDe"></re-captcha>
+        <div class="col-md-12 capt" *ngIf="count > 3">
+          <div class="col-md-12">
+                <mat-card id="signinComp"> <mat-card-header><i class="material-icons" style="padding-left: 7%"  (click)="Captcha()">refresh</i>
+                  <mat-card-title appPreventcopy style="margin-bottom: 0px"><b><i>{{code}}</i></b></mat-card-title></mat-card-header></mat-card></div>
+                <div class="col-md-12 form-group" style="padding-top: 5.5%;padding-left: 6.5%;">
+                    <mat-form-field>
+                        <input matInput appPreventcopy placeholder="{{signInForm.value.captcha === '' ?  'Prove you are not a bot' : 'Letters are Case Sensitive' }}" (keyup)="enableSignIn()" formControlName="captcha">
+                      </mat-form-field>
+                </div>
         </div>
         <div id="error-block" class="col-md-12 form-group">
-          <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" (click)="closeErrorMsg()" aria-label="Close">
+          <div *ngIf="errorObject?.show" class="alert alert-danger alert-dismissible" role="alert" style="margin-left: -1%;">
+            <button type="button" class="close"  (click)="closeErrorMsg()" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
             <strong>Error!</strong> {{errorObject?.message}}
+          </div>
+          <div *ngIf="signInForm.value.captcha.length > 6 && !valid" style="margin-left: -1%;" class="alert alert-danger alert-dismissible" role="alert">
+            <strong>Oops! Those aren't correct</strong>
           </div>
         </div>
       </div>

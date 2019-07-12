@@ -6,18 +6,19 @@ import { MatFormFieldModule, MatOptionModule, MatSelectModule, MatInputModule, M
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { AceEditorModule } from 'ng2-ace-editor';
 describe('AdhocEditSearchScreenPopupComponent', () => {
   let component: AdhocEditSearchScreenPopupComponent;
   let fixture: ComponentFixture<AdhocEditSearchScreenPopupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdhocEditSearchScreenPopupComponent ],
-      imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule,
+      declarations: [AdhocEditSearchScreenPopupComponent],
+      imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, AceEditorModule,
         MatOptionModule, MatSelectModule, MatInputModule, MatRadioModule, MatCheckboxModule, BrowserAnimationsModule],
-        providers: [{ provide: EnvironmentService, useClass: MockEnvironmentService }]
+      providers: [{ provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

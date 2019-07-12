@@ -15,6 +15,8 @@ export class SignupFormService {
     private environment: EnvironmentService
   ) { }
   signUp(signup_info: SignUp): Observable<SignUp> {
+    signup_info.password = btoa(signup_info.password);
+    signup_info.confirmPassword = btoa(signup_info.confirmPassword);
     return this.http.post<SignUp>(this.signupUrl, signup_info, { headers: this.headers });
   }
 

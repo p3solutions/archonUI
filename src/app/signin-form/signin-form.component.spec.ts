@@ -9,11 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { JwtHelperService, JwtModule} from '@auth0/angular-jwt';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatInputModule, MatFormFieldModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatCardModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
-import { RecaptchaModule } from 'ng-recaptcha';
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
@@ -24,7 +23,7 @@ describe('SigninFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormsModule, RouterTestingModule, MatFormFieldModule,
-        MatInputModule, BrowserAnimationsModule, RecaptchaModule,
+        MatInputModule, BrowserAnimationsModule, MatCardModule,
         JwtModule.forRoot({
           config: {
                   tokenGetter: tokenGetter

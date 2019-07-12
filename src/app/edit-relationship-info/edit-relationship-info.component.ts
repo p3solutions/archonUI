@@ -181,7 +181,19 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           }
         }
       }
-      console.log(this.resultantValues);
+      let checkUpdate = false;
+      for (const i of this.resultantValues) {
+      if ('isSelected' in i) {
+      checkUpdate = true;
+      } else {
+        checkUpdate = false;
+      }
+      if (checkUpdate === true) {
+        this.onloadupdate = false;
+      } else {
+        this.onloadupdate = true;
+      }
+      }
     }
     this.updateenable = this.checkDuplicateInObject(this.resultantValues);
     if (this.updateenable === true) {

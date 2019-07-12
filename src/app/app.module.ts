@@ -148,10 +148,10 @@ import { OnlyuppercaseallowDirective } from './ert-table/onlyuppercaseallow.dire
 import { ChangeOverflowDirective } from './change-overflow.directive';
 import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
-import { RecaptchaModule } from 'ng-recaptcha';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { NoDblClickDirective } from './no-dbl-click.directive';
 import { ErtCloneViewComponent } from './ert-clone-view/ert-clone-view.component';
+import { PreventcopyDirective } from './preventcopy.directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -259,7 +259,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 ChangeOverflowDirective,
                 ActivityLandingPageComponent,
                 NoDblClickDirective,
-                ErtCloneViewComponent
+                ErtCloneViewComponent,
+                PreventcopyDirective
         ],
         imports: [
                 JwtModule.forRoot({
@@ -289,7 +290,6 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 FlexLayoutModule,
                 NgxSpinnerModule, MatInputModule, MatSortModule,
                 NgxTrimDirectiveModule,
-                RecaptchaModule.forRoot(),
                 AceEditorModule
         ],
         providers: [

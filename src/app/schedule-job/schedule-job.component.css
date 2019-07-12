@@ -79,7 +79,7 @@ select {
   padding-top: 30px;
 }
 
-::ng-deep table {
+::ng-deep #schedule-div-id table {
   width: 107%;
 }
 
