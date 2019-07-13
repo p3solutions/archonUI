@@ -41,7 +41,6 @@ export class ErtJobsComponent implements OnInit {
   ngOnInit() {
     this.clearServiceLevelValue();
     this.getErtJobList();
-    console.log(this.ertService.data);
   }
 
   clearServiceLevelValue() {
@@ -156,7 +155,7 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.runJob(param).subscribe(result => {
       if (result.httpStatus === 200) {
         el.click();
-        this.isSuccessMsg = false;
+        this.isSuccessMsg = true;
         this.successMsg = 'Your Job has Started. Please check Status Monitoring page to know the status.';
       } else {
         this.isSuccessMsg = false;

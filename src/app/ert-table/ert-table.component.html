@@ -43,8 +43,8 @@
               <div class="col-md-5" id="sel-table-name">
                 <div class='alias-name'>
                   <mat-form-field>
-                    <input type="text" appNonspecialchar appOnlyuppercaseallow matInput name="tablename" id="tablename"
-                      [(ngModel)]="modifiedTableName" placeholder="Table Alias Name"
+                    <input type="text" maxlength="30" appNonspecialchar appOnlyuppercaseallow matInput name="tablename"
+                      id="tablename" [(ngModel)]="modifiedTableName" placeholder="Table Alias Name"
                       (keyup)="toModifiedTableName($event)" (blur)="checkModifiedEmptyTableName()">
                   </mat-form-field>
                 </div>
@@ -96,7 +96,7 @@
                       <td>{{item?.originalColumnName}} <i [ngClass]="{'fa fa-key':item?.isKey}"></i></td>
                       <td><input class="form-control" trim="blur"
                           (blur)="checkEmptyColumnName(item?.originalColumnName,$event)" type="text" required="true"
-                          appNonspecialchar appOnlyuppercaseallow
+                          appNonspecialchar appOnlyuppercaseallow maxlength="30"
                           (ngModelChange)="changeColumnName(item?.originalColumnName,$event)"
                           [ngModel]="item?.modifiedColumnName"></td>
                       <td>{{item?.dataType}}</td>
@@ -156,14 +156,15 @@
       </div>
       <div class="modal-body">
         <div id="table-name-heading" class="form-group">
-          <input type="text" appNonspecialchar appOnlyuppercaseallow class="form-control"
+          <input type="text" maxlength="30" appNonspecialchar appOnlyuppercaseallow class="form-control"
             (keyup)="setQueryModeUserDefined()" [disabled]="disabledUserDefinedColName"
             [(ngModel)]="usrDefinedColumnName" name="ucolumnname" id="ucolumnname"
             placeholder="Enter unique column name">
         </div>
         <div>
           <mat-accordion>
-            <mat-expansion-panel [disabled]="isCombinedQueryMode" (closed)="openColumnMode()">
+            <mat-expansion-panel [expanded]="!isCombinedQueryMode" [disabled]="isCombinedQueryMode"
+              (closed)="openColumnMode()">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Combined Column Mode
@@ -226,7 +227,7 @@
               </div>
 
             </mat-expansion-panel>
-            <mat-expansion-panel [disabled]="isQueryMode">
+            <mat-expansion-panel [expanded]="!isQueryMode" [disabled]="isQueryMode">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Query Mode
@@ -489,10 +490,9 @@
       <div class="modal-footer">
         <button type="button" *ngIf="ertAvillableTableList.erttableList.ertTableList?.length!==0"
           class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal">Cancel</button>
-        <button type="button"
-          *ngIf="ertAvillableTableList.erttableList.ertTableList?.length!==0"
-          class="btn btn-padding btn-info-popup-primary-color"
-          (click)="addSelectTableCreateJob()" data-dismiss="modal">Add</button>
+        <button type="button" *ngIf="ertAvillableTableList.erttableList.ertTableList?.length!==0"
+          class="btn btn-padding btn-info-popup-primary-color" (click)="addSelectTableCreateJob()"
+          data-dismiss="modal">Add</button>
       </div>
     </div>
   </div>
@@ -599,7 +599,8 @@
         <button type="button" *ngIf="originalErttableList.ertTableList!==undefined"
           class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal">Cancel</button>
         <button type="button" *ngIf="originalErttableList.ertTableList!==undefined"
-          class="btn btn-padding btn-info-popup-primary-color" (click)="addSelectTableCreateJob()" data-dismiss="modal">Add</button>
+          class="btn btn-padding btn-info-popup-primary-color" (click)="addSelectTableCreateJob()"
+          data-dismiss="modal">Add</button>
       </div>
     </div>
   </div>

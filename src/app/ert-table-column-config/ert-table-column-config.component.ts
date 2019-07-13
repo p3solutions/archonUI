@@ -52,14 +52,17 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.ertService.updatedjobType.subscribe(res => {
       this.JobMode = res;
     });
-    console.log(this.JobMode);
     if (this.selectedTableList[0] !== undefined) {
       this.selectedTableId = this.selectedTableList[0].tableId;
       const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
       this.selectedTableName = tempTableObj.tableName;
       this.ExpectedTableName = tempTableObj.modifiedTableName;
       tempTableObj.isMainTable = true;
-      this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
+      setTimeout(() => {
+        if (this.JobMode.trim().toUpperCase() === 'TABLE') {
+          this.createDOTActualTable(tempTableObj.columnList);
+        }
+      }, 500);
       if (this.JobMode.trim().toUpperCase() !== 'TABLE') {
         this.selectedTableId = '';
         this.showDataRecordAndSIPGraph();
@@ -157,10 +160,8 @@ export class ErtTableColumnConfigComponent implements OnInit {
       param = this.modifiedParamForEdit(param);
       param = this.deleteFilterObject(param);
       if (ertJobStatus === 'READY' || ertJobStatus === 'DRAFT') {
-        console.log(param);
         this.saveDraftAndCompleteJob(param, ertJobStatus);
       } else {
-        console.log(param);
         this.downloadPDI(param);
       }
     } catch {
@@ -240,9 +241,6 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
 
   saveDraftAndCompleteJob(param, ertJobStatus) {
-    if (this.JobMode.trim().toUpperCase() !== 'TABLE') {
-      d3.select('svg').remove();
-    }
     this.ertService.saveErtJob(param).subscribe(result => {
       this.spinner.hide();
       const msg = ertJobStatus.trim().toUpperCase() === 'DRAFT' ? 'Job successfully saved as draft.' :
@@ -284,6 +282,9 @@ export class ErtTableColumnConfigComponent implements OnInit {
   }
 
   cancel() {
+    if (this.JobMode.trim().toUpperCase() !== 'TABLE') {
+      d3.select('svg').remove();
+    }
     this.router.navigate(['/workspace/ert/ert-jobs']);
   }
 
@@ -345,7 +346,12 @@ export class ErtTableColumnConfigComponent implements OnInit {
   createTableLink(columnList: ColumnListObj[]) {
     for (const item of columnList.filter(a => a.isSelected === true && a.dataType !== 'USERDEFINED')) {
       this.dotString = this.dotString + this.selectedTableName + 'original:' + item.originalColumnName + 'start' + ' -> ' +
-        this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end; ';
+        this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end ';
+      if (item.viewQuery) {
+        this.dotString = this.dotString + '[label="' + item.viewQuery + '"]' + '; ';
+      } else {
+        this.dotString = this.dotString + ';';
+      }
     }
     const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
 

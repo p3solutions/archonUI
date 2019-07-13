@@ -7,7 +7,6 @@ import { SignupFormService } from './signup-form.service';
 import { ErrorObject } from '../error-object';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { ConfirmPasswordValidator, PasswordValidator } from './confirm-password-validator';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-signup-form',
@@ -33,8 +32,7 @@ export class SignupFormComponent implements OnInit {
     private signupService: SignupFormService,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private fb: FormBuilder,
-    private spinner: NgxSpinnerService
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -47,6 +45,7 @@ export class SignupFormComponent implements OnInit {
         this.signUpForm.controls['confirmPassword'].setValue('');
         this.passwordNotMatch = false;
       }
+      this.checkForValidPassword();
       this.onKeyPressOfConfirmPassword();
     });
     this.signUpForm.get('password').valueChanges.subscribe(response1 => {
@@ -84,7 +83,6 @@ export class SignupFormComponent implements OnInit {
 
   onSignUp(form: FormGroup) {
     this.inProgress = true;
-    this.spinner.show();
     this.errorObject = new ErrorObject;
     this.errorObject.show = false;
     this.successMessage = false;
@@ -94,7 +92,6 @@ export class SignupFormComponent implements OnInit {
         this.responseData = data;
         if (this.responseData.httpStatus === 200) {
           this.inProgress = false;
-          this.spinner.hide();
           this.formDirective.resetForm();
           this.successMessage = true;
           setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 3000);
@@ -103,7 +100,6 @@ export class SignupFormComponent implements OnInit {
       (err: HttpErrorResponse) => {
         this.inProgress = false;
         if (err.error) {
-          this.spinner.hide();
           // A client-side or network error occurred. Handle it accordingly.
           this.errorObject.message = err.error.message;
           this.errorObject.show = true;
