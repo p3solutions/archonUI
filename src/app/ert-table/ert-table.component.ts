@@ -98,6 +98,8 @@ export class ErtTableComponent implements OnInit {
   searchAvailableTableName = '';
   errorMessagesForSelection = '';
   isAllColumnSelected = true;
+  isCombinedQueryModeExpanded = false;
+  isQueryModeExpanded = false;
   constructor(private _fb: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private ertService: ErtService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private cst: ChangeDetectorRef) {
@@ -578,7 +580,7 @@ export class ErtTableComponent implements OnInit {
 
   toModifiedTableName(modifiedTableName: string) {
     const tempOriginalTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
-      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName;
+    this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName;
   }
 
   checkModifiedEmptyTableName() {
@@ -598,12 +600,16 @@ export class ErtTableComponent implements OnInit {
   }
 
   openUsrDefinedColumnModel(columnName: string) {
+    this.isCombinedQueryModeExpanded = false;
+    this.isQueryModeExpanded = false;
     this.accordion.closeAll();
     this.userDefinedList = [];
     this.usrDefinedColumnName = '';
     this.usrDefinedQueryView = '';
     this.usrDefinedQueryViewMode = '';
     this.disabledUserDefinedColName = false;
+    this.isCombinedQueryMode = false;
+    this.isQueryMode = false;
     this.closeUserDefinedAlert();
     this.ursDefinedColumnNameList = this.selectedTableList.filter
       (a => a.tableId === this.selectedTableId)[0].columnList.filter(a => a.dataType !== 'USERDEFINED')
@@ -1040,7 +1046,9 @@ export class ErtTableComponent implements OnInit {
       }
     }, (err: HttpErrorResponse) => {
       if (err.error) {
+        this.isUserDefinedColumnInProgress = false;
         this.usrDefinedAlertMessage = err.error.message;
+        document.getElementById('query-alert').classList.remove('alert-hide');
       }
     });
   }

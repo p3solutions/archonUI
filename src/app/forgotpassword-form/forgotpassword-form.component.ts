@@ -38,8 +38,8 @@ export class ForgotpasswordFormComponent implements OnInit {
 
   onForgotPassword() {
     this.forgotpassword = this.forgotPasswordForm.value;
-    setTimeout(() => this.errorObject.show = false, 3000);
-    setTimeout(() => this.successObject.show = false, 3000);
+    setTimeout(() => this.errorObject.show = false, 5000);
+    setTimeout(() => this.successObject.show = false, 5000);
     this.forgotPasswordFormService.forgotPassword(this.forgotpassword).subscribe(
       data => {
         this.successObject = new SuccessObject;

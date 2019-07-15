@@ -300,6 +300,9 @@ export class ErtDatarecordConfigComponent implements OnInit {
 
 
     function ticked() {
+      // for (let i = 0; i < 100; i++) {
+      //   simulation.tick();
+      // }
       link
         .attr('x1', function (d) { return d.source.x; })
         .attr('y1', function (d) { return d.source.y; })

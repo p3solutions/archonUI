@@ -38,6 +38,7 @@ export class ErtService {
   extractConfigUrl = this.apiUrl + 'ert/extractconfig?ertJobId=';
   queryValidationUrl = this.apiUrl + 'ert/queryValidation';
   cloneErtJobUrl = this.apiUrl + 'ert/cloneJob';
+  downloadMetadataUrl = this.apiUrl + 'ert/downloadMetadata';
   schemaResultsTableCount = 0;
   joinListMap = new Map();
   mmrVersion = '';
@@ -46,7 +47,6 @@ export class ErtService {
   storeSelectedTables: TableDetailsListObj[] = [];
   isDataRecordGraphChange = false;
   isSIPGraphChange = false;
-
 
   jobName: BehaviorSubject<string> = new BehaviorSubject<string>('');
   updatedJobName = this.jobName.asObservable();
@@ -184,6 +184,12 @@ export class ErtService {
   createCloneJob(param: any): Observable<any> {
     return this.http.post<any>(this.cloneErtJobUrl, param, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractDataForRunJob));
+  }
+
+  downloadMetadata(param): Observable<Blob> {
+    return this.http.post(this.downloadMetadataUrl, param,
+      { headers: this.userInfoService.getHeaders(), responseType: 'blob' })
+      .pipe(catchError(this.handleError<any>('downloadScreen')));
   }
 
   private extractData(res: any) {

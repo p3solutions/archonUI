@@ -1,3 +1,5 @@
+import { GraphDetails } from '../adhoc-landing-page/adhoc';
+
 export class Ert {
 }
 
@@ -141,6 +143,7 @@ export class ExtractConfig {
     isIngest = false;
     extractDataConfig = new ExtractDataConfigInfo();
     ingestionDataConfig = new IngestionDataConfig();
+    graphDetails = new GraphDetails();
 }
 
 
