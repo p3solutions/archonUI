@@ -51,8 +51,8 @@ export class StatusService {
       .pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
-  getSearchResult(startIndex, search) {
-    const url = this.getSearchStatus + this.userinfoService.getUserId() + '&startIndex=' + startIndex + '&jobName=' + search;
+  getSearchResult(startIndex, search, jobOrigin, jobStatus ) {
+    const url = this.getSearchStatus + this.userinfoService.getUserId() + '&jobOrigin=' + jobOrigin + '&jobStatus=' + jobStatus  + '&jobName=' + search + '&startIndex=' + startIndex ;
     return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
       map(this.extractJobSearch),
       catchError(this.handleError<any>('getUserInfo')));

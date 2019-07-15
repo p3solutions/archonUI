@@ -190,7 +190,7 @@
                             <div class="col-md-10 ana-br p-0" title="Select All" style="margin-top: 15px;margin-left: 6%;
                             width: 88%; font-weight: 600;">
                               <!-- <mat-checkbox style="float:left; padding-top: 5px;" (change)="selectAll($event)" ></mat-checkbox> -->
-                              <input type="checkbox" style="margin-right: 10px;" (change)="selectAll($event)">
+                              <input id="selectallpri" type="checkbox" style="margin-right: 10px;" (change)="selectAll($event)" [checked]="false">
                               Select All
                               <span class="col-loader"
                                 [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
@@ -510,13 +510,15 @@
 <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="true"
   data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInvite">Open Modal</button>
 <div id="confirmCancelInvite" class="modal fade" role="dialog" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width: 480px">
     <div class="modal-content">
       <div class="modal-header adhoc-modal-header">
         <h4 class="modal-title">Alert</h4>
       </div>
       <div class="modal-body">
-        <p>{{message}}</p>
+        <p>{{message}}<a [routerLink]="['/activity/status']" [queryParams]="{jobName: jobname}" data-dismiss="modal">
+          Status Monitoring
+        </a></p>
       </div>
       <div class="modal-footer">
         <div class="action-btn">

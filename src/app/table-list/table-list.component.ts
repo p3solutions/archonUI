@@ -108,6 +108,8 @@ export class TableListComponent implements OnInit {
   schemaResultssecTableCount: number;
   secstartIndex = 1;
   permissionToUser = '';
+  modeForSelectAll = false;
+  jobname;
 
   constructor(
     private tablelistService: TableListService,
@@ -317,8 +319,16 @@ export class TableListComponent implements OnInit {
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
+    this.modeForSelectAll = false;
     // console.log('in');
     const isChecked = _event.target.checked ? true : false;
+    console.log(isChecked);
+    // if (!isChecked) {
+    //   const secTbl = <HTMLInputElement>document.getElementById('selectallpri');
+    //   if (secTbl.checked === true) {
+    //   secTbl.click();
+    //   }
+    // }
     if (isPrimary) {
       for (let i = 0; i < this.primColArray.length; i++) {
         if (this.primColArray[i].columnName === column.columnName) {
@@ -831,7 +841,8 @@ export class TableListComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.tablelistService.getExportxml(this.workspaceID, this.databaseID, this.xml, this.selectedPrimTblID)
       .subscribe(result => {
-        this.message = result.data;
+        this.message = result.data.message;
+        this.jobname = result.data.jobName;
         document.getElementById('successPop').click();
         // this.downloadFile(result, result.type);
       });
@@ -841,19 +852,23 @@ export class TableListComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.tablelistService.getExportjson(this.workspaceID, this.databaseID, this.json, this.selectedPrimTblID)
       .subscribe(result => {
-        this.message = result.data;
+        this.message = result.data.message;
+        this.jobname = result.data.jobName;
         document.getElementById('successPop').click();
         // this.downloadFilejson(result, result.type);
       });
   }
 
   selectAll(event) {
+    // if (!this.modeForSelectAll) {
+    //   $('input:checkbox#selectallpri').click();
+    // } else {
     if (event.target.checked) {
       $('input:checkbox:not(:checked).m-r-10').click();
     } else {
       $('input:checkbox:checked.m-r-10').click();
     }
-  }
+}
 
   selectAllSec(event) {
     if (event.target.checked) {
@@ -861,7 +876,7 @@ export class TableListComponent implements OnInit {
     } else {
       $('input:checkbox:checked.m-r-10.m-r-sec').click();
     }
-  }
+}
 
   togglePanels(index: number) {
     this.indexExpanded = index === this.indexExpanded ? -1 : index;

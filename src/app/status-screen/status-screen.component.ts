@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Renderer } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { StatusService } from './status.service';
 import { ErrorObject } from '../error-object';
 import { AuditService } from '../auditing/audit.service';
@@ -40,10 +40,12 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   expandDefault = false;
   terminateJobID;
   jobId: any;
+  jobName;
 
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private statusService: StatusService,
     private service: AuditService,
     private spinner: NgxSpinnerService, private userinfoService: UserinfoService
@@ -92,7 +94,7 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   }
 
   getSearch() {
-    this.dataSource.filter(this.paginator.pageIndex + 1, this.search.nativeElement.value);
+    this.dataSource.filter(this.paginator.pageIndex + 1, this.search.nativeElement.value, this.selectedJobOrigin , this.selectedJobStatus);
   }
 
   gotoDashboard() {
@@ -102,7 +104,13 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   getStart() {
     this.dataSource = new StatusDataSource(this.statusService, this.spinner);
     this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
-    console.log(this.dataSource);
+    const value = this.route.snapshot.queryParamMap.get('jobName');
+    if (value !== null) {
+      setTimeout(() => {
+        this.search.nativeElement.value = value;
+        this.dataSource.filter(this.paginator.pageIndex + 1, value, this.selectedJobOrigin, this.selectedJobStatus);
+      }, 3000);
+    }
   }
 
   getJobOrigins() {
@@ -180,14 +188,15 @@ continueRetryJob() {
   });
 }
 
-  downloadJob(releatedJobId) {
-    this.statusService.downloadZip(releatedJobId).subscribe(result => {
+  downloadJob(releated) {
+    this.jobName =  releated.jobName;
+    this.statusService.downloadZip(releated.id).subscribe(result => {
       this.downloadFile(result);
     });
   }
 
   downloadFile(content) {
-    const fileName = 'Status' + '-data.zip';
+    const fileName = 'Status' + `-${this.jobName}.zip`;
     const type = 'zip';
     const e = document.createEvent('MouseEvents');
     const a = document.createElement('a');

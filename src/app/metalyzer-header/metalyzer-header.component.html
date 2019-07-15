@@ -43,24 +43,21 @@
         <mat-form-field>
           <mat-label>Export As XML / JSON / PDF</mat-label>
           <mat-select>
-            <mat-option (click)="exportxml()" style="border-bottom: 1px solid #d6d6d6;">Export All Table As XML
+            <mat-option (click)="exportxml()" style="border-bottom: 1px solid #d6d6d6;">Export Complete Metadata As XML
             </mat-option>
-            <mat-option (click)="exportjson()" style="border-bottom: 1px solid #d6d6d6;">Export All Table As JSON
+            <mat-option (click)="exportjson()" style="border-bottom: 1px solid #d6d6d6;">Export Complete Metadata As JSON
             </mat-option>
-            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export
-              Selected Table As XML</mat-option>
+            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table’s Metadata As XML</mat-option>
             <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedxml()"
-              style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As XML</mat-option>
+              style="border-bottom: 1px solid #d6d6d6;">Export Selected Table’s Metadata As XML</mat-option>
             <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export
-              Selected Table As JSON</mat-option>
+              Selected Table's Metadata As JSON</mat-option>
             <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedjson()"
-              style="border-bottom: 1px solid #d6d6d6;">Export Selected Table As JSON</mat-option>
-            <mat-option (click)="exportOverallpdf()" style="border-bottom: 1px solid #d6d6d6;">Export All Table
-              Relationship As PDF</mat-option>
-            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export
-              Selected Table Relationship As PDF</mat-option>
-            <mat-option *ngIf="disable == false" [disabled]="disable" (click)="exportSelectedpdf()"
-              style="border-bottom: 1px solid #d6d6d6;">Export Selected Table Relationship As PDF</mat-option>
+              style="border-bottom: 1px solid #d6d6d6;">Export Selected Table's Metadata As JSON</mat-option>
+            <mat-option (click)="exportOverallpdf()" style="border-bottom: 1px solid #d6d6d6;" matTooltip="{{ 'Export Complete Relationship Diagram As PDF'| uppercase}}">Export Complete Relationship Diagram As PDF</mat-option>
+            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;" matTooltip="{{ 'Export Selected Table’s Relationship Diagram As PDF'| uppercase}}">Export Selected Table’s Relationship Diagram As PDF</mat-option>
+            <mat-option *ngIf="disable == false" [disabled]="disable" (click)="exportSelectedpdf()" matTooltip="{{ 'Export Selected Table’s Relationship Diagram As PDF'| uppercase}}"
+              style="border-bottom: 1px solid #d6d6d6;">Export Selected Table’s Relationship Diagram As PDF</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -141,13 +138,15 @@
 <button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="true"
   data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
 <div id="confirmCancelInviteSuccess" class="modal fade" role="dialog" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
       <div class="modal-header adhoc-modal-header">
         <h4 class="modal-title">Alert</h4>
       </div>
       <div class="modal-body">
-        <p>{{message}}</p>
+        <p>{{message}}<a [routerLink]="['/activity/status']" [queryParams]="{jobName: jobname}" data-dismiss="modal">
+          Status Monitoring
+        </a></p>
       </div>
       <div class="modal-footer">
         <div class="action-btn">

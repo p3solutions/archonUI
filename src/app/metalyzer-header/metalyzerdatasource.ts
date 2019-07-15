@@ -39,9 +39,10 @@ export class MetalyzerDataSource implements DataSource<any> {
           result.model.forEach((value, index) => {
                 value.position = index + 1;
           });
-          if (result.isPaginationRequired) {
-            this.totalScreen = (this.indexValue + 1) * 50;
-          }
+          // if (result.isPaginationRequired) {
+          //   this.totalScreen = (this.indexValue + 1) * 50;
+          // }
+          this.totalScreen = result.totalCount;
           this.metalyzerSubject.next(result.model);
           this.spinner.hide();
         });

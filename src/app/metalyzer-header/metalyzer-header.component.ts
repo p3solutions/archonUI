@@ -40,6 +40,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) matpaginator: MatPaginator;
   dataSource: MetalyzerDataSource;
   permissionToUser = '';
+  jobname;
+
   constructor(
     private router: Router,
     private tablelistService: TableListService,
@@ -152,7 +154,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportxml(this.workspaceID, this.databaseID, this.xml)
       .subscribe(result => {
-        this.message = result.data;
+        this.message = result.data.message;
+        this.jobname = result.data.jobName;
         document.getElementById('successPopUp').click();
         // this.downloadFile(result, result.type);
       });
@@ -162,7 +165,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportjson(this.workspaceID, this.databaseID, this.json)
       .subscribe(result => {
-        this.message = result.data;
+        this.message = result.data.message;
+        this.jobname = result.data.jobName;
         document.getElementById('successPopUp').click();
         // this.downloadFilejson(result, result.type);
       });
@@ -173,7 +177,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportOverallpdf(this.workspaceID)
       .subscribe(result => {
-        this.message = result.data;
+        this.message = result.data.message;
+        this.jobname = result.data.jobName;
         document.getElementById('successPopUp').click();
         // this.downloadFilepdf(result, result.type);
       });
@@ -187,7 +192,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.metalyzerHeaderService.getExportSelectedpdf(this.workspaceID, this.userselectTableslist.tableId)
       .subscribe(result => {
-        this.message = result.data;
+        this.message = result.data.message;
+        this.jobname = result.data.jobName;
         document.getElementById('successPopUp').click();
         // this.downloadFilesecpdf(result, result.type);
       });

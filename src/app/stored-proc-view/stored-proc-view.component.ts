@@ -91,6 +91,7 @@ export class StoredProcViewComponent implements OnInit {
           let tableName: string;
           let relatedObj = new RelatingTableList();
           const tempRelatedList = this.SpvInfoList.filter(a => a.name === result.spvInfo.name)[0].relatingTableList;
+          this.SpvInfoList.filter(a => a.name === result.spvInfo.name)[0].isSelected = true;
           for (const item of this.tableNameAndRelatingTableObj.spvInfo.relatingTableList) {
             relatedObj = new RelatingTableList();
             relatedObj.tableId = item.tableId;
@@ -105,12 +106,14 @@ export class StoredProcViewComponent implements OnInit {
               });
             }
           }
+          this.enableSubmitBtn();
           this.spinner.hide();
         });
       } else {
         this.showTables();
       }
     } catch {
+      this.enableSubmitBtn();
       this.spinner.hide();
     }
   }
@@ -118,8 +121,10 @@ export class StoredProcViewComponent implements OnInit {
   selectSPVName(spvName: string, evt) {
     this.spvName = spvName;
     this.columnlength = 0;
+    console.log(evt);
     if (evt.target.checked) {
       this.SpvInfoList.filter(a => a.name === spvName)[0].isSelected = true;
+      this.SpvInfoList.filter(a => a.name === spvName)[0].relatingTableList.forEach(b => b.isSelected = true);
     } else {
       this.SpvInfoList.filter(a => a.name === spvName)[0].isSelected = false;
       this.SpvInfoList.filter(a => a.name === spvName)[0].relatingTableList.forEach(b => b.isSelected = false);
@@ -139,6 +144,7 @@ export class StoredProcViewComponent implements OnInit {
   selectTableNames(tableId, event) {
     this.spvTableId = tableId;
     const spvNameObj = this.SpvInfoList.filter(a => a.name === this.spvName)[0];
+    const totallength = spvNameObj.relatingTableList.length;
     if (event.target.checked) {
       spvNameObj.isSelected = true;
       spvNameObj.relatingTableList.filter(a => a.tableId === tableId)[0].isSelected = true;
@@ -153,6 +159,17 @@ export class StoredProcViewComponent implements OnInit {
     }
     if (event.target.checked) {
       this.showTables();
+    }
+    let countSelected = 0;
+    spvNameObj.relatingTableList.forEach(element => {
+    if (element.isSelected) {
+    countSelected = countSelected + 1;
+    }
+    });
+    if (countSelected === totallength) {
+    this.SpvInfoList.filter(a => a.name === this.spvName)[0].isIndeterminate = false;
+    } else {
+      this.SpvInfoList.filter(a => a.name === this.spvName)[0].isIndeterminate = true;
     }
     this.enableSubmitBtn();
     event.stopPropagation();
