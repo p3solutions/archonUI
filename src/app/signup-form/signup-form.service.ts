@@ -24,7 +24,7 @@ export class SignupFormService {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      // console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
@@ -35,6 +35,6 @@ export class SignupFormService {
   }
   /** Log a message with the MessageService */
   private log(message: string) {
-    console.log(message);
+    // console.log(message);
   }
 }

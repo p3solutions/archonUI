@@ -39,12 +39,17 @@ export class ErtJobsComponent implements OnInit {
     private permissionService: PermissionService) { }
 
   ngOnInit() {
+    this.clearServiceLevelValue();
+    this.getErtJobList();
+  }
+
+  clearServiceLevelValue() {
     this.ertService.ertJobParams = new ErtJobParams();
     this.ertService.selectedList = [];
     this.ertService.extractDataConfigInfo = new ExtractDataConfigInfo();
     this.ertService.ingestionDataConfig = new IngestionDataConfig();
     this.ertService.schemaResultsTableCount = 0;
-    this.getErtJobList();
+    this.ertService.data = '';
   }
   getErtJobList() {
     const userId = this.userInfoService.getUserId();
@@ -150,7 +155,7 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.runJob(param).subscribe(result => {
       if (result.httpStatus === 200) {
         el.click();
-        this.isSuccessMsg = false;
+        this.isSuccessMsg = true;
         this.successMsg = 'Your Job has Started. Please check Status Monitoring page to know the status.';
       } else {
         this.isSuccessMsg = false;
@@ -249,6 +254,7 @@ export class ErtJobsComponent implements OnInit {
         this.spinner.hide();
         document.getElementById('clone-popup-btn').click();
         this.successMsg = 'Job Clone Created Successfully.';
+        this.getErtJobList();
       }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           this.spinner.hide();

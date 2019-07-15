@@ -9,7 +9,7 @@ body {
 }
 
 .overlayclass {
-overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 h1,
@@ -2139,6 +2139,7 @@ button.ert-secondary-btn-color {
 button.ert-secondary-btn-color:hover {
   transform: scale(1.1, 1.1);
 }
+
 .archon-loading-icon-new:before {
   content: "\F110";
   font: normal normal normal 34px/1 FontAwesome;
@@ -2149,10 +2150,22 @@ button.ert-secondary-btn-color:hover {
   margin-left: 10px;
   -webkit-animation: spinner .6s linear infinite;
   animation: spinner 2s linear infinite;
-  background-color: rgba(255,255,255,0.7);
+  background-color: rgba(255, 255, 255, 0.7);
   opacity: 0.5;
 }
+
 .search-icon {
-color: #a0a2a4;
+  color: #a0a2a4;
 }
 
+
+button.btn-info-popup-primary-color-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  border-radius: 3px;
+}
+
+button.btn-info-popup-primary-color-disabled:hover {
+  color: #ffffff;
+}
