@@ -87,7 +87,7 @@ export class SignupFormComponent implements OnInit {
     this.errorObject.show = false;
     this.successMessage = false;
     this.signup = this.signUpForm.value;
-    this.signupService.signUp(this.signup).subscribe(
+    this.signupService.signUp(JSON.parse(JSON.stringify(this.signup))).subscribe(
       data => {
         this.responseData = data;
         if (this.responseData.httpStatus === 200) {

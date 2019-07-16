@@ -51,7 +51,7 @@ export class SigninFormComponent implements OnInit {
   onSignIn() {
     this.inProgress = true;
     this.signin = this.signInForm.value;
-    this.signinService.signIn(this.signin).subscribe(
+    this.signinService.signIn(JSON.parse(JSON.stringify(this.signin))).subscribe(
       data => {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);

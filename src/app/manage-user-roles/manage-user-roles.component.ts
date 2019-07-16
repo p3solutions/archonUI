@@ -111,6 +111,10 @@ export class ManageUserRolesComponent implements OnInit {
         this.locked = null;
         this.displayedColumns = ['emailAddress', 'globalGroupName', 'status', 'businessJustification',
           'createdBy', 'createdAt', 'updatedAt'];
+        if (this.roleOfUser === 'superadmin') {
+          this.displayedColumns = ['emailAddress', 'globalGroupName', 'status', 'businessJustification',
+            'action', 'createdBy', 'createdAt', 'updatedAt'];
+        }
         break;
       }
       case 'Active': {

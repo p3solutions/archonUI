@@ -60,7 +60,6 @@ export class ChangePasswordComponent implements OnInit {
       }
     },
       (err: HttpErrorResponse) => {
-        console.log(err);
         this.inProgress = false;
         this.errorObject = new ErrorObject;
         this.errorObject.message = err.error.message;
