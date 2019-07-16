@@ -939,9 +939,7 @@ export class TableListComponent implements OnInit {
   }
 
   afterTerminate() {
-    this.homeStage = true;
-    this.dataAModal = false;
-    this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+    this.closeScreen();
   }
 
 }
