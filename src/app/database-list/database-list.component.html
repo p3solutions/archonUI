@@ -46,7 +46,7 @@
   <div class="pl-20">
     <div class="flex-container" *ngFor="let db of dbListActions;let indRow = index; let last = last">
       <div *ngIf="db?.id === deleteId">
-        <mat-card class="example-card delete">
+        <mat-card class="{{db?.owner.id === userinfoId? 'example-card-bg': 'example-card'}} mat-card delete">
           <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
@@ -78,7 +78,7 @@
         </mat-card>
       </div>
       <div *ngIf="ws?.id !== deleteId">
-        <mat-card class="example-card">
+        <mat-card class="{{db?.owner.id === userinfoId? 'example-card-bg': 'example-card'}} mat-card">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title class="header">{{db?.profileName}} </mat-card-title>
@@ -106,23 +106,23 @@
             <div class='body-center'>:</div>
             <div class='body-right'>{{db?.status}}</div>
           </mat-card-content>
-          <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
-            <a *ngIf="db?.owner.id === userinfoId" (click)="editDB(db)" data-toggle="modal" href="#edit_model"
-            matTooltip="Edit Database Password"><i class="material-icons ws">
-                edit
-              </i></a>
-            <a *ngIf="db?.owner.id !== userinfoId" data-toggle="modal" matTooltip="Not Available"><i
-                class="material-icons ws" style="color: grey; cursor: not-allowed;">
-                edit
-              </i></a>
-            <a *ngIf="db?.owner.id === userinfoId" (click)="DBdelete(db?.id,db?.profileName)" data-toggle="modal" href="#confirm_model"
+          <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">           
+            <a *ngIf="db?.owner.id === userinfoId" class="fonticonbelow cursor-poniter" (click)="DBdelete(db?.id,db?.profileName)" data-toggle="modal" href="#confirm_model"
             matTooltip="Delete"><i class="material-icons ws">
                 delete
               </i></a>
-            <a *ngIf="db?.owner.id !== userinfoId" data-toggle="modal" matTooltip="Not Available"><i
-                class="material-icons ws" style="color: grey; cursor: not-allowed;">
+            <a *ngIf="db?.owner.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal" matTooltip="Not Available"><i
+                class="material-icons ws" style="color: #cecdcd; cursor: not-allowed;">
                 delete
               </i></a>
+              <a *ngIf="db?.owner.id === userinfoId" class="fonticonbelow cursor-poniter" (click)="editDB(db)" data-toggle="modal" href="#edit_model"
+              matTooltip="Edit Database Password"><i class="material-icons ws">
+                  edit
+                </i></a>
+              <a *ngIf="db?.owner.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal" matTooltip="Not Available"><i
+                  class="material-icons ws" style="color: #cecdcd; cursor: not-allowed;">
+                  edit
+                </i></a>
           </mat-card-footer>
         </mat-card>
       </div>

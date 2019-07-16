@@ -186,7 +186,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         const params = {
             id: this.WSeditId,
             workspaceName: this.wsName,
-            requestMessage: this.wsDesc
+            description: this.wsDesc
         };
         this.workspaceListService.updateWS(this.WSeditId, params).subscribe((result: any) => {
             document.getElementById('editmsgwss').click();
