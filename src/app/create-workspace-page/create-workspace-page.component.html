@@ -73,9 +73,9 @@
                                 </th>
                                 <td style="width:25%" mat-cell *matCellDef="let row"> {{row.databaseName}} </td>
                             </ng-container>
-                            <ng-container matColumnDef="owner.id">
+                            <ng-container matColumnDef="ownerId">
                                 <th style="width:22.5%" mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
-                                <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.owner.id}}</td>
+                                <td style="width:22.5%" mat-cell *matCellDef="let row"> {{row.ownerId}}</td>
                             </ng-container>
                             <ng-container matColumnDef="createdAt">
                                 <th style="width:25%" mat-header-cell *matHeaderCellDef mat-sort-header> Created Date
@@ -125,7 +125,8 @@
                         </div>
                         <div style="display: flex">
                             <mat-form-field class="form-field-desc">
-                                <textarea trim="blur" maxlength="250"
+                                <textarea trim="blur" required maxlength="250"
+                                    (keyup)="setDescValue($event.target.value)"
                                     value="{{firstFormGroup.get('description').value}}" matInput
                                     placeholder="Description"></textarea>
                             </mat-form-field>
@@ -133,7 +134,7 @@
                         <div id="action-btn" style="margin-top: 6%">
                             <button class="btn cancel btn-padding"
                                 (click)="gotoDatabaseSelection(stepper)">Previous</button>
-                            <button [disabled]="workspaceInProgress" (click)="createWorkspace(stepper)"
+                            <button [disabled]="workspaceInProgress || !firstFormGroup.valid" (click)="createWorkspace(stepper)"
                                 class="btn {{workspaceInProgress? 'save-disabled': 'save'}} btn-padding">Create
                                 <!-- <i *ngIf="workspaceInProgress" class="fa fa-spinner fa-spin loader"></i> -->
                             </button>

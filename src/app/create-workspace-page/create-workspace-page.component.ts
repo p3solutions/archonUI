@@ -17,7 +17,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   firstFormGroup: FormGroup;
   comment = '';
   @ViewChild('stepper') stepper: MatStepper;
-  displayedColumns: string[] = ['select', 'profileName', 'databaseName', 'owner.id', 'createdAt'];
+  displayedColumns: string[] = ['select', 'profileName', 'databaseName', 'ownerId', 'createdAt'];
   dataSource: MatTableDataSource<ConfiguredDB>;
   configDBList: ConfiguredDB[] = [];
   value: any;
@@ -57,12 +57,27 @@ export class CreateWorkspacePageComponent implements OnInit {
     this.userWorkspaceService.getSupportedDBList()
       .subscribe(res => {
         if (res && res.length > 0) {
-          this.configDBList = res;
-          this.dataSource = new MatTableDataSource(res);
+          // this.configDBList = res;
+          this.configDBList = res.map(function (el) {
+            const o = Object.assign({}, el);
+            o.ownerId = el.owner.id;
+            o.ownerName = el.owner.name;
+            return o;
+          });
+          this.dataSource = new MatTableDataSource(this.configDBList);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }
       });
+    // this.firstFormGroup.controls['description'].valueChanges.subscribe((value) => {
+    //   console.log(value);
+    //   this.firstFormGroup.controls['description'].setValue(value);
+    // });
+  }
+
+  setDescValue(value) {
+    console.log(value);
+    this.firstFormGroup.controls['description'].setValue(value);
   }
 
 
@@ -169,9 +184,11 @@ export class CreateWorkspacePageComponent implements OnInit {
         document.getElementById('success-popup-btn').click();
         if (res.workspaceState === 'PENDING') {
           this.workspaceInProgress = false;
-          this.successWorkspaceMessage = 'Workpace is pending for the approval.';
+          // tslint:disable-next-line:max-line-length
+          this.successWorkspaceMessage = 'Workspace creation initiated. It is currently pending database approval. You will be notified on approval confirmation.';
         } else {
-          this.successWorkspaceMessage = 'Workspace creation is in progress. Please check status monitoring page.';
+          // tslint:disable-next-line:max-line-length
+          this.successWorkspaceMessage = 'Workspace creation initiated. You will be notified on approval confirmation. Please check status monitoring page for more details.';
         }
       } else {
         document.getElementById('error-db-btn').click();

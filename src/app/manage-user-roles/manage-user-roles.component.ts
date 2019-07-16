@@ -66,6 +66,7 @@ export class ManageUserRolesComponent implements OnInit {
   globalGroupIds: string[] = [];
   screenfilter = '';
   loginUserGlobalgroup = '';
+  itemPerPage = 50;
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router,
@@ -92,9 +93,9 @@ export class ManageUserRolesComponent implements OnInit {
 
   loadAllUsers(invited, revoked, locked) {
     this.dataSource.emptyUser();
-    this.dataSource.getAllUsers(this.paginator.pageIndex + 1, invited, revoked, locked);
-    this.dataSource.inviteUsersSubject.subscribe(result => {
-      this.totalUser = result.length;
+    this.dataSource.getAllUsers(this.paginator.pageIndex + 1, invited, revoked, locked, this.screenfilter, this.paginator.pageSize);
+    this.dataSource.totalUserSubject.subscribe(result => {
+      this.totalUser = result;
     });
   }
   sortData(sort) {
@@ -403,14 +404,16 @@ export class ManageUserRolesComponent implements OnInit {
       this.dataSource.connect().subscribe(result => {
         response = result;
       });
-      this.dataSource.inviteUsersSubject.subscribe(result => {
-        this.totalUser = result.length;
+      this.dataSource.totalUserSubject.subscribe(result => {
+        this.totalUser = result;
       });
-      this.dataSource._filterData(response);
+      this.dataSource._filterData(this.dataSource.tempInviteUser);
     } else
       if (emailId !== '') {
+        this.paginator.pageIndex = 0;
         this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds, this.spinner);
-        this.dataSource.getUsersByEmailId(emailId, status);
+        this.dataSource.getAllUsers(this.paginator.pageIndex + 1, this.invited, this.revoked, this.locked, emailId,
+          this.paginator.pageSize);
         this.dataSource.inviteUsersSubject.subscribe(result => {
           this.totalUser = result.length;
         });

@@ -26,6 +26,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   info: Info;
   dynamicLoaderService: DynamicLoaderService;
   dbListActions = [];
+  tempDbListActions = [];
   searchText;
   toggleBoolean = false;
   pendingList = [];
@@ -110,6 +111,12 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       this.configDBListInfo = result;
       this.isProgress = false;
       this.dbListActions = this.configDBListInfo;
+      this.tempDbListActions = this.dbListActions.map(function (el) {
+        const o = Object.assign({}, el);
+        o.ownerId = el.owner.id;
+        o.ownerName = el.owner.name;
+        return o;
+      });
     });
   }
   gotoManagementPanel() {
@@ -180,28 +187,29 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
 
   deleteDB() {
     this.configDBListService.deleteDB(this.DBdeleteId).subscribe((result) => {
-          document.getElementById('deletemsg').click();
-          this.successmsg = result;
-            this.success = true;
-            this.deleteId = this.DBdeleteId;
-            this.getConfigDBList();
-             setTimeout(() => {
-               this.getConfigDBList();
-             }, 15000);
-  },
-  (err: HttpErrorResponse) => {
-    document.getElementById('deletemsg').click();
-    this.error = true;
-    this.errormsg = err.error.message;
+      document.getElementById('deletemsg').click();
+      this.successmsg = result;
+      this.success = true;
+      this.deleteId = this.DBdeleteId;
+      this.getConfigDBList();
+      setTimeout(() => {
+        this.getConfigDBList();
+      }, 15000);
+    },
+      (err: HttpErrorResponse) => {
+        document.getElementById('deletemsg').click();
+        this.error = true;
+        this.errormsg = err.error.message;
+      }
+    );
   }
-  );
-}
 
   closeErrorMsg() {
     this.success = false;
     this.error = false;
   }
   editDB(database) {
+    this.dbpassword = '';
     this.configuredDB = database;
     this.dbName = database.databaseName;
     this.DBupdateId = database.id;
@@ -211,24 +219,27 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       id: this.DBupdateId,
       password: this.dbpassword
     };
-    this.configDBListService.updateDB(this.DBupdateId, params ).subscribe((result: any) => {
-          document.getElementById('editmsg').click();
-          if (result.success) {
-            this.successmsg = 'successfully updated';
-           }
-            this.success = true;
-            this.getConfigDBList();
-        },
-  (error) => {
-    document.getElementById('editmsg').click();
-    this.error = true;
-    this.errormsg = error.error.message;
+    this.configDBListService.updateDB(this.DBupdateId, params).subscribe((result: any) => {
+      document.getElementById('editmsg').click();
+      if (result.success) {
+        this.successmsg = 'successfully updated';
+      }
+      this.success = true;
+      this.getConfigDBList();
+    },
+      (error) => {
+        document.getElementById('editmsg').click();
+        this.error = true;
+        this.errormsg = error.error.message;
+      }
+    );
   }
-  );
-}
 
   createDatabase() {
     this.router.navigate(['create-database'], { queryParams: { r: 'database' } });
   }
-
+  searchDatabase() {
+    this.commonUtilityService.filter = this.searchText.trim().toLowerCase();
+    this.dbListActions = this.commonUtilityService._filterData(this.tempDbListActions);
+  }
 }

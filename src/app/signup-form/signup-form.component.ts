@@ -6,7 +6,7 @@ import { SignUp } from '../sign-up';
 import { SignupFormService } from './signup-form.service';
 import { ErrorObject } from '../error-object';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { ConfirmPasswordValidator, PasswordValidator } from './confirm-password-validator';
+import { ConfirmPasswordValidator, PasswordValidator, EmailValidator } from './confirm-password-validator';
 
 @Component({
   selector: 'app-signup-form',
@@ -71,7 +71,7 @@ export class SignupFormComponent implements OnInit {
       userId: new FormControl('', [Validators.required]),
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
-      emailAddress: new FormControl('', [Validators.required, Validators.email]),
+      emailAddress: new FormControl('', [Validators.required, EmailValidator.strong, Validators.email]),
       password: new FormControl('', [Validators.required, PasswordValidator.strong,
       Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)])

@@ -25,6 +25,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     isProgress: boolean;
     dynamicLoaderService: DynamicLoaderService;
     workspaceActions: any;
+    tempWorkspaceActions: any;
     searchText;
     enableCreate = false;
     enableCreateRoles = ['ROLE_ADMIN', 'ROLE_SUPER', 'ROLE_MANAGE_DB', 'ROLE_MANAGE_ARCHON'];
@@ -85,6 +86,12 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
                 this.isProgress = false;
                 this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
                 this.workspaceActions = this.workspaceListInfo;
+                this.tempWorkspaceActions = this.workspaceActions.map(function (el) {
+                    const o = Object.assign({}, el);
+                    o.ownerId = el.owner.id;
+                    o.ownerName = el.owner.name;
+                    return o;
+                });
                 this.spinner.hide();
             } catch {
                 this.spinner.hide();
@@ -194,6 +201,12 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             }
         );
     }
+
+    searchWorkspace() {
+        this.commonUtilityService.filter = this.searchText.trim().toLowerCase();
+        this.workspaceActions = this.commonUtilityService._filterData(this.tempWorkspaceActions);
+    }
+
 }
 
 

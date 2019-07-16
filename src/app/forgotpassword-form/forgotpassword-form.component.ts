@@ -7,6 +7,7 @@ import { ForgotpasswordFormService } from './forgotpassword-form.service';
 import { ErrorObject } from '../error-object';
 import { SuccessObject } from '../success-object';
 import { FormsModule } from '@angular/forms';
+import { EmailValidator } from '../signup-form/confirm-password-validator';
 
 @Component({
   selector: 'app-forgotpassword-form',
@@ -32,7 +33,7 @@ export class ForgotpasswordFormComponent implements OnInit {
 
   createForm() {
     this.forgotPasswordForm = new FormGroup({
-      emailAddress: new FormControl('', [Validators.required, Validators.email])
+      emailAddress: new FormControl('', [Validators.required, EmailValidator.strong])
     });
   }
 

@@ -13,7 +13,7 @@
   </div>
   <div class="col-md-6 search">
     <mat-form-field class="search-width">
-      <input matInput [(ngModel)]="searchText" placeholder="Search">
+      <input matInput [(ngModel)]="searchText" (keyup)="searchWorkspace()" placeholder="Search">
     </mat-form-field>
     <!-- <a *ngIf="enableCreate" style="font-size: 42px" matTooltip="Add Workspace" (click)="openCreateWSModal()"><i
         class="material-icons plus col">
@@ -27,8 +27,7 @@
   <div style="margin-top:10% " *ngIf="workspaceActions?.length===0">
     <h4>No Workspace available. </h4>
   </div>
-  <div class="flex-container"
-    *ngFor="let ws of workspaceActions | searchTable: searchText; let indRow = index; let last = last">
+  <div class="flex-container" *ngFor="let ws of workspaceActions; let indRow = index; let last = last">
     <div *ngIf="ws?.id === deleteId">
       <mat-card class="example-card delete">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -41,9 +40,18 @@
           <div class='body-left'>Databases(s)</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{db?.name}}</div>
+          <div class='body-left'>Owner</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.owner?.id}}</div>
+          <div class='body-left'>Owner Name</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.owner?.name}}</div>
           <div class='body-left'>Meta Version</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.masterMetadataVersion}}</div>
+          <div class='body-left'>Created Time</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.createdAt * 1000 | date: 'medium'}}</div>
           <div class='body-left'>Last Updated Time</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.updatedAt * 1000 | date: 'medium'}}</div>
@@ -68,9 +76,18 @@
           <div class='body-left'>Databases(s)</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{db?.name}}</div>
+          <div class='body-left'>Owner Id</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.owner?.id}}</div>
+          <div class='body-left'>Owner Name</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.owner?.name}}</div>
           <div class='body-left'>Meta Version</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.masterMetadataVersion}}</div>
+          <div class='body-left'>Created Time</div>
+          <div class='body-center'>:</div>
+          <div class='body-right'>{{ws?.createdAt * 1000 | date: 'medium'}}</div>
           <div class='body-left'>Last Updated Time</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.updatedAt * 1000 | date: 'medium'}}</div>
@@ -79,20 +96,20 @@
           <div class='body-right'>{{ws?.workspaceState}}</div>
         </mat-card-content>
         <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
-          <a *ngIf="ws?.owner?.id === userinfoId" (click)="editWS(ws)" data-toggle="modal" href="#edit_model" data-tooltip="Edit"><i
-              class="material-icons ws">
+          <a *ngIf="ws?.owner?.id === userinfoId" (click)="editWS(ws)" data-toggle="modal" href="#edit_model"
+            data-tooltip="Edit"><i class="material-icons ws">
               edit
             </i></a>
-            <a *ngIf="ws?.owner?.id !== userinfoId"  data-toggle="modal" data-tooltip="Edit"><i
-              class="material-icons ws" style="color: grey; cursor: not-allowed;">
+          <a *ngIf="ws?.owner?.id !== userinfoId" data-toggle="modal" data-tooltip="Edit"><i class="material-icons ws"
+              style="color: grey; cursor: not-allowed;">
               edit
             </i></a>
-          <a *ngIf="ws?.owner?.id === userinfoId" (click)="WSdelete(ws?.id)" data-toggle="modal" href="#confirm_model" data-tooltip="Delete"><i
-              class="material-icons ws">
+          <a *ngIf="ws?.owner?.id === userinfoId" (click)="WSdelete(ws?.id)" data-toggle="modal" href="#confirm_model"
+            data-tooltip="Delete"><i class="material-icons ws">
               delete
             </i></a>
-            <a *ngIf="ws?.owner?.id !== userinfoId"  data-toggle="modal" data-tooltip="Delete"><i
-              class="material-icons ws" style="color: grey; cursor: not-allowed;">
+          <a *ngIf="ws?.owner?.id !== userinfoId" data-toggle="modal" data-tooltip="Delete"><i class="material-icons ws"
+              style="color: grey; cursor: not-allowed;">
               delete
             </i></a>
         </mat-card-footer>
