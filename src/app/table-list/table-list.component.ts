@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Pipe, Input, Output, EventEmitter, ViewChild,
-  AfterViewInit, OnChanges, ViewContainerRef, Inject
+  AfterViewInit, OnChanges, ViewContainerRef, Inject, ElementRef
 } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
@@ -18,6 +18,7 @@ import { StoredProcViewComponent } from '../stored-proc-view/stored-proc-view.co
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PermissionService } from '../permission-utility-functions/permission.service';
+import { StatusService } from '../status-screen/status.service';
 
 @Component({
   selector: 'app-table-list',
@@ -110,6 +111,9 @@ export class TableListComponent implements OnInit {
   permissionToUser = '';
   modeForSelectAll = false;
   jobname;
+  responsemsg: any;
+  @ViewChild('click1') button1: ElementRef;
+  @ViewChild('stopjoberror') button2: ElementRef;
 
   constructor(
     private tablelistService: TableListService,
@@ -123,7 +127,8 @@ export class TableListComponent implements OnInit {
     private spinner: NgxSpinnerService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private statusService: StatusService
   ) {
     this.dynamicLoaderService = dynamicLoaderService;
     this.storedprocViewRef = viewContainerRef;
@@ -918,4 +923,25 @@ export class TableListComponent implements OnInit {
   bgcol(c) {
     this.selectedRow = c;
   }
+
+  terminateJob(){
+    const el: HTMLElement = this.button1.nativeElement as HTMLElement;
+    const el1: HTMLElement = this.button2.nativeElement as HTMLElement;
+    this.statusService.terminateJob(this.dataAnalysisjobID).subscribe((result:any) => {
+      if (result) {
+        this.responsemsg = result.data;
+        el.click();
+      }
+    }, (err: HttpErrorResponse) => {
+        this.responsemsg = err.error.message;
+        el1.click();
+      });
+  }
+
+  afterTerminate() {
+    this.homeStage = true;
+    this.dataAModal = false;
+    this.router.navigate(['/workspace/metalyzer/ALL/analysis']);
+  }
+
 }
