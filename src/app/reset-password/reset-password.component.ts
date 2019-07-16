@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { PasswordValidator, ConfirmPasswordValidator } from '../signup-form/confirm-password-validator';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angular/forms';
+import { PasswordValidator, ConfirmPasswordValidator, ConfirmPasswordValidator2 } from '../signup-form/confirm-password-validator';
 import { ErrorObject } from '../error-object';
+import { ResetpasswordService } from './resetpassword.service';
+import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-reset-password',
@@ -12,10 +15,37 @@ export class ResetPasswordComponent implements OnInit {
   resetPasswordForm: FormGroup;
   errorObject: ErrorObject;
   inProgress = false;
-  constructor(private _formBuilder: FormBuilder) { }
+  passwordNotMatch = false;
+  resetKey = '';
+  errorMessage = '';
+  emailAddress = '';
+  successMessage = '';
+  @ViewChild('formDirective') private formDirective: NgForm;
+  constructor(private _formBuilder: FormBuilder, private resetPasswordService: ResetpasswordService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.initResetPasswordForm();
+    this.resetPasswordForm.get('newPassword').valueChanges.subscribe(response1 => {
+      this.onKeyPressOfConfirmPassword();
+    });
+    this.resetPasswordForm.get('confirmPassword').valueChanges.subscribe(response1 => {
+      this.onKeyPressOfConfirmPassword();
+    });
+    this.getUserDetailsByResetKey();
+  }
+
+
+  onKeyPressOfConfirmPassword() {
+    if (this.resetPasswordForm.get('confirmPassword').value !== '') {
+      if (this.resetPasswordForm.get('newPassword').value !== this.resetPasswordForm.get('confirmPassword').value) {
+        this.passwordNotMatch = true;
+      } else {
+        this.passwordNotMatch = false;
+      }
+    } else {
+      this.passwordNotMatch = false;
+    }
   }
 
   initResetPasswordForm() {
@@ -25,11 +55,46 @@ export class ResetPasswordComponent implements OnInit {
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
     },
       {
-        validator: ConfirmPasswordValidator.MatchPassword
+        validator: ConfirmPasswordValidator2.MatchPassword
+      });
+  }
+
+  getUserDetailsByResetKey() {
+    this.resetKey = this.activatedRoute.snapshot.queryParamMap.get('resetKey');
+    this.resetPasswordService.getkeyValueUserDetails(this.resetKey).subscribe(response => {
+      if (response) {
+        this.emailAddress = response.emailAddress;
+      }
+    },
+      (err: HttpErrorResponse) => {
+        if (err.error) {
+          this.errorMessage = err.error.message;
+        }
+      });
+  }
+
+  resetPassword() {
+    this.closeErrorMsg();
+    this.inProgress = true;
+    const param: any = {
+      'emailAddress': this.emailAddress,
+      'password': this.resetPasswordForm.get('newPassword').value
+    };
+    this.resetPasswordService.pwdReset(JSON.parse(JSON.stringify(param))).subscribe(response => {
+      this.inProgress = false;
+      this.successMessage = response;
+      this.formDirective.resetForm();
+    },
+      (err: HttpErrorResponse) => {
+        if (err.error) {
+          this.errorMessage = err.error.message;
+          this.inProgress = false;
+        }
       });
   }
 
   closeErrorMsg() {
-    this.errorObject = null;
+    this.errorMessage = '';
+    this.successMessage = '';
   }
 }
