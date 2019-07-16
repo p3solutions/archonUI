@@ -927,7 +927,7 @@ export class TableListComponent implements OnInit {
   terminateJob(){
     const el: HTMLElement = this.button1.nativeElement as HTMLElement;
     const el1: HTMLElement = this.button2.nativeElement as HTMLElement;
-    this.statusService.terminateJob(this.dataAnalysisjobID).subscribe((result:any) => {
+    this.statusService.terminateJob(this.dataAnalysisjobID).subscribe((result: any) => {
       if (result) {
         this.responsemsg = result.data;
         el.click();
