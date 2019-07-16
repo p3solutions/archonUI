@@ -151,13 +151,11 @@ td.tdr {
   color: #767676; 
   font-size: 12px;
 }
-
 .modal-body {
   border-bottom: 0px solid #E6E9ED;
   padding: 0px 2px 0px 3px;
   text-align: left;
 }
-
 .cancel {
     background-color: #2879ff;
     border: #2879ff;

@@ -42,6 +42,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     WSeditId: any;
     deleteId: string;
     userinfoId: any;
+    WSprofileName: string;
 
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -141,13 +142,14 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
     }
 
-    WSdelete(deleteId: string) {
+    WSdelete(deleteId: string, workspaceName: string) {
         this.WSdeleteId = deleteId;
+        this.WSprofileName = workspaceName;
     }
 
     deleteWS() {
         this.workspaceListService.deleteWS(this.WSdeleteId).subscribe((result) => {
-            document.getElementById('deletemsg').click();
+            document.getElementById('deletemsgss').click();
             this.successmsg = result;
             this.success = true;
             this.deleteId = this.WSdeleteId;
@@ -158,7 +160,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             }, 15000);
         },
             (error) => {
-                document.getElementById('deletemsg').click();
+                document.getElementById('deletemsger').click();
                 this.error = true;
                 this.errormsg = error.error.message;
             }
@@ -187,15 +189,15 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             requestMessage: this.wsDesc
         };
         this.workspaceListService.updateWS(this.WSeditId, params).subscribe((result: any) => {
-            document.getElementById('editmsg').click();
+            document.getElementById('editmsgwss').click();
             if (result.success) {
-                this.successmsg = 'successfully updated';
+                this.successmsg = 'Successfully Updated';
             }
             this.success = true;
             this.getWorkspaceListInfo(this.token_data.user.id);
         },
             (error) => {
-                document.getElementById('editmsg').click();
+                document.getElementById('editmsgwse').click();
                 this.error = true;
                 this.errormsg = error.error.message;
             }
