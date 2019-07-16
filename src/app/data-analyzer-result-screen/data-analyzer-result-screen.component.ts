@@ -58,6 +58,11 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   selectedIndex = 0;
   pricheckvalueMap = new Map();
   seccheckvalueMap = new Map();
+  placeholderSearch = 'Search';
+  accuracyModel2;
+  accuracyModel1;
+  counter = Array;
+  filteredArray = [];
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -106,6 +111,10 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       a[3].classList.add('mat-analyze-psedu-before');
       a[2].classList.add('mat-analyze-psedu');
     }
+  }
+
+  numberReturn(length){
+    return new Array(length);
   }
 
   getPrimaryColumns() {
@@ -366,6 +375,57 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.activatePrimaryFn();
     this.selectRow();
     }
+}
+
+filter(value: string) {
+this.dataSource.filter = value.trim().toLowerCase();
+}
+
+filter1(value: string) {
+  this.dataSource1.filter = value.trim().toLowerCase();
+}
+
+
+accuracyfilter(value) {
+if (value !== 'none') {
+  this.filteredArray = [];
+  this.filteredArray = JSON.parse(JSON.stringify(this.populateSecondaryValuesArray));
+  console.log(this.filteredArray, value);
+  const length = this.filteredArray.length;
+  const tempArray = [];
+  this.filteredArray.forEach((element, index) => {
+    console.log(element.matchPercentage , value, index, length - 1 );
+    if (element.matchPercentage >= JSON.stringify(value)) {
+    tempArray.push(element);
+    }
+    if ((length - 1) === index) {
+      this.dataSource.data = tempArray;
+    }
+  });
+} else {
+  this.dataSource.data = this.populateSecondaryValuesArray;
+}
+}
+
+accuracyfilter1(value) {
+  if (value !== 'none') {
+    this.filteredArray = [];
+    this.filteredArray = JSON.parse(JSON.stringify(this.populatePrimaryValuesArray));
+    console.log(this.filteredArray, value);
+    const length = this.filteredArray.length;
+    const tempArray = [];
+    this.filteredArray.forEach((element, index) => {
+      console.log(element.matchPercentage , value, index, length - 1 );
+      if (element.matchPercentage >= JSON.stringify(value)) {
+      tempArray.push(element);
+      }
+      if ((length - 1) === index) {
+        this.dataSource1.data = tempArray;
+      }
+    });
+  } else {
+    this.dataSource1.data = this.populatePrimaryValuesArray;
+  }
 }
 
 }
