@@ -121,7 +121,6 @@ export class StoredProcViewComponent implements OnInit {
   selectSPVName(spvName: string, evt) {
     this.spvName = spvName;
     this.columnlength = 0;
-    console.log(evt);
     if (evt.target.checked) {
       this.SpvInfoList.filter(a => a.name === spvName)[0].isSelected = true;
       this.SpvInfoList.filter(a => a.name === spvName)[0].relatingTableList.forEach(b => b.isSelected = true);
