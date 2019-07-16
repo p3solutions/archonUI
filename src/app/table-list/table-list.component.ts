@@ -322,13 +322,6 @@ export class TableListComponent implements OnInit {
     this.modeForSelectAll = false;
     // console.log('in');
     const isChecked = _event.target.checked ? true : false;
-    console.log(isChecked);
-    // if (!isChecked) {
-    //   const secTbl = <HTMLInputElement>document.getElementById('selectallpri');
-    //   if (secTbl.checked === true) {
-    //   secTbl.click();
-    //   }
-    // }
     if (isPrimary) {
       for (let i = 0; i < this.primColArray.length; i++) {
         if (this.primColArray[i].columnName === column.columnName) {
@@ -340,6 +333,22 @@ export class TableListComponent implements OnInit {
           }
           break;
         }
+      }
+      const totalCountPri = this.primColArray.length;
+      const selectedCount = this.primColArray.filter(a => a.selected === true).length;
+      const secTbl = <HTMLInputElement>document.getElementById('selectallpri');
+      if (!isChecked && isPrimary) {
+        if (secTbl.checked === true) {
+        secTbl.indeterminate = true;
+        }
+      }
+      if (selectedCount === 0) {
+      secTbl.checked = false;
+      secTbl.indeterminate = false;
+      }
+      if (selectedCount === totalCountPri) {
+      secTbl.indeterminate = false;
+      secTbl.checked = true;
       }
     } else {
       for (let i = 0; i < this.secColArray.length; i++) {
