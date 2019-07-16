@@ -36,7 +36,7 @@ table.table td {
   margin: 15px 15px 10px 10px;
   float: left;
   width: 440px;
-  height: 292px;
+  height: 300px;
 }
 
 .example-card {
@@ -145,7 +145,7 @@ td.tdl {
   color: #121212;
   font-weight: bold;
   font-size: 12px;
-  width: 50%;
+  /* width: 50%; */
 }
 td.tdr {
   color: #767676; 
@@ -305,6 +305,9 @@ td.tdr {
     margin-left: inherit;
   }
   
+  .popup-paragraph-cls {
+    padding-left: 15px;
+}
 
 
  
