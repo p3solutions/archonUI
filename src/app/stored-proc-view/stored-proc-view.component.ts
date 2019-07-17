@@ -170,6 +170,10 @@ export class StoredProcViewComponent implements OnInit {
     } else {
       this.SpvInfoList.filter(a => a.name === this.spvName)[0].isIndeterminate = true;
     }
+    if (countSelected === 0) {
+      this.SpvInfoList.filter(a => a.name === this.spvName)[0].isIndeterminate = false;
+      this.SpvInfoList.filter(a => a.name === this.spvName)[0].isSelected = false;
+    }
     this.enableSubmitBtn();
     event.stopPropagation();
   }
