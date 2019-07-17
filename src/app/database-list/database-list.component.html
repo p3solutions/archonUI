@@ -217,7 +217,7 @@
       </ng-container>
       <ng-container matColumnDef="approve">
         <th style="width:10%" mat-header-cell *matHeaderCellDef> Approve </th>
-        <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons"
+        <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons" style="color: #2879ff"
             (click)="openModal(element, 'Approve');reason = ''" matTooltip="Approve" data-toggle="modal"
             href="#approval-modal">
             check_box
@@ -226,7 +226,7 @@
       </ng-container>
       <ng-container matColumnDef="reject">
         <th style="width:10%" mat-header-cell *matHeaderCellDef> Reject </th>
-        <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons reject"
+        <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons reject" style="color: #ff0000bf"
             matTooltip="Reject" (click)="openModal(element, 'Reject'); reason = ''" data-toggle="modal"
             href="#approval-modal">
             block

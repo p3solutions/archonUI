@@ -12,7 +12,7 @@
         <a *ngIf="!allowManage"  matTooltip="Only Workspace Owner Can Access"  [class.active]="checkActive == 'Manage Metadata Version'">Manage Metadata Version</a>
       </li>
       <li id="workspace-info-link" class="trim-text width">
-        <a [routerLink]="['workspace-info',workspaceId]" [class.active]="checkActive == 'Workspace Info.'" (click)="checkActive = $event.target.innerText">Workspace Info.</a>
+        <a [routerLink]="['workspace-info',workspaceId]" [class.active]="checkActive == 'Workspace Info.'" (click)="checkActive = $event.target.innerText">Workspace Info</a>
       </li>
       <li id="workspace-info-link" class="trim-text width">
         <a [routerLink]="['char-replacement']" [class.active]="checkActive == 'Character Replacement'" (click)="checkActive = $event.target.innerText">Character Replacement</a>
