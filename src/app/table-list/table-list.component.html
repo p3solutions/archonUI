@@ -508,21 +508,24 @@
 
 <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="true"
   data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInvite">Open Modal</button>
-<div id="confirmCancelInvite" class="modal fade" role="dialog" tabindex="-1">
-  <div class="modal-dialog" style="width: 480px">
+ 
+<div class="modal fade" id="confirmCancelInvite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert</h4>
+      <div class="info-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 15px;">info_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 15px;">Alert</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>{{message}}<a [routerLink]="['/activity/status']" [queryParams]="{jobName: jobname}" data-dismiss="modal">
+        <div class="popup-paragraph-cls"> {{message}}<a [routerLink]="['/activity/status']" [queryParams]="{jobName: jobname}" data-dismiss="modal">
           Status Monitoring
-        </a></p>
+        </a></div>
       </div>
       <div class="modal-footer">
-        <div class="action-btn">
-          <button type="button" class="mat-raised-button save btn-padding" data-dismiss="modal">Ok</button>
-        </div>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal"
+          >Ok</button>
       </div>
     </div>
   </div>
