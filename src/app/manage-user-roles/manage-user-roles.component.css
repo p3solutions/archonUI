@@ -189,3 +189,4 @@ td.action-select button:hover {
   text-align: left;
   color: #ff0000;
 }
+button:focus {outline:0;}

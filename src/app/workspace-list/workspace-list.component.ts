@@ -86,7 +86,10 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
                 this.workspaceListInfo = result;
                 this.isProgress = false;
                 this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
-                this.workspaceActions = this.workspaceListInfo;
+                // this.workspaceActions = this.workspaceListInfo;
+                this.workspaceActions = this.workspaceListInfo.filter(a => a.owner.id === this.userinfoId); // My WS
+                const otherUserDbList = this.workspaceListInfo.filter(a => a.owner.id !== this.userinfoId); // My Other user WS
+                Array.prototype.push.apply(this.workspaceActions, otherUserDbList); // Reorder
                 this.tempWorkspaceActions = this.workspaceActions.map(function (el) {
                     const o = Object.assign({}, el);
                     o.ownerId = el.owner.id;
