@@ -377,6 +377,23 @@ export class TableListComponent implements OnInit {
         }
       }
     }
+    const totalCountSec = this.secColArray.length;
+    const selectedCount = this.secColArray.filter(a => a.selected === true).length;
+    const secTbl = <HTMLInputElement>document.getElementById(this.selectedSectableName);
+      if (!isChecked) {
+        if (secTbl.checked === true) {
+          secTbl.indeterminate = true;
+        }
+      }
+      if (selectedCount === 0) {
+        secTbl.checked = false;
+        secTbl.indeterminate = false;
+        // unselect sectbl here
+      }
+      if (selectedCount === totalCountSec) {
+        secTbl.indeterminate = false;
+        secTbl.checked = true;
+      }
     this.enableDisableNextBtn();
   }
   toggleSecTblSelection(_event, table) {
@@ -429,7 +446,6 @@ export class TableListComponent implements OnInit {
       this.SecondaryTableId = table.tableId;
       this.showSecTblCols(table.tableId);
     }
-    this.checkForSelectAll();
   }
   // secondary table Columns
   showSecTblCols(tableId) {
@@ -446,29 +462,36 @@ export class TableListComponent implements OnInit {
     }
   }
 
-  checkForSelectAll() {
+  async checkForSelectAll() {
+    this.spinner.show();
     setTimeout(() => {
-      let isAllCheck = false;
       const checkboxes: any = document.getElementsByName(this.selectedSectableName);
-      console.log(checkboxes);
+      let countSelected = 0;
+      let uncountSelected = 0;
       for (let i = 0, n = checkboxes.length; i < n; i++) {
         if (checkboxes[i].checked) {
-          isAllCheck = true;
-          break;
+          countSelected = countSelected + 1;
         } else {
-          isAllCheck = false;
+          uncountSelected = uncountSelected + 1;
         }
-      }
-      console.log(isAllCheck);
-      if (isAllCheck) {
-        console.log(1);
+        }
+      console.log(checkboxes.length, countSelected);
+      if ((checkboxes.length) === countSelected) {
+        // all are checked
         const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
-        a.checked = false;
-      } else {
-        console.log(2);
-        const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
-        a.checked = true;
+       a.checked = true;
       }
+      if ((checkboxes.length) === uncountSelected) {
+        // all are unchecked
+        const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
+       a.checked = false;
+      }
+      if (countSelected !== 0 && uncountSelected !== 0) {
+        // few are checked and few are not checked
+        const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
+        a.indeterminate = true;
+      }
+    this.spinner.hide();
     }, 1000);
   }
 

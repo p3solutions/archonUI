@@ -264,7 +264,7 @@
                                       *ngFor="let secTbl of secTblArray | searchTable : searchSec1 | paginate: {id: 'dalist1', itemsPerPage: 50, totalItems: schemaResultssecTableCount, currentPage: pagesec } let i=index;"
                                       [hidden]="secTbl.tableName === selectedPrimTbl">
                                       <div class="col-md-12 cur-p da-table trim-text ana-br sec-br" id="list-br"
-                                        title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl);selectedSectableName = secTbl.tableName">
+                                        title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl);selectedSectableName = secTbl.tableName;checkForSelectAll()">
                                         <input id="{{prefixSecTblId + (secTbl.tableName)}}" class="cb-{{i}}"
                                           type="checkbox" (change)="toggleSecTblSelection($event, secTbl)"
                                           class="m-r-10" [checked]="secTbl.selected">
@@ -308,7 +308,7 @@
                                   <div class="col-md-12 column-header ana-br" title="Select All"
                                     style="font-weight: 600">
                                     <input type="checkbox" style="margin-right: 10px; font-weight: 600"
-                                      (change)="selectAllSec($event)" id="{{selectedSectableName}}">
+                                      (change)="selectAllSec($event)" id="{{selectedSectableName}}" [indeterminate]="false">
                                     Select All
                                     <span class="col-loader"
                                       [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
@@ -320,9 +320,8 @@
                                   <div [class.selected]="c == selectedRow" class="col-md-12  trim-text ana-br da-table"
                                     id="list-br" title="{{sColumn.columnName}}">
                                     <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb"
-                                      type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
-                                      checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10 m-r-sec"
-                                      [checked]="sColumn.selected" (click)="bgcol(c)" name="{{selectedSectableName}}">
+                                      type="checkbox" (change)="toggleColSelection($event, false, sColumn)" class="m-r-10 m-r-sec"
+                                      [checked]="sColumn.selected" (click)="bgcol(c);" name="{{selectedSectableName}}">
                                     {{sColumn.columnName}}
                                   </div>
                                 </div>
