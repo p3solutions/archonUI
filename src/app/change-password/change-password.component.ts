@@ -26,6 +26,7 @@ export class ChangePasswordComponent implements OnInit {
   responseData: any;
   successMessage = false;
   thisComponent = this;
+  passwordNotMatch: boolean;
   constructor(private changePasswordService: ChangePasswordService, private router: Router) { }
 
   ngOnInit() {
@@ -64,12 +65,20 @@ export class ChangePasswordComponent implements OnInit {
         this.errorObject = new ErrorObject;
         this.errorObject.message = err.error.message;
         this.errorObject.show = !err.error.success;
+        this.enableChangePassBtn = false;
+        this.createForm();
       });
   }
   enablePassword() {
     if (this.changePasswordForm.value.oldPassword && this.changePasswordForm.value.newPassword
       && this.changePasswordForm.value.confirmPassword && this.changePasswordForm.get('newPassword').valid) {
+        if (this.changePasswordForm.get('newPassword').value !== this.changePasswordForm.get('confirmPassword').value) {
+          this.enableChangePassBtn = false;
+          this.passwordNotMatch = true;
+        } else {
       this.enableChangePassBtn = true;
+      this.passwordNotMatch = false;
+        }
     } else {
       this.enableChangePassBtn = false;
     }

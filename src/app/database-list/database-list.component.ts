@@ -114,13 +114,15 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       this.dbListActions = this.configDBListInfo.filter(a => a.owner.id === this.userinfoId); // My DB
       const otherUserDbList = this.configDBListInfo.filter(a => a.owner.id !== this.userinfoId); // My Other user DB
       Array.prototype.push.apply(this.dbListActions, otherUserDbList); // Reorder
-      console.log(this.dbListActions);
       this.tempDbListActions = this.dbListActions.map(function (el) {
         const o = Object.assign({}, el);
         o.ownerId = el.owner.id;
-        o.ownerName = el.owner.name;
+        o.ownerName = el.owner.firstName + ' ' + el.owner.lastName;
         return o;
       });
+      if (this.searchText) {
+        this.searchDatabase();
+      }
     });
   }
   gotoManagementPanel() {
