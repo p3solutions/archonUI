@@ -114,6 +114,7 @@ export class TableListComponent implements OnInit {
   responsemsg: any;
   @ViewChild('click1') button1: ElementRef;
   @ViewChild('stopjoberror') button2: ElementRef;
+  selectedSectableName = '';
 
   constructor(
     private tablelistService: TableListService,
