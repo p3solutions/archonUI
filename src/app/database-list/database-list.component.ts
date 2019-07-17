@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef, Inject, ViewChild, OnDestroy, ElementRef } from '@angular/core';
-import { ConfiguredDB } from '../workspace-objects';
+import { ConfiguredDB, PendingDB } from '../workspace-objects';
 import { DatabaseListService } from './database-list.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
@@ -11,6 +11,10 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { UserinfoService } from '../userinfo.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { PendingDatabaseDataSource } from './pending-database-data-source';
 
 @Component({
   selector: 'app-database-list',
@@ -29,11 +33,11 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   tempDbListActions = [];
   searchText;
   toggleBoolean = false;
-  pendingList = [];
-  dataSource = new MatTableDataSource(this.pendingList);
+  pendingList: PendingDB[] = [];
+  dataSource: PendingDatabaseDataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['DB Profile Name', 'Workspace Name', 'Workspace Owner', 'Comments', 'Approve', 'Reject'];
+  displayedColumns: string[] = ['dbProfileName', 'workspaceName', 'workspaceOwnerName', 'reason', 'approve', 'reject'];
   @ViewChild('createNewDatabaseWizard', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   workspaceId: any;
   heading: string;
@@ -54,14 +58,19 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   deleteId: string;
   userinfoId: any;
   DBprofileName: string;
-
+  @ViewChild('input') input: ElementRef;
+  totalCount = 0;
+  showPendingApproval = true;
+  toShowDatabase = false;
+  search = '';
   constructor(
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
     private router: Router, private route: ActivatedRoute,
     private workspaceHeaderService: WorkspaceHeaderService,
-    private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService
+    private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService,
+    private spinner: NgxSpinnerService
   ) {
     this.userinfoId = this.userinfoService.getUserId();
     this.dynamicLoaderService = dynamicLoaderService;
@@ -72,9 +81,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.getConfigDBList();
     this.isProgress = true;
     this.getDBInfoByID();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.getAllPending();
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
       if (this.checkAdmin.includes(i)) {
@@ -83,15 +89,38 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       }
     }
     if (this.route.snapshot.paramMap.get('notification')) {
-      const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
-      el.click();
+      this.toShowDatabase = true;
     }
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterViewInit() {
+
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.getAllPending();
+        })
+      )
+      .subscribe();
+
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.paginator.page)
+    .pipe(
+      tap(() => this.getAllPending())
+    )
+    .subscribe();
+  }
+
   getAllPending(): any {
-    this.configDBListService.getPending().subscribe(result => {
-      this.pendingList = result;
-      this.dataSource.data = this.pendingList;
+    this.dataSource = new PendingDatabaseDataSource(this.spinner, this.configDBListService);
+    this.dataSource.getPendingWorkspace(this.paginator.pageIndex + 1, this.paginator.pageSize, this.search);
+    this.dataSource.totalCountSubject.subscribe(res => {
+      this.totalCount = res;
     });
   }
 
@@ -105,6 +134,15 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
 
   viewDBmodal(database) {
     this.configuredDB = database;
+  }
+
+  showDatabase() {
+    this.toShowDatabase = false;
+  }
+
+  pendingApproval() {
+    this.toShowDatabase = true;
+    this.getAllPending();
   }
 
   getConfigDBList() {
@@ -152,11 +190,14 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     if (this.allowToggle) {
       this.toggleBoolean = !this.toggleBoolean;
     }
+    if (this.toggleBoolean) {
+
+    }
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
 
   openModal(element, method) {
     if (method === 'Approve') {

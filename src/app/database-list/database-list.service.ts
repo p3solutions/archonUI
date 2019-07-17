@@ -17,7 +17,7 @@ export class DatabaseListService {
 
   private apiUrl = this.environment.apiUrl;
   private configDBListUrl = this.apiUrl + 'dbs/configured';
-  private getAllApproval = this.apiUrl + 'workspaces/approvalPending';
+  private getAllApproval = this.apiUrl + 'workspaces/approvalPending?';
   private postdecision = this.apiUrl + 'workspaces/approvalEntry';
 
   constructor(
@@ -44,16 +44,16 @@ export class DatabaseListService {
 
   deleteDB(databaseId: string): Observable<ConfiguredDB> {
     return this.http.delete<ConfiguredDB>(this.configDBListUrl + '/' + databaseId, { headers: this.userinfoService.getHeaders() })
-    .pipe(
-      map(this.deletedatabase)
-    );
+      .pipe(
+        map(this.deletedatabase)
+      );
   }
 
- updateDB(DBupdateId: string, params: any): Observable<ConfiguredDB> {
+  updateDB(DBupdateId: string, params: any): Observable<ConfiguredDB> {
     return this.http.patch<ConfiguredDB>(this.configDBListUrl + '/' + DBupdateId, params, { headers: this.userinfoService.getHeaders() })
-    .pipe(
-      map(this.updatedatabase)
-    );
+      .pipe(
+        map(this.updatedatabase)
+      );
   }
   private extractConfigDB(res: any) {
     const data = res.data.configuredDatabases;
@@ -71,8 +71,9 @@ export class DatabaseListService {
   }
 
 
-  getPending(): Observable<any> {
-    return this.http.get<any>(this.getAllApproval, { headers: this.userinfoService.getHeaders() })
+  getPending(startIndex, itemPerPage, search): Observable<any> {
+    return this.http.get<any>(this.getAllApproval + 'startIndex=' + startIndex + '&itemPerPage=' + itemPerPage + '&search=' + search,
+      { headers: this.userinfoService.getHeaders() })
       .pipe(
         map(this.extractApprove),
         catchError(this.handleError('getPending', []))
@@ -80,7 +81,7 @@ export class DatabaseListService {
   }
 
   private extractApprove(res: any) {
-    const data = res.data.pendingWorkspace;
+    const data = res.data;
     return data || [];
   }
 

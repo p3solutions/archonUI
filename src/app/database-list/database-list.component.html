@@ -15,19 +15,18 @@
 <div class="col-md-12">
   <div class="col-md-4" style="width: 37.495%"></div>
   <div class="col-md-3 one one-width">
-    <div class="button-wrap" (click)="toggle()" [ngClass]="{'button-active' : toggleBoolean}" #myDiv>
+    <div class="button-wrap {{ toShowDatabase ? 'button-active':''}}" #myDiv>
       <div class="button-bg">
-        <div class="button-out index">Databases</div>
-        <div class="button-in index" *ngIf="allowToggle">Pending Approval</div>
-        <div class="button-in index" *ngIf="!allowToggle" matTooltip="Access Denied" style="cursor: not-allowed">Pending
-          Approval</div>
+        <div class="button-out index" (click)="showDatabase()">Databases</div>
+        <div class="button-in index" *ngIf="allowToggle" (click)="pendingApproval()">Pending Approval</div>
+        <div class="button-in index" *ngIf="!allowToggle" matTooltip="Access Denied" style="cursor: not-allowed">Pending Approval</div>
         <div class="button-switch"></div>
       </div>
     </div>
   </div>
   <div class="col-md-5" style="width: 37.495%"></div>
 </div>
-<div *ngIf="!toggleBoolean">
+<div [hidden]="toShowDatabase">
   <div class="col-md-6"></div>
   <div class="col-md-1"></div>
   <div class="col-md-5">
@@ -189,34 +188,34 @@
   </div>
 </div>
 
-<div *ngIf="toggleBoolean" style="padding-top: 45px;">
+<div [hidden]="!toShowDatabase" style="padding-top: 45px;">
   <div class="col-md-12">
     <div class="col-md-9"></div>
     <div class="col-md-3">
       <mat-form-field class="search-wid">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        <input matInput #input [(ngModel)]="search" placeholder="Search">
       </mat-form-field>
     </div>
   </div>
   <div class="mat-elevation-z4" id="char-table">
     <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="DB Profile Name">
+      <ng-container matColumnDef="dbProfileName">
         <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> DB Profile Name </th>
         <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element?.dbProfileName}}</td>
       </ng-container>
-      <ng-container matColumnDef="Workspace Name">
+      <ng-container matColumnDef="workspaceName">
         <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header>Workspace Name</th>
         <td style="width:15%" mat-cell *matCellDef="let element"> {{element?.workspaceName}} </td>
       </ng-container>
-      <ng-container matColumnDef="Workspace Owner">
+      <ng-container matColumnDef="workspaceOwnerName">
         <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> Workspace Owner </th>
         <td style="width:15%" mat-cell *matCellDef="let element"> {{element?.workspaceOwnerName}} </td>
       </ng-container>
-      <ng-container matColumnDef="Comments">
+      <ng-container matColumnDef="reason">
         <th style="width:45%" mat-header-cell *matHeaderCellDef> Comments </th>
         <td style="width:45%" mat-cell *matCellDef="let element"> {{element?.reason}} </td>
       </ng-container>
-      <ng-container matColumnDef="Approve">
+      <ng-container matColumnDef="approve">
         <th style="width:10%" mat-header-cell *matHeaderCellDef> Approve </th>
         <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons"
             (click)="openModal(element, 'Approve');reason = ''" matTooltip="Approve" data-toggle="modal"
@@ -225,7 +224,7 @@
           </i>
         </td>
       </ng-container>
-      <ng-container matColumnDef="Reject">
+      <ng-container matColumnDef="reject">
         <th style="width:10%" mat-header-cell *matHeaderCellDef> Reject </th>
         <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons reject"
             matTooltip="Reject" (click)="openModal(element, 'Reject'); reason = ''" data-toggle="modal"
@@ -237,10 +236,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [length]="totalCount" [pageSizeOptions]="[10, 20, 30,40,50]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
-
 
 <div id="approval-modal" class="modal fade" role="dialog">
   <div class="modal-dialog">

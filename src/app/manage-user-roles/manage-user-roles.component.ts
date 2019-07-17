@@ -287,7 +287,7 @@ export class ManageUserRolesComponent implements OnInit {
           if (err.error instanceof Error) {
           } else {
             document.getElementById('error-popup').click();
-            this.successMsg = err.error.message.replace(/([A-Z])/g, ' $1').charAt(0).toUpperCase() + err.error.message.slice(1);
+            this.successMsg = err.error.message;
             this.userInviteInfo = new UserInvite();
             this.getAllUsers(this.invited, this.revoked, this.locked);
           }
