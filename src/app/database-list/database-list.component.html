@@ -106,23 +106,24 @@
             <div class='body-center'>:</div>
             <div class='body-right'>{{db?.status}}</div>
           </mat-card-content>
-          <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">           
-            <a *ngIf="db?.owner.id === userinfoId" class="fonticonbelow cursor-poniter" (click)="DBdelete(db?.id,db?.profileName)" data-toggle="modal" href="#confirm_model"
-            matTooltip="Delete"><i class="material-icons ws">
+          <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
+            <a *ngIf="db?.owner.id === userinfoId" class="fonticonbelow cursor-poniter"
+              (click)="DBdelete(db?.id,db?.profileName)" data-toggle="modal" href="#confirm_model"
+              matTooltip="Delete"><i class="material-icons ws">
                 delete
               </i></a>
-            <a *ngIf="db?.owner.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal" matTooltip="Not Available"><i
-                class="material-icons ws" style="color: #cecdcd; cursor: not-allowed;">
+            <a *ngIf="db?.owner.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal"
+              matTooltip="Not Available"><i class="material-icons ws" style="color: #cecdcd; cursor: not-allowed;">
                 delete
               </i></a>
-              <a *ngIf="db?.owner.id === userinfoId" class="fonticonbelow cursor-poniter" (click)="editDB(db)" data-toggle="modal" href="#edit_model"
-              matTooltip="Edit Database Password"><i class="material-icons ws">
-                  edit
-                </i></a>
-              <a *ngIf="db?.owner.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal" matTooltip="Not Available"><i
-                  class="material-icons ws" style="color: #cecdcd; cursor: not-allowed;">
-                  edit
-                </i></a>
+            <a *ngIf="db?.owner.id === userinfoId" class="fonticonbelow cursor-poniter" (click)="editDB(db)"
+              data-toggle="modal" href="#edit_model" matTooltip="Edit Database Password"><i class="material-icons ws">
+                edit
+              </i></a>
+            <a *ngIf="db?.owner.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal"
+              matTooltip="Not Available"><i class="material-icons ws" style="color: #cecdcd; cursor: not-allowed;">
+                edit
+              </i></a>
           </mat-card-footer>
         </mat-card>
       </div>
@@ -135,11 +136,11 @@
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
-        <div class="info-popup-header-cls">
-          <h4 class="popup-title-cls">
-            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i>
-            <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Database Profile</div>
-          </h4>
+      <div class="info-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Database Profile</div>
+        </h4>
       </div>
       <div class="modal-body">
         <table class="table table-hover">
@@ -268,16 +269,18 @@
           <div class='body-center'>:</div>
           <div class='body-right body-rightc'>{{element?.reason}}</div>
         </div>
-        <div class="reason" style="padding-top: 10px;">
-          <div class="col-md-12" *ngIf="heading == 'Rejection Confirmation'">
-            <mat-form-field class="search-wid">
-              <textarea matInput placeholder="Reason for Rejection" [(ngModel)]="reason" required></textarea>
-            </mat-form-field>
-          </div>
-          <div class="col-md-12" *ngIf="heading == 'Approval Confirmation'">
-            <mat-form-field class="search-wid">
-              <textarea matInput placeholder="Reason for Approval" [(ngModel)]="reason" required></textarea>
-            </mat-form-field>
+        <div>
+          <div style="padding-top: 10px;">
+            <div *ngIf="heading == 'Rejection Confirmation'">
+              <mat-form-field class="search-wid">
+                <textarea matInput placeholder="Reason for Rejection" [(ngModel)]="reason" required></textarea>
+              </mat-form-field>
+            </div>
+            <div *ngIf="heading == 'Approval Confirmation'">
+              <mat-form-field class="search-wid">
+                <textarea matInput placeholder="Reason for Approval" [(ngModel)]="reason" required></textarea>
+              </mat-form-field>
+            </div>
           </div>
         </div>
       </div>
@@ -296,57 +299,68 @@
   </div>
 </div>
 
-<div  id="confirm_model" class="modal fade" role="dialog">             
-  <div class="modal-dialog"  style="width: 480px;">
+<div id="confirm_model" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="error-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Confirm Database Delete</div></h4>
-          </div>
-          <div class="modal-body"  style="padding: 15px">
-              <p class="popup-paragraph-cls">Are you sure you want to delete database
-                  profile '{{DBprofileName}}'?
-                   </p>
-            </div>
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Confirm Database Delete</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls">Are you sure you want to delete database
+          profile '{{DBprofileName}}'?
+        </p>
+      </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="deleteDB()">Yes</button>      
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
+          (click)="deleteDB()">Yes</button>
       </div>
     </div>
   </div>
 </div>
 
-<button style="display: none" type="button" id="deletemsgsuccess" data-toggle="modal" data-target="#deletemessage">Open Modal</button>
-<div class="modal fade" id="deletemessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
+<button style="display: none" type="button" id="deletemsgsuccess" data-toggle="modal" data-target="#deletemessage">Open
+  Modal</button>
+<div class="modal fade" id="deletemessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="info-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Schedule for Deletion</div></h4>
-          </div>
-          <div class="modal-body"  style="padding: 15px">
-              <p class="popup-paragraph-cls"> {{successmsg}}. Please check after 15 seconds. </p>
-            </div>
+      <div class="info-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Schedule for Deletion</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls"> {{successmsg}}. Please check after 15 seconds. </p>
+      </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal" (click)="closeErrorMsg()">OK</button>      
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal"
+          (click)="closeErrorMsg()">OK</button>
       </div>
     </div>
   </div>
 </div>
-<button style="display: none" type="button" id="deletemsgerror" data-toggle="modal" data-target="#deletemessageerror">Open Modal</button>
-<div class="modal fade" id="deletemessageerror" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
+<button style="display: none" type="button" id="deletemsgerror" data-toggle="modal"
+  data-target="#deletemessageerror">Open Modal</button>
+<div class="modal fade" id="deletemessageerror" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="error-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
-          </div>
-          <div class="modal-body"  style="padding: 15px">
-              <p class="popup-paragraph-cls">{{errormsg}} </p>
-            </div>
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls">{{errormsg}} </p>
+      </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="closeErrorMsg()">OK</button>      
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
+          (click)="closeErrorMsg()">OK</button>
       </div>
     </div>
   </div>
@@ -355,12 +369,12 @@
 <div id="edit_model" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 480px;">
-      <form #dbForm="ngForm">        
+      <form #dbForm="ngForm">
         <div class="info-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">edit_outline</i>
-              <div class="pop-title" style="margin-left: -175px;margin-top: 3px;">Edit Database Password</div>
-            </h4>
+          <h4 class="popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">edit_outline</i>
+            <div class="pop-title" style="margin-left: -175px;margin-top: 3px;">Edit Database Password</div>
+          </h4>
         </div>
         <div class="modal-body row">
           <div class="col-md-12 row m-10">
@@ -389,38 +403,47 @@
   </div>
 </div>
 
-<button style="display: none" type="button" id="editmsgsuccess" data-toggle="modal" data-target="#editmessagess">Open Modal</button>
-<div class="modal fade" id="editmessagess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
+<button style="display: none" type="button" id="editmsgsuccess" data-toggle="modal" data-target="#editmessagess">Open
+  Modal</button>
+<div class="modal fade" id="editmessagess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="success-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div></h4>
-          </div>
-          <div class="modal-body"  style="padding: 15px">
-              <p class="popup-paragraph-cls"> {{successmsg}} </p>
-            </div>
+      <div class="success-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls"
+            style="font-size: 22px;margin-top: 3px;">check_circle_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls"> {{successmsg}} </p>
+      </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="closeErrorMsg()">OK</button>      
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal"
+          (click)="closeErrorMsg()">OK</button>
       </div>
     </div>
   </div>
 </div>
 
-<button style="display: none" type="button" id="editmsgerror" data-toggle="modal" data-target="#editmsgerrors">Open Modal</button>
-<div class="modal fade" id="editmsgerrors" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
+<button style="display: none" type="button" id="editmsgerror" data-toggle="modal" data-target="#editmsgerrors">Open
+  Modal</button>
+<div class="modal fade" id="editmsgerrors" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="error-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
-          </div>
-          <div class="modal-body" style="padding: 15px">
-              <p class="popup-paragraph-cls">{{errormsg}} </p>
-            </div>
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls">{{errormsg}} </p>
+      </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="closeErrorMsg()">OK</button>      
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
+          (click)="closeErrorMsg()">OK</button>
       </div>
     </div>
   </div>

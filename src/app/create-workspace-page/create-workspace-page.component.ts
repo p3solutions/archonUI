@@ -69,14 +69,9 @@ export class CreateWorkspacePageComponent implements OnInit {
           this.dataSource.sort = this.sort;
         }
       });
-    // this.firstFormGroup.controls['description'].valueChanges.subscribe((value) => {
-    //   console.log(value);
-    //   this.firstFormGroup.controls['description'].setValue(value);
-    // });
   }
 
   setDescValue(value) {
-    console.log(value);
     this.firstFormGroup.controls['description'].setValue(value);
   }
 
