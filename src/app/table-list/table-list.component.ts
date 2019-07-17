@@ -169,7 +169,7 @@ export class TableListComponent implements OnInit {
     this.tablelistService.selectTables(true);
     this.permissionToUser = this.permissionService.getMetalyzerPermission();
   }
- 
+
 
   getTableList() {
     this.spinner.show();
@@ -191,7 +191,7 @@ export class TableListComponent implements OnInit {
           this.schemaResultsTableCount = (this.startIndex + 1) * 50;
         }
         this.spinner.hide();
-          });
+      });
     } catch {
       this.spinner.hide();
     }
@@ -248,7 +248,7 @@ export class TableListComponent implements OnInit {
     } catch {
       this.spinner.hide();
     }
-   }
+  }
 
   openDataAModal() {
     this.stepperIndex = 0;
@@ -345,16 +345,16 @@ export class TableListComponent implements OnInit {
       const secTbl = <HTMLInputElement>document.getElementById('selectallpri');
       if (!isChecked && isPrimary) {
         if (secTbl.checked === true) {
-        secTbl.indeterminate = true;
+          secTbl.indeterminate = true;
         }
       }
       if (selectedCount === 0) {
-      secTbl.checked = false;
-      secTbl.indeterminate = false;
+        secTbl.checked = false;
+        secTbl.indeterminate = false;
       }
       if (selectedCount === totalCountPri) {
-      secTbl.indeterminate = false;
-      secTbl.checked = true;
+        secTbl.indeterminate = false;
+        secTbl.checked = true;
       }
     } else {
       for (let i = 0; i < this.secColArray.length; i++) {
@@ -429,6 +429,7 @@ export class TableListComponent implements OnInit {
       this.SecondaryTableId = table.tableId;
       this.showSecTblCols(table.tableId);
     }
+    this.checkForSelectAll();
   }
   // secondary table Columns
   showSecTblCols(tableId) {
@@ -444,6 +445,33 @@ export class TableListComponent implements OnInit {
       this.getColumnsByTableName(tableId, false);
     }
   }
+
+  checkForSelectAll() {
+    setTimeout(() => {
+      let isAllCheck = false;
+      const checkboxes: any = document.getElementsByName(this.selectedSectableName);
+      console.log(checkboxes);
+      for (let i = 0, n = checkboxes.length; i < n; i++) {
+        if (checkboxes[i].checked) {
+          isAllCheck = true;
+          break;
+        } else {
+          isAllCheck = false;
+        }
+      }
+      console.log(isAllCheck);
+      if (isAllCheck) {
+        console.log(1);
+        const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
+        a.checked = false;
+      } else {
+        console.log(2);
+        const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
+        a.checked = true;
+      }
+    }, 1000);
+  }
+
   // generating secondary table array
   generateSecTblArray() {
     if (this.secTblArray.length === 0) {
@@ -883,7 +911,7 @@ export class TableListComponent implements OnInit {
     } else {
       $('input:checkbox:checked.m-r-10').click();
     }
-}
+  }
 
   selectAllSec(event) {
     if (event.target.checked) {
@@ -891,7 +919,7 @@ export class TableListComponent implements OnInit {
     } else {
       $('input:checkbox:checked.m-r-10.m-r-sec').click();
     }
-}
+  }
 
   togglePanels(index: number) {
     this.indexExpanded = index === this.indexExpanded ? -1 : index;
@@ -925,7 +953,7 @@ export class TableListComponent implements OnInit {
     this.selectedRow = c;
   }
 
-  terminateJob(){
+  terminateJob() {
     const el: HTMLElement = this.button1.nativeElement as HTMLElement;
     const el1: HTMLElement = this.button2.nativeElement as HTMLElement;
     this.statusService.terminateJob(this.dataAnalysisjobID).subscribe((result: any) => {
@@ -934,9 +962,9 @@ export class TableListComponent implements OnInit {
         el.click();
       }
     }, (err: HttpErrorResponse) => {
-        this.responsemsg = err.error.message;
-        el1.click();
-      });
+      this.responsemsg = err.error.message;
+      el1.click();
+    });
   }
 
   afterTerminate() {
