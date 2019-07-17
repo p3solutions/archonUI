@@ -15,9 +15,9 @@
           <mat-form-field>
             <input name="username" email #username=ngModel [(ngModel)]="smtpConfiguration.username" required matInput
               placeholder="Username">
-              <mat-error *ngIf="username.invalid && !username.errors?.required">
-                Email is invalid.
-              </mat-error>
+            <mat-error *ngIf="username.invalid && !username.errors?.required">
+              Email is invalid.
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
             <input name="password" #password=ngModel [(ngModel)]="smtpConfiguration.password" type=password required
@@ -28,29 +28,53 @@
     </mat-card>
   </div>
   <div id="action-btn">
-    <button (click)="clear()" class="btn cancel btn-padding">Cancel</button>
+    <button (click)="clear()" class="btn secondary-btn-color btn-padding">Cancel</button>
     <button [disabled]="!smtpconfigform.form.valid" (click)="saveSMTPConfiguration()"
-      class="btn save btn-primary btn-padding">Save
+      class="btn {{smtpconfigform.form.valid?'primary-btn-color':'primary-btn-color-disabled'}} btn-padding">Save
       <i *ngIf="inProgress" class="fa fa-spinner fa-spin"></i>
     </button>
   </div>
 </div>
 
-<button style="display:none" type="button" id="success-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
-  data-backdrop="static" data-toggle="modal" data-target="#success">Open Modal</button>
-<div id="success" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+
+<button style="display: none" type="button" id="success-popup-btn" data-toggle="modal" data-target="#success-popup">Open
+  Modal</button>
+<div class="modal fade" id="success-popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert</h4>
+      <div class="success-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
       </div>
-      <div class="modal-body">
-        <p>{{successMessage}}</p>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls"> {{successMessage}} </p>
       </div>
       <div class="modal-footer">
-        <button type="button btn-padding" class="btn btn-primary adhoc-modal-btn" data-dismiss="modal">Ok</button>
-        <button type="button btn-padding" style="display:none" class="btn btn-default adhoc-modal-btn"
-          data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display: none" type="button" id="error-popup-btn" data-toggle="modal" data-target="#error-popup">Open
+  Modal</button>
+<div class="modal fade" id="error-popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">error_outline</i>
+          <div class="pop-title-ert">Error</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls">{{successMessage}} </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">OK</button>
       </div>
     </div>
   </div>

@@ -34,11 +34,12 @@ export class SmtpConfigurationComponent implements OnInit {
   saveSMTPConfiguration() {
     this.inProgress = true;
     this.configurationService.saveSMTPConfiguration(this.smtpConfiguration).subscribe(response => {
-      document.getElementById('success-popup-btn').click();
       if (response.httpStatus === 200) {
+        document.getElementById('success-popup-btn').click();
         this.successMessage = 'SMTP configuration saved successfully.';
         this.inProgress = false;
       } else {
+        document.getElementById('error-popup-btn').click();
         this.successMessage = 'SMTP configuration not saved. Please Check the details.';
         this.inProgress = false;
       }

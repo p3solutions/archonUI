@@ -214,7 +214,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   getOwnerName(): string {
     const accessToken = localStorage.getItem('accessToken');
     const token_data = this.jwtHelper.decodeToken(accessToken);
-    return token_data.user.firstName + ' ' + token_data.user.lastName;;
+    return token_data.user.firstName + ' ' + token_data.user.lastName;
   }
 
   getTodayDate(): string {

@@ -49,9 +49,6 @@
           <div class='body-left'>Meta Version</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.masterMetadataVersion}}</div>
-          <div class='body-left'>Created Time</div>
-          <div class='body-center'>:</div>
-          <div class='body-right'>{{ws?.createdAt * 1000 | date: 'medium'}}</div>
           <div class='body-left'>Last Updated Time</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.updatedAt * 1000 | date: 'medium'}}</div>
@@ -85,9 +82,6 @@
           <div class='body-left'>Meta Version</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.masterMetadataVersion}}</div>
-          <div class='body-left'>Created Time</div>
-          <div class='body-center'>:</div>
-          <div class='body-right'>{{ws?.createdAt * 1000 | date: 'medium'}}</div>
           <div class='body-left'>Last Updated Time</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.updatedAt * 1000 | date: 'medium'}}</div>
@@ -97,19 +91,19 @@
         </mat-card-content>
         <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
           <a *ngIf="ws?.owner?.id === userinfoId" (click)="editWS(ws)" data-toggle="modal" href="#edit_model"
-          matTooltip="Edit"><i class="material-icons ws">
+            matTooltip="Edit"><i class="material-icons ws">
               edit
             </i></a>
-          <a *ngIf="ws?.owner?.id !== userinfoId" data-toggle="modal" matTooltip="Not Available"><i class="material-icons ws"
-              style="color: grey; cursor: not-allowed;">
+          <a *ngIf="ws?.owner?.id !== userinfoId" data-toggle="modal" matTooltip="Not Available"><i
+              class="material-icons ws" style="color: grey; cursor: not-allowed;">
               edit
             </i></a>
-          <a *ngIf="ws?.owner?.id === userinfoId" (click)="WSdelete(ws?.id,ws?.workspaceName)" data-toggle="modal" href="#confirm_model"
-          matTooltip="Delete"><i class="material-icons ws">
+          <a *ngIf="ws?.owner?.id === userinfoId" (click)="WSdelete(ws?.id,ws?.workspaceName)" data-toggle="modal"
+            href="#confirm_model" matTooltip="Delete"><i class="material-icons ws">
               delete
             </i></a>
-          <a *ngIf="ws?.owner?.id !== userinfoId" data-toggle="modal" matTooltip="Not Available"><i class="material-icons ws"
-              style="color: grey; cursor: not-allowed;">
+          <a *ngIf="ws?.owner?.id !== userinfoId" data-toggle="modal" matTooltip="Not Available"><i
+              class="material-icons ws" style="color: grey; cursor: not-allowed;">
               delete
             </i></a>
         </mat-card-footer>
@@ -125,10 +119,10 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="info-popup-header-cls">
-          <h4 class="popup-title-cls">
-            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i>
-            <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Workspace Profile</div>
-          </h4>
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Workspace Profile</div>
+        </h4>
       </div>
       <div class="modal-body">
         <table class="table table-hover">
@@ -174,6 +168,10 @@
               <td class="tdl">Workspace Owner</td>
               <td class="tdr">{{WSListInfo?.owner?.name}}</td>
             </tr>
+            <tr>
+              <td class="tdl">Created Time</td>
+              <td class="tdr">{{WSListInfo?.createdAt * 1000 | date: 'medium'}}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -185,56 +183,67 @@
   </div>
 </div>
 
-<div  id="confirm_model" class="modal fade" role="dialog">             
-    <div class="modal-dialog"  style="width: 480px;">
-      <div class="modal-content">
-          <div class="error-popup-header-cls">
-              <h4 class="popup-title-cls">
-                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Confirm Workspace Delete</div></h4>
-            </div>
-            <div class="modal-body"  style="padding: 15px">
-                <p class="popup-paragraph-cls">Are you sure you want to delete database
-                    profile '{{WSprofileName}}'?
-                     </p>
-              </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">No</button>
-            <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="deleteWS()">Yes</button>      
-        </div>
-      </div>
-    </div>
-  </div>
-<button style="display: none" type="button" id="deletemsgss" data-toggle="modal" data-target="#deletemessagess">Open Modal</button>
-<div class="modal fade" id="deletemessagess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
+<div id="confirm_model" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="info-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Schedule for Deletion</div></h4>
-          </div>
-          <div class="modal-body"  style="padding: 15px">
-              <p class="popup-paragraph-cls"> {{successmsg}}. Please check after 15 seconds. </p>
-            </div>
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Confirm Workspace Delete</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls">Are you sure you want to delete database
+          profile '{{WSprofileName}}'?
+        </p>
+      </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal" (click)="closeErrorMsg()">OK</button>      
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
+          (click)="deleteWS()">Yes</button>
       </div>
     </div>
   </div>
 </div>
-<button style="display: none" type="button" id="deletemsger" data-toggle="modal" data-target="#deletemsgerror">Open Modal</button>
-<div class="modal fade" id="deletemsgerror" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
+<button style="display: none" type="button" id="deletemsgss" data-toggle="modal" data-target="#deletemessagess">Open
+  Modal</button>
+<div class="modal fade" id="deletemessagess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="error-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
-          </div>
-          <div class="modal-body"  style="padding: 15px">
-              <p class="popup-paragraph-cls">{{errormsg}} </p>
-            </div>
+      <div class="info-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Schedule for Deletion</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls"> {{successmsg}}. Please check after 15 seconds. </p>
+      </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="closeErrorMsg()">OK</button>      
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal"
+          (click)="closeErrorMsg()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button style="display: none" type="button" id="deletemsger" data-toggle="modal" data-target="#deletemsgerror">Open
+  Modal</button>
+<div class="modal fade" id="deletemsgerror" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls">{{errormsg}} </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
+          (click)="closeErrorMsg()">OK</button>
       </div>
     </div>
   </div>
@@ -243,12 +252,12 @@
 <div id="edit_model" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 480px;">
-        <div class="info-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">edit_outline</i>
-              <div class="pop-title" style="margin-left: -175px;margin-top: 3px;">Edit Workspace</div>
-            </h4>
-        </div>
+      <div class="info-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">edit_outline</i>
+          <div class="pop-title" style="margin-left: -175px;margin-top: 3px;">Edit Workspace</div>
+        </h4>
+      </div>
       <form #wsForm="ngForm">
         <div class="modal-body row">
           <div class="col-md-12 row m-10">
@@ -276,38 +285,47 @@
   </div>
 </div>
 
-<button style="display: none" type="button" id="editmsgwss" data-toggle="modal" data-target="#editmsgwsss">Open Modal</button>
-<div class="modal fade" id="editmsgwsss" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
+<button style="display: none" type="button" id="editmsgwss" data-toggle="modal" data-target="#editmsgwsss">Open
+  Modal</button>
+<div class="modal fade" id="editmsgwsss" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="success-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">check_circle_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div></h4>
-          </div>
-          <div class="modal-body" style="padding: 15px">
-              <p class="popup-paragraph-cls"> {{successmsg}} </p>
-            </div>
+      <div class="success-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls"
+            style="font-size: 22px;margin-top: 3px;">check_circle_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Success</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls"> {{successmsg}} </p>
+      </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="closeErrorMsg()">OK</button>      
+        <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal"
+          (click)="closeErrorMsg()">OK</button>
       </div>
     </div>
   </div>
 </div>
 
-<button style="display: none" type="button" id="editmsgwse" data-toggle="modal" data-target="#editmsgwser">Open Modal</button>
-<div class="modal fade" id="editmsgwser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
-  <div class="modal-dialog"  style="width: 480px;">
+<button style="display: none" type="button" id="editmsgwse" data-toggle="modal" data-target="#editmsgwser">Open
+  Modal</button>
+<div class="modal fade" id="editmsgwser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="error-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div></h4>
-          </div>
-          <div class="modal-body"  style="padding: 15px">
-              <p class="popup-paragraph-cls">{{errormsg}} </p>
-            </div>
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Error</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls">{{errormsg}} </p>
+      </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="closeErrorMsg()">OK</button>      
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
+          (click)="closeErrorMsg()">OK</button>
       </div>
     </div>
   </div>
