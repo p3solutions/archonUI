@@ -41,11 +41,23 @@
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.43);
   transition:0.5s;
 }
+.example-card-bg {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.43);
+  transition:0.5s;
+  background-color: #f3f6fb;
+}
 .delete:hover {
   opacity: 0.2;
 }
 
 .example-card:hover{
+  box-shadow: rgba(0,0,0,0.43) 0px 0px 20px 0px;
+  transform:translatey(-10px);
+}
+
+.example-card-bg:hover{
   box-shadow: rgba(0,0,0,0.43) 0px 0px 20px 0px;
   transform:translatey(-10px);
 }
@@ -174,13 +186,49 @@ transform:scale(1.1,1.1);
   padding-right: 7px;
 }
  .ws {
-  font-size: 20px;
-  padding: 8px 8px 0px 0px;
+  font-size: 18px;
+    padding: 0px 3px 0px 0px;
+    color: #fff;
 } 
 .example-full-width {
   width: 90%;
   margin-left: inherit;
 }
+
+.fonticonbelow {
+  float: right;
+  color: #ffffff;
+  padding-top: 4px;
+  padding-left: 3px;
+  background-color: #6daeeb;
+  width: 26px;
+  height: 26px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 13px;
+  margin-top: 5px;
+  margin-right: 8px;
+}
+
+.disable-fonticonbelow {
+  float: right;
+  color: #cecdcd;
+  padding-top: 4px;
+  padding-left: 3px;
+  background-color: #e5e5e6;
+  width: 26px;
+  height: 26px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 13px;
+  margin-top: 5px;
+  margin-right: 8px;
+}
+
+.fonticonbelow:hover {
+  background-color: #0A85F8;
+}
+button:focus {outline:0;}
 
 
 

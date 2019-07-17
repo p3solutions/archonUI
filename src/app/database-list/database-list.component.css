@@ -355,6 +355,7 @@ td.tdr {
 .fonticonbelow:hover {
   background-color: #0A85F8;
 }
+button:focus {outline:0;}
 
 
  
