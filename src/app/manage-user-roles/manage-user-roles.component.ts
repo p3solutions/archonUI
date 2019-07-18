@@ -357,6 +357,7 @@ export class ManageUserRolesComponent implements OnInit {
     if (userId.trim() === this.userInfoService.getUserId().trim()) {
       document.getElementById('error-popup').click();
       this.successMsg = 'You are not allowed to change your group.';
+      this.getAllUsers(this.invited, this.revoked, this.locked);
     } else {
       document.getElementById('confirmChangeGlobalRole').click();
       if (this.roleOfUser === 'superadmin') {

@@ -90,6 +90,8 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     }
     if (this.route.snapshot.paramMap.get('notification')) {
       this.toShowDatabase = true;
+      this.paginator.pageSize = 10;
+      this.getAllPending();
     }
   }
 
@@ -102,6 +104,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         tap(() => {
           this.paginator.pageIndex = 0;
+          this.paginator.pageSize = 10;
           this.getAllPending();
         })
       )

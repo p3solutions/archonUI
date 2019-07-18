@@ -68,7 +68,13 @@ export class ResetPasswordComponent implements OnInit {
     },
       (err: HttpErrorResponse) => {
         if (err.error) {
-          this.errorMessage = err.error.message;
+          if (err.status === 0) {
+            this.errorMessage = 'Connection Error.';
+          } else {
+            this.errorMessage = err.error.message;
+          }
+          this.resetPasswordForm.get('newPassword').disable();
+          this.resetPasswordForm.get('confirmPassword').disable();
         }
       });
   }
