@@ -57,8 +57,14 @@
                             <ng-container matColumnDef="select">
                                 <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
                                 <td style="width:5%" mat-cell *matCellDef="let row">
-                                    <mat-checkbox (change)="selectDatabase(row.id,$event)" [checked]="row.isChecked">
-                                    </mat-checkbox>
+                                    <!-- <mat-checkbox (change)="selectDatabase(row.id,$event)" [checked]="row.isChecked">
+                                    </mat-checkbox> -->
+                                    <mat-radio-group (change)="selectDatabase(row.id,$event)" [(ngModel)]="selectedDbId"
+                                        aria-labelledby="example-radio-group-label" class="example-radio-group">
+                                        <mat-radio-button style="margin-top: 5.1px" class="example-radio-button"
+                                            [value]="row.id">
+                                        </mat-radio-button>
+                                    </mat-radio-group>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="profileName">
@@ -134,7 +140,8 @@
                         <div id="action-btn" style="margin-top: 6%">
                             <button class="btn cancel btn-padding"
                                 (click)="gotoDatabaseSelection(stepper)">Previous</button>
-                            <button [disabled]="workspaceInProgress || !firstFormGroup.valid" (click)="createWorkspace(stepper)"
+                            <button [disabled]="workspaceInProgress || !firstFormGroup.valid"
+                                (click)="createWorkspace(stepper)"
                                 class="btn {{workspaceInProgress? 'save-disabled': 'save'}} btn-padding">Create
                                 <!-- <i *ngIf="workspaceInProgress" class="fa fa-spinner fa-spin loader"></i> -->
                             </button>
