@@ -178,7 +178,7 @@ export class CreateWorkspacePageComponent implements OnInit {
         if (res.workspaceState === 'PENDING') {
           this.workspaceInProgress = false;
           // tslint:disable-next-line:max-line-length
-          this.successWorkspaceMessage = 'Workspace creation has been initiated. It is currently pending for database approval You will be notified on approval confirmation.';
+          this.successWorkspaceMessage = 'Workspace creation has been initiated. It is currently pending for database approval. You will be notified on approval confirmation.';
         } else {
           // tslint:disable-next-line:max-line-length
           this.successWorkspaceMessage = 'Workspace creation has been initiated. You will be notified on approval confirmation. Please check status monitoring page for more details.';

@@ -21,6 +21,7 @@
     <a *ngIf="enableCreate" style="font-size: 42px" matTooltip="Add Workspace" (click)="createWorkspace()"><i
         class="material-icons plus col">
       </i></a>
+    <i (click)="reloadWSlist()" class="fa fa-refresh col-archon-blue fa-2x cur-p refresh-icon" aria-hidden="true"></i>
   </div>
 </div>
 <div class="pl-20">
@@ -89,23 +90,24 @@
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.workspaceState}}</div>
         </mat-card-content>
-        <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">         
-          <a *ngIf="ws?.owner?.id === userinfoId" class="fonticonbelow cursor-poniter" (click)="WSdelete(ws?.id,ws?.workspaceName)" data-toggle="modal" href="#confirm_model"
-          matTooltip="Delete"><i class="material-icons ws">
+        <mat-card-footer class="footer" style="border-top: 1px solid #E6E9ED;">
+          <a *ngIf="ws?.owner?.id === userinfoId" class="fonticonbelow cursor-poniter"
+            (click)="WSdelete(ws?.id,ws?.workspaceName)" data-toggle="modal" href="#confirm_model"
+            matTooltip="Delete"><i class="material-icons ws">
               delete
             </i></a>
-          <a *ngIf="ws?.owner?.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal" matTooltip="Not Available"><i class="material-icons ws"
-              style="color: #cecdcd; cursor: not-allowed;">
+          <a *ngIf="ws?.owner?.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal"
+            matTooltip="Not Available"><i class="material-icons ws" style="color: #cecdcd; cursor: not-allowed;">
               delete
             </i></a>
-            <a *ngIf="ws?.owner?.id === userinfoId" class="fonticonbelow cursor-poniter" (click)="editWS(ws)" data-toggle="modal" href="#edit_model"
-            matTooltip="Edit"><i class="material-icons ws">
-                edit
-              </i></a>
-            <a *ngIf="ws?.owner?.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal" matTooltip="Not Available"><i class="material-icons ws"
-                style="color: #cecdcd; cursor: not-allowed;">
-                edit
-              </i></a>
+          <a *ngIf="ws?.owner?.id === userinfoId" class="fonticonbelow cursor-poniter" (click)="editWS(ws)"
+            data-toggle="modal" href="#edit_model" matTooltip="Edit"><i class="material-icons ws">
+              edit
+            </i></a>
+          <a *ngIf="ws?.owner?.id !== userinfoId" class="disable-fonticonbelow" data-toggle="modal"
+            matTooltip="Not Available"><i class="material-icons ws" style="color: #cecdcd; cursor: not-allowed;">
+              edit
+            </i></a>
         </mat-card-footer>
       </mat-card>
     </div>
@@ -183,37 +185,42 @@
   </div>
 </div>
 
-<div  id="confirm_model" class="modal fade" role="dialog">             
-    <div class="modal-dialog"  style="width: 480px;">
-      <div class="modal-content">
-          <div class="error-popup-header-cls">
-              <h4 class="popup-title-cls">
-                <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Delete Confirmation</div></h4>
-            </div>
-            <div class="modal-body"  style="padding: 15px">
-                <p class="popup-paragraph-cls">Are you sure you want to delete database
-                    profile '{{WSprofileName}}' ?
-                     </p>
-              </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">No</button>
-            <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal" (click)="deleteWS()">Yes</button>      
-        </div>
+<div id="confirm_model" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">error_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Delete Confirmation</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls">Are you sure you want to delete database
+          profile '{{WSprofileName}}' ?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
+          (click)="deleteWS()">Yes</button>
       </div>
     </div>
   </div>
+</div>
 <button style="display: none" type="button" id="deletemsgss" data-toggle="modal" data-target="#deletemessagess">Open
   Modal</button>
 <div class="modal fade" id="deletemessagess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-        <div class="info-popup-header-cls">
-            <h4 class="popup-title-cls">
-              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Scheduled for Deletion</div></h4>
-          </div>
-          <div class="modal-body"  style="padding: 15px">
-              <p class="popup-paragraph-cls"> {{successmsg}}. Please check after 15 seconds. </p>
-            </div>
+      <div class="info-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Scheduled for Deletion</div>
+        </h4>
+      </div>
+      <div class="modal-body" style="padding: 15px">
+        <p class="popup-paragraph-cls"> {{successmsg}}. Please check after 15 seconds. </p>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal"
           (click)="closeErrorMsg()">OK</button>

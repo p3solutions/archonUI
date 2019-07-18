@@ -19,7 +19,8 @@
       <div class="button-bg">
         <div class="button-out index" (click)="showDatabase()">Databases</div>
         <div class="button-in index" *ngIf="allowToggle" (click)="pendingApproval()">Pending Approval</div>
-        <div class="button-in index" *ngIf="!allowToggle" matTooltip="Access Denied" style="cursor: not-allowed">Pending Approval</div>
+        <div class="button-in index" *ngIf="!allowToggle" matTooltip="Access Denied" style="cursor: not-allowed">Pending
+          Approval</div>
         <div class="button-switch"></div>
       </div>
     </div>
@@ -40,6 +41,8 @@
       <a style="font-size: 42px" (click)="createDatabase()" matTooltip="Add Database" *ngIf="allowToggle"><i
           class="material-icons plus col">
         </i></a>
+      <i (click)="getConfigDBList()" class="fa fa-refresh col-archon-blue fa-2x cur-p refresh-icon"
+        aria-hidden="true"></i>
     </div>
   </div>
   <div class="pl-20">
@@ -198,7 +201,7 @@
     </div>
   </div>
   <div class="mat-elevation-z4" id="char-table">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortDirection="desc">
       <ng-container matColumnDef="dbProfileName">
         <th style="width:15%" mat-header-cell *matHeaderCellDef mat-sort-header> DB Profile Name </th>
         <td style="width:15%" mat-cell *matCellDef="let element; let i = index;">{{element?.dbProfileName}}</td>
@@ -217,18 +220,18 @@
       </ng-container>
       <ng-container matColumnDef="approve">
         <th style="width:10%" mat-header-cell *matHeaderCellDef> Approve </th>
-        <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons" style="color: #2879ff"
-            (click)="openModal(element, 'Approve');reason = ''" matTooltip="Approve" data-toggle="modal"
-            href="#approval-modal">
+        <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons"
+            style="color: #2879ff" (click)="openModal(element, 'Approve');reason = ''" matTooltip="Approve"
+            data-toggle="modal" href="#approval-modal">
             check_box
           </i>
         </td>
       </ng-container>
       <ng-container matColumnDef="reject">
         <th style="width:10%" mat-header-cell *matHeaderCellDef> Reject </th>
-        <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons reject" style="color: #ff0000bf"
-            matTooltip="Reject" (click)="openModal(element, 'Reject'); reason = ''" data-toggle="modal"
-            href="#approval-modal">
+        <td style="width:10%" class="cursor-pointer" mat-cell *matCellDef="let element"><i class="material-icons reject"
+            style="color: #ff0000bf" matTooltip="Reject" (click)="openModal(element, 'Reject'); reason = ''"
+            data-toggle="modal" href="#approval-modal">
             block
           </i>
         </td>
@@ -236,7 +239,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [length]="totalCount" [pageSizeOptions]="[10, 20, 30,40,50]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [length]="totalCount" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
 

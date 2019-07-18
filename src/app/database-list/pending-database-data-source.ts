@@ -30,4 +30,28 @@ export class PendingDatabaseDataSource implements DataSource<ApprovalWorkspaceLi
             }
         });
     }
+
+    sortfn(sort) {
+        const data = this.pendingWorkspaceSubject.getValue().slice();
+        if (!sort.active || sort.direction === '') {
+            const data1 = this.pendingWorkspaceSubject.getValue();
+            this.pendingWorkspaceSubject.next(data1);
+            return;
+        }
+        const sortedData = data.sort((a, b) => {
+            const isAsc = sort.direction === 'asc';
+            switch (sort.active) {
+                case 'dbProfileName': return this.compare(a.dbProfileName.toLowerCase(), b.dbProfileName.toLowerCase(), isAsc);
+                case 'workspaceName': return this.compare(a.workspaceName.toLowerCase(), b.workspaceName.toLowerCase(), isAsc);
+                case 'workspaceOwnerName': return this.compare(a.workspaceOwnerName.toLowerCase(),
+                    b.workspaceOwnerName.toLowerCase(), isAsc);
+                default: return 0;
+            }
+        });
+        this.pendingWorkspaceSubject.next(sortedData);
+    }
+
+    compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
+        return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
 }

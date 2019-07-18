@@ -104,7 +104,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         tap(() => {
           this.paginator.pageIndex = 0;
-          this.paginator.pageSize = 10;
+          this.paginator.pageSize = 5;
           this.getAllPending();
         })
       )
@@ -113,10 +113,10 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.paginator.page)
-    .pipe(
-      tap(() => this.getAllPending())
-    )
-    .subscribe();
+      .pipe(
+        tap(() => this.getAllPending())
+      )
+      .subscribe();
   }
 
   getAllPending(): any {
@@ -149,22 +149,28 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   }
 
   getConfigDBList() {
-    this.configDBListService.getListOfConfigDatabases().subscribe(result => {
-      this.configDBListInfo = result;
-      this.isProgress = false;
-      this.dbListActions = this.configDBListInfo.filter(a => a.owner.id === this.userinfoId); // My DB
-      const otherUserDbList = this.configDBListInfo.filter(a => a.owner.id !== this.userinfoId); // My Other user DB
-      Array.prototype.push.apply(this.dbListActions, otherUserDbList); // Reorder
-      this.tempDbListActions = this.dbListActions.map(function (el) {
-        const o = Object.assign({}, el);
-        o.ownerId = el.owner.id;
-        o.ownerName = el.owner.firstName + ' ' + el.owner.lastName;
-        return o;
+    this.spinner.show();
+    try {
+      this.configDBListService.getListOfConfigDatabases().subscribe(result => {
+        this.configDBListInfo = result;
+        this.isProgress = false;
+        this.dbListActions = this.configDBListInfo.filter(a => a.owner.id === this.userinfoId); // My DB
+        const otherUserDbList = this.configDBListInfo.filter(a => a.owner.id !== this.userinfoId); // My Other user DB
+        Array.prototype.push.apply(this.dbListActions, otherUserDbList); // Reorder
+        this.tempDbListActions = this.dbListActions.map(function (el) {
+          const o = Object.assign({}, el);
+          o.ownerId = el.owner.id;
+          o.ownerName = el.owner.firstName + ' ' + el.owner.lastName;
+          return o;
+        });
+        if (this.searchText) {
+          this.searchDatabase();
+        }
+        this.spinner.hide();
       });
-      if (this.searchText) {
-        this.searchDatabase();
-      }
-    });
+    } catch {
+      this.spinner.hide();
+    }
   }
   gotoManagementPanel() {
     this.router.navigate(['management-landing-page/management-panel']);
@@ -292,5 +298,9 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   searchDatabase() {
     this.commonUtilityService.filter = this.searchText.trim().toLowerCase();
     this.dbListActions = this.commonUtilityService._filterData(this.tempDbListActions);
+  }
+
+  sortData(sort) {
+    this.dataSource.sortfn(sort);
   }
 }

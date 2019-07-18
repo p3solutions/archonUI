@@ -357,6 +357,12 @@ td.tdr {
 }
 button:focus {outline:0;}
 
+.refresh-icon{
+  vertical-align: super;
+  margin-right: 5px;
+  margin-left: 8px;
+}
+
 
  
 
