@@ -123,7 +123,7 @@
         <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Records found.
         </div>
         <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}"
-          id="screen-table" [length]="datasourceHasValue() ? 0 : dataSource.totalScreen" [pageSize]="50">
+          id="screen-table" [length]="datasourceHasValue() ? 0 : dataSource.totalScreen" [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
 
       </div>
