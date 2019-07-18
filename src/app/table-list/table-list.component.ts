@@ -397,6 +397,7 @@ export class TableListComponent implements OnInit {
         secTbl.checked = true;
       }
     }
+    (<HTMLInputElement>document.getElementsByClassName(this.selectedSectableName)[0]).click();
     this.enableDisableNextBtn();
   }
   toggleSecTblSelection(_event, table) {
