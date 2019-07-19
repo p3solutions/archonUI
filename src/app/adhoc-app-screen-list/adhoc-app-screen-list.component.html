@@ -84,7 +84,7 @@
     id="screen-table">
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortDirection="desc">
       <ng-container matColumnDef="position">
-        <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+        <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
         <td class="word-breaker" style="width:8%" mat-cell *matCellDef="let element; let i = index;">
           {{element.position}}</td>
       </ng-container>
