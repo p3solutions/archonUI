@@ -43,6 +43,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
+  eventName: any;
 
 
   constructor(private router: Router, private auditService: AuditService, private userWorkspaceService: UserWorkspaceService,
@@ -107,14 +108,15 @@ export class AuditingComponent implements OnInit, AfterViewInit {
     });
   }
 
-  downloadJob(releatedJobId) {
-    this.auditService.downloadZip(releatedJobId).subscribe(result => {
+  downloadJob(element) {
+    this.eventName = element.eventName;
+    this.auditService.downloadZip(element.releatedJobId).subscribe(result => {
       this.downloadFile(result);
     });
   }
 
   downloadFile(content) {
-    const fileName = 'audit' + '-data.zip';
+    const fileName = 'audit' + `-${this.eventName}.zip`;
     const type = 'zip';
     const e = document.createEvent('MouseEvents');
     const a = document.createElement('a');

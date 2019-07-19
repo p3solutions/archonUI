@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Pipe, Input, Output, EventEmitter, ViewChild,
-  AfterViewInit, OnChanges, ViewContainerRef, Inject
+  AfterViewInit, OnChanges, ViewContainerRef, Inject, ElementRef
 } from '@angular/core';
 import { TableListService } from './table-list.service';
 import { RelationshipInfoObject } from '../workspace-objects';
@@ -18,6 +18,7 @@ import { StoredProcViewComponent } from '../stored-proc-view/stored-proc-view.co
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PermissionService } from '../permission-utility-functions/permission.service';
+import { StatusService } from '../status-screen/status.service';
 
 @Component({
   selector: 'app-table-list',
@@ -108,6 +109,12 @@ export class TableListComponent implements OnInit {
   schemaResultssecTableCount: number;
   secstartIndex = 1;
   permissionToUser = '';
+  modeForSelectAll = false;
+  jobname;
+  responsemsg: any;
+  @ViewChild('click1') button1: ElementRef;
+  @ViewChild('stopjoberror') button2: ElementRef;
+  selectedSectableName = '';
 
   constructor(
     private tablelistService: TableListService,
@@ -121,7 +128,8 @@ export class TableListComponent implements OnInit {
     private spinner: NgxSpinnerService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private statusService: StatusService
   ) {
     this.dynamicLoaderService = dynamicLoaderService;
     this.storedprocViewRef = viewContainerRef;
@@ -161,7 +169,7 @@ export class TableListComponent implements OnInit {
     this.tablelistService.selectTables(true);
     this.permissionToUser = this.permissionService.getMetalyzerPermission();
   }
- 
+
 
   getTableList() {
     this.spinner.show();
@@ -183,7 +191,7 @@ export class TableListComponent implements OnInit {
           this.schemaResultsTableCount = (this.startIndex + 1) * 50;
         }
         this.spinner.hide();
-          });
+      });
     } catch {
       this.spinner.hide();
     }
@@ -240,7 +248,7 @@ export class TableListComponent implements OnInit {
     } catch {
       this.spinner.hide();
     }
-   }
+  }
 
   openDataAModal() {
     this.stepperIndex = 0;
@@ -317,6 +325,7 @@ export class TableListComponent implements OnInit {
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
+    this.modeForSelectAll = false;
     // console.log('in');
     const isChecked = _event.target.checked ? true : false;
     if (isPrimary) {
@@ -330,6 +339,22 @@ export class TableListComponent implements OnInit {
           }
           break;
         }
+      }
+      const totalCountPri = this.primColArray.length;
+      const selectedCount = this.primColArray.filter(a => a.selected === true).length;
+      const secTbl = <HTMLInputElement>document.getElementById('selectallpri');
+      if (!isChecked && isPrimary) {
+        if (secTbl.checked === true) {
+          secTbl.indeterminate = true;
+        }
+      }
+      if (selectedCount === 0) {
+        secTbl.checked = false;
+        secTbl.indeterminate = false;
+      }
+      if (selectedCount === totalCountPri) {
+        secTbl.indeterminate = false;
+        secTbl.checked = true;
       }
     } else {
       for (let i = 0; i < this.secColArray.length; i++) {
@@ -347,11 +372,32 @@ export class TableListComponent implements OnInit {
           } else {
             this.selectedSecColMap.delete(secColName);
             this.finalSecColMap.delete(secColName);
+            console.log(this.selectedSecColMap.size);
           }
           break;
         }
       }
+    const totalCountSec = this.secColArray.length;
+    const selectedCount = this.secColArray.filter(a => a.selected === true).length;
+    const secTbl = <HTMLInputElement>document.getElementById(this.selectedSectableName);
+      if (!isChecked) {
+        if (secTbl.checked === true) {
+          secTbl.indeterminate = true;
+        }
+      }
+      if (selectedCount === 0) {
+        secTbl.checked = false;
+        secTbl.indeterminate = false;
+        // unselect sectbl here
+      (<HTMLInputElement>document.getElementsByClassName(this.selectedSectableName)[0]).click();
+      (<HTMLInputElement>document.getElementById(this.prefixSecTblId + this.selectedSectableName)).click();
+      }
+      if (selectedCount === totalCountSec) {
+        secTbl.indeterminate = false;
+        secTbl.checked = true;
+      }
     }
+    (<HTMLInputElement>document.getElementsByClassName(this.selectedSectableName)[0]).click();
     this.enableDisableNextBtn();
   }
   toggleSecTblSelection(_event, table) {
@@ -419,6 +465,7 @@ export class TableListComponent implements OnInit {
       this.getColumnsByTableName(tableId, false);
     }
   }
+
   // generating secondary table array
   generateSecTblArray() {
     if (this.secTblArray.length === 0) {
@@ -831,7 +878,8 @@ export class TableListComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.tablelistService.getExportxml(this.workspaceID, this.databaseID, this.xml, this.selectedPrimTblID)
       .subscribe(result => {
-        this.message = result.data;
+        this.message = result.data.message;
+        this.jobname = result.data.jobName;
         document.getElementById('successPop').click();
         // this.downloadFile(result, result.type);
       });
@@ -841,13 +889,17 @@ export class TableListComponent implements OnInit {
     this.databaseID = this.workspaceHeaderService.getDatabaseID();
     this.tablelistService.getExportjson(this.workspaceID, this.databaseID, this.json, this.selectedPrimTblID)
       .subscribe(result => {
-        this.message = result.data;
+        this.message = result.data.message;
+        this.jobname = result.data.jobName;
         document.getElementById('successPop').click();
         // this.downloadFilejson(result, result.type);
       });
   }
 
   selectAll(event) {
+    // if (!this.modeForSelectAll) {
+    //   $('input:checkbox#selectallpri').click();
+    // } else {
     if (event.target.checked) {
       $('input:checkbox:not(:checked).m-r-10').click();
     } else {
@@ -860,6 +912,8 @@ export class TableListComponent implements OnInit {
       $('input:checkbox:not(:checked).m-r-10.m-r-sec').click();
     } else {
       $('input:checkbox:checked.m-r-10.m-r-sec').click();
+      (<HTMLInputElement>document.getElementsByClassName(this.selectedSectableName)[0]).click();
+      // (<HTMLInputElement>document.getElementById(this.prefixSecTblId + this.selectedSectableName)).click();
     }
   }
 
@@ -894,4 +948,58 @@ export class TableListComponent implements OnInit {
   bgcol(c) {
     this.selectedRow = c;
   }
+
+  terminateJob() {
+    const el: HTMLElement = this.button1.nativeElement as HTMLElement;
+    const el1: HTMLElement = this.button2.nativeElement as HTMLElement;
+    this.statusService.terminateJob(this.dataAnalysisjobID).subscribe((result: any) => {
+      if (result) {
+        this.responsemsg = result.data;
+        el.click();
+      }
+    }, (err: HttpErrorResponse) => {
+      this.responsemsg = err.error.message;
+      el1.click();
+    });
+  }
+
+  afterTerminate() {
+    this.closeScreen();
+  }
+
+  checkForSelectAll() {
+    this.spinner.show();
+    setTimeout(() => {
+      const checkboxes: any = document.getElementsByName(this.selectedSectableName);
+      let countSelected = 0;
+      let uncountSelected = 0;
+      for (let i = 0, n = checkboxes.length; i < n; i++) {
+        if (checkboxes[i].checked) {
+          countSelected = countSelected + 1;
+        } else {
+          uncountSelected = uncountSelected + 1;
+        }
+        }
+      console.log(checkboxes.length, countSelected);
+      if ((checkboxes.length) === countSelected) {
+        // all are checked
+        const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
+       a.indeterminate = false;
+       a.checked = true;
+      }
+      if ((checkboxes.length) === uncountSelected) {
+        // all are unchecked
+        const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
+      a.indeterminate = false;
+       a.checked = false;
+      }
+      if (countSelected !== 0 && uncountSelected !== 0) {
+        // few are checked and few are not checked
+        const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
+        a.indeterminate = true;
+      }
+    this.spinner.hide();
+    }, 1000);
+  }
+
 }

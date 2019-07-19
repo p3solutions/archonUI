@@ -63,9 +63,10 @@ export class AuditDataSource implements DataSource<any> {
                 result.responseModel.forEach((value, index) => {
                     value.position = index + 1;
                 });
-                if (result.paginationRequired) {
-                    this.totalScreen = (this.indexValue + 1) * 50;
-                }
+                // if (result.paginationRequired) {
+                //     this.totalScreen = (this.indexValue + 1) * 50;
+                // }
+                this.totalScreen = result.totalCount;
                 this.adhocSubject.next(result.responseModel);
                 this.spinner.hide();
             } catch {

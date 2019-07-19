@@ -12,12 +12,14 @@
   <div class="row-group">
     <div class="col-md-2 heading-item">
       <mat-form-field>
-        <mat-select msInfiniteScroll name="e-select" placeholder="Select Event" [(value)]="selectedEvent">
-          <mat-option appScrollServerCall [value]="" (click)="selectEvent('');getAudit()">
+        <mat-select msInfiniteScroll name="i.workspaceName-select" placeholder="Select WorkSpace"
+          [(value)]="selectedWS">
+          <mat-option appScrollServerCall [value]="" (click)="selectWorkspace('');getAudit()">
             RESET
           </mat-option>
-          <mat-option appScrollServerCall *ngFor="let e of Events" [value]="e" (click)="selectEvent(e);getAudit()">
-            {{e}}
+          <mat-option appScrollServerCall *ngFor="let i of userWorkspaceArray" [value]="i.workspaceName"
+            (click)="selectWorkspace(i);getAudit()">
+            {{i.workspaceName}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -37,14 +39,12 @@
     </div>
     <div class="col-md-2 heading-item">
       <mat-form-field>
-        <mat-select msInfiniteScroll name="i.workspaceName-select" placeholder="Select WorkSpace"
-          [(value)]="selectedWS">
-          <mat-option appScrollServerCall [value]="" (click)="selectWorkspace('');getAudit()">
+        <mat-select msInfiniteScroll name="e-select" placeholder="Select Event" [(value)]="selectedEvent">
+          <mat-option appScrollServerCall [value]="" (click)="selectEvent('');getAudit()">
             RESET
           </mat-option>
-          <mat-option appScrollServerCall *ngFor="let i of userWorkspaceArray" [value]="i.workspaceName"
-            (click)="selectWorkspace(i);getAudit()">
-            {{i.workspaceName}}
+          <mat-option appScrollServerCall *ngFor="let e of Events" [value]="e" (click)="selectEvent(e);getAudit()">
+            {{e}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -134,7 +134,7 @@
           <th style="width:5%;text-align: center" mat-header-cell *matHeaderCellDef> Download </th>
           <td style="width:5%;text-align: center" mat-cell *matCellDef="let element; let i = index;">
             <i class="material-icons details" matTooltip="Download" *ngIf="element.releatedJobId !== null"
-              (click)="downloadJob(element.releatedJobId)">cloud_download</i>
+              (click)="downloadJob(element)">cloud_download</i>
             <i class="material-icons details" style="color: grey" matTooltip="Not Available"
               *ngIf="element.releatedJobId == null">cloud_download</i>
           </td>
@@ -143,7 +143,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator id="screen-table" [length]="dataSource.totalScreen" [pageSize]="50">
+    <mat-paginator id="screen-table" [length]="dataSource.totalScreen" [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
   </div>
 

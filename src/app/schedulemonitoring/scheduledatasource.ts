@@ -61,9 +61,10 @@ export class ScheduleDataSource implements DataSource<any> {
         result.scheduleJobList.forEach((value, index) => {
           value.position = index + 1;
         });
-        if (result.paginationRequired) {
-          this.totalScreen = (this.indexValue + 1) * 50;
-        }
+        // if (result.paginationRequired) {
+        //   this.totalScreen = (this.indexValue + 1) * 50;
+        // }
+        this.totalScreen = result.totalCount;
         this.adhocSubject.next(result.scheduleJobList);
         this.spinner.hide();
       } catch {
