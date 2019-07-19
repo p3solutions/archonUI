@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SignIn } from '../sign-in';
 import { SigninFormService } from './signin-form.service';
 import { ErrorObject } from '../error-object';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-signin-form',
@@ -26,7 +27,8 @@ export class SigninFormComponent implements OnInit {
 
   constructor(
     private signinService: SigninFormService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {
   }
 
@@ -36,7 +38,7 @@ export class SigninFormComponent implements OnInit {
     this.Captcha();
     const test = localStorage.getItem('count');
     if (test !== null) {
-    this.count =  parseInt(localStorage.getItem('count'));
+      this.count = parseInt(localStorage.getItem('count'));
     }
   }
 
@@ -44,13 +46,14 @@ export class SigninFormComponent implements OnInit {
     this.signInForm = new FormGroup({
       userId: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      captcha: new FormControl( '' , [Validators.required])
+      captcha: new FormControl('', [Validators.required])
     });
   }
 
   onSignIn() {
     this.inProgress = true;
     this.signin = this.signInForm.value;
+    this.spinner.show();
     this.signinService.signIn(JSON.parse(JSON.stringify(this.signin))).subscribe(
       data => {
         this.responseData = data;
@@ -61,16 +64,19 @@ export class SigninFormComponent implements OnInit {
         // localStorage.setItem('refreshToken', data.data.refreshToken);
         this.router.navigateByUrl(this.workspaceUrl);
         // this.handleRedirection();
+        this.spinner.hide();
       },
       (err: HttpErrorResponse) => {
         this.count = this.count + 1;
         this.inProgress = false;
+        this.spinner.hide();
         localStorage.setItem('count', this.count);
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
+          this.spinner.hide();
           this.Captcha();
           this.signInForm.controls['captcha'].setValue('');
           this.errorObject = new ErrorObject;
@@ -93,7 +99,7 @@ export class SigninFormComponent implements OnInit {
       this.enableSignInBtn = false;
     }
     if (this.signInForm.value.captcha.length > 6 && !this.valid) {
-    this.errorObject.show = false;
+      this.errorObject.show = false;
     }
   }
   handleRedirection() {
@@ -105,13 +111,13 @@ export class SigninFormComponent implements OnInit {
     this.router.navigateByUrl(redirectUrl);
   }
 
-Captcha() {
-  const alpha = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
-  'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+  Captcha() {
+    const alpha = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+      'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
       '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-  let i, a , b, c , d , e ,f , g;
-  for (i = 0; i < 6; i++) {
+    let i, a, b, c, d, e, f, g;
+    for (i = 0; i < 6; i++) {
       a = alpha[Math.floor(Math.random() * alpha.length)];
       b = alpha[Math.floor(Math.random() * alpha.length)];
       c = alpha[Math.floor(Math.random() * alpha.length)];
@@ -119,24 +125,24 @@ Captcha() {
       e = alpha[Math.floor(Math.random() * alpha.length)];
       f = alpha[Math.floor(Math.random() * alpha.length)];
       g = alpha[Math.floor(Math.random() * alpha.length)];
-      }
-  let code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' ' + f + ' ' + g;
-  this.code = code;
     }
+    let code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' ' + f + ' ' + g;
+    this.code = code;
+  }
 
-ValidCaptcha() {
-  const string1 = this.removeSpaces(this.code);
-  const string2 = this.removeSpaces(this.signInForm.value.captcha);
-  if (string1 === string2) {
-         this.valid = true;
-  } else {
-       this.valid = false;
-       }
-}
+  ValidCaptcha() {
+    const string1 = this.removeSpaces(this.code);
+    const string2 = this.removeSpaces(this.signInForm.value.captcha);
+    if (string1 === string2) {
+      this.valid = true;
+    } else {
+      this.valid = false;
+    }
+  }
 
-removeSpaces(string) {
-  return string.split(' ').join('');
-}
+  removeSpaces(string) {
+    return string.split(' ').join('');
+  }
 
 
 }

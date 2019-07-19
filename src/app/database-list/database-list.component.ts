@@ -63,6 +63,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   showPendingApproval = true;
   toShowDatabase = false;
   search = '';
+  intervalId: any;
   constructor(
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
@@ -93,6 +94,8 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       this.paginator.pageSize = 10;
       this.getAllPending();
     }
+
+    this.refreshDbList();
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
@@ -127,6 +130,12 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     });
   }
 
+  refreshDbList() {
+    this.intervalId = setInterval(() => {
+      this.getDbList();
+    }, 30000);
+  }
+
   getDBInfoByID() {
     this.configDBListService.getDBInfoByID(this.workspaceHeaderService.getDatabaseID()).subscribe(
       (result) => {
@@ -151,23 +160,7 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   getConfigDBList() {
     this.spinner.show();
     try {
-      this.configDBListService.getListOfConfigDatabases().subscribe(result => {
-        this.configDBListInfo = result;
-        this.isProgress = false;
-        this.dbListActions = this.configDBListInfo.filter(a => a.owner.id === this.userinfoId); // My DB
-        const otherUserDbList = this.configDBListInfo.filter(a => a.owner.id !== this.userinfoId); // My Other user DB
-        Array.prototype.push.apply(this.dbListActions, otherUserDbList); // Reorder
-        this.tempDbListActions = this.dbListActions.map(function (el) {
-          const o = Object.assign({}, el);
-          o.ownerId = el.owner.id;
-          o.ownerName = el.owner.firstName + ' ' + el.owner.lastName;
-          return o;
-        });
-        if (this.searchText) {
-          this.searchDatabase();
-        }
-        this.spinner.hide();
-      });
+      this.getDbList();
     } catch {
       this.spinner.hide();
     }
@@ -176,10 +169,31 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.router.navigate(['management-landing-page/management-panel']);
   }
 
+  getDbList() {
+    this.configDBListService.getListOfConfigDatabases().subscribe(result => {
+      this.configDBListInfo = result;
+      this.isProgress = false;
+      this.dbListActions = this.configDBListInfo.filter(a => a.owner.id === this.userinfoId); // My DB
+      const otherUserDbList = this.configDBListInfo.filter(a => a.owner.id !== this.userinfoId); // My Other user DB
+      Array.prototype.push.apply(this.dbListActions, otherUserDbList); // Reorder
+      this.tempDbListActions = this.dbListActions.map(function (el) {
+        const o = Object.assign({}, el);
+        o.ownerId = el.owner.id;
+        o.ownerName = el.owner.firstName + ' ' + el.owner.lastName;
+        return o;
+      });
+      if (this.searchText) {
+        this.searchDatabase();
+      }
+      this.spinner.hide();
+    });
+  }
+
   ngOnDestroy() {
     if (this.viewContainerRef) {
       this.viewContainerRef.remove(0);
     }
+    clearInterval(this.intervalId);
   }
   openCreateAddDBmodal() {
     if (this.viewContainerRef.get(0)) {

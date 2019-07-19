@@ -3,8 +3,9 @@ import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angula
 import { PasswordValidator, ConfirmPasswordValidator, ConfirmPasswordValidator2 } from '../signup-form/confirm-password-validator';
 import { ErrorObject } from '../error-object';
 import { ResetpasswordService } from './resetpassword.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-reset-password',
@@ -22,7 +23,8 @@ export class ResetPasswordComponent implements OnInit {
   successMessage = '';
   @ViewChild('formDirective') private formDirective: NgForm;
   constructor(private _formBuilder: FormBuilder, private resetPasswordService: ResetpasswordService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute, private router: Router, private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit() {
     this.initResetPasswordForm();
@@ -82,17 +84,21 @@ export class ResetPasswordComponent implements OnInit {
   resetPassword() {
     this.closeErrorMsg();
     this.inProgress = true;
+    this.spinner.show();
     const param: any = {
       'emailAddress': this.emailAddress,
       'password': this.resetPasswordForm.get('newPassword').value
     };
     this.resetPasswordService.pwdReset(JSON.parse(JSON.stringify(param))).subscribe(response => {
       this.inProgress = false;
+      this.spinner.hide();
       this.successMessage = response;
+      document.getElementById('success-popup-btn').click();
       this.formDirective.resetForm();
     },
       (err: HttpErrorResponse) => {
         if (err.error) {
+          this.spinner.hide();
           this.errorMessage = err.error.message;
           this.inProgress = false;
         }
@@ -102,5 +108,9 @@ export class ResetPasswordComponent implements OnInit {
   closeErrorMsg() {
     this.errorMessage = '';
     this.successMessage = '';
+  }
+
+  gotoSignUp() {
+    this.router.navigate(['/sign-in']);
   }
 }

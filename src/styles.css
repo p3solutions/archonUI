@@ -2173,3 +2173,35 @@ button.btn-info-popup-primary-color-disabled:hover {
 span.mat-placeholder-required.mat-form-field-required-marker {
   color: #F44336 !important;
 }
+
+.btn:focus {
+  color: #ffffff;
+}
+
+.btn-primary-login {
+  color: #fff;
+  background-color: #2879ff !important;
+  padding: 9px 13px !important;
+  text-transform: inherit;
+  border-radius: 3px;
+  transition: 0.5s;
+  font-size: 1.85rem;
+}
+
+.btn-primary-login:hover {
+  color: #fff;
+  transform: scale(1.1, 1.1);
+}
+
+.btn-primary-login-disabled {
+  color: #fff;
+  background-color: #2879ff !important;
+  padding: 9px 13px !important;
+  text-transform: inherit;
+  border-radius: 3px;
+  font-size: 1.85rem;
+}
+
+.btn-primary-login-disabled:hover {
+  color: #fff;
+}

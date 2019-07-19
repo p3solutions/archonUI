@@ -43,7 +43,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     deleteId: string;
     userinfoId: any;
     WSprofileName: string;
-
+    intervalId: any;
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
         @Inject(ViewContainerRef) viewContainerRef,
@@ -62,6 +62,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         if (this.viewContainerRef) {
             this.viewContainerRef.remove(0);
         }
+
+        clearInterval(this.intervalId);
     }
     ngOnInit() {
         this.accessToken = localStorage.getItem('accessToken');
@@ -76,6 +78,10 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
                 break;
             }
         }
+
+        this.intervalId  = setInterval(() => {
+            this.reloadWSlist();
+        }, 30000);
     }
 
     getWorkspaceListInfo(id: string) {

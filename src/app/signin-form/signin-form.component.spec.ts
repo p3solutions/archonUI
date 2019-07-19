@@ -13,6 +13,7 @@ import { MatInputModule, MatFormFieldModule, MatCardModule } from '@angular/mate
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
@@ -23,14 +24,14 @@ describe('SigninFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormsModule, RouterTestingModule, MatFormFieldModule,
-        MatInputModule, BrowserAnimationsModule, MatCardModule,
+        MatInputModule, BrowserAnimationsModule, MatCardModule, NgxSpinnerModule,
         JwtModule.forRoot({
           config: {
             tokenGetter: tokenGetter
           }
         })],
       declarations: [SigninFormComponent],
-      providers: [SigninFormService, HttpClient, HttpHandler, AuthenticationService,
+      providers: [SigninFormService, HttpClient, HttpHandler, AuthenticationService, NgxSpinnerService,
         JwtHelperService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
     })
       .compileComponents();

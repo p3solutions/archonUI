@@ -9,6 +9,7 @@ import { ResetpasswordService } from './resetpassword.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -17,9 +18,10 @@ describe('ResetPasswordComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResetPasswordComponent],
-      imports: [ReactiveFormsModule, FormsModule, RouterTestingModule, MatFormFieldModule,
+      imports: [ReactiveFormsModule, FormsModule, RouterTestingModule, MatFormFieldModule, NgxSpinnerModule,
         MatInputModule, BrowserAnimationsModule, MatCardModule, HttpClientModule],
-      providers: [ResetpasswordService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      providers: [ResetpasswordService, { provide: EnvironmentService, useClass: MockEnvironmentService },
+        NgxSpinnerService]
     })
       .compileComponents();
   }));

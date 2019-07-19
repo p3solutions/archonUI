@@ -40,12 +40,13 @@ export class ForgotpasswordFormComponent implements OnInit {
   onForgotPassword() {
     this.forgotpassword = this.forgotPasswordForm.value;
     setTimeout(() => this.errorObject.show = false, 5000);
-    setTimeout(() => this.successObject.show = false, 5000);
     this.forgotPasswordFormService.forgotPassword(this.forgotpassword).subscribe(
       data => {
         this.successObject = new SuccessObject;
         this.successObject.message = data.data;
         this.successObject.show = data.success;
+        this.successObject.show = false;
+        document.getElementById('success-popup-btn').click();
         this.forgotPasswordForm.reset();
       },
       (err: HttpErrorResponse) => {
@@ -65,5 +66,9 @@ export class ForgotpasswordFormComponent implements OnInit {
       this.errorObject.message = ' Invalid reset link, please try again.';
       this.errorObject.show = true;
     }
+  }
+
+  gotoSignUp() {
+    this.router.navigate(['/sign-in']);
   }
 }
