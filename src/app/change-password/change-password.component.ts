@@ -52,7 +52,7 @@ export class ChangePasswordComponent implements OnInit {
       newPassword: btoa(this.changePasswordForm.value.confirmPassword),
       oldPassword: btoa(this.changePasswordForm.value.oldPassword)
     };
-    this.changePasswordService.changePassword(param).subscribe((res) => {
+    this.changePasswordService.changePassword(JSON.parse(JSON.stringify(param))).subscribe((res) => {
       this.responseData = res;
       if (this.responseData.httpStatus === 200) {
         this.successMessage = true;
@@ -72,13 +72,13 @@ export class ChangePasswordComponent implements OnInit {
   enablePassword() {
     if (this.changePasswordForm.value.oldPassword && this.changePasswordForm.value.newPassword
       && this.changePasswordForm.value.confirmPassword && this.changePasswordForm.get('newPassword').valid) {
-        if (this.changePasswordForm.get('newPassword').value !== this.changePasswordForm.get('confirmPassword').value) {
-          this.enableChangePassBtn = false;
-          this.passwordNotMatch = true;
-        } else {
-      this.enableChangePassBtn = true;
-      this.passwordNotMatch = false;
-        }
+      if (this.changePasswordForm.get('newPassword').value !== this.changePasswordForm.get('confirmPassword').value) {
+        this.enableChangePassBtn = false;
+        this.passwordNotMatch = true;
+      } else {
+        this.enableChangePassBtn = true;
+        this.passwordNotMatch = false;
+      }
     } else {
       this.enableChangePassBtn = false;
     }
