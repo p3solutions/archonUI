@@ -28,7 +28,7 @@
     </mat-card>
   </div>
   <div id="action-btn">
-    <button (click)="clear()" class="btn secondary-btn-color btn-padding">Cancel</button>
+    <button (click)="clear();gotoManagementPanel()" class="btn secondary-btn-color btn-padding">Cancel</button>
     <button [disabled]="!smtpconfigform.form.valid" (click)="saveSMTPConfiguration()"
       class="btn {{smtpconfigform.form.valid?'primary-btn-color':'primary-btn-color-disabled'}} btn-padding">Save
       <i *ngIf="inProgress" class="fa fa-spinner fa-spin"></i>
