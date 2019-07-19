@@ -23,7 +23,7 @@ describe('ResetPasswordComponent', () => {
       providers: [ResetpasswordService, { provide: EnvironmentService, useClass: MockEnvironmentService },
         NgxSpinnerService]
     })
-      .compileComponents();
+      .compileComponents(); 
   }));
 
   beforeEach(() => {
