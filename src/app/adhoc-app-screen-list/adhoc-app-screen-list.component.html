@@ -84,7 +84,7 @@
     id="screen-table">
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortDirection="desc">
       <ng-container matColumnDef="position">
-        <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+        <th style="width:8%" mat-header-cell *matHeaderCellDef mat-sort-header> S.No </th>
         <td class="word-breaker" style="width:8%" mat-cell *matCellDef="let element; let i = index;">
           {{element.position}}</td>
       </ng-container>
@@ -234,7 +234,7 @@
       <div class="modal-header error-popup-header-cls">
         <h4 class="modal-title popup-title-cls">
           <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i>
-          <div class="pop-title">Delete</div>
+          <div class="pop-title">Delete Confirmation</div>
         </h4>
       </div>
       <div class="modal-body">

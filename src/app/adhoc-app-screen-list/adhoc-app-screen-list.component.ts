@@ -116,6 +116,11 @@ export class AdhocAppScreenListComponent implements OnInit {
       .subscribe();
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.paginator.page)
+      .pipe(
+        tap(() => this.getSearchScreen())
+      )
+      .subscribe();
   }
 
   getApplication() {

@@ -23,6 +23,7 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
@@ -62,6 +63,7 @@ describe('SignupFormComponent', () => {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule, BrowserAnimationsModule,
+        NgxSpinnerModule,
         JwtModule.forRoot({
           config: {
                   tokenGetter: tokenGetter
@@ -73,7 +75,8 @@ describe('SignupFormComponent', () => {
         HttpClientModule,
         AuthenticationService,
         JwtHelperService, 
-        { provide: EnvironmentService, useClass: MockEnvironmentService }
+        { provide: EnvironmentService, useClass: MockEnvironmentService },
+        NgxSpinnerService
       ],
       declarations: [SignupFormComponent]
     })

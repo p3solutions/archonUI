@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SMTPConfiguration } from '../configuration/configuration';
 import { ConfigurationService } from '../configuration/configuration.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-smtp-configuration',
@@ -12,7 +13,7 @@ export class SmtpConfigurationComponent implements OnInit {
   smtpConfiguration = new SMTPConfiguration();
   inProgress = false;
 
-  constructor(private configurationService: ConfigurationService) { }
+  constructor(private configurationService: ConfigurationService, private router: Router) { }
 
   ngOnInit() {
     this.checkExistingSMTPConfiguration();
@@ -34,15 +35,19 @@ export class SmtpConfigurationComponent implements OnInit {
   saveSMTPConfiguration() {
     this.inProgress = true;
     this.configurationService.saveSMTPConfiguration(this.smtpConfiguration).subscribe(response => {
-      document.getElementById('success-popup-btn').click();
       if (response.httpStatus === 200) {
+        document.getElementById('success-popup-btn').click();
         this.successMessage = 'SMTP configuration saved successfully.';
         this.inProgress = false;
       } else {
+        document.getElementById('error-popup-btn').click();
         this.successMessage = 'SMTP configuration not saved. Please Check the details.';
         this.inProgress = false;
       }
       this.clear();
     });
+  }
+  gotoManagementPanel() {
+    this.router.navigate(['management-landing-page/management-panel']);
   }
 }

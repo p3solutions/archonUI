@@ -152,6 +152,7 @@ import { AceEditorModule } from 'ng2-ace-editor';
 import { NoDblClickDirective } from './no-dbl-click.directive';
 import { ErtCloneViewComponent } from './ert-clone-view/ert-clone-view.component';
 import { PreventcopyDirective } from './preventcopy.directive';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -260,7 +261,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 ActivityLandingPageComponent,
                 NoDblClickDirective,
                 ErtCloneViewComponent,
-                PreventcopyDirective
+                PreventcopyDirective,
+                ResetPasswordComponent
         ],
         imports: [
                 JwtModule.forRoot({

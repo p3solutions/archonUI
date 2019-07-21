@@ -17,7 +17,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   firstFormGroup: FormGroup;
   comment = '';
   @ViewChild('stepper') stepper: MatStepper;
-  displayedColumns: string[] = ['select', 'profileName', 'databaseName', 'owner.id', 'createdAt'];
+  displayedColumns: string[] = ['select', 'profileName', 'databaseName', 'ownerId', 'createdAt'];
   dataSource: MatTableDataSource<ConfiguredDB>;
   configDBList: ConfiguredDB[] = [];
   value: any;
@@ -34,6 +34,7 @@ export class CreateWorkspacePageComponent implements OnInit {
   workspaceInProgress = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  selectedDbId = '';
   constructor(private _formBuilder: FormBuilder, public router: Router, public activatedRoute: ActivatedRoute,
     private userWorkspaceService: UserWorkspaceService, private spinner: NgxSpinnerService) {
   }
@@ -57,12 +58,25 @@ export class CreateWorkspacePageComponent implements OnInit {
     this.userWorkspaceService.getSupportedDBList()
       .subscribe(res => {
         if (res && res.length > 0) {
-          this.configDBList = res;
-          this.dataSource = new MatTableDataSource(res);
+          this.configDBList = res.map(function (el) {
+            const o = Object.assign({}, el);
+            o.ownerId = el.owner.id;
+            o.ownerName = el.owner.name;
+            return o;
+          });
+          this.dataSource = new MatTableDataSource(this.configDBList);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+          if (this.configDBList.length !== 0) {
+            this.selectedDbId = this.configDBList[0].id;
+            this.databaseName = this.configDBList[0].profileName;
+          }
         }
       });
+  }
+
+  setDescValue(value) {
+    this.firstFormGroup.controls['description'].setValue(value);
   }
 
 
@@ -128,33 +142,27 @@ export class CreateWorkspacePageComponent implements OnInit {
   }
   gotoWorkspaceReview(stepper: MatStepper) {
     const steps: MatStepHeader[] = stepper._stepHeader.toArray();
-    if (this.configDBList.filter(a => a.isChecked === true).length !== 0) {
-      setTimeout(() => {
-        const a = document.getElementsByClassName('mat-horizontal-stepper-header');
-        a[1].classList.add('mat-auth-psedu');
-        a[2].classList.add('mat-review-psedu');
-        const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
-        b[0].children[3].classList.add('mat-horizental-line');
-        if (steps[1].state === 'edit') {
-          this.value[1].children[1].classList.add('finished-step');
-        }
-        if (steps[0].state === 'edit') {
-          this.value[0].children[1].classList.add('finished-step');
-        }
-        this.value[2].children[1].classList.add('active-step');
-      }, 300);
-      this.stepper.selectedIndex = 2;
-    } else {
-      document.getElementById('error-db-btn').click();
-      this.errorMessage = 'Please select a database.';
-    }
+    setTimeout(() => {
+      const a = document.getElementsByClassName('mat-horizontal-stepper-header');
+      a[1].classList.add('mat-auth-psedu');
+      a[2].classList.add('mat-review-psedu');
+      const b = document.querySelectorAll('.mat-horizontal-stepper-header-container');
+      b[0].children[3].classList.add('mat-horizental-line');
+      if (steps[1].state === 'edit') {
+        this.value[1].children[1].classList.add('finished-step');
+      }
+      if (steps[0].state === 'edit') {
+        this.value[0].children[1].classList.add('finished-step');
+      }
+      this.value[2].children[1].classList.add('active-step');
+    }, 300);
+    this.stepper.selectedIndex = 2;
   }
 
   createWorkspace(stepper: MatStepper) {
     this.databaseIds = [];
     this.showWorkDuplicateMsg = '';
-    const selectedDBId = this.configDBList.filter(a => a.isChecked === true)[0].id;
-    this.databaseIds.push(selectedDBId);
+    this.databaseIds.push(this.selectedDbId);
     this.workspaceInProgress = true;
     this.spinner.show();
     const param: any = {
@@ -169,9 +177,11 @@ export class CreateWorkspacePageComponent implements OnInit {
         document.getElementById('success-popup-btn').click();
         if (res.workspaceState === 'PENDING') {
           this.workspaceInProgress = false;
-          this.successWorkspaceMessage = 'Workpace is pending for the approval.';
+          // tslint:disable-next-line:max-line-length
+          this.successWorkspaceMessage = 'Workspace creation has been initiated. It is currently pending for database approval. You will be notified on approval confirmation.';
         } else {
-          this.successWorkspaceMessage = 'Workspace creation is in progress. Please check status monitoring page.';
+          // tslint:disable-next-line:max-line-length
+          this.successWorkspaceMessage = 'Workspace creation has been initiated. You will be notified on approval confirmation. Please check status monitoring page for more details.';
         }
       } else {
         document.getElementById('error-db-btn').click();
@@ -189,20 +199,14 @@ export class CreateWorkspacePageComponent implements OnInit {
   }
 
   selectDatabase(id, event) {
-    this.configDBList.forEach(a => a.isChecked = false);
-    if (event.checked) {
-      this.closeErrorMsg();
-      const temp = this.configDBList.filter(a => a.id === id)[0];
-      temp.isChecked = true;
-      this.databaseName = temp.profileName;
-    }
-    const selectedDBId = this.configDBList.filter(a => a.isChecked === true)[0].id;
+    this.closeErrorMsg();
+    this.databaseName = this.configDBList.filter(a => a.id === this.selectedDbId)[0].profileName;
   }
 
   getOwnerName(): string {
     const accessToken = localStorage.getItem('accessToken');
     const token_data = this.jwtHelper.decodeToken(accessToken);
-    return token_data.user.firstName + ' ' + token_data.user.lastName;;
+    return token_data.user.firstName + ' ' + token_data.user.lastName;
   }
 
   getTodayDate(): string {

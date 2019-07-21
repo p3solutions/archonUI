@@ -108,10 +108,10 @@
             </tr>
           <tr>
             <td class="col-md-2 col-title">
-              <b>Workspaces</b>
+              <b>Workspace(s)</b>
             </td>
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
-              <span class="m-r-10" *ngFor="let ws of userInfo.workspaceList; let isLast=last">
+              <span class="m-r-10" *ngFor="let ws of userInfo?.workspaceList; let isLast=last">
                 <a (click)="setWorkspace(ws)">{{ws?.workspaceName}}</a>{{isLast ? '' : ', '}}
               </span>
               <span *ngIf="userInfo.workspaceList.length===0">No workspace available</span>

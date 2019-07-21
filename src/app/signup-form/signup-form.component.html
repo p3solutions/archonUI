@@ -1,3 +1,8 @@
+<ngx-spinner class="my-spinner" bdOpacity=0.9 bdColor="rgb(0,0,0,0.35)" size="medium" color="#2879ff"
+    type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+  </ngx-spinner>
+
 <div id="landing-card">
   <div class="x_title">
     <h3>Sign Up</h3>
@@ -9,28 +14,28 @@
       <div class="row form-fields">
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="text" trim="blur" matInput name="id" formControlName="userId" placeholder="User ID">
+            <input type="text" required trim="blur" matInput name="id" formControlName="userId" placeholder="User ID">
           </mat-form-field>
 
         </div>
         <div class="col-md-12 form-group has-feedback" style="display:inline-flex">
           <mat-form-field style="margin-right:7px">
-            <input type="text" trim="blur" matInput name="firstName" formControlName="firstName"
+            <input type="text" required trim="blur" matInput name="firstName" formControlName="firstName"
               placeholder="First Name">
           </mat-form-field>
           <mat-form-field>
-            <input type="text" trim="blur" matInput name="lastName" formControlName="lastName" placeholder="Last Name">
+            <input type="text" required trim="blur" matInput name="lastName" formControlName="lastName" placeholder="Last Name">
           </mat-form-field>
         </div>
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="email" trim="blur" matInput name="signin-email" formControlName="emailAddress"
+            <input type="email" required trim="blur" matInput name="signin-email" formControlName="emailAddress"
               placeholder="Email">
           </mat-form-field>
         </div>
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="password"
+            <input type="password" required
               matTooltip="Password must contain atleast 8 characters, 1 lower case letter [a-z], 1 upper case letter [A-Z], 1 numeric character [0-9] and 1 special character."
               matInput name="signin-password" trim="blur" (blur)="checkForValidPassword()" formControlName="password"
               placeholder="Password">
@@ -46,7 +51,7 @@
         </div>
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="password" trim="blur" (keyup)="onKeyPressOfConfirmPassword()" matInput
+            <input type="password" required trim="blur" (keyup)="onKeyPressOfConfirmPassword()" matInput
               name="signin-confirm-password" formControlName="confirmPassword" placeholder="Confirm Password">
           </mat-form-field>
           <mat-error *ngIf="passwordNotMatch" style="text-align:left">
@@ -78,15 +83,39 @@
           <a routerLink="/sign-in">Sign In</a>
         </div>
         <div class="col-md-6 form-group">
-          <button type="submit" (click)="onSignUp(signUpForm)"
-            class="btn pull-right btn-form btn-primary {{ enableSignUpBtn ? '' : 'bg-disabled'}}"
+            <button type="submit" (click)="onSignUp(signUpForm)"
+            class="btn pull-right {{ signUpForm.valid ? 'btn-primary-login' : 'btn-primary-login-disabled'}}"
             [disabled]="!signUpForm.valid">
-            SIGN UP
-            <i *ngIf="inProgress" class="fa fa-spinner fa-spin inline-loader"></i>
+            Sign Up
+            <!-- <i *ngIf="inProgress" class="fa fa-spinner fa-spin inline-loader"></i> -->
           </button>
           <!-- <button type="submit" class="btn btn-primary pull-right btn-form">SIGN UP</button> -->
         </div>
       </div>
     </form>
+  </div>
+</div>
+
+<button style="display:none" data-keyboard="false" data-backdrop="static" type="button" id="success-popup-btn"
+  class="btn btn-info btn-lg" data-toggle="modal" data-target="#success">Open Modal</button>
+<div id="success" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="modal-header success-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">check_circle_outline</i>
+          <div class="pop-title-ert">Success</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{message}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="gotoSignUp()" class="btn btn-padding btn-success-popup-primary-color"
+          data-dismiss="modal">Ok</button>
+        <button type="button" style="display:none" class="btn btn-padding btn-success-popup-primary-color"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
   </div>
 </div>

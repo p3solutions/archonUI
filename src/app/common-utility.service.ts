@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommonUtilityService {
-
+  _filter = '';
+  filteredData: any;
   constructor(
     // private http: HttpClient
   ) { }
@@ -62,4 +63,32 @@ export class CommonUtilityService {
     }
     return true;
   }
+
+// Start- filter by all keys in object.
+
+  filterPredicate: ((data: any, filter: string) => boolean) = (data: any, filter: string): boolean => {
+    const accumulator = (currentTerm, key) => currentTerm + data[key];
+    const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+    const transformedFilter = filter.trim().toLowerCase();
+    return dataStr.indexOf(transformedFilter) !== -1;
+  }
+
+  _filterData(dataSource: any) {
+    this.filteredData =
+      !this.filter ? dataSource : dataSource.filter(obj => this.filterPredicate(obj, this.filter));
+    const a = JSON.parse(JSON.stringify(this.filteredData));
+    return a;
+  }
+
+
+
+  get filter(): string { return this._filter; }
+  set filter(filter: string) {
+    this._filter = filter;
+  }
+
+// End
+
+
+
 }

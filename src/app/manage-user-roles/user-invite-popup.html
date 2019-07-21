@@ -19,13 +19,13 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <textarea trim="blur" #bussjust="ngModel" maxlength="150" [(ngModel)]="userInviteInfo.businessJustification"
+      <textarea trim="blur" #bussjust="ngModel" maxlength="500" [(ngModel)]="userInviteInfo.businessJustification"
         matInput name="buss-just" required placeholder="Business Justification"></textarea>
     </mat-form-field>
   </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button class="cancel" (click)="onNoClick()">Cancel</button>
-  <button mat-button class="invite" [disabled]="!userInviteForm.form.valid" [mat-dialog-close]="userInviteInfo">
-    Invite</button>
+  <button class="btn btn-padding secondary-btn-color" (click)="onNoClick()">Cancel</button>
+  <button class="btn btn-padding {{!userInviteForm.form.valid?'primary-btn-color-disabled':'primary-btn-color'}}"
+    [disabled]="!userInviteForm.form.valid" [mat-dialog-close]="userInviteInfo">Invite</button>
 </div>

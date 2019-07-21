@@ -69,9 +69,10 @@ export class ManageUserRolesService {
       );
   }
 
-  getAllUsers($startIndex, $accessRevoked, $accountLocked): Observable<any> {
+  getAllUsers($startIndex, $accessRevoked, $accountLocked, $searchText, $itemPerPage): Observable<any> {
     return this.http.get<any>(this.getAllUsersUrl + $startIndex + '&accessRevoked=' + $accessRevoked +
-      '&accountLocked=' + $accountLocked, { headers: this.headers }).
+      '&accountLocked=' + $accountLocked + '&search=' + $searchText +
+      '&itemPerPage=' + $itemPerPage, { headers: this.headers }).
       pipe(map(this.extractDataForAllRequest),
         catchError(this.handleError('getAllUsers', []))
       );

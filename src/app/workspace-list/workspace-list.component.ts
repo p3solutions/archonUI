@@ -25,6 +25,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     isProgress: boolean;
     dynamicLoaderService: DynamicLoaderService;
     workspaceActions: any;
+    tempWorkspaceActions: any;
     searchText;
     enableCreate = false;
     enableCreateRoles = ['ROLE_ADMIN', 'ROLE_SUPER', 'ROLE_MANAGE_DB', 'ROLE_MANAGE_ARCHON'];
@@ -41,7 +42,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     WSeditId: any;
     deleteId: string;
     userinfoId: any;
-
+    WSprofileName: string;
+    intervalId: any;
     constructor(
         @Inject(DynamicLoaderService) dynamicLoaderService,
         @Inject(ViewContainerRef) viewContainerRef,
@@ -60,6 +62,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         if (this.viewContainerRef) {
             this.viewContainerRef.remove(0);
         }
+
+        clearInterval(this.intervalId);
     }
     ngOnInit() {
         this.accessToken = localStorage.getItem('accessToken');
@@ -74,6 +78,10 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
                 break;
             }
         }
+
+        this.intervalId  = setInterval(() => {
+            this.reloadWSlist();
+        }, 30000);
     }
 
     getWorkspaceListInfo(id: string) {
@@ -84,7 +92,16 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
                 this.workspaceListInfo = result;
                 this.isProgress = false;
                 this.setRejectedWorkspaceListInfo(this.workspaceListInfo);
-                this.workspaceActions = this.workspaceListInfo;
+                // this.workspaceActions = this.workspaceListInfo;
+                this.workspaceActions = this.workspaceListInfo.filter(a => a.owner.id === this.userinfoId); // My WS
+                const otherUserDbList = this.workspaceListInfo.filter(a => a.owner.id !== this.userinfoId); // My Other user WS
+                Array.prototype.push.apply(this.workspaceActions, otherUserDbList); // Reorder
+                this.tempWorkspaceActions = this.workspaceActions.map(function (el) {
+                    const o = Object.assign({}, el);
+                    o.ownerId = el.owner.id;
+                    o.ownerName = el.owner.name;
+                    return o;
+                });
                 this.spinner.hide();
             } catch {
                 this.spinner.hide();
@@ -134,13 +151,14 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.commonUtilityService.toggleFlexCard(cardId, toShow, _event);
     }
 
-    WSdelete(deleteId: string) {
+    WSdelete(deleteId: string, workspaceName: string) {
         this.WSdeleteId = deleteId;
+        this.WSprofileName = workspaceName;
     }
 
     deleteWS() {
         this.workspaceListService.deleteWS(this.WSdeleteId).subscribe((result) => {
-            document.getElementById('deletemsg').click();
+            document.getElementById('deletemsgss').click();
             this.successmsg = result;
             this.success = true;
             this.deleteId = this.WSdeleteId;
@@ -151,7 +169,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             }, 15000);
         },
             (error) => {
-                document.getElementById('deletemsg').click();
+                document.getElementById('deletemsger').click();
                 this.error = true;
                 this.errormsg = error.error.message;
             }
@@ -177,23 +195,29 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         const params = {
             id: this.WSeditId,
             workspaceName: this.wsName,
-            requestMessage: this.wsDesc
+            description: this.wsDesc
         };
         this.workspaceListService.updateWS(this.WSeditId, params).subscribe((result: any) => {
-            document.getElementById('editmsg').click();
+            document.getElementById('editmsgwss').click();
             if (result.success) {
-                this.successmsg = 'successfully updated';
+                this.successmsg = 'Successfully Updated';
             }
             this.success = true;
             this.getWorkspaceListInfo(this.token_data.user.id);
         },
             (error) => {
-                document.getElementById('editmsg').click();
+                document.getElementById('editmsgwse').click();
                 this.error = true;
                 this.errormsg = error.error.message;
             }
         );
     }
+
+    searchWorkspace() {
+        this.commonUtilityService.filter = this.searchText.trim().toLowerCase();
+        this.workspaceActions = this.commonUtilityService._filterData(this.tempWorkspaceActions);
+    }
+
 }
 
 
