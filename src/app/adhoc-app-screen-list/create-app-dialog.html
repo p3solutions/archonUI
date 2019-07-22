@@ -2,12 +2,16 @@
 <div mat-dialog-content>
   <form #createAppForm="ngForm" class="flex-container">
     <mat-form-field>
-      <input name="appName" maxlength="50" trim="blur" #appName="ngModel" required matInput placeholder="Application Name"
-        [(ngModel)]="appInfo.appName">
+      <input name="appName" maxlength="50" id="app-name-id" trim="blur" #appName="ngModel" required matInput
+        placeholder="Application Name" [(ngModel)]="appInfo.appName">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput name="appDesc" maxlength="200" trim="blur" required placeholder="Description" #appDesc="ngModel"
-        [(ngModel)]="appInfo.appDesc"></textarea>
+      <input name="databaseName" maxlength="50" trim="blur" #appName="ngModel" required matInput
+        placeholder="Database Name" [(ngModel)]="appInfo.iaDatabaseName">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput name="appDesc" maxlength="200" trim="blur" required placeholder="Description"
+        #appDesc="ngModel" [(ngModel)]="appInfo.appDesc"></textarea>
     </mat-form-field>
     <mat-form-field>
       <mat-select #iaVersion="ngModel" required [(ngModel)]="appInfo.iaVersion" required name="ia-version"

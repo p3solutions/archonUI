@@ -229,7 +229,7 @@ export class AdhocAppScreenListComponent implements OnInit {
           this.successMessage = err.error.message;
         }
       });
-    } catch{
+    } catch {
       this.spinner.hide();
     }
   }
@@ -289,6 +289,14 @@ export class AdhocAppScreenListComponent implements OnInit {
     dialogAppRef.afterClosed().subscribe(result => {
       this.createApplication(result);
     });
+    dialogAppRef.keydownEvents().subscribe(res => {
+      const id = (res.target as Element).id;
+      if (id === 'app-name-id') {
+        setTimeout(() => {
+          this.appInfo.iaDatabaseName = this.appInfo.appName + '-sql-db';
+        }, 200);
+      }
+    });
   }
 
   createApplication(result) {
@@ -296,6 +304,7 @@ export class AdhocAppScreenListComponent implements OnInit {
       const param: any = {
         'appName': result.appName,
         'appDesc': result.appDesc,
+        'iaDatabaseName': result.iaDatabaseName,
         'workspaceId': this.workspaceId,
         'metadataVersion': this.mmrVersion,
         'userId': getUserId(),

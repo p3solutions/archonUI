@@ -51,10 +51,10 @@ export class StatusDataSource implements DataSource<any> {
     this.adhocSubject.complete();
   }
 
-  getTable(selectedJobOrigin, selectedJobStatus, startIndex) {
+  getTable(selectedJobOrigin, selectedJobStatus, startIndex, itemPerPage, jobName) {
     this.indexValue = startIndex;
     this.spinner.show();
-    this.statusService.getJobList(selectedJobOrigin, selectedJobStatus, startIndex).subscribe((result) => {
+    this.statusService.getJobList(selectedJobOrigin, selectedJobStatus, startIndex, itemPerPage, jobName).subscribe((result) => {
       try {
         result.list.forEach((value, index) => {
           value.position = index + 1;
@@ -62,7 +62,7 @@ export class StatusDataSource implements DataSource<any> {
         // if (result.paginationRequired) {
         //   this.totalScreen = (this.indexValue + 1) * 50;
         // }
-        this.totalScreen = result.totalCount;
+        this.totalScreen = result.totalJobList;
         this.adhocSubject.next(result.list);
         this.spinner.hide();
       } catch {
