@@ -110,7 +110,7 @@ export class AdhocAppScreenListComponent implements OnInit {
         distinctUntilChanged(),
         tap(() => {
           this.paginator.pageIndex = 0;
-          this.getSearchScreen();
+          this.loadLessonsPage();
         })
       )
       .subscribe();
@@ -118,7 +118,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.paginator.page)
       .pipe(
-        tap(() => this.getSearchScreen())
+        tap(() => this.loadLessonsPage())
       )
       .subscribe();
   }
@@ -188,19 +188,24 @@ export class AdhocAppScreenListComponent implements OnInit {
       this.addPosition();
       this.dataSource.connect().subscribe(result => {
         this.screenInfoList = result;
-        this.totalScreen = (this.paginator.pageIndex + 1) * 50;
-        if (this.dataSource.paginationRequired) {
-          this.totalScreen = this.totalScreen + 50;
-        } else {
-          if (this.paginator.pageIndex === 0) {
-            this.totalScreen = this.screenInfoList.length;
-          } else {
-            this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
-          }
-        }
+        //  this.totalScreen = (this.paginator.pageIndex + 1) * 50;
+        // if (this.dataSource.paginationRequired) {
+        //   this.totalScreen = this.totalScreen + 50;
+        // } else {
+        //   if (this.paginator.pageIndex === 0) {
+        //     this.totalScreen = this.screenInfoList.length;
+        //   } else {
+        //     this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
+        //   }
+        // }
         this.spinner.hide();
       });
-      this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id);
+      this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id,
+        this.paginator.pageSize === undefined ? 5 : this.paginator.pageSize,
+        this.input === undefined ? '' : this.input.nativeElement.value);
+      this.dataSource.totalScreenSubject.subscribe(res => {
+        this.totalScreen = res;
+      });
     } catch {
       this.spinner.hide();
     }
@@ -235,10 +240,12 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   loadLessonsPage() {
-    this.dataSource.getScreen(
-      this.paginator.pageIndex + 1,
-      this.workspaceId,
-      this.selectedAppObject.id);
+    this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id,
+      this.paginator.pageSize === undefined ? 5 : this.paginator.pageSize,
+      this.input === undefined ? '' : this.input.nativeElement.value);
+    this.dataSource.totalScreenSubject.subscribe(res => {
+      this.totalScreen = res;
+    });
   }
 
 

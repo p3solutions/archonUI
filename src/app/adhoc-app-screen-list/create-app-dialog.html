@@ -3,7 +3,7 @@
   <form #createAppForm="ngForm" class="flex-container">
     <mat-form-field>
       <input name="appName" maxlength="50" id="app-name-id" trim="blur" #appName="ngModel" required matInput
-        placeholder="Application Name" [(ngModel)]="appInfo.appName">
+        placeholder="Application Name" appNonspecialchar [(ngModel)]="appInfo.appName">
     </mat-form-field>
     <mat-form-field>
       <input name="databaseName" maxlength="50" trim="blur" #appName="ngModel" required matInput
