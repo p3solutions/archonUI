@@ -9,7 +9,8 @@ import { UserinfoService } from './userinfo.service';
 @Injectable()
 export class ArchonHttpInterceptor implements HttpInterceptor {
     constructor(
-        private userinfoService: UserinfoService
+        private userinfoService: UserinfoService,
+        private router: Router
     ) {}
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     /*
@@ -40,7 +41,7 @@ export class ArchonHttpInterceptor implements HttpInterceptor {
                 this.userinfoService.redirectOnSessionTimedOut();
             }
             if (response.status ===  423 && response.error.message === 'License expired') {
-                alert('License Expired');
+                this.router.navigate(['workspace/workspace-dashboard/workspace-services'], { queryParams: { license: 'false' } });
             }
     }
 }

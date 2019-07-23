@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input, OnInit, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, OnChanges, Input, OnInit, SimpleChanges, SimpleChange, ViewChild, ElementRef } from '@angular/core';
 import { ServiceActionsObject } from '../workspace-objects';
 import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dashboard.service';
 import { WorkspaceServicesService } from './workspace-services.service';
@@ -17,6 +17,8 @@ import { addAllToArray } from '@angular/core/src/render3/util';
 import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 import { PermissionService } from '../permission-utility-functions/permission.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -34,6 +36,13 @@ export class WorkspaceServicesComponent implements OnInit {
   startIndex = 1;
   isAnyServiceEnable = true;
   showMessage = 'No access to any services. Please contact owner of workspace to get access.';
+  @ViewChild('licensebutton') button: ElementRef;
+  @ViewChild('succesdismiss') success: ElementRef;
+  userId;
+  uploadForm: FormGroup;
+  license = '';
+
+
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -49,7 +58,8 @@ export class WorkspaceServicesComponent implements OnInit {
     private cookieService: CookieService,
     private userWorkspaceService: UserWorkspaceService,
     private permissionService: PermissionService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private formBuilder: FormBuilder
   ) {
     activatedRouter.params.subscribe(val => {
       this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
@@ -65,11 +75,23 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userId = this.userInfoService.getUserId();
     const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService, this.router);
     test.loadfirst = 0;
     test.getNotification();
     this.workspaceHeaderService.updateCheckActiveTab('Services');
     this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
+    this.activatedRouter.queryParams
+      .subscribe(params => {
+        console.log(params);
+      });
+    if (this.license !== '') {
+      const el: HTMLElement = this.button.nativeElement as HTMLElement;
+      el.click();
+    }
+    this.uploadForm = this.formBuilder.group({
+      profile: ['']
+    });
   }
 
   gotoMetalyzer(service: any) {
@@ -137,6 +159,24 @@ export class WorkspaceServicesComponent implements OnInit {
       });
     } catch {
       this.spinner.hide();
+    }
+  }
+
+  logout() {
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['sign-in']);
+  }
+
+  uploadFile(file) {
+    if (file.length > 0) {
+    this.workspaceService.uploadLicense(file[0]).subscribe((result) => {
+    const el: HTMLElement = this.success.nativeElement as HTMLLIElement;
+    el.click();
+    this.router.navigate(['/workspace/workspace-dashboard']);
+    }, (err) => {
+    console.log(err);
+    }
+    );
     }
   }
 }
