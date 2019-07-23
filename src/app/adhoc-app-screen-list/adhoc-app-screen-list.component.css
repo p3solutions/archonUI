@@ -21,7 +21,7 @@ th {
 }
 
 .open-app {
-  margin: 10px;
+  margin: 3px;
   font-size: 40px;
   cursor: pointer
 }
@@ -301,4 +301,63 @@ a.disabled .material-icons {
 
 ::ng-deep .my-spinner .overlay {
   position: fixed !important;
+}
+
+.padding-icon {
+  padding-top: 6px;
+}
+
+.fonticonbelow {
+  float: left;
+  color: #fff;
+  padding-top: 3px;
+  padding-left: 3px;
+  /* background-color: #2879ff; */
+  width: 31px;
+  height: 30px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 13px;
+  margin-top: 4px;
+  border: 2.2px solid #2879ff;
+}
+
+.fonticonbelow:hover {
+  background-color: #0A85F8;
+  color: #fff;
+}
+
+.edit-icon {
+  padding-top: 3px;
+  font-size: 17px;
+  color: #2879ff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit-icon:hover {
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.fonticonbelow:hover .edit-icon {
+  color: #fff;
+  font-weight: 500;
+}
+
+.deleteapp .material-icons {
+  color: #2879ff;
+}
+
+.deleteapp .material-icons:hover {
+  color: #fff;
+}
+
+.fonticonbelow:hover .material-icons {
+  color: #fff;
+}
+
+.deleteapp {
+  margin-left: 5px
 }

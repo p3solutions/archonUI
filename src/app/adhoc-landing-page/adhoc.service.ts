@@ -26,6 +26,8 @@ export class AdhocService {
   tableListUrl = this.apiUrl + 'metalyzer/tablesList?workspaceId=';
   getIAVersionsUrl = this.apiUrl + 'adhocbuilder/ia-versions';
   getTableColumnRelationListUrl = this.apiUrl + 'adhocbuilder/tableColumnList';
+  updateApplicationUrl = this.apiUrl + 'adhocbuilder/application?applicationId=';
+  deleteApplicationUrl = this.apiUrl + 'adhocbuilder/application?applicationId=';
 
   constructor(
     private http: HttpClient,
@@ -47,6 +49,11 @@ export class AdhocService {
 
   createApplication(param): Observable<any> {
     return this.http.post<any>(this.createApplicationUrl, param, { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractDataForSuccess));
+  }
+
+  updateApplication(param): Observable<any> {
+    return this.http.put<any>(this.updateApplicationUrl + param.id, param, { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractDataForSuccess));
   }
 
@@ -115,6 +122,12 @@ export class AdhocService {
 
   deleteScreen(screenId, userId): Observable<string> {
     return this.http.delete<string>(this.deleteScreenUrl + screenId + '&userId=' + userId,
+      { headers: this.userInfoService.getHeaders() }).
+      pipe(map(this.extractData));
+  }
+
+  deleteApplication(appId, userId): Observable<string> {
+    return this.http.delete<string>(this.deleteApplicationUrl + appId + '&userId=' + userId,
       { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractData));
   }

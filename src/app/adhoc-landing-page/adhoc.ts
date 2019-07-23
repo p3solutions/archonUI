@@ -10,6 +10,7 @@ export class ApplicationInfo {
     appDesc = '';
     iaVersion = '';
     iaDatabaseName = '';
+    headerText = 'Create';
     iaVersionList: string[] = [];
 }
 
