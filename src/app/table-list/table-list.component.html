@@ -190,7 +190,7 @@
                             <div class="col-md-10 ana-br p-0" title="Select All" style="margin-top: 15px;margin-left: 6%;
                             width: 88%; font-weight: 600;">
                               <!-- <mat-checkbox style="float:left; padding-top: 5px;" (change)="selectAll($event)" ></mat-checkbox> -->
-                              <input type="checkbox" style="margin-right: 10px;" (change)="selectAll($event)">
+                              <input id="selectallpri" type="checkbox" style="margin-right: 10px;" (change)="selectAll($event)" [checked]="false">
                               Select All
                               <span class="col-loader"
                                 [ngClass]="{'archon-loading-icon' : primColArray.length === 0}"></span>
@@ -263,10 +263,10 @@
                                     <div class="col-md-12 p-0"
                                       *ngFor="let secTbl of secTblArray | searchTable : searchSec1 | paginate: {id: 'dalist1', itemsPerPage: 50, totalItems: schemaResultssecTableCount, currentPage: pagesec } let i=index;"
                                       [hidden]="secTbl.tableName === selectedPrimTbl">
-                                      <div class="col-md-12 cur-p da-table trim-text ana-br sec-br" id="list-br"
-                                        title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl)">
+                                      <div class="col-md-12 cur-p da-table trim-text ana-br sec-br {{secTbl.tableName}}" id="list-br"
+                                        title="{{secTbl.tableName}}" (click)="highlightTable($event, false, secTbl);selectedSectableName = secTbl.tableName;checkForSelectAll()">
                                         <input id="{{prefixSecTblId + (secTbl.tableName)}}" class="cb-{{i}}"
-                                          type="checkbox" (change)="toggleSecTblSelection($event, secTbl)"
+                                          type="checkbox" (change)="toggleSecTblSelection($event, secTbl);checkForSelectAll()"
                                           class="m-r-10" [checked]="secTbl.selected">
                                         {{secTbl.tableName}}
                                         <i class="fa fa-angle-right unselected"></i>
@@ -308,21 +308,19 @@
                                   <div class="col-md-12 column-header ana-br" title="Select All"
                                     style="font-weight: 600">
                                     <input type="checkbox" style="margin-right: 10px; font-weight: 600"
-                                      (change)="selectAllSec($event)">
+                                      (change)="selectAllSec($event)" id="{{selectedSectableName}}" [indeterminate]="false">
                                     Select All
                                     <span class="col-loader"
                                       [ngClass]="{'archon-loading-icon' : secColArray.length === 0}"></span>
                                   </div>
                                 </div>
                                 <div class="col-md-12 p-0"
-                                  *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, totalItems: secColArray.length, currentPage: pageColumn } let c=index;"
-                                  id="secondaryColums">
+                                  *ngFor="let sColumn of secColArray | searchTable : searchSec2 | paginate: {id: 'dalist2', itemsPerPage: 50, totalItems: secColArray.length, currentPage: pageColumn } let c=index;">
                                   <div [class.selected]="c == selectedRow" class="col-md-12  trim-text ana-br da-table"
                                     id="list-br" title="{{sColumn.columnName}}">
                                     <input id="{{SecondaryTableName + secTblColJoiner + sColumn.columnName}}" class="cb"
-                                      type="checkbox" (change)="toggleColSelection($event, false, sColumn)"
-                                      checked="{{sColumn.selected ? 'checked' : null}}" class="m-r-10 m-r-sec"
-                                      [checked]="sColumn.selected" (click)="bgcol(c)">
+                                      type="checkbox" (change)="toggleColSelection($event, false, sColumn)" class="m-r-10 m-r-sec" checked="{{sColumn.selected ? 'checked' : null}}"
+                                      [checked]="sColumn.selected" (click)="bgcol(c);" name="{{selectedSectableName}}">
                                     {{sColumn.columnName}}
                                   </div>
                                 </div>
@@ -437,7 +435,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn save btn-padding" (click)="gotoBack()" data-dismiss="modal">Run As
+          <button type="button" class="btn save btn-padding" (click)="terminateJob()" style="background-color: #dd3c27" data-dismiss="modal" matTooltip="Are You Sure? This will terminate the job.">Stop</button>
+        <button type="button" class="btn save btn-padding" style="margin-left: 10px" (click)="gotoBack()" data-dismiss="modal">Run As
           Background</button>
         <button type="button" class="btn save btn-padding" (click)="getJobStatus()" style="margin-left: 10px;"
           data-dismiss="modal">Refresh</button>
@@ -480,7 +479,7 @@
       <div class="error-popup-header-cls">
         <h4 class="popup-title-cls">
           <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 15px;">error_outline</i>
-          <div class="pop-title" style="margin-left: 0px;margin-top: 15px;">Delete</div>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 15px;">Delete Confirmation</div>
         </h4>
       </div>
       <div class="modal-body">
@@ -509,19 +508,24 @@
 
 <button style="display:none" type="button" id="successPop" class="btn btn-info btn-lg" data-keyboard="true"
   data-backdrop="static" data-toggle="modal" data-target="#confirmCancelInvite">Open Modal</button>
-<div id="confirmCancelInvite" class="modal fade" role="dialog" tabindex="-1">
-  <div class="modal-dialog">
+ 
+<div class="modal fade" id="confirmCancelInvite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
     <div class="modal-content">
-      <div class="modal-header adhoc-modal-header">
-        <h4 class="modal-title">Alert</h4>
+      <div class="info-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 15px;">info_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 15px;">Alert</div>
+        </h4>
       </div>
       <div class="modal-body">
-        <p>{{message}}</p>
+        <div class="popup-paragraph-cls"> {{message}}<a [routerLink]="['/activity/status']" [queryParams]="{jobName: jobname}" data-dismiss="modal">
+          Status Monitoring
+        </a></div>
       </div>
       <div class="modal-footer">
-        <div class="action-btn">
-          <button type="button" class="mat-raised-button save btn-padding" data-dismiss="modal">Ok</button>
-        </div>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal"
+          >Ok</button>
       </div>
     </div>
   </div>
@@ -557,3 +561,51 @@
     </div>
   </div>
 </div>
+
+
+<!-- stop job error-->
+<button style="display:none" type="button" #stopjoberror class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#analyzeserror1">Open Modal</button>
+
+<div id="analyzeserror1" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="error-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 12px;">error_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 12px;">Failed</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">{{responsemsg}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="afterTerminate();"
+          data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  end -->
+
+<button #click1 data-toggle="modal" data-target="#stopPopupModal" hidden></button>
+ <!-- Stop Success Popup -->
+ <div id="stopPopupModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 480px;">
+      <div class="modal-content">
+        <div class="info-popup-header-cls" style="padding: 19px">
+          <h4 class="popup-title-cls">
+            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">info_outline</i>
+            <div class="pop-title" style="margin-left: 0px;">Notification</div>
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p class="popup-paragraph-cls">{{responsemsg}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-padding btn-info-popup-primary-color" data-dismiss="modal" (click)="afterTerminate()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--end-->

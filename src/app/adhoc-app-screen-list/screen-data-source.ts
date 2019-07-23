@@ -8,12 +8,12 @@ export class ScreenDataSource implements DataSource<Adhoc> {
 
     paginationRequired = false;
     private adhocSubject = new BehaviorSubject<Adhoc[]>([]);
-
+    totalScreen = 0;
+    public totalScreenSubject = new BehaviorSubject<number>(0);
     constructor(private adhocService: AdhocService, private spinnner: NgxSpinnerService) { }
 
     sortfn(sort) {
         const data = this.adhocSubject.getValue().slice();
-        console.log(sort, data);
         if (!sort.active || sort.direction === '') {
             const data1 = this.adhocSubject.getValue();
             this.adhocSubject.next(data1);
@@ -47,10 +47,10 @@ export class ScreenDataSource implements DataSource<Adhoc> {
         this.adhocSubject.complete();
     }
 
-    getScreen(startIndexOfScreen, workspaceId, screenId) {
+    getScreen(startIndexOfScreen, workspaceId, screenId, itemPerPage, search) {
         this.spinnner.show();
         try {
-            this.adhocService.getScreen(startIndexOfScreen, workspaceId, screenId).subscribe((result) => {
+            this.adhocService.getScreen(startIndexOfScreen, workspaceId, screenId, itemPerPage, search).subscribe((result) => {
                 result.list.forEach((value, index) => {
                     value.position = index + 1;
                     if (value.parentScreenInfo === null) {
@@ -68,6 +68,7 @@ export class ScreenDataSource implements DataSource<Adhoc> {
                     }
                 });
                 this.paginationRequired = result.paginatiomRequired;
+                this.totalScreenSubject.next(result.totalCount);
                 this.adhocSubject.next(result.list);
                 this.spinnner.hide();
             });

@@ -229,7 +229,7 @@ export class CreateDatabasePageComponent implements OnInit {
         this.spinner.hide();
         this.disableCreateBtn = false;
         document.getElementById('success-popup-btn').click();
-        this.successDatabaseMessage = 'Database profile Created Successfully and pre analysis started.';
+        this.successDatabaseMessage = 'Database profile Created Successfully and pre-analysis has been initiated .';
       }
     }, (err: HttpErrorResponse) => {
       if (err.error) {

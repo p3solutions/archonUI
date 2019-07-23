@@ -119,3 +119,35 @@ export class RelationshipInfoObject {
             softDeleted: boolean;
         }];
 }
+
+
+export class PendingDB {
+    dbProfileName = '';
+    workspaceName = '';
+    workspaceOwnerName = '';
+    reason = '';
+}
+
+export class PendingWorkspaceList {
+    workspaceList: ApprovalWorkspaceList[] = [];
+    paginationRequired = false;
+    totalCount = 0;
+}
+
+
+export class ApprovalWorkspaceList {
+    id = '';
+    createdAt = '';
+    updatedAt = '';
+    corelatedInstanceId = '';
+    instanceId = '';
+    workspaceId = '';
+    workspaceOwnerName = '';
+    databaseId = '';
+    status = '';
+    reason = '';
+    dbProfileName = '';
+    workspaceName = '';
+    databaseOwner = '';
+    softDeleted = '';
+}

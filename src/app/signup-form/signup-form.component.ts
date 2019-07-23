@@ -6,7 +6,8 @@ import { SignUp } from '../sign-up';
 import { SignupFormService } from './signup-form.service';
 import { ErrorObject } from '../error-object';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { ConfirmPasswordValidator, PasswordValidator } from './confirm-password-validator';
+import { ConfirmPasswordValidator, PasswordValidator, EmailValidator } from './confirm-password-validator';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-signup-form',
@@ -32,7 +33,8 @@ export class SignupFormComponent implements OnInit {
     private signupService: SignupFormService,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -71,7 +73,7 @@ export class SignupFormComponent implements OnInit {
       userId: new FormControl('', [Validators.required]),
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
-      emailAddress: new FormControl('', [Validators.required, Validators.email]),
+      emailAddress: new FormControl('', [Validators.required, EmailValidator.strong, Validators.email]),
       password: new FormControl('', [Validators.required, PasswordValidator.strong,
       Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -86,19 +88,23 @@ export class SignupFormComponent implements OnInit {
     this.errorObject = new ErrorObject;
     this.errorObject.show = false;
     this.successMessage = false;
+    this.spinner.show();
     this.signup = this.signUpForm.value;
-    this.signupService.signUp(this.signup).subscribe(
+    this.signupService.signUp(JSON.parse(JSON.stringify(this.signup))).subscribe(
       data => {
         this.responseData = data;
         if (this.responseData.httpStatus === 200) {
           this.inProgress = false;
+          this.spinner.hide();
           this.formDirective.resetForm();
-          this.successMessage = true;
-          setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 3000);
+          // this.successMessage = true;
+          document.getElementById('success-popup-btn').click();
+          // setTimeout(() => this.thisComponent.router.navigate(['/sign-in']), 3000);
         }
       },
       (err: HttpErrorResponse) => {
         this.inProgress = false;
+        this.spinner.hide();
         if (err.error) {
           // A client-side or network error occurred. Handle it accordingly.
           this.errorObject.message = err.error.message;
@@ -118,6 +124,10 @@ export class SignupFormComponent implements OnInit {
     } else {
       this.passwordNotMatch = false;
     }
+  }
+
+  gotoSignUp() {
+    this.router.navigate(['/sign-in']);
   }
 }
 

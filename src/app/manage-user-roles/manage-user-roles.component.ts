@@ -66,6 +66,7 @@ export class ManageUserRolesComponent implements OnInit {
   globalGroupIds: string[] = [];
   screenfilter = '';
   loginUserGlobalgroup = '';
+  itemPerPage = 50;
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router,
@@ -92,9 +93,9 @@ export class ManageUserRolesComponent implements OnInit {
 
   loadAllUsers(invited, revoked, locked) {
     this.dataSource.emptyUser();
-    this.dataSource.getAllUsers(this.paginator.pageIndex + 1, invited, revoked, locked);
-    this.dataSource.inviteUsersSubject.subscribe(result => {
-      this.totalUser = result.length;
+    this.dataSource.getAllUsers(this.paginator.pageIndex + 1, invited, revoked, locked, this.screenfilter, this.paginator.pageSize);
+    this.dataSource.totalUserSubject.subscribe(result => {
+      this.totalUser = result;
     });
   }
   sortData(sort) {
@@ -110,6 +111,10 @@ export class ManageUserRolesComponent implements OnInit {
         this.locked = null;
         this.displayedColumns = ['emailAddress', 'globalGroupName', 'status', 'businessJustification',
           'createdBy', 'createdAt', 'updatedAt'];
+        if (this.roleOfUser === 'superadmin') {
+          this.displayedColumns = ['emailAddress', 'globalGroupName', 'status', 'businessJustification',
+            'action', 'createdBy', 'createdAt', 'updatedAt'];
+        }
         break;
       }
       case 'Active': {
@@ -282,7 +287,7 @@ export class ManageUserRolesComponent implements OnInit {
           if (err.error instanceof Error) {
           } else {
             document.getElementById('error-popup').click();
-            this.successMsg = err.error.message.replace(/([A-Z])/g, ' $1').charAt(0).toUpperCase() + err.error.message.slice(1);
+            this.successMsg = err.error.message;
             this.userInviteInfo = new UserInvite();
             this.getAllUsers(this.invited, this.revoked, this.locked);
           }
@@ -352,6 +357,7 @@ export class ManageUserRolesComponent implements OnInit {
     if (userId.trim() === this.userInfoService.getUserId().trim()) {
       document.getElementById('error-popup').click();
       this.successMsg = 'You are not allowed to change your group.';
+      this.getAllUsers(this.invited, this.revoked, this.locked);
     } else {
       document.getElementById('confirmChangeGlobalRole').click();
       if (this.roleOfUser === 'superadmin') {
@@ -403,14 +409,16 @@ export class ManageUserRolesComponent implements OnInit {
       this.dataSource.connect().subscribe(result => {
         response = result;
       });
-      this.dataSource.inviteUsersSubject.subscribe(result => {
-        this.totalUser = result.length;
+      this.dataSource.totalUserSubject.subscribe(result => {
+        this.totalUser = result;
       });
-      this.dataSource._filterData(response);
+      this.dataSource._filterData(this.dataSource.tempInviteUser);
     } else
       if (emailId !== '') {
+        this.paginator.pageIndex = 0;
         this.dataSource = new InviteUserDataSource(this.manageUserRolesService, this.globalGroupIds, this.spinner);
-        this.dataSource.getUsersByEmailId(emailId, status);
+        this.dataSource.getAllUsers(this.paginator.pageIndex + 1, this.invited, this.revoked, this.locked, emailId,
+          this.paginator.pageSize);
         this.dataSource.inviteUsersSubject.subscribe(result => {
           this.totalUser = result.length;
         });

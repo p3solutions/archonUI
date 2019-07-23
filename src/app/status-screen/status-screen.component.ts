@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Renderer } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { StatusService } from './status.service';
 import { ErrorObject } from '../error-object';
 import { AuditService } from '../auditing/audit.service';
@@ -40,10 +40,12 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   expandDefault = false;
   terminateJobID;
   jobId: any;
+  jobName;
 
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private statusService: StatusService,
     private service: AuditService,
     private spinner: NgxSpinnerService, private userinfoService: UserinfoService
@@ -65,7 +67,7 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap(() => {
           this.paginator.pageIndex = 0;
-          this.getSearch();
+          this.loadPage();
         })
       )
       .subscribe();
@@ -88,11 +90,13 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
     this.dataSource.getTable(
       this.selectedJobOrigin,
       this.selectedJobStatus,
-      this.paginator.pageIndex + 1);
+      this.paginator.pageIndex + 1,
+      this.paginator.pageSize === undefined ? 5 : this.paginator.pageSize,
+      this.search === undefined ? '' : this.search.nativeElement.value);
   }
 
   getSearch() {
-    this.dataSource.filter(this.paginator.pageIndex + 1, this.search.nativeElement.value);
+    this.dataSource.filter(this.paginator.pageIndex + 1, this.search.nativeElement.value, this.selectedJobOrigin, this.selectedJobStatus);
   }
 
   gotoDashboard() {
@@ -101,8 +105,24 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
 
   getStart() {
     this.dataSource = new StatusDataSource(this.statusService, this.spinner);
-    this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1);
-    console.log(this.dataSource);
+    this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1,
+      this.paginator.pageSize === undefined ? 5 : this.paginator.pageSize,
+      this.search === undefined ? '' : this.search.nativeElement.value);
+    const value = this.route.snapshot.queryParamMap.get('jobName');
+    // if (value !== null) {
+    //   setTimeout(() => {
+    //     this.search.nativeElement.value = value;
+    //     this.dataSource.filter(this.paginator.pageIndex + 1, value, this.selectedJobOrigin, this.selectedJobStatus);
+    //   }, 3000);
+    // }
+    if (value !== null) {
+      setTimeout(() => {
+        this.search.nativeElement.value = value;
+        this.dataSource.getTable(this.selectedJobOrigin, this.selectedJobStatus, this.paginator.pageIndex + 1,
+          this.paginator.pageSize === undefined ? 5 : this.paginator.pageSize,
+          this.search === undefined ? '' : this.search.nativeElement.value);
+      }, 3000);
+    }
   }
 
   getJobOrigins() {
@@ -117,10 +137,12 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   }
 
   selectJobStatus(e) {
+    this.paginator.pageIndex = 0;
     this.selectedJobStatus = e;
   }
 
   selectJobOrigin(origin) {
+    this.paginator.pageIndex = 0;
     this.selectedJobOrigin = origin;
   }
 
@@ -128,6 +150,7 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
   refreshStatusTable() {
     this.selectedJobOrigin = '';
     this.selectedJobStatus = '';
+    this.paginator.pageIndex = 0;
     this.getStart();
   }
 
@@ -141,7 +164,7 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
     this.service.getStatusJobDetails(id).subscribe(result => {
       this.jobArray = result;
       if (this.jobArray.length === 1) {
-      this.expandDefault = true;
+        this.expandDefault = true;
       }
       el.click();
     });
@@ -153,41 +176,42 @@ export class StatusScreenComponent implements OnInit, AfterViewInit {
       const el: HTMLElement = this.retry.nativeElement as HTMLElement;
       el.click();
     } else {
-    const param = { 'userId': this.userinfoService.getUserId(), 'jobId': this.jobId , 'continuePreviousJob' : false};
+      const param = { 'userId': this.userinfoService.getUserId(), 'jobId': this.jobId, 'continuePreviousJob': false };
+      this.statusService.setRetryStatus(param).subscribe(res => {
+        if (res) {
+          this.getStart();
+        }
+      }, (err) => {
+        this.errorObject = new ErrorObject;
+        this.errorObject.message = err.error.message;
+        this.errorObject.show = true;
+      }
+      );
+    }
+  }
+
+  continueRetryJob() {
+    const param = { 'userId': this.userinfoService.getUserId(), 'jobId': this.jobId, 'continuePreviousJob': true };
     this.statusService.setRetryStatus(param).subscribe(res => {
       if (res) {
         this.getStart();
       }
     }, (err) => {
       this.errorObject = new ErrorObject;
-        this.errorObject.message = err.error.message;
-        this.errorObject.show = true;
-    }
-    );
-  }
-}
-
-continueRetryJob() {
-  const param = { 'userId': this.userinfoService.getUserId(), 'jobId': this.jobId , 'continuePreviousJob' : true};
-  this.statusService.setRetryStatus(param).subscribe(res => {
-    if (res) {
-      this.getStart();
-    }
-  }, (err) => {
-    this.errorObject = new ErrorObject;
       this.errorObject.message = err.error.message;
       this.errorObject.show = true;
-  });
-}
+    });
+  }
 
-  downloadJob(releatedJobId) {
-    this.statusService.downloadZip(releatedJobId).subscribe(result => {
+  downloadJob(releated) {
+    this.jobName = releated.jobName;
+    this.statusService.downloadZip(releated.id).subscribe(result => {
       this.downloadFile(result);
     });
   }
 
   downloadFile(content) {
-    const fileName = 'Status' + '-data.zip';
+    const fileName = 'Status' + `-${this.jobName}.zip`;
     const type = 'zip';
     const e = document.createEvent('MouseEvents');
     const a = document.createElement('a');
@@ -213,8 +237,8 @@ continueRetryJob() {
   }
 
   terminateConfirmation(id) {
-   this.terminateJobID = id;
-   const el: HTMLElement = this.terminate.nativeElement as HTMLElement;
-   el.click();
+    this.terminateJobID = id;
+    const el: HTMLElement = this.terminate.nativeElement as HTMLElement;
+    el.click();
   }
 }

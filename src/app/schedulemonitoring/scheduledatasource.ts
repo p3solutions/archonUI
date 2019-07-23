@@ -53,17 +53,18 @@ export class ScheduleDataSource implements DataSource<any> {
     this.adhocSubject.complete();
   }
 
-  getTable(selectedTool, selectedJobStatus, startIndex) {
+  getTable(selectedTool, selectedJobStatus, startIndex, itemPerPage, jobName) {
     this.indexValue = startIndex;
     this.spinner.show();
-    this.service.getJobStatuses(selectedTool, selectedJobStatus, startIndex).subscribe((result) => {
+    this.service.getJobStatuses(selectedTool, selectedJobStatus, startIndex, itemPerPage, jobName).subscribe((result) => {
       try {
         result.scheduleJobList.forEach((value, index) => {
           value.position = index + 1;
         });
-        if (result.paginationRequired) {
-          this.totalScreen = (this.indexValue + 1) * 50;
-        }
+        // if (result.paginationRequired) {
+        //   this.totalScreen = (this.indexValue + 1) * 50;
+        // }
+        this.totalScreen = result.totalCount;
         this.adhocSubject.next(result.scheduleJobList);
         this.spinner.hide();
       } catch {

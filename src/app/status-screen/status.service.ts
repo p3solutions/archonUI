@@ -39,10 +39,11 @@ export class StatusService {
       catchError(this.handleError<any>('getUserInfo')));
   }
 
-  getJobList(selectedJobOrigin, selectedJobStatus, startIndex): Observable<any> {
-    const url = this.getStatusListUrl + this.userinfoService.getUserId() + '&jobOrigin=' + selectedJobOrigin + '&jobStatus=' + selectedJobStatus + '&startIndex=' + startIndex;
+  getJobList(selectedJobOrigin, selectedJobStatus, startIndex, itemPerPage, jobName): Observable<any> {
+    const url = this.getSearchStatus + this.userinfoService.getUserId() + '&jobOrigin=' + selectedJobOrigin +
+      '&jobStatus=' + selectedJobStatus + '&startIndex=' + startIndex + '&itemPerPage=' + itemPerPage + '&jobName=' + jobName;
     return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
-      map(this.extractJobStatusList),
+      map(this.extractJobSearch),
       catchError(this.handleError<any>('getUserInfo')));
   }
   setRetryStatus(param): Observable<any> {
@@ -51,8 +52,9 @@ export class StatusService {
       .pipe(catchError(this.handleError<any>('getUserInfo')));
   }
 
-  getSearchResult(startIndex, search) {
-    const url = this.getSearchStatus + this.userinfoService.getUserId() + '&startIndex=' + startIndex + '&jobName=' + search;
+  getSearchResult(startIndex, search, jobOrigin, jobStatus) {
+    const url = this.getSearchStatus + this.userinfoService.getUserId() +
+      '&jobOrigin=' + jobOrigin + '&jobStatus=' + jobStatus + '&jobName=' + search + '&startIndex=' + startIndex;
     return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
       map(this.extractJobSearch),
       catchError(this.handleError<any>('getUserInfo')));

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef, Inject, ViewChild, OnDestroy, ElementRef } from '@angular/core';
-import { ConfiguredDB } from '../workspace-objects';
+import { ConfiguredDB, PendingDB } from '../workspace-objects';
 import { DatabaseListService } from './database-list.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
@@ -11,6 +11,10 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { UserinfoService } from '../userinfo.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { PendingDatabaseDataSource } from './pending-database-data-source';
 
 @Component({
   selector: 'app-database-list',
@@ -26,13 +30,14 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   info: Info;
   dynamicLoaderService: DynamicLoaderService;
   dbListActions = [];
+  tempDbListActions = [];
   searchText;
   toggleBoolean = false;
-  pendingList = [];
-  dataSource = new MatTableDataSource(this.pendingList);
+  pendingList: PendingDB[] = [];
+  dataSource: PendingDatabaseDataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = ['DB Profile Name', 'Workspace Name', 'Workspace Owner', 'Comments', 'Approve', 'Reject'];
+  displayedColumns: string[] = ['dbProfileName', 'workspaceName', 'workspaceOwnerName', 'reason', 'approve', 'reject'];
   @ViewChild('createNewDatabaseWizard', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
   workspaceId: any;
   heading: string;
@@ -52,14 +57,21 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
   dbName: any;
   deleteId: string;
   userinfoId: any;
-
+  DBprofileName: string;
+  @ViewChild('input') input: ElementRef;
+  totalCount = 0;
+  showPendingApproval = true;
+  toShowDatabase = false;
+  search = '';
+  intervalId: any;
   constructor(
     private configDBListService: DatabaseListService,
     @Inject(DynamicLoaderService) dynamicLoaderService,
     @Inject(ViewContainerRef) viewContainerRef,
     private router: Router, private route: ActivatedRoute,
     private workspaceHeaderService: WorkspaceHeaderService,
-    private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService
+    private commonUtilityService: CommonUtilityService, private userinfoService: UserinfoService,
+    private spinner: NgxSpinnerService
   ) {
     this.userinfoId = this.userinfoService.getUserId();
     this.dynamicLoaderService = dynamicLoaderService;
@@ -70,9 +82,6 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.getConfigDBList();
     this.isProgress = true;
     this.getDBInfoByID();
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.getAllPending();
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
       if (this.checkAdmin.includes(i)) {
@@ -81,16 +90,50 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       }
     }
     if (this.route.snapshot.paramMap.get('notification')) {
-      const el: HTMLElement = this.myDiv.nativeElement as HTMLElement;
-      el.click();
+      this.toShowDatabase = true;
+      this.paginator.pageSize = 10;
+      this.getAllPending();
     }
+
+    this.refreshDbList();
+  }
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterViewInit() {
+
+    fromEvent(this.input.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.paginator.pageSize = 5;
+          this.getAllPending();
+        })
+      )
+      .subscribe();
+
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.paginator.page)
+      .pipe(
+        tap(() => this.getAllPending())
+      )
+      .subscribe();
   }
 
   getAllPending(): any {
-    this.configDBListService.getPending().subscribe(result => {
-      this.pendingList = result;
-      this.dataSource.data = this.pendingList;
+    this.dataSource = new PendingDatabaseDataSource(this.spinner, this.configDBListService);
+    this.dataSource.getPendingWorkspace(this.paginator.pageIndex + 1, this.paginator.pageSize, this.search);
+    this.dataSource.totalCountSubject.subscribe(res => {
+      this.totalCount = res;
     });
+  }
+
+  refreshDbList() {
+    this.intervalId = setInterval(() => {
+      this.getDbList();
+    }, 30000);
   }
 
   getDBInfoByID() {
@@ -105,21 +148,52 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     this.configuredDB = database;
   }
 
+  showDatabase() {
+    this.toShowDatabase = false;
+  }
+
+  pendingApproval() {
+    this.toShowDatabase = true;
+    this.getAllPending();
+  }
+
   getConfigDBList() {
-    this.configDBListService.getListOfConfigDatabases().subscribe(result => {
-      this.configDBListInfo = result;
-      this.isProgress = false;
-      this.dbListActions = this.configDBListInfo;
-    });
+    this.spinner.show();
+    try {
+      this.getDbList();
+    } catch {
+      this.spinner.hide();
+    }
   }
   gotoManagementPanel() {
     this.router.navigate(['management-landing-page/management-panel']);
+  }
+
+  getDbList() {
+    this.configDBListService.getListOfConfigDatabases().subscribe(result => {
+      this.configDBListInfo = result;
+      this.isProgress = false;
+      this.dbListActions = this.configDBListInfo.filter(a => a.owner.id === this.userinfoId); // My DB
+      const otherUserDbList = this.configDBListInfo.filter(a => a.owner.id !== this.userinfoId); // My Other user DB
+      Array.prototype.push.apply(this.dbListActions, otherUserDbList); // Reorder
+      this.tempDbListActions = this.dbListActions.map(function (el) {
+        const o = Object.assign({}, el);
+        o.ownerId = el.owner.id;
+        o.ownerName = el.owner.firstName + ' ' + el.owner.lastName;
+        return o;
+      });
+      if (this.searchText) {
+        this.searchDatabase();
+      }
+      this.spinner.hide();
+    });
   }
 
   ngOnDestroy() {
     if (this.viewContainerRef) {
       this.viewContainerRef.remove(0);
     }
+    clearInterval(this.intervalId);
   }
   openCreateAddDBmodal() {
     if (this.viewContainerRef.get(0)) {
@@ -139,11 +213,14 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     if (this.allowToggle) {
       this.toggleBoolean = !this.toggleBoolean;
     }
+    if (this.toggleBoolean) {
+
+    }
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
 
   openModal(element, method) {
     if (method === 'Approve') {
@@ -174,34 +251,36 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
     });
   }
 
-  DBdelete(deleteId: string) {
+  DBdelete(deleteId: string, profileName: string) {
     this.DBdeleteId = deleteId;
+    this.DBprofileName = profileName;
   }
 
   deleteDB() {
     this.configDBListService.deleteDB(this.DBdeleteId).subscribe((result) => {
-          document.getElementById('deletemsg').click();
-          this.successmsg = result;
-            this.success = true;
-            this.deleteId = this.DBdeleteId;
-            this.getConfigDBList();
-             setTimeout(() => {
-               this.getConfigDBList();
-             }, 15000);
-  },
-  (err: HttpErrorResponse) => {
-    document.getElementById('deletemsg').click();
-    this.error = true;
-    this.errormsg = err.error.message;
+      document.getElementById('deletemsgsuccess').click();
+      this.successmsg = result;
+      this.success = true;
+      this.deleteId = this.DBdeleteId;
+      this.getConfigDBList();
+      setTimeout(() => {
+        this.getConfigDBList();
+      }, 15000);
+    },
+      (err: HttpErrorResponse) => {
+        document.getElementById('deletemsgerror').click();
+        this.error = true;
+        this.errormsg = err.error.message;
+      }
+    );
   }
-  );
-}
 
   closeErrorMsg() {
     this.success = false;
     this.error = false;
   }
   editDB(database) {
+    this.dbpassword = '';
     this.configuredDB = database;
     this.dbName = database.databaseName;
     this.DBupdateId = database.id;
@@ -211,24 +290,31 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
       id: this.DBupdateId,
       password: this.dbpassword
     };
-    this.configDBListService.updateDB(this.DBupdateId, params ).subscribe((result: any) => {
-          document.getElementById('editmsg').click();
-          if (result.success) {
-            this.successmsg = 'successfully updated';
-           }
-            this.success = true;
-            this.getConfigDBList();
-        },
-  (error) => {
-    document.getElementById('editmsg').click();
-    this.error = true;
-    this.errormsg = error.error.message;
+    this.configDBListService.updateDB(this.DBupdateId, params).subscribe((result: any) => {
+      document.getElementById('editmsgsuccess').click();
+      if (result.success) {
+        this.successmsg = 'Successfully Updated';
+      }
+      this.success = true;
+      this.getConfigDBList();
+    },
+      (error) => {
+        document.getElementById('editmsgerror').click();
+        this.error = true;
+        this.errormsg = error.error.message;
+      }
+    );
   }
-  );
-}
 
   createDatabase() {
     this.router.navigate(['create-database'], { queryParams: { r: 'database' } });
   }
+  searchDatabase() {
+    this.commonUtilityService.filter = this.searchText.trim().toLowerCase();
+    this.dbListActions = this.commonUtilityService._filterData(this.tempDbListActions);
+  }
 
+  sortData(sort) {
+    this.dataSource.sortfn(sort);
+  }
 }

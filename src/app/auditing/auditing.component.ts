@@ -43,6 +43,7 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
+  eventName: any;
 
 
   constructor(private router: Router, private auditService: AuditService, private userWorkspaceService: UserWorkspaceService,
@@ -107,14 +108,15 @@ export class AuditingComponent implements OnInit, AfterViewInit {
     });
   }
 
-  downloadJob(releatedJobId) {
-    this.auditService.downloadZip(releatedJobId).subscribe(result => {
+  downloadJob(element) {
+    this.eventName = element.eventName;
+    this.auditService.downloadZip(element.releatedJobId).subscribe(result => {
       this.downloadFile(result);
     });
   }
 
   downloadFile(content) {
-    const fileName = 'audit' + '-data.zip';
+    const fileName = 'audit' + `-${this.eventName}.zip`;
     const type = 'zip';
     const e = document.createEvent('MouseEvents');
     const a = document.createElement('a');
@@ -150,11 +152,12 @@ export class AuditingComponent implements OnInit, AfterViewInit {
     };
     this.isAvailable = false;
     this.dataSource = new AuditDataSource(this.auditService, this.spinner);
-    this.dataSource.getTable(params, this.paginator.pageIndex + 1);
+    this.dataSource.getTable(params, this.paginator.pageIndex + 1, this.paginator.pageSize === undefined ? 5 : this.paginator.pageSize);
 
   }
 
   selectWorkspace(param) {
+    this.paginator.pageIndex = 0;
     this.selectedWS = param.workspaceName;
     if (param.id === undefined) {
       this.selectedWSId = '';
@@ -164,10 +167,12 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   }
 
   selectEvent(e) {
+    this.paginator.pageIndex = 0;
     this.selectedEvent = e;
   }
 
   selectService(service) {
+    this.paginator.pageIndex = 0;
     this.selectedService = service;
   }
 }

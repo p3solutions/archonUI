@@ -9,6 +9,7 @@ export class ApplicationInfo {
     appName = '';
     appDesc = '';
     iaVersion = '';
+    iaDatabaseName = '';
     iaVersionList: string[] = [];
 }
 

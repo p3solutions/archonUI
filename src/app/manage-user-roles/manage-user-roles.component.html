@@ -19,7 +19,7 @@
       <div id="search-user">
         <mat-form-field>
           <input matInput name="screen-filter" [(ngModel)]="screenfilter"
-            (keyup)="getUserByEmailId($event.target.value,selectedFilterOption)" placeholder="Search (Email)">
+            (keyup)="getUserByEmailId($event.target.value,selectedFilterOption)" placeholder="Search">
         </mat-form-field>
       </div>
       <div id="search-user">
@@ -109,7 +109,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="businessJustification">
-          <th style="width:13%" mat-header-cell *matHeaderCellDef> Bussiness Justification </th>
+          <th style="width:13%" mat-header-cell *matHeaderCellDef> Business Justification </th>
           <td style="width:13%" mat-cell *matCellDef="let element"> {{element.businessJustification}} </td>
         </ng-container>
         <ng-container matColumnDef="createdBy">
@@ -131,7 +131,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <mat-paginator #matPagintor1 id="user-table-svg" [length]="totalUser" [pageSize]="50">
+    <mat-paginator #matPagintor1 id="user-table-svg" [length]="totalUser" showFirstLastButtons
+    [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
   </div>
 </div>
@@ -189,7 +190,7 @@
       <div class="modal-header error-popup-header-cls">
         <h4 class="modal-title popup-title-cls">
           <i class="material-icons popup-material-icon-cls">error_outline</i>
-          <div class="pop-title-ert">Confirm</div>
+          <div class="pop-title-ert">Group Change Confirmation</div>
         </h4>
       </div>
       <div class="modal-body">

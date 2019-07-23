@@ -1,94 +1,104 @@
 .card-header {
-    color: #000;
-    background-color: #64b5f6;
-    padding: 8px;
-    border-top-left-radius: 3px;
-      border-top-right-radius: 3px;
-  }
-  
-  .card-title {
-    font-size: 16px;
-    float: left;
-  }
-  .back-arrowr {
-    margin-top: 2px;
-    margin-bottom: 5px;
-    margin-left: 16px;
-    float: left;
-  }
-  
-  #da-arrow{
-    margin-left: 11px;
-    margin-right: 13px;
-  }
-  .title-header{
-    font-size: 18px;
-    text-align: left;
-  }
-  .arrow {
-   
-    color: #80adf8;
-    cursor: pointer;
-  }
-  
-  .arrow:hover {
-  
-    color: #2879FF;
-    cursor: pointer;
-  }
-  .body-row {
-      padding: 15px;
-      margin-right: -15px;
-    margin-left: -15px;
-  }
-  .primary-table {
-    background-color: #edf3f8;
-    margin-bottom: 12px;
-    /* margin-top: 12px; */
-  }
-  
-  .container-tab{
-    margin-left: 22px;
-    margin-right: 22px;
-  }
-  .card-title {
-    float: left;
-  }
-  .sub-headerr {
-    margin-left: -4px;
-  }
-
-  div.sticky {
-    position: sticky;
-    top: 0;
-    padding: 8px 10px;   
-    font-size: 13px;
-    letter-spacing: 0.2px;
-    margin-bottom: 6px;
+  color: #000;
+  background-color: #64b5f6;
+  padding: 8px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
-div.sticky-new {
+
+.card-title {
+  font-size: 16px;
+  float: left;
+}
+
+.back-arrowr {
+  margin-top: 2px;
+  margin-bottom: 5px;
+  margin-left: 16px;
+  float: left;
+}
+
+#da-arrow {
+  margin-left: 11px;
+  margin-right: 13px;
+}
+
+.title-header {
+  font-size: 18px;
+  text-align: left;
+}
+
+.arrow {
+
+  color: #80adf8;
+  cursor: pointer;
+}
+
+.arrow:hover {
+
+  color: #2879FF;
+  cursor: pointer;
+}
+
+.body-row {
+  padding: 15px;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.primary-table {
+  background-color: #edf3f8;
+  margin-bottom: 12px;
+  /* margin-top: 12px; */
+}
+
+.container-tab {
+  margin-left: 22px;
+  margin-right: 22px;
+}
+
+.card-title {
+  float: left;
+}
+
+.sub-headerr {
+  margin-left: -4px;
+}
+
+div.sticky {
+  position: sticky;
   top: 0;
-  padding: 8px 10px;   
+  padding: 8px 10px;
   font-size: 13px;
   letter-spacing: 0.2px;
   margin-bottom: 6px;
 }
-.scroll-div {
-    height: 360px;
-    overflow: auto;
-    padding-left: 25px;
+
+div.sticky-new {
+  top: 0;
+  padding: 8px 10px;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  margin-bottom: 6px;
 }
+
+.scroll-div {
+  height: 360px;
+  overflow: auto;
+  padding-left: 25px;
+}
+
 .column-one {
-    float: left;
-    width: 26%;
-    height: 500px;
+  float: left;
+  width: 26%;
+  height: 500px;
 }
 
 .column-two {
-    float: left;
-    width: 25%;  
-    height: 500px;
-    margin-left: -10px;
+  float: left;
+  width: 25%;
+  height: 500px;
+  margin-left: -10px;
 }
 
 .column-three {
@@ -96,18 +106,19 @@ div.sticky-new {
   width: 47%;
   height: 500px;
   padding-left: 10px;
-    margin-left: 7px;
+  margin-left: 7px;
 }
 
 .first-div {
-    display: block;
-    width: 60%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: pre;
-    margin-left: 20px;
-    text-align: left;
+  display: block;
+  width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+  margin-left: 20px;
+  text-align: left;
 }
+
 .first-div-new {
   display: block;
   width: 86%;
@@ -122,12 +133,12 @@ div.sticky-new {
 }
 
 .second-div {
-    margin-top: -18px;
-    margin-left: 75%;
-    width: 24%;
-    overflow: hidden;
-    text-align: left;
-    color: #2879ff;
+  margin-top: -18px;
+  margin-left: 75%;
+  width: 24%;
+  overflow: hidden;
+  text-align: left;
+  color: #2879ff;
 }
 
 
@@ -145,75 +156,82 @@ div.sticky-new {
 
 
 
-.modal-header{
-    font-size: 20px;
-    padding: 14px 18px;
-    border-bottom: 1px solid #e5e5e5;
-    background-color: #2879ff;
-    color: #fff;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    text-align: left;
-  }
+.modal-header {
+  font-size: 20px;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #2879ff;
+  color: #fff;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  text-align: left;
+}
 
 #primary-tbl-heading {
-    float: left;
-    text-align: right;
-    margin-left: -2px;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 0.2px;
+  float: left;
+  text-align: right;
+  margin-left: -2px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.2px;
 }
 
 #primary-table-value {
-    display: block;
-    float: left;
-    text-align: right;
-    margin-left: 3px;
-    text-transform: uppercase;
-    font-weight: 300;
-    font-size: 13px;
-    letter-spacing: 0.2px;
+  display: block;
+  float: left;
+  text-align: right;
+  margin-left: 3px;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.2px;
 }
 
 .modal-title {
-    text-align: left;
-    margin-bottom: 5px;
+  text-align: left;
+  margin-bottom: 5px;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 
 .row:after {
-    content: "";
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
+
 .mat-header-cell {
   font-size: 14px;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
-  letter-spacing: normal;  
+  letter-spacing: normal;
   text-align: left;
-  color: #0c0c0c;  
+  color: #0c0c0c;
   font-weight: bold;
 }
-td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
   padding-left: 10px;
 }
 
-.mat-cell, .mat-footer-cell {
+.mat-cell,
+.mat-footer-cell {
   font-size: 14px;
   text-align: left;
   /* padding-left: 10px; */
 }
+
 ::ng-deep .mat-paginator-range-label {
   margin: 0px !important;
 }
+
 ::ng-deep .mat-paginator-icon {
   height: unset !important;
 }
@@ -221,135 +239,140 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
 
 
 
-table.responsive-table tr>td, table.responsive-table th {
-    text-align: left;
+table.responsive-table tr>td,
+table.responsive-table th {
+  text-align: left;
 }
 
 .selected-td {
-    border: 1px solid #269af8
+  border: 1px solid #269af8
 }
 
 .outer-div {
-    display: block;
-    width: 100%;
-    
+  display: block;
+  width: 100%;
+
 }
 
 
 
 .icon-div {
-    width: 5%;
-    float: right;
-    margin-top: -14px;
-    color: cornflowerblue;
-    font-size: 9px;
+  width: 5%;
+  float: right;
+  margin-top: -14px;
+  color: cornflowerblue;
+  font-size: 9px;
 }
 
 .well {
-    min-height: 22px;
-    margin-bottom: 4px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-weight: 300;
-    font-size: 14px;
-    letter-spacing: 0.2px;
-    /* text-transform: uppercase; */
-    padding: 10px 10px
+  min-height: 22px;
+  margin-bottom: 4px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  /* text-transform: uppercase; */
+  padding: 10px 10px
 }
 
 .well-with-blue {
-    min-height: 22px;
-    margin-bottom: 4px;
-    background-color: #e8f0f6;
-    border: 1px solid #269AF8;
-    border-radius: 4px;
-    font-weight: 300;
-    font-size: 14px;
-    letter-spacing: 0.2px;
-    /* text-transform: uppercase; */
-    padding: 10px 10px
+  min-height: 22px;
+  margin-bottom: 4px;
+  background-color: #e8f0f6;
+  border: 1px solid #269AF8;
+  border-radius: 4px;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  /* text-transform: uppercase; */
+  padding: 10px 10px
 }
 
 .first-div-sec-col {
-    display: block;
-    width: 66%;
-    margin-left: 20px;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: pre;
+  display: block;
+  width: 66%;
+  margin-left: 20px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
 }
 
 .first-div-third-col {
-    width: 34%;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: pre;
-    margin-left: 143px;
-    margin-top: -18px
+  width: 34%;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+  margin-left: 143px;
+  margin-top: -18px
 }
 
 .div-third-col {
-    width: 29%;
-    margin-top: 0px;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: pre;
+  width: 29%;
+  margin-top: 0px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
 }
 
 .sec-div-third-col {
-    width: 20%;
-    margin-left: 300px;
-    margin-top: -18px;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: pre;
+  width: 20%;
+  margin-left: 300px;
+  margin-top: -18px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
 }
 
 .well:hover {
-    background-color: #f5f5f5;
-    border: 1px solid #8c8c8c;
+  background-color: #f5f5f5;
+  border: 1px solid #8c8c8c;
 }
 
-.display-icon{
-    display: none;
+.display-icon {
+  display: none;
 }
 
 .action-btn button.save {
-    background-color: #2879ff;
-    color: #ffffff;
-    text-transform: inherit;
-    margin-right: 10px;
-    transition: 0.5s;
-    border-radius: 3px;
-  }
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 10px;
+  transition: 0.5s;
+  border-radius: 3px;
+}
 
-  .action-btn button.save-disabled {
-    background-color: #2879ff;
-    color: #ffffff;
-    text-transform: inherit;
-    margin-right: 10px;
-    border-radius: 3px;
-  }
-  
-  .action-btn button.cancel {
-    background-color: #64b5f6;
-    color: #1b1b1b;
-    margin-right: 5px;
-    text-transform: inherit;
-    transition: 0.5s;
-    border-radius: 3px;
-  }
-  
-  .action-btn button.save:hover {
-    transform: scale(1.1, 1.1);
-  
-  }
-  
-  .action-btn button.cancel:hover {
-    transform: scale(1.1, 1.1);
-  }
+.action-btn button.save-disabled {
+  background-color: #2879ff;
+  color: #ffffff;
+  text-transform: inherit;
+  margin-right: 10px;
+  border-radius: 3px;
+}
+
+.action-btn button.cancel {
+  background-color: #64b5f6;
+  color: #1b1b1b;
+  margin-right: 5px;
+  text-transform: inherit;
+  transition: 0.5s;
+  border-radius: 3px;
+}
+
+.action-btn button.save:hover {
+  transform: scale(1.1, 1.1);
+
+}
+
+.action-btn button.cancel:hover {
+  transform: scale(1.1, 1.1);
+}
+
+::ng-deep .column-three table {
+  width: 100% !important;
+}

@@ -9,6 +9,7 @@ export class SelectedTableNameListObj {
 }
 
 export class SpvInfo {
+    isIndeterminate = false;
     isSelected = false;
     type = '';
     name = '';
@@ -25,7 +26,7 @@ export class TableNameAndRelatingTable {
 export class RelatingTableList {
     tableId = '';
     tableName = '';
-    isSelected = false;
+    isSelected = true;
     joinInfoList: JoinInfoList[] = [];
     spvRelatedTableList: { tableId: string, tableName: string, pColumn: string, sColumn: string, dataType: string }[] = [];
 }

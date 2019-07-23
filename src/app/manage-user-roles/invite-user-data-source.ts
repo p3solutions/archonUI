@@ -13,6 +13,7 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
     private readonly _filter = new BehaviorSubject<string>('');
     filteredData: UserInviteResponse[];
     globalGroupIds: string[] = [];
+    tempInviteUser: UserInviteResponse[] = [];
     constructor(private manageUserRolesService: ManageUserRolesService,
         private globalGroupId: string[], private spinner: NgxSpinnerService) {
         this.globalGroupIds = globalGroupId;
@@ -36,6 +37,7 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
                 });
                 this.totalUserSubject.next(result.data.model.totalUser);
                 this.inviteUsersSubject.next(result.data.model.users);
+                this.tempInviteUser = result.data.model.users;
                 this.spinner.hide();
             } catch {
                 this.spinner.hide();
@@ -43,30 +45,31 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
         });
     }
 
-    getAllUsers(startIndex, invited, accessRevoked, accountLocked) {
+    getAllUsers(startIndex, invited, accessRevoked, accountLocked, searchText, itemsPerPage) {
         this.spinner.show();
         accessRevoked = accessRevoked === null ? '' : accessRevoked;
         accountLocked = accountLocked === null ? '' : accountLocked;
         if (invited === false) {
-            this.manageUserRolesService.getAllUsers(startIndex, accessRevoked, accountLocked).subscribe((result) => {
-                try {
-                    result.data.users.usersList.forEach((value, index) => {
-                        value.status = this.getStatus(value);
-                        value.action = 'Select Action';
-                        if (this.globalGroupIds.includes(value.globalGroupId)) {
-                            value.hide = true;
-                        } else {
-                            value.hide = false;
-                        }
-                    });
-                    this.inviteUsersSubject.next(result.data.users.usersList.filter(a => a.hide === true));
-                    this.totalUserSubject.next(result.data.model.totalUser);
-                    this.spinner.hide();
-                } catch {
-                    this.spinner.hide();
-                }
+            this.manageUserRolesService.getAllUsers(startIndex, accessRevoked, accountLocked,
+                searchText, itemsPerPage).subscribe((result) => {
+                    try {
+                        result.data.users.usersList.forEach((value, index) => {
+                            value.status = this.getStatus(value);
+                            value.action = 'Select Action';
+                            if (this.globalGroupIds.includes(value.globalGroupId)) {
+                                value.hide = true;
+                            } else {
+                                value.hide = false;
+                            }
+                        });
+                        this.totalUserSubject.next(result.data.users.totalUsers);
+                        this.inviteUsersSubject.next(result.data.users.usersList.filter(a => a.hide === true));
+                        this.spinner.hide();
+                    } catch {
+                        this.spinner.hide();
+                    }
 
-            });
+                });
         } else {
             this.getInviteUsers(startIndex);
         }
@@ -93,7 +96,7 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
                     });
                     this.inviteUsersSubject.next(result.data.filter(a => a.status.trim().toLowerCase() === status.trim().toLowerCase()
                         && a.hide === true));
-                        this.spinner.hide();
+                    this.spinner.hide();
                 }
                 this.spinner.hide();
             } catch {

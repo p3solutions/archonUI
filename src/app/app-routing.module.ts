@@ -68,6 +68,7 @@ import { AddDirectJoinComponent } from './add-direct-join/add-direct-join.compon
 import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.component';
 import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
 import { ErtCloneViewComponent } from './ert-clone-view/ert-clone-view.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -205,6 +206,8 @@ const routes: Routes = [
         path: 'password-reset', component: EnterNewpasswordComponent
       }, {
         path: 'sign-up', component: SignupFormComponent
+      }, {
+        path: 'pwd-reset', component: ResetPasswordComponent
       }]
   }, {
     path: 'user-profile', component: UserProfileComponent, canActivate: [AuthenticationGuard], children: [

@@ -20,7 +20,6 @@ export class AuditDataSource implements DataSource<any> {
 
     sortfn(sort) {
         const data = this.adhocSubject.getValue().slice();
-        console.log(sort, data);
         if (!sort.active || sort.direction === '') {
             const data1 = this.adhocSubject.getValue();
             this.adhocSubject.next(data1);
@@ -55,17 +54,18 @@ export class AuditDataSource implements DataSource<any> {
         this.adhocSubject.complete();
     }
 
-    getTable(params, startIndex) {
+    getTable(params, startIndex, itemPerPage) {
         this.indexValue = startIndex;
         this.spinner.show();
-        this.service.getJobStatuses(params).subscribe(result => {
+        this.service.getJobStatuses(params, startIndex, itemPerPage).subscribe(result => {
             try {
                 result.responseModel.forEach((value, index) => {
                     value.position = index + 1;
                 });
-                if (result.paginationRequired) {
-                    this.totalScreen = (this.indexValue + 1) * 50;
-                }
+                // if (result.paginationRequired) {
+                //     this.totalScreen = (this.indexValue + 1) * 50;
+                // }
+                this.totalScreen = result.totalCount;
                 this.adhocSubject.next(result.responseModel);
                 this.spinner.hide();
             } catch {

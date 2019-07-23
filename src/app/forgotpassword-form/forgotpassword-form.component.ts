@@ -7,6 +7,7 @@ import { ForgotpasswordFormService } from './forgotpassword-form.service';
 import { ErrorObject } from '../error-object';
 import { SuccessObject } from '../success-object';
 import { FormsModule } from '@angular/forms';
+import { EmailValidator } from '../signup-form/confirm-password-validator';
 
 @Component({
   selector: 'app-forgotpassword-form',
@@ -32,19 +33,20 @@ export class ForgotpasswordFormComponent implements OnInit {
 
   createForm() {
     this.forgotPasswordForm = new FormGroup({
-      emailAddress: new FormControl('', [Validators.required, Validators.email])
+      emailAddress: new FormControl('', [Validators.required, EmailValidator.strong])
     });
   }
 
   onForgotPassword() {
     this.forgotpassword = this.forgotPasswordForm.value;
     setTimeout(() => this.errorObject.show = false, 5000);
-    setTimeout(() => this.successObject.show = false, 5000);
     this.forgotPasswordFormService.forgotPassword(this.forgotpassword).subscribe(
       data => {
         this.successObject = new SuccessObject;
         this.successObject.message = data.data;
         this.successObject.show = data.success;
+        this.successObject.show = false;
+        document.getElementById('success-popup-btn').click();
         this.forgotPasswordForm.reset();
       },
       (err: HttpErrorResponse) => {
@@ -64,5 +66,9 @@ export class ForgotpasswordFormComponent implements OnInit {
       this.errorObject.message = ' Invalid reset link, please try again.';
       this.errorObject.show = true;
     }
+  }
+
+  gotoSignUp() {
+    this.router.navigate(['/sign-in']);
   }
 }

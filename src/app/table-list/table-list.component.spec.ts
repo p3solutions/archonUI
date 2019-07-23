@@ -21,6 +21,7 @@ import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { MatExpansionModule } from '@angular/material';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
+import { StatusService } from '../status-screen/status.service';
 
 // Reason: Undefined Property
 describe('TableListComponent', () => {
@@ -35,7 +36,7 @@ describe('TableListComponent', () => {
         SecondaryColumnPipe],
       imports: [RouterTestingModule, FormsModule, HttpClientModule, NgxPaginationModule, MatExpansionModule],
       providers: [TableListService, UserinfoService, WorkspaceHeaderService,
-        DynamicLoaderService, EditRelationshipInfoService, WorkspaceServicesService,
+        DynamicLoaderService, EditRelationshipInfoService, WorkspaceServicesService, StatusService,
         AddDirectJoinService, MetalyzerHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     })
