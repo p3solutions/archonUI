@@ -20,6 +20,7 @@ export class TableColumnNode {
     type: string;
     visible: boolean;
     dataType: string;
+    index: string;
     columns?: TableColumnNode[] = [];
 }
 

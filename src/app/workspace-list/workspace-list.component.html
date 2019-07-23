@@ -30,7 +30,7 @@
   </div>
   <div class="flex-container" *ngFor="let ws of workspaceActions; let indRow = index; let last = last">
     <div *ngIf="ws?.id === deleteId">
-      <mat-card class="{{ws?.owner?.id === userinfoId? 'example-card-bg': 'example-card'}} mat-card delete">
+      <mat-card class="{{ws?.owner?.id !== userinfoId? 'example-card-bg': 'example-card'}} mat-card delete">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
@@ -62,7 +62,7 @@
       </mat-card>
     </div>
     <div *ngIf="ws?.id !== deleteId">
-      <mat-card class="{{ws?.owner.id === userinfoId? 'example-card-bg': 'example-card'}} mat-card">
+      <mat-card class="{{ws?.owner.id !== userinfoId? 'example-card-bg': 'example-card'}} mat-card">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title matTooltip="{{ws?.workspaceName}}" class="header">{{ws?.workspaceName}} </mat-card-title>
