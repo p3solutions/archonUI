@@ -36,11 +36,6 @@ export class WorkspaceServicesComponent implements OnInit {
   startIndex = 1;
   isAnyServiceEnable = true;
   showMessage = 'No access to any services. Please contact owner of workspace to get access.';
-  @ViewChild('licensebutton') button: ElementRef;
-  @ViewChild('succesdismiss') success: ElementRef;
-  userId;
-  uploadForm: FormGroup;
-  license = '';
 
 
   constructor(
@@ -59,7 +54,6 @@ export class WorkspaceServicesComponent implements OnInit {
     private userWorkspaceService: UserWorkspaceService,
     private permissionService: PermissionService,
     private spinner: NgxSpinnerService,
-    private formBuilder: FormBuilder
   ) {
     activatedRouter.params.subscribe(val => {
       this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
@@ -75,23 +69,12 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userId = this.userInfoService.getUserId();
-    const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService, this.router);
+    const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService, this.router, this.activatedRouter, null, null);
     test.loadfirst = 0;
     test.getNotification();
     this.workspaceHeaderService.updateCheckActiveTab('Services');
     this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
-    this.activatedRouter.queryParams
-      .subscribe(params => {
-        console.log(params);
-      });
-    if (this.license !== '') {
-      const el: HTMLElement = this.button.nativeElement as HTMLElement;
-      el.click();
-    }
-    this.uploadForm = this.formBuilder.group({
-      profile: ['']
-    });
+    
   }
 
   gotoMetalyzer(service: any) {
@@ -162,21 +145,4 @@ export class WorkspaceServicesComponent implements OnInit {
     }
   }
 
-  logout() {
-    localStorage.removeItem('accessToken');
-    this.router.navigate(['sign-in']);
-  }
-
-  uploadFile(file) {
-    if (file.length > 0) {
-    this.workspaceService.uploadLicense(file[0]).subscribe((result) => {
-    const el: HTMLElement = this.success.nativeElement as HTMLLIElement;
-    el.click();
-    this.router.navigate(['/workspace/workspace-dashboard']);
-    }, (err) => {
-    console.log(err);
-    }
-    );
-    }
-  }
 }

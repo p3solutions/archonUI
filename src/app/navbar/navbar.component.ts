@@ -1,12 +1,14 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, ViewChild, ElementRef } from '@angular/core';
 import { Info } from '../info';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as $ from 'jquery';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NavbarService } from './navbar.service';
 import { UserinfoService } from '../userinfo.service';
 import { browserRefresh } from '../app.component';
+import { FormGroup , FormBuilder} from '@angular/forms';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 
 @Component({
   selector: 'app-navbar',
@@ -25,9 +27,28 @@ export class NavbarComponent implements OnInit {
   count = 0;
   loadfirst = 0;
   userid;
+  license = true;
+  @ViewChild('licensebutton') button: ElementRef;
+  userId: any;
+  @ViewChild('succesdismiss') success: ElementRef;
+  uploadForm: FormGroup;
 
-  constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService, private router: Router) { }
+  constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService, private router: Router, private activatedrouter: ActivatedRoute, private formBuilder: FormBuilder, private workspaceService: WorkspaceServicesService) { }
   ngOnInit() {
+    this.userId = this.userinfoService.getUserId();
+    this.activatedrouter.queryParams
+      .subscribe(params => {
+      console.log(params);
+          this.license = params.license;
+      });
+      console.log(this.license);
+      if (this.license === false) {
+        const el: HTMLElement = this.button.nativeElement as HTMLElement;
+        el.click();
+      }
+      this.uploadForm = this.formBuilder.group({
+        profile: ['']
+      });
     if (browserRefresh) {
       this.router.navigate(['/workspace/workspace-dashboard']);
     }
@@ -57,7 +78,7 @@ export class NavbarComponent implements OnInit {
         $(this).closest('body').toggleClass('active');
       });
     });
-    this.getNotification();
+      this.getNotification();
   }
 
   // Get information from the info service
@@ -87,6 +108,7 @@ export class NavbarComponent implements OnInit {
     if (this.loadfirst === 0) {
       this.loadfirst = 1;
       this.navService.getNotification().subscribe(result => {
+        console.log(result, 'notification');
         this.notifiactionArray = [];
         this.count = 0;
         this.notifiactionArray = result;
@@ -123,6 +145,19 @@ export class NavbarComponent implements OnInit {
      this.loadfirst = 0;
      this.getNotification();
    });
+  }
+
+  uploadFile(file) {
+    if (file.length > 0) {
+    this.workspaceService.uploadLicense(file[0]).subscribe((result) => {
+    const el: HTMLElement = this.success.nativeElement as HTMLLIElement;
+    el.click();
+    this.router.navigate(['/workspace/workspace-dashboard']);
+    }, (err) => {
+    console.log(err);
+    }
+    );
+    }
   }
 
 }
