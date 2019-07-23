@@ -98,7 +98,7 @@
 
   <div class="col-md-12">
       <div class="col-md-12 expansion">
-      <mat-accordion >
+      <mat-accordion>
           <mat-expansion-panel [disabled]="role?.name !== 'ROLE_OWNER'" *ngFor="let manage of manageMembers | searchTable:searchTableName; let ind=index;">
             <mat-expansion-panel-header>
               <mat-panel-title>

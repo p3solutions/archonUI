@@ -3,7 +3,7 @@ import { ManageMembers } from '../manage-members';
 import { ManageMembersService } from './manage-members.service';
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs';
@@ -22,6 +22,7 @@ import { MockEnvironmentService } from '../environment/mock-environment.service'
 import { FormsModule } from '@angular/forms';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { SearchPipe } from '../search.pipe';
+import { CommonModule } from '@angular/common';
 
 describe('ManageMembersComponent', () => {
   let component: ManageMembersComponent;
@@ -46,7 +47,7 @@ describe('ManageMembersComponent', () => {
         HttpClientModule,
         HttpClientTestingModule,
         RouterTestingModule, MatTableModule, MatSortModule, MatDialogModule, BrowserAnimationsModule,
-        FormsModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule, MatInputModule, MatExpansionModule
+        FormsModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule, MatInputModule, MatExpansionModule, CommonModule
       ],
       declarations: [ManageMembersComponent, AddMembersComponent, ManageUserRolesComponent, SearchPipe],
       providers: [
@@ -57,7 +58,7 @@ describe('ManageMembersComponent', () => {
         WorkspaceHeaderService, ManageUserRolesService, WorkspaceServicesService,
         { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
