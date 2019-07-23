@@ -53,10 +53,10 @@ export class ScheduleDataSource implements DataSource<any> {
     this.adhocSubject.complete();
   }
 
-  getTable(selectedTool, selectedJobStatus, startIndex) {
+  getTable(selectedTool, selectedJobStatus, startIndex, itemPerPage, jobName) {
     this.indexValue = startIndex;
     this.spinner.show();
-    this.service.getJobStatuses(selectedTool, selectedJobStatus, startIndex).subscribe((result) => {
+    this.service.getJobStatuses(selectedTool, selectedJobStatus, startIndex, itemPerPage, jobName).subscribe((result) => {
       try {
         result.scheduleJobList.forEach((value, index) => {
           value.position = index + 1;
