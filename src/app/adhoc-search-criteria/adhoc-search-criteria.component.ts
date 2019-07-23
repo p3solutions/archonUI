@@ -154,7 +154,6 @@ export class AdhocSearchCriteriaComponent implements OnInit {
         this.TREE_DATA.push(tableColumnNode);
       }
     }
-    console.log(tableColumnNode);
     this.adhocScreenService.updateTreeData(this.TREE_DATA);
     this.dataSource.data = JSON.parse(JSON.stringify(this.TREE_DATA));
     this.createMapOfTree();
