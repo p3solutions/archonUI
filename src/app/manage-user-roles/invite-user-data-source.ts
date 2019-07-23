@@ -128,11 +128,9 @@ export class InviteUserDataSource implements DataSource<UserInviteResponse> {
     }
 
     _filterData(dataSource: UserInviteResponse[]) {
-        console.log(dataSource, this.filter);
         this.filteredData =
             !this.filter ? dataSource : dataSource.filter(obj => this.filterPredicate(obj, this.filter));
         this.inviteUsersSubject.next(this.filteredData);
-        console.log(this.filteredData);
         return this.filteredData;
     }
 

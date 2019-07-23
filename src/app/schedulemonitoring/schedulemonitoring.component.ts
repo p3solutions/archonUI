@@ -58,7 +58,7 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         tap(() => {
           this.paginator.pageIndex = 0;
-          this.getSearch();
+          this.loadPage();
         })
       )
       .subscribe();
@@ -80,12 +80,17 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
     this.dataSource.getTable(
       this.selectedTool,
       this.selectedJobStatus,
-      this.paginator.pageIndex + 1);
+      this.paginator.pageIndex + 1,
+      this.paginator.pageSize === undefined ? 5 : this.paginator.pageSize,
+      this.search === undefined ? '' : this.search.nativeElement.value
+    );
   }
 
   getStart() {
     this.dataSource = new ScheduleDataSource(this.service, this.spinner);
-    this.dataSource.getTable(this.selectedTool, this.selectedJobStatus, this.paginator.pageIndex + 1);
+    this.dataSource.getTable(this.selectedTool, this.selectedJobStatus, this.paginator.pageIndex + 1,
+      this.paginator.pageSize === undefined ? 5 : this.paginator.pageSize,
+      this.search === undefined ? '' : this.search.nativeElement.value);
   }
 
   openDetail(id) {
@@ -116,10 +121,12 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
   }
 
   selectTool(tool) {
+    this.paginator.pageIndex = 0;
     this.selectedTool = tool;
   }
 
   selectJobStatus(status) {
+    this.paginator.pageIndex = 0;
     this.selectedJobStatus = status;
   }
 
@@ -135,6 +142,6 @@ export class SchedulemonitoringComponent implements OnInit, AfterViewInit {
     this.terminateJobID = id;
     const el: HTMLElement = this.terminate.nativeElement as HTMLElement;
     el.click();
-   }
+  }
 
 }

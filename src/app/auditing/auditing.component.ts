@@ -152,11 +152,12 @@ export class AuditingComponent implements OnInit, AfterViewInit {
     };
     this.isAvailable = false;
     this.dataSource = new AuditDataSource(this.auditService, this.spinner);
-    this.dataSource.getTable(params, this.paginator.pageIndex + 1);
+    this.dataSource.getTable(params, this.paginator.pageIndex + 1, this.paginator.pageSize === undefined ? 5 : this.paginator.pageSize);
 
   }
 
   selectWorkspace(param) {
+    this.paginator.pageIndex = 0;
     this.selectedWS = param.workspaceName;
     if (param.id === undefined) {
       this.selectedWSId = '';
@@ -166,10 +167,12 @@ export class AuditingComponent implements OnInit, AfterViewInit {
   }
 
   selectEvent(e) {
+    this.paginator.pageIndex = 0;
     this.selectedEvent = e;
   }
 
   selectService(service) {
+    this.paginator.pageIndex = 0;
     this.selectedService = service;
   }
 }

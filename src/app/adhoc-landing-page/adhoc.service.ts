@@ -83,9 +83,10 @@ export class AdhocService {
       pipe(map(this.extractDataForSuccess));
   }
 
-  getScreen(startIndex, workspaceId, appId): Observable<any> {
+  getScreen(startIndex, workspaceId, appId, itemPerPage, search): Observable<any> {
     return this.http.get<any>(this.getScreenUrl + startIndex +
-      '&workspaceId=' + workspaceId + '&appId=' + appId, { headers: this.userInfoService.getHeaders() }).
+      '&workspaceId=' + workspaceId + '&appId=' + appId + '&itemPerPage=' + itemPerPage + '&search=' + search,
+      { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractData),
         catchError(this.handleError('getScreen', []))
       );
