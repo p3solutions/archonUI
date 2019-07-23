@@ -73,8 +73,8 @@
       </div>
        <div class="col-md-6">
          <div class="sub-left">
-              <mat-form-field style="display: none" >
-              <input matInput placeholder="Search">
+              <mat-form-field >
+              <input [(ngModel)]="searchTableName" matInput placeholder="Search">
             </mat-form-field>
           </div> 
           <div class="sub-right">            
@@ -99,7 +99,7 @@
   <div class="col-md-12">
       <div class="col-md-12 expansion">
       <mat-accordion >
-          <mat-expansion-panel [disabled]="role?.name !== 'ROLE_OWNER'" *ngFor="let manage of manageMembers;let ind=index;">
+          <mat-expansion-panel [disabled]="role?.name !== 'ROLE_OWNER'" *ngFor="let manage of manageMembers | searchTable:searchTableName; let ind=index;">
             <mat-expansion-panel-header>
               <mat-panel-title>
                   <div class="ex-header1" style="display: none" ><mat-checkbox (click)="$event.stopPropagation();" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'"></mat-checkbox></div>
