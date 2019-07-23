@@ -14,7 +14,7 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { ManageUserRolesComponent } from '../manage-user-roles/manage-user-roles.component';
 import { MatTableModule, MatSortModule, MatDialogModule, MatFormFieldModule, MatSelectModule,
-  MatPaginatorModule, MatInputModule, MatExpansionModule } from '@angular/material';
+  MatPaginatorModule, MatInputModule, MatExpansionModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ManageUserRolesService } from '../manage-user-roles/manage-user-roles.service';
 import { EnvironmentService } from '../environment/environment.service';
@@ -22,7 +22,7 @@ import { MockEnvironmentService } from '../environment/mock-environment.service'
 import { FormsModule } from '@angular/forms';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 import { SearchPipe } from '../search.pipe';
-import { CommonModule } from '@angular/common';
+
 
 describe('ManageMembersComponent', () => {
   let component: ManageMembersComponent;
@@ -47,7 +47,7 @@ describe('ManageMembersComponent', () => {
         HttpClientModule,
         HttpClientTestingModule,
         RouterTestingModule, MatTableModule, MatSortModule, MatDialogModule, BrowserAnimationsModule,
-        FormsModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule, MatInputModule, MatExpansionModule, CommonModule
+        FormsModule, MatFormFieldModule, MatSelectModule, MatPaginatorModule, MatInputModule, MatExpansionModule
       ],
       declarations: [ManageMembersComponent, AddMembersComponent, ManageUserRolesComponent, SearchPipe],
       providers: [
