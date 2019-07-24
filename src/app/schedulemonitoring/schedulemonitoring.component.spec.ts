@@ -8,7 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { UserinfoService } from '../userinfo.service';
 import { UserProfileService } from '../user-profile/user-profile.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
   MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule
@@ -26,7 +26,7 @@ describe('SchedulemonitoringComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SchedulemonitoringComponent, NavbarComponent],
-      imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, DataTablesModule, RouterTestingModule, HttpClientTestingModule, HttpClientModule],
+      imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, DataTablesModule, RouterTestingModule, HttpClientTestingModule, HttpClientModule, ReactiveFormsModule],
       providers: [UserinfoService, UserProfileService, NgxSpinnerService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

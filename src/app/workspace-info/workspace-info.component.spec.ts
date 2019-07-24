@@ -15,6 +15,7 @@ import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('WorkspaceInfoComponent', () => {
   let component: WorkspaceInfoComponent;
@@ -44,7 +45,7 @@ describe('WorkspaceInfoComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule, ReactiveFormsModule, FormsModule
       ],
       declarations: [WorkspaceInfoComponent, NavbarComponent],
       providers: [

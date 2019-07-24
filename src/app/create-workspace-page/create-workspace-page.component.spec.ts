@@ -17,6 +17,7 @@ import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 
 describe('CreateWorkspacePageComponent', () => {
   let component: CreateWorkspacePageComponent;
@@ -28,7 +29,7 @@ describe('CreateWorkspacePageComponent', () => {
       imports: [HttpClientModule, RouterTestingModule, ReactiveFormsModule,
         FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, NgxSpinnerModule,
         MatSelectModule, MatOptionModule, MatStepperModule, MatTableModule, MatPaginatorModule, MatSortModule],
-      providers: [UserWorkspaceService, UserinfoService, DatabaseListService, UserProfileService, NgxSpinnerService,
+      providers: [UserWorkspaceService, UserinfoService, DatabaseListService, UserProfileService, NgxSpinnerService, WorkspaceServicesService,
         { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
