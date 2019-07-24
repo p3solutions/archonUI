@@ -57,10 +57,17 @@
             </div>
             <div class="form-group">
               <div>
-                <input type="text" trim="blur" (keyup)="checkToEnableBtn()"
+                <input type="text" trim="blur" (keyup)="checkToEnableBtn();createApplicationName()"
                   [(ngModel)]="ingestionDataConfigObj.infoArchiveName" name="app-name" class="form-control"
                   [disabled]="disableIngestData" placeholder="InfoArchieve Application Name">
                 <small>Note: Application name is case sensitive.</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <div>
+                <input type="text" trim="blur" (keyup)="checkToEnableBtn()"
+                  [(ngModel)]="ingestionDataConfigObj.iaDatabaseName" name="app-name" class="form-control"
+                  [disabled]="disableIngestData" placeholder="InfoArchieve Database Name">
               </div>
             </div>
             <div class="form-group">
