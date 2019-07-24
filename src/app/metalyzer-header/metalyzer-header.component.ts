@@ -102,7 +102,7 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.userid = this.userInfoService.getUserId();
     this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService, this.spinner);
-    this.dataSource.getAudit(this.workspaceID, this.userid, this.matpaginator.pageIndex + 1);
+    this.dataSource.getAudit(this.workspaceID, this.userid, this.matpaginator.pageIndex + 1, this.matpaginator.pageSize === undefined ? 5 : this.matpaginator.pageSize);
   }
 
   downloadFile(content, fileType) {

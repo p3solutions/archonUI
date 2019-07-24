@@ -73,8 +73,8 @@
       </div>
        <div class="col-md-6">
          <div class="sub-left">
-              <mat-form-field style="display: none" >
-              <input matInput placeholder="Search">
+              <mat-form-field >
+              <input [(ngModel)]="searchTableName" matInput placeholder="Search">
             </mat-form-field>
           </div> 
           <div class="sub-right">            
@@ -98,8 +98,8 @@
 
   <div class="col-md-12">
       <div class="col-md-12 expansion">
-      <mat-accordion >
-          <mat-expansion-panel [disabled]="role?.name !== 'ROLE_OWNER'" *ngFor="let manage of manageMembers;let ind=index;">
+      <mat-accordion>
+          <mat-expansion-panel [disabled]="role?.name !== 'ROLE_OWNER'" *ngFor="let manage of manageMembers | searchTable:searchTableName; let ind=index;">
             <mat-expansion-panel-header>
               <mat-panel-title>
                   <div class="ex-header1" style="display: none" ><mat-checkbox (click)="$event.stopPropagation();" [disabled]="manage.workspaceRole.name === 'ROLE_OWNER'"></mat-checkbox></div>
@@ -108,10 +108,10 @@
                   <div class="ex-header3"  >{{manage.workspaceRole.name}}</div>
                   <div *ngIf="role?.name == 'ROLE_OWNER'" class="ex-header4" >
                     <a *ngIf="manage.workspaceRole.name !== 'ROLE_OWNER'" data-toggle="modal" data-tooltip="Delete" href="#confirmDelMemModal" (click)="deletemember(manage.user.id)" ><i class="material-icons" style="font-size: 23px" >delete </i></a>
-                    <a *ngIf="manage.workspaceRole.name === 'ROLE_OWNER'" data-toggle="modal" data-tooltip="Not Available"><i class="material-icons" style="font-size: 23px; color: grey; cursor: not-allowed;" >delete </i></a>
+                    <a *ngIf="manage.workspaceRole.name === 'ROLE_OWNER'" data-toggle="modal" data-tooltip="Not Available"><i class="material-icons" style="font-size: 23px; color: #dedede; cursor: not-allowed;" >delete </i></a>
                   </div>
                   <div *ngIf="role?.name !== 'ROLE_OWNER'" class="ex-header4" >
-                     <a data-toggle="modal" data-tooltip="Not Available"><i class="material-icons" style="font-size: 23px; color: grey; cursor: not-allowed;" >delete </i></a>
+                     <a data-toggle="modal" data-tooltip="Not Available"><i class="material-icons" style="font-size: 23px; color: #dedede; cursor: not-allowed;" >delete </i></a>
                     </div>
               </mat-panel-title>              
             </mat-expansion-panel-header>
@@ -204,7 +204,7 @@
           <button type="button" id="dismissmodel" class="btn btn-padding btn-secondary-popup" (click)="closeErrorMsg();"
           data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="confirmDelete();"
-          >OK</button> 
+          >Ok</button> 
       </div>
     </div>
   </div>
@@ -228,7 +228,7 @@
             </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-padding btn-secondary-popup"  data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">OK</button>      
+          <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>      
       </div>
     </div>
   </div>
@@ -247,7 +247,7 @@
               <p class="popup-paragraph-cls">{{successMsg}} </p>
             </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="resetselectedValues()">OK</button>      
+          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="resetselectedValues()">Ok</button>      
       </div>
     </div>
   </div>
@@ -264,7 +264,7 @@
               <p class="popup-paragraph-cls">{{successMsg}} </p>
             </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">OK</button>      
+          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal">Ok</button>      
       </div>
     </div>
   </div>
@@ -283,7 +283,7 @@
               <p class="popup-paragraph-cls">Member(s) added successfully</p>
             </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="resetselectedValues()">OK</button>      
+          <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal" (click)="resetselectedValues()">Ok</button>      
       </div>
     </div>
   </div>

@@ -26,6 +26,8 @@
                 matTreeNodePadding>
                 <button mat-icon-button disabled></button><i
                   [ngClass]="node.node.type=='Table'? 'fa fa-table' : 'fa fa-columns'" aria-hidden="true"></i>
+                 <i *ngIf="node.node.index==='true'" class="fa fa-key"
+                    aria-hidden="true"></i>
                 {{node.node.name | uppercase}}
               </mat-tree-node>
               <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>

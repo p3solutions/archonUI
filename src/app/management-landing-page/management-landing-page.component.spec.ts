@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('ManagementLandingPageComponent', () => {
   let component: ManagementLandingPageComponent;
@@ -17,8 +19,8 @@ describe('ManagementLandingPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ManagementLandingPageComponent, NavbarComponent],
-      imports: [RouterTestingModule, HttpClientModule, NgxSpinnerModule],
-      providers: [UserProfileService, UserinfoService, NgxSpinnerService, { provide: EnvironmentService, useClass: MockEnvironmentService }
+      imports: [RouterTestingModule, HttpClientModule, NgxSpinnerModule, FormsModule, ReactiveFormsModule],
+      providers: [UserProfileService, UserinfoService, NgxSpinnerService, WorkspaceServicesService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
       .compileComponents();

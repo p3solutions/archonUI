@@ -30,7 +30,7 @@
   </div>
   <div class="flex-container" *ngFor="let ws of workspaceActions; let indRow = index; let last = last">
     <div *ngIf="ws?.id === deleteId">
-      <mat-card class="{{ws?.owner?.id === userinfoId? 'example-card-bg': 'example-card'}} mat-card delete">
+      <mat-card class="{{ws?.owner?.id !== userinfoId? 'example-card-bg': 'example-card'}} mat-card delete">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
@@ -62,7 +62,7 @@
       </mat-card>
     </div>
     <div *ngIf="ws?.id !== deleteId">
-      <mat-card class="{{ws?.owner.id === userinfoId? 'example-card-bg': 'example-card'}} mat-card">
+      <mat-card class="{{ws?.owner.id !== userinfoId? 'example-card-bg': 'example-card'}} mat-card">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title matTooltip="{{ws?.workspaceName}}" class="header">{{ws?.workspaceName}} </mat-card-title>
@@ -195,8 +195,7 @@
         </h4>
       </div>
       <div class="modal-body" style="padding: 15px">
-        <p class="popup-paragraph-cls">Are you sure you want to delete database
-          profile '{{WSprofileName}}' ?
+        <p class="popup-paragraph-cls">Scheduled/in-progress jobs of this workspace will be deleted. Are you sure you want to delete workspace '{{WSprofileName}}' ?
         </p>
       </div>
       <div class="modal-footer">
@@ -223,7 +222,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal"
-          (click)="closeErrorMsg()">OK</button>
+          (click)="closeErrorMsg()">Ok</button>
       </div>
     </div>
   </div>
@@ -245,7 +244,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
-          (click)="closeErrorMsg()">OK</button>
+          (click)="closeErrorMsg()">Ok</button>
       </div>
     </div>
   </div>
@@ -277,7 +276,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal" (click)="refreshCharRecord(wsForm)">Cancel</button>
           <button type="button"
             class="btn btn-padding {{!wsForm.form.valid?'primary-btn-color-disabled':'primary-btn-color'}}"
             (click)="updateWS()" data-dismiss="modal" [disabled]="!wsForm.form.valid">Confirm</button>
@@ -304,7 +303,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal"
-          (click)="closeErrorMsg()">OK</button>
+          (click)="closeErrorMsg()">Ok</button>
       </div>
     </div>
   </div>
@@ -327,7 +326,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
-          (click)="closeErrorMsg()">OK</button>
+          (click)="closeErrorMsg()">Ok</button>
       </div>
     </div>
   </div>

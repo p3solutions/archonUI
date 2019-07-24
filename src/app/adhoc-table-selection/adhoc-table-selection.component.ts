@@ -54,7 +54,7 @@ export class AdhocTableSelectionComponent implements OnInit {
   ngOnInit() {
     try {
       const tempTables: { tableId: string, tableName: string, databaseName: string }[] = [];
-      this.workspaceID = this.cookieService.get('workspaceId');
+      this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
       this.spinner.show();
       this.deleteSearchResult('');
       this.screenInfoObject = this.adhocSavedObjectService.screenInfoObject;

@@ -152,9 +152,11 @@ ul.msg_list li:last-child {
 }
 
 .read{
+  background-color:#fff;
+}
+.unread{
   background-color:#e7e7e7;
 }
-
 ul.msg_list li a {
   padding: 5px 10px !important;
   border-radius: 4px;
@@ -235,6 +237,6 @@ ul.msg_list li a .message {
 
 
 .notification-height{
-  height:600px;
+  max-height: 600px;
   overflow-y: auto;
 }

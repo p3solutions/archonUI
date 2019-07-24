@@ -26,7 +26,7 @@ export class MetalyzerDataSource implements DataSource<any> {
         this.metalyzerSubject.complete();
     }
 
-    getAudit(workspaceID, userid, startIndex) {
+    getAudit(workspaceID, userid, startIndex, itemperpage) {
       this.spinner.show();
       try {
         this.indexValue = startIndex;
@@ -34,7 +34,7 @@ export class MetalyzerDataSource implements DataSource<any> {
           'workspaceId': workspaceID,
           'userId': userid
         };
-        this.metalyzerHeaderService.getAudit(param, startIndex).subscribe(result => {
+        this.metalyzerHeaderService.getAudit(param, startIndex, itemperpage).subscribe(result => {
           console.log(result);
           result.model.forEach((value, index) => {
                 value.position = index + 1;

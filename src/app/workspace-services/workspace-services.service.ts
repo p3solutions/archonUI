@@ -2,15 +2,27 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { ServiceActionsObject } from '../workspace-objects';
 import { Observable, Observer, BehaviorSubject, Subject } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { EnvironmentService } from '../environment/environment.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class WorkspaceServicesService {
 
+  private apiUrl = this.environment.apiUrl;
+
+  private headers = new HttpHeaders({
+    // 'Content-Type': 'multipart/form-data',
+    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+  });
+
   private serviceActionsUpdated: BehaviorSubject<ServiceActionsObject[]> = new BehaviorSubject<ServiceActionsObject[]>([]);
   userSelectedWorkspace = this.serviceActionsUpdated.asObservable();
+  uploadFile = this.apiUrl + 'license/upload';
 
 
-  constructor(private spinner: NgxSpinnerService) {
+  constructor(private spinner: NgxSpinnerService, private environment: EnvironmentService, private http: HttpClient,
+    private userInfoService: UserinfoService) {
   }
   updateServiceActions(serviceActionList: ServiceActionsObject[]) {
     this.serviceActionsUpdated.next(serviceActionList);
@@ -58,6 +70,12 @@ export class WorkspaceServicesService {
     } catch {
       this.spinner.hide();
     }
+  }
+
+  uploadLicense(file) {
+  const formData: FormData = new FormData();
+  formData.append('file', file);
+  return this.http.post(this.uploadFile, formData , { headers: this.headers });
   }
 }
 

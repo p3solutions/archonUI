@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input, OnInit, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, OnChanges, Input, OnInit, SimpleChanges, SimpleChange, ViewChild, ElementRef } from '@angular/core';
 import { ServiceActionsObject } from '../workspace-objects';
 import { WorkspaceDashboardService } from '../workspace-dashboard/workspace-dashboard.service';
 import { WorkspaceServicesService } from './workspace-services.service';
@@ -17,6 +17,8 @@ import { addAllToArray } from '@angular/core/src/render3/util';
 import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 import { PermissionService } from '../permission-utility-functions/permission.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
 @Component({
   selector: 'app-workspace-services',
   templateUrl: './workspace-services.component.html',
@@ -34,6 +36,8 @@ export class WorkspaceServicesComponent implements OnInit {
   startIndex = 1;
   isAnyServiceEnable = true;
   showMessage = 'No access to any services. Please contact owner of workspace to get access.';
+
+
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -49,7 +53,7 @@ export class WorkspaceServicesComponent implements OnInit {
     private cookieService: CookieService,
     private userWorkspaceService: UserWorkspaceService,
     private permissionService: PermissionService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) {
     activatedRouter.params.subscribe(val => {
       this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
@@ -65,11 +69,12 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService, this.router);
+    const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService, this.router, this.activatedRouter, null, null);
     test.loadfirst = 0;
     test.getNotification();
     this.workspaceHeaderService.updateCheckActiveTab('Services');
     this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
+    
   }
 
   gotoMetalyzer(service: any) {
@@ -96,10 +101,6 @@ export class WorkspaceServicesComponent implements OnInit {
     } else if (service.serviceName === 'ERT') {
       this.router.navigate(['/workspace/ert']);
     } else if (service.serviceName === 'IA Adhoc Query Builder') {
-      this.cookieService.delete('workspaceId');
-      this.cookieService.delete('workspaceName');
-      this.cookieService.set('workspaceId', this.workspaceHeaderService.getSelectedWorkspaceId());
-      this.cookieService.set('workspaceName', this.workspaceHeaderService.getSelectedWorkspaceName());
       this.router.navigate(['/workspace/adhoc']);
     }
   }
@@ -139,4 +140,5 @@ export class WorkspaceServicesComponent implements OnInit {
       this.spinner.hide();
     }
   }
+
 }

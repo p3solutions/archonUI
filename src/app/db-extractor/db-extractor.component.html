@@ -76,7 +76,7 @@
             <mat-label>Process</mat-label>
             <mat-select #processSelector="ngModel" name="process" [(ngModel)]="processDetailsObj.process" required
               (selectionChange)="getOutputFormatListBySecProcess(processSelector.value)">
-              <mat-option [value]="null">Select Process To Excecute</mat-option>
+              <mat-option [value]="null">Select Process To Execute</mat-option>
               <mat-option *ngFor="let item of processList" [value]="item">{{item}}</mat-option>
             </mat-select>
           </mat-form-field>
