@@ -41,7 +41,7 @@ export class ArchonHttpInterceptor implements HttpInterceptor {
                 this.userinfoService.redirectOnSessionTimedOut();
             }
             if (response.status ===  423 && response.error.message === 'License expired') {
-                this.router.navigate(['workspace/workspace-dashboard/workspace-services'], { queryParams: { license: 'false' } });
+                this.router.navigate(['workspace/workspace-dashboard/workspace-services'], { queryParams: { license: 'no' } });
             }
     }
 }

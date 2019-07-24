@@ -90,7 +90,7 @@
 
 <!--license expired-->
 
-<button style="display: none" type="button" #licensebutton data-toggle="modal" data-target="#license">Open Modal</button>
+<button style="display: none" type="button" #licensebutton data-toggle="modal" data-target="#license" data-backdrop="static" data-keyboard="false">Open Modal</button>
 <div class="modal fade" id="license" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
   <div class="modal-dialog"  style="width: 480px;">
     <div class="modal-content">
@@ -104,8 +104,9 @@
             </div>
       <div class="modal-footer" *ngIf="userId === 'superadmin'">
           <form [formGroup]="uploadForm"> 
+          <span class="alert alert-danger" *ngIf="errorlicense" role="alert" style="margin-right: 3%; padding: 10px;">Please upload a valid license</span>
           <button class="btn btn-padding secondary-btn-color" (click)="logout()" data-dismiss="modal" style="margin-right: 5px;">Not Now</button>
-          <button type="button" class="btn btn-padding primary-btn-color" (click)="uploader.click()" >Upload License</button>   
+          <button type="button" class="btn btn-padding primary-btn-color" (click)="uploader.click();errorlicense = false;" >Upload License</button>   
           <input style="display: none" type="file" #uploader accept=".lic" name="profile"
                    (change)="uploadFile($event.target.files)"/>
           <button style="display: none" #succesdismiss data-dismiss="modal"></button>

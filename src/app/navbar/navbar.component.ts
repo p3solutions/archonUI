@@ -27,25 +27,23 @@ export class NavbarComponent implements OnInit {
   count = 0;
   loadfirst = 0;
   userid;
-  license = true;
+  license = '';
   @ViewChild('licensebutton') button: ElementRef;
   userId: any;
   @ViewChild('succesdismiss') success: ElementRef;
   uploadForm: FormGroup;
+  errorlicense = false;
 
   constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService, private router: Router, private activatedrouter: ActivatedRoute, private formBuilder: FormBuilder, private workspaceService: WorkspaceServicesService) { }
   ngOnInit() {
     this.userId = this.userinfoService.getUserId();
-    this.activatedrouter.queryParams
-      .subscribe(params => {
-      console.log(params);
-          this.license = params.license;
-      });
-      console.log(this.license);
-      if (this.license === false) {
+    setTimeout(() => {
+      this.license = this.activatedrouter.snapshot.queryParamMap.get('license');
+      if (this.license === 'no') {
         const el: HTMLElement = this.button.nativeElement as HTMLElement;
         el.click();
       }
+    }, 1000);
       this.uploadForm = this.formBuilder.group({
         profile: ['']
       });
@@ -152,9 +150,9 @@ export class NavbarComponent implements OnInit {
     this.workspaceService.uploadLicense(file[0]).subscribe((result) => {
     const el: HTMLElement = this.success.nativeElement as HTMLLIElement;
     el.click();
-    this.router.navigate(['/workspace/workspace-dashboard']);
+    window.location.href = window.location.href;
     }, (err) => {
-    console.log(err);
+    this.errorlicense = true;
     }
     );
     }
