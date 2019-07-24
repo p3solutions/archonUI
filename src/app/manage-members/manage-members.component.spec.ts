@@ -69,7 +69,7 @@ describe('ManageMembersComponent', () => {
     // de = fixture.debugElement.query(By.css('#manager-members'));
     // ManageMembersInfoTag = de.nativeElement;
     spyOn(component.router, 'navigate');
-    manageMembersService = TestBed.get(ManageMembersService);
+    // manageMembersService = TestBed.get(ManageMembersService);
     fixture.detectChanges();
   }));
 

@@ -62,9 +62,9 @@ export class ManageMembersComponent implements OnInit {
     this.getRoleList();
     this.getPermissionList();
     this.roleOfUserInWorkspace = this.permissionService.getRoleOfUserInWorkspace();
-    if (this.roleOfUserInWorkspace !== 'ROLE_APPROVER' && this.roleOfUserInWorkspace !== 'ROLE_OWNER') {
-      this.router.navigate(['workspace/workspace-dashboard']);
-    }
+    // if (this.roleOfUserInWorkspace !== 'ROLE_APPROVER' && this.roleOfUserInWorkspace !== 'ROLE_OWNER') {
+    //   this.router.navigate(['workspace/workspace-dashboard']);
+    // }
     this.role = this.workspaceHeaderService.getSelectedWorkspaceWorkspaceRole();
   }
 
