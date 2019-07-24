@@ -22,11 +22,27 @@
         </mat-form-field>
       </div>
       <ng-container *ngIf="permissionToUser!=='READ'">
-        <div>
+        <div class="padding-icon">
           <span class="fa-stack open-app" (click)="openAppDialog()" matTooltip="Create Application">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-circle-thin fa-stack-2x"></i>
             <i class="fa fa-plus fa-stack-1x"></i>
+          </span>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="permissionToUser!=='READ'">
+        <div class="padding-icon">
+          <span class="fonticonbelow" (click)="openAppDialogForUpdate()" matTooltip="Update Application">
+            <i class="fa fa-pencil-square-o edit-icon"></i>
+          </span>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="permissionToUser!=='READ'">
+        <div class="padding-icon deleteapp">
+          <span class="fonticonbelow" (click)="deleteApplicationPopUp()" matTooltip="Delete Application">
+            <i class="material-icons">
+              delete
+            </i>
           </span>
         </div>
       </ng-container>
@@ -267,6 +283,29 @@
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
         <button type="button" style="display:none" class="btn btn-padding btn-error-popup-primary-color"
           data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button style="display:none" type="button" id="app-delete-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#app-delete">Open Modal</button>
+<div id="app-delete" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="modal-header error-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;">error_outline</i>
+          <div class="pop-title">Delete Confirmation</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">Are you sure you want to delete the Application?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="deleteApplicationConfirm()"
+          data-dismiss="modal">Yes</button>
       </div>
     </div>
   </div>

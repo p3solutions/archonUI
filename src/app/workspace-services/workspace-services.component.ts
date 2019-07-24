@@ -101,10 +101,6 @@ export class WorkspaceServicesComponent implements OnInit {
     } else if (service.serviceName === 'ERT') {
       this.router.navigate(['/workspace/ert']);
     } else if (service.serviceName === 'IA Adhoc Query Builder') {
-      this.cookieService.delete('workspaceId');
-      this.cookieService.delete('workspaceName');
-      this.cookieService.set('workspaceId', this.workspaceHeaderService.getSelectedWorkspaceId());
-      this.cookieService.set('workspaceName', this.workspaceHeaderService.getSelectedWorkspaceName());
       this.router.navigate(['/workspace/adhoc']);
     }
   }

@@ -2180,7 +2180,7 @@ span.mat-placeholder-required.mat-form-field-required-marker {
 
 .btn-primary-login {
   color: #fff;
-  background-color: #2879ff !important;
+  background-color: #0277bd !important;
   padding: 9px 13px !important;
   text-transform: inherit;
   border-radius: 3px;
@@ -2195,7 +2195,7 @@ span.mat-placeholder-required.mat-form-field-required-marker {
 
 .btn-primary-login-disabled {
   color: #fff;
-  background-color: #2879ff !important;
+  background-color: #26a3ec !important;
   padding: 9px 13px !important;
   text-transform: inherit;
   border-radius: 3px;
@@ -2205,3 +2205,4 @@ span.mat-placeholder-required.mat-form-field-required-marker {
 .btn-primary-login-disabled:hover {
   color: #fff;
 }
+button:focus {outline:0;}
