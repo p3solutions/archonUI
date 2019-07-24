@@ -64,8 +64,8 @@ export class MetalyzerHeaderService {
     return data || [];
   }
 
-  getAudit(param, startIndex) {
-    return this.http.post(this.getAuditUrl + startIndex, param, { headers: this.userinfoService.getHeaders() }).pipe(
+  getAudit(param, startIndex, itemperpage) {
+    return this.http.post(this.getAuditUrl + startIndex + '&itemPerPage=' + itemperpage, param, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractAudit),
       catchError(this.handleError<string>('getAudit'))
     );

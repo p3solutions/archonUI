@@ -16,6 +16,7 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -24,7 +25,7 @@ describe('UserProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserProfileComponent, EditProfileComponent, NavbarComponent, ChangePasswordComponent ],
-      providers: [UserinfoService, WorkspaceListService, WorkspaceHeaderService, UserProfileService, ChangePasswordService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      providers: [UserinfoService, WorkspaceListService, WorkspaceHeaderService, UserProfileService,WorkspaceServicesService, ChangePasswordService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       imports: [RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule]
     })
     .compileComponents();

@@ -235,6 +235,6 @@ ul.msg_list li a .message {
 
 
 .notification-height{
-  height:600px;
+  max-height: 600px;
   overflow-y: auto;
 }

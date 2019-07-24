@@ -13,6 +13,8 @@ import { NavbarService } from './navbar.service';
 import { UserinfoService } from '../userinfo.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -39,12 +41,12 @@ describe('NavbarComponent', () => {
       imports: [
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule, FormsModule, ReactiveFormsModule
       ],
       declarations: [NavbarComponent],
       providers: [
         InfoService,
-        HttpClientModule, UserProfileService, NavbarService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }
+        HttpClientModule, UserProfileService, NavbarService, UserinfoService, WorkspaceServicesService, { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
       .compileComponents();

@@ -4,11 +4,15 @@ import { WorkspaceServicesService } from './workspace-services.service';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { UserinfoService } from '../userinfo.service';
 
 describe('WorkspaceServicesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WorkspaceServicesService, NgxSpinnerService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      imports: [HttpClientModule, RouterTestingModule],
+      providers: [WorkspaceServicesService, NgxSpinnerService, UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     });
   });
 

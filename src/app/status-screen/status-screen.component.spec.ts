@@ -15,7 +15,7 @@ import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UserProfileService } from '../user-profile/user-profile.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatTableModule, MatDialog, MatDialogModule, MatSelectModule,
   MatOptionModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatSortModule, MatPaginatorModule, MatExpansionModule
@@ -80,7 +80,7 @@ describe('StatusScreenComponent', () => {
          MatFormFieldModule, MatInputModule, BrowserAnimationsModule, MatExpansionModule,
         HttpClientModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule, ReactiveFormsModule
       ],
       providers: [
         HttpClientModule,
