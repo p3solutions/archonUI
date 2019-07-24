@@ -106,7 +106,6 @@ export class NavbarComponent implements OnInit {
     if (this.loadfirst === 0) {
       this.loadfirst = 1;
       this.navService.getNotification().subscribe(result => {
-        console.log(result, 'notification');
         this.notifiactionArray = [];
         this.count = 0;
         this.notifiactionArray = result;
