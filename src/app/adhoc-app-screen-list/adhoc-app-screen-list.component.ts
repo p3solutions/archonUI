@@ -124,7 +124,7 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   getApplication() {
-    this.workspaceId = this.cookieService.get('workspaceId');
+    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     let tempResponse = new AdhocHeaderInfo();
     this.adhocService.updatedAdhocHeaderInfo.subscribe(response => {
       tempResponse = response;
@@ -144,8 +144,8 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   getHeaderInfo() {
-    this.workspaceName = this.cookieService.get('workspaceName');
-    this.workspaceId = this.cookieService.get('workspaceId');
+    this.workspaceName = this.workspaceHeaderService.getSelectedWorkspaceName();
+    this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.adhocService.getMMRVersionList(this.workspaceId).subscribe((result) => {
       if (result.length === 0) {
         document.getElementById('meta-popup-btn').click();
@@ -188,16 +188,6 @@ export class AdhocAppScreenListComponent implements OnInit {
       this.addPosition();
       this.dataSource.connect().subscribe(result => {
         this.screenInfoList = result;
-        //  this.totalScreen = (this.paginator.pageIndex + 1) * 50;
-        // if (this.dataSource.paginationRequired) {
-        //   this.totalScreen = this.totalScreen + 50;
-        // } else {
-        //   if (this.paginator.pageIndex === 0) {
-        //     this.totalScreen = this.screenInfoList.length;
-        //   } else {
-        //     this.totalScreen = (this.paginator.pageIndex) * 50 + this.screenInfoList.length;
-        //   }
-        // }
         this.spinner.hide();
       });
       this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id,
@@ -238,6 +228,32 @@ export class AdhocAppScreenListComponent implements OnInit {
       this.spinner.hide();
     }
   }
+
+
+  deleteApplicationPopUp() {
+    document.getElementById('app-delete-popup-btn').click();
+  }
+
+  deleteApplicationConfirm() {
+    const userId = getUserId();
+    this.spinner.show();
+    try {
+      this.adhocService.deleteApplication(this.selectedAppObject.id, userId).subscribe(result => {
+        this.adhocService.updateAdhocHeaderInfo(new AdhocHeaderInfo());
+        this.getApplication();
+        this.spinner.hide();
+      }, (err: HttpErrorResponse) => {
+        if (err.error) {
+          this.spinner.hide();
+          document.getElementById('failed-popup-btn').click();
+          this.successMessage = err.error.message;
+        }
+      });
+    } catch {
+      this.spinner.hide();
+    }
+  }
+
 
   loadLessonsPage() {
     this.dataSource.getScreen(this.paginator.pageIndex + 1, this.workspaceId, this.selectedAppObject.id,
@@ -307,6 +323,28 @@ export class AdhocAppScreenListComponent implements OnInit {
     });
   }
 
+  openAppDialogForUpdate(): void {
+    this.selectedAppObject.headerText = 'Update';
+    this.appInfo = this.selectedAppObject;
+    this.getIAVersions();
+    const dialogAppRef = this.dialog.open(CreateAppDialogComponent, {
+      width: '550px',
+      data: this.appInfo,
+      panelClass: 'create-app-dialog'
+    });
+    dialogAppRef.afterClosed().subscribe(result => {
+      this.updateApplication(result);
+    });
+    dialogAppRef.keydownEvents().subscribe(res => {
+      const id = (res.target as Element).id;
+      if (id === 'app-name-id') {
+        setTimeout(() => {
+          this.appInfo.iaDatabaseName = this.appInfo.appName + '-sql-db';
+        }, 200);
+      }
+    });
+  }
+
   createApplication(result) {
     if (result !== undefined) {
       const param: any = {
@@ -329,6 +367,37 @@ export class AdhocAppScreenListComponent implements OnInit {
         } else {
           document.getElementById('failed-popup-btn').click();
           this.successMessage = 'Application not Added Successfully.';
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error) {
+          document.getElementById('failed-popup-btn').click();
+          this.successMessage = err.error.message;
+        }
+      });
+    }
+  }
+
+  updateApplication(result) {
+    if (result !== undefined) {
+      const param: any = {
+        'id': this.selectedAppObject.id,
+        'appName': result.appName,
+        'appDesc': result.appDesc,
+        'iaDatabaseName': result.iaDatabaseName,
+        'workspaceId': this.workspaceId,
+        'metadataVersion': this.selectedAppObject.metadataVersion,
+        'userId': getUserId(),
+        'iaVersion': result.iaVersion
+      };
+      this.adhocService.updateApplication(param).subscribe((response) => {
+        this.adhocService.updateAdhocHeaderInfo(new AdhocHeaderInfo());
+        this.getApplication();
+        if (response.httpStatus === 200) {
+          document.getElementById('success-popup-btn').click();
+          this.successMessage = 'Application updated Successfully.';
+        } else {
+          document.getElementById('failed-popup-btn').click();
+          this.successMessage = 'Application not updated Successfully.';
         }
       }, (err: HttpErrorResponse) => {
         if (err.error) {

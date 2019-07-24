@@ -10,6 +10,7 @@ export class ApplicationInfo {
     appDesc = '';
     iaVersion = '';
     iaDatabaseName = '';
+    headerText = 'Create';
     iaVersionList: string[] = [];
 }
 
@@ -19,6 +20,7 @@ export class TableColumnNode {
     type: string;
     visible: boolean;
     dataType: string;
+    index: string;
     columns?: TableColumnNode[] = [];
 }
 

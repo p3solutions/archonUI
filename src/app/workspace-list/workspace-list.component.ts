@@ -80,7 +80,7 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
             }
         }
 
-        this.intervalId  = setInterval(() => {
+        this.intervalId = setInterval(() => {
             this.reloadWSlist();
         }, 30000);
     }
@@ -88,6 +88,10 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     getWorkspaceListInfo(id: string) {
         this.workspaceListInfo = [];
         this.spinner.show();
+        this.getWorkspace(id);
+    }
+
+    getWorkspace(id) {
         this.workspaceListService.getList(id).subscribe(result => {
             try {
                 this.workspaceListInfo = result;
@@ -119,7 +123,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
     }
 
     reloadWSlist() {
-        this.getWorkspaceListInfo(this.token_data.user.id);
+        this.getWorkspace(this.token_data.user.id);
+        // this.getWorkspaceListInfo(this.token_data.user.id);
     }
 
     viewWSmodal(workspace) {

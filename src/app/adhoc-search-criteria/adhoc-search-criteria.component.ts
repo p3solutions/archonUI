@@ -48,7 +48,10 @@ export class AdhocSearchCriteriaComponent implements OnInit {
   transformer = (node: TableColumnNode, level: number) => {
     return {
       expandable: !!node.columns && node.columns.length > 0,
-      node: { 'id': node.id, 'name': node.name, 'type': node.type, 'visible': node.visible, 'dataType': node.dataType },
+      node: {
+        'id': node.id, 'name': node.name, 'type': node.type, 'visible': node.visible,
+        'dataType': node.dataType, 'index': node.index
+      },
       level: level,
     };
   }
@@ -145,7 +148,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
         for (const column of table.columnList) {
           tableColumnNode.columns.push({
             'id': column.columnId, 'name': column.name, 'type': 'column', 'visible': true,
-            'dataType': column.type
+            'dataType': column.type, 'index': column.index
           });
         }
         this.TREE_DATA.push(tableColumnNode);
@@ -165,7 +168,7 @@ export class AdhocSearchCriteriaComponent implements OnInit {
       }
     }
     this.adhocScreenService.setTreeMap(this.treeMap);
-     this.spinner.hide();
+    this.spinner.hide();
   }
 
   initTab() {
