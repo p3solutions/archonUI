@@ -38,6 +38,7 @@ export class ManageMembersComponent implements OnInit {
   userId: any;
   successMsg: string;
   errorMsg: any;
+  searchTableName;
   roleOfUserInWorkspace = '';
   role: any;
 

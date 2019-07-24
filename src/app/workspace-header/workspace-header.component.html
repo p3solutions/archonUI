@@ -9,7 +9,7 @@
         <mat-form-field>
           <!-- <mat-label>Selected Workspace</mat-label> -->
           <mat-select [(ngModel)]="workspaceHeaderService.selected"
-            [placeholder]="userWorkspaceArray?.length === 0 ? 'Create New Worksapce' : ''">
+            [placeholder]="userWorkspaceArray?.length === 0 ? 'Create New Workspace' : ''">
             <mat-option *ngFor="let ws of userWorkspaceArray; let i of index;" [value]="ws.workspaceName"
               (click)="selectWorkspace(ws)">
               {{ws.workspaceName}}
@@ -24,7 +24,7 @@
               </i>
         </span> -->
         <span matTooltip="Create New Workspace" (click)="createWorkspace()">
-          <i class="material-icons plus">
+          <i style="color: #2879ff" class="material-icons plus">
           </i>
         </span>
       </div>
