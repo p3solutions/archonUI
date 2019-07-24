@@ -8,6 +8,7 @@ import { CommonUtilityService } from '../common-utility.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { UserinfoService } from '../userinfo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -222,6 +223,9 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         this.commonUtilityService.filter = this.searchText.trim().toLowerCase();
         this.workspaceActions = this.commonUtilityService._filterData(this.tempWorkspaceActions);
     }
+    refreshCharRecord(form: NgForm) {
+        form.form.reset();
+      }
 
 }
 

@@ -15,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { PendingDatabaseDataSource } from './pending-database-data-source';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-database-list',
@@ -316,5 +317,8 @@ export class DatabaseListComponent implements OnInit, OnDestroy {
 
   sortData(sort) {
     this.dataSource.sortfn(sort);
+  }
+  refreshCharRecord(form: NgForm) {
+    form.form.reset();
   }
 }
