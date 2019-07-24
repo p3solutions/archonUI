@@ -31,3 +31,33 @@
     <div class="noServiceMsg" *ngIf="!isAnyServiceEnable">{{showMessage}}</div>
   </div>
 </div>
+
+<!--license expired-->
+
+<!-- <button style="display: none" type="button" #licensebutton data-toggle="modal" data-target="#license">Open Modal</button>
+<div class="modal fade" id="license" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">             
+  <div class="modal-dialog"  style="width: 480px;">
+    <div class="modal-content">
+        <div class="error-popup-header-cls">
+            <h4 class="popup-title-cls">
+              <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">warning</i><div class="pop-title" style="margin-left: 0px;margin-top: 3px;">License Expired</div></h4>
+          </div>
+          <div class="modal-body">
+              <p class="popup-paragraph-cls" *ngIf="userId === 'superadmin'"> Your License has expired. Please upload license to renew.</p>
+              <p class="popup-paragraph-cls" *ngIf="userId !== 'superadmin'"> Your License has expired. Please contact superadmin.</p>
+            </div>
+      <div class="modal-footer" *ngIf="userId === 'superadmin'">
+          <form [formGroup]="uploadForm"> 
+          <button class="btn btn-padding secondary-btn-color" (click)="logout()" data-dismiss="modal" style="margin-right: 5px;">Not Now</button>
+          <button type="button" class="btn btn-padding primary-btn-color" (click)="uploader.click()" >Upload License</button>   
+          <input style="display: none" type="file" #uploader accept=".lic" name="profile"
+                   (change)="uploadFile($event.target.files)"/>
+          <button style="display: none" #succesdismiss data-dismiss="modal"></button>
+          </form>  
+      </div>
+      <div class="modal-footer" *ngIf="userId !== 'superadmin'">
+          <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal" (click)="logout()">Log Out</button>      
+      </div>
+    </div>
+  </div>
+</div> -->

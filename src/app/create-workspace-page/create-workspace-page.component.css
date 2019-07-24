@@ -118,8 +118,9 @@ th {
 }
 
 #database-table {
+  max-height: 300px;
   overflow: auto;
-  max-height: 300px
+  position: relative;
 }
 
 .database-search .mat-form-field {

@@ -52,7 +52,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div id="database-table">
+                    <div class="example-table-container" id="database-table">
                         <table mat-table [dataSource]="dataSource" matSort>
                             <ng-container matColumnDef="select">
                                 <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
@@ -90,12 +90,13 @@
                                     {{row.createdAt * 1000 | date:'medium' }} </td>
                             </ng-container>
 
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                             </tr>
                         </table>
                     </div>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+                    </mat-paginator>
                     <div id="comment-database">
                         <mat-form-field hintLabel="Reason for using database(s)">
                             <input required trim="blur" [(ngModel)]="comment" matInput #input maxlength="256"
@@ -142,7 +143,7 @@
                                 (click)="gotoDatabaseSelection(stepper)">Previous</button>
                             <button [disabled]="workspaceInProgress || !firstFormGroup.valid"
                                 (click)="createWorkspace(stepper)"
-                                class="btn {{workspaceInProgress? 'save-disabled': 'save'}} btn-padding">Create
+                                class="btn {{workspaceInProgress || !firstFormGroup.valid? 'save-disabled': 'save'}} btn-padding">Create
                                 <!-- <i *ngIf="workspaceInProgress" class="fa fa-spinner fa-spin loader"></i> -->
                             </button>
                         </div>

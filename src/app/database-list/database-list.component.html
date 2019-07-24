@@ -48,7 +48,7 @@
   <div class="pl-20">
     <div class="flex-container" *ngFor="let db of dbListActions;let indRow = index; let last = last">
       <div *ngIf="db?.id === deleteId">
-        <mat-card class="{{db?.owner.id === userinfoId? 'example-card-bg': 'example-card'}} mat-card delete">
+        <mat-card class="{{db?.owner.id !== userinfoId? 'example-card-bg': 'example-card'}} mat-card delete">
           <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
@@ -80,7 +80,7 @@
         </mat-card>
       </div>
       <div *ngIf="ws?.id !== deleteId">
-        <mat-card class="{{db?.owner.id === userinfoId? 'example-card-bg': 'example-card'}} mat-card">
+        <mat-card class="{{db?.owner.id !== userinfoId? 'example-card-bg': 'example-card'}} mat-card">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title class="header">{{db?.profileName}} </mat-card-title>
@@ -339,7 +339,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal"
-          (click)="closeErrorMsg()">OK</button>
+          (click)="closeErrorMsg()">Ok</button>
       </div>
     </div>
   </div>
@@ -361,7 +361,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
-          (click)="closeErrorMsg()">OK</button>
+          (click)="closeErrorMsg()">Ok</button>
       </div>
     </div>
   </div>
@@ -395,7 +395,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-padding secondary-btn-color" data-dismiss="modal" (click)="refreshCharRecord(dbForm)">Cancel</button>
           <button type="button" class="btn btn-padding primary-btn-color" (click)="updateDB()" data-dismiss="modal"
             [disabled]="!dbForm.form.valid">Confirm</button>
         </div>
@@ -421,7 +421,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-success-popup-primary-color" data-dismiss="modal"
-          (click)="closeErrorMsg()">OK</button>
+          (click)="closeErrorMsg()">Ok</button>
       </div>
     </div>
   </div>
@@ -444,7 +444,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal"
-          (click)="closeErrorMsg()">OK</button>
+          (click)="closeErrorMsg()">Ok</button>
       </div>
     </div>
   </div>
