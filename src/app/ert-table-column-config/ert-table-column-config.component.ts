@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { graphviz } from 'd3-graphviz';
 import * as d3 from 'd3';
 import { GraphDetails } from '../adhoc-landing-page/adhoc';
+import { toJson, getERTSummaryPageGraphDataRecord } from '../ert-datarecord-config/tree';
 
 @Component({
   selector: 'app-ert-table-column-config',
@@ -42,7 +43,9 @@ export class ErtTableColumnConfigComponent implements OnInit {
   downloadErrorMsg = '';
   downloadSuccessMsg = '';
   JobMode = '';
-
+  selectedValues: string[] = [];
+  joinListMap = new Map();
+  tempdata;
   constructor(public router: Router, private workspaceHeaderService: WorkspaceHeaderService, private spinner: NgxSpinnerService,
     private ertService: ErtService, private activatedRoute: ActivatedRoute, private userinfoService: UserinfoService) { }
 
@@ -415,6 +418,10 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
   showDataRecordAndSIPGraph() {
     this.data = this.ertService.data;
+    this.selectedValues = this.ertService.selectedValues;
+    this.joinListMap = this.ertService.joinListMap;
+    this.tempdata = getERTSummaryPageGraphDataRecord(this.selectedValues, this.joinListMap); // passing tempdata in update function.
+    // const tempdata = toJSON(this.selectedValues, this.joinListMap);
     this.ShowDiagram = false;
     this.createchart();
   }
@@ -681,7 +688,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
       svg.attr('transform', d3.event.transform);
     }
 
-    update(this.data);
+    update(this.tempdata);
   }
 
 
