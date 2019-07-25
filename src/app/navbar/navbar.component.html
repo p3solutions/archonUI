@@ -35,20 +35,20 @@
           <ul id="notifications" class="dropdown-menu msg_list notification-height" role="menu">
             <li *ngFor="let i of notifiactionArray" matTooltip="Marked as Read"
               [routerLink]="[i.route, {notification:true}]" (mouseleave)="updateNotification(i.id)"
-              [ngClass]="{'read':i.read}">
-              <a>
-                <span>
-                  <span>{{i.userId}}</span>
-                  <span class="time">{{i.createdAt * 1000 | date:'medium'}}</span>
-                </span>
+              [ngClass]="i.read? 'read' : 'unread'">
+              <a>                
                 <span class="message">
                   {{i.message}}
                 </span>
+                <span>
+                  <span>&nbsp;<!--{{i.userId}}--></span>
+                  <span class="time">{{i.createdAt * 1000 | date:'medium'}}</span>
+                </span>
               </a>
             </li>
-            <li class="all-notification">
+            <li *ngIf="notifiactionArray.length === 0" class="all-notification">
               <div class="text-center">
-                <div id="see-all-notif">Notifications</div>
+                <div id="see-all-notif" style="padding: 7px">Notifications</div>
               </div>
             </li>
           </ul>
