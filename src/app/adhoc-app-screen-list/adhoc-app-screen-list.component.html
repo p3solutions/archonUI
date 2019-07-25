@@ -30,7 +30,7 @@
       </ng-container>
       <ng-container *ngIf="permissionToUser!=='READ'">
         <div class="padding-icon">
-          <span  *ngIf="applicationInfoList.length!==0" class="fonticonbelow" (click)="openAppDialogForUpdate()" matTooltip="View/ Update Application">
+          <span  *ngIf="applicationInfoList.length!==0" class="fonticonbelow" (click)="openAppDialogForUpdate()" matTooltip="View / Edit Application">
             <i class="fa fa-pencil-square-o edit-icon"></i>
           </span>
           <span  *ngIf="applicationInfoList.length===0" class="fonticonbelowdisabled" >
