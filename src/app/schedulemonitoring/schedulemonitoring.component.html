@@ -80,23 +80,23 @@
         </ng-container>
         <ng-container matColumnDef="Schedule Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Schedule Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.scheduledDate}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.scheduledDate | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Start Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.startTime}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.startTime | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="End Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.endDate}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.endDate | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Last Run Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header>Last Run Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.lastRuntime}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.lastRuntime | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Next Start Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Next Start Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.nextStartTime}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.nextStartTime | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Status">
           <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
