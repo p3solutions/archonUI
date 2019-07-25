@@ -49,12 +49,12 @@ th {
 #app-dropdown {
   text-align: left;
   display: inline-flex;
-  margin: 2px 2px 2px 0px;
+  margin: 2px 20px 2px 0px;
 }
 
 .heading-item {
   padding: 15px;
-  text-align: left;
+  text-align: right;
   font-size: 16px;
   font-family: roboto;
   word-wrap: break-word;
@@ -327,18 +327,47 @@ a.disabled .material-icons {
   color: #fff;
 }
 
+.fonticonbelowdisabled {
+  float: left;
+  color: #fff;
+  padding-top: 3px;
+  padding-left: 3px;
+  /* background-color: #2879ff; */
+  width: 31px;
+  height: 30px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 13px;
+  margin-top: 4px;
+  border: 2.2px solid #c3c0c0;
+}
+
 .edit-icon {
   padding-top: 3px;
   font-size: 17px;
   color: #2879ff;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
+}
+
+.edit-icon-disabled {
+  padding-top: 3px;
+  font-size: 17px;
+  color: #c3c0c0;
+  font-weight: 500;
+  cursor: not-allowed;
 }
 
 .edit-icon:hover {
   color: #fff;
   font-weight: 500;
   cursor: pointer;
+}
+
+.edit-icon-disabled:hover {
+  color: #c3c0c0;
+  font-weight: 500;
+  cursor: not-allowed;
 }
 
 .fonticonbelow:hover .edit-icon {
@@ -360,4 +389,40 @@ a.disabled .material-icons {
 
 .deleteapp {
   margin-left: 5px
+}
+
+.material-plus {
+  color: #2879ff;
+  font-size: 34px
+}
+
+.material-plus:hover {
+  color: #2879ff;
+  font-size: 34px
+}
+
+.material-plus-disabled:hover {
+  color: #c3c0c0;
+  font-size: 34px
+}
+
+.material-plus-disabled {
+  color: #c3c0c0;
+  font-size: 34px
+}
+
+.material-icons.material-plus-disabled:hover {
+  background-color: #ffffff;
+  font-size: 34px;
+  cursor: not-allowed;
+}
+
+.delete-icon-disabled.material-icons {
+  color: #c3c0c0 !important;
+  cursor: not-allowed;
+}
+
+.delete-icon-disabled.material-icons:hover {
+  color: #c3c0c0;
+  cursor: not-allowed;
 }

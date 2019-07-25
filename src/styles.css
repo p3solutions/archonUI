@@ -1618,14 +1618,14 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 .create-app-dialog .mat-dialog-title {
   display: flex;
   background-color: #2879ff;
-  padding-left: 26px;
+  padding-left: 14px;
   padding-top: 17px;
   color: #ffffff;
   padding-bottom: 17px;
 }
 
 .create-app-dialog .mat-dialog-content {
-  padding: 6px 14px 0px 27px;
+  padding: 6px 14px 0px 14px;
   margin: 0px;
 }
 
@@ -1777,14 +1777,14 @@ mat-checkbox svg {
 .create-app-dialog .mat-dialog-title {
   display: flex;
   background-color: #2879ff;
-  padding-left: 26px;
+  padding-left: 14px;
   padding-top: 17px;
   color: #ffffff;
   padding-bottom: 17px;
 }
 
 .create-app-dialog .mat-dialog-content {
-  padding: 6px 14px 0px 27px;
+  padding: 6px 14px 0px 14px;
   margin: 0px;
 }
 
@@ -2174,9 +2174,6 @@ span.mat-placeholder-required.mat-form-field-required-marker {
   color: #F44336 !important;
 }
 
-.btn:focus {
-  color: #ffffff;
-}
 
 .btn-primary-login {
   color: #fff;
@@ -2205,4 +2202,13 @@ span.mat-placeholder-required.mat-form-field-required-marker {
 .btn-primary-login-disabled:hover {
   color: #fff;
 }
-button:focus {outline:0;}
+
+button:focus {
+  outline: 0;
+}
+
+.text-hidden-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

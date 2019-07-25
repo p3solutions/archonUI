@@ -239,6 +239,7 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.spinner.show();
     try {
       this.adhocService.deleteApplication(this.selectedAppObject.id, userId).subscribe(result => {
+        this.selectedAppObject = new ApplicationInfo();
         this.adhocService.updateAdhocHeaderInfo(new AdhocHeaderInfo());
         this.getApplication();
         this.spinner.hide();
