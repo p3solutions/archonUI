@@ -80,7 +80,7 @@
                   <thead>
                     <tr>
                       <th><input class="select-all-checkbox" type="checkbox" [checked]="isAllColumnSelected"
-                          (change)="selectAllColumns($event)">Include</th>
+                          (change)="selectAllColumns($event)"></th>
                       <th>Column</th>
                       <th>Column(As required in Output)
                       <th>Type</th>
@@ -163,7 +163,7 @@
         </div>
         <div>
           <mat-accordion>
-            <mat-expansion-panel [expanded]="!isCombinedQueryMode" [disabled]="isCombinedQueryMode"
+            <mat-expansion-panel [expanded]="isCombinedQueryModeExpanded" [disabled]="isCombinedQueryMode"
               (closed)="openColumnMode()">
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -227,7 +227,7 @@
               </div>
 
             </mat-expansion-panel>
-            <mat-expansion-panel [expanded]="!isQueryMode" [disabled]="isQueryMode">
+            <mat-expansion-panel [expanded]="isQueryModeExpanded" [disabled]="isQueryMode">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Query Mode

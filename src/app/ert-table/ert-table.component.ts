@@ -150,7 +150,7 @@ export class ErtTableComponent implements OnInit {
     this.selectedTableList = this.ertService.selectedList;
     this.selectedTableId = this.selectedTableList[0].tableId;
     const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-    this.modifiedTableName = tempTableObj.modifiedTableName;
+    this.modifiedTableName = tempTableObj.modifiedTableName.toUpperCase();
     this.tableName = tempTableObj.tableName;
     this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
   }
@@ -207,7 +207,7 @@ export class ErtTableComponent implements OnInit {
           }
           this.selectedTableId = this.selectedTableList[0].tableId;
           const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-          this.modifiedTableName = tempTableObj.modifiedTableName;
+          this.modifiedTableName = tempTableObj.modifiedTableName.toUpperCase();
           this.tableName = tempTableObj.tableName;
           this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
         }
@@ -530,7 +530,7 @@ export class ErtTableComponent implements OnInit {
       this.spinner.show();
       this.selectedTableId = tableId;
       const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-      this.modifiedTableName = tempObj.modifiedTableName;
+      this.modifiedTableName = tempObj.modifiedTableName.toUpperCase();
       this.tableName = tempObj.tableName;
       this.isAllColumnSelected = tempObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
       this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
@@ -602,7 +602,6 @@ export class ErtTableComponent implements OnInit {
   openUsrDefinedColumnModel(columnName: string) {
     this.isCombinedQueryModeExpanded = false;
     this.isQueryModeExpanded = false;
-    this.accordion.closeAll();
     this.userDefinedList = [];
     this.usrDefinedColumnName = '';
     this.usrDefinedQueryView = '';
@@ -1418,12 +1417,18 @@ export class ErtTableComponent implements OnInit {
     if (this.usrDefinedQueryView === '' && this.usrDefinedQueryViewMode === '') {
       this.isCombinedQueryMode = false;
       this.isQueryMode = false;
+      this.isCombinedQueryModeExpanded = false;
+      this.isQueryModeExpanded = false;
     } else if (this.usrDefinedQueryViewMode !== '' && this.usrDefinedQueryView === '') {
       this.isQueryMode = false;
       this.isCombinedQueryMode = true;
+      this.isCombinedQueryModeExpanded = false;
+      this.isQueryModeExpanded = true;
     } else if (this.usrDefinedQueryViewMode === '' && this.usrDefinedQueryView !== '') {
       this.isQueryMode = true;
       this.isCombinedQueryMode = false;
+      this.isCombinedQueryModeExpanded = true;
+      this.isQueryModeExpanded = false;
     }
   }
 
