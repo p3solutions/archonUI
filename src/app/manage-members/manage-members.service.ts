@@ -59,7 +59,7 @@ export class ManageMembersService {
     );
   }
   updateServiceActions(params: AnyObject) {
-    const url = this.apiUrl + `users/${params.userId}/roles/actions`;
+    const url = this.apiUrl + `users/${btoa(params.userId)}/roles/actions`;
     return this.http.post<any>(url, params, { headers: this.headers }).pipe(
       map(this.extractServiceActions),
       catchError(this.handleError('updateServiceActions'))
