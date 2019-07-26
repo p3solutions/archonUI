@@ -421,7 +421,6 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.selectedValues = this.ertService.selectedValues;
     this.joinListMap = this.ertService.joinListMap;
     this.tempdata = getERTSummaryPageGraphDataRecord(this.selectedValues, this.joinListMap); // passing tempdata in update function.
-    // const tempdata = toJSON(this.selectedValues, this.joinListMap);
     this.ShowDiagram = false;
     this.createchart();
   }
@@ -458,6 +457,7 @@ export class ErtTableColumnConfigComponent implements OnInit {
 
     // update starts
     function update(data) {
+      console.log(data, 'inside update');
       const root = d3.hierarchy(data);
       const nodes = flatten(root);
       const links = root.links();

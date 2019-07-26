@@ -279,6 +279,7 @@ export function toJson(inputTableList: string[], tableRelationshipDtls): string 
   }
   //console.log(nodeList);
   let retVal = JSON.stringify(tree.root);
+  console.log(retVal, 'from toJSON');
   // console.log(b);
   return retVal;
 }
@@ -462,8 +463,7 @@ export function getERTSummaryPageGraphDataRecord(inputTableList: string[], table
     addChildrenForERTSummaryPage(nodeList, nodeList[k], tableRelationshipDtls, visible);
   }
   // console.log(nodeList);
-  const retVal = JSON.stringify(tree.root);
   // console.log(b);
-  return retVal;
+  return tree.root;
 }
 
