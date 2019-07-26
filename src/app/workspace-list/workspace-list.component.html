@@ -73,7 +73,7 @@
         <mat-card-content class="content" *ngFor="let db of ws.databases;">
           <div class='body-left'>Database(s)</div>
           <div class='body-center'>:</div>
-          <div class='body-right'>{{db?.name}}</div>
+          <div class='body-right'><div class="overflow-text"  matTooltip="{{db?.name.length>26 ? db?.name : '' }}">{{db?.name}}</div></div>
           <div class='body-left'>Owner Id</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.owner?.id}}</div>
@@ -82,7 +82,7 @@
           <div class='body-right'>{{ws?.owner?.name}}</div>
           <div class='body-left'>Meta Version</div>
           <div class='body-center'>:</div>
-          <div class='body-right'>{{ws?.masterMetadataVersion}}</div>
+          <div class='body-right'><div class="overflow-text"  matTooltip="{{ws?.masterMetadataVersion.length>26 ? ws?.masterMetadataVersion : '' }}">{{ws?.masterMetadataVersion}}</div></div>
           <div class='body-left'>Last Updated Time</div>
           <div class='body-center'>:</div>
           <div class='body-right'>{{ws?.updatedAt * 1000 | date: 'medium'}}</div>

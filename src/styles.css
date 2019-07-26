@@ -2206,3 +2206,9 @@ span.mat-placeholder-required.mat-form-field-required-marker {
   color: #fff;
 }
 button:focus {outline:0;}
+
+.overflow-text {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}

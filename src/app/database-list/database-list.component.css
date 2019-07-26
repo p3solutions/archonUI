@@ -108,9 +108,14 @@ table.table td {
 
 .header {
   margin-top: 10px;
-    margin-left: -9px;
-    font-size: 20px;
-    color: #121212;
+  margin-left: -9px;
+  font-size: 20px;
+  color: #121212;
+  white-space: nowrap; 
+  width: 270px; 
+  overflow: hidden;
+  text-overflow:ellipsis;
+  text-align: left;
 }
 
 .modal-header {
