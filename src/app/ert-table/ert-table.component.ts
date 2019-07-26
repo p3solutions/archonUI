@@ -9,14 +9,15 @@ import {
 } from '../ert-landing-page/ert';
 import {
   addFilterNode, FilterConfigNode, Tree, searchTree,
-  getPreorderDFS, ColumnConfigFunction, deleteNode, columnConfigFunctionList, findParentNode, FilterOperationList, filterOperationList
+  getPreorderDFS, ColumnConfigFunction, deleteNode, findParentNode, FilterOperationList,
 } from './ert-filter';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
 import { MatAccordion } from '@angular/material';
 import { Observable } from 'rxjs';
-import { of } from "rxjs";
+import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { columnConfigFunctionList, filterOperationList, restrictedKeyWordInColumnName } from './ert-utility-function';
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
@@ -240,7 +241,7 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
-  getSearchAvailableTablelist() {  // During creating job when user search table.
+  getSearchAvailableTablelist() {  // During editing job when user search table in available.
     this.currentPageOfOriginalErtTable = 1;
     if (this.searchAvailableTableName !== '') {
       this.ertService.getErtSearchAvailableTable(this.ertJobId, this.searchAvailableTableName.toUpperCase(),
@@ -588,6 +589,8 @@ export class ErtTableComponent implements OnInit {
     if (this.modifiedTableName.length === 0) {
       this.modifiedTableName = tempOriginalTableName;
       this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = tempOriginalTableName;
+    } else {
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName.toUpperCase();
     }
   }
 
@@ -963,7 +966,12 @@ export class ErtTableComponent implements OnInit {
           .filter(b => b.originalColumnName.trim().toUpperCase().includes(this.usrDefinedColumnName.trim().toUpperCase()));
         const lengthuserdefined = checkUndefinedColumnExist.length;
         if (lengthuserdefined !== 1) {
-          this.saveUserDefined();
+          if (restrictedKeyWordInColumnName.filter(a => a.toUpperCase() === this.usrDefinedColumnName.toUpperCase())[0] === undefined) {
+            this.saveUserDefined();
+          } else {
+            this.usrDefinedAlertMessage = 'Kindly provide different column name.';
+            document.getElementById('query-alert').classList.remove('alert-hide');
+          }
         } else {
           this.usrDefinedAlertMessage = 'Kindly provide different column name.';
           document.getElementById('query-alert').classList.remove('alert-hide');
@@ -1443,6 +1451,8 @@ export class ErtTableComponent implements OnInit {
       filter(a => a.originalColumnName === originalColumnName);
     if ($event.target.value.length === 0) {
       temp[0].modifiedColumnName = originalColumnName;
+    } else {
+      temp[0].modifiedColumnName = temp[0].modifiedColumnName.toUpperCase();
     }
   }
 
@@ -1494,6 +1504,11 @@ export class ErtTableComponent implements OnInit {
     }
     return isValid;
   }
+
+  checkForRestrictedColumnName() {
+
+  }
+
 }
 
 

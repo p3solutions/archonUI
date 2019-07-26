@@ -403,7 +403,7 @@
         <div class="form-group">
           <select class="form-control" #selectValue="ngModel" [ngModel]="configColumnObject.selectedConfigFunction"
             name="configName" (ngModelChange)="setColumnConfigObj(selectValue.value)">
-            <option value="null">Select Column</option>
+            <option value="null">Select Function</option>
             <option *ngFor="let item of columnConfigFunctionList" [value]="item.function">{{item.function}}</option>
           </select>
         </div>
