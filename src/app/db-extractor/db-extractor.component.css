@@ -64,6 +64,20 @@ option {
   text-align: left;
   color: #030303;
   margin-left: 35px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.flex-item-icon {
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #030303;
+  margin-left: 3px;
 }
 .bg {
   text-align: left;
