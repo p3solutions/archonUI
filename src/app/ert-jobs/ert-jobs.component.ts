@@ -33,7 +33,7 @@ export class ErtJobsComponent implements OnInit {
   allJobList: ERTJobs[] = [];
   cloneJobName = '';
   cloneJobId = '';
-
+  ertJobName = '';
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router, public cdRef: ChangeDetectorRef,
     private permissionService: PermissionService) { }
@@ -182,8 +182,10 @@ export class ErtJobsComponent implements OnInit {
   }
 
 
-  setJobId(ertJobId: string) {
+  setJobId(ertJobId: string, ertJobName:string) {
     this.ertJobId = ertJobId;
+    this.ertJobName = ertJobName;
+
   }
 
   showJobDetails(jobId: string) {

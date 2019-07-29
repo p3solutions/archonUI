@@ -47,7 +47,7 @@
         </div>
         <ng-container *ngIf="permissionToUser!=='READ'">
           <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
-              (click)="setJobId(item.jobId)" matTooltip="Delete">
+              (click)="setJobId(item.jobId ,item.jobTitle)" matTooltip="Delete">
               <span aria-hidden="true">&times;</span>
             </button></div>
         </ng-container>
@@ -185,7 +185,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <p class="popup-paragraph-cls">Are you sure you want to delete the job ?</p>
+        <p class="popup-paragraph-cls">Are you sure you want to delete the job {{ertJobName}}?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
