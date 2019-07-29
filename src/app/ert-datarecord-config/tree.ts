@@ -494,7 +494,7 @@ export function getERTSummaryPageSIPGraphData(inputTableList: string[], map) {
           childTableList[j].enableClick = false;
         }
       }
-      if ((childTableList[j].color !== 'white')) {
+      if ((childTableList[j].color !== 'white') && (childTableList[j].color !== '#e0e0e0')) {
       tree.add(childTableList[j], parent);
       }
     }
