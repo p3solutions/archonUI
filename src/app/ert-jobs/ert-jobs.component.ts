@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PermissionService } from '../permission-utility-functions/permission.service';
 import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-ert-jobs',
@@ -35,6 +36,7 @@ export class ErtJobsComponent implements OnInit {
   cloneJobId = '';
   ertJobName = '';
   intervalId: any;
+  subscription: Subscription;
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router, public cdRef: ChangeDetectorRef,
     private permissionService: PermissionService) { }
@@ -58,12 +60,13 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.updateJobName('');
     this.ertService.updatejobType('');
     this.getErtJobs();
-    this.intervalId = this.interval();
+    this.interval();
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
-    clearInterval(this.intervalId);
+   // clearInterval(this.intervalId);
+   this.subscription.unsubscribe();
   }
 
 
@@ -105,9 +108,8 @@ export class ErtJobsComponent implements OnInit {
   }
 
   interval() {
-    return setInterval(() => {
-      this.getErtJobs();
-    }, 20000);
+    const source = interval(30000);
+    this.subscription = source.subscribe(val => this.getErtJobs());
   }
 
 
