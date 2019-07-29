@@ -467,3 +467,39 @@ export function getERTSummaryPageGraphDataRecord(inputTableList: string[], table
   return tree.root;
 }
 
+export function getERTSummaryPageSIPGraphData(inputTableList: string[], map) {
+  const tree = new Tree();
+
+ for (let i = 0; i < inputTableList.length; i++) {
+    const parent = getTableProperty(inputTableList[i], map);
+
+    if (i === 0) {
+      // parent.isSelected = isSelectedPath(inputTableList,parent.tableName);
+      parent.color = '#F94B4C';
+      parent.enableClick = true;
+      tree.add(parent);
+    }
+
+    const childTableList: Prop[] = getChildTableListForSIP(inputTableList, parent.name, map);
+    for (let j = 0; j < childTableList.length; j++) {
+      if (isPathForSIP(inputTableList, childTableList[j].name, parent.name)) {
+        childTableList[j].color = 'black';
+        childTableList[j].enableClick = true;
+      }
+
+    if (childTableList[j].color === 'black') {
+        if (tree.contains(childTableList[j]) === true) {
+          childTableList[j].color = '#e0e0e0';
+          // added by Satheesh
+          childTableList[j].enableClick = false;
+        }
+      }
+      if ((childTableList[j].color !== 'white')) {
+      tree.add(childTableList[j], parent);
+      }
+    }
+
+  }
+  return tree.root;
+}
+

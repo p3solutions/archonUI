@@ -9,7 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { graphviz } from 'd3-graphviz';
 import * as d3 from 'd3';
 import { GraphDetails } from '../adhoc-landing-page/adhoc';
-import { toJson, getERTSummaryPageGraphDataRecord } from '../ert-datarecord-config/tree';
+import { toJson, getERTSummaryPageGraphDataRecord, getERTSummaryPageSIPGraphData } from '../ert-datarecord-config/tree';
 
 @Component({
   selector: 'app-ert-table-column-config',
@@ -420,7 +420,11 @@ export class ErtTableColumnConfigComponent implements OnInit {
     this.data = this.ertService.data;
     this.selectedValues = this.ertService.selectedValues;
     this.joinListMap = this.ertService.joinListMap;
-    this.tempdata = getERTSummaryPageGraphDataRecord(this.selectedValues, this.joinListMap); // passing tempdata in update function.
+    if (this.from === 'SIP') {
+      this.tempdata = getERTSummaryPageSIPGraphData(this.selectedValues, this.joinListMap);
+    } else if (this.from === 'data-record') {
+      this.tempdata = getERTSummaryPageGraphDataRecord(this.selectedValues, this.joinListMap); // passing tempdata in update function.
+    }
     this.ShowDiagram = false;
     this.createchart();
   }
