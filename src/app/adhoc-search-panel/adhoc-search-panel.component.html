@@ -8,7 +8,7 @@
         <mat-card cdkDrag *ngFor="let item of searchResult?.mainPanel" class="col-md-4 panel-column-box"
           [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
           <mat-card-header>
-            <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted field" class="material-icons encypted-icon {{item.isHidden?'hidden-icon':''}}">lock</i>
+            <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted field" class="material-icons required-color encypted-icon {{item.isHidden?'hidden-icon':''}}">lock</i>
               <span> <a class="cursor-poniter" matTooltip="Edit"
                   (click)="gotoMainPanelColumnEdit(item?.columnId,item?.tableId,item?.label)">
                   <i class="material-icons {{item.isHidden?'hidden-icon':''}}">

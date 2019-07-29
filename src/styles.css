@@ -1953,11 +1953,19 @@ button.secondary-btn-color-disabled:hover {
   padding-left: 3px;
 }
 
-a.required-color {
+span.required-color {
   color: #dd3c27 !important;
   font-size: 15px;
   vertical-align: top;
   padding-left: 4px;
+}
+
+i.required-color.material-icons {
+  color: #dd3c27 !important;
+}
+
+i.required-color.material-icons:hover {
+  color: #dd3c27 !important;
 }
 
 /* end-encypted field,and required icon in adhoc  */
