@@ -32,22 +32,22 @@
       </div>
     </div>
   </div>
-  <div class="row" id="nextbtn" style="margin-top: 15px;">
-    <button type="button" class="btn btn-padding primary-btn-color primary-btn-hover-margin"
-      (click)="saveERTJob('READY')" style="float: right;margin-right: 24px">Mark
+  <div class="row" id="nextbtn">
+    <button type="button" class="btn btn-padding primary-btn-color margin-btn"
+      (click)="saveERTJob('READY')" style="float: right">Mark
       As Complete
     </button>
-    <button type="button" class="btn btn-padding btn-css primary-btn-color primary-btn-hover-draft-margin"
+    <button type="button" class="btn btn-padding btn-css primary-btn-color margin-btn"
       (click)="saveERTJob('DRAFT')">Save
       As Draft
     </button>
     <button *ngIf="JobMode==='DATA_RECORD' || JobMode==='SIP'" type="button"
-      class="btn btn-padding btn-css primary-btn-color primary-btn-hover-draft-margin" (click)="saveERTJob('Download')">
+      class="btn btn-padding btn-css primary-btn-color margin-btn" (click)="saveERTJob('Download')">
       {{JobMode==='DATA_RECORD'?'Download Metadata':'Download PDI Schema'}}
     </button>
-    <button class="btn btn-padding primary-btn-color btn-css" (click)="gotoExtractData();">
+    <button class="btn btn-padding primary-btn-color btn-css margin-btn" (click)="gotoExtractData();">
       Back</button>
-    <button class="btn btn-padding secondary-btn-color btn-css" id="cancelBtn" data-toggle="modal"
+    <button class="btn btn-padding secondary-btn-color btn-css margin-btn" id="cancelBtn" data-toggle="modal"
       data-target="#confirm_model">
       Cancel</button>
   </div>

@@ -81,6 +81,9 @@
           <div class='foo-iconedit'><a (click)="!item.madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
               matTooltip=" {{item.madeEditDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
           {{item.madeEditDisable ? 'edit-disabled':''}}" aria-hidden="true"></i></a></div>
+          <div style="margin-right: 10px" class='foo-iconedit'><a class="fonticonbelow copy-view-i cursor-poniter"
+              (click)="openCloneJobpopup(item.jobId,item.jobTitle)" matTooltip="Create Clone"><i class="material-icons"
+                aria-hidden="true">file_copy</i></a></div>
         </ng-container>
       </div>
     </div>
@@ -214,8 +217,10 @@
         <!-- <p class="popup-paragraph-cls">check on Job Status page</p> -->
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-secondary-popup"
+          data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-padding btn-success-popup-primary-color" (click)="close()"
-          data-dismiss="modal">CLOSE</button>
+          data-dismiss="modal">Check Status</button>
       </div>
     </div>
   </div>

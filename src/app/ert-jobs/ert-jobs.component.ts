@@ -34,9 +34,11 @@ export class ErtJobsComponent implements OnInit {
   cloneJobName = '';
   cloneJobId = '';
   ertJobName = '';
+  intervalId: any;
   constructor(public ertService: ErtService, private userInfoService: UserinfoService, private spinner: NgxSpinnerService,
     private workspaceHeaderService: WorkspaceHeaderService, private router: Router, public cdRef: ChangeDetectorRef,
     private permissionService: PermissionService) { }
+
 
   ngOnInit() {
     this.clearServiceLevelValue();
@@ -52,11 +54,22 @@ export class ErtJobsComponent implements OnInit {
     this.ertService.data = '';
   }
   getErtJobList() {
-    const userId = this.userInfoService.getUserId();
     this.spinner.show();
     this.ertService.updateJobName('');
     this.ertService.updatejobType('');
+    this.getErtJobs();
+    this.intervalId = this.interval();
+  }
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+  }
+
+
+  getErtJobs() {
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
+    const userId = this.userInfoService.getUserId();
     this.ertService.getErtJob(userId, workspaceId).subscribe((result) => {
       try {
         this.ertJobs = result;
@@ -87,15 +100,20 @@ export class ErtJobsComponent implements OnInit {
       if (err.error) {
         this.spinner.hide();
         this.ertJobslist = true;
-        // document.getElementById('warning-popup-btn').click();
-        // this.errorMessage = err.error.message;
       }
     });
   }
 
+  interval() {
+    return setInterval(() => {
+      this.getErtJobs();
+    }, 20000);
+  }
+
+
+
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
-    this.cdRef.detectChanges();
     this.permissionToUser = this.permissionService.getERTPermission();
   }
 
@@ -157,6 +175,7 @@ export class ErtJobsComponent implements OnInit {
         el.click();
         this.isSuccessMsg = true;
         this.successMsg = 'Your Job has Started. Please check Status Monitoring page to know the status.';
+        this.getErtJobs();
       } else {
         this.isSuccessMsg = false;
         document.getElementById('warning-popup-btn').click();
@@ -182,7 +201,7 @@ export class ErtJobsComponent implements OnInit {
   }
 
 
-  setJobId(ertJobId: string, ertJobName:string) {
+  setJobId(ertJobId: string, ertJobName: string) {
     this.ertJobId = ertJobId;
     this.ertJobName = ertJobName;
 
@@ -235,14 +254,14 @@ export class ErtJobsComponent implements OnInit {
 
   checkForEmptyName() {
     if (this.cloneJobName.length === 0) {
-      const tempObj = this.allJobList.find(a => a.jobId.trim() === this.cloneJobId.trim());
+      const tempObj = this.tempErtJobs.find(a => a.jobId.trim() === this.cloneJobId.trim());
       this.cloneJobName = 'Clone_' + tempObj.jobTitle;
     }
   }
 
 
   createClone() {
-    const tempObj = this.allJobList.find(a => a.jobId.trim() === this.cloneJobId.trim());
+    const tempObj = this.tempErtJobs.find(a => a.jobId.trim() === this.cloneJobId.trim());
     const workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
     if (tempObj !== undefined) {
       this.spinner.show();
