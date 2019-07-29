@@ -12,7 +12,7 @@ export class NavbarService {
 
   updateUrl = this.environment.apiUrl + 'workspaces/markRead?notificationId=';
   getNotificationUrl = this.environment.apiUrl + 'workspaces/notificationList?userId=';
-
+  logoutUrl = this.environment.apiUrl + 'auth/logout?token=';
   constructor(
     private userinfoService: UserinfoService,
     private http: HttpClient,
@@ -33,6 +33,13 @@ export class NavbarService {
         map(this.extractDetails),
         catchError(this.handleError<string>('getworkspaceName'))
       );
+  }
+
+  logout(token) {
+    return this.http.post(this.logoutUrl + token, null, { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractDetails),
+      catchError(this.handleError<string>('logout'))
+    );
   }
 
   private extractDetails(res) {
