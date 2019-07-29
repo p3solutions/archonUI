@@ -13,7 +13,7 @@ import { CommonUtilityService } from '../common-utility.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { SearchPipe } from '../search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule, MatCardModule, MatInputModule, MatProgressBarModule } from '@angular/material';
+import { MatFormFieldModule, MatCardModule, MatInputModule, MatProgressBarModule, MatTooltipModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
@@ -28,7 +28,7 @@ describe('WorkspaceListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [WorkspaceListComponent, SearchPipe],
       imports: [HttpClientModule, RouterTestingModule, MatFormFieldModule,
-        MatCardModule, MatInputModule, BrowserAnimationsModule, FormsModule, MatProgressBarModule],
+        MatCardModule, MatInputModule, BrowserAnimationsModule, FormsModule, MatProgressBarModule, MatTooltipModule],
       providers: [WorkspaceListService, DynamicLoaderService, UserinfoService,
         WorkspaceHeaderService, CommonUtilityService, NgxSpinnerService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
