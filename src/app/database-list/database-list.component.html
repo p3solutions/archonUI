@@ -52,13 +52,13 @@
           <mat-progress-bar mode="indeterminate"></mat-progress-bar>
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title class="header">{{db?.profileName}} </mat-card-title>
+            <mat-card-title matTooltip="{{db?.profileName.length>26 ? db?.profileName : '' }}" class="header">{{db?.profileName}} </mat-card-title>
             <div class="spacer"></div>
           </mat-card-header>
           <mat-card-content class="content">
             <div class='body-left'>Host</div>
             <div class='body-center'>:</div>
-            <div class='body-right'>{{db?.host}}</div>
+            <div class='body-right'><div class="overflow-text"  matTooltip="{{db?.host.length>28 ? db?.host : '' }}">{{db?.host}}</div></div>
             <div class='body-left'>Owner Id</div>
             <div class='body-center'>:</div>
             <div class='body-right'>{{db?.owner.id}}</div>
