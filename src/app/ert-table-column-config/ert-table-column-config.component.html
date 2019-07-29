@@ -14,7 +14,7 @@
             <div class="scroll-div border">
               <div class="well {{item.tableId===selectedTableId?'selectTableCls':''}}"
                 (click)="selectTable(item.tableId)"
-                *ngFor="let item of selectedTableList | searchTable:searchTableName">
+                *ngFor="let item of selectedTableList | searchErtTable:searchTableName">
                 <div class="first-div">{{item.tableName}}</div>
                 <div><i *ngIf="item.tableId===selectedTableId" class="fa fa-angle-right icon-div"></i></div>
               </div>

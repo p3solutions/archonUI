@@ -1151,13 +1151,14 @@ export class ErtTableComponent implements OnInit {
     this.maxNode = 3;
     let filterMap = new Map();
     this.filterWhereClause = '';
-    this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === 'STRING');
+    this.filterOperationList = filterOperationList;
+    // this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === 'STRING');
     const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.
       filter(a => a.dataType.trim().toUpperCase() !== 'USERDEFINED');
     this.filterConfigColumnNameList = tempObj.map(function (item) { return item['originalColumnName']; });
     this.orderFilterConfigColumnNameList = tempObj.map(function (item) { return item['originalColumnName']; });
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-    const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, 0, []);
+    const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, 0, null, []);
     this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
     if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
       temp.filterAndOrderConfig.filterQuery !== '' && temp.filterAndOrderConfig.filterConfig !== null &&
@@ -1289,15 +1290,15 @@ export class ErtTableComponent implements OnInit {
   }
 
 
-  insertFilterNode(id: number, operation: string, column: string, condition: string, value: string, event) {
+  insertFilterNode(id: number, operation: string, column: string, condition: string, value: string, dataType: string, event) {
     if (operation === null || condition === null || value === '') {
       // alert('Please select all the value');
     } else {
-      const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, this.maxNode, []);
+      const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, this.maxNode, dataType, []);
       if (id === 1) {
-        const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, 1, []);
+        const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, 1, dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
-        const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, 1, []);
+        const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, 1, dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
         const filterTreeNode = searchTree(this.filterdata.root, 1);
         filterTreeNode.value = '';
@@ -1314,10 +1315,10 @@ export class ErtTableComponent implements OnInit {
         const parentId = id;
         this.maxNode = this.maxNode + 1;
         const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false,
-          column, condition, value, 18, parentId, []);
+          column, condition, value, 18, parentId, dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
         this.maxNode = this.maxNode + 1;
-        const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, parentId, []);
+        const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, parentId, dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
       }
     }
@@ -1359,7 +1360,8 @@ export class ErtTableComponent implements OnInit {
         tempNode.parentId = filterTreeNode3.parentId;
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2, tempNode));
       } else {
-        const filterConfigNode = new FilterConfigNode(1, null, false, false, tempNode.column, tempNode.condition, tempNode.value, 0, 0, []);
+        const filterConfigNode = new FilterConfigNode(1, null, false, false, tempNode.column, tempNode.condition,
+          tempNode.value, 0, 0, tempNode.dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
       }
     } else if (attachNode === true) {
@@ -1457,12 +1459,14 @@ export class ErtTableComponent implements OnInit {
   }
 
 
-  filterColumnSelectionChange(columnName) {
+  filterColumnSelectionChange(columnName, id) {
     let type = '';
     type = this.getInputType(columnName);
-    if (columnName !== null) {
-      this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === type.trim().toUpperCase());
-    }
+    // if (columnName !== null) {
+    //   this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === type.trim().toUpperCase());
+    // }
+    const tempFilterRow = searchTree(this.filterdata.root, id);
+    tempFilterRow.dataType = type;
   }
 
   selectAllColumns(event) {

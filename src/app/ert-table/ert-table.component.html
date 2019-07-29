@@ -17,7 +17,7 @@
         <div class="card-body" id="ert-tbl-search">
           <div *ngIf="selectedTableList.length>0" id="tbl-list" style="height: 326px;">
             <div class="scroll-div border" appScrollable (scrollPosition)="getNextBatchOfERTTable($event)">
-              <div *ngFor="let item of selectedTableList | searchTable:searchTableName"
+              <div *ngFor="let item of selectedTableList | searchErtTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)"
                 [ngClass]="item.tableId===selectedTableId ?'selectTableCls well':'well'">
                 <input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
@@ -293,13 +293,13 @@
                           <span (click)="deleteFilterConfigTreeNode(node.id)" class="cursor-poniter"><i
                               class="fa fa-trash"></i></span>
                           <div class="form-group filter-well"
-                            (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">
+                            (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,node.dataType,$event)">
                             AND</div>
                           <div class="form-group filter-well"
-                            (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">
+                            (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,node.dataType,$event)">
                             OR</div>
                           <div class="form-group">
-                            <select class="form-control" (change)="filterColumnSelectionChange(node.column)"
+                            <select class="form-control" (change)="filterColumnSelectionChange(node.column,node.id)"
                               [(ngModel)]="node.column" #selectfiltercolumn>
                               <option [ngValue]="null" selected>Select Column</option>
                               <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
@@ -308,7 +308,7 @@
                           <div class="form-group">
                             <select #selectcondition [(ngModel)]="node.condition" class="form-control">
                               <option [ngValue]="null" selected>Select condition</option>
-                              <option [value]="item.operation" *ngFor="let item of filterOperationList">
+                              <option [value]="item.operation" *ngFor="let item of filterOperationList|filteroperation:node.dataType">
                                 {{item.operation}}
                               </option>
                             </select>

@@ -10,9 +10,10 @@ export class FilterConfigNode {
     children: FilterConfigNode[] = [];
     margin_left: number;
     parentId: number;
+    dataType: string;
 
     constructor(id: number, operation: string, displayAND: boolean, displayOR: boolean, column: string,
-        condition: string, value: string, margin_left: number, parentId: number, children: FilterConfigNode[]) {
+        condition: string, value: string, margin_left: number, parentId: number, dataType: string, children: FilterConfigNode[]) {
         this.id = id;
         this.operation = operation;
         this.displayAND = displayAND;
@@ -23,6 +24,7 @@ export class FilterConfigNode {
         children = children;
         margin_left = margin_left;
         this.parentId = parentId;
+        this.dataType = dataType;
     }
 }
 
@@ -35,6 +37,7 @@ function filterNode(data) {
     this.condition = data.condition;
     this.value = data.value;
     this.parentId = data.parentId;
+    this.dataType = data.dataType;
     this.children = [];
 }
 
