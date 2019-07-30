@@ -6,7 +6,7 @@
       <div id="{{mainPanelId}}" cdkDropList [cdkDropListData]="searchResult?.mainPanel"
         (cdkDropListDropped)="drop($event)" style="display:grid">
         <mat-card cdkDrag *ngFor="let item of searchResult?.mainPanel" class="col-md-4 panel-column-box"
-          [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
+          [ngStyle]="{'opacity': item.isHidden ? '0.2' : '0.8'}">
           <mat-card-header>
             <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted field" class="material-icons required-color encypted-icon {{item.isHidden?'hidden-icon':''}}">lock</i>
               <span> <a class="cursor-poniter" matTooltip="Edit"
@@ -45,7 +45,7 @@
               <div id="{{tab.tabName}}" cdkDropList [cdkDropListData]="tab?.resultFields"
                 (cdkDropListDropped)="drop($event)" style="display:grid">
                 <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab"
-                  [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
+                  [ngStyle]="{'opacity': item.isHidden ? '0.2' : '0.8'}">
                   <mat-card-header>
                     <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted field"
                         class="material-icons encypted-icon">lock</i>
@@ -91,7 +91,7 @@
               <div id="{{tab.tabName}}" cdkDropList [cdkDropListData]="tab?.resultFields"
                 (cdkDropListDropped)="drop($event)" style="display:grid">
                 <mat-card cdkDrag *ngFor="let item of  tab?.resultFields" class="col-md-4 panel-column-box-tab"
-                  [ngStyle]="{'opacity': item.isHidden ? '0.4' : '0.8'}">
+                  [ngStyle]="{'opacity': item.isHidden ? '0.2' : '0.8'}">
                   <mat-card-header>
                     <mat-card-title>{{item.label}}<i *ngIf="item.encrypted" matTooltip="Encypted Field"
                         class="material-icons encypted-icon {{item.isHidden?'hidden-icon':''}}">lock</i>

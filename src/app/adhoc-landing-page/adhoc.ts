@@ -220,6 +220,7 @@ export class Adhoc {
     updatedAt = '';
     createdBy = '';
     lastModifiedBy = '';
+    affectedByOtherSearch = false;
 }
 export class SearchTypesByfieldType {
     fieldType = '';

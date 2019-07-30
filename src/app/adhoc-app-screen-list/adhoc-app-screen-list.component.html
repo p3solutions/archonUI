@@ -30,22 +30,24 @@
       </ng-container>
       <ng-container *ngIf="permissionToUser!=='READ'">
         <div class="padding-icon">
-          <span  *ngIf="applicationInfoList.length!==0" class="fonticonbelow" (click)="openAppDialogForUpdate()" matTooltip="View / Edit Application">
+          <span *ngIf="applicationInfoList.length!==0" class="fonticonbelow" (click)="openAppDialogForUpdate()"
+            matTooltip="View / Edit Application">
             <i class="fa fa-pencil-square-o edit-icon"></i>
           </span>
-          <span  *ngIf="applicationInfoList.length===0" class="fonticonbelowdisabled" >
+          <span *ngIf="applicationInfoList.length===0" class="fonticonbelowdisabled">
             <i class="fa fa-pencil-square-o edit-icon-disabled"></i>
           </span>
         </div>
       </ng-container>
       <ng-container *ngIf="permissionToUser!=='READ'">
         <div class="padding-icon deleteapp">
-          <span *ngIf="applicationInfoList.length!==0" class="fonticonbelow" (click)="deleteApplicationPopUp()" matTooltip="Delete Application">
+          <span *ngIf="applicationInfoList.length!==0" class="fonticonbelow" (click)="deleteApplicationPopUp()"
+            matTooltip="Delete Application">
             <i class="material-icons">
               delete
             </i>
           </span>
-          <span *ngIf="applicationInfoList.length===0" class="fonticonbelowdisabled" >
+          <span *ngIf="applicationInfoList.length===0" class="fonticonbelowdisabled">
             <i class="material-icons delete-icon-disabled">
               delete
             </i>
@@ -113,6 +115,9 @@
             *ngIf="element.childScreenInfo.length>0" (click)="showChildInfo(element.id)" class="link-btn"
             mat-icon-button [matMenuTriggerFor]="menu">
             <i class="cursor-poniter fa fa-link"></i>
+          </button>
+          <button class="warning-btn" matTooltip="" mat-icon-button [matMenuTriggerFor]="menu">
+            <i class="material-icons warning-icon"> warning</i>
           </button>
         </td>
       </ng-container>

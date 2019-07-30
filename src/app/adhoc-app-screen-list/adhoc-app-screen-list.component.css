@@ -426,3 +426,16 @@ a.disabled .material-icons {
   color: #c3c0c0;
   cursor: not-allowed;
 }
+
+.warning-icon{
+  font-size: 19px !important;
+  color:#fbc41e !important;
+  cursor: default;
+}
+
+.warning-btn{
+  padding-left: 25px;
+  padding-right: 0px;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
