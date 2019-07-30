@@ -34,7 +34,9 @@ export class NavbarComponent implements OnInit {
   uploadForm: FormGroup;
   errorlicense = false;
 
-  constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService, private router: Router, private activatedrouter: ActivatedRoute, private formBuilder: FormBuilder, private workspaceService: WorkspaceServicesService) { }
+  constructor(private userProfileService: UserProfileService , private navService: NavbarService,
+     private userinfoService: UserinfoService, private router: Router, private activatedrouter: ActivatedRoute, 
+     private formBuilder: FormBuilder, private workspaceService: WorkspaceServicesService) { }
   ngOnInit() {
     this.userId = this.userinfoService.getUserId();
     setTimeout(() => {
@@ -47,9 +49,9 @@ export class NavbarComponent implements OnInit {
       this.uploadForm = this.formBuilder.group({
         profile: ['']
       });
-    // if (browserRefresh) {
-    //   this.router.navigate(['/workspace/workspace-dashboard']);
-    // }
+    if (browserRefresh) {
+      this.router.navigate(['/workspace/workspace-dashboard']);
+    }
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
      if (this.enableAuditArray.includes(i)) {

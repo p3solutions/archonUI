@@ -18,7 +18,7 @@ export class CreateDatabasePageComponent implements OnInit {
   userServerForm: FormGroup;
   @ViewChild('stepper') stepper: MatStepper;
   dbServerList = [];
-  authTypeList = ['JDBC', 'Kerberos'];
+  authTypeList = ['JDBC', 'KERBEROS'];
   databaseServerName = '';
   value: any;
   inProgress = false;
@@ -276,7 +276,7 @@ export class CreateDatabasePageComponent implements OnInit {
       this.userServerForm.controls['password'].setValidators([Validators.required]);
       this.userServerForm.controls['password'].updateValueAndValidity();
       this.closeMessage();
-    } else if (this.databaseConnectionForm.get('authType').value === 'Kerberos') {
+    } else if (this.databaseConnectionForm.get('authType').value === 'KERBEROS') {
       this.isKerberos = true;
       this.userServerForm.controls['password'].clearValidators();
       this.userServerForm.controls['password'].updateValueAndValidity();
