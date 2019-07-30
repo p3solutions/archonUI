@@ -47,9 +47,9 @@ export class NavbarComponent implements OnInit {
       this.uploadForm = this.formBuilder.group({
         profile: ['']
       });
-    if (browserRefresh) {
-      this.router.navigate(['/workspace/workspace-dashboard']);
-    }
+    // if (browserRefresh) {
+    //   this.router.navigate(['/workspace/workspace-dashboard']);
+    // }
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
      if (this.enableAuditArray.includes(i)) {
