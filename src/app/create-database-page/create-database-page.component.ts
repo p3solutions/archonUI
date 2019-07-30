@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatStepper, MatStepHeader } from '@angular/material';
 import { UserWorkspaceService } from '../user-workspace.service';
@@ -18,7 +18,7 @@ export class CreateDatabasePageComponent implements OnInit {
   userServerForm: FormGroup;
   @ViewChild('stepper') stepper: MatStepper;
   dbServerList = [];
-  authTypeList = ['JDBC'];
+  authTypeList = ['JDBC', 'KERBEROS'];
   databaseServerName = '';
   value: any;
   inProgress = false;
@@ -30,7 +30,10 @@ export class CreateDatabasePageComponent implements OnInit {
   duplicateDatabaseMessage = '';
   databaseList: ConfiguredDB[] = [];
   errorMessage = '';
-  constructor(private _formBuilder: FormBuilder, private userWorkspaceService: UserWorkspaceService
+  isKerberos = false;
+  kerberosFileName = '';
+  kerberosFile: File = null;
+  constructor(private _formBuilder: FormBuilder, private userWorkspaceService: UserWorkspaceService, private cd: ChangeDetectorRef
     , private router: Router, private databaseListService: DatabaseListService, private spinner: NgxSpinnerService) { }
 
   // tslint:disable-next-line:use-life-cycle-interface
@@ -64,7 +67,8 @@ export class CreateDatabasePageComponent implements OnInit {
   initUserServerDetails() {
     this.userServerForm = this._formBuilder.group({
       userName: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [''],
+      file: ['']
     });
   }
 
@@ -162,25 +166,26 @@ export class CreateDatabasePageComponent implements OnInit {
   testConnection() {
     this.inProgress = true;
     this.spinner.show();
-    this.userWorkspaceService.checkDBConnection(this.databaseConnectionForm.value, this.userServerForm.value).subscribe((res: any) => {
-      if (res) {
-        this.inProgress = false;
-        this.spinner.hide();
-        this.dbTestConnectionErrorMsg = '';
-        this.errorMessage = res.connection.message;
-        document.getElementById('connection-popup-btn').click();
-        if (res.connection.isConnected) {
-          this.disableCreateBtn = false;
+    this.userWorkspaceService.checkDBConnection(this.databaseConnectionForm.value,
+      this.userServerForm.value, this.kerberosFile).subscribe((res: any) => {
+        if (res) {
+          this.inProgress = false;
+          this.spinner.hide();
+          this.dbTestConnectionErrorMsg = '';
+          this.errorMessage = res.connection.message;
+          document.getElementById('connection-popup-btn').click();
+          if (res.connection.isConnected) {
+            this.disableCreateBtn = false;
+          }
+        } else {
+          this.inProgress = false;
+          this.spinner.hide();
+          this.disableCreateBtn = true;
+          this.dbTestConnectionSuccessMsg = '';
+          this.errorMessage = 'Failed! Try again with correct DB configuration.';
+          document.getElementById('error-db-btn').click();
         }
-      } else {
-        this.inProgress = false;
-        this.spinner.hide();
-        this.disableCreateBtn = true;
-        this.dbTestConnectionSuccessMsg = '';
-        this.errorMessage = 'Failed! Try again with correct DB configuration.';
-        document.getElementById('error-db-btn').click();
-      }
-    });
+      });
   }
 
   setPortName(id: string) {
@@ -196,33 +201,35 @@ export class CreateDatabasePageComponent implements OnInit {
   createDatatbase() {
     this.dbinProgress = true;
     this.spinner.show();
-    this.userWorkspaceService.checkDBConnection(this.databaseConnectionForm.value, this.userServerForm.value).subscribe((res: any) => {
-      if (res) {
-        if (res.connection.isConnected) {
-          this.dbinProgress = true;
-          this.spinner.show();
-          this.disableCreateBtn = true;
-          this.createNewdb();
+    this.userWorkspaceService.checkDBConnection(this.databaseConnectionForm.value,
+      this.userServerForm.value, this.kerberosFile).subscribe((res: any) => {
+        if (res) {
+          if (res.connection.isConnected) {
+            this.dbinProgress = true;
+            this.spinner.show();
+            this.disableCreateBtn = true;
+            this.createNewdb();
+          } else {
+            this.disableCreateBtn = false;
+            this.dbinProgress = false;
+            this.spinner.hide();
+            this.errorMessage = 'Unable to Create Database. Please Test Connection.';
+            document.getElementById('error-db-btn').click();
+          }
         } else {
-          this.disableCreateBtn = false;
           this.dbinProgress = false;
           this.spinner.hide();
+          this.disableCreateBtn = false;
           this.errorMessage = 'Unable to Create Database. Please Test Connection.';
           document.getElementById('error-db-btn').click();
-        }
-      } else {
-        this.dbinProgress = false;
-        this.spinner.hide();
-        this.disableCreateBtn = false;
-        this.errorMessage = 'Unable to Create Database. Please Test Connection.';
-        document.getElementById('error-db-btn').click();
 
-      }
-    });
+        }
+      });
   }
 
   createNewdb() {
-    this.userWorkspaceService.createNewDBConfig(this.databaseConnectionForm.value, this.userServerForm.value).subscribe(res => {
+    this.userWorkspaceService.createNewDBConfig(this.databaseConnectionForm.value,
+       this.userServerForm.value, this.kerberosFile).subscribe(res => {
       if (res) {
         this.spinner.hide();
         this.dbinProgress = false;
@@ -259,5 +266,46 @@ export class CreateDatabasePageComponent implements OnInit {
         }
       }
     });
+  }
+
+  checkAuthType() {
+    if (this.databaseConnectionForm.get('authType').value === 'JDBC') {
+      this.isKerberos = false;
+      this.userServerForm.controls['file'].clearValidators();
+      this.userServerForm.controls['file'].updateValueAndValidity();
+      this.userServerForm.controls['password'].setValidators([Validators.required]);
+      this.userServerForm.controls['password'].updateValueAndValidity();
+      this.closeMessage();
+    } else if (this.databaseConnectionForm.get('authType').value === 'KERBEROS') {
+      this.isKerberos = true;
+      this.userServerForm.controls['password'].clearValidators();
+      this.userServerForm.controls['password'].updateValueAndValidity();
+      this.userServerForm.controls['file'].setValidators([Validators.required]);
+      this.userServerForm.controls['file'].updateValueAndValidity();
+      this.userServerForm.controls['password'].setValue('');
+    }
+  }
+
+  openFileUpload() {
+    document.getElementById('uploadKerberosFile').click();
+  }
+
+
+  uploadQueryFile(event) {
+    const ext = event.target.files.item(0).name.match(/\.([^\.]+)$/)[1];
+    if (ext.trim().toUpperCase() === 'KEYTAB') {
+      this.kerberosFile = event.target.files.item(0);
+      this.kerberosFileName = event.target.files.item(0).name;
+    } else {
+      document.getElementById('error-db-btn').click();
+      this.errorMessage = 'Please upload .KEYTAB file only';
+      this.closeMessage();
+    }
+  }
+
+  closeMessage() {
+    this.kerberosFileName = '';
+    this.userServerForm.controls['file'].setValue(null);
+    this.kerberosFile = null;
   }
 }
