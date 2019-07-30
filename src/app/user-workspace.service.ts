@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { WorkspaceObject, ConfiguredDB, AnyObject, CreateConfigDBObject } from './workspace-objects';
@@ -9,6 +9,10 @@ import { EnvironmentService } from './environment/environment.service';
 @Injectable()
 export class UserWorkspaceService {
   apiUrl = this.environment.apiUrl;
+  private headers = new HttpHeaders({
+    // 'Content-Type': 'multipart/form-data',
+    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+  });
   getConfiguredDBurl = `${this.apiUrl}dbs/configured/schemaReadyDbs`;
   getConfigDBurl = `${this.apiUrl}dbs/configured`;
   createNewWSurl = `${this.apiUrl}workspaces`;
@@ -22,11 +26,15 @@ export class UserWorkspaceService {
     this.http = http;
   }
 
-  checkDBConnection(testDbParam: AnyObject, testServerParam: AnyObject) {
+  checkDBConnection(testDbParam: AnyObject, testServerParam: AnyObject, kerberosFile: File) {
     testDbParam.ownerId = this.userinfoService.getUserId();
     testDbParam.userName = testServerParam.userName;
-    testDbParam.password = testServerParam.password;
-    return this.http.post(this.checkDbConnectionUrl, testDbParam, { headers: this.userinfoService.getHeaders() }).pipe(
+    testDbParam.password = btoa(testServerParam.password);
+    testDbParam.isEncoded = true;
+    const formData: FormData = new FormData();
+    kerberosFile === null ? formData.append('file', null) : formData.append('file', kerberosFile);
+    formData.append('databaseCreatedto', JSON.stringify(testDbParam));
+    return this.http.post(this.checkDbConnectionUrl, formData, { headers: this.headers }).pipe(
       map(this.extractData),
       catchError(this.handleError<any>('test-db-connection'))
     );
@@ -75,12 +83,15 @@ export class UserWorkspaceService {
   }
 
   // Create new Database Configuration service api
-  createNewDBConfig(dbParam: AnyObject, testServerParam: AnyObject) {
+  createNewDBConfig(dbParam: AnyObject, testServerParam: AnyObject, kerberosFile: File) {
     dbParam.ownerId = this.userinfoService.getUserId();
     dbParam.userName = testServerParam.userName;
     dbParam.password = btoa(testServerParam.password);
     dbParam.isEncoded = true;
-    return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, dbParam, { headers: this.userinfoService.getHeaders() }).pipe(
+    const formData: FormData = new FormData();
+    kerberosFile === null ? formData.append('file', null) : formData.append('file', kerberosFile);
+    formData.append('databaseCreatedto', JSON.stringify(dbParam));
+    return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, formData, { headers: this.headers }).pipe(
       map(this.extractData)
     );
   }
