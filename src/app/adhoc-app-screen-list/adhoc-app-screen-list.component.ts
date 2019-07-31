@@ -85,6 +85,8 @@ export class AdhocAppScreenListComponent implements OnInit {
   IAVersions: string[] = [];
   oldMetadata = false;
   permissionToUser = '';
+  isAffectedSearch = true;
+  selectedSearches = '';
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
     private adhocScreenService: AdhocScreenService, private spinner: NgxSpinnerService,
     private router: Router, private adhocService: AdhocService, private cookieService: CookieService,
@@ -157,6 +159,23 @@ export class AdhocAppScreenListComponent implements OnInit {
       }
     });
   }
+
+  checkForDownloadIsAvailable(screenId, screenName) {
+    let names = '';
+    const tempNested = this.screenInfoList.filter(a => a.id === screenId)[0].
+      childScreenInfo.map(function (item) { return item['screenName']; });
+    for (const name of tempNested) {
+      names = names + name + ', ';
+    }
+    names = names.trim().substr(0, names.trim().length - 1);
+    this.selectedSearches = names;
+    if (this.isAffectedSearch) {
+      document.getElementById('warning-download-popup-btn').click();
+    } else {
+      this.downloadScreen(screenId, screenName);
+    }
+  }
+
 
   downloadScreen(screenId, screenName) {
     const userId = getUserId();

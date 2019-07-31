@@ -330,13 +330,13 @@
         </h4>
       </div>
       <div class="modal-body">
-        <p class="popup-paragraph-cls">User review required for search. 
-          By continuing downloaded, the above-mentioned nested searches will not be included during search 
+        <p class="popup-paragraph-cls">User review required for search '  {{selectedSearches }} '. 
+          By continuing download, the above-mentioned nested searches will not be included during search 
           file generation. Do you want to proceed? </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-padding btn-warning-popup-primary-color"
+        <button type="button" class="btn btn-padding btn-warning-popup-primary-color" (click)="downloadScreen()"
           data-dismiss="modal">Yes</button>
       </div>
     </div>
