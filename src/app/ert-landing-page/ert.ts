@@ -109,6 +109,7 @@ export class IngestionDataConfig {
     infoArchiveSchemaName = '';
     infoArchiveUserName = '';
     infoArchivePassword = '';
+    iaDatabaseName = '';
 }
 
 export interface FilterConfigTree {

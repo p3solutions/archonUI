@@ -10,6 +10,7 @@ import { ErtService } from '../ert-landing-page/ert.service';
 import { SearchPipe } from '../search.pipe';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { SearchErtTablePipe } from '../ert-landing-page/search-ert-table.pipe';
 
 describe('ErtTableColumnConfigComponent', () => {
   let component: ErtTableColumnConfigComponent;
@@ -17,11 +18,11 @@ describe('ErtTableColumnConfigComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErtTableColumnConfigComponent, SearchPipe ],
+      declarations: [ErtTableColumnConfigComponent, SearchPipe, SearchErtTablePipe],
       imports: [FormsModule, RouterTestingModule, HttpClientModule],
       providers: [UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

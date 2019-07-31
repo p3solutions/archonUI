@@ -12,6 +12,7 @@ import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SearchErtTablePipe } from '../ert-landing-page/search-ert-table.pipe';
 
 describe('ErtCloneViewComponent', () => {
   let component: ErtCloneViewComponent;
@@ -19,7 +20,7 @@ describe('ErtCloneViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ErtCloneViewComponent, SearchPipe],
+      declarations: [ErtCloneViewComponent, SearchPipe, SearchErtTablePipe],
       imports: [FormsModule, RouterTestingModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule],
       providers: [UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })

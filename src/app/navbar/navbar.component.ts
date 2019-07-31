@@ -7,7 +7,7 @@ import { UserProfileService } from '../user-profile/user-profile.service';
 import { NavbarService } from './navbar.service';
 import { UserinfoService } from '../userinfo.service';
 import { browserRefresh } from '../app.component';
-import { FormGroup , FormBuilder} from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
 
 @Component({
@@ -46,18 +46,18 @@ export class NavbarComponent implements OnInit {
         el.click();
       }
     }, 1000);
-      this.uploadForm = this.formBuilder.group({
-        profile: ['']
-      });
+    this.uploadForm = this.formBuilder.group({
+      profile: ['']
+    });
     if (browserRefresh) {
       this.router.navigate(['/workspace/workspace-dashboard']);
     }
     const check = this.userinfoService.getRoleList();
     for (const i of check) {
-     if (this.enableAuditArray.includes(i)) {
-       this.enableAudit = true;
-       break;
-     }
+      if (this.enableAuditArray.includes(i)) {
+        this.enableAudit = true;
+        break;
+      }
     }
     this.userProfileService.UserNamechange.subscribe(data => {
       this.userChangeName = data;
@@ -78,7 +78,7 @@ export class NavbarComponent implements OnInit {
         $(this).closest('body').toggleClass('active');
       });
     });
-      this.getNotification();
+    this.getNotification();
   }
 
   // Get information from the info service
@@ -100,9 +100,15 @@ export class NavbarComponent implements OnInit {
     localStorage.setItem('userId', '');
   }
   logout() {
+    const token_data = localStorage.getItem('accessToken');
+    this.navService.logout(token_data).subscribe(a => {
+      console.log(a);
+    });
     localStorage.removeItem('accessToken');
     this.router.navigate(['sign-in']);
   }
+
+
 
   getNotification() {
     if (this.loadfirst === 0) {
@@ -135,27 +141,27 @@ export class NavbarComponent implements OnInit {
             }
           }
         });
-    }, 600000);
+      }, 600000);
     }
   }
 
   updateNotification(id) {
-   this.navService.updateNotification(id).subscribe(result => {
-     this.loadfirst = 0;
-     this.getNotification();
-   });
+    this.navService.updateNotification(id).subscribe(result => {
+      this.loadfirst = 0;
+      this.getNotification();
+    });
   }
 
   uploadFile(file) {
     if (file.length > 0) {
-    this.workspaceService.uploadLicense(file[0]).subscribe((result) => {
-    const el: HTMLElement = this.success.nativeElement as HTMLLIElement;
-    el.click();
-    window.location.href = window.location.href;
-    }, (err) => {
-    this.errorlicense = true;
-    }
-    );
+      this.workspaceService.uploadLicense(file[0]).subscribe((result) => {
+        const el: HTMLElement = this.success.nativeElement as HTMLLIElement;
+        el.click();
+        window.location.href = window.location.href;
+      }, (err) => {
+        this.errorlicense = true;
+      }
+      );
     }
   }
 
