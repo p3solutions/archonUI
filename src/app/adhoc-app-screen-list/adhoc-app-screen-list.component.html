@@ -116,7 +116,7 @@
             mat-icon-button [matMenuTriggerFor]="menu">
             <i class="cursor-poniter fa fa-link"></i>
           </button>
-          <button class="warning-btn" matTooltip="" mat-icon-button [matMenuTriggerFor]="menu">
+          <button *ngIf="element.affectedByOtherSearch" class="warning-btn" matTooltip="" mat-icon-button [matMenuTriggerFor]="menu">
             <i class="material-icons warning-icon"> warning</i>
           </button>
         </td>
@@ -313,6 +313,30 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="deleteApplicationConfirm()"
+          data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button style="display:none" type="button" id="warning-download-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#warning_model">Open Modal</button>
+<div id="warning_model" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header warning-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">warning</i>
+          <div class="pop-title-ert">Confirm Download</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">User review required for search. 
+          By continuing downloaded, the above-mentioned nested searches will not be included during search 
+          file generation. Do you want to proceed? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-warning-popup-primary-color"
           data-dismiss="modal">Yes</button>
       </div>
     </div>
