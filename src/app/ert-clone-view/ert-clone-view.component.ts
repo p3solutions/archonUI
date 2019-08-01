@@ -261,28 +261,34 @@ export class ErtCloneViewComponent implements OnInit {
     if (tempObj.usrDefinedColumnList.length !== 0) {
       for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
         const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
-        for (const list of a) {
-          if (item.viewQuery) {
-            this.isFunction = true;
-            linkString = linkString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+        const that = this;
+        if (item.viewQuery) {
+          a.forEach(function (list, index) {
+            that.isFunction = true;
+            linkString = linkString + that.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
               'FunctionTable:' + item.originalColumnName + 'userTempFncStart;';
-            linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
-              this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
-          }
+            if (index === 0) {
+              linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
+                that.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
+            }
+          });
         }
       }
     }
     if (tempObj.columnList.length !== 0) {
       for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
         const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
-        for (const list of a) {
-          if (item.viewQuery) {
-            this.isFunction = true;
-            linkString = linkString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+        const that = this;
+        if (item.viewQuery) {
+          a.forEach(function (list, index) {
+            that.isFunction = true;
+            linkString = linkString + that.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
               'FunctionTable:' + item.originalColumnName + 'userTempFncStart;';
-            linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
-              this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
-          }
+            if (index === 0) {
+              linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
+                that.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
+            }
+          });
         }
       }
     }
