@@ -35,7 +35,7 @@
           </div>
           <div class="col-md-12 form-group" style="padding-top: 5.5%;padding-left: 6.5%;">
             <mat-form-field>
-              <input matInput appPreventcopy
+              <input matInput appPreventcopy autocomplete="off"
                 placeholder="{{signInForm.value.captcha === '' ?  'Prove you are not a bot' : 'Letters are Case Sensitive' }}"
                 (keyup)="enableSignIn()" formControlName="captcha">
             </mat-form-field>
