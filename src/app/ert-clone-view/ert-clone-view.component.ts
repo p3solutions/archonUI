@@ -33,9 +33,11 @@ export class ErtCloneViewComponent implements OnInit {
   successMsg = '';
   errorMessage = '';
   option = {
-    width: 500,
-    height: 400,
     useWorker: false,
+    fade: true,
+    fit: true,
+    zoom: true,
+    splines: false,
     zoomScaleExtent: [0.1, 3]
   };
   cloneJobName = '';
@@ -316,9 +318,9 @@ export class ErtCloneViewComponent implements OnInit {
     if (datum.tag === 'svg') {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      const x = 200;
-      const y = 20;
-      const scale = 2;
+      const x = 60;
+      const y = 10;
+      const scale = 3;
       selection
         .attr('width', width + 'pt')
         .attr('height', height + 'pt')
