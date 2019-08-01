@@ -301,17 +301,17 @@ export class ManageUserRolesComponent implements OnInit {
       document.getElementById('confirmDialog').click();
       if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'revokeaccess') {
         this.confirmMessage = 'Are you sure to revoke the access for the user?';
-        this.changeUserStatusUrl = userId + '&accessRevoked=' + true;
+        this.changeUserStatusUrl = encodeURIComponent(userId) + '&accessRevoked=' + true;
       } else if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'grantaccess') {
-        this.changeUserStatusUrl = userId + '&accessRevoked=' + false +
+        this.changeUserStatusUrl = encodeURIComponent(userId) + '&accessRevoked=' + false +
           '&accountLocked=' + false;
         this.confirmMessage = 'Are you sure to grant the access for the user?';
       } else if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'unlock') {
-        this.changeUserStatusUrl = userId + '&accountLocked=' + false;
+        this.changeUserStatusUrl = encodeURIComponent(userId) + '&accountLocked=' + false;
         this.confirmMessage = 'Are you sure to unlock the user?';
       }
     } else if (($event.target.value).replace(/ /g, '').toLocaleLowerCase() === 'delete') {
-      this.cancelInviteAndDeleteUserUrl = 'users/deleteUser?userId=' + userId;
+      this.cancelInviteAndDeleteUserUrl = 'users/deleteUser?userId=' + encodeURIComponent(userId);
       this.confirmMessage = 'Are you sure to delete the user?';
       this.userAction = 'delete';
       document.getElementById('confirmCancelInvite').click();
@@ -320,12 +320,12 @@ export class ManageUserRolesComponent implements OnInit {
 
   revokeAccess(userId) {
     document.getElementById('confirmDialog').click();
-    this.changeUserStatusUrl = userId + '&accessRevoked=' + true;
+    this.changeUserStatusUrl = encodeURIComponent(userId) + '&accessRevoked=' + true;
     this.confirmMessage = 'Are you sure to revoke the access for the user?';
   }
 
   cancelInvite(userId) {
-    this.cancelInviteAndDeleteUserUrl = 'users/cancelInvite?invitedUserId=' + userId;
+    this.cancelInviteAndDeleteUserUrl = 'users/cancelInvite?invitedUserId=' + encodeURIComponent(userId);
     this.confirmMessage = 'Are you sure to cancel the invitation?';
     this.userAction = 'cancelinvite';
     document.getElementById('confirmCancelInvite').click();

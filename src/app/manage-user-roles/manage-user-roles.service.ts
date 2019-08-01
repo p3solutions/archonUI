@@ -36,7 +36,7 @@ export class ManageUserRolesService {
       userId: userid,
       globalRoleId: globalid
     };
-    return this.http.patch(this.changeGlobalRoleUrl + userid + '/roles/global', body, { headers: this.headers })
+    return this.http.patch(this.changeGlobalRoleUrl + encodeURIComponent(userid) + '/roles/global', body, { headers: this.headers })
       .pipe(catchError(this.handleError('changeglobalrole', [])));
   }
 

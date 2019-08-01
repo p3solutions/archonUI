@@ -107,7 +107,7 @@ export class AdhocService {
   }
 
   downloadScreen(screenId, userId): Observable<Blob> {
-    return this.http.get(this.downloadScreenUrl + screenId + '&userId=' + userId,
+    return this.http.get(this.downloadScreenUrl + screenId + '&userId=' + encodeURIComponent(userId),
       { headers: this.userInfoService.getHeaders(), responseType: 'blob' })
       .pipe(catchError(this.handleError<any>('downloadScreen')));
   }
@@ -121,13 +121,13 @@ export class AdhocService {
   }
 
   deleteScreen(screenId, userId): Observable<string> {
-    return this.http.delete<string>(this.deleteScreenUrl + screenId + '&userId=' + userId,
+    return this.http.delete<string>(this.deleteScreenUrl + screenId + '&userId=' + encodeURIComponent(userId),
       { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractData));
   }
 
   deleteApplication(appId, userId): Observable<string> {
-    return this.http.delete<string>(this.deleteApplicationUrl + appId + '&userId=' + userId,
+    return this.http.delete<string>(this.deleteApplicationUrl + appId + '&userId=' + encodeURIComponent(userId),
       { headers: this.userInfoService.getHeaders() }).
       pipe(map(this.extractData));
   }

@@ -120,7 +120,7 @@ export class ErtService {
 
 
   getErtJob(userId, workspaceId): Observable<ERTJobs[]> {
-    return this.http.get<ERTJobs[]>(this.getErtJobUrl + userId + '&workspaceId=' + workspaceId,
+    return this.http.get<ERTJobs[]>(this.getErtJobUrl + encodeURIComponent(userId) + '&workspaceId=' + workspaceId,
       { headers: this.userInfoService.getHeaders() }).pipe(
         map(this.extractDataForJobs));
   }
