@@ -3,6 +3,7 @@ import { LandingPageComponent } from './landing-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -11,12 +12,13 @@ describe('LandingPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        NgxSpinnerModule
       ],
-      declarations: [ LandingPageComponent ], 
-      providers: [{ provide: EnvironmentService, useClass: MockEnvironmentService }]
+      declarations: [LandingPageComponent],
+      providers: [NgxSpinnerService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
