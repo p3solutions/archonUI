@@ -6,6 +6,7 @@ import { SignIn } from '../sign-in';
 import { SigninFormService } from './signin-form.service';
 import { ErrorObject } from '../error-object';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-signin-form',
@@ -58,7 +59,9 @@ export class SigninFormComponent implements OnInit {
       data => {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
-        localStorage.setItem('accessToken', data.data.accessToken);
+        const userId = this.getUserID();
+        sessionStorage.setItem('userId', userId);
+        localStorage.setItem(userId, data.data.accessToken);
         this.count = 0;
         localStorage.setItem('count', this.count);
         // localStorage.setItem('refreshToken', data.data.refreshToken);
@@ -144,5 +147,10 @@ export class SigninFormComponent implements OnInit {
     return string.split(' ').join('');
   }
 
-
+  getUserID() {
+    const jwtHelper: JwtHelperService = new JwtHelperService();
+    const accessToken = localStorage.getItem('accessToken');
+    const token_data = jwtHelper.decodeToken(accessToken);
+    return token_data.user.id;
+  }
 }
