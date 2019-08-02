@@ -67,7 +67,8 @@ export class WorkspaceListComponent implements OnInit, OnDestroy {
         clearInterval(this.intervalId);
     }
     ngOnInit() {
-        this.accessToken = localStorage.getItem('accessToken');
+        const userId = sessionStorage.getItem('userId');
+        this.accessToken = localStorage.getItem(userId);
         this.token_data = this.jwtHelper.decodeToken(this.accessToken);
         this.getWorkspaceListInfo(this.token_data.user.id);
         this.isProgress = true;

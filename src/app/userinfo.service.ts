@@ -28,7 +28,8 @@ export class UserinfoService {
   }
 
   getTokenData() {
-    this.accessToken = localStorage.getItem('accessToken');
+    const userId = sessionStorage.getItem('userId');
+    this.accessToken = localStorage.getItem(userId);
     this.token_data = this.jwtHelper.decodeToken(this.accessToken);
   }
 
@@ -56,7 +57,8 @@ export class UserinfoService {
   }
 
   getAuthKey() {
-    return localStorage.getItem('accessToken');
+    const userId = sessionStorage.getItem('userId');
+    return localStorage.getItem(userId);
   }
 
   getHeaders() {

@@ -59,7 +59,7 @@ export class SigninFormComponent implements OnInit {
       data => {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
-        const userId = this.getUserID();
+        const userId = this.getUserID(this.responseData);
         sessionStorage.setItem('userId', userId);
         localStorage.setItem(userId, data.data.accessToken);
         this.count = 0;
@@ -147,10 +147,9 @@ export class SigninFormComponent implements OnInit {
     return string.split(' ').join('');
   }
 
-  getUserID() {
+  getUserID(data) {
     const jwtHelper: JwtHelperService = new JwtHelperService();
-    const accessToken = localStorage.getItem('accessToken');
-    const token_data = jwtHelper.decodeToken(accessToken);
+    const token_data = jwtHelper.decodeToken(data.data.accessToken);
     return token_data.user.id;
   }
 }

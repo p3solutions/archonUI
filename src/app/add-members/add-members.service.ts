@@ -10,10 +10,10 @@ import { AddMembers } from '../add-members';
 
 @Injectable()
 export class AddMembersService {
-
+  userId = sessionStorage.getItem('userId');
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userId)
   });
   private apiUrl = this.environment.apiUrl;
   private getAllUsersUrl = this.apiUrl + 'users';

@@ -10,10 +10,10 @@ import { UserinfoService } from '../userinfo.service';
 export class WorkspaceServicesService {
 
   private apiUrl = this.environment.apiUrl;
-
+  userId = sessionStorage.getItem('userId');
   private headers = new HttpHeaders({
     // 'Content-Type': 'multipart/form-data',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userId)
   });
 
   private serviceActionsUpdated: BehaviorSubject<ServiceActionsObject[]> = new BehaviorSubject<ServiceActionsObject[]>([]);

@@ -6,9 +6,10 @@ import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class ChangePasswordService {
+  userID = sessionStorage.getItem('userId');
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userID)
   });
   private getUsersUrl = this.environment.apiUrl + 'users/';
   accessToken: string;

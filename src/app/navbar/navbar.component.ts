@@ -34,7 +34,10 @@ export class NavbarComponent implements OnInit {
   uploadForm: FormGroup;
   errorlicense = false;
 
-  constructor(private userProfileService: UserProfileService , private navService: NavbarService, private userinfoService: UserinfoService, private router: Router, private activatedrouter: ActivatedRoute, private formBuilder: FormBuilder, private workspaceService: WorkspaceServicesService) { }
+  constructor(private userProfileService: UserProfileService , private navService: NavbarService,
+     private userinfoService: UserinfoService, private router: Router,
+     private activatedrouter: ActivatedRoute, private formBuilder: FormBuilder,
+     private workspaceService: WorkspaceServicesService) { }
   ngOnInit() {
     this.userId = this.userinfoService.getUserId();
     setTimeout(() => {
@@ -85,7 +88,8 @@ export class NavbarComponent implements OnInit {
     let accessToken: string;
     let token_data: any;
     const jwtHelper: JwtHelperService = new JwtHelperService();
-    accessToken = localStorage.getItem('accessToken');
+    const userId = sessionStorage.getItem('userId');
+    accessToken = localStorage.getItem(userId);
     token_data = jwtHelper.decodeToken(accessToken);
     info = new Info();
     info.id = token_data.user.id;
@@ -98,7 +102,8 @@ export class NavbarComponent implements OnInit {
     localStorage.setItem('userId', '');
   }
   logout() {
-    localStorage.removeItem('accessToken');
+    const userId = sessionStorage.getItem('userId');
+    localStorage.removeItem(userId);
     this.router.navigate(['sign-in']);
   }
 
