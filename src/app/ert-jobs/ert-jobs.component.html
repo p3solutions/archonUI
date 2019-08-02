@@ -47,7 +47,7 @@
         </div>
         <ng-container *ngIf="permissionToUser!=='READ'">
           <div class='delete'> <button type="button" class="close" data-toggle="modal" data-target="#confirm_model"
-              (click)="setJobId(item.jobId)" matTooltip="Delete">
+              (click)="setJobId(item.jobId ,item.jobTitle)" matTooltip="Delete">
               <span aria-hidden="true">&times;</span>
             </button></div>
         </ng-container>
@@ -81,6 +81,9 @@
           <div class='foo-iconedit'><a (click)="!item.madeEditDisable && gotoEditJob(item.jobId,item.jobStatus)"
               matTooltip=" {{item.madeEditDisable? '':'Edit Job'}}"><i class=" fa fa-pencil-square-o
           {{item.madeEditDisable ? 'edit-disabled':''}}" aria-hidden="true"></i></a></div>
+          <div style="margin-right: 10px" class='foo-iconedit'><a class="fonticonbelow copy-view-i cursor-poniter"
+              (click)="openCloneJobpopup(item.jobId,item.jobTitle)" matTooltip="Create Clone"><i class="material-icons"
+                aria-hidden="true">file_copy</i></a></div>
         </ng-container>
       </div>
     </div>
@@ -185,7 +188,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <p class="popup-paragraph-cls">Are you sure you want to delete the job ?</p>
+        <p class="popup-paragraph-cls">Are you sure you want to delete the job {{ertJobName}}?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
@@ -214,8 +217,10 @@
         <!-- <p class="popup-paragraph-cls">check on Job Status page</p> -->
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-secondary-popup"
+          data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-padding btn-success-popup-primary-color" (click)="close()"
-          data-dismiss="modal">CLOSE</button>
+          data-dismiss="modal">Check Status</button>
       </div>
     </div>
   </div>
@@ -290,7 +295,7 @@
           data-dismiss="modal">Cancel</button>
         <button type="button" data-dismiss="modal"
           class="btn btn-padding {{cloneJobName===''?'primary-btn-color-disabled':'primary-btn-color'}}"
-          [disabled]="cloneJobName===''" (click)="createClone()">Confirm</button>
+          [disabled]="cloneJobName===''" (click)="createClone()">Clone</button>
       </div>
     </div>
   </div>

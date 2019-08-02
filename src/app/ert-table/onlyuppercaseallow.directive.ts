@@ -8,7 +8,9 @@ export class OnlyuppercaseallowDirective {
   constructor(public ref: ElementRef) { }
 
   @HostListener('input', ['$event']) onInput(event) {
-    this.ref.nativeElement.value = event.target.value.toUpperCase();
+    setTimeout(() => {
+      this.ref.nativeElement.value = event.target.value.toUpperCase();
+    }, 100);
   }
 
 }
