@@ -14,10 +14,10 @@ export class DbExtractorService {
     private userInfoService: UserinfoService,
     private environment: EnvironmentService
   ) { }
-
+  userId = sessionStorage.getItem('userId');
   private headers = new HttpHeaders({
     // 'Content-Type': 'multipart/form-data',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userId)
   });
 
   private processDetailsObj: ProcessDetailsObj;

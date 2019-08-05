@@ -34,10 +34,10 @@ export class NavbarComponent implements OnInit {
   uploadForm: FormGroup;
   errorlicense = false;
 
-  constructor(private userProfileService: UserProfileService , private navService: NavbarService,
-     private userinfoService: UserinfoService, private router: Router,
-     private activatedrouter: ActivatedRoute, private formBuilder: FormBuilder,
-     private workspaceService: WorkspaceServicesService) { }
+  constructor(private userProfileService: UserProfileService, private navService: NavbarService,
+    private userinfoService: UserinfoService, private router: Router,
+    private activatedrouter: ActivatedRoute, private formBuilder: FormBuilder,
+    private workspaceService: WorkspaceServicesService) { }
   ngOnInit() {
     this.userId = this.userinfoService.getUserId();
     setTimeout(() => {
@@ -101,11 +101,17 @@ export class NavbarComponent implements OnInit {
   callUserProfile() {
     localStorage.setItem('userId', '');
   }
+
   logout() {
     const userId = sessionStorage.getItem('userId');
+    const userToken = localStorage.getItem(userId);
     localStorage.removeItem(userId);
     sessionStorage.clear();
-    this.router.navigate(['sign-in']);
+    this.navService.logout(userToken).subscribe(res => {
+      setTimeout(() => {
+        this.router.navigate(['sign-in']);
+      }, 500);
+    });
   }
 
 
