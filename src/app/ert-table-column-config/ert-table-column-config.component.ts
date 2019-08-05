@@ -32,11 +32,11 @@ export class ErtTableColumnConfigComponent implements OnInit {
     // width: 500,
     // height: 400,
     useWorker: false,
-    //fade: true,
-    //fit: true,
+    fade: true,
+    fit: true,
     zoom: true,
     // engine: 'circo',
-    // splines: false,
+    splines: false,
     zoomScaleExtent: [0.1, 3]
   };
   graphInstance: any = '';
@@ -407,28 +407,34 @@ export class ErtTableColumnConfigComponent implements OnInit {
     if (tempObj.usrDefinedColumnList.length !== 0) {
       for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
         const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
-        for (const list of a) {
-          if (item.viewQuery) {
-            this.isFunction = true;
-            linkString = linkString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+        const that = this;
+        if (item.viewQuery) {
+          a.forEach(function (list, index) {
+            that.isFunction = true;
+            linkString = linkString + that.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
               'FunctionTable:' + item.originalColumnName + 'userTempFncStart;';
-            linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
-              this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
-          }
+            if (index === 0) {
+              linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
+                that.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
+            }
+          });
         }
       }
     }
     if (tempObj.columnList.length !== 0) {
       for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
         const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
-        for (const list of a) {
-          if (item.viewQuery) {
-            this.isFunction = true;
-            linkString = linkString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+        const that = this;
+        if (item.viewQuery) {
+          a.forEach(function (list, index) {
+            that.isFunction = true;
+            linkString = linkString + that.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
               'FunctionTable:' + item.originalColumnName + 'userTempFncStart;';
-            linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
-              this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
-          }
+            if (index === 0) {
+              linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
+                that.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
+            }
+          });
         }
       }
     }
@@ -457,9 +463,9 @@ export class ErtTableColumnConfigComponent implements OnInit {
     if (datum.tag === 'svg') {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      const x = 200;
-      const y = 20;
-      const scale = 2;
+      const x = 60;
+      const y = 10;
+      const scale = 3;
       selection
         .attr('width', width + 'pt')
         .attr('height', height + 'pt')
