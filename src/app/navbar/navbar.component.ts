@@ -104,6 +104,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     const userId = sessionStorage.getItem('userId');
     localStorage.removeItem(userId);
+    sessionStorage.clear();
     this.router.navigate(['sign-in']);
   }
 

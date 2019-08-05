@@ -41,6 +41,19 @@ export class SigninFormComponent implements OnInit {
     if (test !== null) {
       this.count = parseInt(localStorage.getItem('count'));
     }
+    this.checkSessionExist();
+  }
+
+  checkSessionExist() {
+    const userId = sessionStorage.getItem('userId');
+    if (userId) {
+      const userToken = localStorage.getItem(userId);
+      if (userToken) {
+        this.router.navigateByUrl(this.workspaceUrl);
+      } else {
+        sessionStorage.clear();
+      }
+    }
   }
 
   createForm() {
