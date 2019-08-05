@@ -102,16 +102,8 @@ export class NavbarComponent implements OnInit {
     localStorage.setItem('userId', '');
   }
   logout() {
-<<<<<<< HEAD
     const userId = sessionStorage.getItem('userId');
     localStorage.removeItem(userId);
-=======
-    const token_data = localStorage.getItem('accessToken');
-    this.navService.logout(token_data).subscribe(a => {
-      console.log(a);
-    });
-    localStorage.removeItem('accessToken');
->>>>>>> 1009c4cf01cb398f71eb05ab54aaf0cfe7f73392
     this.router.navigate(['sign-in']);
   }
 
