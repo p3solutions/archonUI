@@ -15,7 +15,8 @@ import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 export function tokenGetter() {
-  return localStorage.getItem('accessToken');
+  const userId = sessionStorage.getItem('userId');
+  return localStorage.getItem(userId);
 }
 
 describe('SigninFormComponent', () => {
