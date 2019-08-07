@@ -157,7 +157,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Records found.</div>
+  <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">Currently, no screens</div>
   <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}" id="screen-table"
     [length]="totalScreen" showFirstLastButtons [pageSizeOptions]="[5, 10, 25, 100]"> </mat-paginator>
 </div>
