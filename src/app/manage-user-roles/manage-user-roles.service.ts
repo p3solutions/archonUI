@@ -8,9 +8,10 @@ import { EnvironmentService } from '../environment/environment.service';
 @Injectable()
 export class ManageUserRolesService {
   apiUrl = this.environment.apiUrl;
+  userID = sessionStorage.getItem('userId');
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userID)
   });
 
   // private getAllUsersUrl = this.apiUrl + 'users';

@@ -204,7 +204,8 @@ export class CreateWorkspacePageComponent implements OnInit {
   }
 
   getOwnerName(): string {
-    const accessToken = localStorage.getItem('accessToken');
+    const userID = sessionStorage.getItem('userId');
+    const accessToken = localStorage.getItem(userID);
     const token_data = this.jwtHelper.decodeToken(accessToken);
     return token_data.user.firstName + ' ' + token_data.user.lastName;
   }
