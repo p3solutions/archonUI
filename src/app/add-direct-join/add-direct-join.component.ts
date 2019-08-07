@@ -131,6 +131,7 @@ export class AddDirectJoinComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryTable, index, secondaryTableName) {
+    this.closeAutoMatchMessage();
     const isWorthy = this.editState.get(primaryTable.columnId);
     if (isWorthy !== secondaryTableName) {
     this.editState.set(primaryTable.columnId, secondaryTableName);

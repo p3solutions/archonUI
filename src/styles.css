@@ -1618,14 +1618,14 @@ mat-card#left-card label.mat-radio-label div.mat-radio-label-content {
 .create-app-dialog .mat-dialog-title {
   display: flex;
   background-color: #2879ff;
-  padding-left: 26px;
+  padding-left: 14px;
   padding-top: 17px;
   color: #ffffff;
   padding-bottom: 17px;
 }
 
 .create-app-dialog .mat-dialog-content {
-  padding: 6px 14px 0px 27px;
+  padding: 6px 14px 0px 14px;
   margin: 0px;
 }
 
@@ -1777,14 +1777,14 @@ mat-checkbox svg {
 .create-app-dialog .mat-dialog-title {
   display: flex;
   background-color: #2879ff;
-  padding-left: 26px;
+  padding-left: 14px;
   padding-top: 17px;
   color: #ffffff;
   padding-bottom: 17px;
 }
 
 .create-app-dialog .mat-dialog-content {
-  padding: 6px 14px 0px 27px;
+  padding: 6px 14px 0px 14px;
   margin: 0px;
 }
 
@@ -1953,11 +1953,19 @@ button.secondary-btn-color-disabled:hover {
   padding-left: 3px;
 }
 
-a.required-color {
+span.required-color {
   color: #dd3c27 !important;
   font-size: 15px;
   vertical-align: top;
   padding-left: 4px;
+}
+
+i.required-color.material-icons {
+  color: #dd3c27 !important;
+}
+
+i.required-color.material-icons:hover {
+  color: #dd3c27 !important;
 }
 
 /* end-encypted field,and required icon in adhoc  */
@@ -2174,9 +2182,6 @@ span.mat-placeholder-required.mat-form-field-required-marker {
   color: #F44336 !important;
 }
 
-.btn:focus {
-  color: #ffffff;
-}
 
 .btn-primary-login {
   color: #fff;
@@ -2210,5 +2215,11 @@ button:focus {outline:0;}
 .overflow-text {
   overflow: hidden;
   text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+.text-hidden-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }

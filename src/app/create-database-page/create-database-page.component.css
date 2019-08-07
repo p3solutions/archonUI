@@ -327,3 +327,32 @@ mat-card {
 ::ng-deep .my-spinner .overlay {
   position: fixed !important;
 }
+
+.file-btn {
+  background-color: #2879ff;
+  color: #fff;
+  text-transform: inherit;
+  transition: .5s;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.upload-file {
+  background-color: #edf3f8;
+  border: 1px solid #ddd;
+  color: #1d1d1d;
+  text-transform: inherit;
+  transition: .5s;
+  border-radius: 3px;
+  margin-left: 20px;
+  width: 180px
+}
+
+.show-file-text {
+  width: 85%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inherit;
+  float: left;
+  text-align: left;
+}

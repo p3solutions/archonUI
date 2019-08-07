@@ -80,23 +80,30 @@
         </ng-container>
         <ng-container matColumnDef="Schedule Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Schedule Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.scheduledDate | date:'medium'}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">
+            {{element.scheduledDate*1000  | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Start Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.startTime | date:'medium'}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">
+            {{ element.startTime === 'Yet to be started'?('Yet to be started') :(element.startTime * 1000  | date:'medium')}}
+          </td>
         </ng-container>
         <ng-container matColumnDef="End Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.endDate | date:'medium'}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">
+            {{element.endDate*1000  | date:'medium'}}</td>
         </ng-container>
         <ng-container matColumnDef="Last Run Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header>Last Run Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.lastRuntime | date:'medium'}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">
+            {{ element.lastRuntime === ''?('') :(element.lastRuntime * 1000  | date:'medium')}}
+          <td>
         </ng-container>
         <ng-container matColumnDef="Next Start Time">
           <th style="width:10%" mat-header-cell *matHeaderCellDef mat-sort-header> Next Start Time </th>
-          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">{{element.nextStartTime | date:'medium'}}</td>
+          <td style="width:10%" mat-cell *matCellDef="let element; let i = index;">
+            {{ element.nextStartTime === ''?('') :(element.nextStartTime * 1000  | date:'medium')}}</td>
         </ng-container>
         <ng-container matColumnDef="Status">
           <th style="width:3%;text-align: center" mat-header-cell *matHeaderCellDef> Status </th>
@@ -180,7 +187,8 @@
                 <div *ngIf="i.value !== ''" class="inner-bold-item">{{i.name}}</div>
                 <div *ngIf="i.type !== 'Date'" class="inner-grey-item">{{i.value}}</div>
                 <div *ngIf="i.type == 'Date' && i.value !== 'null' && i.value !== 'N/A'" class="inner-grey-item">
-                  {{i.value | date: 'medium'}}</div>
+                  {{ i.value === 'Yet to be started'?('Yet to be started') : i.value === null ? (' ') : (i.value * 1000  | date:'medium')}}
+                </div>
                 <div *ngIf="i.type == 'Date' && i.value == 'N/A'" class="inner-grey-item">{{i.value}}</div>
                 <div *ngIf="i.type == 'Date' && i.value == 'null'" class="inner-grey-item">{{i.value}}</div>
               </div>
@@ -200,7 +208,7 @@
           <div class="col-md-12 ws">
             <div class="bg">Message</div>
           </div>
-          <div class="col-md-12 ws">
+          <div class="col-md-12 ws">;
             <div class="col-md-12">
               <div class="inner-div-l">
                 <div class="inner-bold-item">{{jobMessage?.name}}</div>

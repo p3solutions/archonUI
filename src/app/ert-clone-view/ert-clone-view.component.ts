@@ -18,6 +18,9 @@ export class ErtCloneViewComponent implements OnInit {
   workspaceId = '';
   ertJobId = '';
   searchTableName = '';
+  graphInstance: any = '';
+  data;
+  ShowDiagram = true;
   originalErttableList: ErtTableListObj = new ErtTableListObj(); // to show ert table list in popup when we create or add job.
   totalItemOfOriginalErtTable = 50;
   currentPageOfOriginalErtTable = 1;
@@ -30,17 +33,29 @@ export class ErtCloneViewComponent implements OnInit {
   successMsg = '';
   errorMessage = '';
   option = {
-    width: 500,
-    height: 400,
     useWorker: false,
+    fade: true,
+    fit: true,
+    zoom: true,
+    splines: false,
     zoomScaleExtent: [0.1, 3]
   };
-  graphInstance: any = '';
   cloneJobName = '';
-  dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node [shape="plain" padding="0.2" fontsize="5" fontname = "Roboto"' +
-    'pad="0.5" ];edge [shape="plain" fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
+  dotString = 'digraph {graph [pad="0.5", nodesep="0.10", ranksep="0.26"];node' +
+    '[shape="plaintext" padding="0.2" fontsize="5" fontname = "Roboto"' +
+    'pad="0.5" ];edge [shape=plaintext fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
+  downloadErrorMsg = '';
+  downloadSuccessMsg = '';
   JobMode = '';
-  data;
+  selectedValues: string[] = [];
+  joinListMap = new Map();
+  tempdata;
+  tempfunctionTable = 'FunctionTable[shape="plaintext" label=<<table border="0" cellborder="1" cellspacing="0">' +
+    '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left"> Function Involved'
+    + '  </td></tr>';
+  expectedString = '';
+  actualString = '';
+  isFunction = false;
   constructor(private workspaceHeaderService: WorkspaceHeaderService, public router: Router,
     private ertService: ErtService, public activatedRoute: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
@@ -158,84 +173,142 @@ export class ErtCloneViewComponent implements OnInit {
   }
 
   createDOTActualTable(columnList: ColumnListObj[]) {
-    this.dotString = this.dotString + this.selectedTableName + 'original' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
-    this.dotString = this.dotString + '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' + this.selectedTableName + '   </td></tr>';
-    for (const item of columnList.filter(a => a.dataType !== 'USERDEFINED')) {
-      this.dotString = this.dotString + '<tr><td align="left" port = "' +
-        item.originalColumnName + 'start"' + '> ' + item.originalColumnName + '  </td></tr>';
+    if (this.JobMode.trim().toUpperCase() === 'TABLE') {
+      this.actualString = this.actualString + this.selectedTableName +
+        'original' + '[ shape="plaintext" label=<<table border="0" cellborder="1" cellspacing="0">';
+      this.actualString = this.actualString + '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' +
+        this.selectedTableName + '   </td></tr>';
+      for (const item of columnList.filter(a => a.dataType !== 'USERDEFINED')) {
+        this.actualString = this.actualString + '<tr><td align="left" port = "' +
+          item.originalColumnName + 'start"' + '> ' + item.originalColumnName + '  </td></tr>';
+        if (item.viewQuery) {
+          this.isFunction = true;
+          if (item.viewQuery !== '') {
+            this.isFunction = true;
+            this.tempfunctionTable = this.tempfunctionTable + '<tr><td align="left" port = "' +
+              item.originalColumnName + 'tempFncStart"' + '> ' + item.viewQuery + '  </td></tr>';
+          }
+        }
+      }
+      this.actualString = this.actualString + '</table>>];';
+      this.createDOTExpectedTable(columnList);
     }
-    this.dotString = this.dotString + '</table>>];';
-    this.createDOTExpectedTable(columnList);
+  }
 
+  reInitInstance() {
+    this.dotString = 'digraph {graph [pad="0.5", nodesep="0.10", ranksep="0.26"];node' +
+      '[shape="plaintext" padding="0.2" fontsize="5" fontname = "Roboto"' +
+      'pad="0.5" ];edge [shape=plaintext fontsize="3" fontname = "Roboto" arrowsize="0.3" ]rankdir=LR;';
+    this.tempfunctionTable = 'FunctionTable[shape="plaintext" label=<<table border="0" cellborder="1" cellspacing="0">' +
+      '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left"> Function Involved'
+      + '  </td></tr>';
+    this.expectedString = '';
+    this.actualString = '';
+    this.isFunction = false;
   }
 
   createDOTExpectedTable(columnList: ColumnListObj[]) {
-    this.dotString = this.dotString + this.ExpectedTableName + 'expected' + '[label=<<table border="0" cellborder="1" cellspacing="0">';
-    this.dotString = this.dotString + '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' + this.ExpectedTableName + '   </td></tr>';
+    this.expectedString = this.expectedString + this.ExpectedTableName
+      + 'expected' + '[shape="plaintext"  label=<<table border="0" cellborder="1" cellspacing="0">';
+    this.expectedString = this.expectedString +
+      '<tr><td bgcolor="#eef2f9" cellspacing="1" align="left">' + this.ExpectedTableName + '   </td></tr>';
     for (const item of columnList.filter(a => a.isSelected === true && a.dataType !== 'USERDEFINED')) {
-      this.dotString = this.dotString + '<tr><td align="left" port = "' +
+      this.expectedString = this.expectedString + '<tr><td align="left" port = "' +
         item.modifiedColumnName + 'end"' + '> ' + item.modifiedColumnName + '  </td></tr>';
     }
     const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
     if (tempObj.usrDefinedColumnList.length !== 0) {
       for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true
         && a.dataType.trim().toUpperCase() === 'USERDEFINED')) {
-        this.dotString = this.dotString + '<tr><td align="left" port = "' +
+        this.expectedString = this.expectedString + '<tr><td align="left" port = "' +
           item.modifiedColumnName + 'end"' + '> ' + item.modifiedColumnName + '  </td></tr>';
+        if (item.viewQuery) {
+          this.isFunction = true;
+          this.tempfunctionTable = this.tempfunctionTable + '<tr><td align="left" port = "' +
+            item.originalColumnName + 'userTempFncStart"' + '> ' + item.viewQuery + '  </td></tr>';
+        }
       }
     } if (tempObj.columnList.length !== 0) {
       for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType.trim().toUpperCase() === 'USERDEFINED')) {
-        this.dotString = this.dotString + '<tr><td align="left" port = "' +
+        this.expectedString = this.expectedString + '<tr><td align="left" port = "' +
           item.modifiedColumnName + 'end"' + '>' + item.modifiedColumnName + '  </td></tr>';
+        if (item.viewQuery) {
+          this.isFunction = true;
+          this.tempfunctionTable = this.tempfunctionTable + '<tr><td align="left" port = "' +
+            item.originalColumnName + 'userTempFncStart"' + '> ' + item.viewQuery + '  </td></tr>';
+        }
       }
     }
-
-    this.dotString = this.dotString + '</table>>];';
+    this.tempfunctionTable = this.tempfunctionTable + '</table>>];';
+    this.expectedString = this.expectedString + '</table>>];';
     this.createTableLink(columnList);
   }
 
 
   createTableLink(columnList: ColumnListObj[]) {
+    let linkString = '';
     for (const item of columnList.filter(a => a.isSelected === true && a.dataType !== 'USERDEFINED')) {
-      this.dotString = this.dotString + this.selectedTableName + 'original:' + item.originalColumnName + 'start' + ' -> ' +
-        this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end ';
-        if (item.viewQuery) {
-          this.dotString = this.dotString + '[label="' + item.viewQuery + '"]' + '; ';
-        } else {
-          this.dotString = this.dotString + ';';
-        }
+      linkString = linkString + this.selectedTableName + 'original:' + item.originalColumnName + 'start' + ' -> ' +
+        this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
+      if (item.viewQuery) {
+        this.isFunction = true;
+        linkString = linkString + this.selectedTableName + 'original:' + item.originalColumnName + 'start' + ' -> ' +
+          'FunctionTable:' + item.originalColumnName + 'tempFncStart;';
+        linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'tempFncStart' + ' -> ' +
+          this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
+      }
     }
     const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
 
     if (tempObj.usrDefinedColumnList.length !== 0) {
       for (const item of tempObj.usrDefinedColumnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
         const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
-        for (const list of a) {
-          this.dotString = this.dotString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
-            this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end' + '[label="' + item.viewQuery + '"]' + '; ';
+        const that = this;
+        if (item.viewQuery) {
+          a.forEach(function (list, index) {
+            that.isFunction = true;
+            linkString = linkString + that.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+              'FunctionTable:' + item.originalColumnName + 'userTempFncStart;';
+            if (index === 0) {
+              linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
+                that.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
+            }
+          });
         }
       }
     }
     if (tempObj.columnList.length !== 0) {
       for (const item of tempObj.columnList.filter(a => a.isSelected === true && a.dataType === 'USERDEFINED')) {
         const a = JSON.parse(item.userColumnQuery.replace(/'/g, '"'));
-        for (const list of a) {
-          this.dotString = this.dotString + this.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
-            this.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end' + '[label="' + item.viewQuery + '"]' + '; ';
+        const that = this;
+        if (item.viewQuery) {
+          a.forEach(function (list, index) {
+            that.isFunction = true;
+            linkString = linkString + that.selectedTableName + 'original:' + list.column + 'start' + ' -> ' +
+              'FunctionTable:' + item.originalColumnName + 'userTempFncStart;';
+            if (index === 0) {
+              linkString = linkString + 'FunctionTable:' + item.originalColumnName + 'userTempFncStart' + ' -> ' +
+                that.ExpectedTableName + 'expected:' + item.modifiedColumnName + 'end;';
+            }
+          });
         }
       }
     }
-
-    this.dotString = this.dotString + '}';
+    this.dotString = this.dotString + this.actualString;
+    if (this.isFunction) {
+      this.dotString = this.dotString + this.tempfunctionTable;
+    }
+    this.dotString = this.dotString + this.expectedString + linkString + '}';
     this.drawTableRelationship();
   }
+
 
   drawTableRelationship() {
     this.graphInstance = graphviz('#graph', this.option).transition(this.transitionFactory)
       .tweenShapes(false).attributer(this.attributer).renderDot(this.dotString);
     this.resetZoom();
+    // this.resetZoom();
   }
-
   resetZoom() {
     graphviz('#graph', this.option).resetZoom(d3.transition().duration(1000));
   }
@@ -245,9 +318,9 @@ export class ErtCloneViewComponent implements OnInit {
     if (datum.tag === 'svg') {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      const x = 200;
-      const y = 20;
-      const scale = 2;
+      const x = 60;
+      const y = 10;
+      const scale = 3;
       selection
         .attr('width', width + 'pt')
         .attr('height', height + 'pt')

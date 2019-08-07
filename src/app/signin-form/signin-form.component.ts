@@ -69,7 +69,6 @@ export class SigninFormComponent implements OnInit {
       (err: HttpErrorResponse) => {
         this.count = this.count + 1;
         this.inProgress = false;
-        this.spinner.hide();
         localStorage.setItem('count', this.count);
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.

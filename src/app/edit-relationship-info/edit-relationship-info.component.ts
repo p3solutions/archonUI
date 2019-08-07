@@ -111,6 +111,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   selectedValues(primaryValues, index, secondaryColumn) {
+    this.closeAutoMatchMessage();
     const isWorthy = this.editchangeState.get(primaryValues.primaryColumn.columnId);
     if (isWorthy !== secondaryColumn) {
     this.editchangeState.set(primaryValues.primaryColumn.columnId, secondaryColumn);
