@@ -602,7 +602,6 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   checkForMetadataInApplication() {
-    console.log(this.selectedAppObject.metadataVersion, this.mmrVersion);
     if (this.selectedAppObject.metadataVersion !== '') {
       if (this.selectedAppObject.metadataVersion.trim() !== this.mmrVersion.trim()) {
         this.oldMetadata = true;
