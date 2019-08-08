@@ -6,6 +6,8 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { Response, ResponseOptions, XHRBackend } from '@angular/http';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AddMembersService', () => {
   let backend: MockBackend;
@@ -14,13 +16,15 @@ describe('AddMembersService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
       ],
       providers: [
         { provide: MockBackend, useClass: MockBackend },
         { provide: XHRBackend, useExisting: MockBackend },
         AddMembersService,
-        HttpClientModule, 
+        HttpClientModule,
+        UserinfoService,
         { provide: EnvironmentService, useClass: MockEnvironmentService }
       ]
     });

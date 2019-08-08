@@ -323,6 +323,7 @@ export class ErtJobsComponent implements OnInit {
         el.click();
         this.isSuccessMsg = false;
         this.successMsg = 'Analysis has started. Please check Status Monitoring page to know the status.';
+        this.getErtJobs();
       } else {
         this.isSuccessMsg = false;
         document.getElementById('warning-popup-btn').click();
