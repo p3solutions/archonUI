@@ -270,13 +270,13 @@ a.disabled .material-icons {
 
 .metadata-warning {
   border-radius: 3px;
-    background-color: #eef2f9;
-    color: #2879ff;
-    height: 33px;
-    width: 21%;
-    padding: 12px 0px 31px 0px;
-    margin-left: 78px;
-    margin-top: -18px;
+  background-color: #eef2f9;
+  color: #2879ff;
+  height: 33px;
+  width: 21%;
+  padding: 12px 0px 31px 0px;
+  margin-left: 45px;
+  margin-top: -18px;
 }
 
 .no-record-found {
@@ -427,13 +427,13 @@ a.disabled .material-icons {
   cursor: not-allowed;
 }
 
-.warning-icon{
+.warning-icon {
   font-size: 19px !important;
-  color:#fbc41e !important;
+  color: #fbc41e !important;
   cursor: default;
 }
 
-.warning-btn{
+.warning-btn {
   padding-left: 25px;
   padding-right: 0px;
   font-size: 15px;

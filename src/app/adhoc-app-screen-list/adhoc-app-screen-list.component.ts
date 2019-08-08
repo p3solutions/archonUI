@@ -263,6 +263,7 @@ export class AdhocAppScreenListComponent implements OnInit {
         this.selectedAppObject = new ApplicationInfo();
         this.adhocService.updateAdhocHeaderInfo(new AdhocHeaderInfo());
         this.getApplication();
+        this.checkForMetadataInApplication();
         this.spinner.hide();
       }, (err: HttpErrorResponse) => {
         if (err.error) {
@@ -601,12 +602,15 @@ export class AdhocAppScreenListComponent implements OnInit {
   }
 
   checkForMetadataInApplication() {
+    console.log(this.selectedAppObject.metadataVersion, this.mmrVersion);
     if (this.selectedAppObject.metadataVersion !== '') {
       if (this.selectedAppObject.metadataVersion.trim() !== this.mmrVersion.trim()) {
         this.oldMetadata = true;
       } else {
         this.oldMetadata = false;
       }
+    } else {
+      this.oldMetadata = false;
     }
   }
 
