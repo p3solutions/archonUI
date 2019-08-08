@@ -24,12 +24,12 @@ export class ManageMembersService {
     private userinfoService: UserinfoService,
     private environment: EnvironmentService
   ) {
-    this.headers = userinfoService.getHeaders();
+    // this.headers = userinfoService.getHeaders();
   }
 
   getWSMembers(workspaceId): Observable<ManageMembers[]> {
     const url = this.apiUrl + this.wSMembersUrl + workspaceId;
-    return this.http.get<ManageMembers[]>(url, { headers: this.headers }).pipe(
+    return this.http.get<ManageMembers[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractWSMembers),
       catchError(this.handleError('managemembers', []))
     );
@@ -37,7 +37,7 @@ export class ManageMembersService {
 
   getwsRoleList(): Observable<any> {
     const url = this.apiUrl + this.wSroleListUrl;
-    return this.http.get<any[]>(url, { headers: this.headers }).pipe(
+    return this.http.get<any[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractWSRoles),
       catchError(this.handleError('getwsRoleList', []))
     );
@@ -45,7 +45,7 @@ export class ManageMembersService {
 
   getServiceActions(): Observable<any> {
     const url = this.apiUrl + this.serviceActionsUrl;
-    return this.http.get<any>(url, { headers: this.headers }).pipe(
+    return this.http.get<any>(url, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractServiceActions),
       catchError(this.handleError('getServiceActions'))
     );
@@ -53,14 +53,14 @@ export class ManageMembersService {
   updateRole(params: AnyObject) {
    // params.id = this.userinfoService.getUserId(); // loggedIn user id
     const url = this.apiUrl + this.updateWSRoleUrl;
-    return this.http.patch<any>(url, params, { headers: this.headers }).pipe(
+    return this.http.patch<any>(url, params, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractData),
       catchError(this.handleError('updateRole'))
     );
   }
   updateServiceActions(params: AnyObject) {
     const url = this.apiUrl + `users/${params.userId}/roles/actions`;
-    return this.http.post<any>(url, params, { headers: this.headers }).pipe(
+    return this.http.post<any>(url, params, { headers: this.userinfoService.getHeaders()}).pipe(
       map(this.extractServiceActions),
       catchError(this.handleError('updateServiceActions'))
     );
@@ -68,7 +68,7 @@ export class ManageMembersService {
   deleteManageMembersData(param: AnyObject, wsId: string): Observable<any> {
     console.log(param);
     const url = this.apiUrl + this.wsDelAccessUrl + wsId + '/member';
-    return this.http.request<any>('DELETE', url, { body: param, headers: this.headers })
+    return this.http.request<any>('DELETE', url, { body: param, headers: this.userinfoService.getHeaders() })
       .pipe(catchError(this.handleError('deleteManageMembersData', []))
         // tap(_ => this.log(`deleted hero id=${id}`)),
         // catchError(this.handleError<Hero>('deleteHero'))

@@ -30,13 +30,18 @@ export class ErtExtractDigestComponent implements OnInit {
     this.activatedRoute.params.subscribe((requestParam) => {
       this.ertJobId = requestParam.ertJobId;
     });
+    console.log(this.ertService.extractDataConfigInfo);
+    console.log(this.ertService.ingestionDataConfig);
     if (this.ertService.extractDataConfigInfo.titleName !== '' || this.ertService.extractDataConfigInfo.holdingName !== ''
       || this.ertService.extractDataConfigInfo.applicationName !== '' || this.ertService.ingestionDataConfig.infoArchiveName !== ''
     ) {
+      console.log(1);
       this.getExtractAndIngestInfoFromService();
     } else if (this.ertJobId !== '' && this.ertJobId !== undefined) {
+      console.log(2);
       this.getExtractAndIngestInfo();
     } else {
+      console.log(3);
       this.initFunction();
     }
   }
@@ -61,17 +66,22 @@ export class ErtExtractDigestComponent implements OnInit {
       try {
         this.spinner.hide();
         this.extractDataConfigInfo = result.extractDataConfig;
-        this.ertService.data = JSON.parse(result.graphDetails.data.replace(/'/g, '"'));
+        if (result.graphDetails.data) {
+          this.ertService.data = JSON.parse(result.graphDetails.data.replace(/'/g, '"'));
+        }
         const b = document.getElementById('extract-checkbox') as HTMLInputElement;
         b.checked = true;
+        console.log(result);
         if (result.ingestionDataConfig !== null) {
+          console.log(result.ingestionDataConfig);
           const a = document.getElementById('ingest-checkbox') as HTMLInputElement;
           a.checked = true;
           this.ingestionDataConfigObj = result.ingestionDataConfig;
           this.disableIngestData = false;
         }
         this.isDisabledSaveBtn = false;
-      } catch {
+      } catch (err) {
+        console.dir(err);
         this.spinner.hide();
       }
     }, (err: HttpErrorResponse) => {

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GlobalRoles } from '../global-roles';
 import { EnvironmentService } from '../environment/environment.service';
+import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class ManageUserRolesService {
@@ -24,7 +25,8 @@ export class ManageUserRolesService {
   private getUserByEmailIdUrl = this.apiUrl + 'users/manage/role?emailAddress=';
 
   constructor(private http: HttpClient,
-    private environment: EnvironmentService
+    private environment: EnvironmentService,
+    private userinfoService: UserinfoService
   ) { }
 
   private extractGlobalRolesData(res: any) {
@@ -37,13 +39,13 @@ export class ManageUserRolesService {
       userId: userid,
       globalRoleId: globalid
     };
-    return this.http.patch(this.changeGlobalRoleUrl + userid + '/roles/global', body, { headers: this.headers })
+    return this.http.patch(this.changeGlobalRoleUrl + userid + '/roles/global', body, { headers: this.userinfoService.getHeaders() })
       .pipe(catchError(this.handleError('changeglobalrole', [])));
   }
 
 
   getGlobalRoleDetails(): Observable<GlobalRoles[]> {
-    return this.http.get<GlobalRoles[]>(this.getGlobalRoleUrl, { headers: this.headers }).pipe(
+    return this.http.get<GlobalRoles[]>(this.getGlobalRoleUrl, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractGlobalRolesData),
       catchError(this.handleError('globalroles', []))
     );
@@ -52,19 +54,19 @@ export class ManageUserRolesService {
   /********************************* services used for new component  **********************************/
 
   inviteUser(param): Observable<any> {
-    return this.http.post<any>(this.inviteUserUrl, param, { headers: this.headers }).
+    return this.http.post<any>(this.inviteUserUrl, param, { headers: this.userinfoService.getHeaders() }).
       pipe(map(this.extractDataForAllRequest));
   }
 
   getInviteUsers(startIndex): Observable<any> {
-    return this.http.get<any>(this.getInviteUsersUrl + startIndex, { headers: this.headers }).
+    return this.http.get<any>(this.getInviteUsersUrl + startIndex, { headers: this.userinfoService.getHeaders() }).
       pipe(map(this.extractDataForAllRequest),
         catchError(this.handleError('getInviteUsers', []))
       );
   }
 
   getGlobalGroup(role): Observable<any> {
-    return this.http.get<any>(this.apiUrl + role + '/group/global', { headers: this.headers }).
+    return this.http.get<any>(this.apiUrl + role + '/group/global', { headers: this.userinfoService.getHeaders() }).
       pipe(map(this.extractDataForAllRequest),
         catchError(this.handleError('getInviteUsers', []))
       );
@@ -73,35 +75,35 @@ export class ManageUserRolesService {
   getAllUsers($startIndex, $accessRevoked, $accountLocked, $searchText, $itemPerPage): Observable<any> {
     return this.http.get<any>(this.getAllUsersUrl + $startIndex + '&accessRevoked=' + $accessRevoked +
       '&accountLocked=' + $accountLocked + '&search=' + $searchText +
-      '&itemPerPage=' + $itemPerPage, { headers: this.headers }).
+      '&itemPerPage=' + $itemPerPage, { headers: this.userinfoService.getHeaders()}).
       pipe(map(this.extractDataForAllRequest),
         catchError(this.handleError('getAllUsers', []))
       );
   }
 
   getUserByEmailId(emailId): Observable<any> {
-    return this.http.get<any>(this.getUserByEmailIdUrl + emailId, { headers: this.headers }).
+    return this.http.get<any>(this.getUserByEmailIdUrl + emailId, { headers: this.userinfoService.getHeaders()}).
       pipe(map(this.extractDataForAllRequest),
         catchError(this.handleError('getUserByEmailId', []))
       );
   }
 
   changeUserStatus($url): Observable<any> {
-    return this.http.patch<any>(this.changeUserStatusUrl + $url, null, { headers: this.headers }).
+    return this.http.patch<any>(this.changeUserStatusUrl + $url, null, { headers: this.userinfoService.getHeaders() }).
       pipe(map(this.extractDataForAllRequest),
         catchError(this.handleError('changeUserStatus', []))
       );
   }
 
   changeGlobalGroup($url, param): Observable<any> {
-    return this.http.patch<any>(this.apiUrl + $url, param, { headers: this.headers }).
+    return this.http.patch<any>(this.apiUrl + $url, param, { headers: this.userinfoService.getHeaders()}).
       pipe(map(this.extractDataForAllRequest),
         catchError(this.handleError('changeGlobalGroup', []))
       );
   }
 
   cancelInvite(url): Observable<any> {
-    return this.http.delete<any>(this.apiUrl + url, { headers: this.headers }).
+    return this.http.delete<any>(this.apiUrl + url, { headers: this.userinfoService.getHeaders()}).
       pipe(map(this.extractDataForAllRequest));
   }
 

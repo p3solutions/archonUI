@@ -75,7 +75,7 @@ export class WorkspaceServicesService {
   uploadLicense(file) {
   const formData: FormData = new FormData();
   formData.append('file', file);
-  return this.http.post(this.uploadFile, formData , { headers: this.headers });
+  return this.http.post(this.uploadFile, formData , { headers: this.userInfoService.getFileUploadHeaders() });
   }
 }
 
