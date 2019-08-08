@@ -68,6 +68,12 @@ export class UserinfoService {
     });
   }
 
+  getFileUploadHeaders() {
+    return new HttpHeaders({
+      'Authorization': 'Bearer ' + this.getAuthKey()
+    });
+  }
+
   getUserInfo(): Observable<any> {
     return this.http.get<any>(this.getUserInfoUrl(), { headers: this.getHeaders() }).
       pipe(catchError(this.handleError<any>('getUserInfo')));
