@@ -300,3 +300,12 @@ table.mat-table {
 #cancel:hover {
   transform: scale(1.1, 1.1);
 }
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding: 0;
+  padding-right: 10px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 24px;
+}

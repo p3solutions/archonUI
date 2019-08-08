@@ -12,7 +12,22 @@ export class NonspecialcharDirective {
 
 
   @HostListener('keypress', ['$event']) onKeyPress(event) {
-    return new RegExp(this.regexStr).test(event.key);
+    const value = new RegExp(this.regexStr).test(event.key);
+    if (value) {
+      setTimeout(() => {
+        const a = /^[0-9]/.test(event.target.value);
+        if (a) {
+          this.el.nativeElement.value = '';
+        } else {
+          const b = /^[a-zA-Z_][a-zA-Z0-9_]*/.test(event.target.value);
+          if (b) {
+            this.el.nativeElement.value = event.target.value;
+          }
+        }
+      }, 100);
+    } else {
+      return false;
+    }
   }
 
   @HostListener('paste', ['$event']) blockPaste(event: KeyboardEvent) {

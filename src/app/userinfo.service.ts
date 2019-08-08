@@ -28,7 +28,8 @@ export class UserinfoService {
   }
 
   getTokenData() {
-    this.accessToken = localStorage.getItem('accessToken');
+    const userId = sessionStorage.getItem('userId');
+    this.accessToken = localStorage.getItem(userId);
     this.token_data = this.jwtHelper.decodeToken(this.accessToken);
   }
 
@@ -56,7 +57,8 @@ export class UserinfoService {
   }
 
   getAuthKey() {
-    return localStorage.getItem('accessToken');
+    const userId = sessionStorage.getItem('userId');
+    return localStorage.getItem(userId);
   }
 
   getHeaders() {
@@ -120,8 +122,13 @@ export class UserinfoService {
 
   redirectOnSessionTimedOut() {
     // TODO: show alert about losing unsaved data
-    const sessionTimedOutUrl = this.router.url;
-    localStorage.setItem('sessionTimedOutUrl', sessionTimedOutUrl);
+    // const sessionTimedOutUrl = this.router.url; // commented we are not using return url for any purpose.
+    // localStorage.setItem('sessionTimedOutUrl', sessionTimedOutUrl);
+    const userId = sessionStorage.getItem('userId');
+    if (userId) {
+      localStorage.removeItem(userId);
+    }
+    sessionStorage.clear();
     this.router.navigateByUrl(this.loginUrl);
   }
 

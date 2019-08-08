@@ -8,10 +8,11 @@ import { EnvironmentService } from './environment/environment.service';
 
 @Injectable()
 export class UserWorkspaceService {
+  userId = sessionStorage.getItem('userId');
   apiUrl = this.environment.apiUrl;
   private headers = new HttpHeaders({
     // 'Content-Type': 'multipart/form-data',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userId)
   });
   getConfiguredDBurl = `${this.apiUrl}dbs/configured/schemaReadyDbs`;
   getConfigDBurl = `${this.apiUrl}dbs/configured`;

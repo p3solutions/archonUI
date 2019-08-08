@@ -17,7 +17,7 @@
         <div class="card-body" id="ert-tbl-search">
           <div *ngIf="selectedTableList.length>0" id="tbl-list" style="height: 326px;">
             <div class="scroll-div border" appScrollable (scrollPosition)="getNextBatchOfERTTable($event)">
-              <div *ngFor="let item of selectedTableList | searchTable:searchTableName"
+              <div *ngFor="let item of selectedTableList | searchErtTable:searchTableName"
                 (click)="getERTcolumnlist(item.tableId,$event)"
                 [ngClass]="item.tableId===selectedTableId ?'selectTableCls well':'well'">
                 <input [disabled]="item.isSelected && (from=='data-record' || from=='SIP')" style="float:left"
@@ -80,7 +80,7 @@
                   <thead>
                     <tr>
                       <th><input class="select-all-checkbox" type="checkbox" [checked]="isAllColumnSelected"
-                          (change)="selectAllColumns($event)">Include</th>
+                          (change)="selectAllColumns($event)"></th>
                       <th>Column</th>
                       <th>Column(As required in Output)
                       <th>Type</th>
@@ -163,7 +163,7 @@
         </div>
         <div>
           <mat-accordion>
-            <mat-expansion-panel [expanded]="!isCombinedQueryMode" [disabled]="isCombinedQueryMode"
+            <mat-expansion-panel [expanded]="isCombinedQueryModeExpanded" [disabled]="isCombinedQueryMode"
               (closed)="openColumnMode()">
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -227,7 +227,7 @@
               </div>
 
             </mat-expansion-panel>
-            <mat-expansion-panel [expanded]="!isQueryMode" [disabled]="isQueryMode">
+            <mat-expansion-panel [expanded]="isQueryModeExpanded" [disabled]="isQueryMode">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Query Mode
@@ -242,7 +242,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <div style="text-align: -webkit-left" id="query-alert" class="alert-hide alert alert-danger alert-dismissible">
+        <div id="query-alert" class="error-div alert-hide alert alert-danger alert-dismissible">
           <a class="close" (click)="closeUserDefinedAlert()" aria-label="close">&times;</a>
           {{usrDefinedAlertMessage}}
         </div>
@@ -290,25 +290,36 @@
                             class="fa fa-chevron-down"></i>{{node.operation}}</div>
                         <div *ngIf="node.children.length==0" [style.margin-left.px]="node.margin_left"
                           class="filter-div form-inline">
-                          <span (click)="deleteFilterConfigTreeNode(node.id)" class="cursor-poniter"><i
+                          <span (click)="deleteFilterConfigTreeNode(node.id)" class="margin-span cursor-poniter"><i
                               class="fa fa-trash"></i></span>
-                          <div class="form-group filter-well"
-                            (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,$event)">
+                          <!-- <div class="form-group filter-well {{selectfiltercolumn.value === null && selectcondition.value === null && input.value  === '' ? 'filter-add-or-disabled' : 'filter-add-or'}}"
+                            (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,node.dataType,$event)">
                             AND</div>
-                          <div class="form-group filter-well"
-                            (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,$event)">
-                            OR</div>
+                          <div class="form-group filter-well {{selectfiltercolumn.value === null && selectcondition.value === null && input.value  === '' ? 'filter-add-or-disabled' : 'filter-add-or'}}"
+                            (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,node.dataType,$event)">
+                            OR</div> -->
+                          <button
+                            [disabled]="(selectfiltercolumn.value === 'null' || selectcondition.value === 'null' ||  input.value  === '')"
+                            class="btn btn-padding-filter {{(selectfiltercolumn.value === 'null' || selectcondition.value === 'null' || input.value  === '') ? 'primary-btn-color-disabled' :'primary-btn-color'}}"
+                            (click)="insertFilterNode(node.id,'AND',selectfiltercolumn.value,selectcondition.value,input.value,node.dataType,$event)">
+                            AND</button>
+                          <button
+                            [disabled]="(selectfiltercolumn.value === 'null' || selectcondition.value === 'null' || input.value  === '')"
+                            class="btn btn-padding-filter {{(selectfiltercolumn.value === 'null' || selectcondition.value === 'null' || input.value  === '') ? 'primary-btn-color-disabled' :'primary-btn-color'}}"
+                            (click)="insertFilterNode(node.id,'OR',selectfiltercolumn.value,selectcondition.value,input.value,node.dataType,$event)">
+                            OR</button>
                           <div class="form-group">
-                            <select class="form-control" (change)="filterColumnSelectionChange(node.column)"
+                            <select class="form-control" (change)="filterColumnSelectionChange(node.column,node.id)"
                               [(ngModel)]="node.column" #selectfiltercolumn>
-                              <option [ngValue]="null" selected>Select Column</option>
+                              <option value="null" selected>Select Column</option>
                               <option [value]="item" *ngFor="let item of filterConfigColumnNameList">{{item}}</option>
                             </select>
                           </div>
                           <div class="form-group">
                             <select #selectcondition [(ngModel)]="node.condition" class="form-control">
-                              <option [ngValue]="null" selected>Select condition</option>
-                              <option [value]="item.operation" *ngFor="let item of filterOperationList">
+                              <option value="null" selected>Select condition</option>
+                              <option [value]="item.operation"
+                                *ngFor="let item of filterOperationList|filteroperation:node.dataType">
                                 {{item.operation}}
                               </option>
                             </select>
@@ -345,7 +356,15 @@
                     <div id="add-sel-table">
                       <div class="form-inline" *ngFor="let item of dataOrderList;let i=index">
                         <div class="add-edit-heading form-group">{{item.column}}</div>
-                        <div class="add-edit-heading form-group">{{item.order}}</div>
+                        <div *ngIf="item.order ==='Asc'" style="cursor: default" class="add-edit-heading form-group">
+                          <i class="material-icons">
+                            arrow_drop_up
+                          </i>
+                        </div>
+                        <div *ngIf="item.order ==='desc'" style="cursor: default" class="add-edit-heading form-group"><i
+                            class="material-icons">
+                            arrow_drop_down
+                          </i></div>
                         <div class="add-edit-heading form-group"><i (click)="deleteOrderConfig(item.column,i)"
                             class="fa fa-trash"></i>
                         </div>
@@ -403,7 +422,7 @@
         <div class="form-group">
           <select class="form-control" #selectValue="ngModel" [ngModel]="configColumnObject.selectedConfigFunction"
             name="configName" (ngModelChange)="setColumnConfigObj(selectValue.value)">
-            <option value="null">Select Column</option>
+            <option value="null">Select Function</option>
             <option *ngFor="let item of columnConfigFunctionList" [value]="item.function">{{item.function}}</option>
           </select>
         </div>

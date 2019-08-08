@@ -10,9 +10,10 @@ export class FilterConfigNode {
     children: FilterConfigNode[] = [];
     margin_left: number;
     parentId: number;
+    dataType: string;
 
     constructor(id: number, operation: string, displayAND: boolean, displayOR: boolean, column: string,
-        condition: string, value: string, margin_left: number, parentId: number, children: FilterConfigNode[]) {
+        condition: string, value: string, margin_left: number, parentId: number, dataType: string, children: FilterConfigNode[]) {
         this.id = id;
         this.operation = operation;
         this.displayAND = displayAND;
@@ -23,6 +24,7 @@ export class FilterConfigNode {
         children = children;
         margin_left = margin_left;
         this.parentId = parentId;
+        this.dataType = dataType;
     }
 }
 
@@ -35,6 +37,7 @@ function filterNode(data) {
     this.condition = data.condition;
     this.value = data.value;
     this.parentId = data.parentId;
+    this.dataType = data.dataType;
     this.children = [];
 }
 
@@ -231,31 +234,6 @@ export class ColumnConfigFunction {
     dbName = '';
 }
 
-export const columnConfigFunctionList: ColumnConfigFunction[] = [
-    // Start - MYSQL,ORACLE,DB2,TERADATA,SYBASE
-    { function: 'CEIL', inputType: 'NUMBER', outputType: 'NUMBER', dbName: 'MYSQL' },
-    { function: 'FLOOR', inputType: 'NUMBER', outputType: 'NUMBER', dbName: 'MYSQL' },
-    { function: 'LENGTH', inputType: 'STRING', outputType: 'NUMBER', dbName: 'MYSQL' },
-    { function: 'UPPER', inputType: 'STRING', outputType: 'STRING', dbName: 'MYSQL' },
-    { function: 'LOWER', inputType: 'STRING', outputType: 'STRING', dbName: 'MYSQL' },
-    { function: 'SUBSTRING', inputType: 'STRING', outputType: 'STRING', dbName: 'MYSQL' },
-    { function: 'REVERSE', inputType: 'STRING', outputType: 'STRING', dbName: 'MYSQL' },
-    { function: 'ADDTIME', inputType: 'DATE', outputType: 'DATE', dbName: 'MYSQL' },
-    { function: 'ADDDATE', inputType: 'DATE', outputType: 'DATE', dbName: 'MYSQL' },
-    // End
-    // Start - SQL
-    { function: 'CEILING', inputType: 'NUMBER', outputType: 'NUMBER', dbName: 'SQL' },
-    { function: 'FLOOR', inputType: 'NUMBER', outputType: 'NUMBER', dbName: 'SQL' },
-    { function: 'LEN', inputType: 'STRING', outputType: 'NUMBER', dbName: 'SQL' },
-    { function: 'UPPER', inputType: 'STRING', outputType: 'STRING', dbName: 'SQL' },
-    { function: 'LOWER', inputType: 'STRING', outputType: 'STRING', dbName: 'SQL' },
-    { function: 'SUBSTRING', inputType: 'STRING', outputType: 'STRING', dbName: 'SQL' },
-    { function: 'REVERSE', inputType: 'STRING', outputType: 'STRING', dbName: 'SQL' },
-    { function: 'ADDTIME', inputType: 'DATE', outputType: 'DATE', dbName: 'SQL' },
-    { function: 'ADDDATE', inputType: 'DATE', outputType: 'DATE', dbName: 'SQL' }
-    // End
-];
-
 export function findParentNode(element, id: number) {
     if (element.id === id) {
         return element;
@@ -275,27 +253,4 @@ export class FilterOperationList {
     dataType = '';
 }
 
-export const filterOperationList: FilterOperationList[] = [
-    { operation: '=', dataType: 'NUMBER' },
-    { operation: '!=', dataType: 'NUMBER' },
-    { operation: '>', dataType: 'NUMBER' },
-    { operation: '<', dataType: 'NUMBER' },
-    { operation: '>=', dataType: 'NUMBER' },
-    { operation: '<=', dataType: 'NUMBER' },
-    { operation: '=', dataType: 'DATE' },
-    { operation: '!=', dataType: 'DATE' },
-    { operation: '>', dataType: 'DATE' },
-    { operation: '<', dataType: 'DATE' },
-    { operation: '>=', dataType: 'DATE' },
-    { operation: '<=', dataType: 'DATE' },
-    // { operation: 'between', dataType: 'DATE' },
-    { operation: 'is null', dataType: 'DATE' },
-    { operation: 'is not null', dataType: 'DATE' },
-    { operation: '=', dataType: 'BOOLEAN' },
-    { operation: '!=', dataType: 'BOOLEAN' },
-    { operation: '=', dataType: 'STRING' },
-    { operation: '!=', dataType: 'STRING' },
-    { operation: 'like', dataType: 'STRING' },
-    { operation: 'is null', dataType: 'STRING' },
-    { operation: 'is not null', dataType: 'STRING' }
-];
+

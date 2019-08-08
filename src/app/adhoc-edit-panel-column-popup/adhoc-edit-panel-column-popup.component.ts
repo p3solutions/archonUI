@@ -164,7 +164,6 @@ export class AdhocEditPanelColumnPopupComponent implements OnInit {
   }
 
   maskFieldCheck() {
-    console.log(this.editResultFieldsForm.get('isMaskField').value);
     if (!this.editResultFieldsForm.get('isMaskField').value) {
       this.editResultFieldsForm.get('maskType').disable();
       this.editResultFieldsForm.get('maskLength').disable();
