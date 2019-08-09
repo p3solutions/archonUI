@@ -368,6 +368,12 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   toggle() {
+    this.dataSource.filter = '';
+    this.dataSource1.filter = '';
+    this.dataSource.data = this.populateSecondaryValuesArray;
+    this.dataSource1.data = this.populatePrimaryValuesArray;
+    this.accuracyModel2 = '';
+    this.accuracyModel1 = '';
     this.toggleBoolean = !this.toggleBoolean;
     if (this.toggleBoolean === false) {
       this.activateSecondaryFn();
