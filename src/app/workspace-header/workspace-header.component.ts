@@ -99,12 +99,14 @@ export class WorkspaceHeaderComponent implements OnInit, OnDestroy {
       this.workspaceHeaderService.updateWorkspaceList(this.userWorkspaceArray);
       try {
         if (this.workspaceHeaderService.selected === undefined) {
-          // for (let i = 0; i <= this.userWorkspaceArray.length; i++) {
-          //   if (i === 0) {
           this.workspaceHeaderService.selected = this.userWorkspaceArray[0].workspaceName;
           this.selectWorkspace(this.userWorkspaceArray[0]);
-          //   }
-          // }
+        } else {
+          const isWorkspaceExist = this.userWorkspaceArray.filter(a => a.workspaceName === this.workspaceHeaderService.selected)[0];
+          if (isWorkspaceExist === undefined) {
+            this.workspaceHeaderService.selected = this.userWorkspaceArray[0].workspaceName;
+            this.selectWorkspace(this.userWorkspaceArray[0]);
+          }
         }
       } catch {
         this.spinner.hide();
