@@ -38,7 +38,8 @@ export class ArchonHttpInterceptor implements HttpInterceptor {
                 // console.log(`HttpClient error message "${response.error.message}"`);
             }
             if (response.status === 500 && response.error.message === 'Token is expired') {
-                this.userinfoService.redirectOnSessionTimedOut();
+                this.router.navigate(['workspace/workspace-dashboard/workspace-services'], { queryParams: { texp: 'yes' } });
+                // this.userinfoService.redirectOnSessionTimedOut();
             }
             if (response.status ===  423 && response.error.message === 'License expired') {
                 this.router.navigate(['workspace/workspace-dashboard/workspace-services'], { queryParams: { license: 'no' } });

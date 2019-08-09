@@ -33,6 +33,7 @@ export class NavbarComponent implements OnInit {
   @ViewChild('succesdismiss') success: ElementRef;
   uploadForm: FormGroup;
   errorlicense = false;
+  isTokenExpired = '';
 
   constructor(private userProfileService: UserProfileService, private navService: NavbarService,
     private userinfoService: UserinfoService, private router: Router,
@@ -45,6 +46,13 @@ export class NavbarComponent implements OnInit {
       if (this.license === 'no') {
         const el: HTMLElement = this.button.nativeElement as HTMLElement;
         el.click();
+      }
+    }, 1000);
+    setTimeout(() => {
+      this.isTokenExpired = this.activatedrouter.snapshot.queryParamMap.get('texp');
+      console.log(this.isTokenExpired);
+      if (this.isTokenExpired === 'yes') {
+        document.getElementById('token-popup-btn').click();
       }
     }, 1000);
     this.uploadForm = this.formBuilder.group({
@@ -99,7 +107,7 @@ export class NavbarComponent implements OnInit {
     return info;
   }
   callUserProfile() {
-    localStorage.setItem('userId', '');
+    // localStorage.setItem('userId', '');
   }
 
   logout() {

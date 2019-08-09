@@ -36,8 +36,7 @@ export class WorkspaceServicesComponent implements OnInit {
   startIndex = 1;
   isAnyServiceEnable = true;
   showMessage = 'No access to any services. Please contact owner of workspace to get access.';
-
-
+  isTokenExpired = '';
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -54,6 +53,7 @@ export class WorkspaceServicesComponent implements OnInit {
     private userWorkspaceService: UserWorkspaceService,
     private permissionService: PermissionService,
     private spinner: NgxSpinnerService,
+    private activatedrouter: ActivatedRoute
   ) {
     activatedRouter.params.subscribe(val => {
       this.workspaceService.userSelectedWorkspace.subscribe((serviceActions: ServiceActionsObject[]) => {
@@ -69,12 +69,12 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService, this.router, this.activatedRouter, null, null);
+    const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService, 
+      this.router, this.activatedRouter, null, null);
     test.loadfirst = 0;
     test.getNotification();
     this.workspaceHeaderService.updateCheckActiveTab('Services');
     this.isAnyServiceEnable = this.serviceActions.filter(a => a.enableService === true).length !== 0 ? true : false;
-    
   }
 
   gotoMetalyzer(service: any) {
