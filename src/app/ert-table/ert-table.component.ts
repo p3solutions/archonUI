@@ -369,6 +369,11 @@ export class ErtTableComponent implements OnInit {
       const tableIds = this.tempOriginalSelectedTable.map(function (item) { return item['tableId']; });
       this.spinner.show();
       this.tempOriginalSelectedTable = [];
+      if (this.showAvilableBtn) {
+        document.getElementById('cancelSelectedTableBtn').click();
+      } else {
+        document.getElementById('cancelAddBtn').click();
+      }
       this.getEditedERTcolumnlist(tableIds);
     } else {
       this.spinner.hide();

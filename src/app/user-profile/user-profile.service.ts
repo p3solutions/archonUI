@@ -7,9 +7,9 @@ export class UserProfileService {
 
   private messageSource = new BehaviorSubject('');
   userSelectedWorkspace = this.messageSource.asObservable();
-
+  userID = sessionStorage.getItem('userId');
   jwtHelper: JwtHelperService = new JwtHelperService();
-  accessToken = localStorage.getItem('accessToken');
+  accessToken = localStorage.getItem(this.userID);
   token_data = this.jwtHelper.decodeToken(this.accessToken);
 
   private UserName = new BehaviorSubject(this.token_data.user.firstName + ' ' + this.token_data.user.lastName);

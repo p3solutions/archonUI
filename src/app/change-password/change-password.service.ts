@@ -6,9 +6,10 @@ import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class ChangePasswordService {
+  userID = sessionStorage.getItem('userId');
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userID)
   });
   private getUsersUrl = this.environment.apiUrl + 'users/';
   accessToken: string;
@@ -26,7 +27,7 @@ export class ChangePasswordService {
   changePassword(param) {
     const URL = this.getUsersUrl + this.userId + '/pwd';
     this.passwordParam = param;
-    return this.http.patch(URL, this.passwordParam, { headers: this.headers });
+    return this.http.patch(URL, this.passwordParam, { headers: this.userinfoService.getHeaders() });
     // .pipe(
     // catchError(this.handleError('changePassword'))
     // );

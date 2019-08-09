@@ -95,7 +95,8 @@ export function checkOption(controlName: string) {
 }
 export function getUserId(): string {
     const jwtHelper: JwtHelperService = new JwtHelperService();
-    const accessToken = localStorage.getItem('accessToken');
+    const userId = sessionStorage.getItem('userId');
+    const accessToken = localStorage.getItem(userId);
     const token_data = jwtHelper.decodeToken(accessToken);
     return token_data.user.id;
 }

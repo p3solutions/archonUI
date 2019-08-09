@@ -8,10 +8,11 @@ import { EnvironmentService } from './environment/environment.service';
 
 @Injectable()
 export class UserWorkspaceService {
+  userId = sessionStorage.getItem('userId');
   apiUrl = this.environment.apiUrl;
   private headers = new HttpHeaders({
     // 'Content-Type': 'multipart/form-data',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userId)
   });
   getConfiguredDBurl = `${this.apiUrl}dbs/configured/schemaReadyDbs`;
   getConfigDBurl = `${this.apiUrl}dbs/configured`;
@@ -34,7 +35,7 @@ export class UserWorkspaceService {
     const formData: FormData = new FormData();
     kerberosFile === null ? formData.append('file', null) : formData.append('file', kerberosFile);
     formData.append('databaseCreatedto', JSON.stringify(testDbParam));
-    return this.http.post(this.checkDbConnectionUrl, formData, { headers: this.headers }).pipe(
+    return this.http.post(this.checkDbConnectionUrl, formData, { headers: this.userinfoService.getFileUploadHeaders() }).pipe(
       map(this.extractData),
       catchError(this.handleError<any>('test-db-connection'))
     );
@@ -91,7 +92,8 @@ export class UserWorkspaceService {
     const formData: FormData = new FormData();
     kerberosFile === null ? formData.append('file', null) : formData.append('file', kerberosFile);
     formData.append('databaseCreatedto', JSON.stringify(dbParam));
-    return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, formData, { headers: this.headers }).pipe(
+    return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, formData,
+      { headers: this.userinfoService.getFileUploadHeaders() }).pipe(
       map(this.extractData)
     );
   }

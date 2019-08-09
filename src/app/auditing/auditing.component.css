@@ -254,3 +254,13 @@ table.mat-table {
 ::ng-deep .my-spinner .overlay {
   position: fixed !important;
 }
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding: 0;
+  padding-right: 10px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 24px;
+}

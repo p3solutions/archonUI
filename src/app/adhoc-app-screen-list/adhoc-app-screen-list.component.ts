@@ -263,6 +263,7 @@ export class AdhocAppScreenListComponent implements OnInit {
         this.selectedAppObject = new ApplicationInfo();
         this.adhocService.updateAdhocHeaderInfo(new AdhocHeaderInfo());
         this.getApplication();
+        this.checkForMetadataInApplication();
         this.spinner.hide();
       }, (err: HttpErrorResponse) => {
         if (err.error) {
@@ -607,6 +608,8 @@ export class AdhocAppScreenListComponent implements OnInit {
       } else {
         this.oldMetadata = false;
       }
+    } else {
+      this.oldMetadata = false;
     }
   }
 

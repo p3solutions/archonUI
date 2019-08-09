@@ -10,10 +10,10 @@ import { UserinfoService } from '../userinfo.service';
 export class WorkspaceServicesService {
 
   private apiUrl = this.environment.apiUrl;
-
+  userId = sessionStorage.getItem('userId');
   private headers = new HttpHeaders({
     // 'Content-Type': 'multipart/form-data',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userId)
   });
 
   private serviceActionsUpdated: BehaviorSubject<ServiceActionsObject[]> = new BehaviorSubject<ServiceActionsObject[]>([]);
@@ -75,7 +75,7 @@ export class WorkspaceServicesService {
   uploadLicense(file) {
   const formData: FormData = new FormData();
   formData.append('file', file);
-  return this.http.post(this.uploadFile, formData , { headers: this.headers });
+  return this.http.post(this.uploadFile, formData , { headers: this.userInfoService.getFileUploadHeaders() });
   }
 }
 
