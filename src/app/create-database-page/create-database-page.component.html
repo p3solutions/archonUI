@@ -22,7 +22,7 @@
             <div class="workspace-detail">
               <mat-form-field class="form-field-workspace">
                 <mat-label>Auth Type</mat-label>
-                <mat-select formControlName="authType">
+                <mat-select (selectionChange)="checkAuthType()" formControlName="authType">
                   <mat-option *ngFor="let authType of authTypeList" [value]="authType">
                     {{authType}}
                   </mat-option>
@@ -66,9 +66,24 @@
               <mat-form-field class="form-field-workspace">
                 <input matInput trim="blur" required formControlName="userName" placeholder="Database User Name">
               </mat-form-field>
-              <mat-form-field class="form-field-workspace-owner">
-                <input matInput trim="blur" required type="password" formControlName="password" placeholder="Database Password">
+              <mat-form-field *ngIf="!isKerberos" class="form-field-workspace-owner">
+                <input matInput trim="blur" required type="password" formControlName="password"
+                  placeholder="Database Password">
               </mat-form-field>
+              <div *ngIf="isKerberos">
+                <div class="action-btn" style="margin-top: 4px">
+                  <button class="btn file-btn btn-padding" (click)="openFileUpload()">File
+                    Upload</button>
+                  <input type="file" (change)="uploadQueryFile($event)" formControlName="file"
+                    class="hide btn btn-secondary browse-btn" accept=".keytab" id="uploadKerberosFile"
+                    name="queryFileToUpload">
+                  <button *ngIf="kerberosFileName!==''" class="btn upload-file btn-padding" title="Kerberos file">
+                    <div class="show-file-text">{{kerberosFileName}}</div>
+                    <a><button (click)="closeMessage()" type="button" class="close" aria-label="Close"><span
+                          aria-hidden="true">&times;</span></button></a>
+                  </button>
+                </div>
+              </div>
             </div>
           </form>
           <div id="action-btn" style="padding-top: 17%">
@@ -180,17 +195,17 @@
 <div id="confirm_model" class="modal fade" role="dialog">
   <div class="modal-dialog modal-body-width">
     <div class="modal-content">
-      <div class="modal-header error-popup-header-cls">
+      <div class="modal-header info-popup-header-cls">
         <h4 class="modal-title popup-title-cls">
           <i class="material-icons popup-material-icon-cls">error_outline</i>
-          <div class="pop-title-ert">Already Exist</div>
+          <div class="pop-title-ert">Database connection already exist</div>
         </h4>
       </div>
       <div class="modal-body">
         <p class="popup-paragraph-cls">{{errorMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>

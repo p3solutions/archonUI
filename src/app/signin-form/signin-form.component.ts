@@ -6,6 +6,7 @@ import { SignIn } from '../sign-in';
 import { SigninFormService } from './signin-form.service';
 import { ErrorObject } from '../error-object';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-signin-form',
@@ -40,6 +41,19 @@ export class SigninFormComponent implements OnInit {
     if (test !== null) {
       this.count = parseInt(localStorage.getItem('count'));
     }
+    this.checkSessionExist();
+  }
+
+  checkSessionExist() {
+    const userId = sessionStorage.getItem('userId');
+    if (userId) {
+      const userToken = localStorage.getItem(userId);
+      if (userToken) {
+        this.router.navigateByUrl(this.workspaceUrl);
+      } else {
+        sessionStorage.clear();
+      }
+    }
   }
 
   createForm() {
@@ -58,7 +72,9 @@ export class SigninFormComponent implements OnInit {
       data => {
         this.responseData = data;
         // this.authenticationService.authenticateHelper(this.responseData.data._x);
-        localStorage.setItem('accessToken', data.data.accessToken);
+        const userId = this.getUserID(this.responseData);
+        sessionStorage.setItem('userId', userId);
+        localStorage.setItem(userId, data.data.accessToken);
         this.count = 0;
         localStorage.setItem('count', this.count);
         // localStorage.setItem('refreshToken', data.data.refreshToken);
@@ -69,7 +85,6 @@ export class SigninFormComponent implements OnInit {
       (err: HttpErrorResponse) => {
         this.count = this.count + 1;
         this.inProgress = false;
-        this.spinner.hide();
         localStorage.setItem('count', this.count);
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
@@ -144,5 +159,9 @@ export class SigninFormComponent implements OnInit {
     return string.split(' ').join('');
   }
 
-
+  getUserID(data) {
+    const jwtHelper: JwtHelperService = new JwtHelperService();
+    const token_data = jwtHelper.decodeToken(data.data.accessToken);
+    return token_data.user.id;
+  }
 }

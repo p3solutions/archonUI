@@ -220,7 +220,8 @@ export class ManageUserRolesComponent implements OnInit {
     let accessToken: string;
     let token_data: any;
     const jwtHelper: JwtHelperService = new JwtHelperService();
-    accessToken = localStorage.getItem('accessToken');
+    const userID = sessionStorage.getItem('userId');
+    accessToken = localStorage.getItem(userID);
     token_data = jwtHelper.decodeToken(accessToken);
     const roles = token_data.roles;
     for (const item of roles) {
@@ -239,7 +240,8 @@ export class ManageUserRolesComponent implements OnInit {
     let accessToken: string;
     let token_data: any;
     const jwtHelper: JwtHelperService = new JwtHelperService();
-    accessToken = localStorage.getItem('accessToken');
+    const userID = sessionStorage.getItem('userId');
+    accessToken = localStorage.getItem(userID);
     token_data = jwtHelper.decodeToken(accessToken);
     const roles = token_data.roles;
     for (const item of roles) {

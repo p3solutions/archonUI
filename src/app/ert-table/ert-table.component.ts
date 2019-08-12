@@ -9,14 +9,15 @@ import {
 } from '../ert-landing-page/ert';
 import {
   addFilterNode, FilterConfigNode, Tree, searchTree,
-  getPreorderDFS, ColumnConfigFunction, deleteNode, columnConfigFunctionList, findParentNode, FilterOperationList, filterOperationList
+  getPreorderDFS, ColumnConfigFunction, deleteNode, findParentNode, FilterOperationList,
 } from './ert-filter';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { _fixedSizeVirtualScrollStrategyFactory } from '@angular/cdk/scrolling';
 import { MatAccordion } from '@angular/material';
 import { Observable } from 'rxjs';
-import { of } from "rxjs";
+import { of } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { columnConfigFunctionList, filterOperationList, restrictedKeyWordInColumnName } from './ert-utility-function';
 @Component({
   selector: 'app-ert-table',
   templateUrl: './ert-table.component.html',
@@ -150,7 +151,7 @@ export class ErtTableComponent implements OnInit {
     this.selectedTableList = this.ertService.selectedList;
     this.selectedTableId = this.selectedTableList[0].tableId;
     const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-    this.modifiedTableName = tempTableObj.modifiedTableName;
+    this.modifiedTableName = tempTableObj.modifiedTableName.toUpperCase();
     this.tableName = tempTableObj.tableName;
     this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
   }
@@ -207,7 +208,7 @@ export class ErtTableComponent implements OnInit {
           }
           this.selectedTableId = this.selectedTableList[0].tableId;
           const tempTableObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-          this.modifiedTableName = tempTableObj.modifiedTableName;
+          this.modifiedTableName = tempTableObj.modifiedTableName.toUpperCase();
           this.tableName = tempTableObj.tableName;
           this.isAllColumnSelected = tempTableObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
         }
@@ -240,7 +241,7 @@ export class ErtTableComponent implements OnInit {
     }
   }
 
-  getSearchAvailableTablelist() {  // During creating job when user search table.
+  getSearchAvailableTablelist() {  // During editing job when user search table in available.
     this.currentPageOfOriginalErtTable = 1;
     if (this.searchAvailableTableName !== '') {
       this.ertService.getErtSearchAvailableTable(this.ertJobId, this.searchAvailableTableName.toUpperCase(),
@@ -368,6 +369,11 @@ export class ErtTableComponent implements OnInit {
       const tableIds = this.tempOriginalSelectedTable.map(function (item) { return item['tableId']; });
       this.spinner.show();
       this.tempOriginalSelectedTable = [];
+      if (this.showAvilableBtn) {
+        document.getElementById('cancelSelectedTableBtn').click();
+      } else {
+        document.getElementById('cancelAddBtn').click();
+      }
       this.getEditedERTcolumnlist(tableIds);
     } else {
       this.spinner.hide();
@@ -530,7 +536,7 @@ export class ErtTableComponent implements OnInit {
       this.spinner.show();
       this.selectedTableId = tableId;
       const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-      this.modifiedTableName = tempObj.modifiedTableName;
+      this.modifiedTableName = tempObj.modifiedTableName.toUpperCase();
       this.tableName = tempObj.tableName;
       this.isAllColumnSelected = tempObj.columnList.filter(a => a.isSelected === false).length === 0 ? true : false;
       this.workspaceId = this.workspaceHeaderService.getSelectedWorkspaceId();
@@ -588,6 +594,8 @@ export class ErtTableComponent implements OnInit {
     if (this.modifiedTableName.length === 0) {
       this.modifiedTableName = tempOriginalTableName;
       this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = tempOriginalTableName;
+    } else {
+      this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName = this.modifiedTableName.toUpperCase();
     }
   }
 
@@ -602,7 +610,6 @@ export class ErtTableComponent implements OnInit {
   openUsrDefinedColumnModel(columnName: string) {
     this.isCombinedQueryModeExpanded = false;
     this.isQueryModeExpanded = false;
-    this.accordion.closeAll();
     this.userDefinedList = [];
     this.usrDefinedColumnName = '';
     this.usrDefinedQueryView = '';
@@ -964,7 +971,12 @@ export class ErtTableComponent implements OnInit {
           .filter(b => b.originalColumnName.trim().toUpperCase().includes(this.usrDefinedColumnName.trim().toUpperCase()));
         const lengthuserdefined = checkUndefinedColumnExist.length;
         if (lengthuserdefined !== 1) {
-          this.saveUserDefined();
+          if (restrictedKeyWordInColumnName.filter(a => a.toUpperCase() === this.usrDefinedColumnName.toUpperCase())[0] === undefined) {
+            this.saveUserDefined();
+          } else {
+            this.usrDefinedAlertMessage = 'Kindly provide different column name.';
+            document.getElementById('query-alert').classList.remove('alert-hide');
+          }
         } else {
           this.usrDefinedAlertMessage = 'Kindly provide different column name.';
           document.getElementById('query-alert').classList.remove('alert-hide');
@@ -1144,13 +1156,14 @@ export class ErtTableComponent implements OnInit {
     this.maxNode = 3;
     let filterMap = new Map();
     this.filterWhereClause = '';
-    this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === 'STRING');
+    this.filterOperationList = filterOperationList;
+    // this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === 'STRING');
     const tempObj = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList.
       filter(a => a.dataType.trim().toUpperCase() !== 'USERDEFINED');
     this.filterConfigColumnNameList = tempObj.map(function (item) { return item['originalColumnName']; });
     this.orderFilterConfigColumnNameList = tempObj.map(function (item) { return item['originalColumnName']; });
     const temp = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0];
-    const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, 0, []);
+    const filterConfigNode = new FilterConfigNode(1, null, false, false, null, null, '', 0, 0, null, []);
     this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
     if (temp.filterAndOrderConfig !== null && temp.filterAndOrderConfig.filterConfig !== '' &&
       temp.filterAndOrderConfig.filterQuery !== '' && temp.filterAndOrderConfig.filterConfig !== null &&
@@ -1282,15 +1295,15 @@ export class ErtTableComponent implements OnInit {
   }
 
 
-  insertFilterNode(id: number, operation: string, column: string, condition: string, value: string, event) {
+  insertFilterNode(id: number, operation: string, column: string, condition: string, value: string, dataType: string, event) {
     if (operation === null || condition === null || value === '') {
       // alert('Please select all the value');
     } else {
-      const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, this.maxNode, []);
+      const filterConfigNode = new FilterConfigNode(id, operation, false, false, column, condition, value, 0, this.maxNode, dataType, []);
       if (id === 1) {
-        const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, 1, []);
+        const filterConfigNode2 = new FilterConfigNode(2, operation, false, false, column, condition, value, 0, 1, dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
-        const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, 1, []);
+        const filterConfigNode3 = new FilterConfigNode(3, '', false, false, null, null, '', 0, 1, dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
         const filterTreeNode = searchTree(this.filterdata.root, 1);
         filterTreeNode.value = '';
@@ -1307,10 +1320,10 @@ export class ErtTableComponent implements OnInit {
         const parentId = id;
         this.maxNode = this.maxNode + 1;
         const filterConfigNode2 = new FilterConfigNode(this.maxNode, operation, false, false,
-          column, condition, value, 18, parentId, []);
+          column, condition, value, 18, parentId, dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode2));
         this.maxNode = this.maxNode + 1;
-        const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, parentId, []);
+        const filterConfigNode3 = new FilterConfigNode(this.maxNode, '', false, false, null, null, '', 18, parentId, dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode3));
       }
     }
@@ -1352,7 +1365,8 @@ export class ErtTableComponent implements OnInit {
         tempNode.parentId = filterTreeNode3.parentId;
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterTreeNode2, tempNode));
       } else {
-        const filterConfigNode = new FilterConfigNode(1, null, false, false, tempNode.column, tempNode.condition, tempNode.value, 0, 0, []);
+        const filterConfigNode = new FilterConfigNode(1, null, false, false, tempNode.column, tempNode.condition,
+          tempNode.value, 0, 0, tempNode.dataType, []);
         this.filterdata = JSON.parse(addFilterNode(this.filterdata, filterConfigNode, filterConfigNode));
       }
     } else if (attachNode === true) {
@@ -1418,12 +1432,18 @@ export class ErtTableComponent implements OnInit {
     if (this.usrDefinedQueryView === '' && this.usrDefinedQueryViewMode === '') {
       this.isCombinedQueryMode = false;
       this.isQueryMode = false;
+      this.isCombinedQueryModeExpanded = false;
+      this.isQueryModeExpanded = false;
     } else if (this.usrDefinedQueryViewMode !== '' && this.usrDefinedQueryView === '') {
       this.isQueryMode = false;
       this.isCombinedQueryMode = true;
+      this.isCombinedQueryModeExpanded = false;
+      this.isQueryModeExpanded = true;
     } else if (this.usrDefinedQueryViewMode === '' && this.usrDefinedQueryView !== '') {
       this.isQueryMode = true;
       this.isCombinedQueryMode = false;
+      this.isCombinedQueryModeExpanded = true;
+      this.isQueryModeExpanded = false;
     }
   }
 
@@ -1438,16 +1458,20 @@ export class ErtTableComponent implements OnInit {
       filter(a => a.originalColumnName === originalColumnName);
     if ($event.target.value.length === 0) {
       temp[0].modifiedColumnName = originalColumnName;
+    } else {
+      temp[0].modifiedColumnName = temp[0].modifiedColumnName.toUpperCase();
     }
   }
 
 
-  filterColumnSelectionChange(columnName) {
+  filterColumnSelectionChange(columnName, id) {
     let type = '';
     type = this.getInputType(columnName);
-    if (columnName !== null) {
-      this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === type.trim().toUpperCase());
-    }
+    // if (columnName !== null) {
+    //   this.filterOperationList = filterOperationList.filter(a => a.dataType.trim().toUpperCase() === type.trim().toUpperCase());
+    // }
+    const tempFilterRow = searchTree(this.filterdata.root, id);
+    tempFilterRow.dataType = type;
   }
 
   selectAllColumns(event) {
@@ -1489,6 +1513,11 @@ export class ErtTableComponent implements OnInit {
     }
     return isValid;
   }
+
+  checkForRestrictedColumnName() {
+
+  }
+
 }
 
 

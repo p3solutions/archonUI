@@ -1,11 +1,13 @@
 #help-icon {
   margin: 25px;
 }
- .container-fluid {
-  background:url(../../assets/loginBg.jpg);
+
+.container-fluid {
+  background: url(../../assets/loginBg.jpg);
   background-size: 100% 100%;
   height: 100%;
-} 
+}
+
 #brand-img {
   width: 600px;
   margin: 50px;
@@ -22,12 +24,15 @@
   max-height: 300px;
   overflow: auto;
 }
+
 .align-center {
   text-align: center;
 }
+
 .archon-logo {
-  margin-top:16%;
+  margin-top: 16%;
 }
+
 #archon-head {
   margin-left: 50px;
 }
@@ -39,7 +44,11 @@
 #archon-buttons {
   margin-top: 20px;
 }
+
 .archon-link {
   margin: 25px;
 }
 
+::ng-deep .my-spinner .overlay {
+  position: fixed !important;
+}

@@ -4,12 +4,15 @@ import { ManageUserRolesService } from './manage-user-roles.service';
 import { HttpClientModule } from '@angular/common/http';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { UserinfoService } from '../userinfo.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ManageUserRolesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ManageUserRolesService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
-      imports: [HttpClientModule]
+      providers: [ManageUserRolesService,
+        UserinfoService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      imports: [HttpClientModule, RouterTestingModule],
     });
   });
 

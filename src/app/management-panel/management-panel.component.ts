@@ -17,25 +17,25 @@ export class ManagementPanelComponent implements OnInit {
     {
       panelName: 'Databases',
       panelImage: 'livearchival.png',
-      panelDesc: 'Configure and View Database Details.',
+      panelDesc: 'Configure and View Database Details',
       enable: false
     },
     {
       panelName: 'Workspaces',
       panelImage: 'workspace.png',
-      panelDesc: 'Configure, View and Workspace Details.',
+      panelDesc: 'Configure, View and Workspace Details',
       enable: true
     },
     {
       panelName: 'Users',
       panelImage: 'user.png',
-      panelDesc: 'View and Modify User Role.',
+      panelDesc: 'View and Modify User Role',
       enable: false
     },
     {
       panelName: 'Configuration',
       panelImage: 'endtoendtoolkit.png',
-      panelDesc: 'Configure, View and Edit Permissions.',
+      panelDesc: 'Configure, View and Edit Permissions',
       enable: false
     }
   ];

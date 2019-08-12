@@ -153,6 +153,8 @@ import { NoDblClickDirective } from './no-dbl-click.directive';
 import { ErtCloneViewComponent } from './ert-clone-view/ert-clone-view.component';
 import { PreventcopyDirective } from './preventcopy.directive';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { FilteroperationPipe } from './ert-table/filteroperation.pipe';
+import { SearchErtTablePipe } from './ert-landing-page/search-ert-table.pipe';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -262,7 +264,9 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 NoDblClickDirective,
                 ErtCloneViewComponent,
                 PreventcopyDirective,
-                ResetPasswordComponent
+                ResetPasswordComponent,
+                FilteroperationPipe,
+                SearchErtTablePipe
         ],
         imports: [
                 JwtModule.forRoot({

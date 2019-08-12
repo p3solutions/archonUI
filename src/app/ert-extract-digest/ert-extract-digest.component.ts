@@ -31,7 +31,8 @@ export class ErtExtractDigestComponent implements OnInit {
       this.ertJobId = requestParam.ertJobId;
     });
     if (this.ertService.extractDataConfigInfo.titleName !== '' || this.ertService.extractDataConfigInfo.holdingName !== ''
-      || this.ertService.extractDataConfigInfo.applicationName !== '' || this.ertService.ingestionDataConfig.infoArchiveName !== '') {
+      || this.ertService.extractDataConfigInfo.applicationName !== '' || this.ertService.ingestionDataConfig.infoArchiveName !== ''
+    ) {
       this.getExtractAndIngestInfoFromService();
     } else if (this.ertJobId !== '' && this.ertJobId !== undefined) {
       this.getExtractAndIngestInfo();
@@ -60,7 +61,9 @@ export class ErtExtractDigestComponent implements OnInit {
       try {
         this.spinner.hide();
         this.extractDataConfigInfo = result.extractDataConfig;
-        this.ertService.data = JSON.parse(result.graphDetails.data.replace(/'/g, '"'));
+        if (result.graphDetails.data) {
+          this.ertService.data = JSON.parse(result.graphDetails.data.replace(/'/g, '"'));
+        }
         const b = document.getElementById('extract-checkbox') as HTMLInputElement;
         b.checked = true;
         if (result.ingestionDataConfig !== null) {
@@ -70,7 +73,7 @@ export class ErtExtractDigestComponent implements OnInit {
           this.disableIngestData = false;
         }
         this.isDisabledSaveBtn = false;
-      } catch {
+      } catch (err) {
         this.spinner.hide();
       }
     }, (err: HttpErrorResponse) => {
@@ -186,7 +189,8 @@ export class ErtExtractDigestComponent implements OnInit {
   toEnableIngestBtn() {
     if (!this.disableIngestData) {
       if (this.ingestionDataConfigObj.infoArchiveName !== '' && this.ingestionDataConfigObj.infoArchivePassword !== ''
-        && this.ingestionDataConfigObj.infoArchiveSchemaName !== '' && this.ingestionDataConfigObj.infoArchiveUserName !== '') {
+        && this.ingestionDataConfigObj.infoArchiveSchemaName !== '' && this.ingestionDataConfigObj.infoArchiveUserName !== ''
+        && this.ingestionDataConfigObj.iaDatabaseName !== '') {
         this.isDisabledSaveBtn = false;
       } else {
         this.isDisabledSaveBtn = true;
@@ -200,6 +204,10 @@ export class ErtExtractDigestComponent implements OnInit {
   }
   cancel() {
     this.router.navigate(['/workspace/ert/ert-jobs']);
+  }
+
+  createApplicationName() {
+    this.ingestionDataConfigObj.iaDatabaseName = this.ingestionDataConfigObj.infoArchiveName + '-sql-db';
   }
 }
 

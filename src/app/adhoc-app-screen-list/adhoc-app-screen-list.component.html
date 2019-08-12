@@ -24,23 +24,31 @@
       <ng-container *ngIf="permissionToUser!=='READ'">
         <div class="padding-icon">
           <span class="fa-stack open-app" (click)="openAppDialog()" matTooltip="Create Application">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-circle-thin fa-stack-2x"></i>
-            <i class="fa fa-plus fa-stack-1x"></i>
-          </span>
+            <i class="material-icons material-plus plus">
+            </i> </span>
         </div>
       </ng-container>
       <ng-container *ngIf="permissionToUser!=='READ'">
         <div class="padding-icon">
-          <span class="fonticonbelow" (click)="openAppDialogForUpdate()" matTooltip="Update Application">
+          <span *ngIf="applicationInfoList.length!==0" class="fonticonbelow" (click)="openAppDialogForUpdate()"
+            matTooltip="View / Edit Application">
             <i class="fa fa-pencil-square-o edit-icon"></i>
+          </span>
+          <span *ngIf="applicationInfoList.length===0" class="fonticonbelowdisabled">
+            <i class="fa fa-pencil-square-o edit-icon-disabled"></i>
           </span>
         </div>
       </ng-container>
       <ng-container *ngIf="permissionToUser!=='READ'">
         <div class="padding-icon deleteapp">
-          <span class="fonticonbelow" (click)="deleteApplicationPopUp()" matTooltip="Delete Application">
+          <span *ngIf="applicationInfoList.length!==0" class="fonticonbelow" (click)="deleteApplicationPopUp()"
+            matTooltip="Delete Application">
             <i class="material-icons">
+              delete
+            </i>
+          </span>
+          <span *ngIf="applicationInfoList.length===0" class="fonticonbelowdisabled">
+            <i class="material-icons delete-icon-disabled">
               delete
             </i>
           </span>
@@ -48,17 +56,17 @@
       </ng-container>
     </div>
     <div class="col-md-3 heading-item">
-      <div>
+      <div matTooltip="{{workspaceName}}" class="text-hidden-overflow">
         <b>Workspace Name: </b> {{workspaceName}}
       </div>
     </div>
     <div class="col-md-3 heading-item">
-      <div>
+      <div matTooltip="{{selectedAppObject?.metadataVersion}}" class="text-hidden-overflow">
         <b>Application Metadata Version: </b> {{selectedAppObject?.metadataVersion}}
       </div>
     </div>
     <div class="col-md-3 heading-item">
-      <div>
+      <div matTooltip="{{mmrVersion}}" class="text-hidden-overflow">
         <b>Workspace Metadata Version: </b> {{mmrVersion}}
       </div>
     </div>
@@ -69,7 +77,7 @@
         <b style="color:#2879ff">Application Description</b>
         <p>{{selectedAppObject.appDesc!==null?selectedAppObject.appDesc :'Created By Archon'}}</p>
       </div>
-      <div class="col-md-3"></div>
+      <div class="col-md-4"></div>
       <div *ngIf="oldMetadata" class="col-md-3 metadata-warning">
         This is the old application metadata version.
       </div>
@@ -83,15 +91,12 @@
       <span class="fa-stack" *ngIf="applicationInfoList.length!==0"
         (click)="!(applicationInfoList.length===0) && addScreen()"
         matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-circle-thin fa-stack-2x"></i>
-        <i class="fa fa-plus fa-stack-1x"></i>
-      </span>
+        <i class="material-icons material-plus plus">
+        </i> </span>
       <span class="fa-stack-disabled" *ngIf="applicationInfoList.length===0"
         matTooltip="{{applicationInfoList.length===0 ?'Please add application to create screen':'Create Screen'}} ">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-circle-thin fa-stack-2x"></i>
-        <i class="fa fa-plus fa-stack-1x"></i>
+        <i class="material-icons material-plus-disabled plus">
+        </i>
       </span>
     </ng-container>
     <span style="margin-right: 13px" *ngIf="permissionToUser==='READ'"></span>
@@ -111,6 +116,9 @@
             mat-icon-button [matMenuTriggerFor]="menu">
             <i class="cursor-poniter fa fa-link"></i>
           </button>
+          <!-- <button *ngIf="element.affectedByOtherSearch" class="warning-btn" matTooltip="" mat-icon-button [matMenuTriggerFor]="menu">
+            <i class="material-icons warning-icon"> warning</i>
+          </button> -->
         </td>
       </ng-container>
       <ng-container matColumnDef="screenName">
@@ -149,7 +157,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">No Records found.</div>
+  <div class="text-center py-3" *ngIf="datasourceHasValue()=== true" class="no-record-found">Currently, no screens</div>
   <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}" id="screen-table"
     [length]="totalScreen" showFirstLastButtons [pageSizeOptions]="[5, 10, 25, 100]"> </mat-paginator>
 </div>
@@ -305,6 +313,30 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" (click)="deleteApplicationConfirm()"
+          data-dismiss="modal">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button style="display:none" type="button" id="warning-download-popup-btn" class="btn btn-info btn-lg" data-keyboard="false"
+  data-backdrop="static" data-toggle="modal" data-target="#warning_model">Open Modal</button>
+<div id="warning_model" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-body-width">
+    <div class="modal-content">
+      <div class="modal-header warning-popup-header-cls">
+        <h4 class="modal-title popup-title-cls">
+          <i class="material-icons popup-material-icon-cls">warning</i>
+          <div class="pop-title-ert">Confirm Download</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <p class="popup-paragraph-cls">User review required for search '  {{selectedSearches }} '. 
+          By continuing download, the above-mentioned nested searches will not be included during search 
+          file generation. Do you want to proceed? </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-padding btn-warning-popup-primary-color"
           data-dismiss="modal">Yes</button>
       </div>
     </div>

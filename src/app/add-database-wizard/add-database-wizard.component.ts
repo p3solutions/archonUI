@@ -65,32 +65,32 @@ export class AddDatabaseWizardComponent implements OnInit {
     this.documentReadyFn();
   }
 
-  testDbConnection() {
-    this.inProgress = true;
-    this.testDbParam.userName = this.userName;
-    this.testDbParam.password = this.password;
-    this.testDbParam.port = this.port;
-    this.testDbParam.host = this.host;
-    this.testDbParam.databaseName = this.databaseName;
-    this.testDbParam.schemaName = this.schemaName;
-    this.testDbParam.supportedDBId = this.supportedDBId;
-    this.testDbParam.authType = this.authType;
-    this.testDbParam.profileName = this.profileName;
-    this.userWorkspaceService.checkDBConnection(this.testDbParam, this.testDbParam).subscribe((res: any) => {
-      if (res) {
-        this.inProgress = false;
-        this.dbTestConnectionErrorMsg = res.connection.errorMessage;
-        this.dbTestConnectionSuccessMsg = res.connection.message;
-        if (res.connection.isConnected) {
-          this.enableCreateBtn = true;
-        }
-      } else {
-        this.inProgress = false;
-        this.dbTestConnectionSuccessMsg = '';
-        this.dbTestConnectionErrorMsg = 'Failed! Try again with correct DB configuration.';
-      }
-    });
-  }
+  // testDbConnection() {
+  //   this.inProgress = true;
+  //   this.testDbParam.userName = this.userName;
+  //   this.testDbParam.password = this.password;
+  //   this.testDbParam.port = this.port;
+  //   this.testDbParam.host = this.host;
+  //   this.testDbParam.databaseName = this.databaseName;
+  //   this.testDbParam.schemaName = this.schemaName;
+  //   this.testDbParam.supportedDBId = this.supportedDBId;
+  //   this.testDbParam.authType = this.authType;
+  //   this.testDbParam.profileName = this.profileName;
+  //   this.userWorkspaceService.checkDBConnection(this.testDbParam, this.testDbParam).subscribe((res: any) => {
+  //     if (res) {
+  //       this.inProgress = false;
+  //       this.dbTestConnectionErrorMsg = res.connection.errorMessage;
+  //       this.dbTestConnectionSuccessMsg = res.connection.message;
+  //       if (res.connection.isConnected) {
+  //         this.enableCreateBtn = true;
+  //       }
+  //     } else {
+  //       this.inProgress = false;
+  //       this.dbTestConnectionSuccessMsg = '';
+  //       this.dbTestConnectionErrorMsg = 'Failed! Try again with correct DB configuration.';
+  //     }
+  //   });
+  // }
 
   selectDBServer(servername) {
     this.supportedDBId = servername.id;
@@ -283,46 +283,46 @@ export class AddDatabaseWizardComponent implements OnInit {
     // });
   }
 
-  createDBConfig() {
-    this.dbinProgress = true;
-    // this.dbParam.dbProfileName = this.dbProfileName;
-    this.dbParam.userName = this.userName;
-    this.dbParam.password = this.password;
-    // this.dbParam.password = btoa(this.password);
-    this.dbParam.port = this.port;
-    this.dbParam.host = this.host;
-    this.dbParam.databaseName = this.databaseName;
-    this.dbParam.schemaName = this.schemaName;
-    this.dbParam.supportedDBId = this.supportedDBId;
-    this.dbParam.authType = this.authType;
-    this.dbParam.profileName = this.profileName;
-    this.addClass('progress-bar', 'width-100-pc');
-    this.userWorkspaceService.checkDBConnection(this.testDbParam, this.testDbParam).subscribe((res: any) => {
-      if (res) {
-        if (res.connection.isConnected) {
-          this.dbinProgress = false;
-          this.createNewdb();
-          this.createdb = true;
-        } else {
-          this.dbinProgress = false;
-          this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
-        }
-      } else {
-        this.dbinProgress = false;
-        this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
-      }
-    });
-    // window.location.reload();
-    // this.router.navigate(['/workspace/database-list']);
-  }
-  createNewdb() {
-    this.userWorkspaceService.createNewDBConfig(this.dbParam,this.dbParam).subscribe(res => {
-      if (res) {
-        this.newWSinfo = res;
-        // document.getElementById('populate-db-list').click();
-        this.postCreation();
-      }
-    });
-  }
+  // createDBConfig() {
+  //   this.dbinProgress = true;
+  //   // this.dbParam.dbProfileName = this.dbProfileName;
+  //   this.dbParam.userName = this.userName;
+  //   this.dbParam.password = this.password;
+  //   // this.dbParam.password = btoa(this.password);
+  //   this.dbParam.port = this.port;
+  //   this.dbParam.host = this.host;
+  //   this.dbParam.databaseName = this.databaseName;
+  //   this.dbParam.schemaName = this.schemaName;
+  //   this.dbParam.supportedDBId = this.supportedDBId;
+  //   this.dbParam.authType = this.authType;
+  //   this.dbParam.profileName = this.profileName;
+  //   this.addClass('progress-bar', 'width-100-pc');
+  //   this.userWorkspaceService.checkDBConnection(this.testDbParam, this.testDbParam).subscribe((res: any) => {
+  //     if (res) {
+  //       if (res.connection.isConnected) {
+  //         this.dbinProgress = false;
+  //         this.createNewdb();
+  //         this.createdb = true;
+  //       } else {
+  //         this.dbinProgress = false;
+  //         this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
+  //       }
+  //     } else {
+  //       this.dbinProgress = false;
+  //       this.dbTestConnectionErrorMsg = 'Unable to Create Database. Please Test Connection.';
+  //     }
+  //   });
+  //   // window.location.reload();
+  //   // this.router.navigate(['/workspace/database-list']);
+  // }
+  // createNewdb() {
+  //   this.userWorkspaceService.createNewDBConfig(this.dbParam,this.dbParam).subscribe(res => {
+  //     if (res) {
+  //       this.newWSinfo = res;
+  //       // document.getElementById('populate-db-list').click();
+  //       this.postCreation();
+  //     }
+  //   });
+  // }
 
 }

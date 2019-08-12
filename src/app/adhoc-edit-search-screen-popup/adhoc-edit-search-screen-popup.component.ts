@@ -161,6 +161,9 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
         this.editSearchCriteriaForm.controls['option'].clearValidators();
         this.editSearchCriteriaForm.controls['option'].updateValueAndValidity();
         this.editSearchCriteriaForm.controls['option'].setValue('');
+      } else {
+        this.editSearchCriteriaForm.controls['isDateRange'].setValue(false);
+        this.editSearchCriteriaForm.get('isDateRange').disable();
       }
       this.editSearchCriteriaForm.get('fieldType').disable();
       this.editSearchCriteriaForm.controls['searchType'].setValue('=');
@@ -168,6 +171,9 @@ export class AdhocEditSearchScreenPopupComponent implements OnInit {
     } else {
       if (this.editSearchCriteriaForm.get('fieldType').value !== 'DATE') {
         this.editSearchCriteriaForm.get('fieldType').enable();
+      } else {
+        this.editSearchCriteriaForm.controls['isDateRange'].setValue(false);
+        this.editSearchCriteriaForm.get('isDateRange').enable();
       }
       this.editSearchCriteriaForm.get('searchType').enable();
     }

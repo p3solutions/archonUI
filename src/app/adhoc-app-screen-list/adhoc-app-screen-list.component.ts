@@ -85,6 +85,8 @@ export class AdhocAppScreenListComponent implements OnInit {
   IAVersions: string[] = [];
   oldMetadata = false;
   permissionToUser = '';
+  isAffectedSearch = true;
+  selectedSearches = '';
   constructor(public dialog: MatDialog, private workspaceHeaderService: WorkspaceHeaderService,
     private adhocScreenService: AdhocScreenService, private spinner: NgxSpinnerService,
     private router: Router, private adhocService: AdhocService, private cookieService: CookieService,
@@ -139,6 +141,8 @@ export class AdhocAppScreenListComponent implements OnInit {
           this.selectedApp(this.applicationInfoList[0].id);
         }
         this.checkForMetadataInApplication();
+      } else if (this.applicationInfoList.length === 0) {
+        this.getScreen(0);
       }
     });
   }
@@ -155,6 +159,23 @@ export class AdhocAppScreenListComponent implements OnInit {
       }
     });
   }
+
+  checkForDownloadIsAvailable(screenId, screenName) {
+    let names = '';
+    const tempNested = this.screenInfoList.filter(a => a.id === screenId)[0].
+      childScreenInfo.map(function (item) { return item['screenName']; });
+    for (const name of tempNested) {
+      names = names + name + ', ';
+    }
+    names = names.trim().substr(0, names.trim().length - 1);
+    this.selectedSearches = names;
+    if (this.isAffectedSearch) {
+      document.getElementById('warning-download-popup-btn').click();
+    } else {
+      this.downloadScreen(screenId, screenName);
+    }
+  }
+
 
   downloadScreen(screenId, screenName) {
     const userId = getUserId();
@@ -239,8 +260,10 @@ export class AdhocAppScreenListComponent implements OnInit {
     this.spinner.show();
     try {
       this.adhocService.deleteApplication(this.selectedAppObject.id, userId).subscribe(result => {
+        this.selectedAppObject = new ApplicationInfo();
         this.adhocService.updateAdhocHeaderInfo(new AdhocHeaderInfo());
         this.getApplication();
+        this.checkForMetadataInApplication();
         this.spinner.hide();
       }, (err: HttpErrorResponse) => {
         if (err.error) {
@@ -325,7 +348,7 @@ export class AdhocAppScreenListComponent implements OnInit {
 
   openAppDialogForUpdate(): void {
     this.selectedAppObject.headerText = 'Update';
-    this.appInfo = this.selectedAppObject;
+    this.appInfo = JSON.parse(JSON.stringify(this.selectedAppObject));
     this.getIAVersions();
     const dialogAppRef = this.dialog.open(CreateAppDialogComponent, {
       width: '550px',
@@ -395,12 +418,14 @@ export class AdhocAppScreenListComponent implements OnInit {
         if (response.httpStatus === 200) {
           document.getElementById('success-popup-btn').click();
           this.successMessage = 'Application updated Successfully.';
+          this.selectedAppObject = new ApplicationInfo();
         } else {
           document.getElementById('failed-popup-btn').click();
           this.successMessage = 'Application not updated Successfully.';
         }
       }, (err: HttpErrorResponse) => {
         if (err.error) {
+          this.selectedAppObject = new ApplicationInfo();
           document.getElementById('failed-popup-btn').click();
           this.successMessage = err.error.message;
         }
@@ -583,6 +608,8 @@ export class AdhocAppScreenListComponent implements OnInit {
       } else {
         this.oldMetadata = false;
       }
+    } else {
+      this.oldMetadata = false;
     }
   }
 

@@ -13,6 +13,8 @@ import { SearchPipe } from '../search.pipe';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
 import { MatTooltipModule } from '@angular/material';
+import { SearchErtTablePipe } from '../ert-landing-page/search-ert-table.pipe';
+import { FilteroperationPipe } from './filteroperation.pipe';
 
 describe('ErtTableComponent', () => {
   let component: ErtTableComponent;
@@ -20,7 +22,7 @@ describe('ErtTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ErtTableComponent, SearchPipe],
+      declarations: [ErtTableComponent, SearchPipe, SearchErtTablePipe, FilteroperationPipe],
       imports: [FormsModule, ReactiveFormsModule, NgxPaginationModule, MatTooltipModule, HttpClientModule, RouterTestingModule],
       providers: [UserinfoService, WorkspaceHeaderService, ErtService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
