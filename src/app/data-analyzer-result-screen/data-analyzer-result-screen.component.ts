@@ -197,7 +197,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.dataSource.data = this.populateSecondaryValuesArray;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.columnlength = this.populatePrimaryValuesArray.length;
+    this.columnlength = this.populateSecondaryValuesArray.length;
     this.selectedSecondaryTable = x.key;
   }
 
