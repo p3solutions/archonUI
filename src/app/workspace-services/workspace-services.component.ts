@@ -69,7 +69,7 @@ export class WorkspaceServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService, 
+    const test = new NavbarComponent(this.userProfileService, this.navService, this.userinfoService,
       this.router, this.activatedRouter, null, null);
     test.loadfirst = 0;
     test.getNotification();

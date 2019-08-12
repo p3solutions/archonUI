@@ -48,13 +48,6 @@ export class NavbarComponent implements OnInit {
         el.click();
       }
     }, 1000);
-    setTimeout(() => {
-      this.isTokenExpired = this.activatedrouter.snapshot.queryParamMap.get('texp');
-      console.log(this.isTokenExpired);
-      if (this.isTokenExpired === 'yes') {
-        document.getElementById('token-popup-btn').click();
-      }
-    }, 1000);
     this.uploadForm = this.formBuilder.group({
       profile: ['']
     });

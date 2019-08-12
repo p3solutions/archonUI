@@ -47,7 +47,7 @@
                 </span>
               </a>
             </li>
-            <li *ngIf="notifiactionArray.length === 0" class="all-notification">
+            <li *ngIf="notifiactionArray?.length === 0" class="all-notification">
               <div class="text-center">
                 <div id="see-all-notif" style="padding: 7px">Notifications</div>
               </div>
@@ -141,7 +141,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <p class="popup-paragraph-cls">Token has been expired. Redirecting to sign-in page.</p>
+        <p class="popup-paragraph-cls">Session has been expired. Redirecting to sign-in page.</p>
       </div>
       <div class="modal-footer">
         <button type="button" (click)="logout()" class="btn btn-padding btn-error-popup-primary-color"
