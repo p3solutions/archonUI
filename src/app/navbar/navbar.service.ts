@@ -20,14 +20,14 @@ export class NavbarService {
   ) { }
 
   updateNotification(id) {
-    const url = this.updateUrl + id;
+    const url = this.updateUrl + encodeURIComponent(id);
     return this.http.post(url, null, { headers: this.userinfoService.getHeaders() }).pipe(
       catchError(this.handleError<string>('updateNotification'))
     );
   }
 
   getNotification() {
-    const url = this.getNotificationUrl + this.userinfoService.getUserId();
+    const url = this.getNotificationUrl + encodeURIComponent(this.userinfoService.getUserId());
     return this.http.get(url,
       { headers: this.userinfoService.getHeaders() }).pipe(
         map(this.extractDetails),

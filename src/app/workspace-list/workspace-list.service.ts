@@ -23,7 +23,7 @@ export class WorkspaceListService {
     //   });
   }
   getList(id: string): Observable<WorkspaceObject[]> {
-    const url = this.wSListByUidUrl + id;
+    const url = this.wSListByUidUrl + encodeURIComponent(id);
     return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractWorkspaces),
       catchError(this.handleError('workspace-getList()', []))
@@ -31,7 +31,7 @@ export class WorkspaceListService {
   }
 
   getListOfWorkspaceByUserId(id: string): Observable<WorkspaceObject[]> {
-    const url = this.wSListByUidUrl + id;
+    const url = this.wSListByUidUrl + encodeURIComponent(id);
     return this.http.get<WorkspaceObject[]>(url, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractWorkspaces),
       catchError(this.handleError('workspace-getList()', []))

@@ -20,7 +20,7 @@ export class WorkspaceLandingPageService {
     private environment: EnvironmentService
   ) {
     this.http = http;
-    this.workspacesForUserUrl = this.environment.apiUrl + 'users/' + this.userinfoService.getUserId();
+    this.workspacesForUserUrl = this.environment.apiUrl + 'users/' + encodeURIComponent(this.userinfoService.getUserId());
     this.headers = this.userinfoService.getHeaders();
   }
 
