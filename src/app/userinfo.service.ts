@@ -15,7 +15,7 @@ export class UserinfoService {
   errorObject: ErrorObject;
   userRole;
   private loginUrl = 'sign-in';
-  extendSessionUrl = this.environment.apiUrl + 'auth/token';
+  // extendSessionUrl = this.environment.apiUrl + 'auth/token';
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -62,10 +62,10 @@ export class UserinfoService {
     return localStorage.getItem(userId);
   }
 
-  getRefreshKey() {
-    const userId = sessionStorage.getItem('userId');
-    return localStorage.getItem(userId + 'rt');
-  }
+  // getRefreshKey() {
+  //   const userId = sessionStorage.getItem('userId');
+  //   return localStorage.getItem(userId + 'rt');
+  // }
 
   getHeaders() {
     return new HttpHeaders({
@@ -132,26 +132,26 @@ export class UserinfoService {
     return null;
   }
 
-  getRefreshHeaderToken() {
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.getRefreshKey()
-    });
-  }
+  // getRefreshHeaderToken() {
+  //   return new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer ' + this.getRefreshKey()
+  //   });
+  // }
 
 
-  extendSession(): Observable<any> {
-    return this.http.get<any>(this.extendSessionUrl, { headers: this.getRefreshHeaderToken() }).
-      pipe(catchError(this.handleError<any>('extendSession')));
-  }
+  // extendSession(): Observable<any> {
+  //   return this.http.get<any>(this.extendSessionUrl, { headers: this.getRefreshHeaderToken() }).
+  //     pipe(catchError(this.handleError<any>('extendSession')));
+  // }
 
-  extendUserSession() {
-    this.extendSession().subscribe(res => {
-      const userId = sessionStorage.getItem('userId');
-      localStorage[userId] = res.data.accessToken;
-      localStorage[userId + 'rt'] = res.data.refreshToken;
-    });
-  }
+  // extendUserSession() {
+  //   this.extendSession().subscribe(res => {
+  //     const userId = sessionStorage.getItem('userId');
+  //     localStorage[userId] = res.data.accessToken;
+  //     localStorage[userId + 'rt'] = res.data.refreshToken;
+  //   });
+  // }
 
   redirectOnSessionTimedOut() {
     // TODO: show alert about losing unsaved data
