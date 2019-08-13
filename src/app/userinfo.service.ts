@@ -50,7 +50,7 @@ export class UserinfoService {
   }
 
   getUserInfoUrl() {
-    return this.environment.apiUrl + 'users/' + this.getUserId();
+    return this.environment.apiUrl + 'users/' + encodeURIComponent(this.getUserId());
   }
   getAllUserInfoUrl() {
     return this.environment.apiUrl + 'users';
