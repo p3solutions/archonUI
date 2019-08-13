@@ -155,6 +155,7 @@ import { PreventcopyDirective } from './preventcopy.directive';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { FilteroperationPipe } from './ert-table/filteroperation.pipe';
 import { SearchErtTablePipe } from './ert-landing-page/search-ert-table.pipe';
+import { DatePipe } from '@angular/common';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -266,7 +267,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 PreventcopyDirective,
                 ResetPasswordComponent,
                 FilteroperationPipe,
-                SearchErtTablePipe
+                SearchErtTablePipe,
+                
         ],
         imports: [
                 JwtModule.forRoot({
@@ -299,7 +301,7 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 AceEditorModule
         ],
         providers: [
-                  EnvironmentService,
+                  EnvironmentService,DatePipe,
         {
             provide: APP_INITIALIZER,
             useFactory: appInitializerFunction,

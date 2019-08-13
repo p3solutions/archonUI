@@ -5,9 +5,10 @@ import { MetalyzerHeaderService } from './metalyzer-header.service';
 import { TableListService } from '../table-list/table-list.service';
 import { UserinfoService } from '../userinfo.service';
 import { MatPaginator, MatSort } from '@angular/material';
+import { DatePipe } from '@angular/common';
 import { merge } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { MetalyzerDataSource } from './metalyzerdatasource';
+// import { MetalyzerDataSource } from './metalyzerdatasource';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PermissionService } from '../permission-utility-functions/permission.service';
 
@@ -17,7 +18,6 @@ import { PermissionService } from '../permission-utility-functions/permission.se
   styleUrls: ['./metalyzer-header.component.css']
 })
 export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
-
   displayedColumns: string[] = ['modifiedBy', 'createdAt', 'modificationMode', 'modificationDescription'];
 
   wsName: string;
@@ -38,11 +38,21 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   schemaResultsTableCount = 0;
   disable = true;
   @ViewChild(MatPaginator) matpaginator: MatPaginator;
-  dataSource: MetalyzerDataSource;
+  // dataSource: MetalyzerDataSource;
   permissionToUser = '';
   jobname;
+  indexValue;
+  totalScreen;
+  metalyzerValues;
+  categoryarr = [];
+  metalyzerhistoryarr = [];
+  username; category; fromdate; todate;
+  todaydate; maxDate;
+  errmsg=false;
+ 
 
   constructor(
+    private datepipe: DatePipe,
     private router: Router,
     private tablelistService: TableListService,
     private workspaceHeaderService: WorkspaceHeaderService,
@@ -54,6 +64,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.maxDate = new Date();
+    this.GetModificationCategory();
     this.metalyzerHeaderService.cast
       .subscribe(data => {
         this.phase = data;
@@ -72,38 +84,108 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.tablelistService.Dropdownlist.subscribe(data => {
       this.dropdown = data;
     });
-    this.matpaginator.pageIndex = 0;
-    this.loadPage();
     this.permissionToUser = this.permissionService.getMetalyzerPermission();
+
+  }
+
+
+  GetModificationCategory() {
+    this.metalyzerHeaderService.getModificationCategory()
+      .subscribe(result => {
+        for (var i = 0; i < result.length; i++) {
+          this.categoryarr.push({ data: result[i] });
+        }
+      });
+  }
+  
+  getSearchValues() {
+    this.validateSearch(this.workspaceID, 1, 10);
+  }
+
+  validateSearch(workspaceID, startIndex, itemperpage) {
+    this.indexValue = startIndex;
+    var latest_start = this.datepipe.transform(this.fromdate, 'MM/dd/yyyy');
+    var latest_end = this.datepipe.transform(this.todate, 'MM/dd/yyyy');
+    const param = {
+      'workspaceId': workspaceID,
+      'userId': this.username,
+      'metalyzerModificationCategory': this.category,
+      'fromDate': latest_start,
+      'toDate': latest_end
+    };
+    this.metalyzerHeaderService.getAudit(param, startIndex, itemperpage)
+      .subscribe
+      (result => {
+        var metalyzerhis = result.model;
+        this.metalyzerhistoryarr=[];
+        if(metalyzerhis.length===0){
+         this.errmsg=true;   
+         
+        }else{
+          this.errmsg=false;
+          for (var i = 0; i < metalyzerhis.length; i++) {
+            var metalyzerValues = metalyzerhis[i].modificationDescription;
+            var modifiedBy = metalyzerhis[i].modifiedUser;
+            var Category = metalyzerhis[i].metalyzerModificationCategory;
+            var Datetime = metalyzerhis[i].createdAt;        
+            this.metalyzerhistoryarr.push({ data: metalyzerValues, user: modifiedBy, date: Datetime ,category: Category });
+          }
+        }
+        
+      },
+        err => { console.log(err) });
   }
 
   ngAfterViewInit() {
-    merge(this.matpaginator.page)
-      .pipe(
-        tap(() => this.loadPage())
-      )
-      .subscribe();
-
-  }
-
-  datasourceHasValue() {
-    let isScreenPresent;
-    this.dataSource.connect().subscribe(result => {
-      if (result.length === 0) {
-        isScreenPresent = true;
-      } else {
-        isScreenPresent = false;
-      }
-    });
-    return isScreenPresent;
   }
 
   loadPage() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.userid = this.userInfoService.getUserId();
-    this.dataSource = new MetalyzerDataSource(this.metalyzerHeaderService, this.spinner);
-    this.dataSource.getAudit(this.workspaceID, this.userid, this.matpaginator.pageIndex + 1, this.matpaginator.pageSize === undefined ? 5 : this.matpaginator.pageSize);
+    this.getAuditEvents(this.workspaceID, this.userid, 1, 10);
   }
+
+  getAuditEvents(workspaceID, userid, startIndex, itemperpage) {
+    this.spinner.show();
+    try {
+      this.indexValue = startIndex;
+      const param = {
+        'workspaceId': workspaceID,
+        'userId': userid
+      };
+      this.metalyzerHeaderService.getAudit(param, startIndex, itemperpage).subscribe(result => {
+        var metalyzerhis = result.model;
+        this.metalyzerhistoryarr=[];
+        if(metalyzerhis===0){
+        this.errmsg=true;        
+        }else{
+          this.errmsg=false;
+          for (var i = 0; i < metalyzerhis.length; i++) {
+            var metalyzerValues = metalyzerhis[i].modificationDescription;
+            var modifiedBy = metalyzerhis[i].modifiedUser;
+            var Category = metalyzerhis[i].metalyzerModificationCategory;
+            var Datetime = metalyzerhis[i].createdAt;
+            this.metalyzerhistoryarr.push({ data: metalyzerValues, user: modifiedBy, date: Datetime, category: Category });
+          }
+          this.spinner.hide();
+        }
+       
+      });
+    } catch {
+      this.spinner.hide();
+    }
+  }
+  sortFunc (a, b) {
+    return a.date - b.date
+  }
+
+  CloseMetalyzerHistory(){
+    this.username="";
+    this.category="";
+    this.fromdate="";
+    this.todate="";
+  }
+
 
   downloadFile(content, fileType) {
     const fileName = this.wsName + '-metadata.xml';

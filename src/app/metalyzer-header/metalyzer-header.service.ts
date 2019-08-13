@@ -11,6 +11,7 @@ export class MetalyzerHeaderService {
   exportxmlUrl = this.apiUrl + 'metalyzer/exportMetadata/';
   getAuditUrl = this.apiUrl + 'metalyzer/auditEvents?startIndex=';
   exportpdfUrl = this.apiUrl + 'metalyzer/export/erDiagram?';
+  getcategoryUrl=this.apiUrl + 'metalyzer/modificationCategory';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
   cast = this.phase.asObservable();
@@ -68,6 +69,13 @@ export class MetalyzerHeaderService {
     return this.http.post(this.getAuditUrl + startIndex + '&itemPerPage=' + itemperpage, param, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractAudit),
       catchError(this.handleError<string>('getAudit'))
+    );
+  }
+
+  getModificationCategory(){
+    return this.http.get(this.getcategoryUrl , { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractAudit),
+      catchError(this.handleError<string>('getModificationCategory'))
     );
   }
 
