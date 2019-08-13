@@ -155,6 +155,7 @@ import { PreventcopyDirective } from './preventcopy.directive';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { FilteroperationPipe } from './ert-table/filteroperation.pipe';
 import { SearchErtTablePipe } from './ert-landing-page/search-ert-table.pipe';
+import { SessionTimeoutComponent } from './session-timeout/session-timeout.component';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -266,7 +267,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 PreventcopyDirective,
                 ResetPasswordComponent,
                 FilteroperationPipe,
-                SearchErtTablePipe
+                SearchErtTablePipe,
+                SessionTimeoutComponent
         ],
         imports: [
                 JwtModule.forRoot({

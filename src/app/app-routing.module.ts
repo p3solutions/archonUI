@@ -69,6 +69,7 @@ import { StoredProcViewComponent } from './stored-proc-view/stored-proc-view.com
 import { ActivityLandingPageComponent } from './activity-landing-page/activity-landing-page.component';
 import { ErtCloneViewComponent } from './ert-clone-view/ert-clone-view.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SessionTimeoutComponent } from './session-timeout/session-timeout.component';
 const routes: Routes = [
   {
     path: 'workspace', component: WorkspaceLandingPageComponent, canActivate: [AuthenticationGuard], children: [
@@ -280,6 +281,9 @@ const routes: Routes = [
   },
   {
     path: 'create-database', component: CreateDatabasePageComponent, canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'session-timeout', component: SessionTimeoutComponent
   }
 ];
 

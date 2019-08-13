@@ -142,6 +142,9 @@ export class ErtTableColumnConfigComponent implements OnInit {
   saveERTJob(ertJobStatus: string) {
     if (this.ertService.data !== undefined) {
       this.graphDetails.data = JSON.stringify(this.ertService.data).replace(/"/g, '\'');
+      this.graphDetails.selectedValues = JSON.stringify(this.ertService.selectedValues).replace(/"/g, '\'');
+      // this.graphDetails.selectedPrimaryTable = JSON.stringify(this.ertService.selectedPrimaryTable).replace(/"/g, '\'');
+      this.graphDetails.joinListMap = JSON.stringify(Array.from(this.ertService.joinListMap.entries())).replace(/"/g, '\'');
     }
     try {
       this.errorMessage = '';

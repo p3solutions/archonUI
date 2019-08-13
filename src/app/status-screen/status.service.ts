@@ -40,7 +40,7 @@ export class StatusService {
   }
 
   getJobList(selectedJobOrigin, selectedJobStatus, startIndex, itemPerPage, jobName): Observable<any> {
-    const url = this.getSearchStatus + this.userinfoService.getUserId() + '&jobOrigin=' + selectedJobOrigin +
+    const url = this.getSearchStatus + encodeURIComponent(this.userinfoService.getUserId()) + '&jobOrigin=' + selectedJobOrigin +
       '&jobStatus=' + selectedJobStatus + '&startIndex=' + startIndex + '&itemPerPage=' + itemPerPage + '&jobName=' + jobName;
     return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
       map(this.extractJobSearch),
@@ -53,7 +53,7 @@ export class StatusService {
   }
 
   getSearchResult(startIndex, search, jobOrigin, jobStatus) {
-    const url = this.getSearchStatus + this.userinfoService.getUserId() +
+    const url = this.getSearchStatus + encodeURIComponent(this.userinfoService.getUserId()) +
       '&jobOrigin=' + jobOrigin + '&jobStatus=' + jobStatus + '&jobName=' + search + '&startIndex=' + startIndex;
     return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
       map(this.extractJobSearch),

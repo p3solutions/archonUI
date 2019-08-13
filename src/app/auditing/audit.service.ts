@@ -63,7 +63,7 @@ export class AuditService {
   }
 
   getJobStatuses(params, startIndex, itemPerPage) {
-    return this.http.get<any>(this.getAuditUrl + params.userId + '&workspaceId=' + params.workspaceId
+    return this.http.get<any>(this.getAuditUrl + encodeURIComponent(params.userId) + '&workspaceId=' + params.workspaceId
       + '&eventName=' + params.eventName + '&severityLevel=' + params.severityLevel + '&itemPerPage=' + itemPerPage
       + '&fromDate=' + params.fromDate + '&toDate=' + params.toDate + '&serviceId=' + params.serviceId + '&index=' + startIndex,
       { headers: this.getHeaders() }).pipe(

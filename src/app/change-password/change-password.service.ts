@@ -25,7 +25,7 @@ export class ChangePasswordService {
   }
 
   changePassword(param) {
-    const URL = this.getUsersUrl + this.userId + '/pwd';
+    const URL = this.getUsersUrl + encodeURIComponent(this.userId) + '/pwd';
     this.passwordParam = param;
     return this.http.patch(URL, this.passwordParam, { headers: this.userinfoService.getHeaders() });
     // .pipe(

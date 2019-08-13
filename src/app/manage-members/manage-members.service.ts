@@ -59,7 +59,7 @@ export class ManageMembersService {
     );
   }
   updateServiceActions(params: AnyObject) {
-    const url = this.apiUrl + `users/${params.userId}/roles/actions`;
+    const url = this.apiUrl + `users/${encodeURIComponent(params.userId)}/roles/actions`;
     return this.http.post<any>(url, params, { headers: this.userinfoService.getHeaders()}).pipe(
       map(this.extractServiceActions),
       catchError(this.handleError('updateServiceActions'))
