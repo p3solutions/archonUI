@@ -15,6 +15,7 @@ export class UserinfoService {
   errorObject: ErrorObject;
   userRole;
   private loginUrl = 'sign-in';
+  extendSessionUrl = 'auth/token';
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -59,6 +60,11 @@ export class UserinfoService {
   getAuthKey() {
     const userId = sessionStorage.getItem('userId');
     return localStorage.getItem(userId);
+  }
+
+  getRefreshKey() {
+    const userId = sessionStorage.getItem('userId');
+    return localStorage.getItem(userId + 'rt');
   }
 
   getHeaders() {
@@ -126,6 +132,29 @@ export class UserinfoService {
     return null;
   }
 
+  getRefreshHeaderToken() {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getRefreshKey()
+    });
+  }
+
+
+  extendSession(): Observable<any> {
+    return this.http.get<any>(this.extendSessionUrl, { headers: this.getRefreshHeaderToken() }).
+      pipe(catchError(this.handleError<any>('extendSession')));
+  }
+
+  extendUserSession() {
+    this.extendSession().subscribe(res => {
+      console.log(res.data.refreshToken);
+      const userId = sessionStorage.getItem('userId');
+      console.log(userId);
+      localStorage[userId] = res.data.accessToken;
+      localStorage[userId + 'rt'] = res.data.refreshToken;
+    });
+  }
+
   redirectOnSessionTimedOut() {
     // TODO: show alert about losing unsaved data
     // const sessionTimedOutUrl = this.router.url; // commented we are not using return url for any purpose.
@@ -133,9 +162,10 @@ export class UserinfoService {
     const userId = sessionStorage.getItem('userId');
     if (userId) {
       localStorage.removeItem(userId);
+      localStorage.removeItem(userId + 'rt');
     }
     sessionStorage.clear();
-    this.router.navigateByUrl(this.loginUrl);
+    this.router.navigate(['session-timeout']);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
