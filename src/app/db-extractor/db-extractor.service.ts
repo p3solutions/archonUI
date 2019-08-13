@@ -14,10 +14,10 @@ export class DbExtractorService {
     private userInfoService: UserinfoService,
     private environment: EnvironmentService
   ) { }
-
+  userId = sessionStorage.getItem('userId');
   private headers = new HttpHeaders({
     // 'Content-Type': 'multipart/form-data',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userId)
   });
 
   private processDetailsObj: ProcessDetailsObj;
@@ -50,7 +50,7 @@ export class DbExtractorService {
     formData.append('RdbmsDto', JSON.stringify(params));
     formData.append('instanceId', JSON.stringify(instanceID));
 
-    return this.http.post(this.postProcessDetailsUrl, formData, { headers: this.headers });
+    return this.http.post(this.postProcessDetailsUrl, formData, { headers: this.userInfoService.getFileUploadHeaders() });
   }
 
   getDBInfoByID(databaseId: string): Observable<ConfiguredDB> {

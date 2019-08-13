@@ -34,9 +34,10 @@ export class NavbarComponent implements OnInit {
   uploadForm: FormGroup;
   errorlicense = false;
 
-  constructor(private userProfileService: UserProfileService , private navService: NavbarService,
-     private userinfoService: UserinfoService, private router: Router, private activatedrouter: ActivatedRoute, 
-     private formBuilder: FormBuilder, private workspaceService: WorkspaceServicesService) { }
+  constructor(private userProfileService: UserProfileService, private navService: NavbarService,
+    private userinfoService: UserinfoService, private router: Router,
+    private activatedrouter: ActivatedRoute, private formBuilder: FormBuilder,
+    private workspaceService: WorkspaceServicesService) { }
   ngOnInit() {
     this.userId = this.userinfoService.getUserId();
     setTimeout(() => {
@@ -87,7 +88,8 @@ export class NavbarComponent implements OnInit {
     let accessToken: string;
     let token_data: any;
     const jwtHelper: JwtHelperService = new JwtHelperService();
-    accessToken = localStorage.getItem('accessToken');
+    const userId = sessionStorage.getItem('userId');
+    accessToken = localStorage.getItem(userId);
     token_data = jwtHelper.decodeToken(accessToken);
     info = new Info();
     info.id = token_data.user.id;
@@ -99,13 +101,17 @@ export class NavbarComponent implements OnInit {
   callUserProfile() {
     localStorage.setItem('userId', '');
   }
+
   logout() {
-    const token_data = localStorage.getItem('accessToken');
-    this.navService.logout(token_data).subscribe(a => {
-      console.log(a);
+    const userId = sessionStorage.getItem('userId');
+    const userToken = localStorage.getItem(userId);
+    localStorage.removeItem(userId);
+    sessionStorage.clear();
+    this.navService.logout(userToken).subscribe(res => {
+      setTimeout(() => {
+        this.router.navigate(['sign-in']);
+      }, 500);
     });
-    localStorage.removeItem('accessToken');
-    this.router.navigate(['sign-in']);
   }
 
 

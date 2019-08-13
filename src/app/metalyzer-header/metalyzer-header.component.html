@@ -146,8 +146,13 @@
                 </div>  
             </div>
         </div>
-      <div class="modal-footer" id="footer" style="margin-top: 70px;">
-        <button class="arch-btnn" type="button" mat-flat-button data-dismiss="modal" (click)=CloseMetalyzerHistory()>Close</button>
+        <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}"
+          id="screen-table" showFirstLastButtons [length]="datasourceHasValue() ? 0 : dataSource.totalScreen" [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+
+      </div>
+      <div class="modal-footer">
+        <button class="arch-btnn" type="button" mat-flat-button data-dismiss="modal">Close</button>
       </div>
     </div>
 

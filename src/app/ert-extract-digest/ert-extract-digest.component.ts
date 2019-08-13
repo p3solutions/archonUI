@@ -61,7 +61,9 @@ export class ErtExtractDigestComponent implements OnInit {
       try {
         this.spinner.hide();
         this.extractDataConfigInfo = result.extractDataConfig;
-        this.ertService.data = JSON.parse(result.graphDetails.data.replace(/'/g, '"'));
+        if (result.graphDetails.data) {
+          this.ertService.data = JSON.parse(result.graphDetails.data.replace(/'/g, '"'));
+        }
         const b = document.getElementById('extract-checkbox') as HTMLInputElement;
         b.checked = true;
         if (result.ingestionDataConfig !== null) {
@@ -71,7 +73,7 @@ export class ErtExtractDigestComponent implements OnInit {
           this.disableIngestData = false;
         }
         this.isDisabledSaveBtn = false;
-      } catch {
+      } catch (err) {
         this.spinner.hide();
       }
     }, (err: HttpErrorResponse) => {

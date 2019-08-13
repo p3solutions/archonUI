@@ -11,7 +11,7 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { FormsModule } from '@angular/forms';
 import {
   MatFormFieldModule, MatCardModule, MatInputModule, MatTableModule,
-  MatPaginator, MatPaginatorModule, MatProgressBarModule, MatSortModule
+  MatPaginator, MatPaginatorModule, MatProgressBarModule, MatSortModule, MatTooltipModule
 } from '@angular/material';
 import { SearchPipe } from '../search.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,7 +26,7 @@ describe('DatabaseListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DatabaseListComponent, SearchPipe],
       imports: [HttpClientModule, RouterTestingModule, MatProgressBarModule, MatPaginatorModule, MatSortModule, MatTableModule,
-        FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, MatTableModule, MatPaginatorModule],
+        FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, MatTableModule, MatPaginatorModule, MatTooltipModule],
       providers: [DatabaseListService, UserinfoService, DynamicLoaderService,
         CommonUtilityService, WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })

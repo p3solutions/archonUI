@@ -35,7 +35,8 @@ describe('StatusScreenComponent', () => {
     'Dc1MDNhNmI4MDkxOSIsInJvbGVOYW1lIjoiUk9MRV9EQl9BRE1JTiJ9XSwidXNlciI6eyJuYW1lIjoiZGJhZG1pbiIsImlkIjoiNWFjNWRjNjUyZTZjOTkwODYxODM' +
     'wOTc3IiwiZW1haWxBZGRyZXNzIjoiZGJhZG1pbkB0ZXN0LmNvbSJ9LCJpc3MiOiJhcHBsaWNhdGlvbiIsImlhdCI6MTUyNzY4Nzc5MiwiZXhwIjoxNTI3Nzc0MTkyfQ' +
     '.822cmi5CYPIHFgMba7D-LwsdLvFpphMw6FdU8FAs6RYdGKXtr36EugH_EUCbqxccjCAx4EwUBW9swXDSTRjiWA';
-  localStorage.setItem('accessToken', loggedInAccessToken); // inserting logged in user info
+  sessionStorage.setItem('userId', 'superadmin');
+  localStorage.setItem('superadmin', loggedInAccessToken); // inserting logged in user info
   let debugElement: DebugElement;
 
   const getSimpleObservable = function (data) {
@@ -75,9 +76,9 @@ describe('StatusScreenComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        FormsModule, MatTableModule, MatSelectModule, 
+        FormsModule, MatTableModule, MatSelectModule,
         MatOptionModule, MatSortModule, MatPaginatorModule,
-         MatFormFieldModule, MatInputModule, BrowserAnimationsModule, MatExpansionModule,
+        MatFormFieldModule, MatInputModule, BrowserAnimationsModule, MatExpansionModule,
         HttpClientModule,
         HttpClientTestingModule,
         RouterTestingModule, ReactiveFormsModule

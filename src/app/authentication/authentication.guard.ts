@@ -11,7 +11,8 @@ export class AuthenticationGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     let accessToken: string;
-    accessToken = localStorage.getItem('accessToken');
+    const userId = sessionStorage.getItem('userId');
+    accessToken = localStorage.getItem(userId);
     if (!accessToken) {
       this.router.navigate(['sign-in']);
     }

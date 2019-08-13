@@ -7,20 +7,22 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ManageUserRoles } from '../manage-user-roles';
 import { EnvironmentService } from '../environment/environment.service';
 import { AddMembers } from '../add-members';
+import { UserinfoService } from '../userinfo.service';
 
 @Injectable()
 export class AddMembersService {
-
+  userId = sessionStorage.getItem('userId');
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
+    'Authorization': 'Bearer ' + localStorage.getItem(this.userId)
   });
   private apiUrl = this.environment.apiUrl;
   private getAllUsersUrl = this.apiUrl + 'users';
   private addMembersUrl = this.apiUrl + 'workspaces/access';
 
   constructor(private http: HttpClient,
-    private environment: EnvironmentService
+    private environment: EnvironmentService,
+    private userInfoService: UserinfoService
   ) { }
 
   private extractData(res: any) {
@@ -30,13 +32,13 @@ export class AddMembersService {
 
 
   getAllUsers(): Observable<ManageUserRoles[]> {
-    return this.http.get<AddMembers[]>(this.getAllUsersUrl, { headers: this.headers }).pipe(
+    return this.http.get<AddMembers[]>(this.getAllUsersUrl, { headers: this.userInfoService.getHeaders() }).pipe(
       map(this.extractData),
       catchError(this.handleError('getAllUsers', []))
     );
   }
   addMembers(params: any): Observable<any> {
-    return this.http.post(this.addMembersUrl, params, { headers: this.headers });
+    return this.http.post(this.addMembersUrl, params, { headers: this.userInfoService.getHeaders() });
   }
 
   // * Handle HttpClient operation that failed.

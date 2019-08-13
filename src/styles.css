@@ -2210,9 +2210,12 @@ span.mat-placeholder-required.mat-form-field-required-marker {
 .btn-primary-login-disabled:hover {
   color: #fff;
 }
+button:focus {outline:0;}
 
-button:focus {
-  outline: 0;
+.overflow-text {
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 
 .text-hidden-overflow {
