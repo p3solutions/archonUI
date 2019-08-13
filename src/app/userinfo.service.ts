@@ -15,7 +15,7 @@ export class UserinfoService {
   errorObject: ErrorObject;
   userRole;
   private loginUrl = 'sign-in';
-  extendSessionUrl = 'auth/token';
+  extendSessionUrl = this.environment.apiUrl + 'auth/token';
   constructor(
     private http: HttpClient,
     private router: Router,

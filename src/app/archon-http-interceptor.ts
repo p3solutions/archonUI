@@ -39,8 +39,8 @@ export class ArchonHttpInterceptor implements HttpInterceptor {
             }
             if (response.status === 500 && response.error.message === 'Token is expired') {
                 // this.router.navigate(['session-timeout']);
-                // this.userinfoService.redirectOnSessionTimedOut();
-                this.userinfoService.extendUserSession();
+                this.userinfoService.redirectOnSessionTimedOut();
+               // this.userinfoService.extendUserSession();
             }
             if (response.status === 500 && response.error.message.trim() === 'JWT Token has expired') {
                 this.userinfoService.redirectOnSessionTimedOut();
