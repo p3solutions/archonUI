@@ -36,7 +36,6 @@ export class WorkspaceServicesComponent implements OnInit {
   startIndex = 1;
   isAnyServiceEnable = true;
   showMessage = 'No access to any services. Please contact owner of workspace to get access.';
-  isTokenExpired = '';
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,

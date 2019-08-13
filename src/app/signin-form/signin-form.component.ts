@@ -75,7 +75,7 @@ export class SigninFormComponent implements OnInit {
         const userId = this.getUserID(this.responseData);
         sessionStorage.setItem('userId', userId);
         localStorage.setItem(userId, data.data.accessToken);
-        localStorage.setItem(userId + 'rt', data.data.refreshToken);
+        // localStorage.setItem(userId + 'rt', data.data.refreshToken);
         this.count = 0;
         localStorage.setItem('count', this.count);
         // localStorage.setItem('refreshToken', data.data.refreshToken);

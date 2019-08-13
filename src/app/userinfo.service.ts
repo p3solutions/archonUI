@@ -147,9 +147,7 @@ export class UserinfoService {
 
   extendUserSession() {
     this.extendSession().subscribe(res => {
-      console.log(res.data.refreshToken);
       const userId = sessionStorage.getItem('userId');
-      console.log(userId);
       localStorage[userId] = res.data.accessToken;
       localStorage[userId + 'rt'] = res.data.refreshToken;
     });
@@ -162,10 +160,10 @@ export class UserinfoService {
     const userId = sessionStorage.getItem('userId');
     if (userId) {
       localStorage.removeItem(userId);
-      localStorage.removeItem(userId + 'rt');
+      // localStorage.removeItem(userId + 'rt');
     }
     sessionStorage.clear();
-    this.router.navigate(['session-timeout']);
+    this.router.navigateByUrl(this.loginUrl);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
