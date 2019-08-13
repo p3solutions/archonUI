@@ -146,10 +146,6 @@
                 </div>  
             </div>
         </div>
-        <mat-paginator class="{{datasourceHasValue()?'mat-paginator-shadow mat-paginator':'mat-paginator'}}"
-          id="screen-table" showFirstLastButtons [length]="datasourceHasValue() ? 0 : dataSource.totalScreen" [pageSizeOptions]="[5, 10, 25, 100]">
-        </mat-paginator>
-
       </div>
       <div class="modal-footer">
         <button class="arch-btnn" type="button" mat-flat-button data-dismiss="modal">Close</button>
@@ -157,8 +153,6 @@
     </div>
 
   </div>
-</div>
-
 <button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="true"
   data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
   <div class="modal fade" id="confirmCancelInviteSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
