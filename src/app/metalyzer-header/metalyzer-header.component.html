@@ -92,11 +92,11 @@
       <div class="modal-body" style="margin-bottom: -62px;">
           <div class="example-container">
               <mat-form-field id="searchbyname">
-                <input name="searchbyname1" matInput placeholder="Search By Name" [(ngModel)]="username">
+                <input name="searchbyname1" matInput placeholder="Search By Name" [(ngModel)]="username" (keyup)="getCommonSearch()">
               </mat-form-field>
             
               <mat-form-field id="searchbycategory">
-                <mat-select name="searchbycategory1" placeholder="Search By Category" [(ngModel)]="category">
+                <mat-select name="searchbycategory1" placeholder="Search By Category" [(ngModel)]="category" (selectionChange)="getCommonSearch()">
                   <mat-option>None</mat-option>
                   <mat-option  *ngFor="let category of categoryarr" [value]="category.data"
                 >{{category.data}}</mat-option>
@@ -104,22 +104,21 @@
               </mat-form-field>
 
               <mat-form-field id="fromdate">
-                <input matInput name="fromdate1" [matDatepicker]="picker"  placeholder="From Date" [(ngModel)]="fromdate">
+                <input matInput name="fromdate1" [matDatepicker]="picker"  placeholder="From Date" [(ngModel)]="fromdate" (dateInput)="getCommonSearch()" (dateChange)="getCommonSearch()">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
 
               <mat-form-field id="todate">
-                <input matInput name="todate1" [max]="maxDate" [matDatepicker]="picker1" placeholder="To Date" [(ngModel)]="todate" >
+                <input matInput name="todate1" [max]="maxDate" [matDatepicker]="picker1" placeholder="To Date" [(ngModel)]="todate" (dateInput)="getCommonSearch()" (dateChange)="getCommonSearch()">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
-              </mat-form-field>
-              <button mat-flat-button color="primary" id="searchbtn" (click)="getSearchValues()">Search</button> 
+              </mat-form-field>             
             </div>
 
            
-            <div class="container" style="min-height: 100px;width: 1127px;height: 412px;overflow: auto;margin: 5px;padding: 5px;">              
-                <ul class="timeline">                                  
+            <div class="container" style="min-height:300px;width: 1127px;overflow: auto;margin: 5px;padding: 5px;">              
+                <ul class="timeline" style="z-index:1;">                                  
                     <li class="timeline-inverted" *ngFor="let items of metalyzerhistoryarr.sort(sortFunc)">
                       <div class="timestamps">
                           <p style="color:#3689cb;font-size: 13px">{{items.date * 1000.| date:'MMM dd, yyyy'}}</p><br> <p style="font-size: 12px">{{items.date * 1000 | date:'h:mm:ss a'}}</p>
@@ -146,7 +145,7 @@
                 </div>  
             </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="margin-top: 42px">
           <button class="arch-btnn" type="button" mat-flat-button data-dismiss="modal">Close</button>
         </div>
       </div>

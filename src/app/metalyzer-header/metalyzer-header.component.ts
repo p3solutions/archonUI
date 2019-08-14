@@ -98,11 +98,12 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
       });
   }
   
-  getSearchValues() {
+  getCommonSearch() {
     this.validateSearch(this.workspaceID, 1, 10);
   }
 
   validateSearch(workspaceID, startIndex, itemperpage) {
+    this.spinner.show();
     this.indexValue = startIndex;
     var latest_start = this.datepipe.transform(this.fromdate, 'MM/dd/yyyy');
     var latest_end = this.datepipe.transform(this.todate, 'MM/dd/yyyy');
@@ -119,8 +120,8 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
         var metalyzerhis = result.model;
         this.metalyzerhistoryarr=[];
         if(metalyzerhis.length===0){
-         this.errmsg=true;   
-         
+         this.errmsg=true;    
+         this.spinner.hide();       
         }else{
           this.errmsg=false;
           for (var i = 0; i < metalyzerhis.length; i++) {
@@ -129,6 +130,7 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
             var Category = metalyzerhis[i].metalyzerModificationCategory;
             var Datetime = metalyzerhis[i].createdAt;        
             this.metalyzerhistoryarr.push({ data: metalyzerValues, user: modifiedBy, date: Datetime ,category: Category });
+            this.spinner.hide();
           }
         }
         

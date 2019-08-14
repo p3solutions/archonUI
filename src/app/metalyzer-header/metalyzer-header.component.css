@@ -394,6 +394,7 @@ table{
           }
 
       .timeline > li > .timeline-badge {
+          z-index:auto;
           color: #fff;
           width: 38px;
           height: 38px;
@@ -433,9 +434,16 @@ table{
   margin-left: -178px;
   margin-top: 22px;
 }
+.example-container{
+  position:sticky;
+  top:0;
+  background-color: white;
+  z-index: 100;
+}
 
 .timeline-badge {
   background-color: #64b5f6;
+  z-index:1
 }
 .timeline-body{
   width: 735px;
