@@ -8,6 +8,7 @@ import { graphviz } from 'd3-graphviz';
 import * as d3 from 'd3';
 import { getUserId } from '../adhoc-landing-page/adhoc-utility-fn';
 import { HttpErrorResponse } from '@angular/common/http';
+import { getERTSummaryPageSIPGraphData, getERTSummaryPageGraphDataRecord } from '../ert-datarecord-config/tree';
 
 @Component({
   selector: 'app-ert-clone-view',
@@ -128,14 +129,26 @@ export class ErtCloneViewComponent implements OnInit {
     });
   }
 
+  showDataRecordAndSIPGraph(result) {
+    this.data = JSON.parse(result.graphDetails.data.replace(/'/g, '"'));
+    this.selectedValues = JSON.parse(result.graphDetails.selectedValues.replace(/'/g, '"'));
+    this.joinListMap = new Map(JSON.parse(result.graphDetails.joinListMap.replace(/'/g, '"')));
+    if (this.JobMode.trim().toUpperCase() === 'SIP') {
+      this.tempdata = getERTSummaryPageSIPGraphData(this.selectedValues, this.joinListMap);
+    } else if (this.JobMode.trim().toUpperCase() === 'DATA_RECORD') {
+      this.tempdata = getERTSummaryPageGraphDataRecord(this.selectedValues, this.joinListMap); // passing tempdata in update function.
+    }
+    this.ShowDiagram = false;
+    this.createchart();
+  }
+
+
 
   getExtractAndIngestInfo() {
     this.ertService.getExtractConfig(this.ertJobId).subscribe(result => {
       try {
         this.spinner.hide();
-        this.data = JSON.parse(result.graphDetails.data.replace(/'/g, '"'));
-        // this.data = this.ertService.data;
-        this.createchart();
+        this.showDataRecordAndSIPGraph(result);
       } catch {
         this.spinner.hide();
       }
@@ -160,14 +173,11 @@ export class ErtCloneViewComponent implements OnInit {
   }
   selectTable(tableId) {
     if (this.JobMode.trim().toUpperCase() === 'TABLE') {
-      this.dotString = 'digraph {graph [pad="0.5", nodesep="0.5", ranksep="2"];node' +
-        '[shape="plain" fontname = "Roboto" fontsize ="5" ];edge [shape="plain" fontname = "Roboto" ' +
-        'arrowsize="0.3" fontsize ="3" ]rankdir=LR;';
+      this.ShowDiagram = true;
+      this.reInitInstance();
       this.selectedTableId = tableId;
       this.selectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].tableName;
       this.ExpectedTableName = this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].modifiedTableName;
-      // graphviz('#graph', this.option).resetZoom(d3.transition('smooth'));
-      // d3.select('svg').remove();
       this.createDOTActualTable(this.selectedTableList.filter(a => a.tableId === this.selectedTableId)[0].columnList);
     }
   }
@@ -309,8 +319,9 @@ export class ErtCloneViewComponent implements OnInit {
     this.resetZoom();
     // this.resetZoom();
   }
+
   resetZoom() {
-    graphviz('#graph', this.option).resetZoom(d3.transition().duration(1000));
+    graphviz('#graph').resetZoom(d3.transition().duration(1000));
   }
 
   attributer(datum, index, nodes) {
@@ -410,6 +421,7 @@ export class ErtCloneViewComponent implements OnInit {
 
     // update starts
     function update(data) {
+      console.log(data, 'inside update');
       const root = d3.hierarchy(data);
       const nodes = flatten(root);
       const links = root.links();
@@ -640,6 +652,6 @@ export class ErtCloneViewComponent implements OnInit {
       svg.attr('transform', d3.event.transform);
     }
 
-    update(this.data);
+    update(this.tempdata);
   }
 }
