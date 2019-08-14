@@ -79,6 +79,7 @@ export class ErtJobsComponent implements OnInit {
         if (this.ertJobs.length === 0) {
           this.ertJobslist = true;
         } else {
+          this.ertJobslist = false;
           for (const item of this.ertJobs) {
             if (item.jobStatus === 'READY' || item.jobStatus === 'COMPLETED' || item.jobStatus === 'FAILED') {
               item.madeDisable = false;
