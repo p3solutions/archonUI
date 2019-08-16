@@ -63,6 +63,8 @@ export class ErtExtractDigestComponent implements OnInit {
         this.extractDataConfigInfo = result.extractDataConfig;
         if (result.graphDetails.data) {
           this.ertService.data = JSON.parse(result.graphDetails.data.replace(/'/g, '"'));
+          this.ertService.selectedValues = JSON.parse(result.graphDetails.selectedValues.replace(/'/g, '"'));
+          this.ertService.joinListMap = new Map(JSON.parse(result.graphDetails.joinListMap.replace(/'/g, '"')));
         }
         const b = document.getElementById('extract-checkbox') as HTMLInputElement;
         b.checked = true;

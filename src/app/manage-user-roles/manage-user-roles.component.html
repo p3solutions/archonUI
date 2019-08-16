@@ -221,7 +221,7 @@
         <p class="popup-paragraph-cls">{{confirmMessage}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
+        <button type="button" (click)="noGroupChange()" class="btn btn-padding btn-secondary-popup" data-dismiss="modal">No</button>
         <button type="button" (click)="confirmCancelInviteAndDeleteUser()"
           class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Yes</button>
       </div>
