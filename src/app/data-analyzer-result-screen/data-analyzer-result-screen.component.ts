@@ -63,6 +63,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   accuracyModel1;
   counter = Array;
   filteredArray = [];
+  isAddJoinDisabled = true;
 
   constructor(private tablelistService: TableListService,
     private addDirectJoinService: AddDirectJoinService,
@@ -72,6 +73,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
 
   ngOnInit() {
     this.tablelistService.currentResultArray.subscribe(res => {
+      console.log(res);
       if (res[0] !== undefined) {
         this.workspaceId = res[0].workspaceId,
           this.resultant = res[0].relationDetails;
@@ -80,6 +82,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         this.jobId = res[0].jobId;
         this.secodaryTableId = res[0].secondaryTableId;
         this.secondaryTableName = res[0].secondaryTableName;
+        this.selectedSecondaryTable = this.secondaryTableName;
       }
     });
     this.getPrimaryColumns();
@@ -113,7 +116,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     }
   }
 
-  numberReturn(length){
+  numberReturn(length) {
     return new Array(length);
   }
 
@@ -129,7 +132,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
             secondaryColumnName: z.secondaryColumnName,
             dataType: z.dataType,
             matchPercentage: z.matchPercentage,
-            checked : false
+            checked: false
           };
           this.finalSecondaryArray.push(temp);
         }
@@ -141,6 +144,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       }]);
       this.primaryColMap.set(i.primaryColumnName, this.finalSecondaryArray);
     }
+    console.log(this.primaryColDetailsMap);
+    console.log(this.primaryColMap);
   }
 
   getSecondaryColumns() {
@@ -161,7 +166,7 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
             secondaryColumnName: k.secondaryColumnName,
             dataType: k.dataType,
             matchPercentage: k.matchPercentage,
-            checked : false
+            checked: false
           };
           existingPrimCol.push(temp);
         }
@@ -169,6 +174,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         this.secTableNameMap.set(tablename, existingPrimCol);
       }
     }
+    console.log(this.secTableIdMap);
+    console.log(this.secTableNameMap);
   }
 
   activateSecondaryFn() {
@@ -197,14 +204,17 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.dataSource.data = this.populateSecondaryValuesArray;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.columnlength = this.populatePrimaryValuesArray.length;
+    console.log(this.populateSecondaryValuesArray);
+    this.columnlength = this.populateSecondaryValuesArray.length;
     this.selectedSecondaryTable = x.key;
+    console.log(this.selectedSecondaryTable);
   }
 
   checkedPriValues(x, _event, index) {
     console.log(x, event, index);
     const isChecked = _event.target.checked;
     let joinListInfoArray;
+    const primaryColDetail = this.primaryColDetailsMap.get(this.selectedPrimaryColumn);
     if (isChecked) {
       x.checked = true;
       this.pricheckvalueMap.set(index, x.secondaryColumnName);
@@ -219,7 +229,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         this.resultantMap.set(x.tableName, []);
         joinListInfoArray = this.resultantMap.get(x.tableName);
       }
-      const primaryColDetail = this.primaryColDetailsMap.get(this.selectedPrimaryColumn);
       let primaryColumn;
       for (const i of primaryColDetail) {
         primaryColumn = {
@@ -234,8 +243,10 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         'secondaryColumn': secColumn
       };
       joinListInfoArray.push(Obj);
+      this.makePrimaryColumnSelect(x.tableName, Obj.primaryColumn.columnName, Obj.secondaryColumn.columnName, true);
     } else {
       this.pricheckvalueMap.delete(index);
+      this.makePrimaryColumnSelect(x.tableName, primaryColDetail[0].primaryColumnName, x.secondaryColumnName, false);
       x.checked = false;
       joinListInfoArray = this.resultantMap.get(x.tableName);
       for (const i of joinListInfoArray) {
@@ -245,12 +256,14 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         }
       }
     }
+    this.checkForBtnDisabled();
   }
 
   checkedSecValues(x, _event, index) {
     console.log(x, event, index);
     const isChecked = _event.target.checked;
     let joinListInfoArray;
+    console.log(this.selectedSecondaryTable);
     if (isChecked) {
       x.checked = true;
       this.seccheckvalueMap.set(index, x.secondaryColumnName);
@@ -265,6 +278,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         this.resultantMap.set(this.selectedSecondaryTable, []);
         joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
       }
+      console.log(this.resultantMap);
+      console.log(this.selectedSecondaryTable);
       const primaryColDetail = this.primaryColDetailsMap.get(x.primaryColumn);
       let primaryColumn;
       for (const i of primaryColDetail) {
@@ -280,10 +295,14 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         'secondaryColumn': secColumn
       };
       joinListInfoArray.push(Obj);
+      this.makePrimaryColumnSelect(this.selectedSecondaryTable, Obj.primaryColumn.columnName, Obj.secondaryColumn.columnName, true);
     } else {
+      const primaryColDetail = this.primaryColDetailsMap.get(x.primaryColumn);
+      this.makePrimaryColumnSelect(this.selectedSecondaryTable, x.primaryColumn, x.secondaryColumnName, false);
       x.checked = false;
       this.seccheckvalueMap.delete(index);
       joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
+      console.log(joinListInfoArray);
       for (const i of joinListInfoArray) {
         if (i.indexData === index) {
           const indexx = joinListInfoArray.indexOf(i);
@@ -291,6 +310,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         }
       }
     }
+    console.log(this.resultantMap);
+    this.checkForBtnDisabled();
   }
 
   addJoins() {
@@ -307,8 +328,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         delete i.indexData;
       }
       const Obj1 = {
-        'tableId': this.secodaryTableId,
-        'tableName': this.secondaryTableName,
+        'tableId': secTableId,
+        'tableName': secTableName,
         'joinListInfo': tempArray
       };
       finalSecondaryTableListArray.push(Obj1);
@@ -319,8 +340,10 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         tableId: this.primaryTableId,
         tableName: this.primaryTableName
       },
-      secondaryTableList: finalSecondaryTableListArray
+      secondaryTableList: JSON.parse(JSON.stringify(finalSecondaryTableListArray.filter(a => a.joinListInfo.length !== 0)))
     };
+
+    console.log(param);
     if (finalSecondaryTableListArray.length > 0) {
       this.addDirectJoinService.addDaNewJoin(param).subscribe(res => {
         if (res) {
@@ -372,60 +395,92 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     if (this.toggleBoolean === false) {
       this.activateSecondaryFn();
     } else {
-    this.activatePrimaryFn();
-    this.selectRow();
+      this.activatePrimaryFn();
+      this.selectRow();
     }
-}
-
-filter(value: string) {
-this.dataSource.filter = value.trim().toLowerCase();
-}
-
-filter1(value: string) {
-  this.dataSource1.filter = value.trim().toLowerCase();
-}
-
-
-accuracyfilter(value) {
-if (value !== 'none') {
-  this.filteredArray = [];
-  this.filteredArray = JSON.parse(JSON.stringify(this.populateSecondaryValuesArray));
-  console.log(this.filteredArray, value);
-  const length = this.filteredArray.length;
-  const tempArray = [];
-  this.filteredArray.forEach((element, index) => {
-    console.log(element.matchPercentage , value, index, length - 1 );
-    if (element.matchPercentage >= JSON.stringify(value)) {
-    tempArray.push(element);
-    }
-    if ((length - 1) === index) {
-      this.dataSource.data = tempArray;
-    }
-  });
-} else {
-  this.dataSource.data = this.populateSecondaryValuesArray;
-}
-}
-
-accuracyfilter1(value) {
-  if (value !== 'none') {
-    this.filteredArray = [];
-    this.filteredArray = JSON.parse(JSON.stringify(this.populatePrimaryValuesArray));
-    console.log(this.filteredArray, value);
-    const length = this.filteredArray.length;
-    const tempArray = [];
-    this.filteredArray.forEach((element, index) => {
-      console.log(element.matchPercentage , value, index, length - 1 );
-      if (element.matchPercentage >= JSON.stringify(value)) {
-      tempArray.push(element);
-      }
-      if ((length - 1) === index) {
-        this.dataSource1.data = tempArray;
-      }
-    });
-  } else {
-    this.dataSource1.data = this.populatePrimaryValuesArray;
   }
-}
+
+  filter(value: string) {
+    this.dataSource.filter = value.trim().toLowerCase();
+  }
+
+  filter1(value: string) {
+    this.dataSource1.filter = value.trim().toLowerCase();
+  }
+
+
+  accuracyfilter(value) {
+    if (value !== 'none') {
+      this.filteredArray = [];
+      this.filteredArray = JSON.parse(JSON.stringify(this.populateSecondaryValuesArray));
+      console.log(this.filteredArray, value);
+      const length = this.filteredArray.length;
+      const tempArray = [];
+      this.filteredArray.forEach((element, index) => {
+        console.log(element.matchPercentage, value, index, length - 1);
+        if (element.matchPercentage >= JSON.stringify(value)) {
+          tempArray.push(element);
+        }
+        if ((length - 1) === index) {
+          this.dataSource.data = tempArray;
+        }
+      });
+    } else {
+      this.dataSource.data = this.populateSecondaryValuesArray;
+    }
+  }
+
+  accuracyfilter1(value) {
+    if (value !== 'none') {
+      this.filteredArray = [];
+      this.filteredArray = JSON.parse(JSON.stringify(this.populatePrimaryValuesArray));
+      console.log(this.filteredArray, value);
+      const length = this.filteredArray.length;
+      const tempArray = [];
+      this.filteredArray.forEach((element, index) => {
+        console.log(element.matchPercentage, value, index, length - 1);
+        if (element.matchPercentage >= JSON.stringify(value)) {
+          tempArray.push(element);
+        }
+        if ((length - 1) === index) {
+          this.dataSource1.data = tempArray;
+        }
+      });
+    } else {
+      this.dataSource1.data = this.populatePrimaryValuesArray;
+    }
+  }
+
+  makePrimaryColumnSelect(tableName, primaryColumn, secondaryColumn, value) {
+    const joinListArray = this.primaryColMap.get(primaryColumn);
+    const joinListArray1 = this.secTableNameMap.get(tableName);
+    console.log(joinListArray);
+    console.log(joinListArray1);
+    joinListArray.filter(a => a.tableName === tableName && a.secondaryColumnName === secondaryColumn)[0].checked = value;
+    joinListArray1.filter(a => a.primaryColumn === primaryColumn && a.secondaryColumnName === secondaryColumn)[0].checked = value;
+    const joinListArray2 = this.secTableNameMap.get(tableName);
+    console.log(joinListArray2);
+  }
+
+  checkForBtnDisabled() {
+    console.log(this.resultantMap);
+    const resultantArray = [];
+    this.resultantMap.forEach((value, key) => {
+      console.log(JSON.parse(JSON.stringify(value)));
+      value.forEach((join, key1) => {
+        resultantArray.push(join);
+      });
+    });
+    console.log(resultantArray);
+    console.log(resultantArray.length);
+    if (resultantArray.length === 0) {
+      this.isAddJoinDisabled = true;
+      console.log(1);
+    } else {
+      this.isAddJoinDisabled = false;
+      console.log(2);
+    }
+    console.log(this.isAddJoinDisabled);
+  }
 
 }
