@@ -113,9 +113,9 @@
             <td *ngIf="userInfo" class="ws-info-data col-info-data">
               <span class="m-r-10" *ngFor="let ws of userInfo?.workspaceList; let isLast=last">
                <span *ngIf="isLast === false && ws?.workspaceState !== 'PENDING'"> <a (click)="setWorkspace(ws)">{{ws?.workspaceName}}, </a></span>
-               <span *ngIf="isLast === false && ws?.workspaceState === 'PENDING'">  {{ws?.workspaceName}}, </span>
+               <span matTooltip="Pending Workspace" *ngIf="isLast === false && ws?.workspaceState === 'PENDING'">  {{ws?.workspaceName}}, </span>
                 <span *ngIf="isLast === true && ws?.workspaceState !== 'PENDING'">  <a  (click)="setWorkspace(ws)">{{ws?.workspaceName}}</a></span>
-                  <span *ngIf="isLast === true && ws?.workspaceState === 'PENDING'">  {{ws?.workspaceName}}</span>
+                  <span matTooltip="Pending Workspace" *ngIf="isLast === true && ws?.workspaceState === 'PENDING'">  {{ws?.workspaceName}}</span>
               
  
               </span>

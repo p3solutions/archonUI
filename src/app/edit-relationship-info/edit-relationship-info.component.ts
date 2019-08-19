@@ -64,6 +64,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   populateValues() {
+    this.editchangeState.clear();
     this.spinner.show();
     try {
       this.primaryTable = JSON.parse(JSON.stringify(this.userValues.primaryTable.tableName));
