@@ -73,7 +73,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
 
   ngOnInit() {
     this.tablelistService.currentResultArray.subscribe(res => {
-      console.log(res);
       if (res[0] !== undefined) {
         this.workspaceId = res[0].workspaceId,
           this.resultant = res[0].relationDetails;
@@ -144,8 +143,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       }]);
       this.primaryColMap.set(i.primaryColumnName, this.finalSecondaryArray);
     }
-    console.log(this.primaryColDetailsMap);
-    console.log(this.primaryColMap);
   }
 
   getSecondaryColumns() {
@@ -174,8 +171,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         this.secTableNameMap.set(tablename, existingPrimCol);
       }
     }
-    console.log(this.secTableIdMap);
-    console.log(this.secTableNameMap);
   }
 
   activateSecondaryFn() {
@@ -204,14 +199,11 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.dataSource.data = this.populateSecondaryValuesArray;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    console.log(this.populateSecondaryValuesArray);
     this.columnlength = this.populateSecondaryValuesArray.length;
     this.selectedSecondaryTable = x.key;
-    console.log(this.selectedSecondaryTable);
   }
 
   checkedPriValues(x, _event, index) {
-    console.log(x, event, index);
     const isChecked = _event.target.checked;
     let joinListInfoArray;
     const primaryColDetail = this.primaryColDetailsMap.get(this.selectedPrimaryColumn);
@@ -260,10 +252,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   }
 
   checkedSecValues(x, _event, index) {
-    console.log(x, event, index);
     const isChecked = _event.target.checked;
     let joinListInfoArray;
-    console.log(this.selectedSecondaryTable);
     if (isChecked) {
       x.checked = true;
       this.seccheckvalueMap.set(index, x.secondaryColumnName);
@@ -278,8 +268,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         this.resultantMap.set(this.selectedSecondaryTable, []);
         joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
       }
-      console.log(this.resultantMap);
-      console.log(this.selectedSecondaryTable);
       const primaryColDetail = this.primaryColDetailsMap.get(x.primaryColumn);
       let primaryColumn;
       for (const i of primaryColDetail) {
@@ -302,7 +290,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       x.checked = false;
       this.seccheckvalueMap.delete(index);
       joinListInfoArray = this.resultantMap.get(this.selectedSecondaryTable);
-      console.log(joinListInfoArray);
       for (const i of joinListInfoArray) {
         if (i.indexData === index) {
           const indexx = joinListInfoArray.indexOf(i);
@@ -310,7 +297,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         }
       }
     }
-    console.log(this.resultantMap);
     this.checkForBtnDisabled();
   }
 
@@ -318,7 +304,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.updateNotif = false;
     this.updateSuccess = false;
     const finalSecondaryTableListArray = [];
-    console.log(this.resultantMap, this.secTableIdMap);
     this.resultantMap.forEach((value, key) => {
       let tempArray = [];
       const secTableId = this.secTableIdMap.get(key);
@@ -343,7 +328,6 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
       secondaryTableList: JSON.parse(JSON.stringify(finalSecondaryTableListArray.filter(a => a.joinListInfo.length !== 0)))
     };
 
-    console.log(param);
     if (finalSecondaryTableListArray.length > 0) {
       this.addDirectJoinService.addDaNewJoin(param).subscribe(res => {
         if (res) {
@@ -413,11 +397,9 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     if (value !== 'none') {
       this.filteredArray = [];
       this.filteredArray = JSON.parse(JSON.stringify(this.populateSecondaryValuesArray));
-      console.log(this.filteredArray, value);
       const length = this.filteredArray.length;
       const tempArray = [];
       this.filteredArray.forEach((element, index) => {
-        console.log(element.matchPercentage, value, index, length - 1);
         if (element.matchPercentage >= JSON.stringify(value)) {
           tempArray.push(element);
         }
@@ -434,11 +416,9 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     if (value !== 'none') {
       this.filteredArray = [];
       this.filteredArray = JSON.parse(JSON.stringify(this.populatePrimaryValuesArray));
-      console.log(this.filteredArray, value);
       const length = this.filteredArray.length;
       const tempArray = [];
       this.filteredArray.forEach((element, index) => {
-        console.log(element.matchPercentage, value, index, length - 1);
         if (element.matchPercentage >= JSON.stringify(value)) {
           tempArray.push(element);
         }
@@ -454,33 +434,23 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   makePrimaryColumnSelect(tableName, primaryColumn, secondaryColumn, value) {
     const joinListArray = this.primaryColMap.get(primaryColumn);
     const joinListArray1 = this.secTableNameMap.get(tableName);
-    console.log(joinListArray);
-    console.log(joinListArray1);
     joinListArray.filter(a => a.tableName === tableName && a.secondaryColumnName === secondaryColumn)[0].checked = value;
     joinListArray1.filter(a => a.primaryColumn === primaryColumn && a.secondaryColumnName === secondaryColumn)[0].checked = value;
     const joinListArray2 = this.secTableNameMap.get(tableName);
-    console.log(joinListArray2);
   }
 
   checkForBtnDisabled() {
-    console.log(this.resultantMap);
     const resultantArray = [];
     this.resultantMap.forEach((value, key) => {
-      console.log(JSON.parse(JSON.stringify(value)));
       value.forEach((join, key1) => {
         resultantArray.push(join);
       });
     });
-    console.log(resultantArray);
-    console.log(resultantArray.length);
     if (resultantArray.length === 0) {
       this.isAddJoinDisabled = true;
-      console.log(1);
     } else {
       this.isAddJoinDisabled = false;
-      console.log(2);
     }
-    console.log(this.isAddJoinDisabled);
   }
 
 }
