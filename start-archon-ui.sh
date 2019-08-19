@@ -23,7 +23,7 @@ done
 echo "Archon Backend connection validated"
 if [[ "$PROTOCOL_TYPE" == "https" ]]
 then
-    sed -i "s~^		server_name _;.*~		server_name $SERVER_NAME;~" "/etc/nginx/nginx.conf"
+    sed -i "s~^		server_name _;.*~		server_name $ANGULAR_APP_HOST;~" "/etc/nginx/nginx.conf"
     SSL_FIRST_LINE="listen [::]:443 ssl ipv6only=on;"
     SSL_SECOND_LINE="listen 443 ssl;"
     SSL_THIRD_LINE="ssl_certificate /ssl_path/$SSL_CERTIFICATE_PEM_FILE;"
