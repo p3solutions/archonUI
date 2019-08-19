@@ -10,6 +10,13 @@ services:
         - 80
     ports:
         - 80:80
+    volumes:
+        - type: bind
+          source: /etc/letsencrypt
+          target: /etc/letsencrypt
+        - type: bind
+          source: /home/ubuntu/sslKeyJava
+          target: /ssl_path
     networks:
         - archon-network
     env_file: archon-ui.env
