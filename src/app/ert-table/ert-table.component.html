@@ -130,7 +130,7 @@
             </div>
           </ng-container>
         </div>
-        <h4 *ngIf="selectedTableList.length===0" style="margin-top: 12.8%;">No Columns available</h4>
+        <h4 *ngIf="selectedTableList.length===0" style="margin-top: 18.8%;">No Columns available</h4>
       </div>
     </div>
   </div>
@@ -507,11 +507,11 @@
         <div>No Table Available.</div>
       </div>
       <div class="modal-footer">
-        <button type="button" *ngIf="ertAvillableTableList.erttableList.ertTableList?.length!==0"
+        <button type="button" id="cancelSelectedTableBtn" *ngIf="ertAvillableTableList.erttableList.ertTableList?.length!==0"
           class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal">Cancel</button>
-        <button type="button" *ngIf="ertAvillableTableList.erttableList.ertTableList?.length!==0"
-          class="btn btn-padding btn-info-popup-primary-color" (click)="addSelectTableCreateJob()"
-          data-dismiss="modal">Add</button>
+        <button type="button" [disabled]="tempOriginalSelectedTable.length===0"  *ngIf="ertAvillableTableList.erttableList.ertTableList?.length!==0"
+          class="btn btn-padding {{tempOriginalSelectedTable.length===0 ? 'btn-info-popup-primary-color-disabled' : 'btn-info-popup-primary-color'}}" (click)="addSelectTableCreateJob()"
+          >Add</button>
       </div>
     </div>
   </div>
@@ -615,11 +615,11 @@
         <div>No Table Available.</div>
       </div>
       <div class="modal-footer">
-        <button type="button" *ngIf="originalErttableList.ertTableList!==undefined"
+        <button type="button" id="cancelAddBtn" *ngIf="originalErttableList.ertTableList!==undefined"
           class="btn btn-padding ert-secondary-btn-color" data-dismiss="modal">Cancel</button>
-        <button type="button" *ngIf="originalErttableList.ertTableList!==undefined"
-          class="btn btn-padding btn-info-popup-primary-color" (click)="addSelectTableCreateJob()"
-          data-dismiss="modal">Add</button>
+        <button type="button" [disabled]="tempOriginalSelectedTable.length===0" *ngIf="originalErttableList.ertTableList!==undefined"
+          class="btn btn-padding {{tempOriginalSelectedTable.length===0 ? 'btn-info-popup-primary-color-disabled' : 'btn-info-popup-primary-color'}}" (click)="addSelectTableCreateJob()"
+          >Add</button>
       </div>
     </div>
   </div>

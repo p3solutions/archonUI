@@ -77,7 +77,7 @@
         <b style="color:#2879ff">Application Description</b>
         <p>{{selectedAppObject.appDesc!==null?selectedAppObject.appDesc :'Created By Archon'}}</p>
       </div>
-      <div class="col-md-3"></div>
+      <div class="col-md-4"></div>
       <div *ngIf="oldMetadata" class="col-md-3 metadata-warning">
         This is the old application metadata version.
       </div>
@@ -145,7 +145,7 @@
           {{element.updatedAt * 1000 | date:'medium'}} </td>
       </ng-container>
       <ng-container matColumnDef="action">
-        <th style="width:5%" mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+        <th style="width:5%" mat-header-cell *matHeaderCellDef> Action </th>
         <td class="word-breaker" style="width:5%" mat-cell *matCellDef="let element">
           <button mat-icon-button (click)=showActions(element) [matMenuTriggerFor]="actionmenu">
             <i style="color: #252525" class="material-icons">

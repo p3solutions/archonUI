@@ -2223,3 +2223,11 @@ button:focus {outline:0;}
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.mat-radio-button.mat-radio-disabled .mat-radio-inner-circle, .mat-radio-button.mat-radio-disabled .mat-radio-ripple .mat-ripple-element {
+  background-color: rgba(0,0,0,.38) !important;
+}
+
+ .mat-radio-button.mat-radio-disabled .mat-radio-outer-circle, .mat-radio-button.mat-radio-disabled.mat-radio-checked .mat-radio-outer-circle {
+  border-color: rgba(0,0,0,.38) !important;
+}

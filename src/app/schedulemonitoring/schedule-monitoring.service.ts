@@ -28,7 +28,7 @@ export class ScheduleMonitoringService {
 
   getJobStatuses(selectedTool, selectedJobStatus, startIndex, itemPerPage, jobName): Observable<any> {
     return this.http.get<any>(this.getSearchStatus + selectedTool + '&jobStatus=' + selectedJobStatus + '&startIndex=' +
-      startIndex + '&userId=' + this.userinfoService.getUserId() + '&itemPerPage=' + itemPerPage + '&jobName=' + jobName,
+      startIndex + '&userId=' + encodeURIComponent(this.userinfoService.getUserId()) + '&itemPerPage=' + itemPerPage + '&jobName=' + jobName,
       { headers: this.getHeaders() }).pipe(
         map(this.extractJobOrigins),
         catchError(this.handleError<any>('getJobStatus')));
@@ -63,7 +63,7 @@ export class ScheduleMonitoringService {
   }
 
   getSearchResult(startIndex, search) {
-    const url = this.getSearchStatus + startIndex + '&userId=' + this.userinfoService.getUserId() + '&jobName=' + search;
+    const url = this.getSearchStatus + startIndex + '&userId=' + encodeURIComponent(this.userinfoService.getUserId()) + '&jobName=' + search;
     return this.http.get<any>(url, { headers: this.getHeaders() }).pipe(
       map(this.extractJobSearch),
       catchError(this.handleError<any>('getUserInfo')));

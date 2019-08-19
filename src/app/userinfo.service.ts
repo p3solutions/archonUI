@@ -15,6 +15,7 @@ export class UserinfoService {
   errorObject: ErrorObject;
   userRole;
   private loginUrl = 'sign-in';
+  // extendSessionUrl = this.environment.apiUrl + 'auth/token';
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -50,7 +51,7 @@ export class UserinfoService {
   }
 
   getUserInfoUrl() {
-    return this.environment.apiUrl + 'users/' + this.getUserId();
+    return this.environment.apiUrl + 'users/' + encodeURIComponent(this.getUserId());
   }
   getAllUserInfoUrl() {
     return this.environment.apiUrl + 'users';
@@ -61,9 +62,20 @@ export class UserinfoService {
     return localStorage.getItem(userId);
   }
 
+  // getRefreshKey() {
+  //   const userId = sessionStorage.getItem('userId');
+  //   return localStorage.getItem(userId + 'rt');
+  // }
+
   getHeaders() {
     return new HttpHeaders({
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.getAuthKey()
+    });
+  }
+
+  getFileUploadHeaders() {
+    return new HttpHeaders({
       'Authorization': 'Bearer ' + this.getAuthKey()
     });
   }
@@ -120,6 +132,27 @@ export class UserinfoService {
     return null;
   }
 
+  // getRefreshHeaderToken() {
+  //   return new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': 'Bearer ' + this.getRefreshKey()
+  //   });
+  // }
+
+
+  // extendSession(): Observable<any> {
+  //   return this.http.get<any>(this.extendSessionUrl, { headers: this.getRefreshHeaderToken() }).
+  //     pipe(catchError(this.handleError<any>('extendSession')));
+  // }
+
+  // extendUserSession() {
+  //   this.extendSession().subscribe(res => {
+  //     const userId = sessionStorage.getItem('userId');
+  //     localStorage[userId] = res.data.accessToken;
+  //     localStorage[userId + 'rt'] = res.data.refreshToken;
+  //   });
+  // }
+
   redirectOnSessionTimedOut() {
     // TODO: show alert about losing unsaved data
     // const sessionTimedOutUrl = this.router.url; // commented we are not using return url for any purpose.
@@ -127,6 +160,7 @@ export class UserinfoService {
     const userId = sessionStorage.getItem('userId');
     if (userId) {
       localStorage.removeItem(userId);
+      // localStorage.removeItem(userId + 'rt');
     }
     sessionStorage.clear();
     this.router.navigateByUrl(this.loginUrl);

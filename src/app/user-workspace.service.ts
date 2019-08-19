@@ -35,14 +35,14 @@ export class UserWorkspaceService {
     const formData: FormData = new FormData();
     kerberosFile === null ? formData.append('file', null) : formData.append('file', kerberosFile);
     formData.append('databaseCreatedto', JSON.stringify(testDbParam));
-    return this.http.post(this.checkDbConnectionUrl, formData, { headers: this.headers }).pipe(
+    return this.http.post(this.checkDbConnectionUrl, formData, { headers: this.userinfoService.getFileUploadHeaders() }).pipe(
       map(this.extractData),
       catchError(this.handleError<any>('test-db-connection'))
     );
   }
 
   getUserWorkspaceUrl() {
-    return this.apiUrl + 'workspaces/approvedWorkspaces?userId=' + this.userinfoService.getUserId();
+    return this.apiUrl + 'workspaces/approvedWorkspaces?userId=' + encodeURIComponent(this.userinfoService.getUserId());
   }
 
   getAuditWorkspaceUrl() {
@@ -50,7 +50,7 @@ export class UserWorkspaceService {
   }
 
   getWorkspaceByOwnerIdUrl() {
-    return this.apiUrl + 'workspaces?ownerId=' + this.userinfoService.getUserId();
+    return this.apiUrl + 'workspaces?ownerId=' + encodeURIComponent(this.userinfoService.getUserId());
   }
 
   getUserWorkspaceList(): Observable<WorkspaceObject[]> {
@@ -92,7 +92,8 @@ export class UserWorkspaceService {
     const formData: FormData = new FormData();
     kerberosFile === null ? formData.append('file', null) : formData.append('file', kerberosFile);
     formData.append('databaseCreatedto', JSON.stringify(dbParam));
-    return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, formData, { headers: this.headers }).pipe(
+    return this.http.post<CreateConfigDBObject>(this.getConfigDBurl, formData,
+      { headers: this.userinfoService.getFileUploadHeaders() }).pipe(
       map(this.extractData)
     );
   }

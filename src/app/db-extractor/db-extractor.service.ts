@@ -50,7 +50,7 @@ export class DbExtractorService {
     formData.append('RdbmsDto', JSON.stringify(params));
     formData.append('instanceId', JSON.stringify(instanceID));
 
-    return this.http.post(this.postProcessDetailsUrl, formData, { headers: this.headers });
+    return this.http.post(this.postProcessDetailsUrl, formData, { headers: this.userInfoService.getFileUploadHeaders() });
   }
 
   getDBInfoByID(databaseId: string): Observable<ConfiguredDB> {

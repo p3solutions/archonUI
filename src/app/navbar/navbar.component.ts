@@ -33,6 +33,7 @@ export class NavbarComponent implements OnInit {
   @ViewChild('succesdismiss') success: ElementRef;
   uploadForm: FormGroup;
   errorlicense = false;
+  isTokenExpired = '';
 
   constructor(private userProfileService: UserProfileService, private navService: NavbarService,
     private userinfoService: UserinfoService, private router: Router,
@@ -99,7 +100,7 @@ export class NavbarComponent implements OnInit {
     return info;
   }
   callUserProfile() {
-    localStorage.setItem('userId', '');
+    // localStorage.setItem('userId', '');
   }
 
   logout() {
