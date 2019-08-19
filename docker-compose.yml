@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: p3solutions/archon-ui:1.0
+    image: p3solutions/archon-ui:3.1
     expose: 
         - 80
     ports:
