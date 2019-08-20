@@ -1,11 +1,10 @@
 import { Directive, Input, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appNotWildChar]'
+  selector: '[appAllowchar]'
 })
-export class NotWildCharDirective {
-
-  regexStr = '[^%*]';
+export class AllowcharDirective {
+  regexStr = '[-A-Za-z 0-9._]';
   @Input() isAlphaNumeric: boolean;
 
   constructor(private el: ElementRef) { }

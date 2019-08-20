@@ -15,7 +15,7 @@
                     <form [formGroup]="firstFormGroup" class="workspace-detail-form">
                         <div class="workspace-detail">
                             <mat-form-field class="form-field-workspace">
-                                <input trim="blur" required maxlength="50" formControlName="workspaceName" matInput
+                                <input trim="blur" appAllowchar required maxlength="50" formControlName="workspaceName" matInput
                                     placeholder="Workspace Name">
                             </mat-form-field>
                             <mat-form-field class="form-field-workspace-owner">
@@ -29,7 +29,7 @@
                                     [attr.disabled]="true">
                             </mat-form-field>
                             <mat-form-field class="form-field-workspace-owner">
-                                <textarea trim="blur" maxlength="250" required matInput formControlName="description"
+                                <textarea trim="blur" appNotWildChar maxlength="250" required matInput formControlName="description"
                                     placeholder="Description"></textarea>
                             </mat-form-field>
                         </div>
