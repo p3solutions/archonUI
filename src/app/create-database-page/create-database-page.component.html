@@ -15,7 +15,7 @@
           <form [formGroup]="databaseConnectionForm" class="workspace-detail-form">
             <div class="workspace-detail">
               <mat-form-field class="form-field-profile">
-                <input required maxlength="40" trim="blur" formControlName="profileName" matInput
+                <input required maxlength="50" trim="blur" appAllowchar formControlName="profileName" matInput
                   placeholder="Profile Name">
               </mat-form-field>
             </div>
@@ -39,7 +39,7 @@
             </div>
             <div class="workspace-detail">
               <mat-form-field class="form-field-workspace">
-                <input trim="blur" matInput formControlName="host" required placeholder="Host">
+                <input trim="blur" appAllowchar maxlength="50" matInput formControlName="host" required placeholder="Host">
               </mat-form-field>
               <mat-form-field class="form-field-workspace-owner">
                 <input matInput trim="blur" type='number' formControlName="port" required placeholder="port">
@@ -47,10 +47,10 @@
             </div>
             <div class="workspace-detail">
               <mat-form-field class="form-field-workspace">
-                <input matInput trim="blur" required formControlName="databaseName" placeholder="Database Name">
+                <input matInput trim="blur" appNonspecialchar maxlength="50" required formControlName="databaseName" placeholder="Database Name">
               </mat-form-field>
               <mat-form-field class="form-field-workspace-owner">
-                <input matInput trim="blur" required formControlName="schemaName" placeholder="Schema Name">
+                <input matInput trim="blur" appNonspecialchar maxlength="50" required formControlName="schemaName" placeholder="Schema Name">
               </mat-form-field>
             </div>
             <div id="action-btn" class="action-btn-connection">
@@ -64,7 +64,7 @@
           <form [formGroup]="userServerForm" class="workspace-detail-form">
             <div class="workspace-detail">
               <mat-form-field class="form-field-workspace">
-                <input matInput trim="blur" required formControlName="userName" placeholder="Database User Name">
+                <input matInput trim="blur" appNotWildChar maxlength="50" required formControlName="userName" placeholder="Database User Name">
               </mat-form-field>
               <mat-form-field *ngIf="!isKerberos" class="form-field-workspace-owner">
                 <input matInput trim="blur" required type="password" formControlName="password"
