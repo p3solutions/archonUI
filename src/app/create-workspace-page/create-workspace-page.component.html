@@ -99,7 +99,7 @@
                     </mat-paginator>
                     <div id="comment-database">
                         <mat-form-field hintLabel="Reason for using database(s)">
-                            <input required trim="blur" [(ngModel)]="comment" matInput #input maxlength="256"
+                            <input appNotWildChar maxlength="256" required trim="blur" [(ngModel)]="comment" matInput #input maxlength="256"
                                 placeholder="Comment">
                             <mat-hint align="end">{{input.value?.length || 0}}/256</mat-hint>
                         </mat-form-field>
@@ -132,7 +132,7 @@
                         </div>
                         <div style="display: flex">
                             <mat-form-field class="form-field-desc">
-                                <textarea trim="blur" required maxlength="250"
+                                <textarea trim="blur" appNotWildChar required maxlength="250"
                                     (keyup)="setDescValue($event.target.value)"
                                     value="{{firstFormGroup.get('description').value}}" matInput
                                     placeholder="Description"></textarea>

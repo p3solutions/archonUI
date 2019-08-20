@@ -263,14 +263,14 @@
         <div class="modal-body row">
           <div class="col-md-12 row m-10">
             <mat-form-field class="example-full-width">
-              <input matInput maxlength="40" trim="blur" #wsNamea="ngModel" required [(ngModel)]="wsName" name="wsName"
+              <input matInput maxlength="50" appAllowchar trim="blur" #wsNamea="ngModel" required [(ngModel)]="wsName" name="wsName"
                 placeholder="Workspace Name">
             </mat-form-field>
 
           </div>
           <div class="col-md-12 row m-10">
             <mat-form-field class="example-full-width">
-              <textarea matInput maxlength="250" trim="blur" #wsDesca="ngModel" required [(ngModel)]="wsDesc"
+              <textarea matInput appNotWildChar maxlength="250" trim="blur" #wsDesca="ngModel" required [(ngModel)]="wsDesc"
                 name="wsDesc" placeholder="Description / Notes"></textarea>
             </mat-form-field>
           </div>
