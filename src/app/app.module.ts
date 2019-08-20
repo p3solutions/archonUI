@@ -158,6 +158,7 @@ import { SearchErtTablePipe } from './ert-landing-page/search-ert-table.pipe';
 import { SessionTimeoutComponent } from './session-timeout/session-timeout.component';
 import { NotWildCharDirective } from './not-wild-char.directive';
 import { AllowcharDirective } from './allowchar.directive';
+import { AlphabetAllowedDirective } from './alphabet-allowed.directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -272,7 +273,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 SearchErtTablePipe,
                 SessionTimeoutComponent,
                 NotWildCharDirective,
-                AllowcharDirective
+                AllowcharDirective,
+                AlphabetAllowedDirective
         ],
         imports: [
                 JwtModule.forRoot({
