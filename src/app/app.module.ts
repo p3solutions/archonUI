@@ -156,6 +156,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { FilteroperationPipe } from './ert-table/filteroperation.pipe';
 import { SearchErtTablePipe } from './ert-landing-page/search-ert-table.pipe';
 import { SessionTimeoutComponent } from './session-timeout/session-timeout.component';
+import { NotWildCharDirective } from './not-wild-char.directive';
+import { AllowcharDirective } from './allowchar.directive';
+import { AlphabetAllowedDirective } from './alphabet-allowed.directive';
 
 export function tokenGetter() {
     return localStorage.getItem('accessToken');
@@ -268,7 +271,10 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 ResetPasswordComponent,
                 FilteroperationPipe,
                 SearchErtTablePipe,
-                SessionTimeoutComponent
+                SessionTimeoutComponent,
+                NotWildCharDirective,
+                AllowcharDirective,
+                AlphabetAllowedDirective
         ],
         imports: [
                 JwtModule.forRoot({

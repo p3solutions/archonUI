@@ -60,7 +60,7 @@
     <div class="form-inline">
       <div id="job-name">
         <mat-form-field class="job-name-width">
-          <input matInput name="screen-filter" required [(ngModel)]="ertJobParams.ertJobTitle"
+          <input matInput name="screen-filter" appAllowchar trim="blur" required [(ngModel)]="ertJobParams.ertJobTitle"
             (keyup)="enableJobSelection()" #input placeholder="Job Name">
         </mat-form-field>
       </div>

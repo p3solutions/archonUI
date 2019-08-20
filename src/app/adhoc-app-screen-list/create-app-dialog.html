@@ -10,7 +10,7 @@
         placeholder="InfoArchive Database Name" [(ngModel)]="appInfo.iaDatabaseName">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput name="appDesc" maxlength="200" trim="blur" required placeholder="Description"
+      <textarea matInput name="appDesc" appNotWildChar maxlength="200" trim="blur" required placeholder="Description"
         #appDesc="ngModel" [(ngModel)]="appInfo.appDesc"></textarea>
     </mat-form-field>
     <mat-form-field>

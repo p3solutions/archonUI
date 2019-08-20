@@ -281,7 +281,7 @@
                           <div class="action-btn">
                             <button class="btn cancel btn-padding" data-keyboard="false"
                               data-backdrop="static" data-toggle="modal" data-target="#confirmClose">Close</button>
-                            <button style="margin-right: -1%;" class="btn {{'pricheckvalueMap.size === 0 && seccheckvalueMap.size === 0' ? 'save-disabled': 'save'}} btn-padding" data-keyboard="false" [disabled]="pricheckvalueMap.size === 0 && seccheckvalueMap.size === 0"
+                            <button style="margin-right: -1%;" class="btn {{ isAddJoinDisabled ? 'save-disabled': 'save'}} btn-padding" data-keyboard="false" [disabled]="isAddJoinDisabled"
                               data-backdrop="static" data-toggle="modal" data-target="#addJoins">Add Selected Joins</button>
                           </div>
                         </div>

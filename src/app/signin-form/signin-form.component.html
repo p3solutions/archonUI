@@ -11,7 +11,7 @@
       <div class="row form-fields">
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="text" required matInput trim="blur" name="signin-email" formControlName="userId"
+            <input type="text" appNonspecialchar required matInput trim="blur" name="signin-email" formControlName="userId"
               placeholder="User ID" (keyup)="enableSignIn()">
           </mat-form-field>
         </div>

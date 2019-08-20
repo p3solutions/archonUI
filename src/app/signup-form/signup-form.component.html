@@ -10,17 +10,17 @@
       <div class="row form-fields">
         <div class="col-md-12 form-group has-feedback">
           <mat-form-field>
-            <input type="text" required trim="blur" matInput name="id" formControlName="userId" placeholder="User ID">
+            <input type="text" appNonspecialchar required trim="blur" matInput name="id" formControlName="userId" placeholder="User ID">
           </mat-form-field>
 
         </div>
         <div class="col-md-12 form-group has-feedback" style="display:inline-flex">
           <mat-form-field style="margin-right:7px">
-            <input type="text" required trim="blur" matInput name="firstName" formControlName="firstName"
+            <input type="text" appAlphabetAllowed required trim="blur" matInput name="firstName" formControlName="firstName"
               placeholder="First Name">
           </mat-form-field>
           <mat-form-field>
-            <input type="text" required trim="blur" matInput name="lastName" formControlName="lastName" placeholder="Last Name">
+            <input type="text" appAlphabetAllowed required trim="blur" matInput name="lastName" formControlName="lastName" placeholder="Last Name">
           </mat-form-field>
         </div>
         <div class="col-md-12 form-group has-feedback">
