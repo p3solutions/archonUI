@@ -321,12 +321,10 @@ export class TableListComponent implements OnInit {
     this.finalSecColMap.clear();
     this.selectedSecTbl.clear();
     this.finalSecColArray = [];
-    console.log(this.selectedSecTbl);
   }
   // for selecting and mapping the checked values of table
   toggleColSelection(_event, isPrimary, column) {
     this.modeForSelectAll = false;
-    // console.log('in');
     const isChecked = _event.target.checked ? true : false;
     if (isPrimary) {
       for (let i = 0; i < this.primColArray.length; i++) {
@@ -368,11 +366,9 @@ export class TableListComponent implements OnInit {
               secTbl.click();
             }
             this.finalSecColMap.set(secColName, true);
-            console.log(this.selectedSecTbl);
           } else {
             this.selectedSecColMap.delete(secColName);
             this.finalSecColMap.delete(secColName);
-            console.log(this.selectedSecColMap.size);
           }
           break;
         }
@@ -722,7 +718,6 @@ export class TableListComponent implements OnInit {
   getJobStatus() {
     this.tablelistService.getJobStatus(this.dataAnalysisjobID).subscribe(res => {
       this.JobStatus = res.data.jobStatus;
-      console.log(res);
       // document.getElementById('close-analyzer-popup').click();
       if (this.JobStatus === 'SUCCESS') {
         this.dataAModal = false;
@@ -743,7 +738,6 @@ export class TableListComponent implements OnInit {
         // this.addDirectJoinService.clearSession(this.dataAnalysisjobID).subscribe();
         // this.JobStatus = '';
       } else {
-        console.log('a');
         setTimeout(() => {
           this.stepper.selectedIndex = 2;
           this.stepperIndex = 2;
@@ -922,8 +916,6 @@ export class TableListComponent implements OnInit {
   }
 
   searchTable(value) {
-    console.log(this.tempPrimColArray);
-    console.log(value);
     if (value !== '') {
       const tempList = this.tempPrimColArray.filter(a => a.columnName.trim().toLowerCase().includes(value.toLowerCase()));
       this.primColArray = [];
@@ -980,7 +972,6 @@ export class TableListComponent implements OnInit {
           uncountSelected = uncountSelected + 1;
         }
         }
-      console.log(checkboxes.length, countSelected);
       if ((checkboxes.length) === countSelected) {
         // all are checked
         const a = <HTMLInputElement>document.getElementById(this.selectedSectableName);
