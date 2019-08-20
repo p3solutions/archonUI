@@ -139,6 +139,7 @@ div.sticky-new {
   overflow: hidden;
   text-align: left;
   color: #2879ff;
+  cursor: pointer;
 }
 
 
