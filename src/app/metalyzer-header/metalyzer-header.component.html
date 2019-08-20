@@ -104,7 +104,7 @@
               </mat-form-field>
 
               <mat-form-field id="fromdate">
-                <input matInput name="fromdate1" [matDatepicker]="picker"  placeholder="From Date" [(ngModel)]="fromdate" (dateInput)="getCommonSearch()" (dateChange)="getCommonSearch()">
+                <input matInput name="fromdate1" [max]="maxDate" [matDatepicker]="picker"  placeholder="From Date" [(ngModel)]="fromdate" (dateInput)="getCommonSearch()" (dateChange)="getCommonSearch()">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
@@ -117,8 +117,8 @@
             </div>
 
            
-            <div class="container" style="min-height:300px;width: 1127px;overflow: auto;margin: 5px;padding: 5px;">              
-                <ul class="timeline" style="z-index:1;">                                  
+            <div  class="container" style="min-height:300px;width: 1127px;overflow: auto;margin: 5px;padding: 5px;">              
+                <ul *ngIf="refreshcontainer" class="timeline" style="z-index:1;">                                  
                     <li class="timeline-inverted" *ngFor="let items of metalyzerhistoryarr.sort(sortFunc)">
                       <div class="timestamps">
                           <p style="color:#3689cb;font-size: 13px">{{items.date * 1000.| date:'MMM dd, yyyy'}}</p><br> <p style="font-size: 12px">{{items.date * 1000 | date:'h:mm:ss a'}}</p>
@@ -143,13 +143,15 @@
                 <div *ngIf="errmsg">
                   <h4 id="recordmsg" style="margin-top: 104px;color: #2879ff;background-color: #eef2f9;margin-left: 450px;text-align: center;line-height: 43px;width: 174px;">No records found</h4>
                 </div>  
+                <button  mat-button [disabled]="previous" id="previous" (click)="ShowPrevious()">Show Previous</button>
+                <button  mat-button [disabled]="next" id="more" (click)="ShowMore()">Show More</button>
             </div>
         </div>
         <div class="modal-footer" style="margin-top: 42px">
           <button class="arch-btnn" type="button" mat-flat-button data-dismiss="modal">Close</button>
         </div>
       </div>
-    </div>
+    </div>    
 
   </div>
 <button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="true"

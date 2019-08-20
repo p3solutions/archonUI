@@ -520,3 +520,20 @@ margin-top: 20px
           right: auto;
       }
 }
+
+#previous{
+  width: 214px;
+  height: 36px;
+  border-radius: 4px;
+  border: solid 1px #b9bcbf;
+  background-color: #edf3f8;
+}
+
+#more{
+  margin-left: 10px;
+  width: 214px;
+  height: 36px;
+  border-radius: 4px;
+  border: solid 1px #b9bcbf;
+  background-color: #edf3f8;
+}
