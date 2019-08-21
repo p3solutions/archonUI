@@ -169,7 +169,7 @@ Tree.prototype.print = function () {
             queue.push(node.children[i]);
         }
     }
-    console.log(string.slice(0, -2).trim());
+    // console.log(string.slice(0, -2).trim());
 };
 Tree.prototype.printByLevel = function () {
     if (!this.root) {
@@ -188,7 +188,7 @@ Tree.prototype.printByLevel = function () {
             queue.push(node.children[i]);
         }
     }
-    console.log(string.trim());
+    // console.log(string.trim());
 };
 
 export function addFilterNode(filterConfigTree: FilterConfigTree, parent: FilterConfigNode, child: FilterConfigNode): string {

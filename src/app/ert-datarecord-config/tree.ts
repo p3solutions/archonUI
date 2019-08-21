@@ -116,7 +116,7 @@ Tree.prototype.print = function () {
       queue.push(node.children[i]);
     }
   }
-  console.log(string.slice(0, -2).trim());
+  // console.log(string.slice(0, -2).trim());
 };
 Tree.prototype.printByLevel = function () {
   if (!this.root) {
@@ -135,7 +135,7 @@ Tree.prototype.printByLevel = function () {
       queue.push(node.children[i]);
     }
   }
-  console.log(string.trim());
+  // console.log(string.trim());
 };
 
 class Prop {
@@ -224,7 +224,7 @@ function isAldreadyChild(children, name): boolean {
 }
 
 function addChildren(nodeList, parentNode, tableRelationshipDtls, isVisible) {
-  console.log(parentNode);
+  // console.log(parentNode);
   const childTableList: Prop[] = getChildren(parentNode.name, tableRelationshipDtls);
 
   for (let i = 0; childTableList[i]; i++) {
@@ -253,7 +253,7 @@ export function toJson(inputTableList: string[], tableRelationshipDtls): string 
       tree.add(table);
       parent = table; // This is the root table.
       selectedTableList.push(table);
-      console.log("Root Table added" + parent.name);
+      // console.log("Root Table added" + parent.name);
     }
     else {
       table.color = 'black';
@@ -274,12 +274,12 @@ export function toJson(inputTableList: string[], tableRelationshipDtls): string 
 
   for (let k = 0; k < nodeList.length; k++) {
     let visible = (k === nodeList.length - 1) ? true : false;
-    console.log("Node Length :" + nodeList.length + "K: " + k + "Visible :" + visible);
+    // console.log("Node Length :" + nodeList.length + "K: " + k + "Visible :" + visible);
     addChildren(nodeList, nodeList[k], tableRelationshipDtls, visible);
   }
   //console.log(nodeList);
   let retVal = JSON.stringify(tree.root);
-  console.log(retVal, 'from toJSON');
+  // console.log(retVal, 'from toJSON');
   // console.log(b);
   return retVal;
 }
@@ -408,7 +408,7 @@ function findSelectedNodes(node, tablelist) {
 }
 
 function addChildrenForERTSummaryPage(nodeList, parentNode, tableRelationshipDtls, isVisible) {
-  console.log(parentNode);
+  // console.log(parentNode);
   const childTableList: Prop[] = getChildren(parentNode.name, tableRelationshipDtls);
 
   for (let i = 0; childTableList[i]; i++) {
@@ -428,7 +428,7 @@ export function getERTSummaryPageGraphDataRecord(inputTableList: string[], table
   let parent;
   const selectedTableList = [];
 
-  console.log('....I am in toJson...');
+  // console.log('....I am in toJson...');
   // Insert selected paths in the tree First
   for (let i = 0; i < inputTableList.length; i++) {
     const table = getTableProperty(inputTableList[i], tableRelationshipDtls);
@@ -439,7 +439,7 @@ export function getERTSummaryPageGraphDataRecord(inputTableList: string[], table
       tree.add(table);
       parent = table; // This is the root table.
       selectedTableList.push(table);
-      console.log('Root Table added' + parent.name);
+      // console.log('Root Table added' + parent.name);
     } else {
       table.color = 'black';
       table.enableClick = true;
@@ -459,7 +459,7 @@ export function getERTSummaryPageGraphDataRecord(inputTableList: string[], table
 
   for (let k = 0; k < nodeList.length; k++) {
     const visible = (k === nodeList.length - 1) ? true : false;
-    console.log('Node Length :' + nodeList.length + 'K: ' + k + 'Visible :' + visible);
+    // console.log('Node Length :' + nodeList.length + 'K: ' + k + 'Visible :' + visible);
     addChildrenForERTSummaryPage(nodeList, nodeList[k], tableRelationshipDtls, visible);
   }
   // console.log(nodeList);
