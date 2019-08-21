@@ -421,7 +421,7 @@ export class ErtCloneViewComponent implements OnInit {
 
     // update starts
     function update(data) {
-      console.log(data, 'inside update');
+      // console.log(data, 'inside update');
       const root = d3.hierarchy(data);
       const nodes = flatten(root);
       const links = root.links();
