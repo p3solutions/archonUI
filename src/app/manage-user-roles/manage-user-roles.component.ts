@@ -30,6 +30,12 @@ export class CreateUserInviteDialogComponent {
   }
 
 }
+export interface BulkInvite {
+  email: string;
+  position: number;
+  globalGroup: number;
+  recordStatus: string;
+}
 
 @Component({
   selector: 'app-manage-user-roles',
@@ -67,6 +73,12 @@ export class ManageUserRolesComponent implements OnInit {
   screenfilter = '';
   loginUserGlobalgroup = '';
   itemPerPage = 50;
+  bulkinvitearr: BulkInvite[]=[];
+  displayedColumns3: string[] = ['position', 'email', 'globalGroup', 'recordStatus'];
+  formData:FormData;
+  filename;
+  dataSource3;
+
   constructor(public dialog: MatDialog,
     private manageUserRolesService: ManageUserRolesService,
     private router: Router,
@@ -427,6 +439,64 @@ export class ManageUserRolesComponent implements OnInit {
       } else {
         this.getAllUsers(this.invited, this.revoked, this.locked);
       }
+  }
+
+  /*********BULK INVITE*********************/
+
+  fileChange(event): void {
+    const fileList: FileList = event.target.files;
+    console.log(fileList);
+    if (fileList.length > 0) {
+      const file = fileList[0];
+     this.filename=file.name;
+      this.formData = new FormData();
+      this.formData.set('file', file);
+      console.log(JSON.stringify(this.formData));
+      this.manageUserRolesService.getBulkConfig(this.formData).subscribe(response => {
+        if(response.httpStatus==200){
+            var bulkdata=response.data;
+            console.log("bulkdata===========>"+bulkdata)
+            response.data.forEach((value, index) => {
+              value.position = index + 1;
+              console.log(value.position);
+        });
+        console.log("bulkdatalen===========>"+bulkdata.length);
+        for(var i=0;i<bulkdata.length;i++){
+          var invalid=bulkdata[i].invalid;
+          var duplicate=bulkdata[i].duplicate;
+          var recordstatus;
+          if(invalid==false && duplicate==false){
+            recordstatus=0;//valid scenario
+          }else if(invalid==false && duplicate==true){
+             recordstatus=1;//duplicate icon
+          }else if(invalid==true && duplicate==false){
+             recordstatus=2;//invalid icon
+          }else if(invalid==true && duplicate==true){
+             recordstatus=2;//invalid scenario
+          }
+
+          this.bulkinvitearr.push({position:bulkdata[i].position,email:bulkdata[i].email,
+            globalGroup:bulkdata[i].globalGroup,recordStatus:recordstatus
+          })
+          console.log("bulkinviterarray------------>"+JSON.stringify(this.bulkinvitearr))
+          this.dataSource3 = this.bulkinvitearr;
+          console.log( this.dataSource3);
+        }
+      // this.BulkInviteSubject.next(response.data);
+      this.spinner.hide();
+        }
+      });      
+    }
+  }
+  
+  ValidateFilter(filterValue: string){
+    this.dataSource3.filter=filterValue.trim().toLowerCase();
+    this.dataSource3=this.bulkinvitearr;
+
+  }
+
+  ClickClose(){
+    $('#file').val(" ");
   }
 }
 

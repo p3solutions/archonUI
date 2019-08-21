@@ -190,3 +190,174 @@ td.action-select button:hover {
   color: #ff0000;
 }
 button:focus {outline:0;}
+
+#bulk-invite-btn {
+  margin-right: 26px;
+  margin-top: 13px;
+}
+
+#bulk-invite-btn button {
+  background-color: #2879ff;
+  font-size: 14px;
+  padding-top: 6px;
+  padding-bottom: 2px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#bulk-invite-btn button:hover {
+  transform: scale(1.1, 1.1);
+}
+
+
+#bulk-invite-btn .material-icons {
+  font-size: 21px;
+  color: #ffffff;
+  padding-bottom: 4px;
+}
+
+#bulk-invite-btn .material-icons:hover,
+.material-icons:focus {
+  font-size: 21px;
+  color: #ffffff;
+  padding-bottom: 4px;
+}
+#content{
+  margin-left: 10px;
+}
+#filename{
+  margin-left: 10px;
+  width: 162px;
+  height: 30px;
+  border-radius: 3px;
+  border: solid 1px #dddddd;
+  background-color: #edf3f8;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #1d1d1d;
+}
+
+#btnupload{
+  margin-left: -529px;
+  width: 109px;
+  height: 30px;
+  border-radius: 3px;
+  background-color: #2879ff;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+}
+
+#file {
+  z-index:1;
+  margin-right: 754px;
+  margin-top: 15px;
+  position: absolute;
+  font-size: 17px;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}
+
+#bussjust{
+  margin-left: -4px;
+  margin-top: 9px;
+  width: 507px;
+  height: 1px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000000;
+}
+
+#search{
+  margin-left: 70px;
+  width:220px;
+}
+
+#category{
+  margin-left: 30px;
+  width:220px;
+}
+
+#bulkinvitetable{
+  margin-left: 12px;
+  width: 1048px;
+  height: 364px;
+  border-radius: 4px;
+  box-shadow: 0px 1px 6px 1.1px rgba(0, 0, 0, 0.35);
+  background-color: #ffffff;
+}
+
+#cancelbtn{
+  width: 68px;
+  height: 36px;
+  border-radius: 4px;
+  background-color: #64b5f6;
+  margin-right: 11px;
+}
+
+#invitebtn{
+  width: 58px;
+  height: 36px;
+  border-radius: 4px;
+  background-color: #2879ff;
+  margin-right:15px;
+}
+
+#close{
+  width: 9px;
+  height: 9px;
+  font-size: 17px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #2879ff;
+  z-index: 1;
+  margin-left: -20px;
+  margin-top: 7px;
+}
+
+#clsdiv{
+  width: 35px;
+  height: 35px;
+  margin-left: -22px;
+  cursor:pointer;
+}
+
+#check{
+  width: 30px;
+  height: 30px;
+  color: #5f9afb;
+}
+#cancel{
+  width: 30px;
+  height: 30px;
+  color: #f45743;
+}
+#copy{
+  width: 30px;
+  height: 30px;
+  color: #F9A602;
+}
+

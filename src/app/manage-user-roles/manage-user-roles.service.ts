@@ -23,6 +23,7 @@ export class ManageUserRolesService {
   private getAllUsersUrl = this.apiUrl + 'users?startIndex=';
   private changeUserStatusUrl = this.apiUrl + 'users/accessRevoke?userId=';
   private getUserByEmailIdUrl = this.apiUrl + 'users/manage/role?emailAddress=';
+  private bulkconfigUrl=this.apiUrl+ 'users/inviteUser/bulkConfig';
 
   constructor(private http: HttpClient,
     private environment: EnvironmentService,
@@ -107,6 +108,15 @@ export class ManageUserRolesService {
       pipe(map(this.extractDataForAllRequest));
   }
 
+  getBulkConfig(body:any){
+    return this.http.post(this.bulkconfigUrl,body,
+      {
+         headers: this.userinfoService.getFileUploadHeaders()
+        }). 
+      pipe(map(this.extractDataForAllRequest),
+      catchError(this.handleError('getBulkConfig', []))
+    );
+  }
 
 
 

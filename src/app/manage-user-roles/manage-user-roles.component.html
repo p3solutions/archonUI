@@ -40,6 +40,14 @@
           Invite New User
         </button>
       </div>
+      <div id="bulk-invite-btn">
+        <button mat-raised-button color="accent" data-toggle="modal" data-keyboard="true" data-target="#myModal">
+          <i class="material-icons">
+            mail_outline
+          </i>
+          Bulk Invite
+        </button>
+      </div>
     </div>
   </div>
   <div id="user-table">
@@ -245,6 +253,100 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-padding btn-error-popup-primary-color" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Invite Model -->
+<div id="myModal" class="modal fade" role="dialog" tabindex='-1'>
+  <div class="modal-dialog" style="width: 1110px;">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="info-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons" style="font-size: 25px!important;vertical-align: middle;
+              color: #ffffff;
+              margin-top: 1px;">mail_outline</i>
+          <div class="pop-title" style="margin-left: 5px; margin-top: 3px;">Bulk Invite</div>
+          <!-- <button type="button"
+              class="close" style="margin-right: 15px; font-size: 26px;
+               margin-top: 0px;" data-dismiss="modal">&times;</button> -->
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div id="content" style="display: inline-flex;">
+          <input type="file" id="file" placeholder="Upload file" (change)="fileChange($event)">
+          <button mat-button id="btnupload">File Upload</button>
+          <input type="text" id="filename" name="filename" [(ngModel)]="filename">
+          <div id="clsdiv" (click)="ClickClose()">
+            <i id="close" class="material-icons" >
+              close
+              </i>
+          </div>
+          
+        </div>
+        <div>
+          <mat-form-field id="bussjust">
+            <textarea id="txtbussjust" maxlength="500" matInput name="buss-just" required
+              placeholder="Business Justification"></textarea>
+          </mat-form-field>
+
+          <mat-form-field id="search">
+            <input name="search" matInput placeholder="Search" (keyup)="ValidateFilter($event.target.value)">
+          </mat-form-field>
+
+          <mat-form-field id="category">
+            <mat-select formControlName="category" placeholder="Category" [threshold]="'0%'">
+              <mat-option>None</mat-option>
+              <mat-option>Duplicate</mat-option>
+              <mat-option>Invalid</mat-option>
+              <mat-option>Valid</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <table id="bulkinvitetable" mat-table [dataSource]="dataSource3" class="mat-elevation-z8">
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> Row No </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="globalGroup">
+            <th mat-header-cell *matHeaderCellDef> Global Group </th>
+            <td mat-cell *matCellDef="let element"> {{element.globalGroup}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="recordStatus">
+            <th mat-header-cell *matHeaderCellDef> Record Status </th>
+            <td mat-cell *matCellDef="let element"> 
+                <i id="check" *ngIf="element.recordStatus === 0" class="material-icons">
+                    check_circle
+                </i>
+                <i id="cancel" *ngIf="element.recordStatus === 2" class="material-icons">
+                    cancel
+                </i>
+                <i id="copy" *ngIf="element.recordStatus === 1" class="material-icons">
+                    file_copy
+                </i>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns3;sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+        </table>
+  
+        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 20,100]" showFirstLastButtons></mat-paginator>
+      </div>
+      <div class="modal-footer">
+        <button class="arch-btnn" id="cancelbtn" type="button" mat-flat-button data-dismiss="modal">Cancel</button>
+        <button class="arch-btnn" id="invitebtn" type="button" mat-flat-button >Invite</button>
       </div>
     </div>
   </div>
