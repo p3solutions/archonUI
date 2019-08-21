@@ -189,6 +189,7 @@ td.action-select button:hover {
   text-align: left;
   color: #ff0000;
 }
+<<<<<<< HEAD
 button:focus {outline:0;}
 
 #bulk-invite-btn {
@@ -361,3 +362,6 @@ button:focus {outline:0;}
   color: #F9A602;
 }
 
+=======
+button:focus {outline:0;}
+>>>>>>> 6b50f25a54854fd4492b03890f17521a2bd7e06a

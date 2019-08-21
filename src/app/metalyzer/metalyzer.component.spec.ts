@@ -11,11 +11,12 @@ import { WorkspaceHeaderService } from '../workspace-header/workspace-header.ser
 import { NgxPaginationModule } from 'ngx-pagination';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
-import { MatFormFieldModule, MatSelectModule, MatTableModule, MatPaginatorModule, MatTooltipModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule,MatInputModule, MatTableModule, MatPaginatorModule, MatTooltipModule,MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
+import { DatePipe } from '@angular/common';
 
 describe('MetalyzerComponent', () => {
   let component: MetalyzerComponent;
@@ -25,9 +26,9 @@ describe('MetalyzerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [MetalyzerComponent, MetalyzerHeaderComponent],
       imports: [RouterTestingModule, MatTableModule, HttpClientModule, MatTooltipModule,
-        NgxPaginationModule, MatFormFieldModule, FormsModule, MatSelectModule,
+        NgxPaginationModule, MatFormFieldModule, FormsModule, MatSelectModule,MatDatepickerModule, MatNativeDateModule,MatInputModule,
         BrowserAnimationsModule, MatPaginatorModule, NgxSpinnerModule],
-      providers: [TableListService, UserinfoService, MetalyzerHeaderService, WorkspaceServicesService,
+      providers: [DatePipe,TableListService, UserinfoService, MetalyzerHeaderService, WorkspaceServicesService,
         WorkspaceHeaderService, { provide: EnvironmentService, useClass: MockEnvironmentService }]
     })
       .compileComponents();

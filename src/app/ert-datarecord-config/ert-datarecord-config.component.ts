@@ -325,7 +325,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
     }
     const self = this;
     function clicked(d) {
-      console.log(d);
+      // console.log(d);
       if (!d3.event.defaultPrevented && d.data.visible) {
         // if (d.children) {
         //   d._children = d.children;
@@ -367,7 +367,7 @@ export class ErtDatarecordConfigComponent implements OnInit {
           self.selectedValues.push(value.name);
         }
         self.data = JSON.parse(toJson(self.selectedValues, self.joinListMap));
-        console.log(self.data);
+        // console.log(self.data);
         update(self.data);
       });
     }

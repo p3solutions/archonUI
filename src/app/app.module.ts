@@ -155,6 +155,7 @@ import { PreventcopyDirective } from './preventcopy.directive';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { FilteroperationPipe } from './ert-table/filteroperation.pipe';
 import { SearchErtTablePipe } from './ert-landing-page/search-ert-table.pipe';
+import { DatePipe } from '@angular/common';
 import { SessionTimeoutComponent } from './session-timeout/session-timeout.component';
 import { NotWildCharDirective } from './not-wild-char.directive';
 import { AllowcharDirective } from './allowchar.directive';
@@ -307,7 +308,7 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 AceEditorModule
         ],
         providers: [
-                  EnvironmentService,
+                  EnvironmentService,DatePipe,
         {
             provide: APP_INITIALIZER,
             useFactory: appInitializerFunction,
