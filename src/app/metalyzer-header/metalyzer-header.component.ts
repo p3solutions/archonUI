@@ -147,7 +147,9 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
         }
         
       },
-        err => { console.log(err) });
+        err => {
+          this.spinner.hide();
+           console.log(err) });
   }
 
   ngAfterViewInit() {
