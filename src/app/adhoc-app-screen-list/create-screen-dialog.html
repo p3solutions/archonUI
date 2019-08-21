@@ -10,7 +10,7 @@
         placeholder="Screen Name" [(ngModel)]="screenInfo.screenName">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput name="screenDesc" trim="blur" maxlength="200" required placeholder="Description"
+      <textarea matInput name="screenDesc" appNotWildChar trim="blur" maxlength="200" required placeholder="Description"
         #screenDesc="ngModel" [(ngModel)]="screenInfo.screenDesc"></textarea>
     </mat-form-field>
   </form>

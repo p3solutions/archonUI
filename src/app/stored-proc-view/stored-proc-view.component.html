@@ -36,14 +36,13 @@
           </div> -->
           <div class="first-div-new">SP / View Name</div>
         </div>
-        <div class="{{item.name===this.spvName? 'well-with-blue well-sm':'well'}}" *ngFor="let item of SpvInfoList"
-          (click)="getTableNameList(item.name)">
+        <div class="{{item.name===this.spvName? 'well-with-blue well-sm':'well'}}" *ngFor="let item of SpvInfoList">
           <div>
             <!--<mat-checkbox style="float:left; padding-top: 2px;" name="spv{{item.name}}" [(ngModel)]="item.isSPVChecked" (click)="selectSPVName(item.name,$event)" id="{{item}}" [checked]="item.selected" class="spvall" type="checkbox"></mat-checkbox> -->
             <input class="sp-select" style="float:left;" name="spv{{item.name}}" [(ngModel)]="item.isSelected"
               (change)="selectSPVName(item.name,$event)" type="checkbox" [indeterminate]="item.isIndeterminate"></div>
           <div class="first-div">{{item.name}}</div>
-          <div class="second-div">{{item.type}}</div>
+          <div class="second-div" (click)="getTableNameList(item.name)">{{item.type}}</div>
           <div *ngIf="item.name===spvName"><i class="fa fa-chevron-right icon-div "></i></div>
         </div>
       </div>
