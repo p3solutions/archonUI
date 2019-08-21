@@ -7,20 +7,20 @@
       <mat-card-content>
         <form #smtpconfigform="ngForm" class="flex-container">
           <mat-form-field>
-            <input name="host" #host=ngModel [(ngModel)]="smtpConfiguration.host" required matInput placeholder="Host">
+            <input name="host" #host=ngModel appAllowchar trim="blur" [(ngModel)]="smtpConfiguration.host" required matInput placeholder="Host">
           </mat-form-field>
           <mat-form-field>
-            <input name="port" #port=ngModel [(ngModel)]="smtpConfiguration.port" required matInput placeholder="Port">
+            <input name="port" #port=ngModel type="number" trim="blur" [(ngModel)]="smtpConfiguration.port" required matInput placeholder="Port">
           </mat-form-field>
           <mat-form-field>
-            <input name="username" email #username=ngModel [(ngModel)]="smtpConfiguration.username" required matInput
+            <input name="username" email #username=ngModel trim="blur" [(ngModel)]="smtpConfiguration.username" required matInput
               placeholder="Username">
             <mat-error *ngIf="username.invalid && !username.errors?.required">
               Email is invalid.
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input name="password" #password=ngModel [(ngModel)]="smtpConfiguration.password" type=password required
+            <input name="password" #password=ngModel trim="blur" [(ngModel)]="smtpConfiguration.password" type=password required
               matInput placeholder="Password">
           </mat-form-field>
         </form>

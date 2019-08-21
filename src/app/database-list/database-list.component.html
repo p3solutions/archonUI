@@ -386,11 +386,11 @@
           <div class="col-md-12 row m-10">
             <mat-form-field class="example-full-width">
               <input type="password" matInput required [(ngModel)]="dbpassword" name="dbpassword"
-                placeholder="Enter Database Password" minlength="6" #pass="ngModel">
+                placeholder="Enter Database Password" trim="blur" #pass="ngModel">
             </mat-form-field>
-            <mat-error *ngIf="pass.errors?.minlength" style="margin-left: 7px;">
+            <!-- <mat-error *ngIf="pass.errors?.minlength" style="margin-left: 7px;">
               *Password must contain atleast 6 characters.
-            </mat-error>
+            </mat-error> -->
           </div>
 
         </div>

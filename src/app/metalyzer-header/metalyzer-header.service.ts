@@ -11,6 +11,7 @@ export class MetalyzerHeaderService {
   exportxmlUrl = this.apiUrl + 'metalyzer/exportMetadata/';
   getAuditUrl = this.apiUrl + 'metalyzer/auditEvents?startIndex=';
   exportpdfUrl = this.apiUrl + 'metalyzer/export/erDiagram?';
+  getcategoryUrl=this.apiUrl + 'metalyzer/modificationCategory';
   private workspaceId: string;
   private phase = new BehaviorSubject<string>('Analysis');
   cast = this.phase.asObservable();
@@ -28,12 +29,9 @@ export class MetalyzerHeaderService {
   }
   setWorkspaceId(workspaceId: string) {
     this.workspaceId = workspaceId;
-    console.log('setworkspaceID', workspaceId);
   }
   getWorkspaceName(): Observable<string> {
-    console.log('getworkspaceName', this.workspaceId);
     const URL = this.workspaceinfoUrl + this.workspaceId;
-    console.log(URL);
     return this.http.get<string>(URL, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractWorkspace),
       catchError(this.handleError<string>('getworkspaceName'))
@@ -42,32 +40,39 @@ export class MetalyzerHeaderService {
   getExportxml(workspaceId, databaseID, xml): Observable<any> {
     const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: xml };
     return this.http.post(this.exportxmlUrl, params,
-      { headers: this.userinfoService.getHeaders()});
+      { headers: this.userinfoService.getHeaders() });
   }
   getExportjson(workspaceId, databaseID, json): Observable<any> {
     const params = { workspaceId: workspaceId, databaseId: databaseID, exportType: json };
     return this.http.post(this.exportxmlUrl, params,
-      { headers: this.userinfoService.getHeaders()});
+      { headers: this.userinfoService.getHeaders() });
   }
   getExportOverallpdf(workspaceId): Observable<any> {
     const url = this.exportpdfUrl + 'workspaceId=' + workspaceId;
     return this.http.get(url,
-      { headers: this.userinfoService.getHeaders()});
+      { headers: this.userinfoService.getHeaders() });
   }
   getExportSelectedpdf(workspaceId, tableID): Observable<any> {
     const url = this.exportpdfUrl + 'workspaceId=' + workspaceId + '&tableId=' + tableID;
     return this.http.get(url,
-      { headers: this.userinfoService.getHeaders()});
+      { headers: this.userinfoService.getHeaders() });
   }
   private extractWorkspace(res: any) {
     const data = res.data.workspaces.workspaceName;
     return data || [];
   }
 
-  getAudit(param, startIndex, itemperpage) {
-    return this.http.post(this.getAuditUrl + startIndex + '&itemPerPage=' + itemperpage, param, { headers: this.userinfoService.getHeaders() }).pipe(
+  getAudit(param, startIndex, lastIndex) {
+    return this.http.post(this.getAuditUrl + startIndex + '&lastIndex=' + lastIndex, param, { headers: this.userinfoService.getHeaders() }).pipe(
       map(this.extractAudit),
       catchError(this.handleError<string>('getAudit'))
+    );
+  }
+
+  getModificationCategory(){
+    return this.http.get(this.getcategoryUrl , { headers: this.userinfoService.getHeaders() }).pipe(
+      map(this.extractAudit),
+      catchError(this.handleError<string>('getModificationCategory'))
     );
   }
 
@@ -80,7 +85,7 @@ export class MetalyzerHeaderService {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.error(error);
+      //  console.error(error);
       // Let the app keep running by returning an empty result.
       return of(result);
     };

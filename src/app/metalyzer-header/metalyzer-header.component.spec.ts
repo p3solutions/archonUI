@@ -10,10 +10,12 @@ import { TableListService } from '../table-list/table-list.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { EnvironmentService } from '../environment/environment.service';
 import { MockEnvironmentService } from '../environment/mock-environment.service';
-import { MatFormFieldModule, MatSelectModule, MatTableModule, MatPaginatorModule, MatTooltipModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatTableModule, MatPaginatorModule, MatTooltipModule,MatDatepickerModule, MatNativeDateModule, MatInputModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 describe('MetalyzerHeaderComponent', () => {
   let component: MetalyzerHeaderComponent;
@@ -22,10 +24,11 @@ describe('MetalyzerHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MetalyzerHeaderComponent],
-      imports: [RouterTestingModule, HttpClientModule, NgxPaginationModule, MatTableModule, MatTooltipModule, MatFormFieldModule,
+      imports: [RouterTestingModule, HttpClientModule,MatInputModule, NgxPaginationModule, MatDatepickerModule, MatNativeDateModule,MatTableModule, MatTooltipModule, MatFormFieldModule,
         FormsModule, MatSelectModule, BrowserAnimationsModule, MatPaginatorModule],
-      providers: [WorkspaceHeaderService, MetalyzerHeaderService, UserinfoService, TableListService, WorkspaceServicesService,
-        { provide: EnvironmentService, useClass: MockEnvironmentService }]
+      providers: [WorkspaceHeaderService, MetalyzerHeaderService, UserinfoService, TableListService, WorkspaceServicesService,DatePipe,
+        { provide: EnvironmentService, useClass: MockEnvironmentService }],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));

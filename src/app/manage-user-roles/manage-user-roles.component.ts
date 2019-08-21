@@ -338,7 +338,7 @@ export class ManageUserRolesComponent implements OnInit {
       document.getElementById('success-popup-btn').click();
       if (response.httpStatus === 200) {
         if (this.userAction === 'cancelinvite') {
-          this.successMsg = 'Invitation cancel successfully.';
+          this.successMsg = response.data;
         } else if (this.userAction === 'delete') {
           this.successMsg = 'User deleted successfully.';
         }

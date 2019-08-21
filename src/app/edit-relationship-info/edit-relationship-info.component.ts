@@ -64,6 +64,7 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
   }
 
   populateValues() {
+    this.editchangeState.clear();
     this.spinner.show();
     try {
       this.primaryTable = JSON.parse(JSON.stringify(this.userValues.primaryTable.tableName));
@@ -182,18 +183,21 @@ export class EditRelationshipInfoComponent implements OnInit, OnChanges {
           }
         }
       }
-      let checkUpdate = false;
+      // let checkUpdate = false;
       for (const i of this.resultantValues) {
       if ('isSelected' in i) {
-      checkUpdate = true;
+      // checkUpdate = true;
+      this.onloadupdate = false;
+      break;
       } else {
-        checkUpdate = false;
-      }
-      if (checkUpdate === true) {
-        this.onloadupdate = false;
-      } else {
+        // checkUpdate = false;
         this.onloadupdate = true;
       }
+      // if (checkUpdate === true) {
+      //   this.onloadupdate = false;
+      // } else {
+      //   this.onloadupdate = true;
+      // }
       }
     }
     this.updateenable = this.checkDuplicateInObject(this.resultantValues);
