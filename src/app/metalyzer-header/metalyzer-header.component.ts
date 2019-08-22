@@ -116,9 +116,9 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
           } else if (categoryValues == "DELETE") {
             this.finalCategory = "Delete";
           } else if (categoryValues == "ADD_NEW_RELATIONID_EXISTING_JOIN") {
-            this.finalCategory = "Add Relationid Existing Join";
+            this.finalCategory = "Add New Relationship Join";
           } else if (categoryValues == "DATA_ANALYZER_NEW_JOIN") {
-            this.finalCategory = "Add DataAnalyzer Join";
+            this.finalCategory = "Add Data Analyzer Join";
           }
           this.categoryarr.push({ data: result[i], Values: this.finalCategory });
         }

@@ -126,13 +126,14 @@
 
           <button mat-button id="clearbtn" (click)="ClickClear()">Clear</button>
 
-          <button *ngIf="previous" mat-button [disabled]="previous" id="previous" (click)="ShowPrevious()">Show
-            Previous</button>
+         
         </div>
 
 
 
         <div class="container" style="min-height:300px;width: 1127px;overflow: auto;margin: 5px;padding: 5px;">
+          <button *ngIf="previous" mat-button [disabled]="previous" id="previous" (click)="ShowPrevious()">Show
+            Previous</button>
           <ul *ngIf="refreshcontainer" class="timeline" style="z-index:1;">
             <li class="timeline-inverted" *ngFor="let items of metalyzerhistoryarr.sort(sortFunc)">
               <div class="timestamps">
@@ -165,9 +166,7 @@
           style="margin-top: 104px;color: #2879ff;background-color: #eef2f9;margin-left: 450px;text-align: center;line-height: 43px;width: 174px;">
           No records found</h4>
       </div> <br>
-      <div id="showbtn">
         <button *ngIf="next" mat-button [disabled]="next" id="more" (click)="ShowMore()">Show More</button>
-      </div>
     </div>
   </div>
   <div class="modal-footer" style="margin-top: 42px">
