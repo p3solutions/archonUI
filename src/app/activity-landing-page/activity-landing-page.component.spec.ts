@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivityLandingPageComponent } from './activity-landing-page.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserProfileService } from '../user-profile/user-profile.service';

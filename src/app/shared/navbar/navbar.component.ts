@@ -1,14 +1,14 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input, ViewChild, ElementRef } from '@angular/core';
-import { Info } from '../info';
+import { Info } from '../../info';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as $ from 'jquery';
-import { UserProfileService } from '../user-profile/user-profile.service';
+import { UserProfileService } from '../../user-profile/user-profile.service';
 import { NavbarService } from './navbar.service';
-import { UserinfoService } from '../userinfo.service';
-import { browserRefresh } from '../app.component';
+import { UserinfoService } from '../../userinfo.service';
+import { browserRefresh } from '../../app.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
+import { WorkspaceServicesService } from '../../workspace-services/workspace-services.service';
 
 @Component({
   selector: 'app-navbar',
@@ -52,7 +52,7 @@ export class NavbarComponent implements OnInit {
       profile: ['']
     });
     if (browserRefresh) {
-      this.router.navigate(['/workspace/workspace-dashboard']);
+      // this.router.navigate(['/workspace/workspace-dashboard']);
     }
     const check = this.userinfoService.getRoleList();
     for (const i of check) {

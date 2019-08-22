@@ -5,7 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule, MatSortModule, MatInputModule } from '@angular/material';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 import { InfoService } from './info.service';
 import { SigninFormService } from './signin-form/signin-form.service';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -161,6 +161,7 @@ import { NotWildCharDirective } from './not-wild-char.directive';
 import { AllowcharDirective } from './allowchar.directive';
 import { AlphabetAllowedDirective } from './alphabet-allowed.directive';
 import { WorkspaceModule } from './workspace/workspace.module';
+import { SharedModule } from './shared/shared.module';
 
 export function tokenGetter() {
         return localStorage.getItem('accessToken');
@@ -174,7 +175,6 @@ const appInitializerFunction = (environment: EnvironmentService) => {
 @NgModule({
         declarations: [
                 AppComponent,
-                NavbarComponent,
                 LandingPageComponent,
                 WorkspaceLandingPageComponent,
                 SigninFormComponent,
@@ -306,7 +306,8 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 FlexLayoutModule,
                 NgxSpinnerModule, MatInputModule, MatSortModule,
                 NgxTrimDirectiveModule,
-                AceEditorModule
+                AceEditorModule,
+                SharedModule
         ],
         providers: [
                 EnvironmentService, DatePipe,

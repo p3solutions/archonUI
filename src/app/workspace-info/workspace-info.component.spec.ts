@@ -10,7 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Observable } from 'rxjs';
 import { WorkspaceServicesComponent } from '../workspace-services/workspace-services.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { UserinfoService } from '../userinfo.service';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';
 import { EnvironmentService } from '../environment/environment.service';

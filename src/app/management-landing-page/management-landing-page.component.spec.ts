@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManagementLandingPageComponent } from './management-landing-page.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { UserinfoService } from '../userinfo.service';
@@ -20,7 +20,8 @@ describe('ManagementLandingPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ManagementLandingPageComponent, NavbarComponent],
       imports: [RouterTestingModule, HttpClientModule, NgxSpinnerModule, FormsModule, ReactiveFormsModule],
-      providers: [UserProfileService, UserinfoService, NgxSpinnerService, WorkspaceServicesService, { provide: EnvironmentService, useClass: MockEnvironmentService }
+      providers: [UserProfileService, UserinfoService, NgxSpinnerService, WorkspaceServicesService, 
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
       .compileComponents();

@@ -4,17 +4,17 @@ import { DebugElement } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NavbarComponent } from './navbar.component';
-import { InfoService } from '../info.service';
-import { Info } from '../info';
+import { InfoService } from '../../info.service';
+import { Info } from '../../info';
 import { Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UserProfileService } from '../user-profile/user-profile.service';
+import { UserProfileService } from '../../user-profile/user-profile.service';
 import { NavbarService } from './navbar.service';
-import { UserinfoService } from '../userinfo.service';
-import { EnvironmentService } from '../environment/environment.service';
-import { MockEnvironmentService } from '../environment/mock-environment.service';
+import { UserinfoService } from '../../userinfo.service';
+import { EnvironmentService } from '../../environment/environment.service';
+import { MockEnvironmentService } from '../../environment/mock-environment.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { WorkspaceServicesService } from '../workspace-services/workspace-services.service';
+import { WorkspaceServicesService } from '../../workspace-services/workspace-services.service';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -46,7 +46,8 @@ describe('NavbarComponent', () => {
       declarations: [NavbarComponent],
       providers: [
         InfoService,
-        HttpClientModule, UserProfileService, NavbarService, UserinfoService, WorkspaceServicesService, { provide: EnvironmentService, useClass: MockEnvironmentService }
+        HttpClientModule, UserProfileService, NavbarService, UserinfoService, WorkspaceServicesService,
+        { provide: EnvironmentService, useClass: MockEnvironmentService }
       ],
     })
       .compileComponents();

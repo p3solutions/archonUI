@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WorkspaceLandingPageComponent } from './workspace-landing-page.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { InfoService } from '../info.service';
 import { HttpClientModule } from '@angular/common/http';

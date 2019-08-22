@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SchedulemonitoringComponent } from './schedulemonitoring.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { DataTablesModule } from 'angular-datatables';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -26,8 +26,11 @@ describe('SchedulemonitoringComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SchedulemonitoringComponent, NavbarComponent],
-      imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule, MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, DataTablesModule, RouterTestingModule, HttpClientTestingModule, HttpClientModule, ReactiveFormsModule],
-      providers: [UserinfoService, UserProfileService, NgxSpinnerService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      imports: [FormsModule, MatTableModule, MatSelectModule, MatOptionModule, MatSortModule,
+         MatPaginatorModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule, 
+         DataTablesModule, RouterTestingModule, HttpClientTestingModule, HttpClientModule, ReactiveFormsModule],
+      providers: [UserinfoService, UserProfileService, NgxSpinnerService, 
+        { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

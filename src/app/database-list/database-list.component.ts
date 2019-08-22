@@ -3,7 +3,7 @@ import { ConfiguredDB, PendingDB } from '../workspace-objects';
 import { DatabaseListService } from './database-list.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DynamicLoaderService } from '../dynamic-loader.service';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { CommonUtilityService } from '../common-utility.service';
 import { Info } from '../info';
 import { WorkspaceHeaderService } from '../workspace-header/workspace-header.service';

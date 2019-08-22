@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateWorkspacePageComponent } from './create-workspace-page.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -29,7 +29,8 @@ describe('CreateWorkspacePageComponent', () => {
       imports: [HttpClientModule, RouterTestingModule, ReactiveFormsModule,
         FormsModule, MatFormFieldModule, MatCardModule, MatInputModule, BrowserAnimationsModule, NgxSpinnerModule,
         MatSelectModule, MatOptionModule, MatStepperModule, MatTableModule, MatPaginatorModule, MatSortModule],
-      providers: [UserWorkspaceService, UserinfoService, DatabaseListService, UserProfileService, NgxSpinnerService, WorkspaceServicesService,
+      providers: [UserWorkspaceService, UserinfoService, DatabaseListService, 
+        UserProfileService, NgxSpinnerService, WorkspaceServicesService,
         { provide: EnvironmentService, useClass: MockEnvironmentService }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

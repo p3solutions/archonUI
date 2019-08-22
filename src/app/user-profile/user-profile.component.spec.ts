@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserProfileComponent } from './user-profile.component';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserinfoService } from '../userinfo.service';
@@ -24,11 +24,14 @@ describe('UserProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserProfileComponent, EditProfileComponent, NavbarComponent, ChangePasswordComponent ],
-      providers: [UserinfoService, WorkspaceListService, WorkspaceHeaderService, UserProfileService,WorkspaceServicesService, ChangePasswordService, { provide: EnvironmentService, useClass: MockEnvironmentService }],
-      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule, HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule]
+      declarations: [UserProfileComponent, EditProfileComponent, NavbarComponent, ChangePasswordComponent],
+      providers: [UserinfoService, WorkspaceListService, WorkspaceHeaderService,
+        UserProfileService, WorkspaceServicesService, ChangePasswordService,
+        { provide: EnvironmentService, useClass: MockEnvironmentService }],
+      imports: [RouterTestingModule, FormsModule, ReactiveFormsModule,
+        HttpClientModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

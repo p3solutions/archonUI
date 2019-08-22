@@ -13,7 +13,7 @@ import { CommonUtilityService } from '../common-utility.service';
 import { Observable } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { UserProfileService } from '../user-profile/user-profile.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
