@@ -45,18 +45,25 @@
           <mat-select>
             <mat-option (click)="exportxml()" style="border-bottom: 1px solid #d6d6d6;">Export Complete Metadata As XML
             </mat-option>
-            <mat-option (click)="exportjson()" style="border-bottom: 1px solid #d6d6d6;">Export Complete Metadata As JSON
+            <mat-option (click)="exportjson()" style="border-bottom: 1px solid #d6d6d6;">Export Complete Metadata As
+              JSON
             </mat-option>
-            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export Selected Table’s Metadata As XML</mat-option>
+            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export
+              Selected Table’s Metadata As XML</mat-option>
             <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedxml()"
               style="border-bottom: 1px solid #d6d6d6;">Export Selected Table’s Metadata As XML</mat-option>
             <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;">Export
               Selected Table's Metadata As JSON</mat-option>
             <mat-option *ngIf="disable == false" [disabled]="disable" (click)="selectedjson()"
               style="border-bottom: 1px solid #d6d6d6;">Export Selected Table's Metadata As JSON</mat-option>
-            <mat-option (click)="exportOverallpdf()" style="border-bottom: 1px solid #d6d6d6;" matTooltip="{{ 'Export Complete Relationship Diagram As PDF'| uppercase}}">Export Complete Relationship Diagram As PDF</mat-option>
-            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;" matTooltip="{{ 'Export Selected Table’s Relationship Diagram As PDF'| uppercase}}">Export Selected Table’s Relationship Diagram As PDF</mat-option>
-            <mat-option *ngIf="disable == false" [disabled]="disable" (click)="exportSelectedpdf()" matTooltip="{{ 'Export Selected Table’s Relationship Diagram As PDF'| uppercase}}"
+            <mat-option (click)="exportOverallpdf()" style="border-bottom: 1px solid #d6d6d6;"
+              matTooltip="{{ 'Export Complete Relationship Diagram As PDF'| uppercase}}">Export Complete Relationship
+              Diagram As PDF</mat-option>
+            <mat-option *ngIf="disable == true" [disabled]="disable" style="border-bottom: 1px solid #d6d6d6;"
+              matTooltip="{{ 'Export Selected Table’s Relationship Diagram As PDF'| uppercase}}">Export Selected Table’s
+              Relationship Diagram As PDF</mat-option>
+            <mat-option *ngIf="disable == false" [disabled]="disable" (click)="exportSelectedpdf()"
+              matTooltip="{{ 'Export Selected Table’s Relationship Diagram As PDF'| uppercase}}"
               style="border-bottom: 1px solid #d6d6d6;">Export Selected Table’s Relationship Diagram As PDF</mat-option>
           </mat-select>
         </mat-form-field>
@@ -64,8 +71,9 @@
       <div class="dropdown" *ngIf="phase == 'Analysis'" style="width: 18%;">
         <mat-form-field>
           <mat-label>View Details</mat-label>
-          <mat-select >
-            <mat-option (click)="loadPage()" data-toggle="modal" data-keyboard="true" data-target="#myModal">View Modifications</mat-option>
+          <mat-select>
+            <mat-option (click)="loadPage()" data-toggle="modal" data-keyboard="true" data-target="#myModal">View
+              Modifications</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -88,90 +96,106 @@
         </h4>
       </div>
       <div class="modal-body" style="margin-bottom: -62px;">
-          <div class="example-container">
-              <mat-form-field id="searchbyname">
-                <input name="searchbyname1" matInput placeholder="Search By Name" [(ngModel)]="username" (keyup)="getCommonSearch()">
-              </mat-form-field>
-            
-              <mat-form-field id="searchbycategory">
-                <mat-select name="searchbycategory1" placeholder="Search By Category" [(ngModel)]="category" (selectionChange)="getCommonSearch()">
-                  <mat-option>None</mat-option>
-                  <mat-option  *ngFor="let category of categoryarr" [value]="category.data"
-                >{{category.data}}</mat-option>
-                </mat-select>
-              </mat-form-field>
+        <div class="example-container">
+          <mat-form-field id="searchbyname">
+            <input name="searchbyname1" matInput placeholder="Search By Name" [(ngModel)]="username"
+              (keyup)="getCommonSearch()">
+          </mat-form-field>
 
-              <mat-form-field id="fromdate">
-                <input matInput name="fromdate1" [max]="maxDate" [matDatepicker]="picker"  placeholder="From Date" [(ngModel)]="fromdate" (dateInput)="getCommonSearch()" (dateChange)="getCommonSearch()">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
+          <mat-form-field id="searchbycategory">
+            <mat-select name="searchbycategory1" placeholder="Search By Category" [(ngModel)]="category"
+              (selectionChange)="getCommonSearch()">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let category of categoryarr" [value]="category.data">{{category.Values}}</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-              <mat-form-field id="todate">
-                <input matInput name="todate1" [max]="maxDate" [matDatepicker]="picker1" placeholder="To Date" [(ngModel)]="todate" (dateInput)="getCommonSearch()" (dateChange)="getCommonSearch()">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-              </mat-form-field>             
-            </div>
+          <mat-form-field id="fromdate">
+            <input matInput name="fromdate1" [max]="maxDate" [matDatepicker]="picker" placeholder="From Date"
+              [(ngModel)]="fromdate" (dateInput)="ValidateDates()" (dateChange)="ValidateDates()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-           
-            <div  class="container" style="min-height:300px;width: 1127px;overflow: auto;margin: 5px;padding: 5px;">              
-                <ul *ngIf="refreshcontainer" class="timeline" style="z-index:1;">                                  
-                    <li class="timeline-inverted" *ngFor="let items of metalyzerhistoryarr.sort(sortFunc)">
-                      <div class="timestamps">
-                          <p style="color:#3689cb;font-size: 13px">{{items.date * 1000.| date:'MMM dd, yyyy'}}</p><br> <p style="font-size: 12px">{{items.date * 1000 | date:'h:mm:ss a'}}</p>
-                      </div>
-                      
-                      <div class="timeline-badge">
-                        <div style="width: 20px;height: 20px;margin-left: 9px;margin-top: -4px;">
-                          <li *ngIf="items['category']==='ADD_NEW_JOIN'||items['category']==='ADD_NEW_RELATIONID_EXISTING_JOIN'||items['category']==='DATA_ANALYZER_NEW_JOIN'"><i style="color: #fffcd3;font-size:18px;" class="material-icons">add</i></li>
-                          <li *ngIf="items['category']==='DELETE'"><i style="color: #fffcd3;font-size:18px;" class="material-icons">delete</i></li>
-                          <li *ngIf="items['category']==='UPDATE_EXISTING_JOIN'"><i style="color: #fffcd3;font-size:18px;" class="material-icons">edit</i></li>
-                        </div>
-                      </div>
-                      <div class="timeline-panel">
-                        <div class="timeline-body">
-                          <p id="content" style="font-size: 14px">
-                              <strong>{{items.user}}</strong> {{items.data}}
-                          </p>
-                        </div>
-                      </div>
-                    </li>                           
-                </ul>
-                <div *ngIf="errmsg">
-                  <h4 id="recordmsg" style="margin-top: 104px;color: #2879ff;background-color: #eef2f9;margin-left: 450px;text-align: center;line-height: 43px;width: 174px;">No records found</h4>
-                </div>  
-                <button  mat-button [disabled]="previous" id="previous" (click)="ShowPrevious()">Show Previous</button>
-                <button  mat-button [disabled]="next" id="more" (click)="ShowMore()">Show More</button>
-            </div>
+          <mat-form-field id="todate">
+            <input matInput name="todate1" [min]="minDate" [max]="maxDate" [matDatepicker]="picker1" placeholder="To Date"
+              [(ngModel)]="todate" (dateInput)="ValidateDates()" (dateChange)="ValidateDates()">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+
+          <button mat-button id="clearbtn" (click)="ClickClear()">Clear</button>
+
+         
         </div>
-        <div class="modal-footer" style="margin-top: 42px">
-          <button class="arch-btnn" type="button" mat-flat-button data-dismiss="modal">Close</button>
+
+
+
+        <div class="container" style="min-height:300px;width: 1127px;overflow: auto;margin: 5px;padding: 5px;">
+          <button *ngIf="previous" mat-button [disabled]="previous" id="previous" (click)="ShowPrevious()">Show
+            Previous</button>
+          <ul *ngIf="refreshcontainer" class="timeline" style="z-index:1;">
+            <li class="timeline-inverted" *ngFor="let items of metalyzerhistoryarr.sort(sortFunc)">
+              <div class="timestamps">
+                <p style="color:#3689cb;font-size: 13px">{{items.date * 1000.| date:'MMM dd, yyyy'}}</p><br>
+                <p style="font-size: 12px">{{items.date * 1000 | date:'h:mm:ss a'}}</p>
+              </div>
+
+              <div class="timeline-badge">
+                <div style="width: 20px;height: 20px;margin-left: 9px;margin-top: -4px;">
+            <li
+              *ngIf="items['category']==='ADD_NEW_JOIN'||items['category']==='ADD_NEW_RELATIONID_EXISTING_JOIN'||items['category']==='DATA_ANALYZER_NEW_JOIN'">
+              <i style="color: #fffcd3;font-size:18px;" class="material-icons">add</i></li>
+            <li *ngIf="items['category']==='DELETE'"><i style="color: #fffcd3;font-size:18px;"
+                class="material-icons">delete</i></li>
+            <li *ngIf="items['category']==='UPDATE_EXISTING_JOIN'"><i style="color: #fffcd3;font-size:18px;"
+                class="material-icons">edit</i></li>
         </div>
       </div>
-    </div>    
-
+      <div class="timeline-panel">
+        <div class="timeline-body">
+          <p id="content" style="font-size: 14px">
+            <strong>{{items.user}}</strong> {{items.data}}
+          </p>
+        </div>
+      </div>
+      </li>
+      </ul>
+      <div *ngIf="errmsg">
+        <h4 id="recordmsg"
+          style="margin-top: 104px;color: #2879ff;background-color: #eef2f9;margin-left: 450px;text-align: center;line-height: 43px;width: 174px;">
+          No records found</h4>
+      </div> <br>
+        <button *ngIf="next" mat-button [disabled]="next" id="more" (click)="ShowMore()">Show More</button>
+    </div>
   </div>
+  <div class="modal-footer" style="margin-top: 42px">
+    <button class="arch-btnn" type="button" mat-flat-button data-dismiss="modal">Close</button>
+  </div>
+</div>
+</div>
+
+</div>
 <button style="display:none" type="button" id="successPopUp" class="btn btn-info btn-lg" data-keyboard="true"
   data-toggle="modal" data-target="#confirmCancelInviteSuccess">Open Modal</button>
-  <div class="modal fade" id="confirmCancelInviteSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" style="width: 480px;">
-      <div class="modal-content">
-        <div class="info-popup-header-cls">
-          <h4 class="popup-title-cls">
-            <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i>
-            <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Alert</div>
-          </h4>
-        </div>
-        <div class="modal-body">
-          <div class="popup-paragraph-cls"> {{message}}<a [routerLink]="['/activity/status']" [queryParams]="{jobName: jobname}" data-dismiss="modal">
+<div class="modal fade" id="confirmCancelInviteSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" style="width: 480px;">
+    <div class="modal-content">
+      <div class="info-popup-header-cls">
+        <h4 class="popup-title-cls">
+          <i class="material-icons popup-material-icon-cls" style="font-size: 22px;margin-top: 3px;">info_outline</i>
+          <div class="pop-title" style="margin-left: 0px;margin-top: 3px;">Alert</div>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="popup-paragraph-cls"> {{message}}<a [routerLink]="['/activity/status']"
+            [queryParams]="{jobName: jobname}" data-dismiss="modal">
             Status Monitoring
           </a> </div>
-        </div>
-        <div class="modal-footer" >
-          <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal"
-            >Ok</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-padding primary-btn-color" data-dismiss="modal">Ok</button>
       </div>
     </div>
   </div>
+</div>
