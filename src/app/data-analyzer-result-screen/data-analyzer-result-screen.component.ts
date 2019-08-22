@@ -51,8 +51,10 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
   dataSource1 = new MatTableDataSource<any>(this.populatePrimaryValuesArray);
   displayedColumns1: string[] = ['tableName', 'dataType', 'secondaryColumnName', 'matchPercentage', 'checked'];
   columnlength1 = 0;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('primaryMatTable') primaryMatTable: MatPaginator;
+  @ViewChild('secondaryMatTable') secondaryMatTable: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
   toggleBoolean = false;
   selectedRow: any;
   selectedIndex = 0;
@@ -171,6 +173,9 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
         this.secTableNameMap.set(tablename, existingPrimCol);
       }
     }
+    const result = this.secTableNameMap.entries().next().value;
+    const param: any = { 'key': result[0], 'val': result[1] };
+    this.populateSecondaryValues(param, 0);
   }
 
   activateSecondaryFn() {
@@ -187,8 +192,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.selectedRow = i;
     this.populatePrimaryValuesArray = this.primaryColMap.get(x.key);
     this.dataSource1.data = this.populatePrimaryValuesArray;
-    this.dataSource1.paginator = this.paginator;
-    this.dataSource1.sort = this.sort;
+    this.dataSource1.paginator = this.primaryMatTable;
+    // this.dataSource1.sort = this.sort;
     this.columnlength1 = this.populatePrimaryValuesArray.length;
     this.selectedPrimaryColumn = x.key;
   }
@@ -197,8 +202,8 @@ export class DataAnalyzerResultScreenComponent implements OnInit, AfterViewInit 
     this.selectedRow = i;
     this.populateSecondaryValuesArray = this.secTableNameMap.get(x.key);
     this.dataSource.data = this.populateSecondaryValuesArray;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.secondaryMatTable;
+    // this.dataSource.sort = this.sort;
     this.columnlength = this.populateSecondaryValuesArray.length;
     this.selectedSecondaryTable = x.key;
   }
