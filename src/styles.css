@@ -2231,3 +2231,8 @@ button:focus {outline:0;}
  .mat-radio-button.mat-radio-disabled .mat-radio-outer-circle, .mat-radio-button.mat-radio-disabled.mat-radio-checked .mat-radio-outer-circle {
   border-color: rgba(0,0,0,.38) !important;
 }
+
+.mat-calendar-body-selected {
+  background-color: #2879ff !important;
+  color: #fff;
+}
