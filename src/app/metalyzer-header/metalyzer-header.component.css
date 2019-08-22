@@ -298,12 +298,13 @@ table{
   width: 236px;
   margin-left: 19px;
 }
-#searchbtn{  
-    width: 70px;
-    height: 36px;
+#clearbtn{  
+    /* width: 70px;
+    height: 36px; */
     border-radius: 4px;
     background-color: #2879ff;
-    margin-left: 32px;  
+    color: white;
+    margin-left: 20px;  
 }
 #showcards{  
   margin-left: 220px;
@@ -484,14 +485,7 @@ table{
   text-align: left;
   color: #5c5d5e;
 }
-/* #maindivcontent{
-  min-height: 30%;
-    margin: 5px;
-    padding: 5px;
-    width: 1128px;
-    height: 330px;
-    overflow: auto;
-} */
+
 h4 #recordmsg{
   color: #2879ff;
   background-color: #eef2f9;
@@ -522,6 +516,7 @@ margin-top: 20px
 }
 
 #previous{
+  margin-left: 28px;
   width: 214px;
   height: 36px;
   border-radius: 4px;

@@ -20,7 +20,6 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['modifiedBy', 'createdAt', 'modificationMode', 'modificationDescription'];
-  categoryvalues=[{values:'New Join'},{values:'Existing Join'},{values:'Delete'},{values:'New Relationid Existing Join'},{values:'DataAnalyzer New Join'}];
   wsName: string;
   phase: string;
   workspaceID: any;
@@ -42,22 +41,28 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   jobname;
   indexStart;
   indexLast;
-  totalScreen:number;
+  totalScreen: number;
   metalyzerValues;
   categoryarr = [];
   metalyzerhistoryarr = [];
   username; category; fromdate; todate;
-  todaydate; maxDate;
-  errmsg=false;
-  startIndex=1;
-  lastIndex:number=100;
+  todaydate; maxDate; minDate;
+  errmsg = false;
+  startIndex = 1;
+  lastIndex: number = 100;
   exceedstartIndex;
   exceedlastIndex;
   newRecords;
-  next=true;
-  previous=true;
-  refreshcontainer=true;
-
+  next = true;
+  previous = true;
+  refreshcontainer = true;
+  latest_start;
+  latest_end;
+  finalCategory;
+  fromDate;
+  toDate;
+  isValidDate;
+ 
   constructor(
     private datepipe: DatePipe,
     private router: Router,
@@ -68,11 +73,12 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     private spinner: NgxSpinnerService,
     private permissionService: PermissionService
   ) {
+
   }
 
-  ngOnInit() {   
-    this.previous=true;
-    this.next=false;
+  ngOnInit() {
+    this.previous = true;
+    this.next = false;
     this.maxDate = new Date();
     this.GetModificationCategory();
     this.metalyzerHeaderService.cast
@@ -93,63 +99,95 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
     this.tablelistService.Dropdownlist.subscribe(data => {
       this.dropdown = data;
     });
-    this.loadPage();
     this.permissionToUser = this.permissionService.getMetalyzerPermission();
 
-    this.metalyzerhistoryarr ;
+    this.metalyzerhistoryarr;
   }
-
 
   GetModificationCategory() {
     this.metalyzerHeaderService.getModificationCategory()
       .subscribe(result => {
         for (var i = 0; i < result.length; i++) {
-          this.categoryarr.push({ data: result[i] });
+          var categoryValues = result[i];
+          if (categoryValues == "ADD_NEW_JOIN") {
+            this.finalCategory = "Add New Join";
+          } else if (categoryValues == "UPDATE_EXISTING_JOIN") {
+            this.finalCategory = "Existing Join";
+          } else if (categoryValues == "DELETE") {
+            this.finalCategory = "Delete";
+          } else if (categoryValues == "ADD_NEW_RELATIONID_EXISTING_JOIN") {
+            this.finalCategory = "Add New Relationship Join";
+          } else if (categoryValues == "DATA_ANALYZER_NEW_JOIN") {
+            this.finalCategory = "Add Data Analyzer Join";
+          }
+          this.categoryarr.push({ data: result[i], Values: this.finalCategory });
         }
       });
   }
-    
-  getCommonSearch() {
-    this.validateSearch(this.workspaceID, this.startIndex, this.lastIndex);
+
+  ValidateDates() {
+    this.minDate=new Date(this.latest_start);
+    this.latest_start = this.datepipe.transform(this.fromdate, 'MM/dd/yyyy');
+    this.latest_end = this.datepipe.transform(this.todate, 'MM/dd/yyyy');
+    this.isValidDate = this.checkDates(this.latest_start, this.latest_end);
+    if (this.isValidDate == true) {
+      this.getCommonSearch();
+    }
   }
 
-  validateSearch(workspaceID, startIndex, lastIndex) {
+  checkDates(sDate: string, eDate: string) {
+    this.isValidDate = true;
+    if ((sDate != null && eDate != null) && (eDate) < (sDate)) {
+       this.minDate=new Date(this.latest_start);
+      this.isValidDate = false;
+    }
+    return this.isValidDate;
+  }
+
+  getCommonSearch() {
+    this.validateSearch(this.workspaceID, this.userid, this.startIndex, this.lastIndex);
+  }
+
+  validateSearch(workspaceID, userId, startIndex, lastIndex) {
     this.spinner.show();
     this.indexStart = startIndex;
-    this.indexLast=lastIndex;    
-    var latest_start = this.datepipe.transform(this.fromdate, 'MM/dd/yyyy');
-    var latest_end = this.datepipe.transform(this.todate, 'MM/dd/yyyy');
+    this.indexLast = lastIndex;
     const param = {
       'workspaceId': workspaceID,
       'userId': this.username,
       'metalyzerModificationCategory': this.category,
-      'fromDate': latest_start,
-      'toDate': latest_end
+      'fromDate': this.latest_start,
+      'toDate': this.latest_end
     };
     this.metalyzerHeaderService.getAudit(param, startIndex, lastIndex)
       .subscribe
       (result => {
         var metalyzerhis = result.model;
-        this.metalyzerhistoryarr=[];
-        if(metalyzerhis.length==0){
-         this.errmsg=true;    
-         this.spinner.hide();       
-        }else{
-          this.errmsg=false;
+        this.metalyzerhistoryarr = [];
+        if (metalyzerhis.length == 0) {
+          this.errmsg = true;
+          this.spinner.hide();
+          this.next = false;
+          this.previous = false;
+        } else {
+          this.errmsg = false;
+          this.next = true;
+          this.previous = true;
           for (var i = 0; i < metalyzerhis.length; i++) {
             var metalyzerValues = metalyzerhis[i].modificationDescription;
             var modifiedBy = metalyzerhis[i].modifiedUser;
             var Category = metalyzerhis[i].metalyzerModificationCategory;
-            var Datetime = metalyzerhis[i].createdAt;        
-            this.metalyzerhistoryarr.push({ data: metalyzerValues, user: modifiedBy, date: Datetime ,category: Category });
+            var Datetime = metalyzerhis[i].createdAt;
+            this.metalyzerhistoryarr.push({ data: metalyzerValues, user: modifiedBy, date: Datetime, category: Category });
             this.spinner.hide();
           }
         }
-        
+
       },
-        err => {
+        error => {
           this.spinner.hide();
-           console.log(err) });
+          console.log(error)
+        });
   }
 
   ngAfterViewInit() {
@@ -158,33 +196,36 @@ export class MetalyzerHeaderComponent implements OnInit, AfterViewInit {
   loadPage() {
     this.workspaceID = this.workspaceHeaderService.getSelectedWorkspaceId();
     this.userid = this.userInfoService.getUserId();
-    this.getAuditEvents(this.workspaceID, this.userid, this.startIndex, this.lastIndex);    
-    if(this.lastIndex > this.totalScreen){
-      this.next=true;
+    this.getAuditEvents(this.workspaceID, this.startIndex, this.lastIndex);
+    if (this.lastIndex > this.totalScreen) {
+      this.next = true;
     }
-    if(this.startIndex!=1){
-      this.previous=false;
+    if (this.startIndex != 1) {
+      this.previous = false;
     }
   }
 
-getAuditEvents(workspaceID, userid, startIndex, lastIndex) {
+  getAuditEvents(workspaceID, startIndex, lastIndex) {
     this.spinner.show();
     try {
       this.indexStart = startIndex;
-      this.indexLast=lastIndex;     
+      this.indexLast = lastIndex;
       const param = {
-        'workspaceId': workspaceID,
-        'userId': userid
+        'workspaceId': workspaceID
       };
       this.metalyzerHeaderService.getAudit(param, startIndex, lastIndex).subscribe(result => {
         var metalyzerhis = result.model;
         this.totalScreen = result.totalCount;
-        this.metalyzerhistoryarr=[];
-        if(metalyzerhis.length==0){
-        this.spinner.hide();
-        this.errmsg=true;        
-        }else{
-          this.errmsg=false;
+        this.metalyzerhistoryarr = [];
+        if (metalyzerhis.length == 0) {
+          this.spinner.hide();
+          this.errmsg = true;
+          this.next = false;
+          this.previous = false;
+        } else {
+          this.next = true;
+          this.previous = true;
+          this.errmsg = false;
           for (var i = 0; i < metalyzerhis.length; i++) {
             var metalyzerValues = metalyzerhis[i].modificationDescription;
             var modifiedBy = metalyzerhis[i].modifiedUser;
@@ -194,51 +235,58 @@ getAuditEvents(workspaceID, userid, startIndex, lastIndex) {
           }
           this.spinner.hide();
         }
-       
+
       });
     } catch {
       this.spinner.hide();
     }
   }
-  
-  sortFunc (a, b) {
+
+  sortFunc(a, b) {
     return b.date - a.date
   }
 
-  CloseMetalyzerHistory(){
-    this.username="";
-    this.category="";
-    this.fromdate="";
-    this.todate="";
+  CloseMetalyzerHistory() {
+    this.username = "";
+    this.category = "";
+    this.fromdate = "";
+    this.todate = "";
   }
 
-  ShowPrevious(){
-    this.startIndex=1;
-    this.lastIndex=this.newRecords;
-    if(this.startIndex==1){
-      this.previous=true;
-    }
-    this.getAuditEvents(this.workspaceID, this.userid, this.startIndex, this.lastIndex);
+  ClickClear() {
+    this.username = "";
+    this.category = "";
+    this.fromdate = "";
+    this.todate = "";
   }
 
-  ShowMore(){        
-    this.startIndex=this.startIndex+100;
-    this.lastIndex=this.lastIndex+100;
-    if(this.lastIndex >= 500){
-      this.refreshcontainer=false;
-      this.previous=false;
-      this.next=false;
-      this.exceedlastIndex=this.lastIndex+100;;
-      this.newRecords=this.exceedlastIndex-500;     
-      this.metalyzerhistoryarr.splice(1,this.newRecords);
-      this.refreshcontainer=true;
-      this.getAuditEvents(this.workspaceID, this.userid, this.startIndex, this.lastIndex);
+  ShowPrevious() {
+    this.startIndex = 1;
+    this.lastIndex = this.newRecords;
+    if (this.startIndex == 1) {
+      this.previous = true;
     }
-    else{
-      this.getAuditEvents(this.workspaceID, this.userid, this.startIndex, this.lastIndex);
+    this.getAuditEvents(this.workspaceID, this.startIndex, this.lastIndex);
+  }
+
+  ShowMore() {
+    this.startIndex = this.startIndex + 100;
+    this.lastIndex = this.lastIndex + 100;
+    if (this.lastIndex >= 500) {
+      this.refreshcontainer = false;
+      this.previous = false;
+      this.next = false;
+      this.exceedlastIndex = this.lastIndex + 100;;
+      this.newRecords = this.exceedlastIndex - 500;
+      this.metalyzerhistoryarr.splice(1, this.newRecords);
+      this.refreshcontainer = true;
+      this.getAuditEvents(this.workspaceID, this.startIndex, this.lastIndex);
     }
-    
-  
+    else {
+      this.getAuditEvents(this.workspaceID, this.startIndex, this.lastIndex);
+    }
+
+
   }
 
   downloadFile(content, fileType) {
