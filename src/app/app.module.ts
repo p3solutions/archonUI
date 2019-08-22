@@ -113,8 +113,8 @@ import { MaterialModule } from './material-module';
 import { AdhocLandingPageComponent } from './adhoc-landing-page/adhoc-landing-page.component';
 import { AdhocHeaderComponent } from './adhoc-header/adhoc-header.component';
 import {
-    AdhocAppScreenListComponent, CreateScreenDialogComponent,
-    CreateAppDialogComponent
+        AdhocAppScreenListComponent, CreateScreenDialogComponent,
+        CreateAppDialogComponent
 } from './adhoc-app-screen-list/adhoc-app-screen-list.component';
 import { AdhocTableSelectionComponent } from './adhoc-table-selection/adhoc-table-selection.component';
 import { AdhocSearchCriteriaComponent } from './adhoc-search-criteria/adhoc-search-criteria.component';
@@ -160,14 +160,15 @@ import { SessionTimeoutComponent } from './session-timeout/session-timeout.compo
 import { NotWildCharDirective } from './not-wild-char.directive';
 import { AllowcharDirective } from './allowchar.directive';
 import { AlphabetAllowedDirective } from './alphabet-allowed.directive';
+import { WorkspaceModule } from './workspace/workspace.module';
 
 export function tokenGetter() {
-    return localStorage.getItem('accessToken');
+        return localStorage.getItem('accessToken');
 }
 const appInitializerFunction = (environment: EnvironmentService) => {
-    return () => {
-        return environment.loadAppConfig();
-    };
+        return () => {
+                return environment.loadAppConfig();
+        };
 };
 
 @NgModule({
@@ -308,13 +309,13 @@ const appInitializerFunction = (environment: EnvironmentService) => {
                 AceEditorModule
         ],
         providers: [
-                  EnvironmentService,DatePipe,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: appInitializerFunction,
-            multi: true,
-            deps: [EnvironmentService]
-        },
+                EnvironmentService, DatePipe,
+                {
+                        provide: APP_INITIALIZER,
+                        useFactory: appInitializerFunction,
+                        multi: true,
+                        deps: [EnvironmentService]
+                },
                 JwtHelperService,
                 InfoService,
                 SigninFormService,

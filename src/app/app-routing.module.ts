@@ -284,6 +284,10 @@ const routes: Routes = [
   },
   {
     path: 'session-timeout', component: SessionTimeoutComponent
+  },
+  {
+    path: 'workspace-r',
+    loadChildren: 'app/workspace/workspace.module#WorkspaceModule'
   }
 ];
 
